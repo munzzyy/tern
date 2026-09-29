@@ -160,6 +160,7 @@ class RealEngine(
     private val interop = Interop(this)
     private val stars = Stars(this)
     private val moves = Moves(this)
+    private val sourceIcons = SourceIcons(this)
 
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -499,6 +500,7 @@ class RealEngine(
         val size = sizePx.coerceIn(1, 1024)
         val pm = context.packageManager
         val pkg = row.installed?.packageName
+        val kept = if (pkg == null) row.file?.asset?.url?.let { downloader.kept(row.id, it) } else null
         val drawable = if (pkg != null) {
             try {
                 pm.getApplicationIcon(pkg)
@@ -506,7 +508,7 @@ class RealEngine(
                 null
             }
         } else {
-            row.file?.asset?.url?.let { downloader.kept(row.id, it) }?.let { file ->
+            kept?.let { file ->
                 pm.getPackageArchiveInfo(file.path, 0)?.applicationInfo?.let { info ->
                     info.sourceDir = file.path
                     info.publicSourceDir = file.path
@@ -514,7 +516,7 @@ class RealEngine(
                 }
             }
         }
-        drawable?.toBitmap(size, size)
+        if (pkg == null && kept == null) sourceIcons.forRow(row, size) else drawable?.toBitmap(size, size)
     }
 
     /** The background check: every app not set to manual, then automatic installs where Android allows them. */

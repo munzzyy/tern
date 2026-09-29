@@ -16,6 +16,8 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
+      - name: translations match English
+        run: python3 tools/strings.py check app/src/main/res
       - name: core tests
         run: ./gradlew --no-daemon :core:test
       - name: app unit tests

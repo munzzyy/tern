@@ -4,7 +4,7 @@ set -euo pipefail
 APK="${1:?usage: check-apk.sh <apk>}"
 SDK="${ANDROID_HOME:-$HOME/Android/Sdk}"
 AAPT=$(ls "$SDK"/build-tools/*/aapt2 | sort -V | tail -1)
-MAX_BYTES=$((4 * 1024 * 1024))
+MAX_BYTES=$((5 * 1024 * 1024))
 fail=0
 
 expected=$(sort <<'LIST'

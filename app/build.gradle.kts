@@ -39,7 +39,16 @@ android {
     }
 
     androidResources {
-        localeFilters += listOf("en")
+        generateLocaleConfig = true
+        localeFilters += listOf(
+            "en", "ar", "bs", "ca", "cs", "da", "de", "eo", "es", "fa", "fr", "gl", "hu", "in", "it", "ja", "ko", "ml",
+            "nl", "pl", "pt", "pt-rBR", "ru", "sv", "tr", "uk", "vi", "zh-rCN", "zh-rTW",
+        )
+    }
+
+    lint {
+        // A string a translation lacks is shown in English; tools/strings.py checks the rest.
+        disable += "MissingTranslation"
     }
 
     dependenciesInfo {

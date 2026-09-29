@@ -1,6 +1,10 @@
 package io.github.munzzyy.jackdaw.ui.settings
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings as AndroidSettings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -37,7 +42,6 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -55,8 +59,8 @@ import io.github.munzzyy.jackdaw.ui.common.InfoRow
 import io.github.munzzyy.jackdaw.ui.common.LinkDialog
 import io.github.munzzyy.jackdaw.ui.common.SectionHeader
 import io.github.munzzyy.jackdaw.ui.common.SwitchRow
-import io.github.munzzyy.jackdaw.ui.common.openNotificationSettings
 import io.github.munzzyy.jackdaw.ui.common.firstFocus
+import io.github.munzzyy.jackdaw.ui.common.openNotificationSettings
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
 import io.github.munzzyy.jackdaw.ui.common.rememberScreenFocus
 import io.github.munzzyy.jackdaw.ui.common.returnFocus
@@ -337,6 +341,7 @@ private fun CustomProxy(s: Settings, update: Update) {
 @Composable
 private fun AppearanceSection(s: Settings, update: Update) {
     SectionHeader(stringResource(R.string.settings_appearance))
+    LanguageRow()
     ChoiceRow(
         title = stringResource(R.string.settings_theme),
         options = ThemeMode.entries,
@@ -364,6 +369,26 @@ private fun AppearanceSection(s: Settings, update: Update) {
         summary = stringResource(R.string.settings_pure_black_effect),
         checked = s.pureBlack,
         onChange = { v -> update { it.copy(pureBlack = v) } },
+    )
+}
+
+/** Android keeps the language of each app itself from version 13 on; before that the app follows the phone. */
+@Composable
+private fun LanguageRow() {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+    val context = LocalContext.current
+    val actions = rememberActions()
+    val failed = stringResource(R.string.action_failed)
+    ActionRow(
+        title = stringResource(R.string.settings_language),
+        summary = stringResource(R.string.settings_language_effect),
+        onClick = {
+            try {
+                context.startActivity(Intent(AndroidSettings.ACTION_APP_LOCALE_SETTINGS, Uri.parse("package:${context.packageName}")))
+            } catch (_: ActivityNotFoundException) {
+                actions.say(failed)
+            }
+        },
     )
 }
 

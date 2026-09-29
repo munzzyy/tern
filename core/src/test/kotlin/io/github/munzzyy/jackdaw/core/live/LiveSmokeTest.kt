@@ -106,6 +106,22 @@ class LiveSmokeTest {
     }
 
     @Test
+    fun recognisesADownloadLinkThatDoesNotNameItsFile() {
+        val standard = SourceRegistry.standard()
+        val address = "https://telegram.org/dl/android/apk"
+        val before = raw.bytesReceived
+        val spec = standard.detect(address, CheckContext(http, InMemoryValidatorStore()))!!
+        assertEquals("direct", spec.type)
+        val found = listing(standard.check(spec, CheckContext(http, InMemoryValidatorStore())))
+        val asset = found.releases.single().assets.single()
+        println("direct link: ${asset.name}, ${asset.size} bytes, kind ${asset.kind}, release id ${found.releases.single().id.take(40)}, detection and check cost ${raw.bytesReceived - before} bytes")
+        assertTrue("detection must not download the file", raw.bytesReceived - before < 64 * 1024)
+        val info = ApkInspector.inspectRemote(http, asset.url)
+        println("direct link holds ${info.manifest.packageName} code ${info.manifest.versionCode} name ${info.manifest.versionName}, abis ${info.manifest.nativeLibraryAbis}")
+        assertEquals("org.telegram.messenger.web", info.manifest.packageName)
+    }
+
+    @Test
     fun readsForgejoAndGitLab() {
         val forgejo = listing(registry.check(registry.match("https://codeberg.org/forgejo/forgejo")!!, CheckContext(http, InMemoryValidatorStore())))
         println("codeberg: ${forgejo.releases.size} releases, newest ${forgejo.releases.first().id}, ${forgejo.releases.first().assets.size} files, published ${forgejo.releases.first().publishedAtMs}")

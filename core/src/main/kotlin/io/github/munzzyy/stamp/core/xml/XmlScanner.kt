@@ -44,7 +44,7 @@ object XmlScanner {
         private fun skipProlog() {
             while (pos < s.length) {
                 when {
-                    s[pos].isWhitespace() || s[pos] == '﻿' -> pos++
+                    s[pos].isWhitespace() || s[pos] == '\uFEFF' -> pos++
                     s.startsWith("<?", pos) -> skipPast("?>")
                     s.startsWith("<!--", pos) -> skipPast("-->")
                     s.startsWith("<!DOCTYPE", pos, ignoreCase = true) -> skipDoctype()

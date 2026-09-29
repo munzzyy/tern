@@ -49,6 +49,8 @@ android {
     lint {
         // A string a translation lacks is shown in English; tools/strings.py checks the rest.
         disable += "MissingTranslation"
+        // core is plain Java code that runs on Android: lint has to read it against this module's minSdk.
+        checkDependencies = true
     }
 
     dependenciesInfo {

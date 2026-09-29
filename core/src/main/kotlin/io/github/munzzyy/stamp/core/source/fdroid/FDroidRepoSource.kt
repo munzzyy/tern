@@ -26,6 +26,7 @@ import io.github.munzzyy.stamp.core.source.SourceOptions
 import io.github.munzzyy.stamp.core.source.SourceTypes
 import io.github.munzzyy.stamp.core.source.guarded
 import io.github.munzzyy.stamp.core.verify.Fingerprints
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -221,7 +222,7 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
                 val entry = jar.getJarEntry(signedEntryName)
                 if (entry != null) {
                     if (entry.size > MAX_SIGNED_ENTRY) throw SourceException(SourceErrorKind.AUTH, "$signedEntryName is too large")
-                    signedBytes = jar.getInputStream(entry).use { it.readNBytes(MAX_SIGNED_ENTRY + 1) }
+                    signedBytes = jar.getInputStream(entry).use { upTo(it, MAX_SIGNED_ENTRY + 1) }
                     signers = entry.codeSigners
                     // Java counts a SHA-1 signature as none and Android may not, so the answer is given here, the same everywhere.
                     if (!strongDigest(entry.attributes?.keys.orEmpty().map { it.toString() })) {
@@ -378,6 +379,18 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         private const val INDEX_CAP = 96L * 1024 * 1024
         private val SCHEME = Regex("^fdroidrepos?://", RegexOption.IGNORE_CASE)
     }
+}
+
+/** At most [limit] bytes of [input]. InputStream has a method for this, which Android only has from version 13 on. */
+internal fun upTo(input: InputStream, limit: Int): ByteArray {
+    val out = ByteArrayOutputStream()
+    val buffer = ByteArray(64 * 1024)
+    while (out.size() < limit) {
+        val n = input.read(buffer, 0, minOf(buffer.size, limit - out.size()))
+        if (n < 0) break
+        out.write(buffer, 0, n)
+    }
+    return out.toByteArray()
 }
 
 /** The package a spec asks for. It comes from a link or an import, so it is checked before it goes into an address. */

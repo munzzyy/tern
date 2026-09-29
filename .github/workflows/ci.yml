@@ -24,5 +24,7 @@ jobs:
         run: ./gradlew --no-daemon :app:testDebugUnitTest
       - name: release build
         run: ./gradlew --no-daemon :app:assembleRelease
+      - name: no call to a Java method the oldest supported Android lacks
+        run: bash tools/check-java-api.sh
       - name: shipped apk keeps its promises
         run: bash tools/check-apk.sh app/build/outputs/apk/release/app-release-unsigned.apk

@@ -102,7 +102,7 @@ data class ServedFile(val name: String, val kind: AssetKind) {
                 else -> return null
             }
             return try {
-                URLDecoder.decode(parts[2].replace("+", "%2B"), charset)
+                URLDecoder.decode(parts[2].replace("+", "%2B"), charset.name())
             } catch (_: IllegalArgumentException) {
                 null
             }

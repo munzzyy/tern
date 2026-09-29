@@ -72,7 +72,7 @@ object Urls {
     }
 
     fun encodeSegment(text: String): String =
-        URLEncoder.encode(text, Charsets.UTF_8).replace("+", "%20")
+        URLEncoder.encode(text, "UTF-8").replace("+", "%20")
 
     fun queryParam(url: String, name: String): String? {
         val query = try {
@@ -112,7 +112,7 @@ object Urls {
     }
 
     private fun decodeOrNull(value: String): String? = try {
-        URLDecoder.decode(value, Charsets.UTF_8)
+        URLDecoder.decode(value, "UTF-8")
     } catch (_: IllegalArgumentException) {
         null
     }

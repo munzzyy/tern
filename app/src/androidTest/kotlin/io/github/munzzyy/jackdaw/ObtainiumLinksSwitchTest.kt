@@ -8,6 +8,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,9 +18,15 @@ import org.junit.runner.RunWith
 class ObtainiumLinksSwitchTest {
     @get:Rule val compose = createEmptyComposeRule()
 
-    private fun handlerState(): Int = appContext.packageManager.getComponentEnabledSetting(
-        ComponentName(appContext.packageName, "io.github.munzzyy.jackdaw.ObtainiumLinks"),
-    )
+    private val handler = ComponentName(appContext.packageName, "io.github.munzzyy.jackdaw.ObtainiumLinks")
+
+    private fun handlerState(): Int = appContext.packageManager.getComponentEnabledSetting(handler)
+
+    /** An engine test earlier in the same run may have switched the handler; start from the installed default. */
+    @Before
+    fun resetHandler() {
+        appContext.packageManager.setComponentEnabledSetting(handler, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, PackageManager.DONT_KILL_APP)
+    }
 
     @Test
     fun switchStoresTheSettingAndLeavesTheComponentToTheEngine() {

@@ -33,6 +33,8 @@ class LargeTextTest {
         previous = device.executeShellCommand("settings get system font_scale").trim().takeIf { it.toFloatOrNull() != null } ?: "1.0"
         device.executeShellCommand("settings put system font_scale 2.0")
         device.waitForIdle()
+        val deadline = System.currentTimeMillis() + 10_000
+        while (appContext.resources.configuration.fontScale < 1.99f && System.currentTimeMillis() < deadline) Thread.sleep(100)
     }
 
     @After

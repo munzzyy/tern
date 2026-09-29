@@ -68,18 +68,34 @@ fun prepareDevice() {
     shell("pm set-silent-updates-policy --allow-unlimited-silent-updates $own")
     val installer = targetContext.packageManager.packageInstaller
     for (session in installer.mySessions) runCatching { installer.abandonSession(session.sessionId) }
-    // Android takes a moment to let a session go.
+    // Android takes a moment to let a session go, and the answer to an abandoned one can still post a notification.
     waitUntil(10_000, "the leftover sessions to be gone") { installer.mySessions.isEmpty() }
-    targetContext.getSystemService(NotificationManager::class.java).cancelAll()
+    val notifications = targetContext.getSystemService(NotificationManager::class.java)
+    var quietSince = 0L
+    waitUntil(10_000, "the leftover notifications to be gone") {
+        if (notifications.activeNotifications.isNotEmpty()) {
+            notifications.cancelAll()
+            quietSince = 0L
+        } else if (quietSince == 0L) {
+            quietSince = System.currentTimeMillis()
+        }
+        quietSince != 0L && System.currentTimeMillis() - quietSince >= 600
+    }
 }
 
 /** Without the marks that hold a name or a hash left to right, which the eye does not see either. */
 fun plain(text: String?): String? = text?.filterNot { it in '\u2066'..'\u2069' }
 
-/** Puts Android's limit on silent updates back, holding it for [seconds] after each one. */
+/**
+ * Puts Android's limit on silent updates back, holding it for [seconds] after each one. Android
+ * counts a pair it has no record of as updated at boot, so on a device that has been up for less
+ * than the limit even the first silent update is refused. This waits until that time has passed.
+ */
 fun throttleSilentUpdates(seconds: Int) {
     shell("pm set-silent-updates-policy --reset")
     shell("pm set-silent-updates-policy --throttle-time $seconds")
+    val wait = seconds * 1000L + 2_000 - android.os.SystemClock.uptimeMillis()
+    if (wait > 0) Thread.sleep(wait)
 }
 
 fun waitUntil(timeoutMs: Long, what: String, condition: () -> Boolean) {

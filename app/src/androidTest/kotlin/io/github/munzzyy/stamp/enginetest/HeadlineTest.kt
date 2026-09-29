@@ -73,7 +73,7 @@ class HeadlineTest {
 
     @Test
     fun whenAndroidAsksAnywayTheBackgroundUpdateWaitsForTheUserAndThenFinishes() = runBlocking {
-        throttleSilentUpdates(600)
+        throttleSilentUpdates(120)
         Harness("throttled").use { h ->
             val v1 = FakeForge.Release("v1.0", listOf(FakeForge.File("app-v1.apk", asset("apk/app-v1.apk"))))
             val v2 = FakeForge.Release("v2.0", listOf(FakeForge.File("app-v2.apk", asset("apk/app-v2.apk"))))

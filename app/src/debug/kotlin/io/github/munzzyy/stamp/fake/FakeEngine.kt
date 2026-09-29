@@ -78,6 +78,10 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     override val checkingAll: StateFlow<Boolean> = _checkingAll.asStateFlow()
 
     private val _online = MutableStateFlow(true)
+    private val _handoff = MutableStateFlow<Handoff?>(null)
+    override val handoff: StateFlow<Handoff?> = _handoff.asStateFlow()
+    private val received = java.util.concurrent.CopyOnWriteArrayList<Received>()
+    private var handoffJob: Job? = null
     override val online: StateFlow<Boolean> = _online.asStateFlow()
 
     /** Tests set this to play an install whose confirmation Android has already dropped. */
@@ -423,11 +427,6 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     override fun suggestions(): List<Suggestion> = FakeSuggestions.all
 
     override fun canOpenInstallSettings(): Boolean = installSettings
-
-    private val _handoff = MutableStateFlow<Handoff?>(null)
-    override val handoff: StateFlow<Handoff?> = _handoff.asStateFlow()
-    private val received = java.util.concurrent.CopyOnWriteArrayList<Received>()
-    private var handoffJob: Job? = null
 
     override suspend fun openHandoff(): Problem? {
         if (!localNetwork) return Problem(ProblemKind.NETWORK, "This device is on no local network, so a phone cannot reach it.")

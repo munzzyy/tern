@@ -166,6 +166,12 @@ interface Engine {
 
     suspend fun clearEvents()
 
-    /** Icon of the installed app or of its downloaded file; null when there is neither. */
+    /**
+     * Icon of the installed app, else of its downloaded file, else the one its source offers when
+     * the setting allows fetching it. Null when there is none of these.
+     */
     suspend fun icon(row: AppRow, sizePx: Int): Bitmap?
+
+    /** Icon of an app that was found and is not in the list yet, from its source. Null when there is none. */
+    suspend fun icon(found: Detection.Found, sizePx: Int): Bitmap?
 }

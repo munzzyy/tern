@@ -14,6 +14,7 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import io.github.munzzyy.stamp.BuildConfig
+import io.github.munzzyy.stamp.core.icon.IconAddresses
 import io.github.munzzyy.stamp.core.interop.AppConfigJson
 import io.github.munzzyy.stamp.core.interop.AppConfigJsonException
 import io.github.munzzyy.stamp.core.json.Json
@@ -322,7 +323,11 @@ class RealEngine(
         if (existing != null) return existing
         val config = proposedConfig(found)
         withContext(Dispatchers.IO) {
-            val state = AppState(releases = listOfNotNull(found.release), description = found.description?.take(1000))
+            val state = AppState(
+                releases = listOfNotNull(found.release),
+                description = found.description?.take(1000),
+                iconUrls = IconAddresses.accepted(found.spec.url, found.iconUrls),
+            )
             store.putApp(config, state)
             stored[config.id] = StoredApp(config, state)
             event(config.id, EventKind.ADDED, texts.eventAdded(found.spec.url))
@@ -503,6 +508,19 @@ class RealEngine(
     override suspend fun clearEvents() = withContext(Dispatchers.IO) {
         store.clearEvents()
         publishEvents()
+    }
+
+    override suspend fun icon(found: Detection.Found, sizePx: Int): Bitmap? {
+        if (found.installed != null) {
+            return withContext(Dispatchers.IO) {
+                try {
+                    context.packageManager.getApplicationIcon(found.installed.packageName).toBitmap(sizePx.coerceIn(1, 1024), sizePx.coerceIn(1, 1024))
+                } catch (_: PackageManager.NameNotFoundException) {
+                    null
+                }
+            }
+        }
+        return sourceIcons.forAddresses(found.iconUrls, sizePx.coerceIn(1, 1024))
     }
 
     override suspend fun icon(row: AppRow, sizePx: Int): Bitmap? = withContext(Dispatchers.IO) {

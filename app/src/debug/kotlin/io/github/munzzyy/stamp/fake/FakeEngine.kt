@@ -490,6 +490,20 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         _events.value = emptyList()
     }
 
+    /** Every second suggestion has a picture, so a list shows both kinds. */
+    override suspend fun icon(found: Detection.Found, sizePx: Int): Bitmap? {
+        if (found.name.length % 2 == 0) return null
+        val size = sizePx.coerceIn(1, 512)
+        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0xFF2B5F8A.toInt() }
+        Canvas(bitmap).apply {
+            drawRect(0f, 0f, size.toFloat(), size.toFloat(), paint)
+            paint.color = 0xFFFFFFFF.toInt()
+            drawCircle(size / 2f, size / 2f, size * 0.2f, paint)
+        }
+        return bitmap
+    }
+
     override suspend fun icon(row: AppRow, sizePx: Int): Bitmap? {
         val color = when (row.id) {
             "pocketnotes" -> 0xFF2E7D6B.toInt()

@@ -251,6 +251,12 @@ internal class SourceIcons(private val e: RealEngine) {
         return icons.load(addresses(row.id, wait = online), mayFetch = online) { IconBitmaps.decode(it, sizePx) }
     }
 
+    /** For an app that is not in the list yet. The addresses were already narrowed to what its source may name. */
+    suspend fun forAddresses(addresses: List<String>, sizePx: Int): Bitmap? {
+        if (!e.settings.value.sourceIcons || addresses.isEmpty()) return null
+        return icons.load(addresses, mayFetch = e.online.value) { IconBitmaps.decode(it, sizePx) }
+    }
+
     // A row is drawn before its first check has named the addresses, and the screen asks once.
     private suspend fun addresses(id: String, wait: Boolean): List<String> {
         val known = { e.stored[id]?.state?.iconUrls.orEmpty() }

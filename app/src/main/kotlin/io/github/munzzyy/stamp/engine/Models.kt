@@ -165,6 +165,8 @@ sealed interface Detection {
         val warnings: List<String>,
         /** Settings that came with a link or a file. Not stored until the user has seen them and agreed. */
         val carried: AppConfig? = null,
+        /** Where the source says an icon can be had, best first. The engine decides whether to ask. */
+        val iconUrls: List<String> = emptyList(),
     ) : Detection
 
     /** The text was not a link, so it was used as a search. */

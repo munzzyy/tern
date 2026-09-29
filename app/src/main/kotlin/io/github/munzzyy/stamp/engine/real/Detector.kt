@@ -1,6 +1,7 @@
 package io.github.munzzyy.stamp.engine.real
 
 import io.github.munzzyy.stamp.core.apk.BinaryManifest
+import io.github.munzzyy.stamp.core.icon.IconAddresses
 import io.github.munzzyy.stamp.core.interop.ObtainiumImport
 import io.github.munzzyy.stamp.core.interop.ObtainiumImportException
 import io.github.munzzyy.stamp.core.interop.ObtainiumLink
@@ -122,6 +123,7 @@ internal class Detector(private val e: RealEngine) {
             alreadyTracked = tracked,
             warnings = warnings,
             carried = carried,
+            iconUrls = IconAddresses.accepted(spec.url, listing.iconUrls),
         )
     }
 

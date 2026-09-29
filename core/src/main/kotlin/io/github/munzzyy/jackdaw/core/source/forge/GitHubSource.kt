@@ -106,10 +106,16 @@ class GitHubSource : Source {
 
         val response = fetch(url, headers, context, token?.let { "Bearer $it" })
         response.use {
-            if (it.isNotModified) return CheckResult.Unchanged
+            if (it.isNotModified) {
+                remember(spec, context, pending)
+                return CheckResult.Unchanged
+            }
             when (it.status) {
                 404 -> throw SourceException(SourceErrorKind.NOT_FOUND, "Repository not found: $owner/$repo")
-                401, 403 -> throw SourceException(SourceErrorKind.AUTH, "GitHub rejected the request for $owner/$repo")
+                401, 403 -> throw SourceException(
+                    SourceErrorKind.AUTH,
+                    if (token != null) "GitHub rejected the saved token" else "GitHub refused the request for $owner/$repo",
+                )
             }
             if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "GitHub returned ${it.status} for $owner/$repo")
 
@@ -127,15 +133,19 @@ class GitHubSource : Source {
             if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $owner/$repo")
 
             context.validators.put(apiKey, Validator.from(it.headers))
-            if (pending != null) {
-                context.validators.put(validatorKey(spec, "feed"), pending.feedValidator)
-                if (pending.fingerprint.isNotEmpty()) {
-                    context.validators.put(validatorKey(spec, "feed-state"), Validator(pending.fingerprint, null))
-                }
-            }
+            remember(spec, context, pending)
 
-            val movedTo = pending?.movedTo ?: movedTo(it.url, owner, repo, offset = 1)
+            val movedTo = pending?.movedTo ?: movedTo(it.url, owner, repo, apiPath = true)
             return CheckResult.Listing(SourceListing(releases = releases, name = repo, author = owner, movedTo = movedTo))
+        }
+    }
+
+    /** Only once the API has answered, so a failed API call is retried instead of being masked by the feed. */
+    private fun remember(spec: SourceSpec, context: CheckContext, pending: FeedOutcome.NeedsApi?) {
+        if (pending == null) return
+        context.validators.put(validatorKey(spec, "feed"), pending.feedValidator)
+        if (pending.fingerprint.isNotEmpty()) {
+            context.validators.put(validatorKey(spec, "feed-state"), Validator(pending.fingerprint, null))
         }
     }
 
@@ -157,12 +167,15 @@ class GitHubSource : Source {
         return digest.joinToString("") { "%02x".format(it) }
     }
 
-    private fun movedTo(finalUrl: String, owner: String, repo: String, offset: Int = 0): String? {
+    private fun movedTo(finalUrl: String, owner: String, repo: String, apiPath: Boolean = false): String? {
         val segments = Urls.segments(finalUrl)
+        val offset = if (apiPath) 1 else 0
         if (segments.size < offset + 2) return null
+        if (apiPath && segments[0] != "repos") return null
         val newOwner = segments[offset]
         val newRepo = segments[offset + 1].removeSuffix(".git")
         if (newOwner.equals(owner, ignoreCase = true) && newRepo.equals(repo, ignoreCase = true)) return null
+        if (!RepoNames.isValid(newOwner) || !RepoNames.isValid(newRepo)) return null
         return "https://github.com/$newOwner/$newRepo"
     }
 

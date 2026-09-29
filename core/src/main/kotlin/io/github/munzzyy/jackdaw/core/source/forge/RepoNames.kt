@@ -4,5 +4,5 @@ package io.github.munzzyy.jackdaw.core.source.forge
 internal object RepoNames {
     private val VALID = Regex("^[A-Za-z0-9_.-]{1,100}$")
 
-    fun isValid(name: String): Boolean = VALID.matches(name)
+    fun isValid(name: String): Boolean = VALID.matches(name) && name.any { it != '.' }
 }

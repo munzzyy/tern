@@ -3,6 +3,7 @@ package io.github.munzzyy.jackdaw.core.source.forge
 import io.github.munzzyy.jackdaw.core.json.Json
 import io.github.munzzyy.jackdaw.core.json.JsonObject
 import io.github.munzzyy.jackdaw.core.model.Asset
+import io.github.munzzyy.jackdaw.core.model.AssetKind
 import io.github.munzzyy.jackdaw.core.model.NotesFormat
 import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
@@ -126,10 +127,10 @@ class GitLabSource : Source {
     private fun mapRelease(obj: JsonObject, projectUrl: String): Release? {
         val tag = obj.string("tag_name") ?: return null
         val linkAssets = obj.obj("assets")?.array("links")?.objects().orEmpty().mapNotNull { link ->
-            val name = link.string("name") ?: return@mapNotNull null
+            val label = link.string("name") ?: return@mapNotNull null
             val assetUrl = link.string("direct_asset_url") ?: link.string("url") ?: return@mapNotNull null
             if (!Urls.isHttps(assetUrl) || Urls.normalize(assetUrl) == null) return@mapNotNull null
-            Asset(name = name, url = assetUrl)
+            Asset(name = fileName(label, assetUrl), url = assetUrl)
         }
         val description = obj.string("description")
         val uploadAssets = description?.let { extractUploadLinks(it, projectUrl) }.orEmpty()
@@ -142,9 +143,16 @@ class GitLabSource : Source {
             notesFormat = NotesFormat.MARKDOWN,
             publishedAtMs = (obj.string("released_at") ?: obj.string("created_at"))?.let(Iso8601::parseMs),
             prerelease = false,
-            pageUrl = "$projectUrl/-/releases/$tag",
+            pageUrl = obj.obj("_links")?.string("self")?.takeIf(Urls::isHttps) ?: "$projectUrl/-/releases/${Urls.encodeSegment(tag)}",
             assets = linkAssets + uploadAssets,
         )
+    }
+
+    /** Link names are free text; when one hides what the file is, the URL's own file name says it. */
+    private fun fileName(label: String, url: String): String {
+        if (Asset.kindOf(label) != AssetKind.OTHER) return label
+        val fromUrl = Urls.segments(url).lastOrNull() ?: return label
+        return if (Asset.kindOf(fromUrl) != AssetKind.OTHER) fromUrl else label
     }
 
     private fun extractUploadLinks(markdown: String, projectUrl: String): List<Asset> =

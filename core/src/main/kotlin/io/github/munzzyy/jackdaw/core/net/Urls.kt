@@ -30,7 +30,8 @@ object Urls {
 
         val port = uri.port
         if (port !in -1..65535) return null
-        val portPart = if (port == -1 || port == 443) "" else ":$port"
+        val defaultPort = port == -1 || port == 443 || (scheme == "http" && port == 80)
+        val portPart = if (defaultPort) "" else ":$port"
         val path = uri.rawPath ?: ""
         val query = uri.rawQuery?.let { "?$it" } ?: ""
 

@@ -12,7 +12,7 @@ class UrlsTest {
         "https://example.com" to "https://example.com",
         "https://EXAMPLE.com/Path" to "https://example.com/Path",
         "https://example.com:443" to "https://example.com",
-        "http://example.com:80" to "https://example.com:80",
+        "http://example.com:80" to "https://example.com",
         "https://example.com:8443/x" to "https://example.com:8443/x",
         "https://example.com/a//b" to "https://example.com/a//b",
         "https://example.com/a?x=1#frag" to "https://example.com/a?x=1",

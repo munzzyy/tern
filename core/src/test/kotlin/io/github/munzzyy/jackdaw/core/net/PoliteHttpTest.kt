@@ -25,7 +25,6 @@ class PoliteHttpTest {
         http.execute(HttpRequest("https://example.com")).close()
         val sent = fake.requests.single()
         assertEquals("jackdaw-test/1.0", sent.headers["User-Agent"])
-        assertEquals("identity", sent.headers["Accept-Encoding"])
     }
 
     @Test

@@ -26,7 +26,8 @@ class RateLimiter(private val nowMs: () -> Long = System::currentTimeMillis) {
         val remaining = github.first ?: gitlab.first
         val resetMs = github.second ?: gitlab.second
 
-        val blocked = response.status == 429 || remaining == 0L
+        val refused = response.status == 403 || response.status == 429 || response.status == 503
+        val blocked = response.status == 429 || remaining == 0L || (refused && retryAfterMs != null)
         if (!blocked) return null
 
         val target = retryAfterMs ?: resetMs ?: (now + DEFAULT_BLOCK_MS)

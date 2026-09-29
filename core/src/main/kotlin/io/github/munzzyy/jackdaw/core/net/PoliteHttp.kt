@@ -3,7 +3,10 @@ package io.github.munzzyy.jackdaw.core.net
 import java.net.URI
 import java.net.URISyntaxException
 
-/** Adds a User-Agent, honours per-host rate limits, and refuses anything that is not HTTPS. */
+/**
+ * Adds a User-Agent, honours per-host rate limits, and refuses anything that is not HTTPS.
+ * Compression is the transport's business; a caller that needs exact bytes asks for identity itself.
+ */
 class PoliteHttp(
     private val delegate: HttpClient,
     private val limiter: RateLimiter,
@@ -14,15 +17,11 @@ class PoliteHttp(
         limiter.check(host)
 
         val hasHeader = { name: String -> request.headers.keys.any { it.equals(name, ignoreCase = true) } }
-        val extra = buildMap {
-            if (!hasHeader("User-Agent")) put("User-Agent", userAgent)
-            if (!hasHeader("Accept-Encoding")) put("Accept-Encoding", "identity")
-        }
-        val finalRequest = if (extra.isEmpty()) request else request.copy(headers = request.headers + extra)
+        val finalRequest = if (hasHeader("User-Agent")) request else request.copy(headers = request.headers + ("User-Agent" to userAgent))
 
         val response = delegate.execute(finalRequest)
         val blockedUntilMs = limiter.record(host, response)
-        if (blockedUntilMs != null) {
+        if (blockedUntilMs != null && !response.isSuccess && !response.isNotModified) {
             response.close()
             throw RateLimitedException(host, blockedUntilMs)
         }

@@ -76,6 +76,7 @@ import io.github.munzzyy.stamp.ui.text.Tone
 import io.github.munzzyy.stamp.ui.text.sourceParts
 import io.github.munzzyy.stamp.ui.theme.LocalLook
 import io.github.munzzyy.stamp.ui.theme.LocalOutlines
+import io.github.munzzyy.stamp.ui.theme.figures
 import io.github.munzzyy.stamp.ui.theme.status
 
 @Composable
@@ -147,6 +148,43 @@ private fun StatusLabel.chipTone(): ChipTone = when {
 @Composable
 fun StatusPill(label: StatusLabel, modifier: Modifier = Modifier) {
     StatusChip(label.glyph(), stringResource(label.text), modifier, label.chipTone())
+}
+
+@Composable
+private fun lineColor(tone: ChipTone): Color = when (tone) {
+    ChipTone.NEUTRAL -> MaterialTheme.colorScheme.onSurfaceVariant
+    ChipTone.ACCENT -> MaterialTheme.colorScheme.primary
+    ChipTone.NOTICE -> MaterialTheme.colorScheme.tertiary
+    ChipTone.VERIFIED -> MaterialTheme.status.verified.color
+    ChipTone.CAUTION -> MaterialTheme.status.caution.color
+    ChipTone.REFUSED -> MaterialTheme.status.refused.color
+}
+
+/**
+ * A status as one line of a row: its glyph and its word in the colour of what it means, then
+ * [detail], such as a version, in a quiet one. It wraps where the two do not fit side by side.
+ * [ink] is for a row that does not lie on a surface.
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun StatusLine(label: StatusLabel, modifier: Modifier = Modifier, detail: String? = null, ink: Color = Color.Unspecified) {
+    val look = LocalLook.current
+    val own = ink == Color.Unspecified
+    val tone = if (own) lineColor(label.chipTone()) else ink
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(look.gapSmall),
+        verticalArrangement = Arrangement.spacedBy(look.gapSmall / 4),
+        itemVerticalAlignment = Alignment.CenterVertically,
+        modifier = modifier,
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
+            Icon(label.glyph(), contentDescription = null, tint = tone, modifier = Modifier.size(look.glyphSmall))
+            Text(stringResource(label.text), style = MaterialTheme.typography.labelLarge, color = tone)
+        }
+        if (detail != null) {
+            Text(detail, style = MaterialTheme.typography.bodyMedium.figures(), color = if (own) MaterialTheme.colorScheme.onSurfaceVariant else ink)
+        }
+    }
 }
 
 @Composable
@@ -409,7 +447,7 @@ fun BannerRow(
 /** From this text size on, what sits side by side is put one under the other. */
 private const val STACK_FONT_SCALE = 1.5f
 
-/** An empty screen says what to do and offers the quickest ways to do it, two at most. */
+/** An empty screen says what to do and offers the quickest ways to do it, three at most. */
 @Composable
 fun EmptyState(
     title: String,
@@ -420,6 +458,8 @@ fun EmptyState(
     secondAction: String? = null,
     onSecondAction: () -> Unit = {},
     actionModifier: Modifier = Modifier,
+    thirdAction: String? = null,
+    onThirdAction: () -> Unit = {},
 ) {
     val look = LocalLook.current
     Column(
@@ -438,7 +478,8 @@ fun EmptyState(
             modifier = Modifier.widthIn(max = look.contentMaxWidth / 2),
         )
         if (action != null) PrimaryButton(action, onAction, actionModifier.padding(top = look.gap))
-        if (secondAction != null) QuietButton(secondAction, onSecondAction)
+        if (secondAction != null) TonalButton(secondAction, onSecondAction)
+        if (thirdAction != null) QuietButton(thirdAction, onThirdAction)
     }
 }
 
@@ -454,13 +495,27 @@ fun PrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifi
 fun TonalButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, glyph: ImageVector? = null, enabled: Boolean = true) =
     StampButton(ButtonKind.TONAL, text, onClick, modifier, glyph, enabled)
 
-/** An action that needs no weight: text in the accent colour. */
+/** An action that needs no weight: text in the accent colour, or in [ink] where the action takes something away. */
 @Composable
-fun QuietButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, glyph: ImageVector? = null, enabled: Boolean = true) =
-    StampButton(ButtonKind.QUIET, text, onClick, modifier, glyph, enabled)
+fun QuietButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    glyph: ImageVector? = null,
+    enabled: Boolean = true,
+    ink: Color = Color.Unspecified,
+) = StampButton(ButtonKind.QUIET, text, onClick, modifier, glyph, enabled, ink)
 
 @Composable
-private fun StampButton(kind: ButtonKind, text: String, onClick: () -> Unit, modifier: Modifier, glyph: ImageVector?, enabled: Boolean) {
+private fun StampButton(
+    kind: ButtonKind,
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier,
+    glyph: ImageVector?,
+    enabled: Boolean,
+    quietInk: Color = Color.Unspecified,
+) {
     val look = LocalLook.current
     val scheme = MaterialTheme.colorScheme
     val shape = LocalOutlines.current.button
@@ -469,16 +524,17 @@ private fun StampButton(kind: ButtonKind, text: String, onClick: () -> Unit, mod
         !enabled -> scheme.onSurface.copy(alpha = 0.12f) to scheme.onSurface.copy(alpha = 0.38f)
         kind == ButtonKind.PRIMARY -> scheme.primary to scheme.onPrimary
         kind == ButtonKind.TONAL -> scheme.secondaryContainer to scheme.onSecondaryContainer
-        else -> Color.Transparent to scheme.primary
+        else -> Color.Transparent to if (quietInk == Color.Unspecified) scheme.primary else quietInk
     }
     val side = if (kind == ButtonKind.QUIET) look.gap * 3 / 4 else look.gap * 3 / 2
+    val ring = if (kind == ButtonKind.PRIMARY && enabled) scheme.onPrimary else Color.Unspecified
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(look.gapSmall, Alignment.CenterHorizontally),
         modifier = modifier
             .defaultMinSize(minWidth = look.touchTarget, minHeight = look.touchTarget)
             .wrapContentSize(Alignment.Center)
-            .focusLook(shape)
+            .focusLook(shape, ring)
             .clip(shape)
             .background(ground)
             .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
@@ -492,41 +548,64 @@ private fun StampButton(kind: ButtonKind, text: String, onClick: () -> Unit, mod
     }
 }
 
+/** A glyph that is pressed, as large as a fingertip whatever the size of the glyph. [label] is what TalkBack calls it. */
+@Composable
+fun GlyphButton(
+    glyph: ImageVector,
+    label: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    tint: Color = LocalContentColor.current,
+) {
+    val look = LocalLook.current
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .size(look.touchTarget)
+            .focusLook(MaterialTheme.shapes.extraLarge)
+            .clip(MaterialTheme.shapes.extraLarge)
+            .clickable(enabled = enabled, role = Role.Button, onClick = onClick),
+    ) {
+        Icon(glyph, contentDescription = label, tint = if (enabled) tint else tint.copy(alpha = 0.38f), modifier = Modifier.size(look.glyph))
+    }
+}
+
 /**
- * The top of a screen: the way back, the title, the actions. Comfortable gives the title a line
- * of its own, Compact puts all of it on one. Nothing here has a fixed height, so large text
- * grows the bar instead of being cut.
+ * The top of a screen: the way back, the title, the actions. Comfortable gives the title of a
+ * screen that has a way back a line of its own, unless [oneLine] asks for one line. A screen
+ * without a way back and Compact put all of it on one. [leading] takes the place of the way
+ * back. Nothing here has a fixed height, so large text grows the bar instead of being cut.
  */
 @Composable
 fun ScreenTop(
     title: String,
     modifier: Modifier = Modifier,
     onBack: (() -> Unit)? = null,
+    oneLine: Boolean = false,
+    leading: (@Composable () -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     val look = LocalLook.current
+    val twoLines = look.topTakesTwoLines && !oneLine && (onBack != null || leading != null)
     val back: @Composable () -> Unit = {
-        if (onBack != null) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .size(look.touchTarget)
-                    .focusLook(MaterialTheme.shapes.extraLarge)
-                    .clip(MaterialTheme.shapes.extraLarge)
-                    .clickable(role = Role.Button, onClick = onBack),
-            ) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.action_back), modifier = Modifier.size(look.glyph))
-            }
+        when {
+            leading != null -> leading()
+            onBack != null -> GlyphButton(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.action_back), onBack)
         }
     }
     val words: @Composable (Modifier) -> Unit = { place ->
-        Text(
-            title,
-            style = if (look.topTakesTwoLines) MaterialTheme.typography.headlineSmall else MaterialTheme.typography.titleLarge,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
-            modifier = place.semantics { heading() },
-        )
+        if (title.isEmpty()) {
+            Box(place)
+        } else {
+            Text(
+                title,
+                style = if (twoLines) MaterialTheme.typography.headlineSmall else MaterialTheme.typography.titleLarge,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = place.semantics { heading() },
+            )
+        }
     }
     Surface(color = MaterialTheme.colorScheme.surface, modifier = modifier.fillMaxWidth()) {
         Column(
@@ -534,15 +613,47 @@ fun ScreenTop(
                 .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal))
                 .padding(horizontal = look.focusRoom, vertical = look.gapSmall / 2),
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.heightIn(min = look.touchTarget + look.focusRoom)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(look.focusRoom),
+                modifier = Modifier.heightIn(min = look.touchTarget + look.focusRoom),
+            ) {
                 back()
-                if (look.topTakesTwoLines) Box(Modifier.weight(1f)) else words(Modifier.weight(1f).padding(horizontal = look.rowPaddingHorizontal - look.focusRoom))
+                if (twoLines) Box(Modifier.weight(1f)) else words(Modifier.weight(1f).padding(horizontal = look.rowPaddingHorizontal - look.focusRoom))
                 actions()
             }
-            if (look.topTakesTwoLines) {
+            if (twoLines) {
                 words(Modifier.padding(start = look.rowPaddingHorizontal - look.focusRoom, end = look.rowPaddingHorizontal - look.focusRoom, bottom = look.gapSmall))
             }
         }
+    }
+}
+
+/** One choice among a few, or a filter that is on or off. It leaves [LocalLook]'s focus room to whoever places it. */
+@Composable
+fun ChoiceChip(text: String, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier, role: Role = Role.RadioButton) {
+    val look = LocalLook.current
+    val scheme = MaterialTheme.colorScheme
+    val shape = LocalOutlines.current.button
+    val press = if (role == Role.RadioButton) {
+        Modifier.selectable(selected = selected, role = role, onClick = onClick)
+    } else {
+        Modifier.toggleable(value = selected, role = role, onValueChange = { onClick() })
+    }
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(look.gapSmall / 2),
+        modifier = modifier
+            .focusLook(shape)
+            .clip(shape)
+            .background(if (selected) scheme.secondaryContainer else scheme.surfaceContainerHighest)
+            .then(press)
+            .heightIn(min = look.choiceHeight)
+            .padding(horizontal = look.gap),
+    ) {
+        val ink = if (selected) scheme.onSecondaryContainer else scheme.onSurfaceVariant
+        if (selected) Icon(Glyphs.Check, contentDescription = null, tint = ink, modifier = Modifier.size(look.glyphSmall))
+        Text(text, style = MaterialTheme.typography.labelLarge, color = ink)
     }
 }
 
@@ -562,7 +673,6 @@ fun ChoiceChips(
     summary: String? = null,
 ) {
     val look = LocalLook.current
-    val scheme = MaterialTheme.colorScheme
     val focus = LocalFocusManager.current
     val stops = remember(options.size) { List(options.size) { FocusRequester() } }
     var inside by remember { mutableStateOf(false) }
@@ -592,31 +702,21 @@ fun ChoiceChips(
                 },
         ) {
             options.forEachIndexed { index, option ->
-                val taken = index == selected
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(look.gapSmall / 2),
+                ChoiceChip(
+                    option,
+                    selected = index == selected,
+                    onClick = { onSelect(index) },
                     modifier = Modifier
                         .focusRequester(stops[index])
                         .focusProperties {
                             if (index > 0) start = stops[index - 1]
                             if (index < stops.lastIndex) end = stops[index + 1]
-                        }
-                        .focusLook(LocalOutlines.current.button)
-                        .clip(LocalOutlines.current.button)
-                        .background(if (taken) scheme.secondaryContainer else scheme.surfaceContainerHighest)
-                        .selectable(selected = taken, role = Role.RadioButton, onClick = { onSelect(index) })
-                        .heightIn(min = look.choiceHeight)
-                        .padding(horizontal = look.gap),
-                ) {
-                    val ink = if (taken) scheme.onSecondaryContainer else scheme.onSurfaceVariant
-                    if (taken) Icon(Glyphs.Check, contentDescription = null, tint = ink, modifier = Modifier.size(look.glyphSmall))
-                    Text(option, style = MaterialTheme.typography.labelLarge, color = ink)
-                }
+                        },
+                )
             }
         }
         if (summary != null) {
-            Text(summary, style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
+            Text(summary, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }

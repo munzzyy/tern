@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The list of apps -->
+    <string name="apps_search_close">Close search</string>
+    <!-- An install waits until the person confirms it in Android's own dialog. %1$s is the name of the app. -->
+    <string name="waiting_banner_one">%1$s waits for your go-ahead</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d install waits for your go-ahead</item>
+        <item quantity="other">%1$d installs wait for your go-ahead</item>
+    </plurals>
+    <string name="empty_add">Add an app</string>
+    <string name="empty_well_known">Well known apps</string>
+    <string name="empty_handoff">Send from a phone</string>
+    <!-- Shown for a few seconds after an app was taken off the list. %1$s is the name of the app. -->
+    <string name="removed_notice">Stopped following %1$s</string>
+    <string name="removed_undo">Undo</string>
+
+    <!-- App detail -->
+    <string name="waiting_play_protect">Android, or Play Protect, may ask once more. That is their own check and not a problem with the file.</string>
+    <string name="prompt_always_asks">This device always asks before an update is installed.</string>
+    <string name="checks_passed">This file passed every check</string>
+
+    <!-- What each check means. Shown when the person asks, never by default. -->
+    <!-- Spoken for the button next to a check. %1$s is what the check is called, such as "Checksum". -->
+    <string name="explain_button">What this means: %1$s</string>
+    <!-- Spoken by TalkBack after "Double tap to", for a line that explains itself when it is pressed. -->
+    <string name="explain_action">hear what this means</string>
+    <string name="explain_close">Close</string>
+    <string name="explain_signer_title">Signing certificate</string>
+    <string name="explain_checksum_title">Checksum</string>
+    <string name="explain_permissions_title">Permissions</string>
+    <!-- VirusTotal is a service name; keep it as is. -->
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Updates without a prompt</string>
+    <string name="explain_always_asks_title">This device always asks</string>
+    <string name="explain_package">Every Android app has one name that never changes. A file that carried another name would be a different app, whatever it called itself.</string>
+    <string name="explain_signer_installed">A developer signs every release with a key only they hold. Stamp compares the signature of this file with the app on this device and with the certificate it remembered at the first install. A file signed by anyone else is refused, even if it comes from the right address.</string>
+    <string name="explain_signer_first">There is nothing to compare with yet. The file says who signed it, Android confirms that when it installs, and from then on Stamp holds every update to the same certificate.</string>
+    <string name="explain_checksum_matched">A checksum is a fingerprint of the file itself. The publisher gave one, and the file Stamp downloaded has the same, so it arrived as it was published.</string>
+    <string name="explain_checksum_pending">A checksum is a fingerprint of the file itself. The publisher gave one, and Stamp compares it with the file as soon as the file is downloaded.</string>
+    <string name="explain_checksum_mismatch">A checksum is a fingerprint of the file itself. The publisher gave one, and the file Stamp downloaded has another, so it is not the file that was published.</string>
+    <string name="explain_checksum_none">This publisher gives no checksum. The signature is still checked, and it is the stronger of the two.</string>
+    <string name="explain_permissions">What this version asks to be allowed to do that the installed one did not.</string>
+    <string name="explain_virustotal">Opens the page for this exact file at VirusTotal in your browser. Stamp sends nothing there.</string>
+    <string name="explain_silent">Android lets an app update another without asking when that app installed it and the device runs Android 12 or later. Android decides each time.</string>
+    <!-- %1$s is the version of Android on the device, such as 11. -->
+    <string name="explain_always_asks">This device runs Android %1$s, which asks before every install. Stamp downloads and checks the update in the background and tells you when it is ready.</string>
+
+    <!-- Activity: one entry for one thing that happened. %1$s is a version. -->
+    <string name="activity_installed">Installed %1$s</string>
+    <string name="activity_installed_plain">Installed</string>
+    <string name="activity_updated">Updated to %1$s</string>
+    <string name="activity_updated_plain">Updated</string>
+    <string name="activity_update_waits">Update to %1$s waits</string>
+    <string name="activity_update_waits_plain">An update waits</string>
+    <string name="activity_install_waits">Install of %1$s waits</string>
+    <string name="activity_install_waits_plain">An install waits</string>
+    <string name="activity_not_installed">Could not install %1$s</string>
+    <string name="activity_not_installed_plain">Could not install</string>
+    <string name="activity_blocked">Blocked %1$s</string>
+    <string name="activity_blocked_plain">Blocked</string>
+    <string name="activity_added">Added</string>
+    <string name="activity_removed">Stopped following</string>
+    <string name="activity_check_failed">Check failed</string>
+    <string name="activity_steps_show">Show steps</string>
+    <string name="activity_steps_hide">Hide steps</string>
+
+    <!-- First run -->
+    <string name="first_well_known">Well known apps</string>
+</resources>

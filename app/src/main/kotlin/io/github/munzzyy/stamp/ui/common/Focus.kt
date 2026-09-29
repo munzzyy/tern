@@ -23,6 +23,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Fill
@@ -79,12 +80,14 @@ fun focusScale(width: Float, height: Float, roomX: Float, roomY: Float): Float {
  * Focus the way Stamp shows it under a remote or a keyboard: an outline, a lift of the tone and
  * a scale of 1.03, all inside the element's own room. Put it before the clickable it belongs to,
  * and leave `LocalLook.focusRoom` free to its left and right and half of that above and below.
+ * [ring] is for an element filled with the accent itself, on which an outline in the accent
+ * would not be seen.
  */
 @OptIn(ExperimentalComposeUiApi::class)
-fun Modifier.focusLook(shape: Shape? = null): Modifier = composed {
+fun Modifier.focusLook(shape: Shape? = null, ring: Color = Color.Unspecified): Modifier = composed {
     val look = LocalLook.current
     val outline = shape ?: MaterialTheme.shapes.medium
-    val color = MaterialTheme.colorScheme.primary
+    val color = if (ring == Color.Unspecified) MaterialTheme.colorScheme.primary else ring
     val keys = drivenByKeys()
     val window = LocalWindowInfo.current
     var focused by remember { mutableStateOf(false) }

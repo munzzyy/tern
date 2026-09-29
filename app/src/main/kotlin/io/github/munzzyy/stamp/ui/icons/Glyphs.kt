@@ -9,10 +9,10 @@ import androidx.compose.ui.graphics.vector.PathBuilder
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
-private fun glyph(name: String, autoMirror: Boolean = false, draw: ImageVector.Builder.() -> Unit): ImageVector =
+internal fun glyph(name: String, autoMirror: Boolean = false, draw: ImageVector.Builder.() -> Unit): ImageVector =
     ImageVector.Builder(name, 24.dp, 24.dp, 24f, 24f, autoMirror = autoMirror).apply(draw).build()
 
-private fun ImageVector.Builder.line(block: PathBuilder.() -> Unit) = path(
+internal fun ImageVector.Builder.line(block: PathBuilder.() -> Unit) = path(
     fill = null,
     stroke = SolidColor(Color.Black),
     strokeLineWidth = 2f,
@@ -21,7 +21,7 @@ private fun ImageVector.Builder.line(block: PathBuilder.() -> Unit) = path(
     pathBuilder = block,
 )
 
-private fun ImageVector.Builder.solid(block: PathBuilder.() -> Unit) = path(fill = SolidColor(Color.Black), pathBuilder = block)
+internal fun ImageVector.Builder.solid(block: PathBuilder.() -> Unit) = path(fill = SolidColor(Color.Black), pathBuilder = block)
 
 object Glyphs {
     val Apps: ImageVector by lazy {
@@ -301,7 +301,7 @@ object Glyphs {
     }
 }
 
-private fun PathBuilder.circle(x: Float, y: Float, radius: Float) {
+internal fun PathBuilder.circle(x: Float, y: Float, radius: Float) {
     moveTo(x - radius, y)
     arcToRelative(radius, radius, 0f, true, true, radius * 2, 0f)
     arcToRelative(radius, radius, 0f, true, true, -radius * 2, 0f)

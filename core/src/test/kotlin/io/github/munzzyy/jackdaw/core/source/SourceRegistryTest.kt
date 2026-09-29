@@ -1,5 +1,7 @@
 package io.github.munzzyy.jackdaw.core.source
 
+import io.github.munzzyy.jackdaw.core.net.Headers
+import io.github.munzzyy.jackdaw.core.net.HttpResponse
 import io.github.munzzyy.jackdaw.core.net.InMemoryValidatorStore
 import io.github.munzzyy.jackdaw.core.source.forge.ForgejoSource
 import io.github.munzzyy.jackdaw.core.source.forge.GitHubActionsSource
@@ -10,6 +12,7 @@ import io.github.munzzyy.jackdaw.core.testing.Fixtures
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertSame
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SourceRegistryTest {
@@ -56,6 +59,34 @@ class SourceRegistryTest {
         val http = FakeHttp()
         val spec = registry.detect("https://unreachable.example.org/group/app", context(http))
         assertNull(spec)
+    }
+
+    @Test
+    fun theStandardOrderTriesABareDownloadAfterForgesAndBeforeThePageReader() {
+        val standard = SourceRegistry.standard()
+        val types = standard.sources.map { it.type }
+        assertTrue(types.indexOf(SourceTypes.FORGEJO) < types.indexOf(SourceTypes.FDROID_REPO))
+        assertTrue(types.indexOf(SourceTypes.FDROID_REPO) < types.indexOf(SourceTypes.DIRECT))
+        assertEquals(SourceTypes.HTML, types.last())
+
+        val quiet = FakeHttp()
+        assertEquals(SourceTypes.GITHUB, standard.detect("https://github.com/example/app", context(quiet))?.type)
+        assertTrue(quiet.requests.isEmpty())
+
+        val bare = "https://example.org/dl/android/apk"
+        val http = FakeHttp().on(bare) { HttpResponse.of(200, "", Headers.of("Content-Type" to "application/vnd.android.package-archive"), bare) }
+        assertEquals(SourceTypes.DIRECT, standard.detect(bare, context(http))?.type)
+        assertEquals(bare, http.requests.last().url)
+        assertEquals("HEAD", http.requests.last().method)
+        assertTrue(http.requests.dropLast(1).none { it.url == bare })
+        assertTrue(http.requests.size > 1)
+    }
+
+    @Test
+    fun aPageThatIsNotAFileIsLeftToThePageReader() {
+        val page = "https://example.org/download"
+        val http = FakeHttp().on(page) { HttpResponse.of(200, "", Headers.of("Content-Type" to "text/html"), page) }
+        assertNull(SourceRegistry.standard().detect(page, context(http)))
     }
 
     @Test

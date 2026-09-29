@@ -29,6 +29,15 @@ class DirectSource : Source {
         return SourceSpec(type, uri.toString())
     }
 
+    /** An address that does not end in a file name, recognised by what the server says about it; the body is never read. */
+    override fun probe(url: String, context: CheckContext): SourceSpec? {
+        val address = Urls.normalize(url) ?: return null
+        ask(address, emptyMap(), context).use {
+            if (!it.isSuccess) return null
+            return if (ServedFile.announced(it.headers, it.url) != null) SourceSpec(type, address) else null
+        }
+    }
+
     override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
 
     private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {
@@ -41,10 +50,12 @@ class DirectSource : Source {
             val probe = Probe.of(it.headers)
             val id = probe.identity ?: throw SourceException(SourceErrorKind.NO_RELEASES, "The server says nothing that identifies ${spec.url}")
             val version = it.headers["Last-Modified"]?.let(::formatDate) ?: ""
-            val name = Urls.segments(spec.url).lastOrNull()?.take(200) ?: "download.apk"
+            val file = ServedFile.of(it.headers, it.url, spec.url)
+                ?: throw SourceException(SourceErrorKind.NO_RELEASES, "${spec.url} no longer serves an app")
             context.validators.put(key, Validator.from(it.headers))
-            val release = Release(id = id, version = version, assets = listOf(Asset(name = name, url = spec.url, size = probe.size)))
-            return CheckResult.Listing(SourceListing(releases = listOf(release), name = name))
+            val asset = Asset(name = file.name, url = spec.url, size = probe.size, kind = file.kind)
+            val release = Release(id = id, version = version, assets = listOf(asset))
+            return CheckResult.Listing(SourceListing(releases = listOf(release), name = file.name))
         }
     }
 

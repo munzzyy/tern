@@ -2,6 +2,17 @@ package io.github.munzzyy.jackdaw.core.source
 
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
 import io.github.munzzyy.jackdaw.core.net.Urls
+import io.github.munzzyy.jackdaw.core.source.fdroid.FDroidRepoSource
+import io.github.munzzyy.jackdaw.core.source.fdroid.FDroidSource
+import io.github.munzzyy.jackdaw.core.source.forge.ForgejoSource
+import io.github.munzzyy.jackdaw.core.source.forge.GitHubActionsSource
+import io.github.munzzyy.jackdaw.core.source.forge.GitHubSource
+import io.github.munzzyy.jackdaw.core.source.forge.GitLabSource
+import io.github.munzzyy.jackdaw.core.source.web.DirectSource
+import io.github.munzzyy.jackdaw.core.source.web.HtmlSource
+import io.github.munzzyy.jackdaw.core.source.web.JenkinsSource
+import io.github.munzzyy.jackdaw.core.source.web.SourceForgeSource
+import io.github.munzzyy.jackdaw.core.source.web.SourceHutSource
 import java.io.IOException
 
 class SourceRegistry(val sources: List<Source>) {
@@ -36,5 +47,19 @@ class SourceRegistry(val sources: List<Source>) {
             if (spec != null) return spec
         }
         return null
+    }
+
+    companion object {
+        /**
+         * Every source, in the order detection tries them: forges, then repositories, then other
+         * sites, then a bare download address, and the HTML page reader last.
+         */
+        fun standard(trackedInRepository: (repositoryUrl: String) -> Set<String> = { emptySet() }): SourceRegistry = SourceRegistry(
+            listOf(
+                GitHubSource(), GitHubActionsSource(), GitLabSource(), ForgejoSource(),
+                FDroidSource(), FDroidRepoSource(trackedInRepository),
+                SourceForgeSource(), SourceHutSource(), JenkinsSource(), DirectSource(), HtmlSource(),
+            ),
+        )
     }
 }

@@ -29,17 +29,6 @@ import io.github.munzzyy.jackdaw.core.source.SourceOptions
 import io.github.munzzyy.jackdaw.core.source.SourceRegistry
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
 import io.github.munzzyy.jackdaw.core.source.TokenProvider
-import io.github.munzzyy.jackdaw.core.source.fdroid.FDroidRepoSource
-import io.github.munzzyy.jackdaw.core.source.fdroid.FDroidSource
-import io.github.munzzyy.jackdaw.core.source.forge.ForgejoSource
-import io.github.munzzyy.jackdaw.core.source.forge.GitHubActionsSource
-import io.github.munzzyy.jackdaw.core.source.forge.GitHubSource
-import io.github.munzzyy.jackdaw.core.source.forge.GitLabSource
-import io.github.munzzyy.jackdaw.core.source.web.DirectSource
-import io.github.munzzyy.jackdaw.core.source.web.HtmlSource
-import io.github.munzzyy.jackdaw.core.source.web.JenkinsSource
-import io.github.munzzyy.jackdaw.core.source.web.SourceForgeSource
-import io.github.munzzyy.jackdaw.core.source.web.SourceHutSource
 import io.github.munzzyy.jackdaw.data.AppState
 import io.github.munzzyy.jackdaw.data.SettingsStore
 import io.github.munzzyy.jackdaw.data.Store
@@ -106,12 +95,7 @@ class RealEngine(
     internal val device = Device(this.context)
     internal val tokens = TokenProvider { host -> vault.tokenFor(host) }
     internal val http: HttpClient = PoliteHttp(transport, RateLimiter(nowMs), "Jackdaw/${BuildConfig.VERSION_NAME}")
-    internal val registry = SourceRegistry(
-        listOf(
-            GitHubSource(), GitHubActionsSource(), GitLabSource(), ForgejoSource(), FDroidSource(), FDroidRepoSource(::trackedInRepository),
-            SourceForgeSource(), SourceHutSource(), JenkinsSource(), DirectSource(), HtmlSource(),
-        ),
-    )
+    internal val registry = SourceRegistry.standard(::trackedInRepository)
     internal val inspector = FileInspector(http, store, tokens, device.sdk)
     internal val evaluator = Evaluator(texts, device.profile, nowMs)
     internal val downloader = Downloader(http, downloadsDir ?: File(this.context.filesDir, "downloads"), texts)

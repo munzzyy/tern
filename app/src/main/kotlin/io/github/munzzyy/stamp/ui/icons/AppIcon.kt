@@ -6,7 +6,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,11 +20,12 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import io.github.munzzyy.stamp.engine.AppRow
 import io.github.munzzyy.stamp.ui.LocalEngine
 import io.github.munzzyy.stamp.ui.text.avatarColorIndex
 import io.github.munzzyy.stamp.ui.text.avatarLetter
+import io.github.munzzyy.stamp.ui.theme.LocalLook
+import io.github.munzzyy.stamp.ui.theme.LocalOutlines
 
 private object IconCache {
     private const val MAX_BYTES = 8 * 1024 * 1024
@@ -44,8 +44,9 @@ private val AVATAR_COLORS = listOf(
     Color(0xFF285C86), Color(0xFF52632A), Color(0xFF743A74), Color(0xFF2F6666), Color(0xFF86352A),
 )
 
+/** Cut to the Icon shape setting. */
 @Composable
-fun AppIcon(row: AppRow, size: Dp = 40.dp, modifier: Modifier = Modifier) {
+fun AppIcon(row: AppRow, size: Dp = LocalLook.current.iconList, modifier: Modifier = Modifier) {
     val engine = LocalEngine.current
     val px = with(LocalDensity.current) { size.roundToPx() }
     val key = "${row.id}@$px@${row.installed?.versionCode}"
@@ -57,7 +58,7 @@ fun AppIcon(row: AppRow, size: Dp = 40.dp, modifier: Modifier = Modifier) {
         }
     }
     val image = bitmap
-    val shaped = modifier.size(size).clip(CircleShape).clearAndSetSemantics { }
+    val shaped = modifier.size(size).clip(LocalOutlines.current.icon).clearAndSetSemantics { }
     if (image != null) {
         Image(image.asImageBitmap(), contentDescription = null, modifier = shaped)
     } else {
@@ -68,7 +69,7 @@ fun AppIcon(row: AppRow, size: Dp = 40.dp, modifier: Modifier = Modifier) {
 @Composable
 fun LetterAvatar(id: String, name: String, size: Dp, modifier: Modifier = Modifier) {
     val bg = AVATAR_COLORS[avatarColorIndex(id, AVATAR_COLORS.size)]
-    Box(modifier.size(size).clip(CircleShape).background(bg), contentAlignment = Alignment.Center) {
+    Box(modifier.size(size).clip(LocalOutlines.current.icon).background(bg), contentAlignment = Alignment.Center) {
         Text(
             avatarLetter(name),
             color = Color.White,

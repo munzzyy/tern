@@ -436,7 +436,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         if (!localNetwork) return Problem(ProblemKind.NETWORK, "This device is on no local network, so a phone cannot reach it.")
         received.clear()
         _handoffEnd.value = null
-        _handoff.value = Handoff("http://192.168.1.23:48211", "k4mz q7wd x2np h5tc r9vb", FakeSuggestions.pattern(), System.currentTimeMillis() + 600_000, 0)
+        _handoff.value = Handoff("http://192.168.1.23:48211", "k4mz q7wd x2np h5tc r3vb", FakeSuggestions.pattern(), System.currentTimeMillis() + 600_000, 0)
         handoffJob?.cancel()
         handoffJob = scope.launch {
             delay(stepMs * 40)

@@ -297,7 +297,10 @@ data class Handoff(
     val closesAtMs: Long,
     /** How many things have arrived and wait in [Engine.takeReceived]. */
     val waiting: Int,
-)
+) {
+    /** Without the code, so that a log line that holds a handoff does not hold what seals it. */
+    override fun toString(): String = "Handoff(address=$address, closesAtMs=$closesAtMs, waiting=$waiting)"
+}
 
 /** Why a handoff is no longer open. */
 enum class HandoffEnd {

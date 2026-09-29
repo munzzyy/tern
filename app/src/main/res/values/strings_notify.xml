@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Tap to finish an install</string>
+    <string name="notify_downloading_plain">Downloading</string>
+    <string name="settings_notify_names">Name the apps in notifications</string>
+    <string name="settings_notify_names_help">A notification can be read on the lock screen. Off, Stamp says how many apps and never which.</string>
+</resources>

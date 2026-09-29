@@ -195,6 +195,8 @@ data class Settings(
     val notifyUpdates: Boolean = true,
     val notifyInstalled: Boolean = true,
     val notifyFailures: Boolean = false,
+    /** Off keeps the names of apps out of every notification, and with that off the lock screen. */
+    val notifyNames: Boolean = true,
     val keepInstallers: Boolean = false,
     /** Ask Android to make Stamp the update owner of what it installs (Android 14 and later). */
     val claimUpdateOwnership: Boolean = false,

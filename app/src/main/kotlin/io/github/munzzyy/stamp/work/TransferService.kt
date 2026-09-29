@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import io.github.munzzyy.stamp.engine.real.RealEngine
-import io.github.munzzyy.stamp.engine.real.Texts
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
@@ -24,7 +23,7 @@ class TransferService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         lastStartId = startId
         val engine = RealEngine.obtain(applicationContext)
-        val notifier = Notifier(applicationContext, Texts(applicationContext))
+        val notifier = engine.notifier
         notifier.ensureChannels()
         startForeground(Notifier.ID_TRANSFER, notifier.transfer(emptyList(), 0, null), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
         if (watcher?.isActive == true) return START_NOT_STICKY

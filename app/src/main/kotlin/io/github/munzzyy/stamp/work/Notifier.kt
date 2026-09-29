@@ -10,7 +10,12 @@ import android.util.Log
 import io.github.munzzyy.stamp.R
 import io.github.munzzyy.stamp.engine.real.Texts
 
-class Notifier(context: Context, private val texts: Texts) {
+/**
+ * Every notification has a version without names. It is what a lock screen set to hide sensitive
+ * content shows, and the only version there is while [names] says no: Android shows the whole
+ * notification on a lock screen that is not set that way.
+ */
+class Notifier(context: Context, private val texts: Texts, private val names: () -> Boolean) {
     private val c = context.applicationContext
     private val manager = c.getSystemService(NotificationManager::class.java)
 
@@ -27,39 +32,59 @@ class Notifier(context: Context, private val texts: Texts) {
 
     fun updates(names: List<String>) {
         if (names.isEmpty()) return
-        post(ID_UPDATES, builder(UPDATES, R.drawable.ic_stat_update).setContentTitle(texts.notifyUpdates(names.size, names.singleOrNull())).setContentText(names.joinToString()))
+        show(ID_UPDATES, updatesAbout(names))
     }
 
     fun installed(names: List<String>) {
         if (names.isEmpty()) return
-        post(ID_INSTALLED, builder(INSTALLED, R.drawable.ic_stat_done).setContentTitle(texts.notifyInstalled(names.size, names.singleOrNull())).setContentText(names.joinToString()))
+        show(ID_INSTALLED, installedAbout(names))
     }
 
     fun failures(names: List<String>) {
         if (names.isEmpty()) return
-        post(ID_FAILURES, builder(ATTENTION, R.drawable.ic_stat_attention).setContentTitle(texts.notifyFailures(names.size)).setContentText(names.joinToString()))
+        show(ID_FAILURES, failuresAbout(names))
     }
 
     /** The system installer wants the user; tapping opens its confirmation. */
     fun confirm(appId: String, name: String, confirm: Intent) {
         val tap = PendingIntent.getActivity(c, appId.hashCode(), confirm, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-        val n = builder(ATTENTION, R.drawable.ic_stat_attention).setContentTitle(texts.notifyConfirm(name)).setContentIntent(tap)
-        post(confirmId(appId), n)
+        show(confirmId(appId), confirmAbout(name) { it.setContentIntent(tap) })
     }
 
     fun cancelConfirm(appId: String) = manager.cancel(confirmId(appId))
 
-    fun transfer(names: List<String>, done: Long, total: Long?): Notification {
-        val b = builder(TRANSFERS, R.drawable.ic_stat_download)
-            .setContentTitle(texts.notifyDownloading(names.joinToString()))
-            .setOngoing(true)
-            .setOnlyAlertOnce(true)
-        if (total != null && total > 0) {
-            b.setProgress(PROGRESS_SCALE, (done * PROGRESS_SCALE / total).toInt().coerceIn(0, PROGRESS_SCALE), false)
-        } else {
-            b.setProgress(0, 0, true)
+    fun transfer(apps: List<String>, done: Long, total: Long?): Notification =
+        about(TRANSFERS, R.drawable.ic_stat_download, texts.notifyDownloadingPlain(), apps.takeIf { it.isNotEmpty() }?.let { texts.notifyDownloading(it.joinToString()) }, null) { b ->
+            b.setOngoing(true).setOnlyAlertOnce(true)
+            if (total != null && total > 0) {
+                b.setProgress(PROGRESS_SCALE, (done * PROGRESS_SCALE / total).toInt().coerceIn(0, PROGRESS_SCALE), false)
+            } else {
+                b.setProgress(0, 0, true)
+            }
         }
-        return b.build()
+
+    fun updatesAbout(apps: List<String>): Notification =
+        about(UPDATES, R.drawable.ic_stat_update, texts.notifyUpdates(apps.size, null), texts.notifyUpdates(apps.size, apps.singleOrNull()), apps.joinToString())
+
+    fun installedAbout(apps: List<String>): Notification =
+        about(INSTALLED, R.drawable.ic_stat_done, texts.notifyInstalled(apps.size, null), texts.notifyInstalled(apps.size, apps.singleOrNull()), apps.joinToString())
+
+    fun failuresAbout(apps: List<String>): Notification =
+        about(ATTENTION, R.drawable.ic_stat_attention, texts.notifyFailures(apps.size), texts.notifyFailures(apps.size), apps.joinToString())
+
+    fun confirmAbout(app: String, more: (Notification.Builder) -> Unit = {}): Notification =
+        about(ATTENTION, R.drawable.ic_stat_attention, texts.notifyConfirmPlain(), texts.notifyConfirm(app), null, more)
+
+    private fun about(channel: String, icon: Int, plain: String, named: String?, text: String?, more: (Notification.Builder) -> Unit = {}): Notification {
+        val public = builder(channel, icon).setContentTitle(plain).setVisibility(Notification.VISIBILITY_PUBLIC).also(more)
+        if (named == null || !names()) return public.build()
+        return builder(channel, icon)
+            .setContentTitle(named)
+            .setContentText(text)
+            .setVisibility(Notification.VISIBILITY_PRIVATE)
+            .setPublicVersion(public.build())
+            .also(more)
+            .build()
     }
 
     private fun builder(channel: String, icon: Int): Notification.Builder {
@@ -67,8 +92,6 @@ class Notifier(context: Context, private val texts: Texts) {
             ?.let { PendingIntent.getActivity(c, 0, it, PendingIntent.FLAG_IMMUTABLE) }
         return Notification.Builder(c, channel).setSmallIcon(icon).setAutoCancel(true).also { b -> open?.let(b::setContentIntent) }
     }
-
-    private fun post(id: Int, builder: Notification.Builder) = show(id, builder.build())
 
     fun show(id: Int, notification: Notification) {
         try {

@@ -43,10 +43,14 @@ import kotlinx.coroutines.withTimeoutOrNull
  */
 internal class Installs(private val e: RealEngine) {
     private val jobs = ConcurrentHashMap<String, Job>()
+
+    /** Apps with an install under way. Whoever starts one, the user or the background check, claims the app here first. */
+    private val busy: MutableSet<String> = ConcurrentHashMap.newKeySet()
     private val outcomes = ConcurrentHashMap<String, CompletableDeferred<Int>>()
     private val batch: MutableSet<String> = ConcurrentHashMap.newKeySet()
     private val confirmations = ConcurrentHashMap<String, Intent>()
 
+    @Synchronized
     fun start(appId: String, releaseId: String?, assetUrl: String?, userStarted: Boolean): Job {
         jobs[appId]?.takeIf { it.isActive }?.let { return it }
         if (userStarted) {
@@ -106,11 +110,27 @@ internal class Installs(private val e: RealEngine) {
     /** Returns the session handed to the installer, or null when the pipeline stopped before that. */
     suspend fun run(appId: String, releaseId: String?, assetUrl: String?): Int? = withContext(Dispatchers.IO) {
         e.ready()
-        val stored = e.stored[appId] ?: return@withContext null
+        if (!busy.add(appId)) return@withContext null
+        val staging = File(e.staging, e.downloader.folder(appId).name)
+        try {
+            pipeline(appId, releaseId, assetUrl, staging)
+        } finally {
+            staging.deleteRecursively()
+            busy.remove(appId)
+        }
+    }
+
+    private suspend fun pipeline(appId: String, releaseId: String?, assetUrl: String?, staging: File): Int? {
+        val stored = e.stored[appId] ?: return null
+        val waiting = stored.state.pending
+        if (waiting != null && waiting.sessionId in e.installer.liveSessionIds()) {
+            resume(appId)
+            return null
+        }
         val config = stored.config
         var release: Release? = null
         var asset: Asset? = null
-        try {
+        return try {
             if (config.trackOnly) throw StepFailure(ProblemKind.UNSUPPORTED, e.texts.trackOnly())
             val eval = e.evaluations[appId]
             val chosenRelease = releaseId?.let { id -> stored.state.releases.firstOrNull { it.id == id } }
@@ -144,7 +164,7 @@ internal class Installs(private val e: RealEngine) {
                 pinnedSigners = config.pinnedSigners,
                 installedOf = { pkg -> e.readInstalled(pkg)?.app },
                 device = e.device.profile,
-                staging = File(e.staging, e.downloader.folder(appId).name),
+                staging = staging,
             )
             val pass = runInterruptible { e.gate.check(request) }
             val facts = pass.facts.copy(checksumMatchedFrom = expected?.second)
@@ -171,7 +191,6 @@ internal class Installs(private val e: RealEngine) {
                 startedAtMs = e.nowMs(),
             )
             commit(appId, pending)
-            request.staging.deleteRecursively()
             sessionId
         } catch (failure: StepFailure) {
             fail(appId, release, asset, failure.problem)

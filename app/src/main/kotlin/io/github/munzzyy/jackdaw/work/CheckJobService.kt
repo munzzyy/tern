@@ -14,6 +14,7 @@ class CheckJobService : JobService() {
     override fun onStartJob(params: JobParameters): Boolean {
         val engine = RealEngine.obtain(applicationContext)
         val job = engine.scope.launch {
+            val self = coroutineContext[Job]
             var failed = false
             try {
                 engine.runScheduledCheck()
@@ -22,7 +23,7 @@ class CheckJobService : JobService() {
                 Log.e(TAG, "Background check failed", e)
                 failed = true
             } finally {
-                running.remove(params.jobId)
+                if (self != null) running.remove(params.jobId, self)
             }
             jobFinished(params, failed)
         }

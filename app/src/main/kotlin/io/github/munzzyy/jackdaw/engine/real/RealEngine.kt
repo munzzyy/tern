@@ -266,11 +266,16 @@ class RealEngine(
         return app
     }
 
-    internal fun saveState(id: String, change: (AppState) -> AppState): StoredApp? =
-        store.updateState(id, change)?.also { stored[id] = it }
+    private val saving = Any()
 
-    internal fun saveApp(id: String, change: (StoredApp) -> StoredApp): StoredApp? =
+    /** One at a time, so what is drawn from memory is never older than what is on disk. */
+    internal fun saveState(id: String, change: (AppState) -> AppState): StoredApp? = synchronized(saving) {
+        store.updateState(id, change)?.also { stored[id] = it }
+    }
+
+    internal fun saveApp(id: String, change: (StoredApp) -> StoredApp): StoredApp? = synchronized(saving) {
         store.update(id, change)?.also { stored[id] = it }
+    }
 
     internal fun event(appId: String?, kind: EventKind, message: String) {
         val name = appId?.let { stored[it]?.config?.name }

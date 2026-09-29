@@ -164,7 +164,8 @@ class Downloader(
         if (encoding != null && !encoding.equals("identity", ignoreCase = true)) throw StepFailure(ProblemKind.NETWORK, texts.encodedDownload(encoding))
         if (total != null && total > MAX_BYTES) throw StepFailure(ProblemKind.STORAGE, texts.fileTooLarge())
         if (total != null) {
-            val needed = (total * SPACE_FACTOR).toLong()
+            // What is already on disk from an earlier attempt has left the free space already.
+            val needed = (total * SPACE_FACTOR).toLong() - start
             val free = freeBytes(files.dir)
             if (free < needed) throw StepFailure(ProblemKind.STORAGE, texts.noSpace(needed, free))
         }

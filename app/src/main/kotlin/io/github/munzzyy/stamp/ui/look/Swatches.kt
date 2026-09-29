@@ -18,6 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -116,10 +119,21 @@ fun Swatches(settings: Settings, dark: Boolean, onPick: ((Settings) -> Settings)
         BoxWithConstraints(Modifier.fillMaxWidth().selectableGroup()) {
             val least = with(LocalDensity.current) { (MaterialTheme.typography.labelMedium.fontSize * NAME_WIDTH).toDp() }
             val columns = columnsFor(maxWidth.value, least.value, swatches.size)
+            val stops = remember(swatches.size) { List(swatches.size) { FocusRequester() } }
             Column(verticalArrangement = Arrangement.spacedBy(look.focusRoom)) {
-                for (line in swatches.chunked(columns)) {
+                for ((row, line) in swatches.chunked(columns).withIndex()) {
                     Row(horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2)) {
-                        for (swatch in line) SwatchItem(swatch, Modifier.weight(1f)) { onPick(swatch.pick) }
+                        for ((column, swatch) in line.withIndex()) {
+                            val index = row * columns + column
+                            val place = Modifier
+                                .weight(1f)
+                                .focusRequester(stops[index])
+                                .focusProperties {
+                                    if (index > 0) start = stops[index - 1]
+                                    if (index < stops.lastIndex) end = stops[index + 1]
+                                }
+                            SwatchItem(swatch, place) { onPick(swatch.pick) }
+                        }
                         repeat(columns - line.size) { Spacer(Modifier.weight(1f)) }
                     }
                 }

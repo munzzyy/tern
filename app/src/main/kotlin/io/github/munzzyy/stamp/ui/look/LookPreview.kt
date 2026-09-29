@@ -2,6 +2,7 @@ package io.github.munzzyy.stamp.ui.look
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -66,6 +67,9 @@ fun TextLayoutResult.isCut(): Boolean {
 
 private const val STACK_FONT_SCALE = 1.5f
 
+/** A preview narrower than this many rows are high puts its button under the words. */
+private const val STACK_ROWS = 5
+
 /** A piece of the app under [settings], which need not be stored yet: an app row with its status and action, and one sentence. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -84,7 +88,6 @@ fun LookPreview(settings: Settings, modifier: Modifier = Modifier) {
             iconOutline = LocalOutlines.current.icon.toString(),
             cut = cut.values.any { it },
         )
-        val stacked = density.fontScale >= STACK_FONT_SCALE
         val action: @Composable () -> Unit = { TonalButton(stringResource(R.string.action_update), onClick = {}) }
         Surface(
             color = scheme.surface,
@@ -99,6 +102,8 @@ fun LookPreview(settings: Settings, modifier: Modifier = Modifier) {
                     this[LookDrawn] = drawn
                 },
         ) {
+            BoxWithConstraints {
+            val stacked = density.fontScale >= STACK_FONT_SCALE || maxWidth < look.rowHeight * STACK_ROWS
             Column(Modifier.padding(vertical = look.gapSmall)) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -148,6 +153,7 @@ fun LookPreview(settings: Settings, modifier: Modifier = Modifier) {
                         onTextLayout = { cut["sentence"] = it.isCut() },
                     )
                 }
+            }
             }
         }
     }

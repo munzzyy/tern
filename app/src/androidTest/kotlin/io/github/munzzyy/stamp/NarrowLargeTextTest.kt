@@ -5,12 +5,14 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import io.github.munzzyy.stamp.ui.TAB_LABEL_TAG
+import io.github.munzzyy.stamp.ui.look.isCut
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertEquals
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,6 +27,7 @@ class NarrowLargeTextTest {
 
     @Before
     fun narrowAndLarge() {
+        assumeTrue("a television is never as narrow as a phone", !withoutTouch)
         previousScale = device.executeShellCommand("settings get system font_scale").trim().takeIf { it.toFloatOrNull() != null } ?: "1.0"
         device.executeShellCommand("wm size 720x1600")
         device.executeShellCommand("wm density 320")
@@ -48,7 +51,7 @@ class NarrowLargeTextTest {
                 val layouts = mutableListOf<TextLayoutResult>()
                 node.config[SemanticsActions.GetTextLayoutResult].action?.invoke(layouts)
                 val text = layouts.single().layoutInput.text
-                assertFalse("\"$text\" is cut off", layouts.single().hasVisualOverflow)
+                assertFalse("\"$text\" is cut off", layouts.single().isCut())
             }
         }
     }

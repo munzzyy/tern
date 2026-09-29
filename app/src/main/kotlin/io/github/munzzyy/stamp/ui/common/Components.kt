@@ -48,6 +48,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
@@ -535,7 +546,11 @@ fun ScreenTop(
     }
 }
 
-/** A few choices shown side by side, one of them taken. Left and right move between them; they wrap to a new line when the text is large. */
+/**
+ * A few choices shown side by side, one of them taken. Left and right move between them in their
+ * order, also from the end of one line to the start of the next when large text has wrapped
+ * them. Up and down leave them, so a remote never has to walk through every line of one choice.
+ */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ChoiceChips(
@@ -548,6 +563,9 @@ fun ChoiceChips(
 ) {
     val look = LocalLook.current
     val scheme = MaterialTheme.colorScheme
+    val focus = LocalFocusManager.current
+    val stops = remember(options.size) { List(options.size) { FocusRequester() } }
+    var inside by remember { mutableStateOf(false) }
     Column(
         verticalArrangement = Arrangement.spacedBy(look.gapSmall),
         modifier = modifier
@@ -558,7 +576,20 @@ fun ChoiceChips(
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2),
             verticalArrangement = Arrangement.spacedBy(look.focusRoom + (look.touchTarget - look.choiceHeight)),
-            modifier = Modifier.selectableGroup(),
+            modifier = Modifier
+                .selectableGroup()
+                .onFocusChanged { inside = it.hasFocus }
+                .onPreviewKeyEvent { event ->
+                    val direction = when (event.key) {
+                        Key.DirectionDown -> FocusDirection.Down
+                        Key.DirectionUp -> FocusDirection.Up
+                        else -> return@onPreviewKeyEvent false
+                    }
+                    if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent true
+                    var lines = options.size
+                    while (focus.moveFocus(direction) && inside && --lines > 0) Unit
+                    true
+                },
         ) {
             options.forEachIndexed { index, option ->
                 val taken = index == selected
@@ -566,6 +597,11 @@ fun ChoiceChips(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(look.gapSmall / 2),
                     modifier = Modifier
+                        .focusRequester(stops[index])
+                        .focusProperties {
+                            if (index > 0) start = stops[index - 1]
+                            if (index < stops.lastIndex) end = stops[index + 1]
+                        }
                         .focusLook(LocalOutlines.current.button)
                         .clip(LocalOutlines.current.button)
                         .background(if (taken) scheme.secondaryContainer else scheme.surfaceContainerHighest)

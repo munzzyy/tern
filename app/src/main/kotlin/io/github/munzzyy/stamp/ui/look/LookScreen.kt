@@ -120,7 +120,7 @@ fun LookScreen(onBack: () -> Unit) {
                             .verticalScroll(rememberScrollState())
                             .padding(start = look.screenPadding, bottom = look.gapSection),
                     ) { choices() }
-                    Box(Modifier.width(look.contentMaxWidth * PREVIEW_SHARE).padding(end = look.screenPadding)) { preview(Modifier) }
+                    Box(Modifier.width(minOf(look.contentMaxWidth * PREVIEW_SHARE, this@BoxWithConstraints.maxWidth * PREVIEW_MOST)).padding(end = look.screenPadding)) { preview(Modifier) }
                 }
             } else {
                 Column(Modifier.fillMaxSize()) {
@@ -144,6 +144,7 @@ fun LookScreen(onBack: () -> Unit) {
 
 private const val SIDE_BY_SIDE = 0.85f
 private const val PREVIEW_SHARE = 0.45f
+private const val PREVIEW_MOST = 0.38f
 private const val PINNED_ROWS = 7
 
 @Composable

@@ -388,6 +388,13 @@ async function main() {
   same('2 MiB and one byte are refused by the page', 'The file is larger than 2 MiB, which is more than a list of apps takes, so it was not taken.', await typed.run(text('file-said')));
   same('without a request', sent, typed.requests().length);
 
+  const without = await tab(chrome);
+  await without.call('Emulation.setScriptExecutionDisabled', { value: true });
+  await without.open(device.address);
+  check('with scripts turned off the page says that it needs them', await without.run("document.body.innerText.includes('This page needs scripts to seal what you send')"));
+  check('and offers nothing to send', !(await without.run(shown('sender'))) && !(await without.run("document.body.innerText.includes('Send the')")));
+  same('and asks for nothing but itself', ['GET ' + device.address + '/'], without.requests().map((request) => request.request.method + ' ' + request.request.url));
+
   for (const [which, page] of [['scanned', scanned], ['typed', typed]]) {
     const asked = page.requests().map((request) => request.request.method + ' ' + request.request.url);
     const wanted = asked.filter((request, i) => request === (i === 0 ? 'GET ' + device.address + '/' : 'POST ' + device.address + '/send'));

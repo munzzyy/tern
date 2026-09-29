@@ -79,6 +79,7 @@ object StateJson {
             "verified" to facts.verified,
             "checksumMatchedFrom" to facts.checksumMatchedFrom,
             "fileSha256" to facts.fileSha256,
+            "nativeAbis" to facts.nativeAbis,
         ),
     )
 
@@ -97,6 +98,7 @@ object StateJson {
             verified = obj.bool("verified") ?: false,
             checksumMatchedFrom = obj.string("checksumMatchedFrom"),
             fileSha256 = obj.string("fileSha256")?.let(Fingerprints::normalize),
+            nativeAbis = obj.array("nativeAbis")?.strings().orEmpty(),
         )
     }
 

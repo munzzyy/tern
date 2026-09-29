@@ -71,7 +71,8 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
         }
 
         val ranked = rank(config, candidate)
-        val (chosen, facts) = chooseFile(config, installed, candidate, ranked, inspect)
+        val (chosen, facts) = chooseFile(config, installed, candidate, ranked, device, inspect)
+        val abiMismatch = facts?.nativeAbis?.takeIf { it.isNotEmpty() && it.none { abi -> abi in device.abis } }
         val app = installed?.app
         var decision = UpdateDecision.decide(
             candidate, app, state.record, facts?.inspection, config.packageName, config.pinnedSigners,
@@ -101,6 +102,10 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
         if (gateBlock != null && status != AppStatus.UP_TO_DATE) {
             status = AppStatus.BLOCKED
             problem = gateBlock.problem
+        }
+        if (abiMismatch != null && status != AppStatus.UP_TO_DATE) {
+            status = AppStatus.ERROR
+            problem = Problem(ProblemKind.NO_FILE_FOR_DEVICE, texts.noFileForDevice(abiMismatch.joinToString()))
         }
         if (problem == null) problem = state.installProblem ?: state.checkProblem
         return Evaluation(
@@ -198,18 +203,30 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
         ).joinToString("\u0000") { it.orEmpty() }
 
         /**
-         * With something installed, pinned, or a package configured, the first of the best few
-         * files that is not known to be refused wins: a project may sign a store build and a free
-         * build differently, or publish more than one app's file from the same release.
+         * The first of the best few files that is not known to be refused wins and whose native
+         * libraries, if it declares any, fit one of the device's processors: a project may sign a
+         * store build and a free build differently, publish more than one app's file from the same
+         * release, or build a file for fewer processors than its name suggests. When [inspect]
+         * cannot read a file now, that file is offered as before this check existed.
          */
-        internal fun chooseFile(config: AppConfig, installed: DeviceApp?, release: Release, ranked: List<Pick>, inspect: (Asset, String) -> FileFacts?): Pair<Pick, FileFacts?> {
+        internal fun chooseFile(
+            config: AppConfig,
+            installed: DeviceApp?,
+            release: Release,
+            ranked: List<Pick>,
+            device: DeviceProfile,
+            inspect: (Asset, String) -> FileFacts?,
+        ): Pair<Pick, FileFacts?> {
             val best = ranked.first()
-            if (installed == null && config.pinnedSigners.isEmpty() && config.packageName == null) return best to inspect(best.asset, release.id)
+            var fallback: Pair<Pick, FileFacts?>? = null
             for (pick in ranked.take(MAX_CANDIDATES)) {
                 val facts = inspect(pick.asset, release.id) ?: return pick to null
-                if (UpdateDecision.blockFor(facts.inspection, installed?.app, config.packageName, config.pinnedSigners) == null) return pick to facts
+                val abiOk = facts.nativeAbis.isEmpty() || facts.nativeAbis.any { it in device.abis }
+                val packageOk = UpdateDecision.blockFor(facts.inspection, installed?.app, config.packageName, config.pinnedSigners) == null
+                if (abiOk && packageOk) return pick to facts
+                if (fallback == null) fallback = pick to facts
             }
-            return best to inspect(best.asset, release.id)
+            return fallback ?: (best to inspect(best.asset, release.id))
         }
 
         /**

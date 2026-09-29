@@ -21,6 +21,8 @@ data class FileFacts(
     val checksumMatchedFrom: String? = null,
     /** Measured over the downloaded file; null for facts read remotely. */
     val fileSha256: String? = null,
+    /** ABIs the file's native libraries were built for; empty when it carries none, absent from facts stored before this field existed. */
+    val nativeAbis: List<String> = emptyList(),
 ) {
     val inspection: Inspection get() = Inspection(packageName, versionCode, versionName, signers, lineage)
 
@@ -38,6 +40,7 @@ data class FileFacts(
                 targetSdk = info.manifest.targetSdk,
                 testOnly = info.manifest.testOnly,
                 verified = false,
+                nativeAbis = info.manifest.nativeLibraryAbis,
             )
         }
     }

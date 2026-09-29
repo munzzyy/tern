@@ -21,9 +21,11 @@ object AssetPicker {
 
     private val ABI_ALIASES = mapOf(
         "arm64-v8a" to "arm64-v8a", "arm64" to "arm64-v8a", "aarch64" to "arm64-v8a", "armv8" to "arm64-v8a",
+        "arm64v8" to "arm64-v8a", "arm64v8a" to "arm64-v8a",
         "armeabi-v7a" to "armeabi-v7a", "armv7" to "armeabi-v7a", "armv7a" to "armeabi-v7a",
-        "arm32" to "armeabi-v7a", "armeabi" to "armeabi-v7a",
-        "x86_64" to "x86_64", "x64" to "x86_64", "amd64" to "x86_64",
+        "arm32" to "armeabi-v7a", "armeabi" to "armeabi-v7a", "arm32v7" to "armeabi-v7a",
+        "armeabiv7a" to "armeabi-v7a", "armhf" to "armeabi-v7a", "arm" to "armeabi-v7a",
+        "x86_64" to "x86_64", "x64" to "x86_64", "amd64" to "x86_64", "x8664" to "x86_64",
         "x86" to "x86", "i686" to "x86", "i386" to "x86",
         "universal" to "any", "all" to "any", "fat" to "any", "noarch" to "any",
     )

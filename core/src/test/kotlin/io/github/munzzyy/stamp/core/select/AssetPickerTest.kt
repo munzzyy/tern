@@ -149,6 +149,44 @@ class AssetPickerTest {
     }
 
     @Test
+    fun arm64PhonePicksArm64v8OverArm32v7WhenNamedThatWay() {
+        val assets = listOf(
+            asset("LocalSend-1.17.0-android-arm32v7.apk"),
+            asset("LocalSend-1.17.0-android-arm64v8.apk"),
+        )
+        val picks = AssetPicker.rank(assets, DeviceProfile.ARM64_PHONE, AssetPolicy())
+        assertEquals("LocalSend-1.17.0-android-arm64v8.apk", picks.first().asset.name)
+        assertTrue(picks.first().score > picks.last().score)
+    }
+
+    @Test
+    fun bareArmTokenReadAsThirtyTwoBitArm() {
+        val assets = listOf(
+            asset("koreader-android-arm-v2025.04.apk"),
+            asset("koreader-android-arm64-v2025.04.apk"),
+        )
+        val picks = AssetPicker.rank(assets, DeviceProfile.ARM64_PHONE, AssetPolicy())
+        assertEquals("koreader-android-arm64-v2025.04.apk", picks.first().asset.name)
+        assertEquals(2, picks.size)
+    }
+
+    @Test
+    fun otherAbiSpellingsAreRecognised() {
+        val assets = listOf(
+            asset("app-arm64v8a.apk"),
+            asset("app-armeabiv7a.apk"),
+            asset("app-armhf.apk"),
+            asset("app-x8664.apk"),
+        )
+        val picks = AssetPicker.rank(assets, DeviceProfile.ARM64_PHONE, AssetPolicy(matchDevice = false))
+        val byName = picks.associateBy { it.asset.name }
+        assertTrue(byName.getValue("app-arm64v8a.apk").reasons.contains(PickReason(PickReason.Kind.ABI_MATCH, "arm64-v8a")))
+        assertTrue(byName.getValue("app-armeabiv7a.apk").reasons.any { it.kind == PickReason.Kind.ABI_MATCH && it.detail == "armeabi-v7a" })
+        assertTrue(byName.getValue("app-armhf.apk").reasons.any { it.kind == PickReason.Kind.ABI_MATCH && it.detail == "armeabi-v7a" })
+        assertTrue(byName.getValue("app-x8664.apk").reasons.any { it.kind == PickReason.Kind.ABI_MISMATCH && it.detail == "x86_64" })
+    }
+
+    @Test
     fun negativeControlDetectsBrokenAbiPreference() {
         val assets = listOf(asset("coffeecup-armeabi-v7a-release.apk"), asset("coffeecup-arm64-v8a-release.apk"))
         val picks = AssetPicker.rank(assets, DeviceProfile.ARM64_PHONE, AssetPolicy())

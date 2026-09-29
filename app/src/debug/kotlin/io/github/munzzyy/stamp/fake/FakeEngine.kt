@@ -402,14 +402,14 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override suspend fun exportToFolder(): SavedFile {
         delay(stepMs * 6)
-        return SavedFile("stamp-apps.json", "Download/Stamp", "/storage/emulated/0/Download/Stamp/stamp-apps.json", System.currentTimeMillis(), 18_432)
+        return SavedFile("stamp-apps-2026-09-29.json", "Download/Stamp", "/storage/emulated/0/Download/Stamp/stamp-apps-2026-09-29.json", System.currentTimeMillis(), 18_432)
     }
 
     override suspend fun importableFiles(): List<SavedFile> {
         delay(stepMs * 4)
         val now = System.currentTimeMillis()
         return listOf(
-            SavedFile("stamp-apps.json", "Download/Stamp", "/storage/emulated/0/Download/Stamp/stamp-apps.json", now - 3_600_000, 18_432),
+            SavedFile("stamp-apps-2026-09-29.json", "Download/Stamp", "/storage/emulated/0/Download/Stamp/stamp-apps-2026-09-29.json", now - 3_600_000, 18_432),
             SavedFile("obtainium-export.json", "Download", "/storage/emulated/0/Download/obtainium-export.json", now - 86_400_000 * 3, 41_200),
         )
     }

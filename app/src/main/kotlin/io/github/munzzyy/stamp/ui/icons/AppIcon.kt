@@ -20,12 +20,35 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.stamp.engine.AppRow
 import io.github.munzzyy.stamp.ui.LocalEngine
 import io.github.munzzyy.stamp.ui.text.avatarColorIndex
 import io.github.munzzyy.stamp.ui.text.avatarLetter
 import io.github.munzzyy.stamp.ui.theme.LocalLook
 import io.github.munzzyy.stamp.ui.theme.LocalOutlines
+import kotlinx.coroutines.CancellationException
+
+/** [key] names the picture. [round] changes with every check of the app, and a new round asks again for a picture that was missing. */
+internal data class IconAsk(val key: String, val round: String)
+
+internal fun iconAsk(row: AppRow, px: Int, sourceIcons: Boolean): IconAsk =
+    IconAsk("${row.id}@$px@${row.installed?.versionCode}@$sourceIcons", row.lastCheckedMs.toString())
+
+/** Remembers in which round the engine had no icon, so a long list does not ask again on every scroll. */
+internal class Misses(private val most: Int = 2048) {
+    private val rounds = object : LinkedHashMap<String, String>(64, 0.75f, true) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, String>): Boolean = size > most
+    }
+
+    @Synchronized
+    fun known(ask: IconAsk): Boolean = rounds[ask.key] == ask.round
+
+    @Synchronized
+    fun note(ask: IconAsk) {
+        rounds[ask.key] = ask.round
+    }
+}
 
 private object IconCache {
     private const val MAX_BYTES = 8 * 1024 * 1024
@@ -34,8 +57,7 @@ private object IconCache {
         override fun sizeOf(key: String, value: Bitmap): Int = value.byteCount
     }
 
-    /** Remembers that the engine had no icon, so a long list does not ask again on every scroll. */
-    val missing = LruCache<String, Boolean>(2048)
+    val misses = Misses()
 }
 
 /** Every colour carries white text at 4.5:1 or better. */
@@ -49,11 +71,19 @@ private val AVATAR_COLORS = listOf(
 fun AppIcon(row: AppRow, size: Dp = LocalLook.current.iconList, modifier: Modifier = Modifier) {
     val engine = LocalEngine.current
     val px = with(LocalDensity.current) { size.roundToPx() }
-    val key = "${row.id}@$px@${row.installed?.versionCode}"
-    val bitmap by produceState(IconCache.bitmaps.get(key), key) {
-        if (value == null && IconCache.missing.get(key) == null) {
-            val loaded = runCatching { engine.icon(row, px) }.getOrNull()
-            if (loaded != null) IconCache.bitmaps.put(key, loaded) else IconCache.missing.put(key, true)
+    val settings by engine.settings.collectAsStateWithLifecycle()
+    val ask = iconAsk(row, px, settings.sourceIcons)
+    val bitmap by produceState(IconCache.bitmaps.get(ask.key), ask) {
+        value = IconCache.bitmaps.get(ask.key)
+        if (value == null && !IconCache.misses.known(ask)) {
+            val loaded = try {
+                engine.icon(row, px)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                null
+            }
+            if (loaded != null) IconCache.bitmaps.put(ask.key, loaded) else IconCache.misses.note(ask)
             value = loaded
         }
     }

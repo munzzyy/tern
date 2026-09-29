@@ -30,14 +30,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.focused
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.stateDescription
@@ -49,8 +50,8 @@ import io.github.munzzyy.jackdaw.engine.Phase
 import io.github.munzzyy.jackdaw.ui.LocalEngine
 import io.github.munzzyy.jackdaw.ui.LocalOnline
 import io.github.munzzyy.jackdaw.ui.common.ConfirmDialog
+import io.github.munzzyy.jackdaw.ui.common.focusHighlight
 import io.github.munzzyy.jackdaw.ui.common.StatusPill
-import io.github.munzzyy.jackdaw.ui.common.focusRing
 import io.github.munzzyy.jackdaw.ui.common.confirmInstall
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
 import io.github.munzzyy.jackdaw.ui.icons.AppIcon
@@ -79,6 +80,7 @@ fun AppRowItem(
     val actions = rememberActions()
     var menu by remember { mutableStateOf(false) }
     var confirmRemove by remember { mutableStateOf(false) }
+    var hasFocus by remember { mutableStateOf(false) }
     val action = inlineAction(row)
     val stacked = LocalDensity.current.fontScale >= STACK_FONT_SCALE
     val noLauncher = stringResource(R.string.open_no_launcher)
@@ -111,12 +113,14 @@ fun AppRowItem(
     val rowSemantics = if (selecting) {
         Modifier.clearAndSetSemantics {
             contentDescription = description
+            focused = hasFocus
             this.selected = checked
             stateDescription = pickedState
             onClick(labelToggle) { onSelect(); true }
         }
     } else Modifier.clearAndSetSemantics {
         contentDescription = description
+        focused = hasFocus
         this.selected = selected
         onClick(labelDetails) { onOpen(); true }
         customActions = buildList {
@@ -140,7 +144,7 @@ fun AppRowItem(
             IconButton(onClick = { menu = true }) {
                 Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.action_more))
             }
-            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }, modifier = Modifier.focusHighlight()) {
                 if (row.installed != null) {
                     DropdownMenuItem(text = { Text(labelOpen) }, onClick = { menu = false; openApp() })
                 }
@@ -162,6 +166,7 @@ fun AppRowItem(
         modifier
             .fillMaxWidth()
             .background(if (selected || (selecting && checked)) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent)
+            .onFocusChanged { hasFocus = it.hasFocus }
             .then(rowSemantics)
             .padding(end = 4.dp),
     ) {
@@ -171,7 +176,6 @@ fun AppRowItem(
                 modifier = Modifier
                     .weight(1f)
                     .heightIn(min = 72.dp)
-                    .focusRing(RectangleShape)
                     .combinedClickable(
                         onClick = if (selecting) onSelect else onOpen,
                         onLongClick = onSelect,

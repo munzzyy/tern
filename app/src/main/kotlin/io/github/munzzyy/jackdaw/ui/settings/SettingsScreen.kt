@@ -56,8 +56,11 @@ import io.github.munzzyy.jackdaw.ui.common.LinkDialog
 import io.github.munzzyy.jackdaw.ui.common.SectionHeader
 import io.github.munzzyy.jackdaw.ui.common.SwitchRow
 import io.github.munzzyy.jackdaw.ui.common.openNotificationSettings
+import io.github.munzzyy.jackdaw.ui.common.firstFocus
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
-import io.github.munzzyy.jackdaw.ui.common.verticalKeysLeave
+import io.github.munzzyy.jackdaw.ui.common.rememberScreenFocus
+import io.github.munzzyy.jackdaw.ui.common.returnFocus
+import io.github.munzzyy.jackdaw.ui.common.textFieldKeys
 import io.github.munzzyy.jackdaw.ui.detail.minAgeLabel
 import io.github.munzzyy.jackdaw.ui.detail.updateModeEffect
 import io.github.munzzyy.jackdaw.ui.detail.updateModeLabel
@@ -77,6 +80,7 @@ fun SettingsScreen(onImport: () -> Unit) {
     val actions = rememberActions()
     val failed = stringResource(R.string.save_failed)
     val update: ((Settings) -> Settings) -> Unit = { change -> vm.update({ actions.say(failed) }, change) }
+    val screen = rememberScreenFocus()
 
     Scaffold(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_settings)) }) },
@@ -89,7 +93,7 @@ fun SettingsScreen(onImport: () -> Unit) {
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = 24.dp),
         ) {
-            Column(Modifier.widthIn(max = 840.dp)) {
+            Column(Modifier.widthIn(max = 840.dp).firstFocus(screen)) {
                 BackgroundSection(s, update)
                 DefaultsSection(s, update)
                 NotificationsSection(s, update)
@@ -97,7 +101,7 @@ fun SettingsScreen(onImport: () -> Unit) {
                 TokensSection(vm)
                 NetworkSection(s, update)
                 AppearanceSection(s, update)
-                DataSection(s, vm, update, onImport)
+                DataSection(s, vm, update, onImport, Modifier.returnFocus(screen, "import"))
                 AboutSection()
             }
         }
@@ -236,7 +240,7 @@ private fun TokensSection(vm: SettingsViewModel) {
             isError = badHost,
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
-            modifier = Modifier.fillMaxWidth().verticalKeysLeave(),
+            modifier = Modifier.fillMaxWidth().textFieldKeys(),
         )
         OutlinedTextField(
             value = token,
@@ -246,7 +250,7 @@ private fun TokensSection(vm: SettingsViewModel) {
             singleLine = true,
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, autoCorrectEnabled = false),
-            modifier = Modifier.fillMaxWidth().verticalKeysLeave(),
+            modifier = Modifier.fillMaxWidth().textFieldKeys(),
         )
         Button(
             onClick = {
@@ -307,7 +311,7 @@ private fun CustomProxy(s: Settings, update: Update) {
             isError = !hostOk,
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
-            modifier = Modifier.fillMaxWidth().verticalKeysLeave(),
+            modifier = Modifier.fillMaxWidth().textFieldKeys(),
         )
         OutlinedTextField(
             value = port,
@@ -317,7 +321,7 @@ private fun CustomProxy(s: Settings, update: Update) {
             isError = portValue == null,
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth().verticalKeysLeave(),
+            modifier = Modifier.fillMaxWidth().textFieldKeys(),
         )
         val dirty = host.trim() != s.proxyHost || portValue != s.proxyPort
         if (dirty) {
@@ -364,7 +368,7 @@ private fun AppearanceSection(s: Settings, update: Update) {
 }
 
 @Composable
-private fun DataSection(s: Settings, vm: SettingsViewModel, update: Update, onImport: () -> Unit) {
+private fun DataSection(s: Settings, vm: SettingsViewModel, update: Update, onImport: () -> Unit, importFocus: Modifier) {
     val context = LocalContext.current
     val actions = rememberActions()
     val exporting by vm.exporting.collectAsStateWithLifecycle()
@@ -382,6 +386,7 @@ private fun DataSection(s: Settings, vm: SettingsViewModel, update: Update, onIm
         title = stringResource(R.string.settings_import),
         summary = stringResource(R.string.settings_import_effect),
         onClick = onImport,
+        modifier = importFocus,
     )
     ActionRow(
         title = stringResource(if (exporting) R.string.settings_exporting else R.string.settings_export),

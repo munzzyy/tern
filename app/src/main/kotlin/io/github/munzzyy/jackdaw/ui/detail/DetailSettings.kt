@@ -45,7 +45,7 @@ import io.github.munzzyy.jackdaw.ui.common.ChoiceRow
 import io.github.munzzyy.jackdaw.ui.common.FileChoiceView
 import io.github.munzzyy.jackdaw.ui.common.SwitchRow
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
-import io.github.munzzyy.jackdaw.ui.common.verticalKeysLeave
+import io.github.munzzyy.jackdaw.ui.common.textFieldKeys
 import io.github.munzzyy.jackdaw.ui.text.breakableFingerprint
 import io.github.munzzyy.jackdaw.ui.text.canPickInstall
 import io.github.munzzyy.jackdaw.ui.text.formatFingerprint
@@ -196,7 +196,7 @@ private fun PatternField(label: Int, help: Int, value: String, invalid: Boolean,
         isError = invalid,
         singleLine = true,
         textStyle = MaterialTheme.typography.bodyLarge.copy(fontFamily = FontFamily.Monospace),
-        modifier = Modifier.fillMaxWidth().verticalKeysLeave(),
+        modifier = Modifier.fillMaxWidth().textFieldKeys(),
     )
 }
 
@@ -234,7 +234,7 @@ private fun AdvancedGroup(vm: DetailViewModel, config: AppConfig) {
                 label = { Text(stringResource(R.string.setting_categories)) },
                 supportingText = { Text(stringResource(R.string.setting_categories_help)) },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth().verticalKeysLeave(),
+                modifier = Modifier.fillMaxWidth().textFieldKeys(),
             )
             SaveDraft(vm, config)
         }
@@ -286,7 +286,7 @@ private fun PinnedSigners(config: AppConfig, save: ((AppConfig) -> AppConfig) ->
             isError = bad,
             singleLine = true,
             textStyle = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
-            modifier = Modifier.fillMaxWidth().verticalKeysLeave(),
+            modifier = Modifier.fillMaxWidth().textFieldKeys(),
         )
         OutlinedButton(
             onClick = {

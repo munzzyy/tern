@@ -35,7 +35,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -50,7 +49,9 @@ import io.github.munzzyy.jackdaw.engine.EventKind
 import io.github.munzzyy.jackdaw.ui.LocalEngine
 import io.github.munzzyy.jackdaw.ui.LocalSnackbar
 import io.github.munzzyy.jackdaw.ui.common.ConfirmDialog
-import io.github.munzzyy.jackdaw.ui.common.focusRing
+import io.github.munzzyy.jackdaw.ui.common.firstFocus
+import io.github.munzzyy.jackdaw.ui.common.rememberScreenFocus
+import io.github.munzzyy.jackdaw.ui.common.returnFocus
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
 import io.github.munzzyy.jackdaw.ui.text.formatDate
 import io.github.munzzyy.jackdaw.ui.text.formatTime
@@ -68,6 +69,7 @@ fun ActivityScreen(onOpenApp: (String) -> Unit) {
     val zone = remember { ZoneId.systemDefault() }
     val days = remember(events, problemsOnly) { groupByDay(events, zone, problemsOnly) }
     val today = LocalDate.now(zone)
+    val screen = rememberScreenFocus()
 
     Scaffold(
         topBar = {
@@ -89,7 +91,7 @@ fun ActivityScreen(onOpenApp: (String) -> Unit) {
                 .padding(padding),
         ) {
             item(key = "filter") {
-                Row(Modifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
+                Row(Modifier.padding(horizontal = 16.dp, vertical = 4.dp).firstFocus(screen)) {
                     FilterChip(
                         selected = problemsOnly,
                         onClick = { problemsOnly = !problemsOnly },
@@ -124,7 +126,7 @@ fun ActivityScreen(onOpenApp: (String) -> Unit) {
                             .semantics { heading() },
                     )
                 }
-                items(day.events, key = { "e-${it.id}" }) { event -> EventRow(event, onOpenApp) }
+                items(day.events, key = { "e-${it.id}" }) { event -> EventRow(event, onOpenApp, Modifier.returnFocus(screen, "e-${event.id}")) }
             }
         }
     }
@@ -147,7 +149,7 @@ private fun dayTitle(name: DayName): String = when (name) {
 }
 
 @Composable
-private fun EventRow(event: Event, onOpenApp: (String) -> Unit) {
+private fun EventRow(event: Event, onOpenApp: (String) -> Unit, focus: Modifier) {
     val scheme = MaterialTheme.colorScheme
     val problem = isProblem(event)
     val (icon, tint) = when {
@@ -159,7 +161,7 @@ private fun EventRow(event: Event, onOpenApp: (String) -> Unit) {
     val sentence = listOfNotNull(time, event.appName, event.message).joinToString(". ") { it.trimEnd('.') } + "."
     val appId = event.appId
     val clickable = if (appId != null) {
-        Modifier.focusRing(RectangleShape).selectable(selected = false, role = Role.Button, onClick = { onOpenApp(appId) })
+        focus.selectable(selected = false, role = Role.Button, onClick = { onOpenApp(appId) })
     } else {
         Modifier
     }

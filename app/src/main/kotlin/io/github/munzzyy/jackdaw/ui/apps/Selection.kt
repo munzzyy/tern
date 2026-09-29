@@ -54,8 +54,9 @@ import io.github.munzzyy.jackdaw.engine.Engine
 import io.github.munzzyy.jackdaw.ui.LocalOnline
 import io.github.munzzyy.jackdaw.ui.common.Actions
 import io.github.munzzyy.jackdaw.ui.common.ConfirmDialog
-import io.github.munzzyy.jackdaw.ui.common.focusRing
-import io.github.munzzyy.jackdaw.ui.common.verticalKeysLeave
+import io.github.munzzyy.jackdaw.ui.common.focusHighlight
+import io.github.munzzyy.jackdaw.ui.common.focusWhenShown
+import io.github.munzzyy.jackdaw.ui.common.textFieldKeys
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -86,7 +87,7 @@ private fun BulkMenu(picked: List<AppRow>, onAction: (BulkAction) -> Unit) {
     val online = LocalOnline.current
     Box {
         IconButton(onClick = { open = true }) { Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.action_more)) }
-        DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+        DropdownMenu(expanded = open, onDismissRequest = { open = false }, modifier = Modifier.focusHighlight()) {
             for ((action, label) in listOf(
                 BulkAction.CATEGORY to R.string.action_add_to_category,
                 BulkAction.CHECK to R.string.action_check_now,
@@ -198,6 +199,7 @@ private fun CategoryDialog(count: Int, categories: List<String>, onDismiss: () -
     var text by rememberSaveable { mutableStateOf("") }
     val clean = cleanCategory(text)
     AlertDialog(
+        modifier = Modifier.focusHighlight(),
         onDismissRequest = onDismiss,
         title = { Text(pluralStringResource(R.plurals.bulk_category_title, count, count)) },
         text = {
@@ -208,7 +210,7 @@ private fun CategoryDialog(count: Int, categories: List<String>, onDismiss: () -
                     singleLine = true,
                     label = { Text(stringResource(R.string.bulk_category_field)) },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                    modifier = Modifier.fillMaxWidth().verticalKeysLeave().testTag(BULK_CATEGORY_FIELD_TAG),
+                    modifier = Modifier.fillMaxWidth().textFieldKeys().testTag(BULK_CATEGORY_FIELD_TAG),
                 )
                 if (categories.isNotEmpty()) {
                     Text(stringResource(R.string.bulk_category_existing), style = MaterialTheme.typography.bodyMedium)
@@ -220,7 +222,6 @@ private fun CategoryDialog(count: Int, categories: List<String>, onDismiss: () -
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .heightIn(min = 48.dp)
-                                    .focusRing()
                                     .selectable(selected = clean == category, role = Role.RadioButton, onClick = { text = category }),
                             ) {
                                 RadioButton(selected = clean == category, onClick = null)
@@ -236,6 +237,6 @@ private fun CategoryDialog(count: Int, categories: List<String>, onDismiss: () -
                 Text(stringResource(R.string.action_add_to_category))
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss, modifier = Modifier.focusWhenShown()) { Text(stringResource(R.string.action_cancel)) } },
     )
 }

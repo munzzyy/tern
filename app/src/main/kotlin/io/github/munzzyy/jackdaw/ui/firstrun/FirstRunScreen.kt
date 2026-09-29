@@ -42,6 +42,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import io.github.munzzyy.jackdaw.R
+import io.github.munzzyy.jackdaw.ui.common.firstFocus
+import io.github.munzzyy.jackdaw.ui.common.rememberScreenFocus
 import io.github.munzzyy.jackdaw.ui.icons.Glyphs
 
 const val FIRST_RUN_ADD_TAG = "first_run_add"
@@ -54,6 +56,7 @@ fun FirstRunScreen(onAddFirst: () -> Unit, onSkip: () -> Unit) {
         mutableStateOf(!needsAsking || ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
     }
     var asked by remember { mutableStateOf(false) }
+    val screen = rememberScreenFocus()
     val ask = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
         granted = it
         asked = true
@@ -90,7 +93,7 @@ fun FirstRunScreen(onAddFirst: () -> Unit, onSkip: () -> Unit) {
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
             ) {
-                Button(onClick = onAddFirst, modifier = Modifier.fillMaxWidth().testTag(FIRST_RUN_ADD_TAG)) {
+                Button(onClick = onAddFirst, modifier = Modifier.fillMaxWidth().testTag(FIRST_RUN_ADD_TAG).firstFocus(screen)) {
                     Text(stringResource(R.string.action_add_first))
                 }
                 TextButton(onClick = onSkip, modifier = Modifier.align(Alignment.CenterHorizontally)) {

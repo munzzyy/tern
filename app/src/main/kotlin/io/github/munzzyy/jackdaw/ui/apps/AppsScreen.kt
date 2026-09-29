@@ -63,8 +63,14 @@ import io.github.munzzyy.jackdaw.ui.LocalEngine
 import io.github.munzzyy.jackdaw.ui.LocalOnline
 import io.github.munzzyy.jackdaw.ui.common.OfflineBanner
 import io.github.munzzyy.jackdaw.ui.LocalSnackbar
+import io.github.munzzyy.jackdaw.ui.common.ScreenFocus
+import io.github.munzzyy.jackdaw.ui.common.backupFocus
+import io.github.munzzyy.jackdaw.ui.common.focusHighlight
+import io.github.munzzyy.jackdaw.ui.common.firstFocus
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
-import io.github.munzzyy.jackdaw.ui.common.verticalKeysLeave
+import io.github.munzzyy.jackdaw.ui.common.rememberScreenFocus
+import io.github.munzzyy.jackdaw.ui.common.returnFocus
+import io.github.munzzyy.jackdaw.ui.common.textFieldKeys
 import io.github.munzzyy.jackdaw.ui.icons.Glyphs
 
 const val APP_LIST_TAG = "app_list"
@@ -92,6 +98,7 @@ fun AppsScreen(
     val picked = remember(selection, allRows) { selection?.let { ids -> allRows.filter { it.id in ids } }.orEmpty() }
     var pending by rememberSaveable { mutableStateOf<BulkAction?>(null) }
     BackHandler(enabled = selection != null) { vm.stopSelecting() }
+    val screen = rememberScreenFocus(active = selectedId == null)
 
     Scaffold(
         topBar = {
@@ -137,7 +144,7 @@ fun AppsScreen(
             ) {
                 when {
                     !state.loaded -> Unit
-                    state.total == 0 -> EmptyApps(onAdd)
+                    state.total == 0 -> EmptyApps(onAdd, Modifier.firstFocus(screen))
                     else -> AppList(
                         state = state,
                         query = query,
@@ -150,6 +157,7 @@ fun AppsScreen(
                         listState = listState,
                         selection = selection,
                         onSelect = { id -> if (selection == null) vm.startSelecting(id) else vm.toggle(id) },
+                        screen = screen,
                     )
                 }
                 if (checking) LinearProgressIndicator(Modifier.fillMaxWidth().align(Alignment.TopCenter))
@@ -168,7 +176,7 @@ private fun ScreenMenu(onSelect: () -> Unit) {
         IconButton(onClick = { open = true }) {
             Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.action_more))
         }
-        DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+        DropdownMenu(expanded = open, onDismissRequest = { open = false }, modifier = Modifier.focusHighlight()) {
             DropdownMenuItem(text = { Text(stringResource(R.string.action_select)) }, onClick = { open = false; onSelect() })
         }
     }
@@ -187,10 +195,17 @@ private fun AppList(
     listState: LazyListState,
     selection: Set<String>?,
     onSelect: (String) -> Unit,
+    screen: ScreenFocus,
 ) {
     val sections = state.sections
+    val firstId = (sections.updates.firstOrNull() ?: sections.others.firstOrNull())?.id
+    val rowFocus: (String) -> Modifier = { id ->
+        Modifier.returnFocus(screen, id).then(if (id == firstId) Modifier.firstFocus(screen) else Modifier)
+    }
     LazyColumn(state = listState, contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize().testTag(APP_LIST_TAG)) {
-        item(key = "search", contentType = "search") { SearchField(text, onText) }
+        item(key = "search", contentType = "search") {
+            SearchField(text, onText, Modifier.backupFocus(screen))
+        }
         item(key = "filters", contentType = "filters") { FilterChips(state.categories, query.filter, onFilter) }
         if (sections.isEmpty) {
             item(key = "nomatch", contentType = "message") {
@@ -206,13 +221,13 @@ private fun AppList(
             item(key = "h-updates", contentType = "header") {
                 UpdatesHeader(sections.updates.size, if (selection == null) state.updatable else 0, onUpdateAll)
             }
-            rows(sections.updates, selectedId, onOpen, selection, onSelect)
+            rows(sections.updates, selectedId, onOpen, selection, onSelect, rowFocus)
         }
         if (sections.others.isNotEmpty()) {
             if (sections.updates.isNotEmpty()) {
                 item(key = "h-others", contentType = "header") { ListHeader(stringResource(R.string.apps_section_others)) }
             }
-            rows(sections.others, selectedId, onOpen, selection, onSelect)
+            rows(sections.others, selectedId, onOpen, selection, onSelect, rowFocus)
         }
     }
 }
@@ -223,12 +238,14 @@ private fun androidx.compose.foundation.lazy.LazyListScope.rows(
     onOpen: (String) -> Unit,
     selection: Set<String>?,
     onSelect: (String) -> Unit,
+    rowFocus: (String) -> Modifier,
 ) {
     items(rows, key = { it.id }, contentType = { "row" }) { row ->
         AppRowItem(
             row,
             selected = row.id == selectedId,
             onOpen = { onOpen(row.id) },
+            modifier = rowFocus(row.id),
             selecting = selection != null,
             checked = selection?.contains(row.id) == true,
             onSelect = { onSelect(row.id) },
@@ -278,7 +295,7 @@ private fun UpdatesHeader(count: Int, updatable: Int, onUpdateAll: () -> Unit) {
 }
 
 @Composable
-private fun SearchField(text: String, onText: (String) -> Unit) {
+private fun SearchField(text: String, onText: (String) -> Unit, focus: Modifier) {
     OutlinedTextField(
         value = text,
         onValueChange = onText,
@@ -298,7 +315,8 @@ private fun SearchField(text: String, onText: (String) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 4.dp)
-            .verticalKeysLeave(),
+            .then(focus)
+            .textFieldKeys(),
     )
 }
 
@@ -339,7 +357,7 @@ private fun SortMenu(current: AppSort, onSort: (AppSort) -> Unit) {
         IconButton(onClick = { open = true }) {
             Icon(Glyphs.Sort, contentDescription = stringResource(R.string.sort_title))
         }
-        DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+        DropdownMenu(expanded = open, onDismissRequest = { open = false }, modifier = Modifier.focusHighlight()) {
             for (sort in AppSort.entries) {
                 DropdownMenuItem(
                     text = { Text(stringResource(sortLabel(sort))) },
@@ -361,7 +379,7 @@ private fun sortLabel(sort: AppSort): Int = when (sort) {
 }
 
 @Composable
-private fun EmptyApps(onAdd: () -> Unit) {
+private fun EmptyApps(onAdd: () -> Unit, focus: Modifier) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -376,6 +394,6 @@ private fun EmptyApps(onAdd: () -> Unit) {
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        FilledTonalButton(onClick = onAdd) { Text(stringResource(R.string.action_add_first)) }
+        FilledTonalButton(onClick = onAdd, modifier = focus) { Text(stringResource(R.string.action_add_first)) }
     }
 }

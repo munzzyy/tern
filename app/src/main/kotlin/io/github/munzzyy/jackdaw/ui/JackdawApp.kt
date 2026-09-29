@@ -54,6 +54,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -67,6 +69,10 @@ import io.github.munzzyy.jackdaw.R
 import io.github.munzzyy.jackdaw.engine.Engine
 import io.github.munzzyy.jackdaw.ui.activity.ActivityScreen
 import io.github.munzzyy.jackdaw.ui.add.AddScreen
+import io.github.munzzyy.jackdaw.ui.common.LocalNoTouch
+import io.github.munzzyy.jackdaw.ui.common.focusHighlight
+import io.github.munzzyy.jackdaw.ui.common.verticalFocusStaysInside
+import io.github.munzzyy.jackdaw.ui.common.lacksTouch
 import io.github.munzzyy.jackdaw.ui.apps.AppsScreen
 import io.github.munzzyy.jackdaw.ui.detail.DetailScreen
 import io.github.munzzyy.jackdaw.ui.firstrun.FirstRunScreen
@@ -92,22 +98,28 @@ fun JackdawApp(
 ) {
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val configuration = LocalConfiguration.current
+    val noTouch = remember(configuration) { context.lacksTouch() }
     CompositionLocalProvider(
+        LocalNoTouch provides noTouch,
         LocalEngine provides engine,
         LocalSnackbar provides snackbar,
         LocalActionScope provides scope,
         LocalReducedMotion provides reducedMotion,
     ) {
-        if (!firstRunDone) {
-            FirstRunScreen(
-                onAddFirst = {
-                    onFirstRunDone()
-                    stack.select(Tab.ADD)
-                },
-                onSkip = onFirstRunDone,
-            )
-        } else {
-            Shell(stack)
+        Box(Modifier.fillMaxSize().focusHighlight()) {
+            if (!firstRunDone) {
+                FirstRunScreen(
+                    onAddFirst = {
+                        onFirstRunDone()
+                        stack.select(Tab.ADD)
+                    },
+                    onSkip = onFirstRunDone,
+                )
+            } else {
+                Shell(stack)
+            }
         }
     }
 }
@@ -204,7 +216,8 @@ private fun Shell(stack: BackStack) {
                             .weight(1f)
                             .fillMaxHeight()
                             .consumeWindowInsets(railInsets.only(WindowInsetsSides.Start))
-                            .then(backModifier),
+                            .then(backModifier)
+                            .verticalFocusStaysInside(),
                     ) {
                         Pane(stack, holder, current, twoPane)
                     }
@@ -220,7 +233,7 @@ private fun Pane(stack: BackStack, holder: SaveableStateHolder, current: Route, 
     val showList = twoPane && (current == Route.Apps || current is Route.Detail)
     if (showList) {
         Row(Modifier.fillMaxSize()) {
-            Box(Modifier.width(LIST_PANE_WIDTH).fillMaxHeight()) {
+            Box(Modifier.width(LIST_PANE_WIDTH).fillMaxHeight().verticalFocusStaysInside()) {
                 holder.SaveableStateProvider("apps") {
                     AppsScreen(
                         selectedId = (current as? Route.Detail)?.appId,
@@ -231,7 +244,7 @@ private fun Pane(stack: BackStack, holder: SaveableStateHolder, current: Route, 
                 }
             }
             VerticalDivider()
-            Box(Modifier.weight(1f).fillMaxHeight()) {
+            Box(Modifier.weight(1f).fillMaxHeight().verticalFocusStaysInside()) {
                 if (current is Route.Detail) {
                     Screens(stack, holder, current, listState, twoPane = true)
                 } else {

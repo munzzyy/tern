@@ -94,7 +94,6 @@ fun SwitchRow(
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
         modifier = Modifier
             .heightIn(min = 56.dp)
-            .focusRing()
             .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onChange),
     )
 }
@@ -106,15 +105,15 @@ fun ActionRow(
     summary: String? = null,
     icon: ImageVector? = null,
     tint: Color = Color.Unspecified,
+    modifier: Modifier = Modifier,
 ) {
     ListItem(
         headlineContent = { Text(title, color = tint) },
         supportingContent = summary?.let { { Text(it) } },
         leadingContent = icon?.let { { Icon(it, contentDescription = null, tint = if (tint == Color.Unspecified) MaterialTheme.colorScheme.onSurfaceVariant else tint) } },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-        modifier = Modifier
+        modifier = modifier
             .heightIn(min = 56.dp)
-            .focusRing()
             .selectable(selected = false, role = Role.Button, onClick = onClick),
     )
 }
@@ -136,7 +135,6 @@ fun <T> ChoiceRow(
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
         modifier = Modifier
             .heightIn(min = 56.dp)
-            .focusRing()
             .selectable(selected = false, role = Role.Button, onClick = { open = true }),
     )
     if (open) {
@@ -157,6 +155,7 @@ fun <T> ChoiceDialog(
     onSelect: (T) -> Unit,
 ) {
     AlertDialog(
+        modifier = Modifier.focusHighlight(),
         onDismissRequest = onDismiss,
         title = { Text(title) },
         text = {
@@ -168,7 +167,7 @@ fun <T> ChoiceDialog(
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 48.dp)
-                            .focusRing()
+                            .then(if (option == selected) Modifier.focusWhenShown() else Modifier)
                             .selectable(selected = option == selected, role = Role.RadioButton, onClick = { onSelect(option) }),
                     ) {
                         RadioButton(selected = option == selected, onClick = null)
@@ -190,6 +189,7 @@ fun ConfirmDialog(
     onDismiss: () -> Unit,
 ) {
     AlertDialog(
+        modifier = Modifier.focusHighlight(),
         onDismissRequest = onDismiss,
         title = { Text(title) },
         text = { Text(text) },
@@ -199,7 +199,7 @@ fun ConfirmDialog(
                 onDismiss()
             }) { Text(confirm) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss, modifier = Modifier.focusWhenShown()) { Text(stringResource(R.string.action_cancel)) } },
     )
 }
 

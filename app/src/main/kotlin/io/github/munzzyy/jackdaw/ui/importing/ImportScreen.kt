@@ -49,6 +49,9 @@ import io.github.munzzyy.jackdaw.ui.LocalEngine
 import io.github.munzzyy.jackdaw.ui.LocalSnackbar
 import io.github.munzzyy.jackdaw.ui.common.ProblemBox
 import io.github.munzzyy.jackdaw.ui.common.SectionHeader
+import io.github.munzzyy.jackdaw.ui.common.backupFocus
+import io.github.munzzyy.jackdaw.ui.common.firstFocus
+import io.github.munzzyy.jackdaw.ui.common.rememberScreenFocus
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -100,13 +103,14 @@ fun ImportScreen(onBack: () -> Unit, onOpenApp: (String) -> Unit = {}) {
     val starsState by stars.state.collectAsStateWithLifecycle()
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri -> uri?.let(vm::import) }
     val pick = { picker.launch(arrayOf("application/json", "text/plain", "application/octet-stream")) }
+    val screen = rememberScreenFocus()
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.import_title)) },
                 navigationIcon = {
-                    IconButton(onClick = onBack) {
+                    IconButton(onClick = onBack, modifier = Modifier.backupFocus(screen)) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.action_back))
                     }
                 },
@@ -123,7 +127,7 @@ fun ImportScreen(onBack: () -> Unit, onOpenApp: (String) -> Unit = {}) {
         ) {
             item(key = "file-heading") { SectionHeader(stringResource(R.string.import_file_heading)) }
             item(key = "file") {
-                Padded {
+                Padded(Modifier.firstFocus(screen)) {
                     Text(stringResource(R.string.import_explain), style = MaterialTheme.typography.bodyLarge)
                     FileState(state, pick, vm::cancel, onOpenApp)
                 }
@@ -135,10 +139,10 @@ fun ImportScreen(onBack: () -> Unit, onOpenApp: (String) -> Unit = {}) {
 }
 
 @Composable
-fun Padded(content: @Composable () -> Unit) {
+fun Padded(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier
+        modifier = modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .widthIn(max = 720.dp),
     ) { content() }

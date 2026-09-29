@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
@@ -52,6 +51,7 @@ fun LinkDialog(url: String, onDismiss: () -> Unit, note: String? = null) {
     val clipboard = LocalClipboard.current
     val actions = rememberActions()
     AlertDialog(
+        modifier = Modifier.focusHighlight(),
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.link_dialog_title)) },
         text = {
@@ -69,10 +69,13 @@ fun LinkDialog(url: String, onDismiss: () -> Unit, note: String? = null) {
             }) { Text(stringResource(R.string.link_open)) }
         },
         dismissButton = {
-            TextButton(onClick = {
-                actions.run { clipboard.setClipEntry(ClipEntry(ClipData.newPlainText(url, url))) }
-                onDismiss()
-            }) { Text(stringResource(R.string.action_copy)) }
+            TextButton(
+                onClick = {
+                    actions.run { clipboard.setClipEntry(ClipEntry(ClipData.newPlainText(url, url))) }
+                    onDismiss()
+                },
+                modifier = Modifier.focusWhenShown(),
+            ) { Text(stringResource(R.string.action_copy)) }
         },
     )
 }
@@ -87,7 +90,6 @@ fun LinkText(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
         textDecoration = TextDecoration.Underline,
         modifier = modifier
             .heightIn(min = 48.dp)
-            .focusRing(RoundedCornerShape(4.dp))
             .clickable(role = Role.Button, onClick = onClick)
             .wrapContentHeight()
             .padding(vertical = 4.dp),

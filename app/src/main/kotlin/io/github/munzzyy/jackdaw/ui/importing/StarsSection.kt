@@ -26,7 +26,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -38,8 +37,7 @@ import io.github.munzzyy.jackdaw.R
 import io.github.munzzyy.jackdaw.engine.SearchHit
 import io.github.munzzyy.jackdaw.ui.common.ProblemBox
 import io.github.munzzyy.jackdaw.ui.common.SectionHeader
-import io.github.munzzyy.jackdaw.ui.common.focusRing
-import io.github.munzzyy.jackdaw.ui.common.verticalKeysLeave
+import io.github.munzzyy.jackdaw.ui.common.textFieldKeys
 
 const val STARS_USER_TAG = "stars_user"
 const val STARS_SHOW_TAG = "stars_show"
@@ -107,7 +105,7 @@ private fun AskUser(onLook: (String) -> Unit, problem: StarsState.Failed?) {
             keyboardActions = KeyboardActions(onSearch = { if (ready) onLook(user) }),
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalKeysLeave()
+                .textFieldKeys()
                 .testTag(STARS_USER_TAG),
         )
         Button(onClick = { onLook(user) }, enabled = ready, modifier = Modifier.testTag(STARS_SHOW_TAG)) {
@@ -123,7 +121,6 @@ private fun StarRow(hit: SearchHit, picked: Boolean, onToggle: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 56.dp)
-            .focusRing(RectangleShape)
             .toggleable(value = picked, role = Role.Checkbox, onValueChange = { onToggle() })
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .widthIn(max = 720.dp),

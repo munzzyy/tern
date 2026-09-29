@@ -55,8 +55,10 @@ import io.github.munzzyy.jackdaw.ui.LocalOnline
 import io.github.munzzyy.jackdaw.ui.common.OfflineBanner
 import io.github.munzzyy.jackdaw.ui.LocalSnackbar
 import io.github.munzzyy.jackdaw.ui.common.ProblemBox
-import io.github.munzzyy.jackdaw.ui.common.focusRing
-import io.github.munzzyy.jackdaw.ui.common.verticalKeysLeave
+import io.github.munzzyy.jackdaw.ui.common.firstFocus
+import io.github.munzzyy.jackdaw.ui.common.focusWhenShown
+import io.github.munzzyy.jackdaw.ui.common.rememberScreenFocus
+import io.github.munzzyy.jackdaw.ui.common.textFieldKeys
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
 import io.github.munzzyy.jackdaw.ui.MAX_INCOMING_CHARS
 
@@ -77,6 +79,7 @@ fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: 
 
     val online = LocalOnline.current
     val offlineReason = stringResource(R.string.offline_reason)
+    val screen = rememberScreenFocus()
     LaunchedEffect(prefill, nonce) { vm.prefill(prefill, nonce) }
     LaunchedEffect(added) {
         added?.let {
@@ -116,7 +119,8 @@ fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: 
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag(ADD_FIELD_TAG)
-                        .verticalKeysLeave(),
+                        .firstFocus(screen)
+                        .textFieldKeys(),
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End), modifier = Modifier.fillMaxWidth()) {
                     TextButton(onClick = {
@@ -142,21 +146,24 @@ fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: 
                         body = null,
                         action = stringResource(R.string.action_try_again),
                         onAction = { vm.detect() },
+                        modifier = Modifier.focusWhenShown(),
                     )
-                    is AddState.Answer -> when (val d = s.detection) {
-                        is Detection.Found -> PreviewCard(
-                            found = d,
-                            carried = remember(d) { vm.carried(d) },
-                            onAdd = { install -> vm.add(d, install) },
-                            onShow = onShow,
-                        )
-                        is Detection.Results -> SearchResults(d, onPick = { vm.detect(it.url) })
-                        is Detection.Failed -> ProblemBox(
-                            title = d.problem.message,
-                            body = stringResource(io.github.munzzyy.jackdaw.ui.text.problemAdvice(d.problem.kind, installed = false)),
-                            action = stringResource(R.string.action_try_again),
-                            onAction = { vm.detect() },
-                        )
+                    is AddState.Answer -> Column(Modifier.focusWhenShown(revealTop = true)) {
+                        when (val d = s.detection) {
+                            is Detection.Found -> PreviewCard(
+                                found = d,
+                                carried = remember(d) { vm.carried(d) },
+                                onAdd = { install -> vm.add(d, install) },
+                                onShow = onShow,
+                            )
+                            is Detection.Results -> SearchResults(d, onPick = { vm.detect(it.url) })
+                            is Detection.Failed -> ProblemBox(
+                                title = d.problem.message,
+                                body = stringResource(io.github.munzzyy.jackdaw.ui.text.problemAdvice(d.problem.kind, installed = false)),
+                                action = stringResource(R.string.action_try_again),
+                                onAction = { vm.detect() },
+                            )
+                        }
                     }
                 }
             }
@@ -175,7 +182,7 @@ private fun Busy(text: String, onCancel: (() -> Unit)?) {
     ) {
         CircularProgressIndicator()
         Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-        onCancel?.let { TextButton(onClick = it) { Text(stringResource(R.string.action_cancel)) } }
+        onCancel?.let { TextButton(onClick = it, modifier = Modifier.focusWhenShown()) { Text(stringResource(R.string.action_cancel)) } }
     }
 }
 
@@ -206,7 +213,6 @@ private fun SearchResults(results: Detection.Results, onPick: (SearchHit) -> Uni
                 modifier = Modifier
                     .heightIn(min = 56.dp)
                     .widthIn(max = 720.dp)
-                    .focusRing()
                     .selectable(selected = false, role = Role.Button, onClick = { onPick(hit) }),
             )
         }

@@ -63,6 +63,9 @@ import io.github.munzzyy.jackdaw.ui.common.ProblemBox
 import io.github.munzzyy.jackdaw.ui.common.StatusPill
 import io.github.munzzyy.jackdaw.ui.common.sourceText
 import io.github.munzzyy.jackdaw.ui.common.VerificationPanel
+import io.github.munzzyy.jackdaw.ui.common.backupFocus
+import io.github.munzzyy.jackdaw.ui.common.firstFocus
+import io.github.munzzyy.jackdaw.ui.common.rememberScreenFocus
 import io.github.munzzyy.jackdaw.ui.common.confirmInstall
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
 import io.github.munzzyy.jackdaw.ui.icons.AppIcon
@@ -90,6 +93,7 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit) {
     val current = row
     val listState = rememberLazyListState()
     val headerGone by remember { derivedStateOf { listState.firstVisibleItemIndex > 0 } }
+    val screen = rememberScreenFocus()
 
     Scaffold(
         topBar = {
@@ -122,8 +126,8 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit) {
                 .padding(padding)
                 .testTag(DETAIL_LIST_TAG),
         ) {
-            item(key = "header") { Header(current) }
-            item(key = "action") { ActionArea(current) }
+            item(key = "header") { Header(current, Modifier.backupFocus(screen)) }
+            item(key = "action") { ActionArea(current, Modifier.firstFocus(screen)) }
             val moveState = move
             if (current.movedTo != null || moveState is MoveState.Refused || moveState == MoveState.Followed) {
                 item(key = "moved") { MovedBox(current.movedTo, moveState, vm) }
@@ -159,12 +163,12 @@ fun SectionTitle(text: String) {
 }
 
 @Composable
-private fun Header(row: AppRow) {
+private fun Header(row: AppRow, focus: Modifier) {
     var link by remember { mutableStateOf<String?>(null) }
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier = focus.padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
         AppIcon(row, size = 48.dp)
         Column(Modifier.weight(1f)) {
@@ -183,7 +187,7 @@ private fun Header(row: AppRow) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ActionArea(row: AppRow) {
+private fun ActionArea(row: AppRow, focus: Modifier) {
     val engine = LocalEngine.current
     val actions = rememberActions()
     val noLauncher = stringResource(R.string.open_no_launcher)
@@ -229,7 +233,7 @@ private fun ActionArea(row: AppRow) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp), modifier = focus) {
             primaryAction(row)?.let { action ->
                 Button(
                     onClick = {

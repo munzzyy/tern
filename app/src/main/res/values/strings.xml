@@ -123,12 +123,17 @@
         <item quantity="other">Add %d apps to a category</item>
     </plurals>
     <string name="bulk_category_field">Category</string>
+    <!-- %1$d is how many apps, %2$s the category name. -->
+    <plurals name="bulk_category_done">
+        <item quantity="one">Filed %1$d app under %2$s.</item>
+        <item quantity="other">Filed %1$d apps under %2$s.</item>
+    </plurals>
     <string name="bulk_category_existing">Or pick one you already use:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Check %d app now?</item>
         <item quantity="other">Check %d apps now?</item>
     </plurals>
-    <string name="bulk_check_text">Jackdaw asks each source for its newest release. Nothing is downloaded.</string>
+    <string name="bulk_check_text">Jackdaw asks each source for its newest release. Nothing is installed.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">Update %d app?</item>
         <item quantity="other">Update %d apps?</item>

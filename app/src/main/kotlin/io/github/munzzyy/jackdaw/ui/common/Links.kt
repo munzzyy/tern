@@ -55,11 +55,11 @@ fun LinkDialog(url: String, onDismiss: () -> Unit, note: String? = null) {
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.link_dialog_title)) },
         text = {
-            Column(Modifier.heightIn(max = 280.dp).verticalScroll(rememberScrollState())) {
-                note?.let { Text(it, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(bottom = 12.dp)) }
+            Column(Modifier.heightIn(max = 360.dp).verticalScroll(rememberScrollState())) {
                 SelectionContainer {
                     Text(url, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.fillMaxWidth())
                 }
+                note?.let { Text(it, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 12.dp)) }
             }
         },
         confirmButton = {

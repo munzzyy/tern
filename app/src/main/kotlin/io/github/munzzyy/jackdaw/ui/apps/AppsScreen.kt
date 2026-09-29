@@ -97,9 +97,10 @@ fun AppsScreen(
         topBar = {
             if (selection != null) {
                 SelectionTopBar(
-                    count = picked.size,
+                    picked = picked,
                     onClose = vm::stopSelecting,
                     onSelectAll = { vm.selectAll(state.sections.updates.map { it.id } + state.sections.others.map { it.id }) },
+                    onAction = { pending = it },
                 )
                 return@Scaffold
             }
@@ -203,7 +204,7 @@ private fun AppList(
         }
         if (sections.updates.isNotEmpty()) {
             item(key = "h-updates", contentType = "header") {
-                UpdatesHeader(sections.updates.size, state.updatable, onUpdateAll)
+                UpdatesHeader(sections.updates.size, if (selection == null) state.updatable else 0, onUpdateAll)
             }
             rows(sections.updates, selectedId, onOpen, selection, onSelect)
         }

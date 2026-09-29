@@ -272,6 +272,7 @@ function start() {
       if (request.status === 200) {
         code = used;
         codePart.hidden = true;
+        codeField.value = '';
         field.value = '';
       }
       if (request.status === 403) {

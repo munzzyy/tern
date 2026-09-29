@@ -175,22 +175,89 @@ class OrbotTest {
     }
 
     @Test
-    fun noAnswerInTimeIsUnknown() {
-        val watch = OrbotWatch(scope, installed = { true }, send = {}, answerWithinMs = 100)
+    fun anOrbotThatSaysNothingAndHasNoProxyRunningIsOff() {
+        val watch = OrbotWatch(scope, installed = { true }, send = {}, answerWithinMs = 100, probe = { false })
         watch.heard(Orbot.Answer(OrbotState.ON, 9150))
         assertEquals(OrbotState.ON, watch.state.value)
         watch.ask()
-        waitFor(watch, OrbotState.UNKNOWN)
+        waitFor(watch, OrbotState.OFF)
         assertNull(watch.port)
     }
 
     @Test
-    fun aRequestThatCannotBeSentIsUnknown() {
-        val watch = OrbotWatch(scope, installed = { true }, send = { throw SecurityException("refused") }, answerWithinMs = 5_000)
+    fun aRequestThatCannotBeSentLeavesTheProxyToSay() {
+        val watch = OrbotWatch(scope, installed = { true }, send = { throw SecurityException("refused") }, answerWithinMs = 5_000, probe = { false })
         watch.heard(Orbot.Answer(OrbotState.ON, 9150))
         watch.ask()
-        waitFor(watch, OrbotState.UNKNOWN)
+        waitFor(watch, OrbotState.OFF)
         assertNull(watch.port)
+    }
+
+    /** Orbot from 2026-09-15 on: it answers no request, and its proxy is the only thing to ask. */
+    @Test
+    fun anOrbotThatSaysNothingIsOnWhenItsProxyAnswers() {
+        val sent = AtomicInteger()
+        val asked = java.util.concurrent.CopyOnWriteArrayList<Int>()
+        val watch = OrbotWatch(scope, installed = { true }, send = { sent.incrementAndGet() }, answerWithinMs = 100, probe = { asked += it; it == 9050 })
+        watch.ask()
+        waitFor(watch, OrbotState.ON)
+        assertEquals(9050, watch.port)
+        assertEquals(listOf(9050), asked.toList())
+        assertEquals("a proxy that answers needs no request", 0, sent.get())
+    }
+
+    @Test
+    fun aProxyThatStartsToAnswerAfterTheRequestCountsToo() {
+        val probes = AtomicInteger()
+        val watch = OrbotWatch(scope, installed = { true }, send = {}, answerWithinMs = 100, probe = { probes.incrementAndGet() > 1 })
+        watch.ask()
+        waitFor(watch, OrbotState.ON)
+        assertEquals(9050, watch.port)
+    }
+
+    @Test
+    fun thePortAnOlderOrbotNamedIsAskedFirstAndItsUsualOneAfterIt() {
+        val asked = java.util.concurrent.CopyOnWriteArrayList<Int>()
+        val watch = OrbotWatch(scope, installed = { true }, send = {}, answerWithinMs = 100, probe = { asked += it; it == 9050 })
+        watch.heard(Orbot.Answer(OrbotState.ON, 9150))
+        watch.ask()
+        waitFor(watch, OrbotState.ON)
+        runBlocking { withTimeout(5_000) { while (watch.port != 9050) kotlinx.coroutines.delay(10) } }
+        assertEquals(listOf(9150, 9050), asked.toList())
+    }
+
+    @Test
+    fun onlyAPortOnThisDeviceIsEverAsked() {
+        assertEquals(false, io.github.munzzyy.stamp.net.ProxyProbe.answers(0))
+        assertEquals(false, io.github.munzzyy.stamp.net.ProxyProbe.answers(65536))
+        val nobody = java.net.ServerSocket(0).use { it.localPort }
+        assertEquals(false, io.github.munzzyy.stamp.net.ProxyProbe.answers(nobody, withinMs = 500))
+    }
+
+    @Test
+    fun aProxyThatSaysHelloTheWayOfSocksAnswersAndAnythingElseDoesNot() {
+        fun server(reply: ByteArray): Pair<java.net.ServerSocket, java.util.concurrent.CopyOnWriteArrayList<List<Int>>> {
+            val heard = java.util.concurrent.CopyOnWriteArrayList<List<Int>>()
+            val socket = java.net.ServerSocket(0, 5, java.net.InetAddress.getByAddress(byteArrayOf(127, 0, 0, 1)))
+            Thread {
+                try {
+                    socket.accept().use { client ->
+                        val input = client.getInputStream()
+                        heard += listOf(input.read(), input.read(), input.read())
+                        client.getOutputStream().apply { write(reply); flush() }
+                    }
+                } catch (_: java.io.IOException) {
+                }
+            }.apply { isDaemon = true }.start()
+            return socket to heard
+        }
+        val (socks, heard) = server(byteArrayOf(5, 0))
+        socks.use { assertEquals(true, io.github.munzzyy.stamp.net.ProxyProbe.answers(it.localPort)) }
+        assertEquals(listOf(listOf(5, 1, 0)), heard.toList())
+        val (web, _) = server("HT".toByteArray())
+        web.use { assertEquals(false, io.github.munzzyy.stamp.net.ProxyProbe.answers(it.localPort)) }
+        val (wantsLogin, _) = server(byteArrayOf(5, 2))
+        wantsLogin.use { assertEquals(false, io.github.munzzyy.stamp.net.ProxyProbe.answers(it.localPort)) }
     }
 
     @Test
@@ -220,6 +287,7 @@ class OrbotTest {
     fun anAnswerThatComesRightAfterTheQuestionCounts() {
         val watch = OrbotWatch(scope, installed = { true }, send = {}, answerWithinMs = 300)
         watch.ask()
+        Thread.sleep(50)
         watch.heard(Orbot.Answer(OrbotState.ON, 9150))
         Thread.sleep(600)
         assertEquals(OrbotState.ON, watch.state.value)

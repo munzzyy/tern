@@ -4,13 +4,15 @@
 # Every request leaves through net/UrlConnectionHttp.kt, which opens its connection through the
 # proxy the user chose and hands the name of the host to that proxy unresolved. A second place that
 # opens a connection, makes a socket or resolves a name would go round the proxy, and nothing else
-# would notice. The handoff in core/handoff listens on the local network; it alone makes sockets.
+# would notice. The handoff in core/handoff listens on the local network, and net/ProxyProbe.kt asks
+# the proxy on this device whether it is there. No other place makes a socket.
 #
 #   tools/check-network-doors.sh [root of the source tree]
 set -euo pipefail
 ROOT="${1:-$(cd "$(dirname "$0")/.." && pwd)}"
 DOOR="app/src/main/kotlin/io/github/munzzyy/stamp/net/UrlConnectionHttp.kt"
 HANDOFF="core/src/main/kotlin/io/github/munzzyy/stamp/core/handoff/"
+PROBE="app/src/main/kotlin/io/github/munzzyy/stamp/net/ProxyProbe.kt"
 fail=0
 
 cd "$ROOT"
@@ -20,13 +22,16 @@ for tree in app/src/main app/src/release core/src/main; do
   [ -d "$tree" ] && trees+=("$tree")
 done
 
-# what it is, the pattern, the path that may hold it (a file, a folder ending in /, or - for none)
+# what it is, the pattern, then the paths that may hold it (a file, a folder ending in /, or - for none)
 check() {
-  local what="$1" pattern="$2" allowed="$3" hits
+  local what="$1" pattern="$2" allowed hits
+  shift 2
   hits=$(grep -rnE --include='*.kt' --include='*.java' -- "$pattern" "${trees[@]}" || true)
-  if [ "$allowed" != "-" ] && [ -n "$hits" ]; then
-    hits=$(printf '%s\n' "$hits" | grep -vF -- "$allowed" || true)
-  fi
+  for allowed in "$@"; do
+    if [ "$allowed" != "-" ] && [ -n "$hits" ]; then
+      hits=$(printf '%s\n' "$hits" | grep -vF -- "$allowed" || true)
+    fi
+  done
   if [ -n "$hits" ]; then
     echo "FAIL $what"
     printf '%s\n' "$hits" | sed 's/^/       /'
@@ -47,8 +52,21 @@ else
 fi
 
 check "a connection opened outside $DOOR" 'openConnection\(|\.openStream\(' "$DOOR:"
-check "a socket made outside $HANDOFF" '(^|[^A-Za-z0-9_])(Socket|ServerSocket|DatagramSocket|MulticastSocket)\(|createSocket\(|SocketChannel|DatagramChannel' "$HANDOFF"
-check "an address made from a name outside $HANDOFF, which resolves it on this device" '(^|[^A-Za-z0-9_])InetSocketAddress\(' "$HANDOFF"
+check "a socket made outside $HANDOFF and $PROBE" '(^|[^A-Za-z0-9_])(Socket|ServerSocket|DatagramSocket|MulticastSocket)\(|createSocket\(|SocketChannel|DatagramChannel' "$HANDOFF" "$PROBE:"
+check "an address made from a name outside $HANDOFF, which resolves it on this device" '(^|[^A-Za-z0-9_])InetSocketAddress\(' "$HANDOFF" "$PROBE:"
+
+# The probe asks the proxy on this device whether it is there. It may go to 127.0.0.1 and nowhere else.
+if [ -f "$PROBE" ]; then
+  to=$(grep -nE 'InetSocketAddress\(|\.connect\(' "$PROBE" | grep -vF 'InetSocketAddress(InetAddress.getByAddress(THIS_DEVICE), port)' || true)
+  device=$(grep -cF 'THIS_DEVICE = byteArrayOf(127, 0, 0, 1)' "$PROBE" || true)
+  if [ -z "$to" ] && [ "$device" -eq 1 ]; then
+    echo "ok   the probe connects to 127.0.0.1 and nowhere else"
+  else
+    echo "FAIL the probe connects to something other than 127.0.0.1"
+    printf '%s\n' "$to" | sed 's/^/       /'
+    fail=1
+  fi
+fi
 check "a name resolved on this device" 'getByName\(|getAllByName\(' "-"
 
 [ "$fail" -eq 0 ] && echo "ok   the network has one door"

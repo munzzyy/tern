@@ -2,6 +2,7 @@ package io.github.munzzyy.stamp.net
 
 import io.github.munzzyy.stamp.engine.OrbotState
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 
 /**
@@ -60,21 +62,25 @@ object Orbot {
 }
 
 /**
- * Asks Orbot and keeps what it last said. [installed] and [send] are the two things that need
- * Android; answers come in through [heard].
+ * Finds out how Orbot is doing and keeps what it last found. Orbot took out the way for other
+ * apps to ask it on 2026-09-15 (its commit 3ae39bc554), so the proxy itself is asked first: a
+ * SOCKS proxy that answers at Orbot's port on this device means Orbot is on. An older Orbot is
+ * still sent the request and can name another port. [installed], [send] and [probe] are the
+ * three things that need Android or a socket; answers come in through [heard].
  */
 class OrbotWatch(
     private val scope: CoroutineScope,
     private val installed: () -> Boolean,
     private val send: () -> Unit,
-    private val answerWithinMs: Long = 10_000,
+    private val answerWithinMs: Long = 3_000,
     private val askAgainAfterMs: Long = 3_000,
     private val askAgainTimes: Int = 40,
+    private val probe: (port: Int) -> Boolean = { false },
 ) {
     private val _state = MutableStateFlow(OrbotState.UNKNOWN)
     val state: StateFlow<OrbotState> = _state.asStateFlow()
 
-    /** The port of the last answer, when that answer said Orbot is on. */
+    /** The port of the proxy, when it answered there or Orbot named it while it was on. */
     @Volatile
     var port: Int? = null
         private set
@@ -82,7 +88,7 @@ class OrbotWatch(
     private val answers = MutableStateFlow(0L)
     private var asking: Job? = null
 
-    /** Asks now, and again while Orbot says it is starting. Without an answer in time nothing is known. */
+    /** Asks now, and again while an older Orbot says it is starting. A proxy that does not answer and an Orbot that says nothing is off. */
     @Synchronized
     fun ask() {
         asking?.cancel()
@@ -92,6 +98,7 @@ class OrbotWatch(
         }
         var before = answers.value
         asking = scope.launch {
+            if (found()) return@launch
             repeat(askAgainTimes) {
                 val sent = try {
                     send()
@@ -101,7 +108,7 @@ class OrbotWatch(
                 }
                 val answered = sent && withTimeoutOrNull(answerWithinMs) { answers.first { it != before } } != null
                 if (!answered) {
-                    take(OrbotState.UNKNOWN, null)
+                    if (!found()) take(OrbotState.OFF, null)
                     return@launch
                 }
                 if (_state.value != OrbotState.STARTING) return@launch
@@ -109,6 +116,14 @@ class OrbotWatch(
                 before = answers.value
             }
         }
+    }
+
+    /** True, with the state set, when a proxy answers at the port Orbot once named or at its usual one. */
+    private suspend fun found(): Boolean {
+        val ports = listOfNotNull(port, ProxyChoice.ORBOT_PORT).distinct()
+        val at = withContext(Dispatchers.IO) { ports.firstOrNull(probe) } ?: return false
+        take(OrbotState.ON, at)
+        return true
     }
 
     /** An answer that arrived. While Orbot is not installed none can be its own, and none is taken. */

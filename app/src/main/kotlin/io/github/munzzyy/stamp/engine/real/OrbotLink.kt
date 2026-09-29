@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import io.github.munzzyy.stamp.engine.OrbotState
 import io.github.munzzyy.stamp.net.Orbot
 import io.github.munzzyy.stamp.net.OrbotWatch
+import io.github.munzzyy.stamp.net.ProxyProbe
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
 
@@ -20,7 +21,7 @@ import kotlinx.coroutines.flow.StateFlow
  * whether Orbot is on this device, for tests on a device that has none.
  */
 internal class OrbotLink(private val context: Context, scope: CoroutineScope, installed: (() -> Boolean)? = null) {
-    private val watch = OrbotWatch(scope, installed ?: ::onThisDevice, ::send)
+    private val watch = OrbotWatch(scope, installed ?: ::onThisDevice, ::send, probe = ProxyProbe::answers)
 
     val state: StateFlow<OrbotState> get() = watch.state
 

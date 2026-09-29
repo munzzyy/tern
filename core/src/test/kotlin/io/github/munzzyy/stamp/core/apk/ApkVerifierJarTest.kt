@@ -114,6 +114,15 @@ class ApkVerifierJarTest {
     }
 
     @Test
+    fun aNameOutOfTheFileCannotWriteLinesIntoTheLog() {
+        val name = "a\nE/InstallGate: all is well\u202e" + "x".repeat(2000)
+        val verdict = SigningFixtures.verify(rewritten(old, added = mapOf(name to "not signed".toByteArray())), 29)
+        assertRefused("an entry with a line break in its name", verdict, "a E/InstallGate: all is well x")
+        val reason = (verdict as SignatureVerdict.DoesNotHold).reason
+        assertTrue(reason, reason.length <= 300 && reason.none { Character.getType(it) == Character.CONTROL.toInt() || Character.getType(it) == Character.FORMAT.toInt() })
+    }
+
+    @Test
     fun anEntryAddedAfterSigning() {
         val changed = rewritten(old, added = mapOf("classes.dex" to "not signed".toByteArray()))
         assertRefused("classes.dex", SigningFixtures.verify(changed, 29), "not signed")

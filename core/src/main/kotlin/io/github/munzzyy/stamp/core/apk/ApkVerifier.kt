@@ -12,10 +12,13 @@ sealed interface SignatureVerdict {
      */
     data class Holds(val scheme: Int, val certificates: List<String>, val lineage: List<String>) : SignatureVerdict
 
-    /** The file is not signed the way it says. [reason] is for the log and is never shown as it is. */
+    /**
+     * The file is not signed the way it says. [reason] is for the log and is never shown as it is.
+     * It can hold names out of the file, so it is one short line without control characters.
+     */
     data class DoesNotHold(val reason: String) : SignatureVerdict
 
-    /** Nothing was proven either way: the file needs a check that is not made here. */
+    /** Nothing was proven either way: the file needs a check that is not made here. [reason] is as in [DoesNotHold]. */
     data class CannotVerify(val reason: String) : SignatureVerdict
 }
 
@@ -30,16 +33,21 @@ object ApkVerifier {
     fun verify(file: File, sdk: Int, maxBytes: Long): SignatureVerdict = try {
         FileSource(file).use { verify(file, it, sdk, maxBytes) }
     } catch (e: SignatureRefused) {
-        SignatureVerdict.DoesNotHold(e.message.orEmpty())
+        SignatureVerdict.DoesNotHold(forTheLog(e.message))
     } catch (e: NotCheckedHere) {
-        SignatureVerdict.CannotVerify(e.message.orEmpty())
+        SignatureVerdict.CannotVerify(forTheLog(e.message))
     } catch (e: ApkFormatException) {
-        SignatureVerdict.DoesNotHold("the file is malformed: ${e.message}")
+        SignatureVerdict.DoesNotHold(forTheLog("the file is malformed: ${e.message}"))
     } catch (e: IOException) {
-        SignatureVerdict.CannotVerify("the file could not be read: ${e.message}")
+        SignatureVerdict.CannotVerify(forTheLog("the file could not be read: ${e.message}"))
     } catch (e: RuntimeException) {
-        SignatureVerdict.DoesNotHold("the check broke off: $e")
+        SignatureVerdict.DoesNotHold(forTheLog("the check broke off: $e"))
     }
+
+    private val UNPRINTABLE = Regex("\\p{C}")
+    private const val MAX_REASON = 300
+
+    private fun forTheLog(reason: String?): String = reason.orEmpty().take(MAX_REASON).replace(UNPRINTABLE, " ")
 
     private fun verify(file: File, source: FileSource, sdk: Int, maxBytes: Long): SignatureVerdict {
         if (source.size > maxBytes) throw NotCheckedHere("the file has ${source.size} bytes, the limit is $maxBytes")

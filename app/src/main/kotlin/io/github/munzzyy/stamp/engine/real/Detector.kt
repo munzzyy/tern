@@ -96,7 +96,7 @@ internal class Detector(private val e: RealEngine) {
                 name = app.name,
                 owner = null,
                 description = app.summary,
-                url = "${spec.url}?package=${app.packageName}&fingerprint=${listing.fingerprint}",
+                url = FDroidRepoSource.appAddress(spec.url, app.packageName, listing.fingerprint),
                 origin = origin,
             )
         }

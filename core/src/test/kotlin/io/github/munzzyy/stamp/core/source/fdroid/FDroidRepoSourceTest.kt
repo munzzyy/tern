@@ -278,10 +278,88 @@ class FDroidRepoSourceTest {
     fun aHitsUrlRoundTripsThroughMatchWithAPackageAndTheLearnedFingerprint() {
         val spec = SourceSpec(source.type, repoUrl)
         val listing = source.listApps(spec, CheckContext(goodHttp(), InMemoryValidatorStore()))
-        val hitUrl = "$repoUrl?package=${listing.apps[0].packageName}&fingerprint=${listing.fingerprint}"
+        val hitUrl = FDroidRepoSource.appAddress(repoUrl, listing.apps[0].packageName, listing.fingerprint)
         val matched = source.match(hitUrl)
         assertEquals(listing.apps[0].packageName, matched?.option(SourceOptions.PACKAGE))
         assertEquals(listing.fingerprint, matched?.option(SourceOptions.FINGERPRINT))
+    }
+
+    private fun listingHttp(): FakeHttp = FakeHttp()
+        .bytes(entryJarUrl, Fixtures.bytes("fdroid/repo/entry-listing.jar"))
+        .bytes("$repoUrl/index-v2-listing.json", Fixtures.bytes("fdroid/repo/index-v2-listing.json"))
+
+    private fun olderListingHttp(): FakeHttp = FakeHttp()
+        .on(entryJarUrl) { HttpResponse.of(404, "", Headers.EMPTY, entryJarUrl) }
+        .bytes("$repoUrl/index-v1.jar", Fixtures.bytes("fdroid/repo-v1/index-v1-listing.jar"))
+
+    private val listedInOrder = listOf("org.example.atox", "org.example.hidden", "org.example.same.a", "org.example.same.b", "org.example.zapp")
+
+    @Test
+    fun theFixtureIndexesReallyHoldAPackageThatIsNoPackageName() {
+        assertTrue(Fixtures.text("fdroid/repo/index-v2-listing.json").contains("\"x&fingerprint=abc\""))
+        assertTrue(Fixtures.text("fdroid/repo/index-v2-listing.json").contains("\"org.example..dots\""))
+    }
+
+    @Test
+    fun aPackageThatIsNoPackageNameIsLeftOutOfTheList() {
+        val listing = source.listApps(SourceSpec(source.type, repoUrl), CheckContext(listingHttp(), InMemoryValidatorStore()))
+        assertEquals(listedInOrder, listing.apps.map { it.packageName })
+        assertTrue(listing.apps.none { it.name.startsWith("Aard") })
+    }
+
+    @Test
+    fun theOlderIndexLeavesThemOutToo() {
+        val listing = source.listApps(SourceSpec(source.type, repoUrl), CheckContext(olderListingHttp(), InMemoryValidatorStore()))
+        assertEquals(listedInOrder, listing.apps.map { it.packageName })
+    }
+
+    @Test
+    fun theOrderIgnoresCaseAndEqualNamesGoByPackage() {
+        for (http in listOf(listingHttp(), olderListingHttp())) {
+            val names = source.listApps(SourceSpec(source.type, repoUrl), CheckContext(http, InMemoryValidatorStore())).apps.map { it.name }
+            assertTrue("aTox has to come before Zapp in $names", names.indexOf("aTox") < names.indexOf("Zapp"))
+            assertEquals(listOf("same", "Same"), names.filter { it.equals("same", ignoreCase = true) })
+        }
+    }
+
+    @Test
+    fun anAddressKeepsItsShapeWhateverThePackageSays() {
+        val address = FDroidRepoSource.appAddress(repoUrl, "x&fingerprint=abc", fingerprint)
+        assertEquals("$repoUrl?package=x%26fingerprint%3Dabc&fingerprint=$fingerprint", address)
+        assertEquals(fingerprint, io.github.munzzyy.stamp.core.net.Urls.queryParam(address, "fingerprint"))
+        assertEquals("x&fingerprint=abc", io.github.munzzyy.stamp.core.net.Urls.queryParam(address, "package"))
+        assertNull(source.match(address))
+    }
+
+    @Test
+    fun aRepositoryWithMoreAppsThanAreListedIsCutAndSaysSo() {
+        val http = FakeHttp()
+            .bytes(entryJarUrl, Fixtures.bytes("fdroid/repo/entry-many.jar"))
+            .bytes("$repoUrl/index-v2-many.json", Fixtures.bytes("fdroid/repo/index-v2-many.json"))
+        val listing = source.listApps(SourceSpec(source.type, repoUrl), CheckContext(http, InMemoryValidatorStore()))
+        assertEquals(200, listing.apps.size)
+        assertTrue(listing.more)
+        assertEquals((0 until 200).map { "App %03d".format(it) }, listing.apps.map { it.name })
+        assertEquals("org.example.many.n204", listing.apps.first().packageName)
+    }
+
+    @Test
+    fun onlyWhatCanStillBeListedIsHeldWhileReading() {
+        val first = FirstByName(200)
+        for (i in 100_000 downTo 1) {
+            first.offer(FDroidRepoSource.RepoApp("org.example.n$i", "App %06d".format(i), null))
+            assertTrue("held ${first.held} entries", first.held <= 201)
+        }
+        assertTrue(first.more)
+        assertEquals((1..200).map { "App %06d".format(it) }, first.apps().map { it.name })
+    }
+
+    @Test
+    fun exactlyAsManyAsAreListedIsNotMore() {
+        val first = FirstByName(200)
+        for (i in 1..200) first.offer(FDroidRepoSource.RepoApp("org.example.n$i", "App $i", null))
+        assertEquals(200, first.apps().size)
+        assertTrue(!first.more)
     }
 
     @Test

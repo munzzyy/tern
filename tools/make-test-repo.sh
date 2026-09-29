@@ -265,6 +265,74 @@ signed_next entry-next 1700000000000.json ""
 signed_next entry-next-removed removed.json ""
 signed_next entry-next-wrong-diff-hash 1700000000000.json "$(printf '8%.0s' $(seq 1 64))"
 
+# Indexes for listing a whole repository. The first holds names that differ only in case, two apps
+# of one name, a name with characters that are not drawn, and a package that is no package name
+# and would change the address it is written into. The second holds more apps than are listed.
+python3 - "$OUT/repo/index-v2-listing.json" "$OUT/repo/index-v2-many.json" <<'PY'
+import json, sys
+
+listing_path, many_path = sys.argv[1], sys.argv[2]
+
+
+def app(name, summary=None):
+    metadata = {"name": {"en-US": name}}
+    if summary is not None:
+        metadata["summary"] = {"en-US": summary}
+    return {"metadata": metadata, "versions": {}}
+
+
+listing = {
+    "repo": {"timestamp": 1700000000000, "version": 20000, "name": {"en-US": "Listing‮ Test​ Repo"}},
+    "packages": {
+        "org.example.zapp": app("Zapp"),
+        "org.example.atox": app("aTox"),
+        "org.example.same.b": app("Same"),
+        "org.example.same.a": app("same"),
+        "org.example.hidden": app("Bank‮knaB​  of\n\tNames", "A summary in two\u0007 lines"),
+        "x&fingerprint=abc": app("Aardvark"),
+        "org.example..dots": app("Aardwolf"),
+    },
+}
+with open(listing_path, "w") as f:
+    json.dump(listing, f, sort_keys=True)
+
+count = 205
+many = {
+    "repo": {"timestamp": 1700000000000, "version": 20000, "name": {"en-US": "Many Test Repo"}},
+    "packages": {"org.example.many.n%03d" % i: app("App %03d" % (count - 1 - i)) for i in range(count)},
+}
+with open(many_path, "w") as f:
+    json.dump(many, f, sort_keys=True)
+PY
+
+signed_for() {
+  local name="$1" index_file="$2"
+  local sha size
+  sha=$(sha256sum "$OUT/repo/$index_file" | cut -d' ' -f1)
+  size=$(stat -c%s "$OUT/repo/$index_file")
+  mkdir -p "$WORK/$name"
+  python3 - "$WORK/$name/entry.json" "$sha" "$size" "/$index_file" <<'PY'
+import json, sys
+
+path, index_sha, index_size, index_name = sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4]
+entry = {
+    "timestamp": 1700000000000,
+    "version": 20000,
+    "maxAge": 14,
+    "index": {"name": index_name, "sha256": index_sha, "size": index_size, "numPackages": 2},
+    "diffs": {},
+}
+with open(path, "w") as f:
+    json.dump(entry, f, sort_keys=True)
+PY
+  (cd "$WORK/$name" && jar cf "../$name.jar" entry.json)
+  jarsigner -keystore "$WORK/good.jks" -storepass "$STOREPASS" -sigalg SHA256withRSA -digestalg SHA-256 \
+    "$WORK/$name.jar" good >/dev/null
+  cp "$WORK/$name.jar" "$OUT/repo/$name.jar"
+}
+signed_for entry-listing index-v2-listing.json
+signed_for entry-many index-v2-many.json
+
 python3 - "$WORK/entry.jar" "$WORK/entry-tampered.jar" <<'PY'
 import json, sys, zipfile
 
@@ -333,6 +401,34 @@ PY
 jarsigner -keystore "$WORK/good.jks" -storepass "$STOREPASS" -sigalg SHA256withRSA -digestalg SHA-256 \
   "$WORK/index-v1.jar" good >/dev/null
 cp "$WORK/index-v1.jar" "$OUT/repo-v1/index-v1.jar"
+
+# The older format with the same names as index-v2-listing.json.
+mkdir -p "$WORK/v1-listing"
+python3 - "$WORK/v1-listing/index-v1.json" <<'PY'
+import json, sys
+
+path = sys.argv[1]
+index = {
+    "repo": {"timestamp": 1700000000000, "name": "Listing‮ Test​ Repo"},
+    "requests": {"install": [], "uninstall": []},
+    "apps": [
+        {"packageName": "org.example.zapp", "name": "Zapp"},
+        {"packageName": "org.example.atox", "name": "aTox"},
+        {"packageName": "org.example.same.b", "name": "Same"},
+        {"packageName": "org.example.same.a", "name": "same"},
+        {"packageName": "org.example.hidden", "name": "Bank‮knaB​  of\n\tNames", "summary": "A summary in two\u0007 lines"},
+        {"packageName": "x&fingerprint=abc", "name": "Aardvark"},
+        {"packageName": "org.example..dots", "name": "Aardwolf"},
+    ],
+    "packages": {},
+}
+with open(path, "w") as f:
+    json.dump(index, f, sort_keys=True)
+PY
+(cd "$WORK/v1-listing" && jar cf index-v1.jar index-v1.json)
+jarsigner -keystore "$WORK/good.jks" -storepass "$STOREPASS" -sigalg SHA256withRSA -digestalg SHA-256 \
+  "$WORK/v1-listing/index-v1.jar" good >/dev/null
+cp "$WORK/v1-listing/index-v1.jar" "$OUT/repo-v1/index-v1-listing.jar"
 
 # What an old repository still serves: the same index under a SHA-1 signature.
 (cd "$WORK" && mkdir sha1 && cp index-v1.json sha1/ && cd sha1 && jar cf index-v1.jar index-v1.json)

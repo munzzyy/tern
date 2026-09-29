@@ -69,9 +69,10 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
     data class RepoListing(val apps: List<RepoApp>, val more: Boolean, val repositoryName: String?, val fingerprint: String)
 
     /**
-     * Every app a repository address without a `package` option carries, read through the same
-     * verified path [check] uses. At most [MAX_LIST_APPS], ordered by name, with [RepoListing.more]
-     * set when the repository holds more than that.
+     * The apps a repository address without a `package` option carries, read through the same
+     * verified path [check] uses. At most [MAX_LIST_APPS], ordered by name without regard to case
+     * and by package where names are equal, with [RepoListing.more] set when the repository holds
+     * more than that. An entry whose package is not a package name is left out.
      */
     fun listApps(spec: SourceSpec, context: CheckContext): RepoListing = guarded(context) { listOnce(spec, it) }
 
@@ -118,12 +119,13 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         } catch (e: Exception) {
             throw SourceException(SourceErrorKind.PARSE, "index-v1.json is not valid JSON", cause = e)
         }
-        val apps = root.array("apps")?.objects().orEmpty().mapNotNull { a ->
-            val pkg = a.string("packageName") ?: return@mapNotNull null
-            RepoApp(pkg, a.string("name")?.take(MAX_APP_STRING) ?: pkg, a.string("summary")?.take(MAX_APP_STRING))
-        }.sortedBy { it.name }
+        val first = FirstByName(MAX_LIST_APPS)
+        for (a in root.array("apps")?.objects().orEmpty()) {
+            val pkg = a.string("packageName")?.takeIf { BinaryManifest.isValidName(it) } ?: continue
+            first.offer(RepoApp(pkg, a.string("name")?.take(MAX_APP_STRING) ?: pkg, a.string("summary")?.take(MAX_APP_STRING)))
+        }
         val repoName = root.obj("repo")?.string("name")?.take(MAX_APP_STRING)
-        return RepoListing(apps.take(MAX_LIST_APPS), apps.size > MAX_LIST_APPS, repoName, verification.fingerprint)
+        return RepoListing(first.apps(), first.more, repoName, verification.fingerprint)
     }
 
     /** Streams "packages" instead of parsing the whole index into memory, as [download] does for a single app. */
@@ -133,7 +135,7 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
             if (!response.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${response.status} for $url")
             val digest = MessageDigest.getInstance("SHA-256")
             val counting = CappedDigestInputStream(response.body, digest, INDEX_CAP)
-            val apps = ArrayList<RepoApp>()
+            val first = FirstByName(MAX_LIST_APPS)
             var repoName: String? = null
             try {
                 val reader = JsonReader(InputStreamReader(counting, Charsets.UTF_8), maxDepth = 96)
@@ -148,11 +150,15 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
                             reader.beginObject()
                             while (reader.hasNext()) {
                                 val pkg = reader.nextName()
+                                if (!BinaryManifest.isValidName(pkg)) {
+                                    reader.skipValue()
+                                    continue
+                                }
                                 val value = reader.readValue() as? JsonObject
                                 val metadata = value?.obj("metadata")
                                 val name = localized(metadata?.obj("name"))?.take(MAX_APP_STRING) ?: pkg
                                 val summary = localized(metadata?.obj("summary"))?.take(MAX_APP_STRING)
-                                apps += RepoApp(pkg, name, summary)
+                                first.offer(RepoApp(pkg, name, summary))
                             }
                             reader.endObject()
                         }
@@ -167,8 +173,7 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
             if (Fingerprints.toHex(digest.digest()) != file.sha256 || counting.count != file.size) {
                 throw SourceException(SourceErrorKind.PARSE, "${file.name} does not match the hash the repository signed")
             }
-            val sorted = apps.sortedBy { it.name }
-            RepoListing(sorted.take(MAX_LIST_APPS), sorted.size > MAX_LIST_APPS, repoName, fingerprint)
+            RepoListing(first.apps(), first.more, repoName, fingerprint)
         }
     }
 
@@ -495,6 +500,10 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         private const val MAX_LIST_APPS = 200
         private const val MAX_APP_STRING = 200
         private val SCHEME = Regex("^fdroidrepos?://", RegexOption.IGNORE_CASE)
+
+        /** The address of one app of a repository, as [match] reads it. Both values are encoded, so neither can add to the address. */
+        fun appAddress(repositoryUrl: String, packageName: String, fingerprint: String): String =
+            "$repositoryUrl?package=${Urls.encodeSegment(packageName)}&fingerprint=${Urls.encodeSegment(fingerprint)}"
     }
 }
 
@@ -527,6 +536,30 @@ internal fun strongDigest(attributeNames: List<String>): Boolean {
 internal fun insideRepository(name: String): Boolean =
     name.startsWith("/") && !name.startsWith("//") && name.length <= 512 &&
         name.split('/').none { it == ".." || it == "." } && name.none { it == '\\' || it == '?' || it == '#' || it.code < 0x20 }
+
+/**
+ * The first [limit] apps in the order of the list, kept while reading. It holds one more than it
+ * hands out, which is how it knows there were more, and never more than that.
+ */
+internal class FirstByName(private val limit: Int) {
+    private val kept = java.util.TreeSet(ORDER)
+
+    val held: Int get() = kept.size
+
+    val more: Boolean get() = kept.size > limit
+
+    fun offer(app: FDroidRepoSource.RepoApp) {
+        kept.add(app)
+        if (kept.size > limit + 1) kept.pollLast()
+    }
+
+    fun apps(): List<FDroidRepoSource.RepoApp> = kept.take(limit)
+
+    companion object {
+        val ORDER: Comparator<FDroidRepoSource.RepoApp> =
+            compareBy<FDroidRepoSource.RepoApp, String>(String.CASE_INSENSITIVE_ORDER) { it.name }.thenBy { it.packageName }
+    }
+}
 
 /** What one signed file said about the apps that were looked for in it. */
 private class Extract(val searched: Set<String>, val found: Map<String, JsonValue>)

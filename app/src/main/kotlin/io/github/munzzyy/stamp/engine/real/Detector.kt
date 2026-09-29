@@ -14,11 +14,14 @@ import io.github.munzzyy.stamp.core.source.CheckContext
 import io.github.munzzyy.stamp.core.source.CheckResult
 import io.github.munzzyy.stamp.core.source.SourceException
 import io.github.munzzyy.stamp.core.source.SourceListing
+import io.github.munzzyy.stamp.core.source.SourceOptions
 import io.github.munzzyy.stamp.core.source.SourceTypes
+import io.github.munzzyy.stamp.core.source.fdroid.FDroidRepoSource
 import io.github.munzzyy.stamp.data.AppState
 import io.github.munzzyy.stamp.engine.Detection
 import io.github.munzzyy.stamp.engine.Problem
 import io.github.munzzyy.stamp.engine.ProblemKind
+import io.github.munzzyy.stamp.engine.SearchHit
 import io.github.munzzyy.stamp.engine.SignerState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runInterruptible
@@ -54,6 +57,10 @@ internal class Detector(private val e: RealEngine) {
     private suspend fun resolve(target: Target): Detection {
         val normalized = Urls.normalize(target.url) ?: return Detection.Failed(Problem(ProblemKind.NOT_FOUND, e.texts.notASource()))
         val context = CheckContext(e.http, InMemoryValidatorStore(), e.tokens, e.nowMs, e.device.profile)
+        val repoSpec = target.spec ?: e.registry.match(normalized)
+        if (repoSpec != null && repoSpec.type == SourceTypes.FDROID_REPO && repoSpec.option(SourceOptions.PACKAGE) == null) {
+            return runInterruptible { repoResults(repoSpec, context) }
+        }
         val outcome: Any = runInterruptible {
             try {
                 val spec = target.spec ?: e.registry.detect(normalized, context) ?: SourceSpec(SourceTypes.HTML, normalized)
@@ -73,6 +80,27 @@ internal class Detector(private val e: RealEngine) {
             return Detection.Failed(Problem(ProblemKind.PARSE, e.texts.checkParse(ex.message)))
         }
         return found(learnedSpec, listing, carried)
+    }
+
+    /** A repository address with no app of its own: what it carries, as picks for the Add screen. */
+    private fun repoResults(spec: SourceSpec, context: CheckContext): Detection {
+        val source = e.registry.get(SourceTypes.FDROID_REPO) as? FDroidRepoSource ?: return Detection.Failed(Problem(ProblemKind.UNSUPPORTED, e.texts.notASource()))
+        val listing = try {
+            source.listApps(spec, context)
+        } catch (ex: SourceException) {
+            return Detection.Failed(e.checks.problemOf(ex))
+        }
+        val origin = listing.repositoryName?.takeIf { it.isNotBlank() } ?: Urls.host(spec.url)
+        val hits = listing.apps.map { app ->
+            SearchHit(
+                name = app.name,
+                owner = null,
+                description = app.summary,
+                url = "${spec.url}?package=${app.packageName}&fingerprint=${listing.fingerprint}",
+                origin = origin,
+            )
+        }
+        return Detection.Results(spec.url, hits, listing.more)
     }
 
     private fun found(spec: SourceSpec, listing: SourceListing, carried: AppConfig?): Detection.Found {

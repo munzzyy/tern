@@ -227,6 +227,64 @@ class FDroidRepoSourceTest {
     }
 
     @Test
+    fun matchesPackageQueryParamAndPinsFingerprint() {
+        val spec = source.match("$repoUrl?package=org.example.one&fingerprint=$fingerprint")
+        assertEquals("org.example.one", spec?.option(SourceOptions.PACKAGE))
+        assertEquals(fingerprint, spec?.option(SourceOptions.FINGERPRINT))
+    }
+
+    @Test
+    fun refusesAPackageQueryParamThatIsNotAValidPackageName() {
+        assertNull(source.match("$repoUrl?package=not a package"))
+    }
+
+    @Test
+    fun listingWithNoPackageOptionListsEveryAppOrderedByName() {
+        val spec = SourceSpec(source.type, repoUrl)
+        val listing = source.listApps(spec, CheckContext(goodHttp(), InMemoryValidatorStore()))
+        assertEquals(listOf("org.example.one", "org.example.two"), listing.apps.map { it.packageName })
+        assertEquals("Example One", listing.apps[0].name)
+        assertEquals("An example app with split builds", listing.apps[0].summary)
+        assertEquals(fingerprint, listing.fingerprint)
+        assertEquals("Jackdaw Test Repo", listing.repositoryName)
+        assertTrue(!listing.more)
+    }
+
+    @Test
+    fun listingFallsBackToIndexV1AndReadsItsAppsArray() {
+        val v1Url = "$repoUrl/index-v1.jar"
+        val http = FakeHttp()
+            .on(entryJarUrl) { HttpResponse.of(404, "", Headers.EMPTY, entryJarUrl) }
+            .bytes(v1Url, Fixtures.bytes("fdroid/repo-v1/index-v1.jar"))
+        val spec = SourceSpec(source.type, repoUrl)
+        val listing = source.listApps(spec, CheckContext(http, InMemoryValidatorStore()))
+        assertEquals(listOf("org.example.one", "org.example.two"), listing.apps.map { it.packageName })
+        assertEquals("Jackdaw Test Repo", listing.repositoryName)
+        assertEquals(fingerprint, listing.fingerprint)
+    }
+
+    @Test
+    fun listingWithAWrongPinnedFingerprintThrowsAuth() {
+        val spec = SourceSpec(source.type, repoUrl, mapOf(SourceOptions.FINGERPRINT to "0".repeat(64)))
+        try {
+            source.listApps(spec, CheckContext(goodHttp(), InMemoryValidatorStore()))
+            fail("expected SourceException")
+        } catch (e: SourceException) {
+            assertEquals(SourceErrorKind.AUTH, e.kind)
+        }
+    }
+
+    @Test
+    fun aHitsUrlRoundTripsThroughMatchWithAPackageAndTheLearnedFingerprint() {
+        val spec = SourceSpec(source.type, repoUrl)
+        val listing = source.listApps(spec, CheckContext(goodHttp(), InMemoryValidatorStore()))
+        val hitUrl = "$repoUrl?package=${listing.apps[0].packageName}&fingerprint=${listing.fingerprint}"
+        val matched = source.match(hitUrl)
+        assertEquals(listing.apps[0].packageName, matched?.option(SourceOptions.PACKAGE))
+        assertEquals(listing.fingerprint, matched?.option(SourceOptions.FINGERPRINT))
+    }
+
+    @Test
     fun noEntryJarOrIndexV1JarThrowsNotFound() {
         val v1Url = "$repoUrl/index-v1.jar"
         val http = FakeHttp()

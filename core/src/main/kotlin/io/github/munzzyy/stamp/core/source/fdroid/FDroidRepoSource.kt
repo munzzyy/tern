@@ -53,8 +53,123 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         if (!path.endsWith("/repo") && !path.contains("/fdroid/repo")) return null
         val base = "https://${uri.authority}$path"
         val fingerprint = Urls.queryParam(uri.toString(), "fingerprint")?.let(Fingerprints::normalize)
-        val options = buildMap { if (fingerprint != null) put(SourceOptions.FINGERPRINT, fingerprint) }
+        val pkg = Urls.queryParam(uri.toString(), "package")
+        if (pkg != null && !BinaryManifest.isValidName(pkg)) return null
+        val options = buildMap {
+            if (fingerprint != null) put(SourceOptions.FINGERPRINT, fingerprint)
+            if (pkg != null) put(SourceOptions.PACKAGE, pkg)
+        }
         return SourceSpec(type, base, options)
+    }
+
+    /** One app found while listing everything a repository without a chosen package offers. */
+    data class RepoApp(val packageName: String, val name: String, val summary: String?)
+
+    /** What listing found: the repository's own name, the fingerprint learned or confirmed while reading it, and its apps. */
+    data class RepoListing(val apps: List<RepoApp>, val more: Boolean, val repositoryName: String?, val fingerprint: String)
+
+    /**
+     * Every app a repository address without a `package` option carries, read through the same
+     * verified path [check] uses. At most [MAX_LIST_APPS], ordered by name, with [RepoListing.more]
+     * set when the repository holds more than that.
+     */
+    fun listApps(spec: SourceSpec, context: CheckContext): RepoListing = guarded(context) { listOnce(spec, it) }
+
+    private fun listOnce(spec: SourceSpec, context: CheckContext): RepoListing {
+        val pinned = spec.option(SourceOptions.FINGERPRINT)
+        val entryUrl = "${spec.url}/entry.jar"
+        val entryResponse = context.http.execute(HttpRequest(entryUrl))
+        var usedFallback = false
+        val jarBytes: ByteArray
+        entryResponse.use {
+            when {
+                it.status == 404 -> {
+                    usedFallback = true
+                    jarBytes = ByteArray(0)
+                }
+                it.isSuccess -> jarBytes = it.bytes(ENTRY_JAR_CAP)
+                else -> throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${it.status} for $entryUrl")
+            }
+        }
+        if (!usedFallback) {
+            val verification = verifyJar(jarBytes, "entry.json", unsupportedOnFailure = false)
+            checkFingerprint(pinned, verification.fingerprint)
+            val entry = try {
+                Json.parseObject(String(verification.signedBytes, Charsets.UTF_8))
+            } catch (e: Exception) {
+                throw SourceException(SourceErrorKind.PARSE, "entry.json is not valid JSON", cause = e)
+            }
+            val index = signedFile(entry.obj("index"), "index")
+            return streamV2AppList(spec.url, index, context, verification.fingerprint)
+        }
+
+        val v1Url = "${spec.url}/index-v1.jar"
+        val v1Response = context.http.execute(HttpRequest(v1Url))
+        val v1Bytes: ByteArray
+        v1Response.use {
+            if (it.status == 404) throw SourceException(SourceErrorKind.NOT_FOUND, "No entry.jar or index-v1.jar at ${spec.url}")
+            if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${it.status} for $v1Url")
+            v1Bytes = it.bytes(V1_JAR_CAP)
+        }
+        val verification = verifyJar(v1Bytes, "index-v1.json", unsupportedOnFailure = true)
+        checkFingerprint(pinned, verification.fingerprint)
+        val root = try {
+            Json.parseObject(String(verification.signedBytes, Charsets.UTF_8))
+        } catch (e: Exception) {
+            throw SourceException(SourceErrorKind.PARSE, "index-v1.json is not valid JSON", cause = e)
+        }
+        val apps = root.array("apps")?.objects().orEmpty().mapNotNull { a ->
+            val pkg = a.string("packageName") ?: return@mapNotNull null
+            RepoApp(pkg, a.string("name")?.take(MAX_APP_STRING) ?: pkg, a.string("summary")?.take(MAX_APP_STRING))
+        }.sortedBy { it.name }
+        val repoName = root.obj("repo")?.string("name")?.take(MAX_APP_STRING)
+        return RepoListing(apps.take(MAX_LIST_APPS), apps.size > MAX_LIST_APPS, repoName, verification.fingerprint)
+    }
+
+    /** Streams "packages" instead of parsing the whole index into memory, as [download] does for a single app. */
+    private fun streamV2AppList(repositoryUrl: String, file: SignedFile, context: CheckContext, fingerprint: String): RepoListing {
+        val url = repositoryUrl + file.name
+        return context.http.execute(HttpRequest(url)).use { response ->
+            if (!response.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${response.status} for $url")
+            val digest = MessageDigest.getInstance("SHA-256")
+            val counting = CappedDigestInputStream(response.body, digest, INDEX_CAP)
+            val apps = ArrayList<RepoApp>()
+            var repoName: String? = null
+            try {
+                val reader = JsonReader(InputStreamReader(counting, Charsets.UTF_8), maxDepth = 96)
+                reader.beginObject()
+                while (reader.hasNext()) {
+                    when (reader.nextName()) {
+                        "repo" -> {
+                            val repo = reader.readValue() as? JsonObject
+                            repoName = (localized(repo?.obj("name")) ?: repo?.string("name"))?.take(MAX_APP_STRING)
+                        }
+                        "packages" -> {
+                            reader.beginObject()
+                            while (reader.hasNext()) {
+                                val pkg = reader.nextName()
+                                val value = reader.readValue() as? JsonObject
+                                val metadata = value?.obj("metadata")
+                                val name = localized(metadata?.obj("name"))?.take(MAX_APP_STRING) ?: pkg
+                                val summary = localized(metadata?.obj("summary"))?.take(MAX_APP_STRING)
+                                apps += RepoApp(pkg, name, summary)
+                            }
+                            reader.endObject()
+                        }
+                        else -> reader.skipValue()
+                    }
+                }
+                reader.endObject()
+                reader.requireEndOfDocument()
+            } catch (e: Exception) {
+                throw SourceException(SourceErrorKind.PARSE, "Could not read ${file.name} of the repository", cause = e)
+            }
+            if (Fingerprints.toHex(digest.digest()) != file.sha256 || counting.count != file.size) {
+                throw SourceException(SourceErrorKind.PARSE, "${file.name} does not match the hash the repository signed")
+            }
+            val sorted = apps.sortedBy { it.name }
+            RepoListing(sorted.take(MAX_LIST_APPS), sorted.size > MAX_LIST_APPS, repoName, fingerprint)
+        }
     }
 
     /** A validly signed index that is older than one already seen is a replay, used to hide updates. */
@@ -377,6 +492,8 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         private const val ENTRY_JAR_CAP = 1024 * 1024
         private const val V1_JAR_CAP = 32 * 1024 * 1024
         private const val INDEX_CAP = 96L * 1024 * 1024
+        private const val MAX_LIST_APPS = 200
+        private const val MAX_APP_STRING = 200
         private val SCHEME = Regex("^fdroidrepos?://", RegexOption.IGNORE_CASE)
     }
 }

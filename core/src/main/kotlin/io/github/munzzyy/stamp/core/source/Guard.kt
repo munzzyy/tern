@@ -32,7 +32,7 @@ internal class PendingValidators(private val target: ValidatorStore) : Validator
  * Runs one check so that it either succeeds as a whole or leaves no trace, and so that every
  * failure reaches the caller as a [SourceException].
  */
-internal inline fun guarded(context: CheckContext, check: (CheckContext) -> CheckResult): CheckResult {
+internal inline fun <T> guarded(context: CheckContext, check: (CheckContext) -> T): T {
     val validators = PendingValidators(context.validators)
     val scoped = CheckContext(context.http, validators, context.tokens, context.nowMs, context.device)
     val result = try {

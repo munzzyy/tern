@@ -97,6 +97,72 @@ class NetTest {
     }
 
     @Test
+    fun aServerThatNamesNoLengthCannotFillTheDevice() = runBlocking {
+        val block = ByteArray(1024 * 1024) { 7 }
+        LoopbackServer { _, out ->
+            head(out, "200 OK")
+            repeat(12) { out.write(block) }
+        }.use { server ->
+            var looks = 0
+            val downloader = Downloader(local, dir, Texts(targetContext), freeBytes = { if (looks++ == 0) Long.MAX_VALUE else 1024L * 1024 })
+            try {
+                downloader.fetch("endless", "http://127.0.0.1:${server.port}/app.apk", null) { _, _ -> }
+                fail("twelve megabytes were written with one megabyte free")
+            } catch (e: StepFailure) {
+                assertEquals(ProblemKind.STORAGE, e.kind)
+            }
+            assertTrue("free space was looked at $looks times", looks >= 2)
+            assertEquals(emptyList<String>(), downloader.folder("endless").listFiles().orEmpty().map { it.name })
+        }
+    }
+
+    @Test
+    fun aServerThatNamesNoLengthIsTakenWhereThereIsRoom() = runBlocking {
+        val content = Random(11).nextBytes(9 * 1024 * 1024)
+        LoopbackServer { _, out ->
+            head(out, "200 OK")
+            out.write(content)
+        }.use { server ->
+            val downloader = Downloader(local, dir, Texts(targetContext), freeBytes = { 10L * 1024 * 1024 * 1024 })
+            val result = downloader.fetch("roomy", "http://127.0.0.1:${server.port}/app.apk", null) { _, _ -> }
+            assertEquals(Fingerprints.sha256(content), result.sha256)
+            assertEquals(content.size.toLong(), result.size)
+        }
+    }
+
+    @Test
+    fun aDownloadThereIsNoRoomForLeavesNothingBehind() = runBlocking {
+        val content = Random(13).nextBytes(300_000)
+        var calls = 0
+        LoopbackServer { request, out ->
+            if (calls++ == 0) {
+                head(out, "200 OK", "Content-Length" to "${content.size}", "ETag" to "\"e1\"")
+                out.write(content, 0, 100_000)
+                out.flush()
+                throw IOException("cut on purpose")
+            }
+            val from = request.header("Range")!!.removePrefix("bytes=").removeSuffix("-").toInt()
+            head(out, "206 Partial Content", "Content-Range" to "bytes $from-${content.size - 1}/${content.size}", "Content-Length" to "${content.size - from}", "ETag" to "\"e1\"")
+            out.write(content, from, content.size - from)
+        }.use { server ->
+            var free = Long.MAX_VALUE
+            val downloader = Downloader(local, dir, Texts(targetContext), freeBytes = { free })
+            val url = "http://127.0.0.1:${server.port}/app.apk"
+            runCatching { downloader.fetch("full", url, null) { _, _ -> } }
+            assertTrue(downloader.folder("full").listFiles().orEmpty().any { it.name.endsWith(".part") })
+
+            free = 1024
+            try {
+                downloader.fetch("full", url, null) { _, _ -> }
+                fail("a download was carried on with a kilobyte free")
+            } catch (e: StepFailure) {
+                assertEquals(ProblemKind.STORAGE, e.kind)
+            }
+            assertEquals(emptyList<String>(), downloader.folder("full").listFiles().orEmpty().map { it.name })
+        }
+    }
+
+    @Test
     fun theTokenStaysOnItsOwnHostThroughRedirects() {
         LoopbackServer { request, out ->
             when (request.target) {

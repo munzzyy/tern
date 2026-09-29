@@ -58,6 +58,32 @@ else
   echo "ok   network security config refuses cleartext everywhere"
 fi
 
+badging=$("$AAPT" dump badging "$APK")
+television=""
+echo "$badging" | grep -q "^leanback-launchable-activity: name='[^']" || television="$television no-launcher-entry"
+echo "$badging" | grep -q "^application: .* banner='[^']" || television="$television no-banner"
+echo "$badging" | grep -q "uses-feature-not-required: name='android.hardware.touchscreen'" || television="$television touchscreen-required"
+echo "$badging" | grep -q "uses-feature-not-required: name='android.software.leanback'" || television="$television leanback-required"
+if [ -n "$television" ]; then
+  echo "FAIL a television could not show or install the app:$television"; fail=1
+else
+  echo "ok   a television sees the app: launcher entry, banner, no touch screen required"
+fi
+
+# A device refuses an apk that has native code, but none for its own processor.
+abis=$(unzip -Z1 "$APK" 'lib/*' 2>/dev/null | cut -d/ -f2 | sort -u | tr '\n' ' ' || true)
+missing=""
+if [ -n "$abis" ]; then
+  for abi in arm64-v8a armeabi-v7a x86 x86_64; do
+    case " $abis" in *" $abi "*) ;; *) missing="$missing $abi" ;; esac
+  done
+fi
+if [ -n "$missing" ]; then
+  echo "FAIL native code is missing for:$missing"; fail=1
+else
+  echo "ok   native code for every processor (${abis:-none at all})"
+fi
+
 size=$(stat -c %s "$APK")
 if [ "$size" -gt "$MAX_BYTES" ]; then
   echo "FAIL apk is $size bytes, budget is $MAX_BYTES"; fail=1

@@ -255,6 +255,25 @@ class HandoffsTest {
     }
 
     @Test
+    fun aHandoffThatStampLeftWhileItWasOpeningIsClosedAgain() {
+        var leave: (() -> Unit)? = null
+        val late = Handoffs({ network }, Sentences, { leave?.invoke(); 5_000_000L }, quick)
+        leave = {
+            leave = null
+            late.leftScreen()
+        }
+        try {
+            assertEquals(Problem(ProblemKind.UNSUPPORTED, "notOnScreen"), runBlocking { late.open() })
+            assertNull("the screen was left before the handoff could be shown", late.handoff.value)
+            late.cameOnScreen()
+            assertNull(runBlocking { late.open() })
+            assertTrue(late.handoff.value != null)
+        } finally {
+            late.shutDown()
+        }
+    }
+
+    @Test
     fun aHandoffThatEndsByItselfIsGoneFromTheScreenAndKeepsWhatHasArrived() {
         val few = Handoffs({ network }, Sentences, { 5_000_000L }, quick.copy(requests = 3))
         try {

@@ -76,17 +76,25 @@ internal class Handoffs(
             LocalNetwork.None -> return@withContext Problem(ProblemKind.NETWORK, texts.noLocalNetwork())
             LocalNetwork.Vpn -> return@withContext Problem(ProblemKind.NETWORK, texts.behindVpn())
         }
-        synchronized(lock) {
+        val wasOpen = synchronized(lock) {
             if (!onScreen) return@withContext Problem(ProblemKind.UNSUPPORTED, texts.notOnScreen())
-            val wasOpen = server?.isOpen == true
-            drop()
-            val opened = try {
-                HandoffServer.open(address, limits, nowMs = nowMs, onChange = ::publish)
-            } catch (e: IOException) {
+            (server?.isOpen == true).also { drop() }
+        }
+        // Outside the lock: leaving the screen has to be able to close the port while this one waits for the system.
+        val opened = try {
+            HandoffServer.open(address, limits, nowMs = nowMs, onChange = ::publish)
+        } catch (e: IOException) {
+            if (wasOpen) ended.value = HandoffEnd.CLOSED
+            return@withContext Problem(ProblemKind.NETWORK, texts.cannotOpen(e.message))
+        }
+        val squares = QrEncoder.encode(opened.addressWithCode)
+        synchronized(lock) {
+            if (!onScreen) {
+                opened.close()
                 if (wasOpen) ended.value = HandoffEnd.CLOSED
-                return@withContext Problem(ProblemKind.NETWORK, texts.cannotOpen(e.message))
+                return@withContext Problem(ProblemKind.UNSUPPORTED, texts.notOnScreen())
             }
-            val squares = QrEncoder.encode(opened.addressWithCode)
+            drop()
             server = opened
             qr = QrCode(squares.size, squares.squares())
             left = false

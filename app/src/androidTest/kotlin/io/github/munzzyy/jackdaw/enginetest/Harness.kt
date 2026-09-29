@@ -89,7 +89,7 @@ class CountingInstaller(private val real: Installer) : Installer by real {
     }
 }
 
-class Harness(name: String, gate: Gate? = null, installer: Installer? = null, http: HttpClient? = null) : Closeable {
+class Harness(name: String, gate: Gate? = null, installer: Installer? = null, http: HttpClient? = null, private val freshPrefs: Boolean = true, private val keepPrefs: Boolean = false) : Closeable {
     val forge = FakeForge()
     val installer = CountingInstaller(installer ?: SessionInstaller(targetContext))
     private val store = "enginetest-$name.db"
@@ -99,8 +99,10 @@ class Harness(name: String, gate: Gate? = null, installer: Installer? = null, ht
     init {
         targetContext.deleteDatabase(store)
         downloads.deleteRecursively()
-        targetContext.deleteSharedPreferences("${prefs}settings")
-        targetContext.deleteSharedPreferences("${prefs}tokens")
+        if (freshPrefs) {
+            targetContext.deleteSharedPreferences("${prefs}settings")
+            targetContext.deleteSharedPreferences("${prefs}tokens")
+        }
     }
 
     val engine = RealEngine(
@@ -130,8 +132,10 @@ class Harness(name: String, gate: Gate? = null, installer: Installer? = null, ht
     override fun close() {
         engine.close()
         targetContext.deleteDatabase(store)
-        targetContext.deleteSharedPreferences("${prefs}settings")
-        targetContext.deleteSharedPreferences("${prefs}tokens")
+        if (!keepPrefs) {
+            targetContext.deleteSharedPreferences("${prefs}settings")
+            targetContext.deleteSharedPreferences("${prefs}tokens")
+        }
         downloads.deleteRecursively()
     }
 }
@@ -166,6 +170,8 @@ object Prompt {
     }
 
     fun visible(): Boolean = device.hasObject(By.pkg(INSTALLER))
+
+    fun appears(timeoutMs: Long): Boolean = device.wait(Until.hasObject(By.pkg(INSTALLER).text(CONFIRM)), timeoutMs) == true
 
     fun dismiss() {
         if (visible()) device.pressBack()

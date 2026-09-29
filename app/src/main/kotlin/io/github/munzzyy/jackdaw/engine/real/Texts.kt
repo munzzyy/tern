@@ -48,6 +48,7 @@ class Texts(context: Context) {
     fun noReleasePasses() = s(R.string.engine_no_release_passes)
     fun onlyPrereleases() = s(R.string.engine_only_prereleases)
     fun patternProblem(detail: String?) = s(R.string.engine_pattern_problem, detail.orEmpty().take(200))
+    fun offline() = s(R.string.engine_offline)
     fun trackOnly() = s(R.string.engine_track_only)
     fun noRelease() = s(R.string.engine_no_release)
 

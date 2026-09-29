@@ -31,15 +31,15 @@ internal class Detector(private val e: RealEngine) {
         val text = input.trim().take(MAX_INPUT)
         if (text.isEmpty()) return Detection.Failed(Problem(ProblemKind.NOT_FOUND, e.texts.nothingToSearch()))
         val target: Target = when (val link = ObtainiumLink.parse(text)) {
-            is ObtainiumLink.Add -> Target(link.url, null)
+            is ObtainiumLink.Add -> Target(link.url, null, null)
             is ObtainiumLink.App -> fromObtainiumApp(link.json) ?: return Detection.Failed(Problem(ProblemKind.UNSUPPORTED, e.texts.notASource()))
             is ObtainiumLink.Apps -> return Detection.Failed(Problem(ProblemKind.UNSUPPORTED, e.texts.severalApps()))
-            null -> if (looksLikeLink(text)) Target(text, null) else return Detection.Results(text, search.search(text))
+            null -> if (looksLikeLink(text)) Target(text, null, null) else return Detection.Results(text, search.search(text))
         }
         return withContext(Dispatchers.IO) { resolve(target) }
     }
 
-    private class Target(val url: String, val spec: SourceSpec?)
+    private class Target(val url: String, val spec: SourceSpec?, val config: AppConfig?)
 
     private fun fromObtainiumApp(json: String): Target? {
         val app = try {
@@ -47,7 +47,7 @@ internal class Detector(private val e: RealEngine) {
         } catch (_: ObtainiumImportException) {
             null
         } ?: return null
-        return Target(app.source.url, app.source)
+        return Target(app.source.url, app.source, app)
     }
 
     private suspend fun resolve(target: Target): Detection {
@@ -65,13 +65,19 @@ internal class Detector(private val e: RealEngine) {
         @Suppress("UNCHECKED_CAST")
         val (spec, result) = outcome as Pair<SourceSpec, CheckResult>
         val listing = (result as? CheckResult.Listing)?.listing ?: return Detection.Failed(Problem(ProblemKind.NO_RELEASES, e.texts.notASource()))
-        return found(spec.copy(options = spec.options + listing.learnedOptions), listing)
+        val learnedSpec = spec.copy(options = spec.options + listing.learnedOptions)
+        val carried = try {
+            target.config?.let { e.validated(it.copy(source = learnedSpec)) }
+        } catch (ex: IllegalArgumentException) {
+            return Detection.Failed(Problem(ProblemKind.PARSE, e.texts.checkParse(ex.message)))
+        }
+        return found(learnedSpec, listing, carried)
     }
 
-    private fun found(spec: SourceSpec, listing: SourceListing): Detection.Found {
+    private fun found(spec: SourceSpec, listing: SourceListing, carried: AppConfig?): Detection.Found {
         val settings = e.settings.value
         val listed = listing.packageName?.takeIf { BinaryManifest.isValidName(it) }
-        var config = AppConfig(
+        var config = carried?.copy(id = "detect", source = spec, packageName = carried.packageName ?: listed) ?: AppConfig(
             id = "detect",
             source = spec,
             name = listing.name?.take(200) ?: Urls.host(spec.url),
@@ -83,7 +89,7 @@ internal class Detector(private val e: RealEngine) {
         val warnings = ArrayList<String>()
 
         var eval = e.evaluator.evaluate(config, state, e.readInstalled(config.packageName), e.inspector::inspect)
-        if (eval.latest == null && eval.problem?.message == e.texts.onlyPrereleases()) {
+        if (carried == null && eval.latest == null && eval.problem?.message == e.texts.onlyPrereleases()) {
             config = config.copy(releases = config.releases.copy(includePrereleases = true))
             eval = e.evaluator.evaluate(config, state, e.readInstalled(config.packageName), e.inspector::inspect)
             warnings += e.texts.warnPrerelease()
@@ -98,6 +104,10 @@ internal class Detector(private val e: RealEngine) {
         if (tracked != null) warnings += e.texts.warnTracked()
         if (installed != null && eval.verification?.signerState == SignerState.MISMATCH) warnings += e.texts.warnSignedDifferently()
         if (eval.problem?.kind == ProblemKind.NO_FILE_FOR_DEVICE) warnings += e.texts.warnNoFile()
+        val readPackage = eval.facts?.packageName
+        if (carried?.packageName != null && readPackage != null && readPackage != carried.packageName) {
+            warnings += e.texts.packageMismatch(carried.packageName, readPackage)
+        }
         listing.movedTo?.let { warnings += e.texts.warnMoved(it) }
         return Detection.Found(
             spec = spec,
@@ -111,6 +121,7 @@ internal class Detector(private val e: RealEngine) {
             installed = installed?.app,
             alreadyTracked = tracked,
             warnings = warnings,
+            carried = carried,
         )
     }
 

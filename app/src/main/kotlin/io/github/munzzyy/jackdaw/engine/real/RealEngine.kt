@@ -6,6 +6,9 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -16,7 +19,9 @@ import io.github.munzzyy.jackdaw.core.interop.AppConfigJsonException
 import io.github.munzzyy.jackdaw.core.json.Json
 import io.github.munzzyy.jackdaw.core.model.AppConfig
 import io.github.munzzyy.jackdaw.core.model.Release
+import io.github.munzzyy.jackdaw.core.model.ReleasePolicy
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
+import io.github.munzzyy.jackdaw.core.verify.Fingerprints
 import io.github.munzzyy.jackdaw.core.net.HttpClient
 import io.github.munzzyy.jackdaw.core.net.PoliteHttp
 import io.github.munzzyy.jackdaw.core.net.RateLimiter
@@ -46,6 +51,8 @@ import io.github.munzzyy.jackdaw.engine.Event
 import io.github.munzzyy.jackdaw.engine.EventKind
 import io.github.munzzyy.jackdaw.engine.ImportSummary
 import io.github.munzzyy.jackdaw.engine.NoteBlock
+import io.github.munzzyy.jackdaw.engine.Problem
+import io.github.munzzyy.jackdaw.engine.ProblemKind
 import io.github.munzzyy.jackdaw.engine.Progress
 import io.github.munzzyy.jackdaw.engine.Settings
 import io.github.munzzyy.jackdaw.install.ArchiveReader
@@ -136,6 +143,25 @@ class RealEngine(
     /** Downloads the user started, which keep the transfer service in the foreground. */
     val transfers: StateFlow<Map<String, Progress>> get() = _transfers.asStateFlow()
 
+    private val _online = MutableStateFlow(true)
+    private val _lastRunProblem = MutableStateFlow<Problem?>(null)
+
+    override val online: StateFlow<Boolean> get() = _online.asStateFlow()
+
+    /** Why the last check of the whole list could not run at all, such as being offline; null once one runs. */
+    val lastRunProblem: StateFlow<Problem?> get() = _lastRunProblem.asStateFlow()
+
+    private val connectivity = this.context.getSystemService(ConnectivityManager::class.java)
+    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
+        override fun onCapabilitiesChanged(network: Network, capabilities: NetworkCapabilities) {
+            _online.value = usable(capabilities)
+        }
+
+        override fun onLost(network: Network) {
+            _online.value = false
+        }
+    }
+
     internal val checks = Checks(this)
     internal val installs = Installs(this)
     private val detector = Detector(this)
@@ -151,6 +177,7 @@ class RealEngine(
     private val startup = scope.launch(Dispatchers.IO) {
         notifier.ensureChannels()
         Scheduler.apply(this@RealEngine.context, _settings.value)
+        setObtainiumLinks(_settings.value.openObtainiumLinks)
         store.apps().forEach { stored[it.config.id] = it }
         _events.value = store.events()
         installs.reconcile()
@@ -167,7 +194,27 @@ class RealEngine(
             addDataScheme("package")
         }
         ContextCompat.registerReceiver(this.context, packageReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED)
+        _online.value = connectivity.activeNetwork?.let { connectivity.getNetworkCapabilities(it) }?.let(::usable) ?: false
+        connectivity.registerDefaultNetworkCallback(networkCallback)
     }
+
+    private fun usable(capabilities: NetworkCapabilities) =
+        capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+
+    /** A check started offline fails at once: one problem for the run, not a timeout per app. */
+    private suspend fun offline(appId: String?) = withContext(Dispatchers.IO) {
+        val problem = Problem(ProblemKind.NETWORK, texts.offline())
+        if (appId == null) {
+            _lastRunProblem.value = problem
+            event(null, EventKind.CHECK_FAILED, problem.message)
+            return@withContext
+        }
+        saveState(appId) { it.copy(checkProblem = problem) } ?: return@withContext
+        checks.reevaluate(appId, network = false)
+        publish()
+    }
+
+    override fun resumeInstall(appId: String): Boolean = installs.resume(appId)
 
     internal suspend fun ready() = startup.join()
 
@@ -238,25 +285,34 @@ class RealEngine(
         return detector.detect(input)
     }
 
+    override fun proposedConfig(found: Detection.Found): AppConfig {
+        val s = _settings.value
+        val base = found.carried ?: AppConfig(
+            id = "",
+            source = found.spec,
+            name = "",
+            releases = ReleasePolicy(
+                includePrereleases = s.includePrereleasesByDefault || found.release?.prerelease == true,
+                minAgeDays = s.minAgeDaysByDefault,
+            ),
+            updates = s.defaultUpdateMode,
+        )
+        return validated(
+            base.copy(
+                id = idFor(found.spec),
+                source = found.spec,
+                name = found.name.take(200).ifBlank { found.spec.url.take(200) },
+                author = found.author?.take(200),
+                packageName = found.verification?.packageName ?: base.packageName ?: found.installed?.packageName,
+            ),
+        )
+    }
+
     override suspend fun add(found: Detection.Found, install: Boolean): String {
         ready()
         val existing = found.alreadyTracked ?: findBySpec(found.spec)
         if (existing != null) return existing
-        val s = _settings.value
-        val config = validated(
-            AppConfig(
-                id = newId(),
-                source = found.spec,
-                name = found.name.take(200).ifBlank { found.spec.url.take(200) },
-                author = found.author?.take(200),
-                packageName = found.verification?.packageName ?: found.installed?.packageName,
-                releases = io.github.munzzyy.jackdaw.core.model.ReleasePolicy(
-                    includePrereleases = s.includePrereleasesByDefault || found.release?.prerelease == true,
-                    minAgeDays = s.minAgeDaysByDefault,
-                ),
-                updates = s.defaultUpdateMode,
-            ),
-        )
+        val config = proposedConfig(found)
         withContext(Dispatchers.IO) {
             val state = AppState(releases = listOfNotNull(found.release), description = found.description?.take(1000))
             store.putApp(config, state)
@@ -270,6 +326,11 @@ class RealEngine(
 
     override suspend fun check(appId: String?) {
         ready()
+        if (!_online.value) {
+            offline(appId)
+            return
+        }
+        _lastRunProblem.value = null
         if (appId != null) {
             checks.checkOne(appId)
             return
@@ -411,6 +472,11 @@ class RealEngine(
     /** The background check: every app not set to manual, then automatic installs where Android allows them. */
     suspend fun runScheduledCheck() {
         ready()
+        if (!_online.value) {
+            offline(null)
+            return
+        }
+        _lastRunProblem.value = null
         installs.runScheduled(_settings.value)
     }
 
@@ -418,6 +484,19 @@ class RealEngine(
         stored.values.firstOrNull { it.config.source.type == spec.type && it.config.source.url.equals(spec.url, ignoreCase = true) }?.config?.id
 
     internal fun newId(): String = UUID.randomUUID().toString().replace("-", "").take(16)
+
+    /** Stable per source, so the id shown before adding is the id that gets stored, and unlike any other tracked app's. */
+    private fun idFor(spec: SourceSpec): String {
+        val base = Fingerprints.sha256("${spec.type}|${spec.url.lowercase()}".toByteArray())
+        var length = 16
+        while (length < base.length) {
+            val id = base.take(length)
+            val holder = stored[id]?.config?.source
+            if (holder == null || (holder.type == spec.type && holder.url.equals(spec.url, ignoreCase = true))) return id
+            length += 4
+        }
+        return base
+    }
 
     internal fun validated(config: AppConfig): AppConfig = try {
         AppConfigJson.decode(Json.parseObject(Json.write(AppConfigJson.encode(config))))
@@ -437,6 +516,11 @@ class RealEngine(
 
     override fun close() {
         scope.cancel()
+        try {
+            connectivity.unregisterNetworkCallback(networkCallback)
+        } catch (e: IllegalArgumentException) {
+            Log.w(TAG, "Network callback was not registered: ${e.message}")
+        }
         try {
             context.unregisterReceiver(packageReceiver)
         } catch (e: IllegalArgumentException) {

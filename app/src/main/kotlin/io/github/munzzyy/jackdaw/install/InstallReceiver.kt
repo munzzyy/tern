@@ -18,7 +18,7 @@ class InstallReceiver : BroadcastReceiver() {
         val sessionId = intent.getIntExtra(PackageInstaller.EXTRA_SESSION_ID, -1)
         val message = intent.getStringExtra(PackageInstaller.EXTRA_STATUS_MESSAGE)
         val confirm = IntentCompat.getParcelableExtra(intent, Intent.EXTRA_INTENT, Intent::class.java)
-        Log.i(TAG, "Session $sessionId for $appId ended with status $status")
+        Log.i(TAG, "Session $sessionId for $appId ended with status $status: $message")
         val engine = RealEngine.obtain(context)
         val done = goAsync()
         engine.scope.launch {

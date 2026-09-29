@@ -45,6 +45,7 @@ internal class Installs(private val e: RealEngine) {
     private val jobs = ConcurrentHashMap<String, Job>()
     private val outcomes = ConcurrentHashMap<String, CompletableDeferred<Int>>()
     private val batch: MutableSet<String> = ConcurrentHashMap.newKeySet()
+    private val confirmations = ConcurrentHashMap<String, Intent>()
 
     fun start(appId: String, releaseId: String?, assetUrl: String?, userStarted: Boolean): Job {
         jobs[appId]?.takeIf { it.isActive }?.let { return it }
@@ -71,8 +72,35 @@ internal class Installs(private val e: RealEngine) {
             e.saveState(appId) { it.copy(pending = null) }
             e.notifier.cancelConfirm(appId)
         }
+        confirmations.remove(appId)
         outcomes.remove(appId)?.complete(PackageInstaller.STATUS_FAILURE_ABORTED)
         e.setProgress(appId, null)
+    }
+
+    /** Reopens the system's confirmation for a live session; otherwise settles the phase and returns false. */
+    fun resume(appId: String): Boolean {
+        val pending = e.stored[appId]?.state?.pending
+        val confirm = confirmations[appId]
+        val live = e.installer.liveSessionIds()
+        if (pending != null && pending.sessionId in live && confirm != null) {
+            try {
+                e.context.startActivity(Intent(confirm).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                return true
+            } catch (ex: RuntimeException) {
+                Log.w(TAG, "Could not reopen the install confirmation: ${ex.message}")
+            }
+        }
+        if (pending != null) {
+            if (pending.sessionId in live) e.installer.abandon(pending.sessionId)
+            settle(appId, pending)
+        }
+        confirmations.remove(appId)
+        e.notifier.cancelConfirm(appId)
+        outcomes.remove(appId)?.complete(PackageInstaller.STATUS_FAILURE_ABORTED)
+        e.progress.remove(appId)
+        e.checks.reevaluate(appId, network = false)
+        e.publish()
+        return false
     }
 
     /** Returns the session handed to the installer, or null when the pipeline stopped before that. */
@@ -223,7 +251,10 @@ internal class Installs(private val e: RealEngine) {
                 e.saveState(appId) { it.copy(pending = pending.copy(waitingForUser = true)) }
                 e.setProgress(appId, Progress(Phase.WAITING_FOR_USER))
                 val shown = confirm?.takeIf { it.action == CONFIRM_INSTALL }
-                if (shown != null) askUser(appId, stored.config.name, shown)
+                if (shown != null) {
+                    confirmations[appId] = shown
+                    askUser(appId, stored.config.name, shown)
+                }
                 if (!inForeground()) outcomes[appId]?.complete(status)
                 return@withContext
             }
@@ -231,6 +262,7 @@ internal class Installs(private val e: RealEngine) {
             else -> failed(appId, problemFor(status, message))
         }
         e.notifier.cancelConfirm(appId)
+        confirmations.remove(appId)
         outcomes.remove(appId)?.complete(status)
         e.progress.remove(appId)
         e.checks.reevaluate(appId, network = false)
@@ -306,12 +338,17 @@ internal class Installs(private val e: RealEngine) {
                 e.progress[id] = Progress(if (pending.waitingForUser) Phase.WAITING_FOR_USER else Phase.INSTALLING)
                 continue
             }
-            val now = e.readInstalled(pending.packageName)
-            if (now != null && now.app.versionCode == pending.versionCode) {
-                succeeded(id, pending, notify = false)
-            } else {
-                e.saveState(id) { it.copy(pending = null, installProblem = Problem(ProblemKind.INSTALL_FAILED, e.texts.installNotFinished())) }
-            }
+            settle(id, pending)
+        }
+    }
+
+    /** A pending install whose session is gone: PackageManager alone says whether it happened. */
+    private fun settle(appId: String, pending: PendingInstall) {
+        val now = e.readInstalled(pending.packageName)
+        if (now != null && now.app.versionCode == pending.versionCode) {
+            succeeded(appId, pending, notify = false)
+        } else {
+            e.saveState(appId) { it.copy(pending = null, installProblem = Problem(ProblemKind.INSTALL_FAILED, e.texts.installNotFinished())) }
         }
     }
 

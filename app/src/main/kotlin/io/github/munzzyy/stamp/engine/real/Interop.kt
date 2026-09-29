@@ -16,6 +16,7 @@ import io.github.munzzyy.stamp.engine.ImportSummary
 import io.github.munzzyy.stamp.engine.Problem
 import io.github.munzzyy.stamp.engine.ProblemException
 import io.github.munzzyy.stamp.engine.ProblemKind
+import io.github.munzzyy.stamp.engine.SavedFile
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
@@ -94,10 +95,13 @@ internal object ImportDecoder {
 }
 
 internal class Interop(private val e: RealEngine) {
+    private val files = Files(e.context, e.texts, e.nowMs)
     private val links = Links(e.http, e.texts, e.nowMs)
     private val oneAtATime = Mutex()
 
     suspend fun importFrom(uri: Uri): ImportSummary = bring { ImportDecoder.decode(read(uri), e.texts) }
+
+    suspend fun importFromFile(file: SavedFile): ImportSummary = bring { ImportDecoder.decode(files.read(file), e.texts) }
 
     suspend fun importFromLink(url: String): ImportSummary = bring { links.read(url) }
 
@@ -106,6 +110,8 @@ internal class Interop(private val e: RealEngine) {
         if (bytes.size > MAX_BYTES) throw ProblemException(Problem(ProblemKind.UNSUPPORTED, e.texts.importTooLarge(MAX_BYTES)))
         ImportDecoder.decode(bytes, e.texts)
     }
+
+    suspend fun importableFiles(): List<SavedFile> = runInterruptible(Dispatchers.IO) { files.list() }
 
     private suspend fun bring(door: () -> Decoded): ImportSummary {
         val decoded = runInterruptible(Dispatchers.IO) { door() }
@@ -149,11 +155,17 @@ internal class Interop(private val e: RealEngine) {
     ).any { !it.isNullOrBlank() }
 
     suspend fun exportTo(uri: Uri): Int = withContext(Dispatchers.IO) {
-        val configs = e.stored.values.map { it.config }.sortedBy { it.name.lowercase() }
-        val text = StampExport.write(configs, e.nowMs(), BuildConfig.VERSION_NAME)
+        val (text, count) = export()
         val out = e.context.contentResolver.openOutputStream(uri, "wt") ?: throw IOException("Cannot write to $uri")
         out.use { it.write(text.toByteArray(Charsets.UTF_8)) }
-        configs.size
+        count
+    }
+
+    suspend fun exportToFolder(): SavedFile = runInterruptible(Dispatchers.IO) { files.save(export().first) }
+
+    private fun export(): Pair<String, Int> {
+        val configs = e.stored.values.map { it.config }.sortedBy { it.name.lowercase() }
+        return StampExport.write(configs, e.nowMs(), BuildConfig.VERSION_NAME) to configs.size
     }
 
     private fun read(uri: Uri): ByteArray = try {

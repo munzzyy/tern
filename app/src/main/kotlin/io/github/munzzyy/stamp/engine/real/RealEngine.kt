@@ -458,11 +458,17 @@ class RealEngine(
 
     override fun hasFilePicker(): Boolean = device.hasFilePicker()
 
-    override suspend fun exportToFolder(): SavedFile = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
+    override suspend fun exportToFolder(): SavedFile {
+        ready()
+        return interop.exportToFolder()
+    }
 
-    override suspend fun importableFiles(): List<SavedFile> = emptyList()
+    override suspend fun importableFiles(): List<SavedFile> = interop.importableFiles()
 
-    override suspend fun importFromFile(file: SavedFile): ImportSummary = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
+    override suspend fun importFromFile(file: SavedFile): ImportSummary {
+        ready()
+        return interop.importFromFile(file)
+    }
 
     override suspend fun importFromLink(url: String): ImportSummary {
         ready()

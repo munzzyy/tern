@@ -74,6 +74,7 @@ class Texts(context: Context) : ImportTexts {
     override fun importNotAnExport() = s(R.string.engine_import_not_an_export)
     override fun importUnreadableExport(detail: String?) = s(R.string.engine_import_unreadable_export, detail.orEmpty().take(200))
     override fun importTooLarge(limitBytes: Int) = s(R.string.engine_import_too_large, limitBytes / (1024 * 1024))
+    fun importFileGone() = s(R.string.engine_import_file_gone)
     override fun linkNotHttps() = s(R.string.engine_link_not_https)
     override fun linkNotAnAddress() = s(R.string.engine_link_not_an_address)
     override fun linkLeavesHttps() = s(R.string.engine_link_leaves_https)
@@ -82,6 +83,8 @@ class Texts(context: Context) : ImportTexts {
     override fun linkUnreachable(detail: String?) = if (detail.isNullOrBlank()) s(R.string.engine_link_unreachable_plain) else s(R.string.engine_link_unreachable, detail.take(200))
     override fun linkTooSlow() = s(R.string.engine_link_too_slow)
     override fun linkNotAnExport() = s(R.string.engine_link_not_an_export)
+    fun exportNoPlace() = s(R.string.engine_export_no_place)
+    fun exportFailed(detail: String?) = if (detail.isNullOrBlank()) s(R.string.engine_export_failed_plain) else s(R.string.engine_export_failed, detail.take(200))
 
     fun trackOnly() = s(R.string.engine_track_only)
     fun noRelease() = s(R.string.engine_no_release)

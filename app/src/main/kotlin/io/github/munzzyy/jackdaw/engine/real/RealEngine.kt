@@ -386,6 +386,8 @@ class RealEngine(
         return true
     }
 
+    override fun mayInstall(): Boolean = device.mayInstall()
+
     override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
         ready()
         withContext(Dispatchers.IO) {

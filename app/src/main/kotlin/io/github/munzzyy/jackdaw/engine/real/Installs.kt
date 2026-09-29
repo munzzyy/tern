@@ -388,9 +388,11 @@ internal class Installs(private val e: RealEngine) {
         val checked = e.checks.checkMany(targets)
         val installed = ArrayList<String>()
         val failed = ArrayList<String>()
+        // Without the permission Android would ask from a notification and then call the install cancelled.
+        val allowed = e.device.mayInstall()
         for (id in targets) {
             val config = e.stored[id]?.config ?: continue
-            if (config.updates != UpdateMode.AUTO || config.trackOnly) continue
+            if (!allowed || config.updates != UpdateMode.AUTO || config.trackOnly) continue
             val eval = e.evaluations[id] ?: continue
             if (eval.status != AppStatus.UPDATE_AVAILABLE || !eval.certain || eval.problem != null || e.progress.containsKey(id)) continue
             batch += id

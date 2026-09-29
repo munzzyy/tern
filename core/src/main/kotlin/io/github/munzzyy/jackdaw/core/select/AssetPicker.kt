@@ -7,7 +7,12 @@ import io.github.munzzyy.jackdaw.core.model.DeviceProfile
 import io.github.munzzyy.jackdaw.core.text.PatternException
 import io.github.munzzyy.jackdaw.core.text.SafePattern
 
-data class Pick(val asset: Asset, val score: Int, val reasons: List<String>)
+/** One thing the file's name said that moved its score. [detail] is the processor or device type it named. */
+data class PickReason(val kind: Kind, val detail: String? = null) {
+    enum class Kind { ABI_MATCH, ABI_MISMATCH, UNIVERSAL, NO_ABI, VARIANT_MATCH, VARIANT_MISMATCH, DEBUG_BUILD, TEST_BUILD, UNSIGNED }
+}
+
+data class Pick(val asset: Asset, val score: Int, val reasons: List<PickReason>)
 
 class AssetPolicyException(message: String) : Exception(message)
 
@@ -25,10 +30,10 @@ object AssetPicker {
 
     private val VARIANT_TOKENS = setOf("tv", "wear", "automotive")
     private val DEBUG_REASONS = mapOf(
-        "debug" to "looks like a debug build",
-        "test" to "looks like a test build",
-        "tests" to "looks like a test build",
-        "unsigned" to "is not signed",
+        "debug" to PickReason.Kind.DEBUG_BUILD,
+        "test" to PickReason.Kind.TEST_BUILD,
+        "tests" to PickReason.Kind.TEST_BUILD,
+        "unsigned" to PickReason.Kind.UNSIGNED,
     )
 
     private const val MAX_NAME_LENGTH = 512
@@ -83,7 +88,7 @@ object AssetPicker {
 
         val tokens = tokenize(name)
         var score = 0
-        val reasons = mutableListOf<String>()
+        val reasons = mutableListOf<PickReason>()
 
         val namedAbis = tokens.mapNotNull { ABI_ALIASES[it] }.distinct()
         val realAbis = namedAbis.filterNot { it == "any" }
@@ -92,35 +97,35 @@ object AssetPicker {
             if (matches.isEmpty()) {
                 if (policy.matchDevice) return null
                 score -= ABI_MISMATCH_PENALTY
-                reasons += "names an ABI this device does not run (${realAbis.joinToString()})"
+                reasons += PickReason(PickReason.Kind.ABI_MISMATCH, realAbis.joinToString())
             } else {
                 val bestIndex = matches.minOf { deviceAbis.indexOf(it) }
                 val bestAbi = matches.first { deviceAbis.indexOf(it) == bestIndex }
                 score += ABI_BASE_SCORE - bestIndex * ABI_STEP
-                reasons += "matches this device ($bestAbi)"
+                reasons += PickReason(PickReason.Kind.ABI_MATCH, bestAbi)
             }
         } else if ("any" in namedAbis) {
             score += NO_ABI_BONUS
-            reasons += "matches this device (universal build)"
+            reasons += PickReason(PickReason.Kind.UNIVERSAL)
         } else {
             score += NO_ABI_BONUS - 1
-            reasons += "no ABI named, should run on this device"
+            reasons += PickReason(PickReason.Kind.NO_ABI)
         }
 
         for (variant in tokens.filter { it in VARIANT_TOKENS }.distinct()) {
             if (variant == deviceVariant) {
                 score += VARIANT_MATCH_BONUS
-                reasons += "targets this device type ($variant)"
+                reasons += PickReason(PickReason.Kind.VARIANT_MATCH, variant)
             } else {
                 score -= VARIANT_MISMATCH_PENALTY
-                reasons += "targets a different device type ($variant)"
+                reasons += PickReason(PickReason.Kind.VARIANT_MISMATCH, variant)
             }
         }
 
         for (token in tokens.distinct()) {
-            val reason = DEBUG_REASONS[token] ?: continue
+            val kind = DEBUG_REASONS[token] ?: continue
             score -= DEBUG_PENALTY
-            reasons += reason
+            if (reasons.none { it.kind == kind }) reasons += PickReason(kind)
         }
 
         if (asset.kind == AssetKind.APK) {

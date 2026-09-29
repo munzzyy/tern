@@ -97,11 +97,29 @@
     <string name="engine_channel_installed">Installed</string>
     <string name="engine_channel_attention">Needs your attention</string>
     <string name="engine_channel_transfers">Downloads</string>
-    <string name="engine_notify_updates">%1$d updates available</string>
+    <plurals name="engine_notify_updates_count">
+        <item quantity="one">%1$d update available</item>
+        <item quantity="other">%1$d updates available</item>
+    </plurals>
     <string name="engine_notify_update_one">Update available for %1$s</string>
-    <string name="engine_notify_installed">%1$d apps updated</string>
+    <plurals name="engine_notify_installed_count">
+        <item quantity="one">%1$d app updated</item>
+        <item quantity="other">%1$d apps updated</item>
+    </plurals>
     <string name="engine_notify_installed_one">%1$s was updated</string>
     <string name="engine_notify_confirm">Tap to finish installing %1$s</string>
-    <string name="engine_notify_failures">%1$d apps could not be checked or updated</string>
+    <plurals name="engine_notify_failures_count">
+        <item quantity="one">%1$d app could not be checked or updated</item>
+        <item quantity="other">%1$d apps could not be checked or updated</item>
+    </plurals>
     <string name="engine_notify_downloading">Downloading %1$s</string>
+    <string name="engine_pick_abi_match">Built for this device\'s processor (%1$s)</string>
+    <string name="engine_pick_abi_mismatch">Built for a processor this device does not have (%1$s)</string>
+    <string name="engine_pick_universal">A universal build that runs on any processor</string>
+    <string name="engine_pick_no_abi">Names no processor type, so it should run on this device</string>
+    <string name="engine_pick_variant_match">Made for this kind of device (%1$s)</string>
+    <string name="engine_pick_variant_mismatch">Made for a different kind of device (%1$s)</string>
+    <string name="engine_pick_debug">Looks like a debug build</string>
+    <string name="engine_pick_test">Looks like a test build</string>
+    <string name="engine_pick_unsigned">Its name says it is not signed</string>
 </resources>

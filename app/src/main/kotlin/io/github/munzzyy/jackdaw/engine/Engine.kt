@@ -50,6 +50,13 @@ interface Engine {
      */
     fun install(appId: String, releaseId: String? = null, assetUrl: String? = null)
 
+    /**
+     * Whether Android lets Jackdaw install apps at all. The user says so once, in the system
+     * settings. An install started without it is answered with that question and then reported
+     * as cancelled, so the screens ask first.
+     */
+    fun mayInstall(): Boolean
+
     fun installAllUpdates()
 
     fun cancel(appId: String)

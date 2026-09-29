@@ -23,7 +23,7 @@ class AssetPickerTest {
         )
         val picks = AssetPicker.rank(assets, DeviceProfile.ARM64_PHONE, AssetPolicy())
         assertEquals("coffeecup-arm64-v8a-release.apk", picks.first().asset.name)
-        assertTrue(picks.first().reasons.any { it.contains("arm64-v8a") })
+        assertTrue(picks.first().reasons.contains(PickReason(PickReason.Kind.ABI_MATCH, "arm64-v8a")))
     }
 
     @Test

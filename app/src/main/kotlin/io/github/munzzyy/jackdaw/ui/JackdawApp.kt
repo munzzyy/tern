@@ -66,10 +66,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.jackdaw.R
 import io.github.munzzyy.jackdaw.engine.Engine
 import io.github.munzzyy.jackdaw.ui.activity.ActivityScreen
 import io.github.munzzyy.jackdaw.ui.add.AddScreen
+import io.github.munzzyy.jackdaw.ui.common.GuardHolder
+import io.github.munzzyy.jackdaw.ui.common.InstallPermissionDialog
 import io.github.munzzyy.jackdaw.ui.common.LocalNoTouch
 import io.github.munzzyy.jackdaw.ui.common.focusHighlight
 import io.github.munzzyy.jackdaw.ui.common.verticalFocusStaysInside
@@ -102,9 +105,10 @@ fun JackdawApp(
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val noTouch = remember(configuration) { context.lacksTouch() }
+    val guarded = viewModel(key = "install-guard") { GuardHolder(engine) }.guarded
     CompositionLocalProvider(
         LocalNoTouch provides noTouch,
-        LocalEngine provides engine,
+        LocalEngine provides guarded,
         LocalSnackbar provides snackbar,
         LocalActionScope provides scope,
         LocalReducedMotion provides reducedMotion,
@@ -121,6 +125,7 @@ fun JackdawApp(
             } else {
                 Shell(stack)
             }
+            InstallPermissionDialog(guarded)
         }
     }
 }

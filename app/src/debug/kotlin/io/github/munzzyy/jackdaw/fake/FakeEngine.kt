@@ -101,6 +101,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         _settings.value = Settings()
         _online.value = name != "offline"
         nothingWaits = false
+        installsAllowed = true
         tokens.value = if (rows.isEmpty()) emptySet() else setOf("api.github.com")
         if (name == "default") startTicker()
     }
@@ -288,6 +289,11 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     }
 
     override fun open(appId: String): Boolean = row(appId)?.let { it.installed != null && it.id != "tidetable" } ?: false
+
+    /** Switched off by a test to stand for a phone that has not yet allowed installs. */
+    @Volatile var installsAllowed = true
+
+    override fun mayInstall(): Boolean = installsAllowed
 
     override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
         edit(appId) { it.copy(config = change(it.config).copy(id = appId)) }

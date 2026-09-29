@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.format.DateFormat
 import android.text.format.Formatter
 import io.github.munzzyy.jackdaw.R
+import io.github.munzzyy.jackdaw.core.select.PickReason
 import java.util.Date
 
 /** Every sentence the engine shows, from resources so it can be translated. */
@@ -11,6 +12,8 @@ class Texts(context: Context) {
     private val c = context.applicationContext
 
     private fun s(id: Int, vararg args: Any): String = c.getString(id, *args)
+
+    private fun q(id: Int, count: Int): String = c.resources.getQuantityString(id, count, count)
 
     private fun bytes(n: Long): String = Formatter.formatShortFileSize(c, n)
 
@@ -104,10 +107,22 @@ class Texts(context: Context) {
     fun channelInstalled() = s(R.string.engine_channel_installed)
     fun channelAttention() = s(R.string.engine_channel_attention)
     fun channelTransfers() = s(R.string.engine_channel_transfers)
-    fun notifyUpdates(count: Int, onlyName: String?) = if (count == 1 && onlyName != null) s(R.string.engine_notify_update_one, onlyName) else s(R.string.engine_notify_updates, count)
-    fun notifyInstalled(count: Int, onlyName: String?) = if (count == 1 && onlyName != null) s(R.string.engine_notify_installed_one, onlyName) else s(R.string.engine_notify_installed, count)
+    fun notifyUpdates(count: Int, onlyName: String?) = if (count == 1 && onlyName != null) s(R.string.engine_notify_update_one, onlyName) else q(R.plurals.engine_notify_updates_count, count)
+    fun notifyInstalled(count: Int, onlyName: String?) = if (count == 1 && onlyName != null) s(R.string.engine_notify_installed_one, onlyName) else q(R.plurals.engine_notify_installed_count, count)
     fun notifyConfirm(name: String) = s(R.string.engine_notify_confirm, name)
-    fun notifyFailures(count: Int) = s(R.string.engine_notify_failures, count)
+    fun notifyFailures(count: Int) = q(R.plurals.engine_notify_failures_count, count)
+
+    fun pickReason(reason: PickReason): String = when (reason.kind) {
+        PickReason.Kind.ABI_MATCH -> s(R.string.engine_pick_abi_match, reason.detail.orEmpty())
+        PickReason.Kind.ABI_MISMATCH -> s(R.string.engine_pick_abi_mismatch, reason.detail.orEmpty())
+        PickReason.Kind.UNIVERSAL -> s(R.string.engine_pick_universal)
+        PickReason.Kind.NO_ABI -> s(R.string.engine_pick_no_abi)
+        PickReason.Kind.VARIANT_MATCH -> s(R.string.engine_pick_variant_match, reason.detail.orEmpty())
+        PickReason.Kind.VARIANT_MISMATCH -> s(R.string.engine_pick_variant_mismatch, reason.detail.orEmpty())
+        PickReason.Kind.DEBUG_BUILD -> s(R.string.engine_pick_debug)
+        PickReason.Kind.TEST_BUILD -> s(R.string.engine_pick_test)
+        PickReason.Kind.UNSIGNED -> s(R.string.engine_pick_unsigned)
+    }
     fun notifyDownloading(name: String) = s(R.string.engine_notify_downloading, name)
 
     private fun time(ms: Long): String = DateFormat.getTimeFormat(c).format(Date(ms))

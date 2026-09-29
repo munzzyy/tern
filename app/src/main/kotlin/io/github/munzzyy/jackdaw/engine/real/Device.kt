@@ -71,12 +71,15 @@ class Device(context: Context) {
         null to null
     }
 
+    /** Whether Android lets this app install others. The user says so once, in the system settings. */
+    fun mayInstall(): Boolean = pm.canRequestPackageInstalls()
+
     /**
      * Android's hint for whether an update can install without a prompt. The system decides; this
      * only predicts, from the rules documented for SessionParams.setRequireUserAction.
      */
     fun silentUpdateLikely(installed: DeviceApp?, offeredTargetSdk: Int?): Boolean? {
-        if (installed == null) return false
+        if (installed == null || !mayInstall()) return false
         val floor = silentTargetFloor(sdk) ?: return false
         val ours = installed.installer == ownPackage || installed.updateOwner == ownPackage
         if (installed.updateOwner != null && installed.updateOwner != ownPackage) return false

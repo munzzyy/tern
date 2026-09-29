@@ -439,6 +439,8 @@
     <string name="proxy_port">Proxy port</string>
     <string name="proxy_port_invalid">A number from 1 to 65535</string>
     <string name="settings_appearance">Appearance</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_effect">Chosen in Android\'s settings for this app.</string>
     <string name="settings_theme">Theme</string>
     <string name="theme_system">Follow the system</string>
     <string name="theme_light">Light</string>
@@ -543,4 +545,7 @@
     <string name="first_notify_denied">Notifications are off. You can turn them on later in Settings.</string>
     <string name="first_notify_allow">Allow notifications</string>
     <string name="first_skip">Not now</string>
+    <string name="install_permission_title">Allow Jackdaw to install apps</string>
+    <string name="install_permission_body">Android asks once before one app may install another. On the next screen, turn on the switch for Jackdaw, then come back. The install carries on by itself.</string>
+    <string name="install_permission_open">Open settings</string>
 </resources>

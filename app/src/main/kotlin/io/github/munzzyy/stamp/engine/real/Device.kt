@@ -1,10 +1,13 @@
 package io.github.munzzyy.stamp.engine.real
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import io.github.munzzyy.stamp.core.engine.InstalledApp
 import io.github.munzzyy.stamp.core.model.DeviceProfile
@@ -83,6 +86,18 @@ class Device(context: Context) {
     /** Whether Android lets this app install others. The user says so once, in the system settings. */
     fun mayInstall(): Boolean = pm.canRequestPackageInstalls()
 
+    /** A television answers the file picker's intent with a screen that only says no app can do this. */
+    fun hasFilePicker(): Boolean =
+        opens(Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType(EXPORT_TYPE))
+
+    fun canOpenInstallSettings(): Boolean =
+        opens(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.fromParts("package", ownPackage, null)))
+
+    private fun opens(intent: Intent): Boolean {
+        val activity = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)?.activityInfo ?: return false
+        return !isStub(activity.packageName, activity.name)
+    }
+
     /**
      * Android's hint for whether an update can install without a prompt. The system decides; this
      * only predicts, from the rules documented for SessionParams.setRequireUserAction.
@@ -97,6 +112,11 @@ class Device(context: Context) {
 
     companion object {
         private const val TAG = "StampDevice"
+        const val EXPORT_TYPE = "application/json"
+
+        /** True for an activity that stands in for a missing one, such as those in com.android.tv.frameworkpackagestubs. */
+        fun isStub(packageName: String?, className: String?): Boolean =
+            packageName.orEmpty().contains("frameworkpackagestubs") || className.orEmpty().contains("Stub")
 
         /** Lowest targetSdk an app may have for a silent update, per Android release. Null below Android 12. */
         fun silentTargetFloor(sdk: Int): Int? = when {

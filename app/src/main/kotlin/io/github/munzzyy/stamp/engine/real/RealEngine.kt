@@ -456,7 +456,7 @@ class RealEngine(
         return interop.importFrom(uri)
     }
 
-    override fun hasFilePicker(): Boolean = true
+    override fun hasFilePicker(): Boolean = device.hasFilePicker()
 
     override suspend fun exportToFolder(): SavedFile = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
 
@@ -470,7 +470,7 @@ class RealEngine(
 
     override fun suggestions(): List<Suggestion> = emptyList()
 
-    override fun canOpenInstallSettings(): Boolean = true
+    override fun canOpenInstallSettings(): Boolean = device.canOpenInstallSettings()
 
     private val _handoff = MutableStateFlow<Handoff?>(null)
     override val handoff: StateFlow<Handoff?> = _handoff.asStateFlow()

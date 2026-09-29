@@ -61,8 +61,9 @@ class QrEncoderTest {
 
     @Test
     fun theLongestAddressOfAHandoffFits() {
-        val code = QrEncoder.encode("http://192.168.100.200:65535/" + "a".repeat(26))
+        val code = QrEncoder.encode("http://192.168.100.200:65535/#" + "a".repeat(20))
         assertEquals(4, code.version)
+        assertEquals(3, QrEncoder.encode("http://10.0.0.2:1024/#" + "a".repeat(20)).version)
     }
 
     @Test

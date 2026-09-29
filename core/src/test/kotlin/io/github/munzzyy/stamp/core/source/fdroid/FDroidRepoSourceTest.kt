@@ -188,6 +188,45 @@ class FDroidRepoSourceTest {
     }
 
     @Test
+    fun theOlderIndexIsReadByPackageAndAnotherPackageIsLeftAlone() {
+        val v1Url = "$repoUrl/index-v1.jar"
+        val http = FakeHttp()
+            .on(entryJarUrl) { HttpResponse.of(404, "", Headers.EMPTY, entryJarUrl) }
+            .bytes(v1Url, Fixtures.bytes("fdroid/repo-v1/index-v1.jar"))
+        val spec = SourceSpec(source.type, repoUrl, mapOf(SourceOptions.PACKAGE to "org.example.two"))
+        val listing = (source.check(spec, CheckContext(http, InMemoryValidatorStore())) as CheckResult.Listing).listing
+        assertEquals(listOf("9.0"), listing.releases.map { it.version })
+        assertEquals(listOf("org.example.two_90.apk"), listing.releases.flatMap { it.assets }.map { it.name })
+    }
+
+    @Test
+    fun anIndexUnderASha1SignatureIsRefusedAndSaysWhy() {
+        val v1Url = "$repoUrl/index-v1.jar"
+        val http = FakeHttp()
+            .on(entryJarUrl) { HttpResponse.of(404, "", Headers.EMPTY, entryJarUrl) }
+            .bytes(v1Url, Fixtures.bytes("fdroid/repo-v1/index-v1-sha1.jar"))
+        val spec = SourceSpec(source.type, repoUrl, mapOf(SourceOptions.PACKAGE to "org.example.one"))
+        try {
+            source.check(spec, CheckContext(http, InMemoryValidatorStore()))
+            fail("an index signed with SHA-1 was accepted")
+        } catch (e: SourceException) {
+            assertEquals(SourceErrorKind.UNSUPPORTED, e.kind)
+            assertTrue(e.message.orEmpty().contains("SHA-1"))
+        }
+    }
+
+    @Test
+    fun onlySha256AndStrongerCountAsADigest() {
+        assertTrue(strongDigest(listOf("SHA-256-Digest")))
+        assertTrue(strongDigest(listOf("SHA1-Digest", "SHA-256-Digest")))
+        assertTrue(strongDigest(listOf("SHA-512-Digest")))
+        assertTrue(strongDigest(emptyList()))
+        assertTrue(strongDigest(listOf("Name")))
+        assertEquals(false, strongDigest(listOf("SHA1-Digest")))
+        assertEquals(false, strongDigest(listOf("SHA-1-Digest", "MD5-Digest")))
+    }
+
+    @Test
     fun noEntryJarOrIndexV1JarThrowsNotFound() {
         val v1Url = "$repoUrl/index-v1.jar"
         val http = FakeHttp()

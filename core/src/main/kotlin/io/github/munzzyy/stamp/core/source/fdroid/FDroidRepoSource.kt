@@ -222,6 +222,10 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
                     if (entry.size > MAX_SIGNED_ENTRY) throw SourceException(SourceErrorKind.AUTH, "$signedEntryName is too large")
                     signedBytes = jar.getInputStream(entry).use { it.readNBytes(MAX_SIGNED_ENTRY + 1) }
                     signers = entry.codeSigners
+                    // Java counts a SHA-1 signature as none and Android may not, so the answer is given here, the same everywhere.
+                    if (!strongDigest(entry.attributes?.keys.orEmpty().map { it.toString() })) {
+                        throw SourceException(SourceErrorKind.UNSUPPORTED, "This repository signs its index with SHA-1, which is no longer safe to rely on")
+                    }
                 }
             }
         } catch (e: SecurityException) {
@@ -337,7 +341,8 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
 
     private fun buildV1Releases(root: JsonObject, pkg: String, repoBase: String, context: CheckContext): List<Release> {
         val device = context.device
-        val entries = root.array("packages")?.objects().orEmpty()
+        // In this format "packages" maps each package to the list of its versions.
+        val entries = root.obj("packages")?.array(pkg)?.objects().orEmpty()
         val releases = entries.filter { it.string("packageName") == pkg }.mapNotNull { entry ->
             val versionName = entry.string("versionName") ?: return@mapNotNull null
             val versionCode = entry.long("versionCode") ?: return@mapNotNull null
@@ -372,6 +377,12 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         private const val INDEX_CAP = 96L * 1024 * 1024
         private val SCHEME = Regex("^fdroidrepos?://", RegexOption.IGNORE_CASE)
     }
+}
+
+/** True when the manifest vouches for the file with SHA-256 or stronger. A file with no digest at all is left to the signer check. */
+internal fun strongDigest(attributeNames: List<String>): Boolean {
+    val digests = attributeNames.filter { it.endsWith("-Digest", ignoreCase = true) }.map { it.uppercase() }
+    return digests.isEmpty() || digests.any { it.startsWith("SHA-256") || it.startsWith("SHA-384") || it.startsWith("SHA-512") || it.startsWith("SHA256") || it.startsWith("SHA384") || it.startsWith("SHA512") }
 }
 
 /** True for a file name that stays inside the repository it was read from. */

@@ -288,21 +288,43 @@ python3 - "$WORK/index-v1.json" <<'PY'
 import json, sys
 
 path = sys.argv[1]
+# The shape of a real index-v1.json: "apps" is a list, "packages" maps each package to its versions.
 index = {
     "repo": {"timestamp": 1700000000000, "name": "Jackdaw Test Repo"},
-    "packages": [
-        {
-            "packageName": "org.example.one",
-            "versionName": "1.0",
-            "versionCode": 10,
-            "apkName": "org.example.one_10.apk",
-            "hash": "7" * 64,
-            "hashType": "sha256",
-            "size": 500,
-            "minSdkVersion": 21,
-            "nativecode": [],
-        },
+    "requests": {"install": [], "uninstall": []},
+    "apps": [
+        {"packageName": "org.example.one", "name": "Example One"},
+        {"packageName": "org.example.two", "name": "Example Two"},
     ],
+    "packages": {
+        "org.example.two": [
+            {
+                "packageName": "org.example.two",
+                "versionName": "9.0",
+                "versionCode": 90,
+                "apkName": "org.example.two_90.apk",
+                "hash": "8" * 64,
+                "hashType": "sha256",
+                "size": 700,
+                "minSdkVersion": 21,
+                "added": 1700000000000,
+            },
+        ],
+        "org.example.one": [
+            {
+                "packageName": "org.example.one",
+                "versionName": "1.0",
+                "versionCode": 10,
+                "apkName": "org.example.one_10.apk",
+                "hash": "7" * 64,
+                "hashType": "sha256",
+                "size": 500,
+                "minSdkVersion": 21,
+                "nativecode": [],
+                "added": 1700000000000,
+            },
+        ],
+    },
 }
 with open(path, "w") as f:
     json.dump(index, f, sort_keys=True)
@@ -311,6 +333,12 @@ PY
 jarsigner -keystore "$WORK/good.jks" -storepass "$STOREPASS" -sigalg SHA256withRSA -digestalg SHA-256 \
   "$WORK/index-v1.jar" good >/dev/null
 cp "$WORK/index-v1.jar" "$OUT/repo-v1/index-v1.jar"
+
+# What an old repository still serves: the same index under a SHA-1 signature.
+(cd "$WORK" && mkdir sha1 && cp index-v1.json sha1/ && cd sha1 && jar cf index-v1.jar index-v1.json)
+jarsigner -keystore "$WORK/good.jks" -storepass "$STOREPASS" -sigalg SHA1withRSA -digestalg SHA1 \
+  -J-Djava.security.properties=/dev/null "$WORK/sha1/index-v1.jar" good >/dev/null 2>&1
+cp "$WORK/sha1/index-v1.jar" "$OUT/repo-v1/index-v1-sha1.jar"
 printf '%s' "$FINGERPRINT" > "$OUT/repo-v1/fingerprint.txt"
 
 echo "Wrote fixtures to $OUT"

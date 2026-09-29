@@ -95,6 +95,7 @@ class IconSourcesTest {
             { this },
             { text(gitLabProject, "not here", status = 404) },
             { text(gitLabProject, "oops", status = 500) },
+            { text(gitLabProject, Fixtures.text("icons/gitlab_project.json"), status = 500) },
             { text(gitLabProject, "<html>") },
             { text(gitLabProject, "[1, 2]") },
             { text(gitLabProject, "{\"avatar_url\": 7, \"namespace\": \"group\"}") },
@@ -141,7 +142,13 @@ class IconSourcesTest {
 
     @Test
     fun aForgejoRepositoryThatCannotBeAskedStillGivesItsReleases() {
-        for (answer in listOf<FakeHttp.() -> FakeHttp>({ this }, { text(forgejoRepository, "gone", status = 404) }, { text(forgejoRepository, "{") })) {
+        val answers = listOf<FakeHttp.() -> FakeHttp>(
+            { this },
+            { text(forgejoRepository, "gone", status = 404) },
+            { text(forgejoRepository, Fixtures.text("icons/forgejo_repository.json"), status = 403) },
+            { text(forgejoRepository, "{") },
+        )
+        for (answer in answers) {
             val listing = (ForgejoSource().check(forgejo, context(forgejoWith(answer))) as CheckResult.Listing).listing
             assertTrue(listing.releases.isNotEmpty())
             assertEquals(emptyList<String>(), listing.iconUrls)

@@ -15,10 +15,11 @@ internal object VersionGuess {
     }
 
     /**
-     * Looks past a codename for a stage word this same release name carries, so
-     * `22.0-Piers_beta1` is not cut down to `22.0`. Stops at the first whole word that is
-     * not a stage word, so a processor name or file ending is never read as one. Returns the
-     * stage word with its own trailing number, not the codename between it and the version.
+     * The first stage word in the name that goes on after the number, with its own trailing
+     * number. The name goes on for as long as letters, digits, dots, dashes and underscores
+     * follow, and is read for [STAGE_WINDOW] characters at most. A word in it that is no stage
+     * word is passed over, so `22.0-Piers_beta1` gives `beta1`. Any other character, such as a
+     * space or the start of a tag, ends the name and the search.
      */
     private fun stageAfter(s: String, from: Int): String? {
         val windowEnd = minOf(s.length, from + STAGE_WINDOW)
@@ -34,8 +35,10 @@ internal object VersionGuess {
                     return s.substring(i, numEnd).lowercase()
                 }
                 i = wordEnd
-            } else {
+            } else if (c.isDigit() || c == '.' || c == '-' || c == '_') {
                 i++
+            } else {
+                return null
             }
         }
         return null

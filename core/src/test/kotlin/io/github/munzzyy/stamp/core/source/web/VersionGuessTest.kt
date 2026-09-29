@@ -67,11 +67,29 @@ class VersionGuessTest {
     }
 
     @Test
-    fun negativeControlDetectsTheEarlyCutFault() {
-        val brokenPattern = Regex("\\d+(\\.\\d+){1,4}([-._]?(alpha|beta|rc)\\d*)?", RegexOption.IGNORE_CASE)
-        val text = "kodi-22.0-Piers_beta1-armeabi-v7a.apk"
-        val brokenGuess = brokenPattern.findAll(text).maxByOrNull { it.value.length }?.value
-        assertEquals("22.0", brokenGuess)
-        assertTrue(VersionGuess.find(text) != brokenGuess)
+    fun aTagOfThePageAfterTheNumberIsNotReadAsAStage() {
+        assertEquals("1.2.3", VersionGuess.find("<b>Version 1.2.3</b><pre>notes</pre>"))
+        assertEquals("1.2.3", VersionGuess.find("1.2.3</b><pre>"))
+        assertEquals("4.5.6", VersionGuess.find("<td>4.5.6</td><td class=\"rc\">"))
+    }
+
+    @Test
+    fun wordsAfterASpaceAreNotReadAsAStage() {
+        assertEquals("1.2.3", VersionGuess.find("1.2.3 for dev boards"))
+        assertEquals("2.0.1", VersionGuess.find("Release 2.0.1, the beta is over"))
+        assertEquals("3.1.0", VersionGuess.find("3.1.0 (nightly builds are elsewhere)"))
+    }
+
+    @Test
+    fun anotherPartOfTheAddressIsNotReadAsAStage() {
+        assertEquals("1.2.3", VersionGuess.find("files/1.2.3/dev/app.apk"))
+        assertEquals("1.2.3", VersionGuess.find("app-1.2.3.apk?channel=beta"))
+    }
+
+    @Test
+    fun theStageIsStillReadThroughDotsDashesAndUnderscores() {
+        assertEquals("1.2.3-rc1", VersionGuess.find("app_1.2.3_rc1.apk"))
+        assertEquals("1.2.3-alpha", VersionGuess.find("app-1.2.3.alpha.apk"))
+        assertEquals("7.0-nightly", VersionGuess.find("app-7.0-20260101-nightly.apk"))
     }
 }

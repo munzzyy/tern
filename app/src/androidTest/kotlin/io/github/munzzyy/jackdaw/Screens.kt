@@ -2,13 +2,19 @@ package io.github.munzzyy.jackdaw
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.ui.platform.ViewRootForTest
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteraction
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isFocused
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollToNode
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
@@ -47,3 +53,18 @@ fun ComposeTestRule.shownRow(name: String): SemanticsNodeInteraction {
 fun ComposeTestRule.tagged(tag: String): SemanticsNodeInteraction = onNodeWithTag(tag)
 
 fun ComposeTestRule.textCount(text: String): Int = onAllNodesWithText(text).fetchSemanticsNodes().size
+
+/** Like assertIsDisplayed, but a failure says where the node and the focus were, which is what a layout bug needs. */
+fun ComposeTestRule.assertShown(text: String) {
+    val node = onNodeWithText(text)
+    try {
+        node.assertIsDisplayed()
+    } catch (e: AssertionError) {
+        val found = onAllNodes(hasText(text)).fetchSemanticsNodes()
+        val focused = onAllNodes(isFocused()).fetchSemanticsNodes()
+        val where = found.joinToString { "at ${it.boundsInWindow} of root ${(it.root as? ViewRootForTest)?.view?.let { v -> v.width to v.height }}, placed=${it.layoutInfo.isPlaced}" }
+        val focus = focused.joinToString { "${it.config.getOrNull(SemanticsProperties.Text) ?: it.config.getOrNull(SemanticsProperties.ContentDescription)} at ${it.boundsInWindow}" }
+        throw AssertionError("\"$text\" is not shown: $where; focus on: $focus; font scale ${appContext.resources.configuration.fontScale}", e)
+    }
+}
+

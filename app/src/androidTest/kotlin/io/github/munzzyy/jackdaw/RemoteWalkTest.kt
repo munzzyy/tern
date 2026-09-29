@@ -18,6 +18,7 @@ import io.github.munzzyy.jackdaw.core.model.UpdateMode
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -78,6 +79,17 @@ class RemoteWalkTest {
 
             device.pressBack()
             compose.assertFocusOn(row and hasContentDescription("$name.", substring = true), "back returns to the app that was opened")
+        }
+    }
+
+    @Test
+    fun anActivityEntryWithoutAnAppCanBeReachedWithTheRemote() {
+        assumeTrue("needs a device without touch", withoutTouch)
+        launch("default").use {
+            compose.openTab("Activity")
+            val imported = hasContentDescription("Imported 14 apps", substring = true)
+            compose.moveTo(imported, KEYCODE_DPAD_DOWN)
+            compose.assertFocusOn(imported, "the entry about the import takes focus")
         }
     }
 

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -49,6 +50,7 @@ import io.github.munzzyy.jackdaw.engine.EventKind
 import io.github.munzzyy.jackdaw.ui.LocalEngine
 import io.github.munzzyy.jackdaw.ui.LocalSnackbar
 import io.github.munzzyy.jackdaw.ui.common.ConfirmDialog
+import io.github.munzzyy.jackdaw.ui.common.LocalNoTouch
 import io.github.munzzyy.jackdaw.ui.common.firstFocus
 import io.github.munzzyy.jackdaw.ui.common.rememberScreenFocus
 import io.github.munzzyy.jackdaw.ui.common.returnFocus
@@ -160,10 +162,11 @@ private fun EventRow(event: Event, onOpenApp: (String) -> Unit, focus: Modifier)
     val time = formatTime(event.atMs)
     val sentence = listOfNotNull(time, event.appName, event.message).joinToString(". ") { it.trimEnd('.') } + "."
     val appId = event.appId
-    val clickable = if (appId != null) {
-        focus.selectable(selected = false, role = Role.Button, onClick = { onOpenApp(appId) })
-    } else {
-        Modifier
+    val clickable = when {
+        appId != null -> focus.selectable(selected = false, role = Role.Button, onClick = { onOpenApp(appId) })
+        // A remote scrolls by moving focus, so an entry it cannot land on is one it cannot reach.
+        LocalNoTouch.current -> focus.focusable()
+        else -> Modifier
     }
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp),

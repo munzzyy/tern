@@ -30,6 +30,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.input.InputModeManager
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
@@ -58,6 +59,15 @@ fun Context.lacksTouch(): Boolean = lacksTouch(
 
 @Composable
 fun drivenByKeys(): Boolean = LocalNoTouch.current || LocalInputModeManager.current.inputMode == InputMode.Keyboard
+
+/**
+ * A pointer on a device without a touch screen, an air mouse for one, leaves the window in touch
+ * mode, where only text fields take focus. Focus placed then lands on the first text field of the
+ * screen, however far down it is. Leaving touch mode first lets it land where it should.
+ */
+private fun InputModeManager.leaveTouchMode() {
+    if (inputMode != InputMode.Keyboard) requestInputMode(InputMode.Keyboard)
+}
 
 /** Up and down leave the field; without a touch screen a stop sits in front of it, since focusing the field itself opens the keyboard. */
 fun Modifier.textFieldKeys(): Modifier = composed {
@@ -132,7 +142,13 @@ fun rememberScreenFocus(active: Boolean = true, again: Int = 0): ScreenFocus {
         ScreenFocus(null)
     }
     val keys = drivenByKeys()
-    LaunchedEffect(screen, active, again) { if (active && keys) screen.land() }
+    val input = LocalInputModeManager.current
+    LaunchedEffect(screen, active, again) {
+        if (active && keys) {
+            input.leaveTouchMode()
+            screen.land()
+        }
+    }
     return screen
 }
 
@@ -155,8 +171,10 @@ fun Modifier.focusWhenShown(revealTop: Boolean = false): Modifier = composed {
     val requester = remember { FocusRequester() }
     val reveal = remember { BringIntoViewRequester() }
     val keys = drivenByKeys()
+    val input = LocalInputModeManager.current
     LaunchedEffect(requester) {
         if (!keys) return@LaunchedEffect
+        input.leaveTouchMode()
         for (frame in 0 until 30) {
             withFrameNanos {}
             if (requester.tryFocus()) {

@@ -14,6 +14,7 @@ import androidx.test.uiautomator.UiDevice
 import io.github.munzzyy.jackdaw.ui.add.ADD_FIND_TAG
 import io.github.munzzyy.jackdaw.ui.detail.DETAIL_PRIMARY_TAG
 import io.github.munzzyy.jackdaw.ui.firstrun.FIRST_RUN_ADD_TAG
+import kotlin.math.abs
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -31,15 +32,19 @@ class LargeTextTest {
     @Before
     fun bigText() {
         previous = device.executeShellCommand("settings get system font_scale").trim().takeIf { it.toFloatOrNull() != null } ?: "1.0"
-        device.executeShellCommand("settings put system font_scale 2.0")
-        device.waitForIdle()
-        val deadline = System.currentTimeMillis() + 10_000
-        while (appContext.resources.configuration.fontScale < 1.99f && System.currentTimeMillis() < deadline) Thread.sleep(100)
+        scale("2.0")
     }
 
     @After
-    fun restore() {
-        device.executeShellCommand("settings put system font_scale $previous")
+    fun restore() = scale(previous)
+
+    /** Returns once the app has the new size, so a change never lands in the middle of the next test. */
+    private fun scale(value: String) {
+        device.executeShellCommand("settings put system font_scale $value")
+        val wanted = value.toFloat()
+        val deadline = System.currentTimeMillis() + 10_000
+        while (abs(appContext.resources.configuration.fontScale - wanted) > 0.01f && System.currentTimeMillis() < deadline) Thread.sleep(100)
+        device.waitForIdle()
     }
 
     @Test
@@ -84,7 +89,7 @@ class LargeTextTest {
     fun settingsShowsItsFirstSetting() {
         launch("default").use {
             compose.onNodeWithText("Settings").performClick()
-            compose.onNodeWithText("How often").assertIsDisplayed()
+            compose.assertShown("How often")
         }
     }
 

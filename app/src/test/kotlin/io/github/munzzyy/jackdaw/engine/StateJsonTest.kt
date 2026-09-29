@@ -63,8 +63,9 @@ class StateJsonTest {
 
     @Test
     fun factsRoundTripAndRejectTheirAbsence() {
-        val facts = FileFacts("com.example.app", 3, "3.0", listOf("aa"), listOf("bb"), listOf("android.permission.CAMERA"), 24, 35, false, true, "GitHub release digest")
+        val facts = FileFacts("com.example.app", 3, "3.0", listOf("aa"), listOf("bb"), listOf("android.permission.CAMERA"), 24, 35, false, true, "GitHub release digest", "ef".repeat(32))
         assertEquals(facts, StateJson.decodeFacts(StateJson.encodeFacts(facts)))
+        assertNull(StateJson.decodeFacts(StateJson.encodeFacts(facts.copy(fileSha256 = "../not-a-hash")))?.fileSha256)
         assertNull(StateJson.decodeFacts("{\"versionCode\":3}"))
         assertNull(StateJson.decodeFacts("garbage"))
     }

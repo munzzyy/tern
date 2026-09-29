@@ -98,7 +98,7 @@ private fun found(
         release = release,
         file = file,
         otherFiles = others,
-        verification = invent.verification("org.example.$repo", signer, checksum),
+        verification = invent.verification("org.example.$repo", signer, checksum, fileSha256 = file?.asset?.sha256),
         installed = null,
         alreadyTracked = null,
         warnings = warnings,

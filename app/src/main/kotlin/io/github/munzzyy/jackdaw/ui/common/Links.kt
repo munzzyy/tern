@@ -47,7 +47,7 @@ fun openLink(context: Context, url: String): Boolean {
 
 /** Shows the whole address before anything leaves the app. */
 @Composable
-fun LinkDialog(url: String, onDismiss: () -> Unit) {
+fun LinkDialog(url: String, onDismiss: () -> Unit, note: String? = null) {
     val context = LocalContext.current
     val clipboard = LocalClipboard.current
     val actions = rememberActions()
@@ -56,6 +56,7 @@ fun LinkDialog(url: String, onDismiss: () -> Unit) {
         title = { Text(stringResource(R.string.link_dialog_title)) },
         text = {
             Column(Modifier.heightIn(max = 280.dp).verticalScroll(rememberScrollState())) {
+                note?.let { Text(it, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(bottom = 12.dp)) }
                 SelectionContainer {
                     Text(url, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.fillMaxWidth())
                 }

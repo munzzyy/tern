@@ -213,6 +213,10 @@
         <item quantity="other">Asks for %d new permissions</item>
     </plurals>
     <string name="fingerprint_copied">Fingerprint copied</string>
+    <!-- VirusTotal is a service name; keep it as is. -->
+    <string name="checks_virustotal">Look this file up on VirusTotal</string>
+    <!-- Shown above the address before the browser opens it. The fingerprint is the file's SHA-256 hash. -->
+    <string name="checks_virustotal_note">Only the file\'s fingerprint is sent, by your browser, and a file that nobody has uploaded to VirusTotal will not be found there.</string>
 
     <!-- What the user can do about each problem. -->
     <string name="advice_network">Jackdaw could not reach the source. Check your connection or proxy, then try again.</string>

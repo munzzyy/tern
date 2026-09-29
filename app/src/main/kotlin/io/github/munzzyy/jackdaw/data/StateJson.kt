@@ -7,6 +7,7 @@ import io.github.munzzyy.jackdaw.core.json.JsonObject
 import io.github.munzzyy.jackdaw.core.model.Asset
 import io.github.munzzyy.jackdaw.core.model.NotesFormat
 import io.github.munzzyy.jackdaw.core.model.Release
+import io.github.munzzyy.jackdaw.core.verify.Fingerprints
 import io.github.munzzyy.jackdaw.engine.Problem
 import io.github.munzzyy.jackdaw.engine.ProblemKind
 
@@ -71,6 +72,7 @@ object StateJson {
             "testOnly" to facts.testOnly,
             "verified" to facts.verified,
             "checksumMatchedFrom" to facts.checksumMatchedFrom,
+            "fileSha256" to facts.fileSha256,
         ),
     )
 
@@ -88,6 +90,7 @@ object StateJson {
             testOnly = obj.bool("testOnly") ?: false,
             verified = obj.bool("verified") ?: false,
             checksumMatchedFrom = obj.string("checksumMatchedFrom"),
+            fileSha256 = obj.string("fileSha256")?.let(Fingerprints::normalize),
         )
     }
 

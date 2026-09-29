@@ -16,6 +16,7 @@ import io.github.munzzyy.jackdaw.core.select.Pick
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
 import io.github.munzzyy.jackdaw.core.text.PatternException
 import io.github.munzzyy.jackdaw.core.verify.Checksums
+import io.github.munzzyy.jackdaw.core.verify.Fingerprints
 import io.github.munzzyy.jackdaw.data.AppState
 import io.github.munzzyy.jackdaw.data.FileFacts
 import io.github.munzzyy.jackdaw.data.PatternProblem
@@ -158,6 +159,7 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
             checksum = checksum,
             checksumSource = source,
             newPermissions = newPermissions,
+            fileSha256 = facts?.fileSha256 ?: asset.sha256?.let(Fingerprints::normalize),
         )
     }
 

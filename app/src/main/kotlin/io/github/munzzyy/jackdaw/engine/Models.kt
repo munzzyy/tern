@@ -89,6 +89,8 @@ data class Verification(
     val checksumSource: String?,
     /** Permissions the offered version asks for that the installed one does not. */
     val newPermissions: List<String>,
+    /** SHA-256 of the file, lowercase hex: the publisher's digest before download, the measured hash after. */
+    val fileSha256: String? = null,
 )
 
 enum class Phase { QUEUED, DOWNLOADING, VERIFYING, INSTALLING, WAITING_FOR_USER }

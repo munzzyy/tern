@@ -58,4 +58,13 @@ class EvidenceTest {
         assertEquals("CAMERA", shortPermission("android.permission.CAMERA"))
         assertEquals("com.vendor.permission.X", shortPermission("com.vendor.permission.X"))
     }
+
+    @Test
+    fun virusTotalLinksOnlyAWellFormedFingerprint() {
+        val hash = "0123456789abcdef".repeat(4)
+        assertEquals("https://www.virustotal.com/gui/file/$hash", virusTotalUrl(hash))
+        for (bad in listOf(null, "", hash.uppercase(), hash.dropLast(1), hash + "0", "$hash/../../x", hash.replaceRange(0, 1, "g"), " $hash")) {
+            assertEquals(bad, null, virusTotalUrl(bad))
+        }
+    }
 }

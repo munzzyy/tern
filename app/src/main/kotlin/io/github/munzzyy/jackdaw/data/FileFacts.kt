@@ -19,6 +19,8 @@ data class FileFacts(
     val testOnly: Boolean,
     val verified: Boolean,
     val checksumMatchedFrom: String? = null,
+    /** Measured over the downloaded file; null for facts read remotely. */
+    val fileSha256: String? = null,
 ) {
     val inspection: Inspection get() = Inspection(packageName, versionCode, versionName, signers, lineage)
 

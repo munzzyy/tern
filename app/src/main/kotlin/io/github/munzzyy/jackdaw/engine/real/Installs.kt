@@ -167,7 +167,7 @@ internal class Installs(private val e: RealEngine) {
                 staging = staging,
             )
             val pass = runInterruptible { e.gate.check(request) }
-            val facts = pass.facts.copy(checksumMatchedFrom = expected?.second)
+            val facts = pass.facts.copy(checksumMatchedFrom = expected?.second, fileSha256 = download.sha256)
             e.inspector.remember(chosenAsset, chosenRelease.id, facts)
             e.event(appId, EventKind.VERIFIED, e.texts.eventVerified(facts.packageName, facts.versionCode, facts.signers.firstOrNull()?.take(16) ?: "?"))
 

@@ -73,6 +73,7 @@ class Invent(private val now: Long) {
         checksum: ChecksumState,
         verified: Boolean = false,
         newPermissions: List<String> = emptyList(),
+        fileSha256: String? = null,
     ) = Verification(
         packageName = pkg,
         signers = if (signer == SignerState.UNKNOWN) emptyList() else listOf(fakeHash("signer:$pkg:$signer")),
@@ -84,6 +85,7 @@ class Invent(private val now: Long) {
             else -> "GitHub release digest"
         },
         newPermissions = newPermissions,
+        fileSha256 = fileSha256,
     )
 
     fun row(
@@ -127,7 +129,7 @@ class Invent(private val now: Long) {
             latest = release,
             file = file,
             otherFiles = others,
-            verification = release?.let { verification(pkg, signer, checksum, newPermissions = newPermissions) },
+            verification = release?.let { verification(pkg, signer, checksum, newPermissions = newPermissions, fileSha256 = file?.asset?.sha256) },
             progress = progress,
             problem = problem,
             lastCheckedMs = now - checkedHoursAgo * HOUR,

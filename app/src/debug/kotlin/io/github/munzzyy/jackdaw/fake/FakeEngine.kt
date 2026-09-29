@@ -238,7 +238,10 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         edit(appId) { it.copy(progress = Progress(Phase.VERIFYING)) }
         delay(stepMs * 5)
         edit(appId) { r ->
-            val v = r.verification?.let { it.copy(signersVerified = true, checksum = if (it.checksum == ChecksumState.PENDING) ChecksumState.MATCHED else it.checksum) }
+            val v = r.verification?.let {
+                val measured = r.file?.asset?.sha256 ?: fakeHash("measured:${r.id}")
+                it.copy(signersVerified = true, checksum = if (it.checksum == ChecksumState.PENDING) ChecksumState.MATCHED else it.checksum, fileSha256 = measured)
+            }
             r.copy(verification = v, progress = Progress(Phase.INSTALLING))
         }
         log(row(appId), EventKind.VERIFIED, "Signer and checksum checked.")

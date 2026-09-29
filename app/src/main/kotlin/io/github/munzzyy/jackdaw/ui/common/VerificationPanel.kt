@@ -17,10 +17,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -35,6 +40,7 @@ import io.github.munzzyy.jackdaw.ui.text.checksumLine
 import io.github.munzzyy.jackdaw.ui.text.formatFingerprint
 import io.github.munzzyy.jackdaw.ui.text.shortPermission
 import io.github.munzzyy.jackdaw.ui.text.signerLine
+import io.github.munzzyy.jackdaw.ui.text.virusTotalUrl
 
 @Composable
 fun VerificationPanel(v: Verification, modifier: Modifier = Modifier) {
@@ -58,6 +64,7 @@ fun VerificationPanel(v: Verification, modifier: Modifier = Modifier) {
             stringResource(checksum.text),
             detail = v.checksumSource?.let { stringResource(R.string.checksum_source, it) },
         )
+        virusTotalUrl(v.fileSha256)?.let { VirusTotalLink(it) }
         if (v.newPermissions.isEmpty()) {
             TrustLine(Trust.GOOD, stringResource(R.string.permissions_none_new))
         } else {
@@ -68,6 +75,15 @@ fun VerificationPanel(v: Verification, modifier: Modifier = Modifier) {
             )
         }
     }
+}
+
+const val VIRUSTOTAL_TAG = "checks_virustotal"
+
+@Composable
+private fun VirusTotalLink(url: String) {
+    var open by remember { mutableStateOf(false) }
+    LinkText(stringResource(R.string.checks_virustotal), onClick = { open = true }, modifier = Modifier.testTag(VIRUSTOTAL_TAG))
+    if (open) LinkDialog(url, onDismiss = { open = false }, note = stringResource(R.string.checks_virustotal_note))
 }
 
 @Composable

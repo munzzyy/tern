@@ -35,6 +35,7 @@ import io.github.munzzyy.jackdaw.ui.notes.NotesView
 import io.github.munzzyy.jackdaw.ui.text.canPickInstall
 import io.github.munzzyy.jackdaw.ui.text.formatDate
 import io.github.munzzyy.jackdaw.ui.text.isolate
+import io.github.munzzyy.jackdaw.ui.text.knownVersion
 
 private const val FOLDED_COUNT = 5
 
@@ -42,7 +43,7 @@ fun LazyListScope.history(vm: DetailViewModel, row: AppRow) {
     row.latest?.let { latest ->
         item(key = "notes") {
             Section {
-                SectionTitle(stringResource(R.string.notes_title, isolate(latest.version)))
+                SectionTitle(knownVersion(latest.version)?.let { stringResource(R.string.notes_title, isolate(it)) } ?: stringResource(R.string.notes_title_unknown))
                 LaunchedEffect(latest.id) { vm.loadNotes(latest) }
                 val notes by vm.notes.collectAsStateWithLifecycle()
                 NotesState(notes[latest.id])
@@ -99,21 +100,22 @@ private fun ReleaseEntry(vm: DetailViewModel, row: AppRow, release: Release) {
     var open by rememberSaveable(release.id) { mutableStateOf(false) }
     val notes by vm.notes.collectAsStateWithLifecycle()
     Column(Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Text(release.version, style = MaterialTheme.typography.titleSmall)
+        val version = knownVersion(release.version)
+        Text(version ?: stringResource(R.string.version_unknown_short), style = MaterialTheme.typography.titleSmall)
         val meta = listOfNotNull(
             release.publishedAtMs?.let { isolate(formatDate(it)) },
             if (release.prerelease) stringResource(R.string.prerelease) else null,
             if (release.id == row.latest?.id) stringResource(R.string.version_offered) else null,
-            if (row.installed?.versionName == release.version) stringResource(R.string.version_installed) else null,
+            if (version != null && knownVersion(row.installed?.versionName) == version) stringResource(R.string.version_installed) else null,
         )
         if (meta.isNotEmpty()) {
             Text(meta.joinToString(" · "), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), itemVerticalAlignment = Alignment.CenterVertically) {
-            val isInstalled = row.installed?.versionName == release.version
+            val isInstalled = version != null && knownVersion(row.installed?.versionName) == version
             val installable = canPickInstall(row) && !isInstalled && release.installable.isNotEmpty()
             if (installable) {
-                val spoken = stringResource(R.string.action_install_version_spoken, release.version)
+                val spoken = version?.let { stringResource(R.string.action_install_version_spoken, it) } ?: stringResource(R.string.action_install_version)
                 OutlinedButton(
                     onClick = { engine.install(row.id, releaseId = release.id) },
                     modifier = Modifier.semantics { contentDescription = spoken },

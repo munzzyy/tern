@@ -1,6 +1,7 @@
 package io.github.munzzyy.jackdaw.ui.text
 
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
+import io.github.munzzyy.jackdaw.engine.AppStatus
 import io.github.munzzyy.jackdaw.ui.testRow
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -34,11 +35,22 @@ class FormatTest {
 
     @Test
     fun versionChangeShowsBothSidesOnlyWhenTheyDiffer() {
-        assertEquals(VersionChange("1.4.2", "1.5.0"), versionChange(testRow(installed = "1.4.2", offered = "1.5.0")))
-        assertEquals(VersionChange(null, "2.0"), versionChange(testRow(installed = "2.0", offered = "2.0")))
-        assertEquals(VersionChange(null, "3.0"), versionChange(testRow(installed = null, offered = "3.0")))
-        assertEquals(VersionChange(null, "1.0"), versionChange(testRow(installed = "1.0", offered = null)))
+        assertEquals(VersionChange.Change("1.4.2", "1.5.0"), versionChange(testRow(installed = "1.4.2", offered = "1.5.0")))
+        assertEquals(VersionChange.Same("2.0"), versionChange(testRow(installed = "2.0", offered = "2.0")))
+        assertEquals(VersionChange.Same("3.0"), versionChange(testRow(installed = null, offered = "3.0")))
+        assertEquals(VersionChange.Same("1.0"), versionChange(testRow(installed = "1.0", offered = null)))
         assertNull(versionChange(testRow(installed = null, offered = null)))
+    }
+
+    @Test
+    fun releaseWithoutVersionNeverPrintsAnEmptyVersion() {
+        val update = testRow(status = AppStatus.UPDATE_AVAILABLE, installed = "1.4.2", offered = "")
+        assertEquals(VersionChange.NewFile("1.4.2"), versionChange(update))
+        assertEquals(VersionChange.Unknown, versionChange(testRow(status = AppStatus.NOT_INSTALLED, installed = null, offered = "  ")))
+        assertEquals(VersionChange.Same("1.4.2"), versionChange(testRow(status = AppStatus.UP_TO_DATE, installed = "1.4.2", offered = "")))
+        assertEquals(VersionChange.Unknown, versionChange(testRow(status = AppStatus.NOT_INSTALLED, installed = "", offered = "")))
+        assertNull(knownVersion(" "))
+        assertEquals("2.0", knownVersion(" 2.0 "))
     }
 
     @Test

@@ -28,16 +28,32 @@ fun formatBytes(bytes: Long, locale: Locale = Locale.getDefault()): String {
 
 fun percentOf(fraction: Float): Int = (fraction.coerceIn(0f, 1f) * 100).toInt()
 
-data class VersionChange(val from: String?, val to: String)
+/** What a row says about versions. A release read from a bare file link can have no version yet. */
+sealed interface VersionChange {
+    data class Same(val version: String) : VersionChange
 
-/** The version pair a row shows: installed to offered, or just offered when nothing is installed. */
+    data class Change(val from: String, val to: String) : VersionChange
+
+    /** Installed [installed], and a newer file whose version is only known once it is read. */
+    data class NewFile(val installed: String) : VersionChange
+
+    data object Unknown : VersionChange
+}
+
+/** Null for a missing or blank version, so no label ever prints an empty gap. */
+fun knownVersion(version: String?): String? = version?.trim()?.takeIf { it.isNotEmpty() }
+
 fun versionChange(row: AppRow): VersionChange? {
-    val offered = row.latest?.version
-    val installed = row.installed?.versionName
+    val offered = knownVersion(row.latest?.version)
+    val installed = knownVersion(row.installed?.versionName)
+    val hasRelease = row.latest != null
     return when {
-        offered == null -> installed?.let { VersionChange(null, it) }
-        installed == null || installed == offered -> VersionChange(null, offered)
-        else -> VersionChange(installed, offered)
+        offered != null && installed != null && installed != offered -> VersionChange.Change(installed, offered)
+        offered != null -> VersionChange.Same(offered)
+        installed != null && hasRelease && isUpdate(row) -> VersionChange.NewFile(installed)
+        installed != null -> VersionChange.Same(installed)
+        hasRelease -> VersionChange.Unknown
+        else -> null
     }
 }
 

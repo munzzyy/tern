@@ -39,6 +39,12 @@
     <string name="version_change">%1$s to %2$s</string>
     <string name="version_change_spoken">Version %1$s to %2$s</string>
     <string name="version_single_spoken">Version %1$s</string>
+    <!-- The app is installed and a newer file exists whose version is only known once it is downloaded and read. %1$s is the installed version. -->
+    <string name="version_new_file">%1$s, new file available</string>
+    <string name="version_new_file_spoken">Version %1$s installed, new file available</string>
+    <string name="version_unknown">Version unknown until the file is read</string>
+    <!-- Title of a release in the version list when the release names no version. -->
+    <string name="version_unknown_short">Version unknown</string>
     <!-- %1$s and %2$s are sizes such as "12 MB"; %3$d is a whole percentage. -->
     <string name="progress_bytes_percent">%1$s of %2$s, %3$d%%</string>
     <string name="progress_bytes">%1$s so far</string>
@@ -203,6 +209,7 @@
     <string name="phase_waiting">Waiting for you to confirm in Android\'s install dialog</string>
     <!-- %s is a version. -->
     <string name="notes_title">What\'s new in %s</string>
+    <string name="notes_title_unknown">What\'s new</string>
     <string name="notes_none">This release has no notes.</string>
     <string name="notes_failed">The notes could not be loaded.</string>
     <string name="notes_show">Show notes</string>

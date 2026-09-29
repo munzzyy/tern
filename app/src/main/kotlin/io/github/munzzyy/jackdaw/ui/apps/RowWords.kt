@@ -14,10 +14,20 @@ import io.github.munzzyy.jackdaw.ui.text.statusLabel
 import io.github.munzzyy.jackdaw.ui.text.versionChange
 
 @Composable
-fun versionText(change: VersionChange?): String? = when {
-    change == null -> null
-    change.from == null -> isolate(change.to)
-    else -> stringResource(R.string.version_change, isolate(change.from), isolate(change.to))
+fun versionText(change: VersionChange?): String? = when (change) {
+    null -> null
+    is VersionChange.Same -> isolate(change.version)
+    is VersionChange.Change -> stringResource(R.string.version_change, isolate(change.from), isolate(change.to))
+    is VersionChange.NewFile -> stringResource(R.string.version_new_file, isolate(change.installed))
+    VersionChange.Unknown -> stringResource(R.string.version_unknown)
+}
+
+@Composable
+private fun spokenVersion(change: VersionChange): String = when (change) {
+    is VersionChange.Same -> stringResource(R.string.version_single_spoken, change.version)
+    is VersionChange.Change -> stringResource(R.string.version_change_spoken, change.from, change.to)
+    is VersionChange.NewFile -> stringResource(R.string.version_new_file_spoken, change.installed)
+    VersionChange.Unknown -> stringResource(R.string.version_unknown)
 }
 
 @Composable
@@ -36,13 +46,7 @@ fun progressText(progress: Progress): String? {
 @Composable
 fun rowDescription(row: AppRow): String {
     val parts = mutableListOf(row.config.name, stringResource(statusLabel(row).text))
-    versionChange(row)?.let { change ->
-        parts += if (change.from == null) {
-            stringResource(R.string.version_single_spoken, change.to)
-        } else {
-            stringResource(R.string.version_change_spoken, change.from, change.to)
-        }
-    }
+    versionChange(row)?.let { parts += spokenVersion(it) }
     row.progress?.let { p -> progressText(p)?.let { parts += it } }
     row.problem?.let { parts += it.message }
     return parts.joinToString(". ") { it.trimEnd('.') } + "."

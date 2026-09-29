@@ -32,6 +32,7 @@ import io.github.munzzyy.jackdaw.ui.icons.LetterAvatar
 import io.github.munzzyy.jackdaw.ui.text.Trust
 import io.github.munzzyy.jackdaw.ui.text.formatDate
 import io.github.munzzyy.jackdaw.ui.text.isolate
+import io.github.munzzyy.jackdaw.ui.text.knownVersion
 import io.github.munzzyy.jackdaw.ui.text.shortUrl
 import io.github.munzzyy.jackdaw.ui.text.sourceName
 
@@ -67,7 +68,8 @@ fun PreviewCard(found: Detection.Found, onAdd: (install: Boolean) -> Unit, onSho
                 } else {
                     val published = release.publishedAtMs?.let { isolate(formatDate(it)) }
                     Text(
-                        stringResource(R.string.preview_version, isolate(release.version)),
+                        knownVersion(release.version)?.let { stringResource(R.string.preview_version, isolate(it)) }
+                            ?: stringResource(R.string.version_unknown),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     val extras = listOfNotNull(
@@ -80,7 +82,7 @@ fun PreviewCard(found: Detection.Found, onAdd: (install: Boolean) -> Unit, onSho
                 }
                 found.installed?.let {
                     Text(
-                        stringResource(R.string.preview_installed, it.versionName ?: it.versionCode.toString()),
+                        stringResource(R.string.preview_installed, isolate(knownVersion(it.versionName) ?: it.versionCode.toString())),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 }

@@ -35,6 +35,8 @@ internal class Interop(private val e: RealEngine) {
         var added = 0
         var present = 0
         val fresh = ArrayList<String>()
+        val withPins = ArrayList<String>()
+        val withFilters = ArrayList<String>()
         for (imported in configs.take(MAX_APPS)) {
             if (e.findBySpec(imported.source) != null) {
                 present++
@@ -51,11 +53,18 @@ internal class Interop(private val e: RealEngine) {
             e.event(config.id, EventKind.IMPORTED, e.texts.eventImported())
             fresh += config.id
             added++
+            if (config.pinnedSigners.isNotEmpty()) withPins += config.name
+            if (hasFilters(config)) withFilters += config.name
         }
         e.publish()
         if (fresh.isNotEmpty()) e.scope.launch { e.checks.checkMany(fresh) }
-        ImportSummary(added, present, skipped)
+        ImportSummary(added, present, skipped, withPins, withFilters)
     }
+
+    private fun hasFilters(config: AppConfig): Boolean = listOf(
+        config.releases.tagFilter, config.releases.titleFilter, config.releases.notesFilter,
+        config.releases.versionExtract, config.assets.include, config.assets.exclude,
+    ).any { !it.isNullOrBlank() }
 
     suspend fun exportTo(uri: Uri): Int = withContext(Dispatchers.IO) {
         val configs = e.stored.values.map { it.config }.sortedBy { it.name.lowercase() }

@@ -205,4 +205,8 @@ data class ImportSummary(
     val alreadyPresent: Int,
     /** Name and the reason it could not be brought over. */
     val skipped: List<Pair<String, String>>,
+    /** Names of added apps that arrived with pinned signing certificates. */
+    val withPins: List<String> = emptyList(),
+    /** Names of added apps that arrived with release or file filters. */
+    val withFilters: List<String> = emptyList(),
 )

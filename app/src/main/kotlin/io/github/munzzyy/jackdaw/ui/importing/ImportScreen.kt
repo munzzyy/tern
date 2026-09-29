@@ -157,7 +157,7 @@ private fun FileState(state: ImportState, pick: () -> Unit, cancel: () -> Unit, 
         )
         is ImportState.Done -> {
             val s = state.summary
-            ImportSummaryView(s.added, s.alreadyPresent, s.skipped)
+            ImportSummaryView(s.added, s.alreadyPresent, s.skipped) { CarriedNote(s, onOpenApp) }
             TextButton(onClick = pick) { Text(stringResource(R.string.import_pick_other)) }
         }
     }

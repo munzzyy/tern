@@ -8,6 +8,8 @@ import android.graphics.RectF
 import android.net.Uri
 import io.github.munzzyy.jackdaw.core.engine.InstalledApp
 import io.github.munzzyy.jackdaw.core.model.AppConfig
+import io.github.munzzyy.jackdaw.core.model.AssetPolicy
+import io.github.munzzyy.jackdaw.core.model.ReleasePolicy
 import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.engine.AppRow
 import io.github.munzzyy.jackdaw.engine.AppStatus
@@ -348,9 +350,11 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     override suspend fun importFrom(uri: Uri): ImportSummary {
         delay(stepMs * 12)
         val invent = Invent(System.currentTimeMillis())
+        val heron = invent.row("imported1", "Heron Books", AppStatus.UNKNOWN, null, null, pins = listOf(fakeHash("signer:imported:heron")))
+        val plover = invent.row("imported2", "Plover Chat", AppStatus.UNKNOWN, null, null)
         val added = listOf(
-            invent.row("imported1", "Heron Books", AppStatus.UNKNOWN, null, null),
-            invent.row("imported2", "Plover Chat", AppStatus.UNKNOWN, null, null),
+            heron.copy(config = heron.config.copy(assets = AssetPolicy(include = "arm64"))),
+            plover.copy(config = plover.config.copy(releases = ReleasePolicy(tagFilter = "^v"))),
             invent.row("imported3", "Rook Budget", AppStatus.UNKNOWN, null, null),
         ).filter { row(it.id) == null }
         _apps.update { ordered(it + added) }
@@ -362,6 +366,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
                 "Pixel Fetch" to "Its source, a chat channel, is not one Jackdaw can read.",
                 "Old Sync" to "The export had no link for it.",
             ),
+            withPins = added.filter { it.config.pinnedSigners.isNotEmpty() }.map { it.config.name },
+            withFilters = added.filter { it.config.assets.include != null || it.config.releases.tagFilter != null }.map { it.config.name },
         )
     }
 

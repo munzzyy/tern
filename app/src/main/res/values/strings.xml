@@ -449,6 +449,11 @@
         <item quantity="other">Show all %d names</item>
     </plurals>
     <string name="import_hide_names">Hide the names</string>
+    <string name="import_carried">Some of these apps came with settings that somebody else chose. Look them over before you install anything.</string>
+    <!-- Heading over a list of app names; a pinned certificate decides whose files are accepted. -->
+    <string name="import_carried_pins">These trust only the signing certificates the file named:</string>
+    <!-- Heading over a list of app names; filters decide which releases and files are used. -->
+    <string name="import_carried_filters">These use filters from the file to pick releases and files:</string>
     <string name="import_file_heading">From a file</string>
     <string name="import_stars_heading">From GitHub stars</string>
     <string name="import_stars_explain">See the repositories someone has starred on GitHub and pick the ones to add. Nothing is picked for you, and nothing is installed.</string>

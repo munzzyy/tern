@@ -50,6 +50,7 @@ import io.github.munzzyy.stamp.engine.Problem
 import io.github.munzzyy.stamp.engine.ProblemException
 import io.github.munzzyy.stamp.engine.ProblemKind
 import io.github.munzzyy.stamp.engine.Progress
+import io.github.munzzyy.stamp.engine.ProxyMode
 import io.github.munzzyy.stamp.engine.Received
 import io.github.munzzyy.stamp.engine.SavedFile
 import io.github.munzzyy.stamp.engine.SearchHit
@@ -98,6 +99,7 @@ class RealEngine(
     installer: Installer? = null,
     gate: Gate? = null,
     downloadsDir: File? = null,
+    orbotInstalled: (() -> Boolean)? = null,
 ) : Engine, Closeable {
     internal val context: Context = context.applicationContext
     internal val store = Store(this.context, storeName)
@@ -169,9 +171,12 @@ class RealEngine(
     private val moves = Moves(this)
     private val sourceIcons = SourceIcons(this)
 
+    private val orbotLink = OrbotLink(this.context, scope, orbotInstalled)
+
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val pkg = intent.data?.schemeSpecificPart ?: return
+            orbotLink.packageChanged(pkg)
             scope.launch(Dispatchers.IO) { checks.onPackageChanged(pkg) }
         }
     }
@@ -180,6 +185,7 @@ class RealEngine(
         notifier.ensureChannels()
         Scheduler.apply(this@RealEngine.context, _settings.value)
         setObtainiumLinks(_settings.value.openObtainiumLinks)
+        if (_settings.value.proxy == ProxyMode.ORBOT) orbotLink.ask()
         store.apps().forEach { stored[it.config.id] = it }
         _events.value = store.events()
         installs.reconcile()
@@ -218,7 +224,7 @@ class RealEngine(
 
     /** The proxy the user chose, as it is now. Throws when the setting names a proxy that cannot be built. */
     @Throws(IOException::class)
-    fun proxy(): Proxy = ProxyChoice.of(_settings.value)
+    fun proxy(): Proxy = ProxyChoice.of(_settings.value, orbotLink.port)
 
     override fun resumeInstall(appId: String): Boolean = installs.resume(appId)
 
@@ -454,11 +460,13 @@ class RealEngine(
     override suspend fun saveSettings(settings: Settings) {
         ready()
         withContext(Dispatchers.IO) {
+            val before = _settings.value
             settingsStore.save(settings)
             val loaded = settingsStore.load()
             _settings.value = loaded
             Scheduler.apply(context, loaded)
             setObtainiumLinks(loaded.openObtainiumLinks)
+            if (loaded.proxy == ProxyMode.ORBOT && before.proxy != ProxyMode.ORBOT) orbotLink.ask()
         }
     }
 
@@ -503,10 +511,9 @@ class RealEngine(
 
     override val handoffEnd: StateFlow<HandoffEnd?> get() = handoffs.handoffEnd
 
-    private val _orbot = MutableStateFlow(OrbotState.UNKNOWN)
-    override val orbot: StateFlow<OrbotState> = _orbot.asStateFlow()
+    override val orbot: StateFlow<OrbotState> get() = orbotLink.state
 
-    override fun askOrbot() = Unit
+    override fun askOrbot() = orbotLink.ask()
 
     override suspend fun openHandoff(): Problem? = handoffs.open()
 
@@ -620,6 +627,7 @@ class RealEngine(
     override fun close() {
         scope.cancel()
         handoffs.shutDown()
+        orbotLink.close()
         try {
             connectivity.unregisterNetworkCallback(networkCallback)
         } catch (e: IllegalArgumentException) {

@@ -145,7 +145,8 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
             publishedFrom != null -> ChecksumState.PENDING to publishedFrom
             else -> ChecksumState.NOT_PUBLISHED to null
         }
-        val newPermissions = facts?.permissions.orEmpty().filter { installed == null || it !in installed.permissions }
+        val ownReceiverGuard = facts?.let { "${it.packageName}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" }
+        val newPermissions = facts?.permissions.orEmpty().filter { (installed == null || it !in installed.permissions) && it != ownReceiverGuard }
         return Verification(
             packageName = facts?.packageName ?: config.packageName,
             signers = facts?.signers.orEmpty(),

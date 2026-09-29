@@ -112,6 +112,12 @@ class SealTest {
         val file = sealedOf("file")
         val asLinks = file.copyOf().also { it[0] = Seal.LINKS.toByte() }
         assertNull(Seal(code).open(asLinks))
+
+        val sealedHere = Seal(code).seal(Seal.LINKS, ByteArray(12) { 7 }, ascii("example.org"))
+        for (kind in 0..255) {
+            val opened = Seal(code).open(sealedHere.copyOf().also { it[0] = kind.toByte() })
+            assertEquals("kind $kind", kind == Seal.LINKS, opened != null)
+        }
     }
 
     @Test

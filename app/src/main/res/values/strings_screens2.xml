@@ -58,6 +58,11 @@
     <string name="orbot_ask_again">Ask again</string>
     <string name="orbot_note">While Orbot is chosen and not running, Stamp reaches nothing. It never goes round the proxy.</string>
 
+    <!-- After an import. "Tell me about updates" is the name of an update mode in the app. -->
+    <string name="import_asked_auto">The file set these apps to install updates by themselves. Stamp stored them as \"Tell me about updates\", because that is for you to switch on here:</string>
+    <string name="import_let_auto">Let it update by itself</string>
+    <string name="import_auto_on">Updates by itself now</string>
+
     <!-- Import and export on a device without a file picker, which is the usual case on a television. -->
     <string name="door_export">Export to the Download folder</string>
     <!-- %1$s is the name of the file, %2$s the folder such as Download/Stamp. -->

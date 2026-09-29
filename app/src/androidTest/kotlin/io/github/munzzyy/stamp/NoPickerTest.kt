@@ -13,6 +13,7 @@ import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextReplacement
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import io.github.munzzyy.stamp.core.model.UpdateMode
 import io.github.munzzyy.stamp.fake.FakeEngine
 import io.github.munzzyy.stamp.ui.handoff.HANDOFF_QR_TAG
 import io.github.munzzyy.stamp.ui.importing.DOOR_FILES_TAG
@@ -21,6 +22,7 @@ import io.github.munzzyy.stamp.ui.importing.DOOR_LINK_FIELD_TAG
 import io.github.munzzyy.stamp.ui.importing.DOOR_LINK_GO_TAG
 import io.github.munzzyy.stamp.ui.importing.DOOR_LINK_TAG
 import io.github.munzzyy.stamp.ui.importing.IMPORT_LIST_TAG
+import io.github.munzzyy.stamp.ui.importing.LET_AUTO_TAG
 import io.github.munzzyy.stamp.ui.settings.EXPORT_ROW_TAG
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -95,6 +97,30 @@ class NoPickerTest {
             showText("obtainium-export.json")
             compose.onNodeWithText("obtainium-export.json", substring = true).performClick()
             theSameSummaryAsEveryImport(before)
+        }
+    }
+
+    @Test
+    fun anAppTheFileSetToUpdateByItselfIsStoredAsTellMeUntilItIsSwitchedOnHere() {
+        launch(FakeEngine.BARE).use {
+            openImport()
+            show(DOOR_FILES_TAG)
+            compose.tagged(DOOR_FILES_TAG).performClick()
+            compose.waitForText("obtainium-export.json")
+            showText("obtainium-export.json")
+            compose.onNodeWithText("obtainium-export.json", substring = true).performClick()
+            compose.waitForText("Import finished")
+            showText("The file set these apps to install updates by themselves.")
+            compose.onNodeWithText("The file set these apps to install updates by themselves.", substring = true).assertIsDisplayed()
+            fun heron() = fake.apps.value.single { it.config.name == "Heron Books" }.config.updates
+            assertEquals(UpdateMode.NOTIFY, heron())
+
+            show(LET_AUTO_TAG)
+            compose.tagged(LET_AUTO_TAG).performClick()
+            compose.waitUntil(3_000) { heron() == UpdateMode.AUTO }
+            showText("Updates by itself now")
+            compose.onNodeWithText("Updates by itself now").assertIsDisplayed()
+            assertEquals(0, compose.onAllNodes(hasTestTag(LET_AUTO_TAG)).fetchSemanticsNodes().size)
         }
     }
 

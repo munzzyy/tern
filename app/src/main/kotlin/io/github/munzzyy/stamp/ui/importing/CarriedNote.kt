@@ -8,14 +8,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.stamp.R
+import io.github.munzzyy.stamp.core.model.UpdateMode
 import io.github.munzzyy.stamp.engine.AppRow
 import io.github.munzzyy.stamp.engine.ImportSummary
 import io.github.munzzyy.stamp.ui.LocalEngine
 import io.github.munzzyy.stamp.ui.common.LinkText
+import io.github.munzzyy.stamp.ui.common.QuietButton
 import io.github.munzzyy.stamp.ui.common.TrustLine
+import io.github.munzzyy.stamp.ui.common.rememberActions
 import io.github.munzzyy.stamp.ui.text.Trust
 import io.github.munzzyy.stamp.ui.theme.LocalLook
 
@@ -38,16 +42,53 @@ private fun AppRow.hasFilters(): Boolean = listOf(
     config.releases.versionExtract, config.assets.include, config.assets.exclude,
 ).any { !it.isNullOrBlank() }
 
-/** Names the imported apps whose pins or filters were chosen by whoever made the file, each linked to its page. */
+/**
+ * Names the imported apps whose pins or filters were chosen by whoever made the file, each linked
+ * to its page, and those the file set to update by themselves, which Stamp stored as "Tell me".
+ */
 @Composable
 fun CarriedNote(summary: ImportSummary, onOpenApp: (String) -> Unit) {
-    if (summary.withPins.isEmpty() && summary.withFilters.isEmpty()) return
+    if (summary.withPins.isEmpty() && summary.withFilters.isEmpty() && summary.askedToInstallByThemselves.isEmpty()) return
     val rows by LocalEngine.current.apps.collectAsStateWithLifecycle()
-    val pins = remember(summary, rows) { linkNames(summary.withPins, rows) { it.config.pinnedSigners.isNotEmpty() } }
-    val filters = remember(summary, rows) { linkNames(summary.withFilters, rows) { it.hasFilters() } }
-    TrustLine(Trust.NOTE, stringResource(R.string.import_carried))
-    Group(stringResource(R.string.import_carried_pins), pins, onOpenApp)
-    Group(stringResource(R.string.import_carried_filters), filters, onOpenApp)
+    if (summary.withPins.isNotEmpty() || summary.withFilters.isNotEmpty()) {
+        val pins = remember(summary, rows) { linkNames(summary.withPins, rows) { it.config.pinnedSigners.isNotEmpty() } }
+        val filters = remember(summary, rows) { linkNames(summary.withFilters, rows) { it.hasFilters() } }
+        TrustLine(Trust.NOTE, stringResource(R.string.import_carried))
+        Group(stringResource(R.string.import_carried_pins), pins, onOpenApp)
+        Group(stringResource(R.string.import_carried_filters), filters, onOpenApp)
+    }
+    AskedToUpdateByThemselves(summary.askedToInstallByThemselves, rows)
+}
+
+const val LET_AUTO_TAG = "import_let_auto"
+
+@Composable
+private fun AskedToUpdateByThemselves(names: List<String>, rows: List<AppRow>) {
+    if (names.isEmpty()) return
+    val engine = LocalEngine.current
+    val actions = rememberActions()
+    val look = LocalLook.current
+    val linked = remember(names, rows) { linkNames(names, rows) { true } }
+    TrustLine(Trust.NOTE, stringResource(R.string.import_asked_auto))
+    Column(Modifier.padding(start = look.gap * 2)) {
+        for ((name, id) in linked) {
+            val row = rows.firstOrNull { it.id == id }
+            Text(name, style = MaterialTheme.typography.bodyMedium)
+            when {
+                row == null -> Unit
+                row.config.updates == UpdateMode.AUTO -> Text(
+                    stringResource(R.string.import_auto_on),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                else -> QuietButton(
+                    stringResource(R.string.import_let_auto),
+                    onClick = { actions.run { engine.configure(row.id) { it.copy(updates = UpdateMode.AUTO) } } },
+                    modifier = Modifier.testTag(LET_AUTO_TAG),
+                )
+            }
+        }
+    }
 }
 
 @Composable

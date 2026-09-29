@@ -47,7 +47,8 @@ class CarriedImportTest {
         compose.onNodeWithText("signing certificates the file named", substring = true).assertIsDisplayed()
         compose.onNodeWithText("filters from the file", substring = true).assertIsDisplayed()
         compose.onNodeWithText("Plover Chat").performClick()
-        assertEquals(2, compose.onAllNodes(hasText("Heron Books")).fetchSemanticsNodes().size)
+        compose.onNodeWithText("The file set these apps to install updates by themselves.", substring = true).assertIsDisplayed()
+        assertEquals("named for its pins, its filters and its updates", 3, compose.onAllNodes(hasText("Heron Books")).fetchSemanticsNodes().size)
         assertEquals(listOf("imported2"), opened)
     }
 

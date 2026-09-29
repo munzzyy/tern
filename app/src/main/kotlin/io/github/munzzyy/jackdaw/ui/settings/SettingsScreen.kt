@@ -58,7 +58,6 @@ import io.github.munzzyy.jackdaw.ui.common.SwitchRow
 import io.github.munzzyy.jackdaw.ui.common.openNotificationSettings
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
 import io.github.munzzyy.jackdaw.ui.common.verticalKeysLeave
-import io.github.munzzyy.jackdaw.ui.common.setObtainiumLinks
 import io.github.munzzyy.jackdaw.ui.detail.minAgeLabel
 import io.github.munzzyy.jackdaw.ui.detail.updateModeEffect
 import io.github.munzzyy.jackdaw.ui.detail.updateModeLabel
@@ -393,10 +392,7 @@ private fun DataSection(s: Settings, vm: SettingsViewModel, update: Update, onIm
         title = stringResource(R.string.settings_obtainium_links),
         summary = stringResource(R.string.settings_obtainium_links_effect),
         checked = s.openObtainiumLinks,
-        onChange = { v ->
-            setObtainiumLinks(context, v)
-            update { it.copy(openObtainiumLinks = v) }
-        },
+        onChange = { v -> update { it.copy(openObtainiumLinks = v) } },
     )
 }
 

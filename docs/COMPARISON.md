@@ -91,6 +91,7 @@ Not yet observed: behaviour in Doze over many hours, and after a reboot.
 | Keep the file when an install fails | 1978 | Yes |
 | Older versions | 2934 | The version history installs any listed release; going back needs the app removed first, which Android requires |
 | Update ownership | 2078 | A setting, off by default. Not yet tested |
+| VirusTotal | 462 | A link to the file's page there, by its SHA-256. Nothing is uploaded |
 
 ## What Obtainium does that Jackdaw does not
 

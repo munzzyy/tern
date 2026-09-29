@@ -39,7 +39,7 @@ class BlockedAppTest {
 
             compose.waitForText("signed with a different certificate")
             compose.onNodeWithText("The new file is signed with a different certificate than Ferry Book on this phone.").assertIsDisplayed()
-            compose.onNodeWithText("Jackdaw refuses", substring = true).assertIsDisplayed()
+            compose.onNodeWithText("Android does not replace an app", substring = true).assertIsDisplayed()
             compose.tagged(DETAIL_PRIMARY_TAG).assertTextEquals("Check again")
             assertEquals(0, installControlsOnScreen())
 

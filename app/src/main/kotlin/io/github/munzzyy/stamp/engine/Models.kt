@@ -81,7 +81,7 @@ data class Verification(
     val packageName: String?,
     /** SHA-256 of the signing certificates, lowercase hex. */
     val signers: List<String>,
-    /** False while the certificates were only read from the file's header; true once Android verified the downloaded file. */
+    /** False while the certificates were only read from the file's header; true once every file downloaded had its signature verified, by Android or by Stamp's own verifier. */
     val signersVerified: Boolean,
     val signerState: SignerState,
     val checksum: ChecksumState,

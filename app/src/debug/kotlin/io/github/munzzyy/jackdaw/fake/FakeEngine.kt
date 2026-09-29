@@ -22,6 +22,7 @@ import io.github.munzzyy.jackdaw.engine.Phase
 import io.github.munzzyy.jackdaw.engine.Progress
 import io.github.munzzyy.jackdaw.engine.Settings
 import io.github.munzzyy.jackdaw.ui.Scenarios
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -42,7 +43,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     /** tools/check-apk.sh looks for this text in a release build; class names do not survive R8. */
     val marker: String = "jackdaw-stand-in-engine"
 
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    /** Naming the scope after [marker] keeps the text alive: R8 drops a string nothing reads. */
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default + CoroutineName(marker))
     private val jobs = ConcurrentHashMap<String, Job>()
     private var ticker: Job? = null
     private val eventIds = AtomicLong(10_000)

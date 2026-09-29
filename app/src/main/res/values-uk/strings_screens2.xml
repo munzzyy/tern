@@ -18,6 +18,12 @@
     <string name="handoff_step_3">3. Вставте посилання або виберіть файл експорту на сторінці, що відкриється.</string>
     <string name="handoff_by_hand">Або відкрийте %1$s у браузері та введіть цей код:</string>
     <string name="handoff_code_note">Код захищає те, що надсилається, тому ніхто інший у мережі не зможе прочитати чи змінити це. Сам він ніколи не надсилається.</string>
+    <plurals name="handoff_time_left">
+        <item quantity="one">Відкрито ще %1$d хвилину</item>
+        <item quantity="few">Відкрито ще %1$d хвилини</item>
+        <item quantity="many">Відкрито ще %1$d хвилин</item>
+        <item quantity="other">Відкрито ще %1$d хвилин</item>
+    </plurals>
     <string name="handoff_arrived">Надійшло з телефону</string>
     <string name="handoff_open_again">Відкрити знову</string>
     <string name="handoff_end_expired">Десять хвилин минули. Відкрийте його знову, коли знадобиться.</string>

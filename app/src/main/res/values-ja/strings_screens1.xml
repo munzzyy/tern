@@ -2,6 +2,9 @@
 <resources>
     <string name="apps_search_close">検索を閉じる</string>
     <string name="waiting_banner_one">%1$s が承認待ちです</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="other">%1$d 件のインストールが操作待ちです</item>
+    </plurals>
     <string name="empty_add">アプリを追加</string>
     <string name="empty_well_known">よく知られたアプリ</string>
     <string name="empty_handoff">電話から送信</string>
@@ -40,6 +43,8 @@
     <string name="activity_install_waits_plain">インストールが操作待ちです</string>
     <string name="activity_not_installed">%1$s をインストールできませんでした</string>
     <string name="activity_not_installed_plain">インストールできませんでした</string>
+    <string name="activity_cancelled">%1$s のインストールがキャンセルされました</string>
+    <string name="activity_cancelled_plain">インストールがキャンセルされました</string>
     <string name="activity_blocked">%1$s をブロックしました</string>
     <string name="activity_blocked_plain">ブロックしました</string>
     <string name="activity_added">追加しました</string>

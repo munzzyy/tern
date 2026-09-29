@@ -30,10 +30,12 @@
     <string name="look_shape_and_size">Formato e tamanho</string>
     <string name="look_density">Densidade</string>
     <string name="density_comfortable">Confortável</string>
+    <string name="density_compact">Compacto</string>
     <string name="look_density_effect">A opção compacta cabe mais na tela. Nada que você pressiona fica menor que a ponta de um dedo.</string>
     <string name="look_corners">Cantos</string>
     <string name="corners_round">Arredondados</string>
     <string name="corners_soft">Suaves</string>
+    <string name="corners_sharp">Retos</string>
     <string name="look_icon_shape">Formato do ícone</string>
     <string name="icon_shape_circle">Círculo</string>
     <string name="icon_shape_squircle">Esquírculo</string>

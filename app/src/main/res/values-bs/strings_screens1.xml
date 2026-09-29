@@ -2,6 +2,11 @@
 <resources>
     <string name="apps_search_close">Zatvori pretragu</string>
     <string name="waiting_banner_one">%1$s čeka vaše odobrenje</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d instalacija čeka vašu potvrdu</item>
+        <item quantity="few">%1$d instalacije čekaju vašu potvrdu</item>
+        <item quantity="other">%1$d instalacija čeka vašu potvrdu</item>
+    </plurals>
     <string name="empty_add">Dodaj aplikaciju</string>
     <string name="empty_well_known">Poznate aplikacije</string>
     <string name="empty_handoff">Pošalji s telefona</string>
@@ -40,6 +45,8 @@
     <string name="activity_install_waits_plain">Instalacija čeka</string>
     <string name="activity_not_installed">Nije se moglo instalirati %1$s</string>
     <string name="activity_not_installed_plain">Nije se moglo instalirati</string>
+    <string name="activity_cancelled">Instalacija %1$s otkazana</string>
+    <string name="activity_cancelled_plain">Instalacija otkazana</string>
     <string name="activity_blocked">Blokirano %1$s</string>
     <string name="activity_blocked_plain">Blokirano</string>
     <string name="activity_added">Dodano</string>

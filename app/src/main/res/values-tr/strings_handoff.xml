@@ -2,6 +2,7 @@
 <resources>
     <string name="engine_handoff_no_local_network">Bu cihaz hiçbir yerel ağda değil, bu yüzden bir telefon ona ulaşamaz. Bu cihazı Wi-Fi\'a veya bir ağ kablosuna bağlayıp tekrar deneyin.</string>
     <string name="engine_handoff_behind_vpn">Bu cihaz bir VPN üzerinden bağlı, bu yüzden yerel ağdaki bir telefon ona ulaşamaz. Gönderim yaptığınız süre boyunca VPN\'i kapatıp tekrar deneyin.</string>
+    <string name="engine_handoff_cannot_open">Bu cihaz yerel ağda bir sayfa açamadı: %1$s</string>
     <string name="engine_handoff_cannot_open_plain">Bu cihaz yerel ağda bir sayfa açamadı.</string>
     <string name="engine_handoff_not_on_screen">Telefondan bağlantıları alırken Tern ekranda olmalıdır. Tern\'ı açıp tekrar deneyin.</string>
 </resources>

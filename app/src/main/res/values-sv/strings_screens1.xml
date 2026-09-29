@@ -44,6 +44,8 @@
     <string name="activity_install_waits_plain">En installation väntar</string>
     <string name="activity_not_installed">Kunde inte installera %1$s</string>
     <string name="activity_not_installed_plain">Kunde inte installera</string>
+    <string name="activity_cancelled">Installation av %1$s avbruten</string>
+    <string name="activity_cancelled_plain">Installation avbruten</string>
     <string name="activity_blocked">Blockerade %1$s</string>
     <string name="activity_blocked_plain">Blockerade</string>
     <string name="activity_added">Lade till</string>

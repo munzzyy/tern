@@ -8,6 +8,7 @@
     <string name="look_palette">Kolor</string>
     <string name="look_wallpaper">Tapeta</string>
     <string name="look_own">Własny kolor</string>
+    <string name="palette_ink">Atrament</string>
     <string name="palette_slate">Łupkowy</string>
     <string name="palette_tide">Pływowy</string>
     <string name="palette_moss">Mszysty</string>
@@ -23,6 +24,7 @@
     <string name="look_contrast_effect">Większy kontrast bardziej oddziela tekst i kontury od tego, co jest za nimi.</string>
     <string name="look_shape_and_size">Kształt i rozmiar</string>
     <string name="look_density">Gęstość</string>
+    <string name="density_comfortable">Wygodny</string>
     <string name="density_compact">Kompaktowa</string>
     <string name="look_density_effect">Kompaktowa mieści więcej na ekranie. Żaden naciskany element nie staje się mniejszy niż opuszka palca.</string>
     <string name="look_corners">Rogi</string>

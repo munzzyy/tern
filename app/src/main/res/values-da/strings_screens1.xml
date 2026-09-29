@@ -44,6 +44,8 @@
     <string name="activity_install_waits_plain">En installation venter</string>
     <string name="activity_not_installed">Kunne ikke installere %1$s</string>
     <string name="activity_not_installed_plain">Kunne ikke installere</string>
+    <string name="activity_cancelled">Installation af %1$s annulleret</string>
+    <string name="activity_cancelled_plain">Installation annulleret</string>
     <string name="activity_blocked">Blokerede %1$s</string>
     <string name="activity_blocked_plain">Blokeret</string>
     <string name="activity_added">Tilføjet</string>

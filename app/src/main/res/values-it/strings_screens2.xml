@@ -13,6 +13,7 @@
     <string name="repo_more">Questo repository contiene più app di quelle mostrate qui. Aggiungine un\'altra tramite l\'indirizzo della sua pagina nel repository.</string>
     <string name="handoff_title">Invia da un telefono</string>
     <string name="handoff_effect">Link e la tua lista di app, senza digitare su questo dispositivo.</string>
+    <string name="handoff_step_1">1. Connetti il telefono alla stessa rete di questo dispositivo.</string>
     <string name="handoff_step_2">2. Scansiona il codice con la fotocamera del telefono.</string>
     <string name="handoff_step_3">3. Incolla i link o scegli il tuo file di esportazione nella pagina che si apre.</string>
     <string name="handoff_by_hand">O apri %1$s in un browser e digita questo codice:</string>

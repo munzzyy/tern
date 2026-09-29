@@ -44,6 +44,8 @@
     <string name="activity_install_waits_plain">Egy telepítés várakozik</string>
     <string name="activity_not_installed">Nem sikerült a(z) %1$s telepítése</string>
     <string name="activity_not_installed_plain">Nem sikerült a telepítés</string>
+    <string name="activity_cancelled">%1$s telepítése megszakítva</string>
+    <string name="activity_cancelled_plain">Telepítés megszakítva</string>
     <string name="activity_blocked">Blokkolva: %1$s</string>
     <string name="activity_blocked_plain">Blokkolva</string>
     <string name="activity_added">Hozzáadva</string>

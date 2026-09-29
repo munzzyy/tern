@@ -17,6 +17,11 @@
     <string name="palette_rose">Ruža</string>
     <string name="palette_plum">Šljiva</string>
     <string name="look_hue">Nijansa vaše vlastite boje</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d stepen</item>
+        <item quantity="few">%1$d stepena</item>
+        <item quantity="other">%1$d stepeni</item>
+    </plurals>
     <string name="look_contrast">Kontrast</string>
     <string name="contrast_standard">Standardni</string>
     <string name="contrast_medium">Srednji</string>

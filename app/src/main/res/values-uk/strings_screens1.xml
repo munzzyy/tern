@@ -46,6 +46,8 @@
     <string name="activity_install_waits_plain">Встановлення очікує</string>
     <string name="activity_not_installed">Не вдалося встановити %1$s</string>
     <string name="activity_not_installed_plain">Не вдалося встановити</string>
+    <string name="activity_cancelled">Встановлення %1$s скасовано</string>
+    <string name="activity_cancelled_plain">Встановлення скасовано</string>
     <string name="activity_blocked">Заблоковано %1$s</string>
     <string name="activity_blocked_plain">Заблоковано</string>
     <string name="activity_added">Додано</string>

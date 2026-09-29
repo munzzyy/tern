@@ -43,6 +43,8 @@
     <string name="activity_install_waits_plain">설치 대기 중</string>
     <string name="activity_not_installed">%1$s을(를) 설치할 수 없음</string>
     <string name="activity_not_installed_plain">설치할 수 없음</string>
+    <string name="activity_cancelled">%1$s 설치 취소</string>
+    <string name="activity_cancelled_plain">설치 취소</string>
     <string name="activity_blocked">%1$s 차단됨</string>
     <string name="activity_blocked_plain">차단됨</string>
     <string name="activity_added">추가됨</string>

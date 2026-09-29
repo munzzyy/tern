@@ -44,6 +44,8 @@
     <string name="activity_install_waits_plain">Bir yükleme bekliyor</string>
     <string name="activity_not_installed">%1$s yüklenemedi</string>
     <string name="activity_not_installed_plain">Yüklenemedi</string>
+    <string name="activity_cancelled">%1$s yüklemesi iptal edildi</string>
+    <string name="activity_cancelled_plain">Yükleme iptal edildi</string>
     <string name="activity_blocked">%1$s engellendi</string>
     <string name="activity_blocked_plain">Engellendi</string>
     <string name="activity_added">Eklendi</string>

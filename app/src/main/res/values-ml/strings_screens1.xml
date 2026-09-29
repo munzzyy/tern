@@ -44,6 +44,8 @@
     <string name="activity_install_waits_plain">ഒരു ഇൻസ്റ്റാൾ കാത്തിരിക്കുന്നു</string>
     <string name="activity_not_installed">%1$s ഇൻസ്റ്റാൾ ചെയ്യാനായില്ല</string>
     <string name="activity_not_installed_plain">ഇൻസ്റ്റാൾ ചെയ്യാനായില്ല</string>
+    <string name="activity_cancelled">%1$s ഇൻസ്റ്റാൾ റദ്ദാക്കി</string>
+    <string name="activity_cancelled_plain">ഇൻസ്റ്റാൾ റദ്ദാക്കി</string>
     <string name="activity_blocked">%1$s ബ്ലോക്ക് ചെയ്തു</string>
     <string name="activity_blocked_plain">ബ്ലോക്ക് ചെയ്തു</string>
     <string name="activity_added">ചേർത്തു</string>

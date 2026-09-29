@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="engine_built_in_pin_mismatch">O Tern carrega o certificado com o qual este app é assinado, e este arquivo é assinado com outro. Ele pode ter vindo de outra pessoa, então não foi instalado.</string>
     <string name="engine_warn_built_in_pin">O Tern guarda o certificado com o qual este app é assinado, e o arquivo oferecido é assinado com outro.</string>
 </resources>

@@ -40,9 +40,13 @@
     <string name="activity_updated">Aggiornata a %1$s</string>
     <string name="activity_updated_plain">Aggiornata</string>
     <string name="activity_update_waits">Aggiornamento a %1$s in attesa</string>
+    <string name="activity_update_waits_plain">Un aggiornamento è in attesa</string>
     <string name="activity_install_waits">Installazione di %1$s in attesa</string>
+    <string name="activity_install_waits_plain">Un\'installazione è in attesa</string>
     <string name="activity_not_installed">Impossibile installare %1$s</string>
     <string name="activity_not_installed_plain">Impossibile installare</string>
+    <string name="activity_cancelled">Installazione di %1$s annullata</string>
+    <string name="activity_cancelled_plain">Installazione annullata</string>
     <string name="activity_blocked">Bloccata %1$s</string>
     <string name="activity_blocked_plain">Bloccata</string>
     <string name="activity_added">Aggiunta</string>

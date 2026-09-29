@@ -2,6 +2,10 @@
 <resources>
     <string name="apps_search_close">Fermi serĉon</string>
     <string name="waiting_banner_one">%1$s atendas vian aprobon</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d instalo atendas vian konfirmon</item>
+        <item quantity="other">%1$d instaloj atendas vian konfirmon</item>
+    </plurals>
     <string name="empty_add">Aldoni aplikaĵon</string>
     <string name="empty_well_known">Bone konataj aplikaĵoj</string>
     <string name="empty_handoff">Sendi de telefono</string>
@@ -40,6 +44,8 @@
     <string name="activity_install_waits_plain">Instalo atendas</string>
     <string name="activity_not_installed">Ne povis instali %1$s</string>
     <string name="activity_not_installed_plain">Ne povis instali</string>
+    <string name="activity_cancelled">Instalo de %1$s nuligita</string>
+    <string name="activity_cancelled_plain">Instalo nuligita</string>
     <string name="activity_blocked">Blokis %1$s</string>
     <string name="activity_blocked_plain">Blokita</string>
     <string name="activity_added">Aldonita</string>

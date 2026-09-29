@@ -46,6 +46,8 @@
     <string name="activity_install_waits_plain">Instalace čeká</string>
     <string name="activity_not_installed">Nebylo možné nainstalovat %1$s</string>
     <string name="activity_not_installed_plain">Nebylo možné nainstalovat</string>
+    <string name="activity_cancelled">Instalace %1$s zrušena</string>
+    <string name="activity_cancelled_plain">Instalace zrušena</string>
     <string name="activity_blocked">Zablokováno %1$s</string>
     <string name="activity_blocked_plain">Zablokováno</string>
     <string name="activity_added">Přidáno</string>

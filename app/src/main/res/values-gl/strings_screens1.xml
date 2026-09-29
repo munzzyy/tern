@@ -44,6 +44,8 @@
     <string name="activity_install_waits_plain">Unha instalación agarda</string>
     <string name="activity_not_installed">Non se puido instalar %1$s</string>
     <string name="activity_not_installed_plain">Non se puido instalar</string>
+    <string name="activity_cancelled">Instalación de %1$s cancelada</string>
+    <string name="activity_cancelled_plain">Instalación cancelada</string>
     <string name="activity_blocked">Bloqueouse %1$s</string>
     <string name="activity_blocked_plain">Bloqueouse</string>
     <string name="activity_added">Engadiuse</string>

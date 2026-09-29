@@ -478,6 +478,12 @@
     <string name="import_stars_loading">Запит списку в GitHub</string>
     <string name="import_stars_failed">Не вдалося отримати список зірок.</string>
     <string name="import_stars_failed_help">Перевірте з\'єднання та спробуйте знову.</string>
+    <plurals name="import_stars_count">
+        <item quantity="one">%2$s має %1$d вподобаний репозиторій. Виберіть, які додати.</item>
+        <item quantity="few">%2$s має %1$d вподобані репозиторії. Виберіть, які додати.</item>
+        <item quantity="many">%2$s має %1$d вподобаних репозиторіїв. Виберіть, які додати.</item>
+        <item quantity="other">%2$s має %1$d вподобаних репозиторіїв. Виберіть, які додати.</item>
+    </plurals>
     <string name="import_stars_none">%1$s не відзначив зірочкою жодного репозиторію.</string>
     <plurals name="import_stars_add">
         <item quantity="one">Додати %d вибраний</item>

@@ -2,6 +2,12 @@
 <resources>
     <string name="apps_search_close">Закрыть поиск</string>
     <string name="waiting_banner_one">%1$s ожидает вашего разрешения</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d установка ожидает вашего подтверждения</item>
+        <item quantity="few">%1$d установки ожидают вашего подтверждения</item>
+        <item quantity="many">%1$d установок ожидают вашего подтверждения</item>
+        <item quantity="other">%1$d установки ожидают вашего подтверждения</item>
+    </plurals>
     <string name="empty_add">Добавить приложение</string>
     <string name="empty_well_known">Известные приложения</string>
     <string name="empty_handoff">Отправить с телефона</string>
@@ -40,6 +46,8 @@
     <string name="activity_install_waits_plain">Установка ожидает</string>
     <string name="activity_not_installed">Не удалось установить %1$s</string>
     <string name="activity_not_installed_plain">Не удалось установить</string>
+    <string name="activity_cancelled">Установка %1$s отменена</string>
+    <string name="activity_cancelled_plain">Установка отменена</string>
     <string name="activity_blocked">Заблокировано %1$s</string>
     <string name="activity_blocked_plain">Заблокировано</string>
     <string name="activity_added">Добавлено</string>

@@ -43,6 +43,8 @@
     <string name="activity_install_waits_plain">有一项安装等待中</string>
     <string name="activity_not_installed">无法安装 %1$s</string>
     <string name="activity_not_installed_plain">无法安装</string>
+    <string name="activity_cancelled">%1$s 的安装已取消</string>
+    <string name="activity_cancelled_plain">安装已取消</string>
     <string name="activity_blocked">已拦截 %1$s</string>
     <string name="activity_blocked_plain">已拦截</string>
     <string name="activity_added">已添加</string>

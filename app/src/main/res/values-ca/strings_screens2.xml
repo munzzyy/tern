@@ -18,6 +18,11 @@
     <string name="handoff_step_3">3. Enganxa enllaços o tria el teu fitxer d\'exportació a la pàgina que s\'obre.</string>
     <string name="handoff_by_hand">O obre %1$s en un navegador i tecleja aquest codi:</string>
     <string name="handoff_code_note">El codi segella el que s\'envia, així que ningú més a la xarxa ho pot llegir o canviar. Mai s\'envia en si mateix.</string>
+    <plurals name="handoff_time_left">
+        <item quantity="one">Obert %1$d minut més</item>
+        <item quantity="many">Obert %1$d minuts més</item>
+        <item quantity="other">Obert %1$d minuts més</item>
+    </plurals>
     <string name="handoff_arrived">Ha arribat des del telèfon</string>
     <string name="handoff_open_again">Obre de nou</string>
     <string name="handoff_end_expired">Els deu minuts s\'han acabat. Torna-ho a obrir quan ho necessitis.</string>

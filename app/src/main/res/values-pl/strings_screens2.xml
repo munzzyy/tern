@@ -39,6 +39,7 @@
     <string name="orbot_unknown">Orbot jeszcze nie odpowiedział.</string>
     <string name="orbot_ask_again">Zapytaj ponownie</string>
     <string name="orbot_note">Gdy Orbot jest wybrany, ale nie działa, Tern z niczym się nie łączy. Nigdy nie omija serwera proxy.</string>
+    <string name="import_asked_auto">Plik ustawił te aplikacje, aby instalowały aktualizacje samodzielnie. Tern zapisał je jako „Powiadom mnie o aktualizacjach”, ponieważ to do Ciebie należy włączenie tego tutaj:</string>
     <string name="import_let_auto">Pozwól na samodzielną aktualizację</string>
     <string name="import_auto_on">Aktualizacje są teraz samodzielne</string>
     <string name="door_export">Eksportuj do folderu Pobrane</string>

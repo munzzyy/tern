@@ -26,6 +26,7 @@
     <string name="explain_always_asks_title">Este dispositivo sempre pergunta</string>
     <string name="explain_package">Todo app Android tem um nome que nunca muda. Um arquivo que carregasse outro nome seria um app diferente, não importa como se chamasse.</string>
     <string name="explain_signer_installed">Um desenvolvedor assina todo lançamento com uma chave que só ele possui. O Tern compara a assinatura deste arquivo com a do app neste dispositivo e com o certificado que ele lembrou na primeira instalação. Um arquivo assinado por qualquer outra pessoa é recusado, mesmo que venha do endereço certo.</string>
+    <string name="explain_signer_first">Não há nada para comparar ainda. O arquivo diz quem o assinou, o Android confirma isso quando o instala, e a partir de então o Tern exige o mesmo certificado para cada atualização.</string>
     <string name="explain_checksum_matched">Uma soma de verificação é uma impressão digital do próprio arquivo. O publicador deu uma, e o arquivo que o Tern baixou tem a mesma, então ele chegou como foi publicado.</string>
     <string name="explain_checksum_pending">Uma soma de verificação é uma impressão digital do próprio arquivo. O publicador deu uma, e o Tern a compara com o arquivo assim que ele é baixado.</string>
     <string name="explain_checksum_mismatch">Uma soma de verificação é uma impressão digital do próprio arquivo. O publicador deu uma, e o arquivo que o Tern baixou tem outra, então não é o arquivo que foi publicado.</string>
@@ -44,6 +45,8 @@
     <string name="activity_install_waits_plain">Uma instalação aguarda</string>
     <string name="activity_not_installed">Não foi possível instalar %1$s</string>
     <string name="activity_not_installed_plain">Não foi possível instalar</string>
+    <string name="activity_cancelled">Instalação de %1$s cancelada</string>
+    <string name="activity_cancelled_plain">Instalação cancelada</string>
     <string name="activity_blocked">Bloqueou %1$s</string>
     <string name="activity_blocked_plain">Bloqueado</string>
     <string name="activity_added">Adicionado</string>

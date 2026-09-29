@@ -38,11 +38,14 @@
     <string name="activity_installed_plain">Geïnstalleerd</string>
     <string name="activity_updated">Geüpdatet naar %1$s</string>
     <string name="activity_updated_plain">Bijgewerkt</string>
+    <string name="activity_update_waits">Update naar %1$s wacht</string>
     <string name="activity_update_waits_plain">Een update wacht</string>
     <string name="activity_install_waits">Installatie van %1$s wacht</string>
     <string name="activity_install_waits_plain">Een installatie wacht</string>
     <string name="activity_not_installed">Kon %1$s niet installeren</string>
     <string name="activity_not_installed_plain">Kon niet installeren</string>
+    <string name="activity_cancelled">Installatie van %1$s geannuleerd</string>
+    <string name="activity_cancelled_plain">Installatie geannuleerd</string>
     <string name="activity_blocked">%1$s geblokkeerd</string>
     <string name="activity_blocked_plain">Geblokkeerd</string>
     <string name="activity_added">Toegevoegd</string>

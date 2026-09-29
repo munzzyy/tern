@@ -43,6 +43,8 @@
     <string name="activity_install_waits_plain">Instal menunggu</string>
     <string name="activity_not_installed">Tidak dapat menginstal %1$s</string>
     <string name="activity_not_installed_plain">Tidak dapat menginstal</string>
+    <string name="activity_cancelled">Instal %1$s dibatalkan</string>
+    <string name="activity_cancelled_plain">Instal dibatalkan</string>
     <string name="activity_blocked">Diblokir %1$s</string>
     <string name="activity_blocked_plain">Diblokir</string>
     <string name="activity_added">Ditambahkan</string>

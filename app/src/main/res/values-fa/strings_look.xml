@@ -7,6 +7,7 @@
     <string name="look_colours">رنگ‌ها</string>
     <string name="look_palette">رنگ</string>
     <string name="look_wallpaper">تصویر زمینه</string>
+    <string name="look_own">رنگ اختصاصی</string>
     <string name="palette_ink">جوهر</string>
     <string name="palette_slate">اسلیت</string>
     <string name="palette_tide">جزر و مد</string>
@@ -23,6 +24,7 @@
     <string name="look_contrast">تضاد</string>
     <string name="contrast_standard">استاندارد</string>
     <string name="contrast_medium">متوسط</string>
+    <string name="contrast_high">بالا</string>
     <string name="look_contrast_effect">تضاد بیشتر، متن و حاشیه‌ها را از پس‌زمینه آن‌ها متمایزتر می‌کند.</string>
     <string name="look_shape_and_size">شکل و اندازه</string>
     <string name="look_density">تراکم</string>

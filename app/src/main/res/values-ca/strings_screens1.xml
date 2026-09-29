@@ -45,6 +45,8 @@
     <string name="activity_install_waits_plain">Una instal·lació espera</string>
     <string name="activity_not_installed">No s\'ha pogut instal·lar %1$s</string>
     <string name="activity_not_installed_plain">No s\'ha pogut instal·lar</string>
+    <string name="activity_cancelled">Instal·lació de %1$s cancel·lada</string>
+    <string name="activity_cancelled_plain">Instal·lació cancel·lada</string>
     <string name="activity_blocked">S\'ha bloquejat %1$s</string>
     <string name="activity_blocked_plain">Bloquejada</string>
     <string name="activity_added">Afegida</string>

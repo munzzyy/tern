@@ -17,6 +17,12 @@
     <string name="palette_rose">Троянда</string>
     <string name="palette_plum">Слива</string>
     <string name="look_hue">Відтінок вашого власного кольору</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d градус</item>
+        <item quantity="few">%1$d градуси</item>
+        <item quantity="many">%1$d градусів</item>
+        <item quantity="other">%1$d градусів</item>
+    </plurals>
     <string name="look_contrast">Контраст</string>
     <string name="contrast_standard">Стандартний</string>
     <string name="contrast_medium">Середній</string>

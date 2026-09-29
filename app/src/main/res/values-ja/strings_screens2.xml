@@ -18,6 +18,9 @@
     <string name="handoff_step_3">3. 開いたページでリンクを貼り付けるか、エクスポートファイルを選択します。</string>
     <string name="handoff_by_hand">または、ブラウザで %1$s を開き、次のコードを入力します:</string>
     <string name="handoff_code_note">コードは送信内容を封印するため、ネットワーク上の他の誰もそれを読み取ったり変更したりできません。コード自体が送信されることはありません。</string>
+    <plurals name="handoff_time_left">
+        <item quantity="other">残り %1$d 分間開いています</item>
+    </plurals>
     <string name="handoff_arrived">電話から届きました</string>
     <string name="handoff_open_again">もう一度開く</string>
     <string name="handoff_end_expired">10分が経過しました。必要なときにまた開いてください。</string>

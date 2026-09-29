@@ -27,6 +27,7 @@
     <string name="handoff_open_again">Abrir novamente</string>
     <string name="handoff_end_expired">Os dez minutos acabaram. Abra de novo quando precisar.</string>
     <string name="handoff_end_left_screen">Fechou porque o Tern saiu da tela.</string>
+    <string name="handoff_end_used_up">Ele fechou porque foi solicitado muitas vezes. Isso não acontece manualmente.</string>
     <string name="handoff_footer">Nada do que chega é adicionado até que você tenha verificado aqui.</string>
     <string name="handoff_opening">Abrindo a página para o telefone</string>
     <string name="handoff_failed">Este dispositivo não conseguiu abrir a página para o telefone.</string>

@@ -48,6 +48,8 @@
     <string name="activity_install_waits_plain">تثبيت في الانتظار</string>
     <string name="activity_not_installed">تعذر تثبيت %1$s</string>
     <string name="activity_not_installed_plain">تعذر التثبيت</string>
+    <string name="activity_cancelled">تم إلغاء عملية تثبيت %1$s</string>
+    <string name="activity_cancelled_plain">تم إلغاء عملية التثبيت</string>
     <string name="activity_blocked">تم حظر %1$s</string>
     <string name="activity_blocked_plain">تم الحظر</string>
     <string name="activity_added">تمت الإضافة</string>

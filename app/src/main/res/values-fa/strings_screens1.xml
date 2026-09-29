@@ -6,6 +6,7 @@
         <item quantity="one">%1$d نصب منتظر تأیید شماست</item>
         <item quantity="other">%1$d نصب منتظر تأیید شماست</item>
     </plurals>
+    <string name="empty_add">افزودن برنامه</string>
     <string name="empty_well_known">برنامه‌های شناخته‌شده</string>
     <string name="empty_handoff">ارسال از تلفن</string>
     <string name="removed_notice">دنبال کردن %1$s متوقف شد</string>
@@ -43,6 +44,8 @@
     <string name="activity_install_waits_plain">یک نصب منتظر است</string>
     <string name="activity_not_installed">نصب %1$s امکان‌پذیر نشد</string>
     <string name="activity_not_installed_plain">نصب امکان‌پذیر نشد</string>
+    <string name="activity_cancelled">نصب %1$s لغو شد</string>
+    <string name="activity_cancelled_plain">نصب لغو شد</string>
     <string name="activity_blocked">%1$s مسدود شد</string>
     <string name="activity_blocked_plain">مسدود شد</string>
     <string name="activity_added">اضافه شد</string>

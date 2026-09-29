@@ -2,6 +2,9 @@
 <resources>
     <string name="apps_search_close">Đóng tìm kiếm</string>
     <string name="waiting_banner_one">%1$s đang chờ bạn cho phép</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="other">%1$d bản cài đặt đang chờ bạn xác nhận</item>
+    </plurals>
     <string name="empty_add">Thêm ứng dụng</string>
     <string name="empty_well_known">Ứng dụng phổ biến</string>
     <string name="empty_handoff">Gửi từ điện thoại</string>
@@ -40,6 +43,8 @@
     <string name="activity_install_waits_plain">Một bản cài đặt đang chờ</string>
     <string name="activity_not_installed">Không thể cài đặt %1$s</string>
     <string name="activity_not_installed_plain">Không thể cài đặt</string>
+    <string name="activity_cancelled">Đã hủy cài đặt %1$s</string>
+    <string name="activity_cancelled_plain">Đã hủy cài đặt</string>
     <string name="activity_blocked">Đã chặn %1$s</string>
     <string name="activity_blocked_plain">Đã chặn</string>
     <string name="activity_added">Đã thêm</string>

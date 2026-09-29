@@ -172,9 +172,98 @@ PY
     "$WORK/$name.jar" good >/dev/null
   cp "$WORK/$name.jar" "$OUT/repo/$name.jar"
 }
+# The real F-Droid repository writes entry.json first and the manifest last. A reader that
+# expects the manifest up front sees such an archive as unsigned, so one fixture has that order.
+python3 - "$WORK/entry.jar" "$OUT/repo/entry-manifest-last.jar" <<'PY'
+import sys, zipfile
+
+src, dst = sys.argv[1], sys.argv[2]
+with zipfile.ZipFile(src) as zin, zipfile.ZipFile(dst, "w", zipfile.ZIP_DEFLATED) as zout:
+    names = [n for n in zin.namelist() if not n.endswith("/")]
+    order = sorted(names, key=lambda n: (n.startswith("META-INF/"), n.endswith("MANIFEST.MF"), n))
+    for name in order:
+        zout.writestr(zin.getinfo(name), zin.read(name))
+PY
+
 signed_variant entry-older 1600000000000 "/index-v2.json"
 signed_variant entry-newer 1800000000000 "/index-v2.json"
 signed_variant entry-escaping 1700000000000 "/../../other/index-v2.json"
+
+# The repository one publication later: org.example.two gains 0.6 and loses 0.5, org.example.one
+# is untouched. Published as a full index and as a diff against the index above.
+mkdir -p "$OUT/repo/diff"
+python3 - "$WORK/index-v2.json" "$OUT/repo/index-v2-next.json" "$OUT/repo/diff/1700000000000.json" "$OUT/repo/diff/removed.json" <<'PY'
+import json, sys
+
+old_path, next_path, diff_path, removed_path = sys.argv[1:5]
+index = json.load(open(old_path))
+added = {
+    "added": 1800000000000,
+    "whatsNew": {"en-US": "Faster start."},
+    "file": {"name": "/org.example.two_6.apk", "sha256": "7" * 64, "size": 650},
+    "manifest": {
+        "versionName": "0.6",
+        "versionCode": 6,
+        "usesSdk": {"minSdkVersion": 21, "targetSdkVersion": 34},
+        "signer": {"sha256": ["2" * 64]},
+        "nativecode": [],
+    },
+    "releaseChannels": [],
+}
+index["repo"]["timestamp"] = 1800000000000
+two = index["packages"]["org.example.two"]
+del two["versions"]["v5"]
+two["versions"]["v6"] = added
+two["metadata"]["summary"] = {"en-US": "A second example app, now faster"}
+json.dump(index, open(next_path, "w"), sort_keys=True)
+
+patch = {
+    "repo": {"timestamp": 1800000000000},
+    "packages": {
+        "org.example.two": {
+            "metadata": {"summary": {"en-US": "A second example app, now faster"}},
+            "versions": {"v5": None, "v6": added},
+        },
+        "org.example.three": {"metadata": {"name": {"en-US": "Example Three"}}, "versions": {}},
+    },
+}
+json.dump(patch, open(diff_path, "w"), sort_keys=True)
+json.dump({"repo": {"timestamp": 1800000000000}, "packages": {"org.example.two": None}}, open(removed_path, "w"), sort_keys=True)
+PY
+
+signed_next() {
+  local name="$1" diff_file="$2" diff_sha="$3"
+  local next_sha next_size diff_size
+  next_sha=$(sha256sum "$OUT/repo/index-v2-next.json" | cut -d' ' -f1)
+  next_size=$(stat -c%s "$OUT/repo/index-v2-next.json")
+  diff_size=$(stat -c%s "$OUT/repo/diff/$diff_file")
+  [ -n "$diff_sha" ] || diff_sha=$(sha256sum "$OUT/repo/diff/$diff_file" | cut -d' ' -f1)
+  mkdir -p "$WORK/$name"
+  python3 - "$WORK/$name/entry.json" "$next_sha" "$next_size" "$diff_file" "$diff_sha" "$diff_size" <<'PY'
+import json, sys
+
+path, next_sha, next_size, diff_file, diff_sha, diff_size = sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4], sys.argv[5], int(sys.argv[6])
+entry = {
+    "timestamp": 1800000000000,
+    "version": 20000,
+    "maxAge": 14,
+    "index": {"name": "/index-v2-next.json", "sha256": next_sha, "size": next_size, "numPackages": 2},
+    "diffs": {
+        "1700000000000": {"name": "/diff/" + diff_file, "sha256": diff_sha, "size": diff_size, "numPackages": 2},
+        "1650000000000": {"name": "/diff/1650000000000.json", "sha256": "9" * 64, "size": 10, "numPackages": 1},
+    },
+}
+with open(path, "w") as f:
+    json.dump(entry, f, sort_keys=True)
+PY
+  (cd "$WORK/$name" && jar cf "../$name.jar" entry.json)
+  jarsigner -keystore "$WORK/good.jks" -storepass "$STOREPASS" -sigalg SHA256withRSA -digestalg SHA-256 \
+    "$WORK/$name.jar" good >/dev/null
+  cp "$WORK/$name.jar" "$OUT/repo/$name.jar"
+}
+signed_next entry-next 1700000000000.json ""
+signed_next entry-next-removed removed.json ""
+signed_next entry-next-wrong-diff-hash 1700000000000.json "$(printf '8%.0s' $(seq 1 64))"
 
 python3 - "$WORK/entry.jar" "$WORK/entry-tampered.jar" <<'PY'
 import json, sys, zipfile

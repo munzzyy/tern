@@ -64,7 +64,15 @@ class RepoReviewTest {
         assertTrue(replayed.requestsTo(indexUrl).isEmpty())
 
         val same = FakeHttp().bytes(entryUrl, jar("entry-newer.jar")).bytes(indexUrl, index)
-        assertEquals(1, listing(repo.check(two, CheckContext(same, validators))).releases.size)
+        assertEquals(CheckResult.Unchanged, repo.check(two, CheckContext(same, validators)))
+    }
+
+    @Test
+    fun readsAnArchiveThatKeepsItsManifestLast() {
+        val http = FakeHttp().bytes(entryUrl, jar("entry-manifest-last.jar")).bytes(indexUrl, Fixtures.bytes("fdroid/repo/index-v2.json"))
+        val found = listing(repo.check(two, CheckContext(http, InMemoryValidatorStore())))
+        assertEquals(Fixtures.text("fdroid/repo/fingerprint.txt").trim(), found.learnedOptions[SourceOptions.FINGERPRINT])
+        assertEquals("0.5", found.releases.single().version)
     }
 
     @Test

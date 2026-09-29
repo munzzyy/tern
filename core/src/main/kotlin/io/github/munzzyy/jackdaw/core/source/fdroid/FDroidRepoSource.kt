@@ -1,9 +1,13 @@
 package io.github.munzzyy.jackdaw.core.source.fdroid
 
 import io.github.munzzyy.jackdaw.core.json.Json
+import io.github.munzzyy.jackdaw.core.json.JsonMergePatch
+import io.github.munzzyy.jackdaw.core.json.JsonNull
 import io.github.munzzyy.jackdaw.core.json.JsonObject
 import io.github.munzzyy.jackdaw.core.json.JsonReader
 import io.github.munzzyy.jackdaw.core.json.JsonString
+import io.github.munzzyy.jackdaw.core.json.JsonToken
+import io.github.munzzyy.jackdaw.core.json.JsonValue
 import io.github.munzzyy.jackdaw.core.model.Asset
 import io.github.munzzyy.jackdaw.core.model.NotesFormat
 import io.github.munzzyy.jackdaw.core.model.Release
@@ -21,17 +25,23 @@ import io.github.munzzyy.jackdaw.core.source.SourceOptions
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
 import io.github.munzzyy.jackdaw.core.source.guarded
 import io.github.munzzyy.jackdaw.core.verify.Fingerprints
-import java.io.ByteArrayInputStream
+import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.security.CodeSigner
 import java.security.MessageDigest
-import java.util.jar.JarInputStream
+import java.util.jar.JarFile
 import java.util.zip.ZipException
 
-class FDroidRepoSource : Source {
+/**
+ * Any repository in F-Droid's format. [tracked] names every app the user follows in a repository,
+ * so that one download serves them all instead of one download per app.
+ */
+class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<String> = { emptySet() }) : Source {
     override val type: String = SourceTypes.FDROID_REPO
+
+    private val shared = SharedDownloads()
 
     override fun match(url: String): SourceSpec? {
         val normalized = SCHEME.replace(url) { "https://" }
@@ -90,25 +100,44 @@ class FDroidRepoSource : Source {
         if (!usedFallback) {
             val verification = verifyJar(jarBytes, "entry.json", unsupportedOnFailure = false)
             val learned = checkFingerprint(pinned, verification.fingerprint)
-            val entryObj = try {
+            val entry = try {
                 Json.parseObject(String(verification.signedBytes, Charsets.UTF_8))
             } catch (e: Exception) {
                 throw SourceException(SourceErrorKind.PARSE, "entry.json is not valid JSON", cause = e)
             }
-            val indexInfo = entryObj.obj("index") ?: throw SourceException(SourceErrorKind.PARSE, "entry.json is missing an index")
-            val indexName = indexInfo.string("name") ?: throw SourceException(SourceErrorKind.PARSE, "entry.json index has no name")
-            val indexSha = indexInfo.string("sha256") ?: throw SourceException(SourceErrorKind.PARSE, "entry.json index has no sha256")
-            val indexSize = indexInfo.long("size") ?: throw SourceException(SourceErrorKind.PARSE, "entry.json index has no size")
-            if (!insideRepository(indexName)) throw SourceException(SourceErrorKind.PARSE, "entry.json names an index outside the repository")
-            refuseReplay(spec, context, entryObj.long("timestamp"))
+            val index = signedFile(entry.obj("index"), "index")
+            val timestamp = entry.long("timestamp") ?: throw SourceException(SourceErrorKind.PARSE, "The repository index carries no timestamp")
+            refuseReplay(spec, context, timestamp)
 
-            val indexUrl = "${spec.url}$indexName"
-            val found = fetchIndexV2(indexUrl, indexSha, indexSize, pkg, context)
-                ?: throw SourceException(SourceErrorKind.NOT_FOUND, "Package $pkg not found in $indexUrl")
-            val releases = buildV2Releases(found, spec.url, context)
-            if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No installable releases for $pkg")
+            val held = held(spec, context, pkg)
+            val current: JsonObject = when {
+                held != null && held.timestamp == timestamp -> return CheckResult.Unchanged
+                held != null && entry.obj("diffs")?.obj(held.timestamp.toString()) != null -> {
+                    val diff = signedFile(entry.obj("diffs")?.obj(held.timestamp.toString()), "diff")
+                    when (val patch = download(spec.url, diff, DIFF_CAP, pkg, context).found[pkg]) {
+                        null -> {
+                            hold(spec, context, pkg, timestamp, held.json)
+                            return CheckResult.Unchanged
+                        }
+                        JsonNull -> throw SourceException(SourceErrorKind.NOT_FOUND, "The repository no longer carries $pkg")
+                        else -> JsonMergePatch.apply(held.json, patch) as? JsonObject
+                            ?: throw SourceException(SourceErrorKind.PARSE, "The repository diff does not describe $pkg")
+                    }
+                }
+                else -> download(spec.url, index, INDEX_CAP, pkg, context).found[pkg] as? JsonObject
+                    ?: throw SourceException(SourceErrorKind.NOT_FOUND, "Package $pkg not found in ${spec.url}")
+            }
+            hold(spec, context, pkg, timestamp, current)
+
+            val metadata = current.obj("metadata")
             return CheckResult.Listing(
-                SourceListing(releases = releases, packageName = pkg, name = found.name, description = found.summary, learnedOptions = learned),
+                SourceListing(
+                    releases = buildV2Releases(current, spec.url, context),
+                    packageName = pkg,
+                    name = localized(metadata?.obj("name")),
+                    description = localized(metadata?.obj("summary")),
+                    learnedOptions = learned,
+                ),
             )
         }
 
@@ -132,9 +161,37 @@ class FDroidRepoSource : Source {
             throw SourceException(SourceErrorKind.PARSE, "index-v1.json is not valid JSON", cause = e)
         }
         refuseReplay(spec, context, root.obj("repo")?.long("timestamp"))
-        val releases = buildV1Releases(root, pkg, spec.url, context)
-        if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No installable releases for $pkg")
-        return CheckResult.Listing(SourceListing(releases = releases, packageName = pkg, learnedOptions = learned))
+        return CheckResult.Listing(SourceListing(releases = buildV1Releases(root, pkg, spec.url, context), packageName = pkg, learnedOptions = learned))
+    }
+
+    private class SignedFile(val name: String, val sha256: String, val size: Long)
+
+    private fun signedFile(described: JsonObject?, what: String): SignedFile {
+        val name = described?.string("name") ?: throw SourceException(SourceErrorKind.PARSE, "entry.json names no $what")
+        val sha256 = described.string("sha256")?.let(Fingerprints::normalize) ?: throw SourceException(SourceErrorKind.PARSE, "entry.json gives no hash for its $what")
+        val size = described.long("size") ?: throw SourceException(SourceErrorKind.PARSE, "entry.json gives no size for its $what")
+        if (!insideRepository(name)) throw SourceException(SourceErrorKind.PARSE, "entry.json names a $what outside the repository")
+        return SignedFile(name, sha256, size)
+    }
+
+    /** What is known about an app from the last index read, so that the next change costs a diff. */
+    private class Held(val timestamp: Long, val json: JsonObject)
+
+    private fun held(spec: SourceSpec, context: CheckContext, pkg: String): Held? {
+        val stored = context.validators.get(validatorKey(spec, "package:$pkg")) ?: return null
+        val timestamp = stored.lastModified?.toLongOrNull() ?: return null
+        val json = try {
+            Json.parse(stored.etag ?: return null) as? JsonObject
+        } catch (_: Exception) {
+            null
+        } ?: return null
+        return Held(timestamp, json)
+    }
+
+    private fun hold(spec: SourceSpec, context: CheckContext, pkg: String, timestamp: Long, json: JsonObject) {
+        val key = validatorKey(spec, "package:$pkg")
+        val text = Json.write(json)
+        if (text.length > MAX_HELD) context.validators.remove(key) else context.validators.put(key, Validator(text, timestamp.toString()))
     }
 
     private fun checkFingerprint(pinned: String?, learnedFingerprint: String): Map<String, String> {
@@ -147,18 +204,27 @@ class FDroidRepoSource : Source {
 
     private class Verification(val signedBytes: ByteArray, val fingerprint: String)
 
+    /**
+     * Read through JarFile, which finds the manifest wherever it sits. F-Droid writes it last, and a
+     * stream reader that expects it first reports such an archive as unsigned.
+     */
     private fun verifyJar(bytes: ByteArray, signedEntryName: String, unsupportedOnFailure: Boolean): Verification {
         var signedBytes: ByteArray? = null
         var signers: Array<CodeSigner>? = null
+        val file = try {
+            File.createTempFile("repository", ".jar")
+        } catch (e: IOException) {
+            throw SourceException(SourceErrorKind.NETWORK, "No room to check the repository archive", cause = e)
+        }
         try {
-            JarInputStream(ByteArrayInputStream(bytes), true).use { jar ->
-                while (true) {
-                    val entry = jar.nextJarEntry ?: break
-                    val data = jar.readBytes()
-                    if (entry.name == signedEntryName) {
-                        signedBytes = data
-                        signers = entry.codeSigners
-                    }
+            file.writeBytes(bytes)
+            JarFile(file, true).use { jar ->
+                if (jar.size() > MAX_JAR_ENTRIES) throw SourceException(SourceErrorKind.AUTH, "The repository archive holds too many entries")
+                val entry = jar.getJarEntry(signedEntryName)
+                if (entry != null) {
+                    if (entry.size > MAX_SIGNED_ENTRY) throw SourceException(SourceErrorKind.AUTH, "$signedEntryName is too large")
+                    signedBytes = jar.getInputStream(entry).use { it.readNBytes(MAX_SIGNED_ENTRY + 1) }
+                    signers = entry.codeSigners
                 }
             }
         } catch (e: SecurityException) {
@@ -171,9 +237,12 @@ class FDroidRepoSource : Source {
             throw SourceException(SourceErrorKind.AUTH, "The repository archive is not a valid signed jar", cause = e)
         } catch (e: IOException) {
             throw SourceException(SourceErrorKind.AUTH, "The repository archive could not be read", cause = e)
+        } finally {
+            file.delete()
         }
 
         val json = signedBytes ?: throw SourceException(SourceErrorKind.AUTH, "The repository archive has no $signedEntryName")
+        if (json.size > MAX_SIGNED_ENTRY) throw SourceException(SourceErrorKind.AUTH, "$signedEntryName is too large")
         val signerList = signers?.toList().orEmpty()
         if (signerList.isEmpty()) throw SourceException(SourceErrorKind.AUTH, "$signedEntryName is not signed")
         if (signerList.size > 1) throw SourceException(SourceErrorKind.AUTH, "$signedEntryName has more than one signer")
@@ -182,47 +251,45 @@ class FDroidRepoSource : Source {
         return Verification(json, Fingerprints.sha256(certificate.encoded))
     }
 
-    private class FoundPackage(val json: JsonObject, val name: String?, val summary: String?)
+    /**
+     * Reads one signed file of the repository, a full index or a diff, and keeps what it says about
+     * every tracked app. A value of JsonNull means a diff removes the app.
+     */
+    private fun download(repositoryUrl: String, file: SignedFile, cap: Long, pkg: String, context: CheckContext): Extract {
+        val key = "$repositoryUrl|${file.sha256}"
+        shared.get(key)?.takeIf { pkg in it.searched }?.let { return it }
 
-    private fun fetchIndexV2(indexUrl: String, expectedSha: String, expectedSize: Long, pkg: String, context: CheckContext): FoundPackage? {
-        val response = context.http.execute(HttpRequest(indexUrl))
-        return response.use { resp ->
-            if (!resp.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${resp.status} for $indexUrl")
+        val wanted = (tracked(repositoryUrl).asSequence().take(MAX_TRACKED) + pkg).toSet()
+        val url = repositoryUrl + file.name
+        return context.http.execute(HttpRequest(url)).use { response ->
+            if (!response.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${response.status} for $url")
             val digest = MessageDigest.getInstance("SHA-256")
-            val counting = CappedDigestInputStream(resp.body, digest, INDEX_CAP)
-            val reader = JsonReader(InputStreamReader(counting, Charsets.UTF_8), maxDepth = 96)
-            var found: JsonObject? = null
+            val counting = CappedDigestInputStream(response.body, digest, cap)
+            val found = HashMap<String, JsonValue>()
             try {
+                val reader = JsonReader(InputStreamReader(counting, Charsets.UTF_8), maxDepth = 96)
                 reader.beginObject()
                 while (reader.hasNext()) {
-                    val name = reader.nextName()
-                    if (name == "packages") {
-                        reader.beginObject()
-                        while (reader.hasNext()) {
-                            val pkgName = reader.nextName()
-                            if (pkgName == pkg) {
-                                found = reader.readValue() as? JsonObject
-                            } else {
-                                reader.skipValue()
-                            }
-                        }
-                        reader.endObject()
-                    } else {
+                    if (reader.nextName() != "packages" || reader.peek() != JsonToken.BEGIN_OBJECT) {
                         reader.skipValue()
+                        continue
                     }
+                    reader.beginObject()
+                    while (reader.hasNext()) {
+                        val name = reader.nextName()
+                        if (name in wanted) found[name] = reader.readValue() else reader.skipValue()
+                    }
+                    reader.endObject()
                 }
                 reader.endObject()
                 reader.requireEndOfDocument()
             } catch (e: Exception) {
-                throw SourceException(SourceErrorKind.PARSE, "Could not parse the repository index", cause = e)
+                throw SourceException(SourceErrorKind.PARSE, "Could not read ${file.name} of the repository", cause = e)
             }
-            val digestHex = Fingerprints.toHex(digest.digest())
-            if (!digestHex.equals(expectedSha, ignoreCase = true) || counting.count != expectedSize) {
-                throw SourceException(SourceErrorKind.PARSE, "The downloaded index does not match the signed hash")
+            if (Fingerprints.toHex(digest.digest()) != file.sha256 || counting.count != file.size) {
+                throw SourceException(SourceErrorKind.PARSE, "${file.name} does not match the hash the repository signed")
             }
-            val packageJson = found ?: return@use null
-            val metadata = packageJson.obj("metadata")
-            FoundPackage(packageJson, localized(metadata?.obj("name")), localized(metadata?.obj("summary")))
+            Extract(wanted, found).also { shared.put(key, it) }
         }
     }
 
@@ -233,8 +300,8 @@ class FDroidRepoSource : Source {
         return map.fields.values.filterIsInstance<JsonString>().firstOrNull()?.value
     }
 
-    private fun buildV2Releases(found: FoundPackage, repoBase: String, context: CheckContext): List<Release> {
-        val versions = found.json.obj("versions")?.fields.orEmpty()
+    private fun buildV2Releases(app: JsonObject, repoBase: String, context: CheckContext): List<Release> {
+        val versions = app.obj("versions")?.fields.orEmpty()
         val device = context.device
         val releases = versions.values.filterIsInstance<JsonObject>().mapNotNull { version ->
             val file = version.obj("file") ?: return@mapNotNull null
@@ -298,10 +365,37 @@ class FDroidRepoSource : Source {
 
     companion object {
         private const val MAX_RELEASES = 30
+        private const val MAX_TRACKED = 500
+        private const val MAX_HELD = 512 * 1024
+        private const val DIFF_CAP = 32L * 1024 * 1024
+        private const val MAX_JAR_ENTRIES = 64
+        private const val MAX_SIGNED_ENTRY = 40 * 1024 * 1024
         private const val ENTRY_JAR_CAP = 1024 * 1024
         private const val V1_JAR_CAP = 32 * 1024 * 1024
         private const val INDEX_CAP = 96L * 1024 * 1024
         private val SCHEME = Regex("^fdroidrepos?://", RegexOption.IGNORE_CASE)
+    }
+}
+
+/** What one signed file said about the apps that were looked for in it. */
+private class Extract(val searched: Set<String>, val found: Map<String, JsonValue>)
+
+/** The last few files read, kept in memory so that apps of one repository share a download. */
+private class SharedDownloads {
+    private val recent = LinkedHashMap<String, Extract>()
+
+    @Synchronized
+    fun get(key: String): Extract? = recent[key]
+
+    @Synchronized
+    fun put(key: String, extract: Extract) {
+        recent.remove(key)
+        recent[key] = extract
+        while (recent.size > KEPT) recent.remove(recent.keys.first())
+    }
+
+    private companion object {
+        const val KEPT = 4
     }
 }
 

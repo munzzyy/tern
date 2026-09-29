@@ -22,4 +22,7 @@ dependencies {
 
 tasks.test {
     useJUnit()
+    systemProperty("jackdaw.live", System.getProperty("jackdaw.live") ?: "false")
+    systemProperty("jackdaw.index", System.getProperty("jackdaw.index") ?: "")
+    testLogging.showStandardStreams = System.getProperty("jackdaw.live") == "true" || System.getProperty("jackdaw.index") != null
 }

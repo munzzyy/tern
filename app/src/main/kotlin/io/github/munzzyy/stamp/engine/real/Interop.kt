@@ -9,6 +9,7 @@ import io.github.munzzyy.stamp.core.interop.StampExportException
 import io.github.munzzyy.stamp.core.json.Json
 import io.github.munzzyy.stamp.core.json.JsonException
 import io.github.munzzyy.stamp.core.model.AppConfig
+import io.github.munzzyy.stamp.core.model.UpdateMode
 import io.github.munzzyy.stamp.core.net.Urls
 import io.github.munzzyy.stamp.data.AppState
 import io.github.munzzyy.stamp.data.StoredApp
@@ -142,6 +143,7 @@ internal class Interop(private val e: RealEngine) {
         val fresh = ArrayList<String>()
         val withPins = ArrayList<String>()
         val withFilters = ArrayList<String>()
+        val askedForMore = ArrayList<String>()
         for (imported in decoded.apps.take(MAX_APPS)) {
             if (e.findBySpec(imported.source) != null) {
                 present++
@@ -160,10 +162,11 @@ internal class Interop(private val e: RealEngine) {
             added++
             if (imported.pinnedSigners.isNotEmpty()) withPins += config.name
             if (hasFilters(config)) withFilters += config.name
+            if (imported.updates == UpdateMode.AUTO) askedForMore += config.name
         }
         e.publish()
         if (fresh.isNotEmpty()) e.scope.launch { e.checks.checkMany(fresh) }
-        return ImportSummary(added, present, skipped, withPins, withFilters)
+        return ImportSummary(added, present, skipped, withPins, withFilters, askedForMore)
     }
 
     private fun hasFilters(config: AppConfig): Boolean = listOf(

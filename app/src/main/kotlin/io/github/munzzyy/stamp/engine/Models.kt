@@ -225,6 +225,11 @@ data class ImportSummary(
     val withPins: List<String> = emptyList(),
     /** Names of added apps that arrived with release or file filters. */
     val withFilters: List<String> = emptyList(),
+    /**
+     * Names of added apps whose file asked for updates that install by themselves. They were
+     * stored as "tell me", because that is for the user of this device to switch on.
+     */
+    val askedToInstallByThemselves: List<String> = emptyList(),
 )
 
 /** Where the colours come from. [WALLPAPER] needs Android 12 and falls back to [PALETTE] before that. */

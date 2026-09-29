@@ -141,6 +141,7 @@ internal class Detector(private val e: RealEngine) {
             warnings += e.texts.packageMismatch(carried.packageName, readPackage)
         }
         listing.movedTo?.let { warnings += e.texts.warnMoved(it) }
+        if (Urls.isLocal(Urls.host(spec.url))) warnings += e.texts.warnLocalAddress()
         return Detection.Found(
             spec = spec,
             name = config.name,

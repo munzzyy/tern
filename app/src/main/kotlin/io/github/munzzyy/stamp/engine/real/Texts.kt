@@ -76,6 +76,7 @@ class Texts(context: Context) : ImportTexts {
     override fun importNotAnExport() = s(R.string.engine_import_not_an_export)
     override fun importEmpty() = s(R.string.engine_import_empty)
     override fun importLocalAddress() = s(R.string.engine_import_local_address)
+    fun warnLocalAddress() = s(R.string.engine_warn_local_address)
     override fun importUnreadableExport(detail: String?) = s(R.string.engine_import_unreadable_export, detail.orEmpty().take(200))
     override fun importTooLarge(limitBytes: Int) = s(R.string.engine_import_too_large, limitBytes / (1024 * 1024))
     fun importFileGone() = s(R.string.engine_import_file_gone)

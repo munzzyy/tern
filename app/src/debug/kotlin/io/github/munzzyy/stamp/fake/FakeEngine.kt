@@ -390,6 +390,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
             ),
             withPins = added.filter { it.config.pinnedSigners.isNotEmpty() }.map { it.config.name },
             withFilters = added.filter { it.config.assets.include != null || it.config.releases.tagFilter != null }.map { it.config.name },
+            askedToInstallByThemselves = added.take(1).map { it.config.name },
         )
     }
 

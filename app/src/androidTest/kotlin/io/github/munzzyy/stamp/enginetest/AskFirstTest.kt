@@ -85,6 +85,7 @@ class AskFirstTest {
             val asking = AppConfig(id = "arrived", source = SourceSpec(SourceTypes.FORGEJO, FakeForge.PROJECT), name = "Fixture", packageName = PKG, updates = UpdateMode.AUTO)
             val summary = h.engine.importReceived(Received.ExportFile("stamp-export.json", StampExport.write(listOf(asking), 1L, "0.1.0").toByteArray()))
             assertEquals(1, summary.added)
+            assertEquals("the summary has to say that the file asked for it", listOf("Fixture"), summary.askedToInstallByThemselves)
             val id = "arrived"
             assertEquals(UpdateMode.NOTIFY, h.row(id).config.updates)
             waitUntil(30_000, "the imported app to be checked") { h.row(id).lastCheckedMs != null && !h.row(id).checking }

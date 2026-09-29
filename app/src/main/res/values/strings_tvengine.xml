@@ -3,6 +3,7 @@
     <string name="engine_import_not_an_export">This file is not a list of apps exported from Stamp or Obtainium.</string>
     <string name="engine_import_empty">This file holds no apps.</string>
     <string name="engine_import_local_address">Its address is on a local network. Add it by hand if it is yours.</string>
+    <string name="engine_warn_local_address">This address is on your own network. Stamp asks it every time it checks for updates.</string>
     <!-- %1$s is a short technical reason in English, such as "Unsupported export schema 2". -->
     <string name="engine_import_unreadable_export">This export from Stamp could not be read (%1$s). If it comes from a newer version of Stamp, update Stamp on this device and try again.</string>
     <string name="engine_import_too_large">The file is larger than %1$d MiB, which is more than a list of apps takes, so Stamp did not read it.</string>

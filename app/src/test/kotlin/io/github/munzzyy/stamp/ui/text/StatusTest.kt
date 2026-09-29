@@ -115,4 +115,35 @@ class StatusTest {
         assertEquals(R.string.advice_signer_mismatch, problemAdvice(ProblemKind.PIN_MISMATCH, installed = false))
         assertEquals(problemAdvice(ProblemKind.NETWORK, installed = true), problemAdvice(ProblemKind.NETWORK, installed = false))
     }
+
+    @Test
+    fun anUpdateThatWaitsSaysWhetherAndroidWillAsk() {
+        val row = testRow(status = AppStatus.UPDATE_AVAILABLE, installed = "1.0", offered = "1.1")
+        assertEquals(PromptLine.SILENT, promptLine(row.copy(silentUpdate = true), sdk = 34))
+        assertEquals(PromptLine.ASKS, promptLine(row.copy(silentUpdate = false), sdk = 34))
+        assertNull(promptLine(row.copy(silentUpdate = null), sdk = 34))
+    }
+
+    @Test
+    fun beforeAndroid12TheDeviceAlwaysAsks() {
+        val row = testRow(status = AppStatus.UPDATE_AVAILABLE, installed = "1.0", offered = "1.1")
+        for (silent in listOf(true, false, null)) {
+            assertEquals(PromptLine.ALWAYS_ASKS, promptLine(row.copy(silentUpdate = silent), sdk = 30))
+        }
+        assertEquals(PromptLine.ALWAYS_ASKS, promptLine(row.copy(silentUpdate = false), sdk = 29))
+        assertEquals(PromptLine.ASKS, promptLine(row.copy(silentUpdate = false), sdk = 31))
+        assertEquals(R.string.explain_always_asks, PromptLine.ALWAYS_ASKS.explanation)
+        assertEquals(R.string.explain_silent, PromptLine.SILENT.explanation)
+        assertEquals(R.string.explain_silent, PromptLine.ASKS.explanation)
+    }
+
+    @Test
+    fun nothingIsSaidAboutAPromptWhereNoUpdateCanStart() {
+        val row = testRow(status = AppStatus.UPDATE_AVAILABLE, installed = "1.0", offered = "1.1").copy(silentUpdate = true)
+        assertNull(promptLine(row.copy(status = AppStatus.UP_TO_DATE), sdk = 34))
+        assertNull(promptLine(row.copy(status = AppStatus.BLOCKED), sdk = 30))
+        assertNull(promptLine(row.copy(progress = Progress(Phase.DOWNLOADING, 1, 2)), sdk = 34))
+        assertNull(promptLine(row.copy(config = row.config.copy(trackOnly = true)), sdk = 34))
+        assertNull(promptLine(row.copy(installed = null), sdk = 30))
+    }
 }

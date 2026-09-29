@@ -2,26 +2,17 @@ package io.github.munzzyy.stamp.ui.detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,31 +21,40 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.unit.dp
 import io.github.munzzyy.stamp.R
 import io.github.munzzyy.stamp.core.model.AppConfig
 import io.github.munzzyy.stamp.core.model.UpdateMode
 import io.github.munzzyy.stamp.engine.AppRow
 import io.github.munzzyy.stamp.ui.LocalEngine
-import io.github.munzzyy.stamp.ui.apps.RemoveDialog
+import io.github.munzzyy.stamp.ui.apps.rememberRemove
 import io.github.munzzyy.stamp.ui.common.ActionRow
 import io.github.munzzyy.stamp.ui.common.ChoiceRow
 import io.github.munzzyy.stamp.ui.common.FileChoiceView
+import io.github.munzzyy.stamp.ui.common.GlyphButton
+import io.github.munzzyy.stamp.ui.common.QuietButton
 import io.github.munzzyy.stamp.ui.common.SwitchRow
+import io.github.munzzyy.stamp.ui.common.TonalButton
 import io.github.munzzyy.stamp.ui.common.rememberActions
 import io.github.munzzyy.stamp.ui.common.textFieldKeys
+import io.github.munzzyy.stamp.ui.icons.Bin
+import io.github.munzzyy.stamp.ui.icons.Close
+import io.github.munzzyy.stamp.ui.icons.Collapse
+import io.github.munzzyy.stamp.ui.icons.Expand
+import io.github.munzzyy.stamp.ui.icons.Glyphs
 import io.github.munzzyy.stamp.ui.text.breakableFingerprint
 import io.github.munzzyy.stamp.ui.text.canPickInstall
 import io.github.munzzyy.stamp.ui.text.formatFingerprint
+import io.github.munzzyy.stamp.ui.theme.LocalLook
+import io.github.munzzyy.stamp.ui.theme.fingerprint
 
 private val MIN_AGE_CHOICES = listOf(0, 1, 3, 7, 14, 30)
 
 fun LazyListScope.settings(vm: DetailViewModel, row: AppRow, onRemoved: () -> Unit) {
-    item(key = "s-updates") { UpdatesGroup(vm, row.config) }
     item(key = "s-files") { FilesGroup(vm, row) }
+    item(key = "s-updates") { UpdatesGroup(vm, row.config) }
     item(key = "s-advanced") { AdvancedGroup(vm, row.config) }
     item(key = "s-remove") { RemoveGroup(row, onRemoved) }
 }
@@ -64,12 +64,6 @@ private fun saver(vm: DetailViewModel): ((AppConfig) -> AppConfig) -> Unit {
     val actions = rememberActions()
     val failed = stringResource(R.string.save_failed)
     return { change -> vm.save(change) { actions.say(failed) } }
-}
-
-@Composable
-private fun GroupTitle(text: String) {
-    HorizontalDivider(Modifier.padding(vertical = 8.dp))
-    Column(Modifier.padding(horizontal = 16.dp)) { SectionTitle(text) }
 }
 
 @Composable
@@ -97,8 +91,7 @@ fun minAgeLabel(days: Int): String =
 @Composable
 private fun UpdatesGroup(vm: DetailViewModel, config: AppConfig) {
     val save = saver(vm)
-    Column(Modifier.widthIn(max = 840.dp)) {
-        GroupTitle(stringResource(R.string.group_updates))
+    DetailCard(stringResource(R.string.group_updates)) {
         ChoiceRow(
             title = stringResource(R.string.setting_update_mode),
             options = UpdateMode.entries,
@@ -124,22 +117,35 @@ private fun UpdatesGroup(vm: DetailViewModel, config: AppConfig) {
     }
 }
 
+/** Text and fields inside a card whose rows bring their own padding. */
+@Composable
+private fun Padded(content: @Composable () -> Unit) {
+    val look = LocalLook.current
+    Column(
+        verticalArrangement = Arrangement.spacedBy(look.gapSmall + look.gapSmall / 2),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = look.cardPadding, vertical = look.gapSmall / 2),
+    ) { content() }
+}
+
 @Composable
 private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
     val engine = LocalEngine.current
+    val look = LocalLook.current
     val save = saver(vm)
     val config = row.config
     val draft = vm.draftFor(config)
     val invalid = draft.invalid
-    Column(Modifier.widthIn(max = 840.dp)) {
-        GroupTitle(stringResource(R.string.group_files))
+    DetailCard(stringResource(R.string.group_files)) {
         val ranked = listOfNotNull(row.file) + row.otherFiles
-        Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Padded {
             if (ranked.isEmpty()) {
                 Text(stringResource(R.string.files_none), style = MaterialTheme.typography.bodyMedium)
             }
             ranked.forEachIndexed { index, choice ->
-                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                if (index > 0) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                Column(verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
                     Text(
                         stringResource(if (index == 0) R.string.file_recommended else R.string.file_alternative, index + 1),
                         style = MaterialTheme.typography.labelLarge,
@@ -147,9 +153,7 @@ private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
                     )
                     FileChoiceView(choice)
                     if (index > 0 && canPickInstall(row)) {
-                        OutlinedButton(onClick = { engine.install(row.id, assetUrl = choice.asset.url) }) {
-                            Text(stringResource(R.string.action_install_file))
-                        }
+                        TonalButton(stringResource(R.string.action_install_file), onClick = { engine.install(row.id, assetUrl = choice.asset.url) })
                     }
                 }
             }
@@ -160,7 +164,7 @@ private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
             checked = config.assets.matchDevice,
             onChange = { on -> save { it.copy(assets = it.assets.copy(matchDevice = on)) } },
         )
-        Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Padded {
             PatternField(R.string.setting_include, R.string.setting_include_help, draft.include, "include" in invalid) { v ->
                 vm.editDraft(config) { it.copy(include = v) }
             }
@@ -175,14 +179,13 @@ private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
 @Composable
 private fun SaveDraft(vm: DetailViewModel, config: AppConfig) {
     if (!vm.isDirty(config)) return
+    val look = LocalLook.current
     val actions = rememberActions()
     val failed = stringResource(R.string.save_failed)
     val invalid = vm.draftFor(config).invalid.isNotEmpty()
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End), modifier = Modifier.fillMaxWidth()) {
-        TextButton(onClick = { vm.editDraft(config) { PatternDraft.of(config) } }) { Text(stringResource(R.string.action_discard)) }
-        Button(onClick = { vm.saveDraft(config) { actions.say(failed) } }, enabled = !invalid) {
-            Text(stringResource(R.string.action_save))
-        }
+    Row(horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2, Alignment.End), modifier = Modifier.fillMaxWidth()) {
+        QuietButton(stringResource(R.string.action_discard), onClick = { vm.editDraft(config) { PatternDraft.of(config) } })
+        TonalButton(stringResource(R.string.action_save), onClick = { vm.saveDraft(config) { actions.say(failed) } }, enabled = !invalid)
     }
 }
 
@@ -195,7 +198,7 @@ private fun PatternField(label: Int, help: Int, value: String, invalid: Boolean,
         supportingText = { Text(stringResource(if (invalid) R.string.pattern_invalid else help)) },
         isError = invalid,
         singleLine = true,
-        textStyle = MaterialTheme.typography.bodyLarge.copy(fontFamily = FontFamily.Monospace),
+        textStyle = MaterialTheme.typography.bodyLarge.fingerprint(),
         modifier = Modifier.fillMaxWidth().textFieldKeys(),
     )
 }
@@ -206,16 +209,14 @@ private fun AdvancedGroup(vm: DetailViewModel, config: AppConfig) {
     val save = saver(vm)
     val draft = vm.draftFor(config)
     val invalid = draft.invalid
-    Column(Modifier.widthIn(max = 840.dp)) {
-        HorizontalDivider(Modifier.padding(vertical = 8.dp))
+    DetailCard(stringResource(R.string.group_advanced)) {
         ActionRow(
-            title = stringResource(R.string.group_advanced),
-            summary = stringResource(if (open) R.string.advanced_hide else R.string.advanced_show),
-            icon = if (open) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
+            title = stringResource(if (open) R.string.advanced_hide else R.string.advanced_show),
+            icon = if (open) Glyphs.Collapse else Glyphs.Expand,
             onClick = { open = !open },
         )
-        if (!open) return@Column
-        Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        if (!open) return@DetailCard
+        Padded {
             PatternField(R.string.setting_tag_filter, R.string.setting_tag_filter_help, draft.tag, "tag" in invalid) { v ->
                 vm.editDraft(config) { it.copy(tag = v) }
             }
@@ -254,11 +255,13 @@ private fun AdvancedGroup(vm: DetailViewModel, config: AppConfig) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PinnedSigners(config: AppConfig, save: ((AppConfig) -> AppConfig) -> Unit) {
+    val look = LocalLook.current
     var entry by remember { mutableStateOf("") }
     var bad by remember { mutableStateOf(false) }
-    Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Padded {
         Text(stringResource(R.string.pins_title), style = MaterialTheme.typography.titleSmall)
         Text(
             stringResource(if (config.pinnedSigners.isEmpty()) R.string.pins_none else R.string.pins_effect),
@@ -266,13 +269,16 @@ private fun PinnedSigners(config: AppConfig, save: ((AppConfig) -> AppConfig) ->
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         for (pin in config.pinnedSigners) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(look.gapSmall)) {
                 SelectionContainer(Modifier.weight(1f)) {
-                    Text(breakableFingerprint(formatFingerprint(pin)), style = MaterialTheme.typography.bodySmall, fontFamily = FontFamily.Monospace)
+                    Text(breakableFingerprint(formatFingerprint(pin)), style = MaterialTheme.typography.bodySmall.fingerprint())
                 }
-                IconButton(onClick = { save { c -> c.copy(pinnedSigners = c.pinnedSigners - pin) } }) {
-                    Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.pins_remove))
-                }
+                GlyphButton(
+                    Glyphs.Close,
+                    stringResource(R.string.pins_remove),
+                    onClick = { save { c -> c.copy(pinnedSigners = c.pinnedSigners - pin) } },
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         }
         OutlinedTextField(
@@ -285,37 +291,42 @@ private fun PinnedSigners(config: AppConfig, save: ((AppConfig) -> AppConfig) ->
             supportingText = { Text(stringResource(if (bad) R.string.pins_add_invalid else R.string.pins_add_help)) },
             isError = bad,
             singleLine = true,
-            textStyle = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+            textStyle = MaterialTheme.typography.bodyMedium.fingerprint(),
             modifier = Modifier.fillMaxWidth().textFieldKeys(),
         )
-        OutlinedButton(
-            onClick = {
-                val fp = normalizeFingerprint(entry)
-                if (fp == null) {
-                    bad = true
-                } else {
-                    save { c -> c.copy(pinnedSigners = (c.pinnedSigners + fp).distinct()) }
-                    entry = ""
-                }
-            },
-            enabled = entry.isNotBlank(),
-            modifier = Modifier.align(Alignment.End),
-        ) { Text(stringResource(R.string.pins_add)) }
+        FlowRow(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
+            TonalButton(
+                stringResource(R.string.pins_add),
+                enabled = entry.isNotBlank(),
+                onClick = {
+                    val fp = normalizeFingerprint(entry)
+                    if (fp == null) {
+                        bad = true
+                    } else {
+                        save { c -> c.copy(pinnedSigners = (c.pinnedSigners + fp).distinct()) }
+                        entry = ""
+                    }
+                },
+            )
+        }
     }
 }
 
+/** No question is asked: the app leaves the list at once and can be taken back while the snackbar shows. */
 @Composable
 private fun RemoveGroup(row: AppRow, onRemoved: () -> Unit) {
-    var confirm by remember { mutableStateOf(false) }
-    Column(Modifier.widthIn(max = 840.dp)) {
-        HorizontalDivider(Modifier.padding(vertical = 8.dp))
+    val remove = rememberRemove()
+    DetailCard(title = null) {
         ActionRow(
             title = stringResource(R.string.action_remove),
             summary = stringResource(if (row.installed != null) R.string.remove_text_installed else R.string.remove_text),
-            icon = Icons.Filled.Delete,
+            icon = Glyphs.Bin,
             tint = MaterialTheme.colorScheme.error,
-            onClick = { confirm = true },
+            modifier = Modifier.testTag(DETAIL_REMOVE_TAG),
+            onClick = {
+                remove(row)
+                onRemoved()
+            },
         )
     }
-    if (confirm) RemoveDialog(row, onDismiss = { confirm = false }, onRemoved = onRemoved)
 }

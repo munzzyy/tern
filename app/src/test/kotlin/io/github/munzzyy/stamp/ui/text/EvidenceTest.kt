@@ -1,10 +1,16 @@
 package io.github.munzzyy.stamp.ui.text
 
 import io.github.munzzyy.stamp.R
+import io.github.munzzyy.stamp.engine.AppStatus
 import io.github.munzzyy.stamp.engine.ChecksumState
+import io.github.munzzyy.stamp.engine.Problem
+import io.github.munzzyy.stamp.engine.ProblemKind
 import io.github.munzzyy.stamp.engine.SignerState
 import io.github.munzzyy.stamp.engine.Verification
+import io.github.munzzyy.stamp.ui.testRow
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class EvidenceTest {
@@ -71,5 +77,49 @@ class EvidenceTest {
         for (bad in listOf(null, "", hash.uppercase(), hash.dropLast(1), hash + "0", "$hash/../../x", hash.replaceRange(0, 1, "g"), " $hash")) {
             assertEquals(bad, null, virusTotalUrl(bad))
         }
+    }
+
+    private fun checked(state: SignerState, verified: Boolean = true, checksum: ChecksumState = ChecksumState.MATCHED) =
+        testRow().copy(verification = v(state, verified, checksum))
+
+    @Test
+    fun theSealIsForAFileThatAndroidReadAndThatMatchesWhatIsKnown() {
+        assertTrue(passedEveryCheck(checked(SignerState.MATCHES_INSTALLED)))
+        assertTrue(passedEveryCheck(checked(SignerState.MATCHES_PIN)))
+        assertTrue(passedEveryCheck(checked(SignerState.MATCHES_PIN, checksum = ChecksumState.NOT_PUBLISHED)))
+    }
+
+    @Test
+    fun noSealWhileAnythingIsOpenOrWrong() {
+        assertFalse(passedEveryCheck(testRow()))
+        assertFalse(passedEveryCheck(checked(SignerState.MATCHES_INSTALLED, verified = false)))
+        assertFalse(passedEveryCheck(checked(SignerState.FIRST_SEEN)))
+        assertFalse(passedEveryCheck(checked(SignerState.UNKNOWN)))
+        assertFalse(passedEveryCheck(checked(SignerState.MISMATCH)))
+        assertFalse(passedEveryCheck(checked(SignerState.MATCHES_PIN, checksum = ChecksumState.PENDING)))
+        assertFalse(passedEveryCheck(checked(SignerState.MATCHES_PIN, checksum = ChecksumState.MISMATCH)))
+        val good = checked(SignerState.MATCHES_INSTALLED)
+        assertFalse(passedEveryCheck(good.copy(status = AppStatus.BLOCKED)))
+        assertFalse(passedEveryCheck(good.copy(problem = Problem(ProblemKind.DOWNGRADE, "older"))))
+        assertFalse(passedEveryCheck(good.copy(verification = good.verification?.copy(packageName = null))))
+        assertFalse(passedEveryCheck(good.copy(verification = good.verification?.copy(signers = emptyList()))))
+    }
+
+    @Test
+    fun theSignerIsExplainedByWhatThereIsToCompareWith() {
+        assertEquals(R.string.explain_signer_first, signerExplanation(v(SignerState.FIRST_SEEN, false), installed = false))
+        assertEquals(R.string.explain_signer_first, signerExplanation(v(SignerState.UNKNOWN, false), installed = false))
+        assertEquals(R.string.explain_signer_installed, signerExplanation(v(SignerState.UNKNOWN, false), installed = true))
+        for (state in listOf(SignerState.MATCHES_PIN, SignerState.MATCHES_INSTALLED, SignerState.MISMATCH)) {
+            assertEquals(R.string.explain_signer_installed, signerExplanation(v(state, true), installed = false))
+        }
+    }
+
+    @Test
+    fun everyStateOfTheChecksumHasItsOwnExplanation() {
+        val explained = ChecksumState.entries.map { checksumExplanation(v(SignerState.MATCHES_PIN, true, it)) }
+        assertEquals(ChecksumState.entries.size, explained.toSet().size)
+        assertEquals(R.string.explain_checksum_matched, checksumExplanation(v(SignerState.MATCHES_PIN, true, ChecksumState.MATCHED)))
+        assertEquals(R.string.explain_checksum_none, checksumExplanation(v(SignerState.MATCHES_PIN, true, ChecksumState.NOT_PUBLISHED)))
     }
 }

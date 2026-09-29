@@ -73,6 +73,27 @@ fun isWaitingForUser(row: AppRow): Boolean = row.progress?.phase == Phase.WAITIN
 
 fun isBusy(row: AppRow): Boolean = row.progress != null
 
+/** What is said about the question Android may ask before an update, and what that means when the user asks. */
+enum class PromptLine(@param:StringRes val text: Int, @param:StringRes val title: Int, @param:StringRes val explanation: Int) {
+    SILENT(R.string.silent_yes, R.string.explain_silent_title, R.string.explain_silent),
+    ASKS(R.string.silent_no, R.string.explain_silent_title, R.string.explain_silent),
+    ALWAYS_ASKS(R.string.prompt_always_asks, R.string.explain_always_asks_title, R.string.explain_always_asks),
+}
+
+/** Android installs an update without asking from this version on, and only under its own conditions. */
+const val FIRST_SILENT_SDK = 31
+
+/** Null while no update waits to be started, and where nothing is known about how Android would take it. */
+fun promptLine(row: AppRow, sdk: Int): PromptLine? {
+    if (row.status != AppStatus.UPDATE_AVAILABLE || row.installed == null || row.config.trackOnly || isBusy(row)) return null
+    if (sdk < FIRST_SILENT_SDK) return PromptLine.ALWAYS_ASKS
+    return when (row.silentUpdate) {
+        true -> PromptLine.SILENT
+        false -> PromptLine.ASKS
+        null -> null
+    }
+}
+
 /** The one button that fits inline in a list row, if any. */
 fun inlineAction(row: AppRow): RowAction? = when {
     isWaitingForUser(row) -> RowAction.CONFIRM

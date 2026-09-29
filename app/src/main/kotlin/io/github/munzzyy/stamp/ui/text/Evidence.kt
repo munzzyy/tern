@@ -2,6 +2,8 @@ package io.github.munzzyy.stamp.ui.text
 
 import androidx.annotation.StringRes
 import io.github.munzzyy.stamp.R
+import io.github.munzzyy.stamp.engine.AppRow
+import io.github.munzzyy.stamp.engine.AppStatus
 import io.github.munzzyy.stamp.engine.ChecksumState
 import io.github.munzzyy.stamp.engine.SignerState
 import io.github.munzzyy.stamp.engine.Verification
@@ -31,6 +33,35 @@ fun checksumLine(v: Verification): EvidenceLine = when (v.checksum) {
     ChecksumState.PENDING -> EvidenceLine(R.string.checksum_pending, Trust.NOTE)
     ChecksumState.MATCHED -> EvidenceLine(R.string.checksum_matched, Trust.GOOD)
     ChecksumState.MISMATCH -> EvidenceLine(R.string.checksum_mismatch, Trust.BAD)
+}
+
+/**
+ * True once Android has read the downloaded file, its signer is the one Stamp or the device
+ * already knows, no checksum speaks against it and nothing else stops it. The seal stands for
+ * this and for nothing less: a first install has nothing to compare with, so it gets none.
+ */
+fun passedEveryCheck(row: AppRow): Boolean {
+    val v = row.verification ?: return false
+    if (row.status == AppStatus.BLOCKED || row.problem != null) return false
+    val signer = v.signerState == SignerState.MATCHES_PIN || v.signerState == SignerState.MATCHES_INSTALLED
+    val checksum = v.checksum == ChecksumState.MATCHED || v.checksum == ChecksumState.NOT_PUBLISHED
+    return v.packageName != null && v.signersVerified && v.signers.isNotEmpty() && signer && checksum
+}
+
+/** [installed] decides for a signer nothing is known about yet: with the app on the device there is something to compare with. */
+@StringRes
+fun signerExplanation(v: Verification, installed: Boolean): Int = when (v.signerState) {
+    SignerState.FIRST_SEEN -> R.string.explain_signer_first
+    SignerState.UNKNOWN -> if (installed) R.string.explain_signer_installed else R.string.explain_signer_first
+    SignerState.MATCHES_PIN, SignerState.MATCHES_INSTALLED, SignerState.MISMATCH -> R.string.explain_signer_installed
+}
+
+@StringRes
+fun checksumExplanation(v: Verification): Int = when (v.checksum) {
+    ChecksumState.NOT_PUBLISHED -> R.string.explain_checksum_none
+    ChecksumState.PENDING -> R.string.explain_checksum_pending
+    ChecksumState.MATCHED -> R.string.explain_checksum_matched
+    ChecksumState.MISMATCH -> R.string.explain_checksum_mismatch
 }
 
 /** "ab12cd" becomes "AB:12:CD". Anything that is not even-length hex is returned unchanged. */

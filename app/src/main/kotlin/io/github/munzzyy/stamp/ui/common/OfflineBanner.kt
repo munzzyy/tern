@@ -3,10 +3,9 @@ package io.github.munzzyy.stamp.ui.common
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -19,29 +18,35 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.unit.dp
 import io.github.munzzyy.stamp.R
+import io.github.munzzyy.stamp.ui.icons.Glyphs
+import io.github.munzzyy.stamp.ui.theme.LocalLook
 
 const val OFFLINE_BANNER_TAG = "offline_banner"
 
 @Composable
 fun OfflineBanner(online: Boolean, modifier: Modifier = Modifier) {
     if (online) return
+    val look = LocalLook.current
     Surface(
-        color = MaterialTheme.colorScheme.secondaryContainer,
-        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        color = MaterialTheme.colorScheme.surfaceContainerHighest,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        shape = MaterialTheme.shapes.large,
         modifier = modifier
             .fillMaxWidth()
+            .padding(horizontal = look.screenPadding, vertical = look.gapSmall / 2)
             .testTag(OFFLINE_BANNER_TAG)
             .semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite },
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(look.gap),
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier = Modifier
+                .heightIn(min = look.touchTarget)
+                .padding(horizontal = look.cardPadding, vertical = look.gapSmall),
         ) {
-            Icon(Icons.Filled.Info, contentDescription = null, modifier = Modifier.size(20.dp))
-            Text(stringResource(R.string.offline_banner), style = MaterialTheme.typography.bodyMedium)
+            Icon(Glyphs.Offline, contentDescription = null, modifier = Modifier.size(look.glyph))
+            Text(stringResource(R.string.offline_banner), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
         }
     }
 }

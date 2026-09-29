@@ -158,7 +158,7 @@ class Invent(private val now: Long) {
         row("quietclock", "Quiet Clock", AppStatus.NEW_RELEASE, "5.1", "5.2", trackOnly = true, signer = SignerState.UNKNOWN),
         row(
             "ferrybook", "Ferry Book", AppStatus.BLOCKED, "4.0.0", "4.1.0", signer = SignerState.MISMATCH,
-            problem = Problem(ProblemKind.SIGNER_MISMATCH, "The new file is signed with a different certificate than Ferry Book on this phone."),
+            problem = Problem(ProblemKind.SIGNER_MISMATCH, "The new file is signed with a different certificate than Ferry Book on this device."),
         ),
         row(
             "lanternpdf", "Lantern PDF", AppStatus.BLOCKED, "2.2", "2.3", checksum = ChecksumState.MISMATCH,
@@ -268,9 +268,15 @@ class Invent(private val now: Long) {
         return listOf(
             e(0.2, "trailmap", "Trail Map", EventKind.UPDATE_FOUND, "Version 1.5.0 is available."),
             e(0.5, "cinderplayer", "Cinder Player", EventKind.DOWNLOADED, "Downloaded cinderplayer-8.1-x86_64.apk (24 MB)."),
+            e(0.51, "cinderplayer", "Cinder Player", EventKind.UPDATE_FOUND, "Version 8.1 is available."),
             e(1.0, "ferrybook", "Ferry Book", EventKind.BLOCKED, "Blocked: the new file is signed with a different certificate."),
+            e(1.01, "ferrybook", "Ferry Book", EventKind.VERIFIED, "Read the file: package org.example.ferrybook, version code 4001000."),
+            e(1.02, "ferrybook", "Ferry Book", EventKind.DOWNLOADED, "Downloaded ferrybook-4.1.0-x86_64.apk (14 MB)."),
+            e(1.2, "ferrybook", "Ferry Book", EventKind.UPDATE_FOUND, "Version 4.1.0 is available."),
             e(1.5, "pocketnotes", "Pocket Notes", EventKind.INSTALLED, "Installed version 2.3.1."),
-            e(1.6, "pocketnotes", "Pocket Notes", EventKind.VERIFIED, "Signer matches the installed app. Checksum matched."),
+            e(1.51, "pocketnotes", "Pocket Notes", EventKind.VERIFIED, "Signer matches the installed app. Checksum matched."),
+            e(1.52, "pocketnotes", "Pocket Notes", EventKind.DOWNLOADED, "Downloaded pocketnotes-2.3.1-x86_64.apk (12 MB)."),
+            e(1.53, "pocketnotes", "Pocket Notes", EventKind.UPDATE_FOUND, "Version 2.3.1 is available."),
             e(3.0, "ridgeradio", "Ridge Radio", EventKind.CHECK_FAILED, "GitHub is limiting requests from this network."),
             e(26.0, "kestrelmail", "Kestrel Mail", EventKind.ADDED, "Added from gitlab.com."),
             e(27.0, null, null, EventKind.IMPORTED, "Imported 14 apps from an Obtainium export."),

@@ -68,8 +68,13 @@ fun prepareDevice() {
     shell("pm set-silent-updates-policy --allow-unlimited-silent-updates $own")
     val installer = targetContext.packageManager.packageInstaller
     for (session in installer.mySessions) runCatching { installer.abandonSession(session.sessionId) }
+    // Android takes a moment to let a session go.
+    waitUntil(10_000, "the leftover sessions to be gone") { installer.mySessions.isEmpty() }
     targetContext.getSystemService(NotificationManager::class.java).cancelAll()
 }
+
+/** Without the marks that hold a name or a hash left to right, which the eye does not see either. */
+fun plain(text: String?): String? = text?.filterNot { it in '\u2066'..'\u2069' }
 
 /** Puts Android's limit on silent updates back, holding it for [seconds] after each one. */
 fun throttleSilentUpdates(seconds: Int) {
@@ -146,6 +151,14 @@ class Harness(name: String, gate: Gate? = null, installer: Installer? = null, ht
     fun state(id: String): AppState = engine.store.app(id)!!.state
 
     fun eventsFor(id: String) = engine.events.value.filter { it.appId == id }
+
+    /** True once an install has been answered and everything that follows it has been written and drawn. */
+    fun settledOn(id: String, versionCode: Long): Boolean {
+        val state = state(id)
+        val row = row(id)
+        return installedVersionCode() == versionCode && state.pending == null && state.record?.versionCode == versionCode &&
+            row.progress == null && row.status == io.github.munzzyy.jackdaw.engine.AppStatus.UP_TO_DATE && row.installed?.versionCode == versionCode
+    }
 
     /** Confirms the system installer's dialog for [id], and says what the engine held when none came. */
     fun confirm(id: String): String = try {

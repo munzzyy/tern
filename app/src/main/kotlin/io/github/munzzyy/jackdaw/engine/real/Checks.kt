@@ -103,10 +103,32 @@ internal class Checks(private val e: RealEngine) {
         }
     }
 
-    /** Recomputes the row against the device. With [network], files may be inspected remotely. */
+    private val evaluating = ConcurrentHashMap<String, Any>()
+
+    /**
+     * Recomputes the row against the device. With [network], files may be inspected remotely.
+     *
+     * A check that brings a new listing and an install that finishes evaluate the same app at the
+     * same moment, and the one that started from the older state must not be the one that is
+     * kept. So the row is computed one at a time for each app, from what is stored once its turn
+     * has come. Reading a file over the network takes seconds and callers such as cancel run on
+     * the main thread, so that reading happens before the turn and only fills the cache.
+     */
     fun reevaluate(id: String, network: Boolean) {
+        if (network) readFilesFor(id)
+        synchronized(evaluating.getOrPut(id) { Any() }) { evaluate(id) }
+    }
+
+    private fun readFilesFor(id: String) {
         val stored = e.stored[id] ?: return
-        val inspect: (Asset, String) -> FileFacts? = if (network) e.inspector::inspect else e.inspector::cached
+        val eval = e.evaluator.evaluate(stored.config, stored.state, e.readInstalled(stored.config.packageName), e.inspector::inspect)
+        // Remembered at once, so the evaluation that follows does not run a runaway pattern a second time.
+        if (eval.patternProblem != stored.state.patternProblem) e.saveState(id) { it.copy(patternProblem = eval.patternProblem) }
+    }
+
+    private fun evaluate(id: String) {
+        val stored = e.stored[id] ?: return
+        val inspect: (Asset, String) -> FileFacts? = e.inspector::cached
         var config = stored.config
         var installed = e.readInstalled(config.packageName)
         var eval = e.evaluator.evaluate(config, stored.state, installed, inspect)

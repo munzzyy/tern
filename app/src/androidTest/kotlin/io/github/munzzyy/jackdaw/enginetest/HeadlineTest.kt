@@ -80,7 +80,7 @@ class HeadlineTest {
             h.forge.releases = listOf(v1)
             val id = h.engine.add(h.engine.detect(FakeForge.PROJECT) as Detection.Found, install = true)
             h.confirm(id)
-            waitUntil(60_000, "v1 to be installed and settled") { installedVersionCode() == 1L && h.row(id).status == AppStatus.UP_TO_DATE }
+            waitUntil(60_000, "v1 to be installed and settled") { h.settledOn(id, 1) }
             h.engine.configure(id) { it.copy(updates = UpdateMode.AUTO) }
             h.forge.releases = listOf(v2, v1)
             h.engine.runScheduledCheck()
@@ -92,7 +92,7 @@ class HeadlineTest {
             h.engine.check(id)
             h.engine.install(id)
             h.confirm(id)
-            waitUntil(60_000, "v1 to be installed again") { installedVersionCode() == 1L && h.row(id).status == AppStatus.UP_TO_DATE }
+            waitUntil(60_000, "v1 to be installed again") { h.settledOn(id, 1) }
 
             h.forge.releases = listOf(v2, v1)
             h.engine.runScheduledCheck()

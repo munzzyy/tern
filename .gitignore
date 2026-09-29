@@ -10,3 +10,4 @@ keystore.properties
 captures/
 dist/
 .claude/
+__pycache__/

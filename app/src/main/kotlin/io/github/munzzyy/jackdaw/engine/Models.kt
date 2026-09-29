@@ -152,6 +152,8 @@ sealed interface Detection {
         val alreadyTracked: String?,
         /** Things the user should know before adding, plain sentences. */
         val warnings: List<String>,
+        /** Settings that came with a link or a file. Not stored until the user has seen them and agreed. */
+        val carried: AppConfig? = null,
     ) : Detection
 
     /** The text was not a link, so it was used as a search. */

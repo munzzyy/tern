@@ -124,15 +124,37 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         return fakeDetect(input, Invent(System.currentTimeMillis()))
     }
 
-    override suspend fun add(found: Detection.Found, install: Boolean): String {
-        found.alreadyTracked?.let { return it }
-        delay(stepMs)
+    private val _online = MutableStateFlow(true)
+    override val online: StateFlow<Boolean> = _online.asStateFlow()
+
+    override fun proposedConfig(found: Detection.Found): AppConfig {
         val base = found.spec.url.trimEnd('/').substringAfterLast('/').lowercase().filter { it.isLetterOrDigit() }.ifEmpty { "app" }
         var id = base
         var n = 2
         while (row(id) != null) id = base + n++
+        val carried = found.carried
+        return (carried ?: AppConfig(id = id, source = found.spec, name = found.name)).copy(
+            id = id,
+            source = found.spec,
+            name = carried?.name ?: found.name,
+            author = carried?.author ?: found.author,
+            packageName = found.verification?.packageName ?: carried?.packageName,
+        )
+    }
+
+    override fun resumeInstall(appId: String): Boolean {
+        val waiting = row(appId)?.progress?.phase == Phase.WAITING_FOR_USER
+        if (waiting) install(appId)
+        return waiting
+    }
+
+    override suspend fun add(found: Detection.Found, install: Boolean): String {
+        found.alreadyTracked?.let { return it }
+        delay(stepMs)
+        val config = proposedConfig(found)
+        val id = config.id
         val newRow = AppRow(
-            config = AppConfig(id = id, source = found.spec, name = found.name, author = found.author, packageName = found.verification?.packageName),
+            config = config,
             installed = found.installed,
             status = if (found.file != null) AppStatus.NOT_INSTALLED else AppStatus.UNKNOWN,
             latest = found.release,

@@ -22,10 +22,22 @@ interface Engine {
     /** True while a check of the whole list is running. */
     val checkingAll: StateFlow<Boolean>
 
+    /** False while the device has no working internet connection. */
+    val online: StateFlow<Boolean>
+
     /** Looks at what the user typed, pasted or shared: a link is resolved, anything else is searched. */
     suspend fun detect(input: String): Detection
 
-    /** Starts tracking. Returns the id of the new app, or of the existing one when it was already tracked. */
+    /**
+     * The configuration [add] would store for [found]. An app that arrives by link or import can
+     * carry filters and pinned certificates, and the user has to see them before they are stored.
+     */
+    fun proposedConfig(found: Detection.Found): AppConfig
+
+    /**
+     * Starts tracking and stores exactly what [proposedConfig] returns. Returns the id of the new
+     * app, or of the existing one when it was already tracked.
+     */
     suspend fun add(found: Detection.Found, install: Boolean): String
 
     /** Checks one app, or all of them when [appId] is null. Returns when the check is finished. */
@@ -41,6 +53,12 @@ interface Engine {
     fun installAllUpdates()
 
     fun cancel(appId: String)
+
+    /**
+     * Reopens Android's confirmation for an install that waits for the user. False when nothing
+     * waits for this app any more.
+     */
+    fun resumeInstall(appId: String): Boolean
 
     /** Stops tracking. The installed app stays. */
     suspend fun remove(appId: String)
@@ -62,6 +80,7 @@ interface Engine {
     /** The release's notes, parsed for drawing. Empty when it has none. */
     suspend fun notes(release: Release): List<NoteBlock>
 
+    /** Stores the settings and applies what follows from them: the schedule, the proxy, the link handler. */
     suspend fun saveSettings(settings: Settings)
 
     /** Stores a token for exactly [host]; null or blank removes it. */

@@ -1,0 +1,68 @@
+:root {
+  color-scheme: light dark;
+  --ground: #f8f9ff;
+  --ink: #1b1b21;
+  --quiet: #47464f;
+  --accent: #3c35b2;
+  --on-accent: #ffffff;
+  --card: #ffffff;
+  --line: #d8d6e4;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #131318;
+    --ink: #e5e1e9;
+    --quiet: #c8c5d0;
+    --accent: #c3c0ff;
+    --on-accent: #1f178f;
+    --card: #1f1f25;
+    --line: #47464f;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+}
+main { max-width: 42rem; margin: 0 auto; padding: 2.5rem 1.25rem 3rem; }
+header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+header img { width: 64px; height: 64px; }
+h1 { font-size: 2.2rem; margin: 0; line-height: 1.1; }
+h2 { font-size: 1.25rem; margin: 2.25rem 0 0.5rem; }
+p, li { color: var(--ink); }
+.lead { font-size: 1.2rem; }
+.quiet { color: var(--quiet); font-size: 0.95rem; }
+a { color: var(--accent); }
+.button {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--on-accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+}
+.button.second { background: transparent; color: var(--accent); border: 2px solid var(--accent); padding: 0.7rem 1.4rem; font-size: 1rem; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 1rem; padding: 1.25rem; margin: 1.25rem 0; }
+.address { font-family: ui-monospace, "Noto Sans Mono", monospace; overflow-wrap: anywhere; font-size: 1.05rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin: 1rem 0; }
+ul { padding-left: 1.25rem; }
+li { margin: 0.35rem 0; }
+label { display: block; font-weight: 600; margin-bottom: 0.35rem; }
+input, textarea {
+  width: 100%;
+  font: inherit;
+  color: var(--ink);
+  background: var(--ground);
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  padding: 0.6rem 0.75rem;
+}
+textarea { font-family: ui-monospace, "Noto Sans Mono", monospace; font-size: 0.85rem; min-height: 5.5rem; margin-top: 0.75rem; }
+footer { margin-top: 3rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+[hidden] { display: none !important; }

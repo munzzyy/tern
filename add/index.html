@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Add an app to Tern</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="icon" href="../icon.png">
+</head>
+<body data-page="add">
+<main>
+<header>
+  <img src="../icon.png" alt="">
+  <h1>Add an app to Tern</h1>
+</header>
+
+<noscript><p class="card">This page needs JavaScript to read the app's address. The address is in this page's own link, after <code>?url=</code>.</p></noscript>
+
+<div id="good" hidden>
+  <div class="card">
+    <p class="quiet">The app's address</p>
+    <p class="address" id="address"></p>
+  </div>
+  <div class="actions">
+    <a class="button" id="open" href="../">Open in Tern</a>
+    <button class="button second" id="copy" type="button">Copy the address</button>
+  </div>
+  <p>Tern shows you the app first. Nothing is added until you press Add there.</p>
+  <p class="card" id="elsewhere" hidden>Open this page on the Android phone or tablet where Tern is installed. On a TV, open Tern, choose Send from a phone, and send this address from your phone.</p>
+  <p class="quiet">No Tern yet? <a href="../">Download Tern</a>, open it once, and come back to this page.</p>
+</div>
+
+<div id="bad" hidden>
+  <p class="card">This link does not hold the address of an app. Ask whoever gave it to you for the address of the app's releases.</p>
+  <p><a href="../">About Tern</a></p>
+</div>
+</main>
+<script src="../tern.js"></script>
+</body>
+</html>

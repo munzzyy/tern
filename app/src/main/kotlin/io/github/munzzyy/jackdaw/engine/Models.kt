@@ -193,8 +193,17 @@ data class Settings(
     val claimUpdateOwnership: Boolean = false,
     val openObtainiumLinks: Boolean = false,
     val theme: ThemeMode = ThemeMode.SYSTEM,
-    val dynamicColor: Boolean = true,
+    val colorSource: ColorSource = ColorSource.WALLPAPER,
+    val palette: Palette = Palette.INK,
+    /** The hue of the user's own colour, in degrees from 0 to 359. */
+    val customHue: Int = 250,
+    val contrast: Contrast = Contrast.STANDARD,
     val pureBlack: Boolean = false,
+    val density: Density = Density.COMFORTABLE,
+    val corners: Corners = Corners.ROUND,
+    val iconShape: IconShape = IconShape.CIRCLE,
+    /** Fetch an app's icon from its source while the app is not installed. Off draws a letter on a colour. */
+    val sourceIcons: Boolean = true,
     val proxy: ProxyMode = ProxyMode.NONE,
     val proxyHost: String = "127.0.0.1",
     val proxyPort: Int = 9050,
@@ -210,3 +219,76 @@ data class ImportSummary(
     /** Names of added apps that arrived with release or file filters. */
     val withFilters: List<String> = emptyList(),
 )
+
+/** Where the colours come from. [WALLPAPER] needs Android 12 and falls back to [PALETTE] before that. */
+enum class ColorSource { WALLPAPER, PALETTE, CUSTOM }
+
+/** Ready-made colours. Every shade of each is worked out from one hue, so all of them pass the same contrast tests. */
+enum class Palette { INK, SLATE, TIDE, MOSS, AMBER, CLAY, ROSE, PLUM }
+
+enum class Contrast { STANDARD, MEDIUM, HIGH }
+
+enum class Density { COMFORTABLE, COMPACT }
+
+enum class Corners { ROUND, SOFT, SHARP }
+
+/** The outline app icons are cut to in lists. */
+enum class IconShape { CIRCLE, SQUIRCLE, SQUARE }
+
+enum class SuggestionKind { MEDIA, TOOLS, PRIVACY, READING, MESSAGING, MAPS, LAUNCHERS, GAMES }
+
+/**
+ * A well known app and the address its own developer publishes it at. Built into the app and never
+ * fetched, so offering one needs no network and tells nobody anything.
+ */
+data class Suggestion(
+    val name: String,
+    /** One short line in the user's language. */
+    val summary: String,
+    val url: String,
+    val kind: SuggestionKind,
+    /** Made for a television, or at home on one. */
+    val forTelevision: Boolean,
+)
+
+/** A file the app can read or has written without a file picker. */
+data class SavedFile(
+    val name: String,
+    /** Where a person would look for it, such as "Download/Jackdaw". */
+    val place: String,
+    val path: String,
+    val modifiedAtMs: Long,
+    val sizeBytes: Long,
+)
+
+/** The dark and light squares of a QR code, [size] by [size], without the quiet border around it. */
+class QrCode(val size: Int, private val dark: BooleanArray) {
+    init {
+        require(size > 0 && dark.size == size * size) { "A QR code of side $size needs ${size * size} squares" }
+    }
+
+    fun isDark(x: Int, y: Int): Boolean = dark[y * size + x]
+}
+
+/**
+ * An open door for a phone on the same network: while it is open, the page at [address] takes
+ * links and one export file and hands them to this device. Nothing that arrives is added until
+ * the user has looked at it here.
+ */
+data class Handoff(
+    /** The page without the secret in it, short enough to type: the page then asks for [pin]. */
+    val address: String,
+    /** Six digits, shown next to [address] for typing by hand. */
+    val pin: String,
+    /** [address] with the long secret in it, which is what [qr] holds. */
+    val qr: QrCode,
+    val closesAtMs: Long,
+    /** How many things have arrived and wait in [Engine.takeReceived]. */
+    val waiting: Int,
+)
+
+sealed interface Received {
+    data class Link(val text: String) : Received
+
+    class ExportFile(val name: String, val bytes: ByteArray) : Received
+}

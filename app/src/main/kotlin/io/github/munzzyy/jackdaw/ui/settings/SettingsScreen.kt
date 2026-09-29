@@ -48,6 +48,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.jackdaw.BuildConfig
 import io.github.munzzyy.jackdaw.R
 import io.github.munzzyy.jackdaw.core.model.UpdateMode
+import io.github.munzzyy.jackdaw.engine.ColorSource
 import io.github.munzzyy.jackdaw.engine.ProxyMode
 import io.github.munzzyy.jackdaw.engine.Settings
 import io.github.munzzyy.jackdaw.engine.ThemeMode
@@ -360,9 +361,9 @@ private fun AppearanceSection(s: Settings, update: Update) {
     SwitchRow(
         title = stringResource(R.string.settings_dynamic_color),
         summary = stringResource(if (dynamicColorSupported) R.string.settings_dynamic_color_effect else R.string.settings_dynamic_color_unsupported),
-        checked = s.dynamicColor && dynamicColorSupported,
+        checked = s.colorSource == ColorSource.WALLPAPER && dynamicColorSupported,
         enabled = dynamicColorSupported,
-        onChange = { v -> update { it.copy(dynamicColor = v) } },
+        onChange = { v -> update { it.copy(colorSource = if (v) ColorSource.WALLPAPER else ColorSource.PALETTE) } },
     )
     SwitchRow(
         title = stringResource(R.string.settings_pure_black),

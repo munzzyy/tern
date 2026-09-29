@@ -16,6 +16,9 @@ import io.github.munzzyy.jackdaw.engine.SignerState
 /** The invented links detect() knows, so screens and tests can walk every kind of answer. */
 object FakeLinks {
     const val NEW_APP = "https://github.com/example/sparrow"
+
+    /** Every suggestion of the stand-in lives under this address and is found when asked for. */
+    const val SUGGESTED_PREFIX = "https://codeberg.org/suggested/"
     const val WARNED_APP = "https://codeberg.org/example/wren"
     const val TRACKED_APP = "https://github.com/example/trailmap"
     const val MISSING = "https://gitlab.com/example/missing"
@@ -59,6 +62,9 @@ fun fakeDetect(input: String, invent: Invent): Detection {
             )
         }
         lower.startsWith(FakeLinks.NEW_APP) -> found(invent, "Sparrow", SourceTypes.GITHUB, "sparrow", emptyList())
+        lower.startsWith(FakeLinks.SUGGESTED_PREFIX) -> text.trimEnd('/').substringAfterLast('/').let { slug ->
+            found(invent, FakeSuggestions.all.firstOrNull { it.url.endsWith("/$slug") }?.name ?: slug, SourceTypes.FORGEJO, slug, emptyList())
+        }
         lower.startsWith(FakeLinks.WARNED_APP) -> found(
             invent, "Wren", SourceTypes.FORGEJO, "wren",
             listOf("The newest release is a pre-release. It is offered because it is the only one with a file.", "This project publishes no checksums, so only the signature can be checked."),

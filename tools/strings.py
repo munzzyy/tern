@@ -9,24 +9,27 @@ import json, re, sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-FILES = ["strings.xml", "strings_engine.xml"]
 PLACEHOLDER = re.compile(r"%(?:(\d+)\$)?([sd])")
-# CLDR plural categories per language, as Android uses them.
+# The plural forms Android's lint asks for, language by language.
 PLURALS = {
-    "one_other": "bg ca da de el en eo es et eu fi gl hu it ml nb nl pt pt-rBR sv tr ur".split(),
+    "one_other": "bg da de el en eo et eu fi gl hu ml nb nl sv tr ur fa hi bn".split(),
     "other": "in id ja ko th vi zh-rCN zh-rTW ms".split(),
-    "one_few_many_other": "ru uk pl".split(),
-    "one_few_other": "cs sk bs hr sr ro".split(),
+    "one_few_many_other": "ru uk pl cs sk".split(),
+    "one_few_other": "bs hr sr ro".split(),
     "zero_one_two_few_many_other": "ar".split(),
     "one_two_many_other": "he iw".split(),
-    "one_other_fa": "fa hi bn".split(),
-    "one_many_other": "fr".split(),
+    "one_many_other": "fr es it pt pt-rBR ca".split(),
 }
 CATEGORY_SETS = {
     "one_other": ["one", "other"], "other": ["other"], "one_few_many_other": ["one", "few", "many", "other"],
     "one_few_other": ["one", "few", "other"], "zero_one_two_few_many_other": ["zero", "one", "two", "few", "many", "other"],
-    "one_two_many_other": ["one", "two", "many", "other"], "one_other_fa": ["one", "other"], "one_many_other": ["one", "many", "other"],
+    "one_two_many_other": ["one", "two", "many", "other"], "one_many_other": ["one", "many", "other"],
 }
+
+
+def files(values):
+    """Every strings file of the English folder, which decides what a translation may hold."""
+    return sorted(p.name for p in Path(values).glob("strings*.xml"))
 
 
 def categories(locale):
@@ -77,14 +80,14 @@ def read(path):
 
 
 def dump(values):
-    return {name: read(Path(values) / name) for name in FILES}
+    return {name: read(Path(values) / name) for name in files(values)}
 
 
 def write(res, locale, data):
     english = dump(Path(res) / "values")
     target = Path(res) / f"values-{locale}"
     target.mkdir(parents=True, exist_ok=True)
-    for name in FILES:
+    for name in english:
         lines = ['<?xml version="1.0" encoding="utf-8"?>', "<resources>"]
         for key, source in english[name].items():
             if key == "app_name":
@@ -114,7 +117,7 @@ def holders(text):
 def problems(res, locale):
     english = dump(Path(res) / "values")
     found = []
-    for name in FILES:
+    for name in english:
         path = Path(res) / f"values-{locale}" / name
         if not path.exists():
             found.append(f"{locale}/{name}: missing file")
@@ -146,8 +149,9 @@ def problems(res, locale):
                 reference = holders(source["other"])
                 for quantity, text in value.items():
                     got = holders(text)
-                    # A language may spell "one" without the number; never may it add a placeholder.
-                    if got != reference and not (quantity in ("one", "zero", "two") and set(got) <= set(reference)):
+                    # "one" is not the number 1 everywhere: in Russian it is also 21, in French also 0.
+                    # So every form carries the number, which is also what Android's lint asks for.
+                    if got != reference:
                         found.append(f"{locale}/{name}: {key}[{quantity}] placeholders {got}, English has {reference}")
                     if not text.strip():
                         found.append(f"{locale}/{name}: {key}[{quantity}] is empty")

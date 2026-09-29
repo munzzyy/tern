@@ -217,8 +217,8 @@
     <string name="carried_notes_none">Releases are followed whatever their notes say.</string>
     <string name="carried_version">The version is read from the tag with %1$s.</string>
     <string name="carried_version_none">The version is read the usual way.</string>
-    <string name="carried_match_device_on">When several files are offered, the one built for this phone is preferred.</string>
-    <string name="carried_match_device_off">Files are not narrowed to this phone\'s processor.</string>
+    <string name="carried_match_device_on">When several files are offered, the one built for this device is preferred.</string>
+    <string name="carried_match_device_off">Files are not narrowed to this device\'s processor.</string>
     <string name="carried_fallback_on">An older release is used when the newest has no usable file.</string>
     <string name="carried_fallback_off">Older releases are never used, even when the newest has no usable file.</string>
     <string name="carried_track_on">Releases are only followed; nothing is downloaded or installed.</string>
@@ -274,7 +274,7 @@
     <string name="advice_checksum_mismatch">The file changed after it was published or was damaged on the way. Do not install it. Try again later.</string>
     <string name="advice_signer_mismatch">The file is signed with a different certificate than the one pinned for this app, so Jackdaw refuses. If the developer announced a new key, replace the pin under Advanced.</string>
     <string name="advice_signer_broken">The signatures in this file do not agree with each other. Do not install it, and tell the developer.</string>
-    <!-- Shown when the app is on the phone: no setting in Jackdaw can get past this, Android itself refuses. -->
+    <!-- Shown when the app is on the device: no setting in Jackdaw can get past this, Android itself refuses. -->
     <string name="advice_signer_mismatch_installed">Android does not replace an app with one signed by someone else, and Jackdaw will not try. If the developer announced a new key, the app has to be removed and installed again, which deletes its data.</string>
     <string name="advice_package_mismatch">The file is a different app than the one you follow. Check the include and exclude patterns under File choice.</string>
     <string name="advice_downgrade">The offered version is older than the installed one, and Android does not install over a newer version. Going back means removing the app first, which deletes its data.</string>
@@ -345,7 +345,7 @@
     <string name="file_recommended">Choice %d, recommended</string>
     <string name="file_alternative">Choice %d</string>
     <string name="setting_match_device">Match this device</string>
-    <string name="setting_match_device_effect">When several files are offered, prefer the one built for this phone\'s processor.</string>
+    <string name="setting_match_device_effect">When several files are offered, prefer the one built for this device\'s processor.</string>
     <string name="setting_include">Only files matching</string>
     <string name="setting_include_help">A pattern the file name must contain, for example universal</string>
     <string name="setting_exclude">Skip files matching</string>

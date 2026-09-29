@@ -23,8 +23,15 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             claimUpdateOwnership = prefs.getBoolean("claimUpdateOwnership", d.claimUpdateOwnership),
             openObtainiumLinks = prefs.getBoolean("openObtainiumLinks", d.openObtainiumLinks),
             theme = enumOr(prefs.getString("theme", null), d.theme),
-            dynamicColor = prefs.getBoolean("dynamicColor", d.dynamicColor),
+            colorSource = enumOr(prefs.getString("colorSource", null), d.colorSource),
+            palette = enumOr(prefs.getString("palette", null), d.palette),
+            customHue = prefs.getInt("customHue", d.customHue).coerceIn(0, 359),
+            contrast = enumOr(prefs.getString("contrast", null), d.contrast),
             pureBlack = prefs.getBoolean("pureBlack", d.pureBlack),
+            density = enumOr(prefs.getString("density", null), d.density),
+            corners = enumOr(prefs.getString("corners", null), d.corners),
+            iconShape = enumOr(prefs.getString("iconShape", null), d.iconShape),
+            sourceIcons = prefs.getBoolean("sourceIcons", d.sourceIcons),
             proxy = enumOr(prefs.getString("proxy", null), d.proxy),
             proxyHost = prefs.getString("proxyHost", null) ?: d.proxyHost,
             proxyPort = prefs.getInt("proxyPort", d.proxyPort),
@@ -46,8 +53,15 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putBoolean("claimUpdateOwnership", s.claimUpdateOwnership)
             .putBoolean("openObtainiumLinks", s.openObtainiumLinks)
             .putString("theme", s.theme.name)
-            .putBoolean("dynamicColor", s.dynamicColor)
+            .putString("colorSource", s.colorSource.name)
+            .putString("palette", s.palette.name)
+            .putInt("customHue", s.customHue.coerceIn(0, 359))
+            .putString("contrast", s.contrast.name)
             .putBoolean("pureBlack", s.pureBlack)
+            .putString("density", s.density.name)
+            .putString("corners", s.corners.name)
+            .putString("iconShape", s.iconShape.name)
+            .putBoolean("sourceIcons", s.sourceIcons)
             .putString("proxy", s.proxy.name)
             .putString("proxyHost", s.proxyHost)
             .putInt("proxyPort", s.proxyPort)

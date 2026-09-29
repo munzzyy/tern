@@ -21,7 +21,6 @@ import io.github.munzzyy.jackdaw.core.model.AppConfig
 import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.core.model.ReleasePolicy
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
-import io.github.munzzyy.jackdaw.core.verify.Fingerprints
 import io.github.munzzyy.jackdaw.core.net.HttpClient
 import io.github.munzzyy.jackdaw.core.net.PoliteHttp
 import io.github.munzzyy.jackdaw.core.net.RateLimiter
@@ -29,6 +28,7 @@ import io.github.munzzyy.jackdaw.core.source.SourceOptions
 import io.github.munzzyy.jackdaw.core.source.SourceRegistry
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
 import io.github.munzzyy.jackdaw.core.source.TokenProvider
+import io.github.munzzyy.jackdaw.core.verify.Fingerprints
 import io.github.munzzyy.jackdaw.data.AppState
 import io.github.munzzyy.jackdaw.data.SettingsStore
 import io.github.munzzyy.jackdaw.data.Store
@@ -40,13 +40,18 @@ import io.github.munzzyy.jackdaw.engine.Detection
 import io.github.munzzyy.jackdaw.engine.Engine
 import io.github.munzzyy.jackdaw.engine.Event
 import io.github.munzzyy.jackdaw.engine.EventKind
+import io.github.munzzyy.jackdaw.engine.Handoff
 import io.github.munzzyy.jackdaw.engine.ImportSummary
 import io.github.munzzyy.jackdaw.engine.NoteBlock
 import io.github.munzzyy.jackdaw.engine.Problem
+import io.github.munzzyy.jackdaw.engine.ProblemException
 import io.github.munzzyy.jackdaw.engine.ProblemKind
-import io.github.munzzyy.jackdaw.engine.SearchHit
 import io.github.munzzyy.jackdaw.engine.Progress
+import io.github.munzzyy.jackdaw.engine.Received
+import io.github.munzzyy.jackdaw.engine.SavedFile
+import io.github.munzzyy.jackdaw.engine.SearchHit
 import io.github.munzzyy.jackdaw.engine.Settings
+import io.github.munzzyy.jackdaw.engine.Suggestion
 import io.github.munzzyy.jackdaw.install.ArchiveReader
 import io.github.munzzyy.jackdaw.install.Downloader
 import io.github.munzzyy.jackdaw.install.Gate
@@ -449,6 +454,31 @@ class RealEngine(
         ready()
         return interop.importFrom(uri)
     }
+
+    override fun hasFilePicker(): Boolean = true
+
+    override suspend fun exportToFolder(): SavedFile = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
+
+    override suspend fun importableFiles(): List<SavedFile> = emptyList()
+
+    override suspend fun importFromFile(file: SavedFile): ImportSummary = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
+
+    override suspend fun importFromLink(url: String): ImportSummary = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
+
+    override suspend fun importReceived(file: Received.ExportFile): ImportSummary = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
+
+    override fun suggestions(): List<Suggestion> = emptyList()
+
+    override fun canOpenInstallSettings(): Boolean = true
+
+    private val _handoff = MutableStateFlow<Handoff?>(null)
+    override val handoff: StateFlow<Handoff?> = _handoff.asStateFlow()
+
+    override suspend fun openHandoff(): Problem? = Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet())
+
+    override fun closeHandoff() = Unit
+
+    override fun takeReceived(): List<Received> = emptyList()
 
     override suspend fun starredBy(user: String): List<SearchHit> {
         ready()

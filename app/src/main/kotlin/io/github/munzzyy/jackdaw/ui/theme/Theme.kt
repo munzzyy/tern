@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import io.github.munzzyy.jackdaw.engine.ColorSource
 import io.github.munzzyy.jackdaw.engine.Settings
 import io.github.munzzyy.jackdaw.engine.ThemeMode
 
@@ -113,7 +114,7 @@ fun JackdawTheme(settings: Settings, content: @Composable () -> Unit) {
     val dark = isDark(settings)
     val context = LocalContext.current
     val base = when {
-        settings.dynamicColor && dynamicColorSupported ->
+        settings.colorSource == ColorSource.WALLPAPER && dynamicColorSupported ->
             if (dark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         dark -> DarkColors
         else -> LightColors

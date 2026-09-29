@@ -20,6 +20,8 @@ class Texts(context: Context) {
 
     private fun bytes(n: Long): String = Formatter.formatShortFileSize(c, n)
 
+    fun notBuiltYet() = "Not built yet."
+
     fun cannotWrite() = s(R.string.engine_cannot_write)
     fun downloadFailed(detail: String?) = if (detail.isNullOrBlank()) s(R.string.engine_download_failed_plain) else s(R.string.engine_download_failed, detail)
     fun serverStatus(code: Int) = s(R.string.engine_server_status, code)

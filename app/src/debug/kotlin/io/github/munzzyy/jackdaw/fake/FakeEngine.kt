@@ -19,6 +19,10 @@ import io.github.munzzyy.jackdaw.engine.Engine
 import io.github.munzzyy.jackdaw.engine.Event
 import io.github.munzzyy.jackdaw.engine.EventKind
 import io.github.munzzyy.jackdaw.engine.ImportSummary
+import io.github.munzzyy.jackdaw.engine.Suggestion
+import io.github.munzzyy.jackdaw.engine.SavedFile
+import io.github.munzzyy.jackdaw.engine.Received
+import io.github.munzzyy.jackdaw.engine.Handoff
 import io.github.munzzyy.jackdaw.engine.NoteBlock
 import io.github.munzzyy.jackdaw.engine.Phase
 import io.github.munzzyy.jackdaw.engine.Problem
@@ -102,6 +106,10 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         _online.value = name != "offline"
         nothingWaits = false
         installsAllowed = true
+        filePicker = true
+        installSettings = true
+        localNetwork = true
+        closeHandoff()
         tokens.value = if (rows.isEmpty()) emptySet() else setOf("api.github.com")
         if (name == "default") startTicker()
     }
@@ -375,6 +383,82 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
             withPins = added.filter { it.config.pinnedSigners.isNotEmpty() }.map { it.config.name },
             withFilters = added.filter { it.config.assets.include != null || it.config.releases.tagFilter != null }.map { it.config.name },
         )
+    }
+
+    /** Switched off by a test to stand for a television, which has no file picker. */
+    @Volatile var filePicker = true
+
+    /** Switched off by a test to stand for a device whose settings an app cannot open. */
+    @Volatile var installSettings = true
+
+    /** Switched off by a test to stand for a device on no local network. */
+    @Volatile var localNetwork = true
+
+    override fun hasFilePicker(): Boolean = filePicker
+
+    override suspend fun exportToFolder(): SavedFile {
+        delay(stepMs * 6)
+        return SavedFile("jackdaw-apps.json", "Download/Jackdaw", "/storage/emulated/0/Download/Jackdaw/jackdaw-apps.json", System.currentTimeMillis(), 18_432)
+    }
+
+    override suspend fun importableFiles(): List<SavedFile> {
+        delay(stepMs * 4)
+        val now = System.currentTimeMillis()
+        return listOf(
+            SavedFile("jackdaw-apps.json", "Download/Jackdaw", "/storage/emulated/0/Download/Jackdaw/jackdaw-apps.json", now - 3_600_000, 18_432),
+            SavedFile("obtainium-export.json", "Download", "/storage/emulated/0/Download/obtainium-export.json", now - 86_400_000 * 3, 41_200),
+        )
+    }
+
+    override suspend fun importFromFile(file: SavedFile): ImportSummary = importFrom(Uri.EMPTY)
+
+    override suspend fun importFromLink(url: String): ImportSummary {
+        if (!url.trim().startsWith("https://")) throw ProblemException(Problem(ProblemKind.UNSUPPORTED, "Only https links are accepted."))
+        if (url.contains("missing")) throw ProblemException(Problem(ProblemKind.NOT_FOUND, "The server answered 404: there is no file at that address."))
+        return importFrom(Uri.EMPTY)
+    }
+
+    override suspend fun importReceived(file: Received.ExportFile): ImportSummary = importFrom(Uri.EMPTY)
+
+    override fun suggestions(): List<Suggestion> = FakeSuggestions.all
+
+    override fun canOpenInstallSettings(): Boolean = installSettings
+
+    private val _handoff = MutableStateFlow<Handoff?>(null)
+    override val handoff: StateFlow<Handoff?> = _handoff.asStateFlow()
+    private val received = java.util.concurrent.CopyOnWriteArrayList<Received>()
+    private var handoffJob: Job? = null
+
+    override suspend fun openHandoff(): Problem? {
+        if (!localNetwork) return Problem(ProblemKind.NETWORK, "This device is on no local network, so a phone cannot reach it.")
+        received.clear()
+        _handoff.value = Handoff("http://192.168.1.23:48211", "402917", FakeSuggestions.pattern(), System.currentTimeMillis() + 600_000, 0)
+        handoffJob?.cancel()
+        handoffJob = scope.launch {
+            delay(stepMs * 40)
+            receive(Received.Link(FakeLinks.NEW_APP))
+        }
+        return null
+    }
+
+    /** What a phone would have sent; tests call it to make something arrive at a moment of their choosing. */
+    fun receive(item: Received) {
+        if (_handoff.value == null) return
+        received += item
+        _handoff.update { it?.copy(waiting = received.size) }
+    }
+
+    override fun closeHandoff() {
+        handoffJob?.cancel()
+        received.clear()
+        _handoff.value = null
+    }
+
+    override fun takeReceived(): List<Received> {
+        val taken = received.toList()
+        received.removeAll(taken.toSet())
+        _handoff.update { it?.copy(waiting = received.size) }
+        return taken
     }
 
     /** "example" stars a few of every kind, "many" stars 240 tools, "nobody" does not exist, "busy" meets a rate limit. */

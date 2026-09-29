@@ -114,6 +114,48 @@ interface Engine {
     suspend fun importFrom(uri: Uri): ImportSummary
 
     /**
+     * False where Android has no file picker, which is the usual case on a television. Import and
+     * export then go through [exportToFolder], [importableFiles], [importFromLink] and [handoff].
+     */
+    fun hasFilePicker(): Boolean
+
+    /** Writes the export where a file manager can find it and returns where that is. Tokens are never exported. */
+    suspend fun exportToFolder(): SavedFile
+
+    /** Export files this app may read without a picker, newest first. */
+    suspend fun importableFiles(): List<SavedFile>
+
+    suspend fun importFromFile(file: SavedFile): ImportSummary
+
+    /** Imports an export file served at an HTTPS address. Throws [ProblemException] when it cannot be had or read. */
+    suspend fun importFromLink(url: String): ImportSummary
+
+    suspend fun importReceived(file: Received.ExportFile): ImportSummary
+
+    /** Well known apps to start from, those for a television first when this device is one. */
+    fun suggestions(): List<Suggestion>
+
+    /**
+     * False where the system has no settings page for [mayInstall] that an app can open, as on some
+     * televisions. The screens then say where to find the switch by hand.
+     */
+    fun canOpenInstallSettings(): Boolean
+
+    /** The open handoff, or null while there is none. */
+    val handoff: StateFlow<Handoff?>
+
+    /**
+     * Opens the handoff for ten minutes, or until [closeHandoff]. Returns why not when this device
+     * is on no local network.
+     */
+    suspend fun openHandoff(): Problem?
+
+    fun closeHandoff()
+
+    /** Takes what has arrived, oldest first. What is taken is gone from the handoff. */
+    fun takeReceived(): List<Received>
+
+    /**
      * Repositories [user] has starred, at most 300, for the user to pick from. Nothing is added.
      * Throws [ProblemException] when the name is not valid or the list cannot be had.
      */

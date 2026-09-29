@@ -68,7 +68,7 @@
     <string name="action_failed">Tio ne funkciis. Provu denove post momento.</string>
     <string name="save_failed">La ŝanĝo ne estis konservita. Provu denove.</string>
     <string name="open_no_launcher">Ĉi tiu aplikaĵo ne havas malfermeblan ekranon</string>
-    <string name="offline_banner">Neniu interreta konekto. Jackdaw denove kontrolos kiam ĝi revenos.</string>
+    <string name="offline_banner">Neniu interreta konekto. Stamp denove kontrolos kiam ĝi revenos.</string>
     <string name="offline_reason">Nedisponebla sen interreta konekto</string>
     <string name="apps_search_hint">Serĉi viajn aplikaĵojn</string>
     <string name="filter_all">Ĉiuj</string>
@@ -107,7 +107,7 @@
         <item quantity="one">Kontroli %d aplikaĵon nun?</item>
         <item quantity="other">Kontroli %d aplikaĵojn nun?</item>
     </plurals>
-    <string name="bulk_check_text">Jackdaw petas ĉiun fonton pri ĝia plej nova eldono. Nenio estas instalata.</string>
+    <string name="bulk_check_text">Stamp petas ĉiun fonton pri ĝia plej nova eldono. Nenio estas instalata.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">Ĝisdatigi %d aplikaĵon?</item>
         <item quantity="other">Ĝisdatigi %d aplikaĵojn?</item>
@@ -121,16 +121,16 @@
         <item quantity="one">Ĉesi sekvi %d aplikaĵon?</item>
         <item quantity="other">Ĉesi sekvi %d aplikaĵojn?</item>
     </plurals>
-    <string name="bulk_remove_text">La aplikaĵoj restas instalitaj. Jackdaw nur ĉesas kontroli ilin por ĝisdatigoj.</string>
+    <string name="bulk_remove_text">La aplikaĵoj restas instalitaj. Stamp nur ĉesas kontroli ilin por ĝisdatigoj.</string>
     <string name="apps_empty_title">Ankoraŭ neniuj aplikaĵoj</string>
-    <string name="apps_empty_text">Algluu ligilon al projekta paĝo, eldona paĝo aŭ F-Droid-deponejo, kaj Jackdaw tenos la aplikaĵon ĝisdata de tie.</string>
+    <string name="apps_empty_text">Algluu ligilon al projekta paĝo, eldona paĝo aŭ F-Droid-deponejo, kaj Stamp tenos la aplikaĵon ĝisdata de tie.</string>
     <string name="sort_title">Ordigi</string>
     <string name="sort_name">Laŭ nomo</string>
     <string name="sort_recently_checked">Lastatempe kontrolita</string>
     <string name="sort_source">Laŭ fonto</string>
     <string name="remove_title">Ĉu forigi %s?</string>
-    <string name="remove_text_installed">Jackdaw ĉesos sekvi ĝin. La aplikaĵo restos instalita.</string>
-    <string name="remove_text">Jackdaw ĉesos sekvi ĝin.</string>
+    <string name="remove_text_installed">Stamp ĉesos sekvi ĝin. La aplikaĵo restos instalita.</string>
+    <string name="remove_text">Stamp ĉesos sekvi ĝin.</string>
     <string name="add_title">Aldoni aplikaĵon</string>
     <string name="add_field_label">Ligilo aŭ serĉo</string>
     <string name="add_field_hint">https://github.com/posedanto/aplikaĵo</string>
@@ -198,8 +198,8 @@
     <string name="signer_unknown">Nenio ankoraŭ estas konata pri la subskribinto. Ĝi estos kontrolita post elŝuto.</string>
     <string name="signer_first_seen">Unua instalo: ĉi tiu atestilo estos memorita</string>
     <string name="signer_first_seen_claimed">Unua instalo: la dosiero asertas ĉi tiun atestilon, kaj ĝi estos memorita post kiam Android konfirmos ĝin</string>
-    <string name="signer_matches_pin">Subskribita per la atestilo, kiun Jackdaw tenas por ĉi tiu aplikaĵo</string>
-    <string name="signer_matches_pin_claimed">La dosiero asertas la atestilon, kiun Jackdaw tenas por ĉi tiu aplikaĵo. Android konfirmas ĝin antaŭ instalo.</string>
+    <string name="signer_matches_pin">Subskribita per la atestilo, kiun Stamp tenas por ĉi tiu aplikaĵo</string>
+    <string name="signer_matches_pin_claimed">La dosiero asertas la atestilon, kiun Stamp tenas por ĉi tiu aplikaĵo. Android konfirmas ĝin antaŭ instalo.</string>
     <string name="signer_matches_installed">Subskribita de la sama programisto kiel la instalita aplikaĵo</string>
     <string name="signer_matches_installed_claimed">La dosiero asertas la saman programiston kiel la instalita aplikaĵo. Android konfirmas ĝin antaŭ instalo.</string>
     <string name="signer_mismatch">Subskribita de iu alia ol la programisto de la instalita aplikaĵo</string>
@@ -217,17 +217,17 @@
     <string name="fingerprint_copied">Fingrospuro kopiita</string>
     <string name="checks_virustotal">Serĉi ĉi tiun dosieron ĉe VirusTotal</string>
     <string name="checks_virustotal_note">Nur la fingrospuro de la dosiero estas sendata, per via retumilo, kaj dosiero kiun neniu alŝutis al VirusTotal ne estos trovita tie.</string>
-    <string name="advice_network">Jackdaw ne povis atingi la fonton. Kontrolu vian konekton aŭ prokurilon, poste provu denove.</string>
+    <string name="advice_network">Stamp ne povis atingi la fonton. Kontrolu vian konekton aŭ prokurilon, poste provu denove.</string>
     <string name="advice_rate_limited">La fonto limigas kiom ofte ĝi povas esti demandita. Konservita alirĵetono por ĉi tiu gastiganto altigas la limon.</string>
     <string name="advice_not_found">La projekto eble estis movita aŭ igita privata. Kontrolu ĉu la ligilo ankoraŭ malfermiĝas en retumilo.</string>
     <string name="advice_auth">La fonto rifuzis la alirĵetonon. Anstataŭigu ĝin en Agordoj, sub alirĵetonoj.</string>
-    <string name="advice_parse">La fonto respondis per io, kion Jackdaw ne povis legi. Ĝi eble estas provizora misfunkcio ĉe ilia flanko.</string>
-    <string name="advice_no_releases">La projekto ankoraŭ ne publikigis eldonon uzeblan de Jackdaw. Antaŭeldonoj validas se vi ŝaltas ilin.</string>
+    <string name="advice_parse">La fonto respondis per io, kion Stamp ne povis legi. Ĝi eble estas provizora misfunkcio ĉe ilia flanko.</string>
+    <string name="advice_no_releases">La projekto ankoraŭ ne publikigis eldonon uzeblan de Stamp. Antaŭeldonoj validas se vi ŝaltas ilin.</string>
     <string name="advice_no_file">Neniu el la dosieroj taŭgas por ĉi tiu aparato. Elektu unu mem sub Dosiera elekto, aŭ ŝanĝu la inkluzivajn kaj ekskluzivajn ŝablonojn.</string>
     <string name="advice_checksum_mismatch">La dosiero ŝanĝiĝis post kiam ĝi estis eldonita, aŭ ĝi estis difektita survoje. Ne instalu ĝin. Provu denove poste.</string>
-    <string name="advice_signer_mismatch">La dosiero estas subskribita per alia atestilo ol tiu alpinglita por ĉi tiu aplikaĵo, do Jackdaw rifuzas. Se la programisto anoncis novan ŝlosilon, anstataŭigu la alpinglitan atestilon sub Altnivela.</string>
+    <string name="advice_signer_mismatch">La dosiero estas subskribita per alia atestilo ol tiu alpinglita por ĉi tiu aplikaĵo, do Stamp rifuzas. Se la programisto anoncis novan ŝlosilon, anstataŭigu la alpinglitan atestilon sub Altnivela.</string>
     <string name="advice_signer_broken">La subskriboj en ĉi tiu dosiero ne konsentas unu kun la alia. Ne instalu ĝin, kaj informu la programiston.</string>
-    <string name="advice_signer_mismatch_installed">Android ne anstataŭigas aplikaĵon per alia subskribita de iu alia, kaj Jackdaw ne provos. Se la programisto anoncis novan ŝlosilon, la aplikaĵo devas esti forigita kaj denove instalita, kio forigas ĝiajn datumojn.</string>
+    <string name="advice_signer_mismatch_installed">Android ne anstataŭigas aplikaĵon per alia subskribita de iu alia, kaj Stamp ne provos. Se la programisto anoncis novan ŝlosilon, la aplikaĵo devas esti forigita kaj denove instalita, kio forigas ĝiajn datumojn.</string>
     <string name="advice_package_mismatch">La dosiero estas alia aplikaĵo ol tiu, kiun vi sekvas. Kontrolu la inkluzivajn kaj ekskluzivajn ŝablonojn sub Dosiera elekto.</string>
     <string name="advice_downgrade">La ofertita versio estas pli malnova ol la instalita, kaj Android ne instalas sur pli novan version. Reiro signifas unue forigi la aplikaĵon, kio forigas ĝiajn datumojn.</string>
     <string name="advice_install_failed">Android rifuzis la instalon. La kialo kiun ĝi donis estas montrita supre.</string>
@@ -240,11 +240,11 @@
     </plurals>
     <string name="detail_gone">Ĉi tiu aplikaĵo ne plu estas en via listo.</string>
     <string name="moved_title">Ĉi tiu projekto moviĝis al %1$s</string>
-    <string name="moved_explain">Jackdaw transiras nur se la nova adreso ofertas la saman aplikaĵon, subskribitan de la sama programisto.</string>
+    <string name="moved_explain">Stamp transiras nur se la nova adreso ofertas la saman aplikaĵon, subskribitan de la sama programisto.</string>
     <string name="moved_follow">Sekvi ĝin tien</string>
     <string name="moved_keep">Konservi la malnovan adreson</string>
     <string name="moved_working">Kontrolas la novan adreson</string>
-    <string name="moved_done">Jackdaw nun sekvas la novan adreson.</string>
+    <string name="moved_done">Stamp nun sekvas la novan adreson.</string>
     <string name="silent_yes">Ĉi tiu ĝisdatigo povas instaliĝi sen konfirmopeto.</string>
     <string name="silent_no">Android petos vin konfirmi ĉi tiun ĝisdatigon.</string>
     <string name="phase_queued">Atendas ke aliaj elŝutoj finiĝu</string>
@@ -352,7 +352,7 @@
     <string name="settings_keep_installers">Konservi elŝutitajn dosierojn</string>
     <string name="settings_keep_installers_effect">Dosieroj restas post instalo, okupante spacon. Malŝaltite forigas ilin.</string>
     <string name="settings_ownership">Esti la sola ĝisdatiganto</string>
-    <string name="settings_ownership_effect">Peti al Android permesi nur al Jackdaw ĝisdatigi la aplikaĵojn, kiujn ĝi instalas, do alia vendejo ne povas anstataŭigi ilin.</string>
+    <string name="settings_ownership_effect">Peti al Android permesi nur al Stamp ĝisdatigi la aplikaĵojn, kiujn ĝi instalas, do alia vendejo ne povas anstataŭigi ilin.</string>
     <string name="settings_ownership_unsupported">Bezonas Android 14 aŭ pli novan.</string>
     <string name="settings_tokens">Alirĵetonoj</string>
     <string name="settings_tokens_effect">Ĵetono altigas ofto-limojn kaj malfermas privatajn projektojn. Ĝi estas sendata nur al la preciza gastiganto por kiu ĝi estas konservita, kaj ĝi neniam denove estas montrata.</string>
@@ -383,13 +383,13 @@
     <string name="theme_light">Hela</string>
     <string name="theme_dark">Malhela</string>
     <string name="settings_dynamic_color">Koloroj el via tapeto</string>
-    <string name="settings_dynamic_color_effect">Malŝaltite uzas la propran ardezbluon de Jackdaw.</string>
+    <string name="settings_dynamic_color_effect">Malŝaltite uzas la propran ardezbluon de Stamp.</string>
     <string name="settings_dynamic_color_unsupported">Bezonas Android 12 aŭ pli novan.</string>
     <string name="settings_pure_black">Pura nigro</string>
     <string name="settings_pure_black_effect">Nigraj fonoj en la malhela etoso, pli komfortaj por OLED-ekranoj.</string>
     <string name="settings_data">Importi kaj eksporti</string>
     <string name="settings_import">Importi aplikaĵojn</string>
-    <string name="settings_import_effect">El Jackdaw aŭ Obtainium eksporto</string>
+    <string name="settings_import_effect">El Stamp aŭ Obtainium eksporto</string>
     <string name="settings_export">Eksporti aplikaĵojn</string>
     <string name="settings_exporting">Eksportas</string>
     <string name="settings_export_effect">Konservas vian liston kaj agordojn en dosieron. Ĵetonoj neniam estas inkluzivitaj.</string>
@@ -399,14 +399,14 @@
     </plurals>
     <string name="export_failed">La eksporto ne povis esti skribita.</string>
     <string name="settings_obtainium_links">Malfermi Obtainium-ligilojn</string>
-    <string name="settings_obtainium_links_effect">Ligiloj destinitaj por Obtainium malfermiĝas en Jackdaw anstataŭe. Vi daŭre konfirmas ĉiun aplikaĵon.</string>
+    <string name="settings_obtainium_links_effect">Ligiloj destinitaj por Obtainium malfermiĝas en Stamp anstataŭe. Vi daŭre konfirmas ĉiun aplikaĵon.</string>
     <string name="settings_about">Pri</string>
     <string name="about_version">Versio</string>
     <string name="about_licence">Permesilo</string>
     <string name="about_licence_name">GNU Ĝenerala Publika Permesilo, versio 3 aŭ pli nova</string>
     <string name="about_source">Fontkodo</string>
     <string name="import_title">Importi aplikaĵojn</string>
-    <string name="import_explain">Elektu eksportan dosieron de Jackdaw aŭ Obtainium. Nenio estas instalata; la aplikaĵoj estas aldonataj al via listo kaj kontrolataj.</string>
+    <string name="import_explain">Elektu eksportan dosieron de Stamp aŭ Obtainium. Nenio estas instalata; la aplikaĵoj estas aldonataj al via listo kaj kontrolataj.</string>
     <string name="import_pick">Elekti dosieron</string>
     <string name="import_pick_other">Elekti alian dosieron</string>
     <string name="import_working">Legas la dosieron</string>
@@ -459,19 +459,19 @@
     <string name="import_stars_stop">Halti</string>
     <string name="import_skip_no_file">Nenio en ĝiaj eldonoj povas esti instalita sur ĉi tiu aparato.</string>
     <string name="import_skip_no_releases">Ĝi publikigas neniujn eldonojn.</string>
-    <string name="import_skip_not_found">Jackdaw ne povis trovi ĝin.</string>
-    <string name="import_skip_rate_limited">GitHub petis al Jackdaw atendi. Provu ĉi tiujn denove poste.</string>
+    <string name="import_skip_not_found">Stamp ne povis trovi ĝin.</string>
+    <string name="import_skip_rate_limited">GitHub petis al Stamp atendi. Provu ĉi tiujn denove poste.</string>
     <string name="import_skip_network">La konekto malsukcesis.</string>
-    <string name="import_skip_other">Jackdaw ne povis legi ĝiajn eldonojn.</string>
-    <string name="first_title">Jackdaw</string>
-    <string name="first_line_1">Jackdaw instalas kaj ĝisdatigas aplikaĵojn rekte de tie, kie iliaj programistoj eldonas ilin.</string>
-    <string name="first_line_2">Antaŭ ol Android vidas dosieron, Jackdaw kontrolas kiu subskribis ĝin kaj ĉu ĝi kongruas kun la kontrolsumo de la eldonisto.</string>
+    <string name="import_skip_other">Stamp ne povis legi ĝiajn eldonojn.</string>
+    <string name="first_title">Stamp</string>
+    <string name="first_line_1">Stamp instalas kaj ĝisdatigas aplikaĵojn rekte de tie, kie iliaj programistoj eldonas ilin.</string>
+    <string name="first_line_2">Antaŭ ol Android vidas dosieron, Stamp kontrolas kiu subskribis ĝin kaj ĉu ĝi kongruas kun la kontrolsumo de la eldonisto.</string>
     <string name="first_line_3">Ĉio, kion ĝi trovas kaj faras, estas skribita al la agada protokolo, per simplaj vortoj.</string>
-    <string name="first_notify_explain">Jackdaw povas sciigi vin kiam ĝisdatigoj estas pretaj. Android demandos ĉu permesi sciigojn.</string>
+    <string name="first_notify_explain">Stamp povas sciigi vin kiam ĝisdatigoj estas pretaj. Android demandos ĉu permesi sciigojn.</string>
     <string name="first_notify_denied">Sciigoj estas malŝaltitaj. Vi povas ŝalti ilin poste en Agordoj.</string>
     <string name="first_notify_allow">Permesi sciigojn</string>
     <string name="first_skip">Ne nun</string>
-    <string name="install_permission_title">Permesi al Jackdaw instali aplikaĵojn</string>
-    <string name="install_permission_body">Android demandas unufoje antaŭ ol unu aplikaĵo rajtas instali alian. Sur la sekva ekrano, ŝaltu la ŝaltilon por Jackdaw, poste revenu. La instalo daŭros memstare.</string>
+    <string name="install_permission_title">Permesi al Stamp instali aplikaĵojn</string>
+    <string name="install_permission_body">Android demandas unufoje antaŭ ol unu aplikaĵo rajtas instali alian. Sur la sekva ekrano, ŝaltu la ŝaltilon por Stamp, poste revenu. La instalo daŭros memstare.</string>
     <string name="install_permission_open">Malfermi agordojn</string>
 </resources>

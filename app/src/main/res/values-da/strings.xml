@@ -68,7 +68,7 @@
     <string name="action_failed">Det virkede ikke. Prøv igen om lidt.</string>
     <string name="save_failed">Ændringen blev ikke gemt. Prøv igen.</string>
     <string name="open_no_launcher">Denne app har ingen skærm at åbne</string>
-    <string name="offline_banner">Ingen internetforbindelse. Jackdaw tjekker igen, når den er tilbage.</string>
+    <string name="offline_banner">Ingen internetforbindelse. Stamp tjekker igen, når den er tilbage.</string>
     <string name="offline_reason">Utilgængelig uden internetforbindelse</string>
     <string name="apps_search_hint">Søg i dine apps</string>
     <string name="filter_all">Alle</string>
@@ -107,7 +107,7 @@
         <item quantity="one">Tjek %d app nu?</item>
         <item quantity="other">Tjek %d apps nu?</item>
     </plurals>
-    <string name="bulk_check_text">Jackdaw spørger hver kilde om dens nyeste udgivelse. Intet installeres.</string>
+    <string name="bulk_check_text">Stamp spørger hver kilde om dens nyeste udgivelse. Intet installeres.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">Opdater %d app?</item>
         <item quantity="other">Opdater %d apps?</item>
@@ -121,16 +121,16 @@
         <item quantity="one">Stop med at følge %d app?</item>
         <item quantity="other">Stop med at følge %d apps?</item>
     </plurals>
-    <string name="bulk_remove_text">Appene forbliver installeret. Jackdaw stopper kun med at tjekke dem for opdateringer.</string>
+    <string name="bulk_remove_text">Appene forbliver installeret. Stamp stopper kun med at tjekke dem for opdateringer.</string>
     <string name="apps_empty_title">Ingen apps endnu</string>
-    <string name="apps_empty_text">Sæt et link ind til en projektside, en udgivelsesside eller et F-Droid-arkiv, og Jackdaw holder appen opdateret derfra.</string>
+    <string name="apps_empty_text">Sæt et link ind til en projektside, en udgivelsesside eller et F-Droid-arkiv, og Stamp holder appen opdateret derfra.</string>
     <string name="sort_title">Sorter</string>
     <string name="sort_name">Efter navn</string>
     <string name="sort_recently_checked">Nyligt tjekket</string>
     <string name="sort_source">Efter kilde</string>
     <string name="remove_title">Fjern %s?</string>
-    <string name="remove_text_installed">Jackdaw stopper med at følge den. Appen forbliver installeret.</string>
-    <string name="remove_text">Jackdaw stopper med at følge den.</string>
+    <string name="remove_text_installed">Stamp stopper med at følge den. Appen forbliver installeret.</string>
+    <string name="remove_text">Stamp stopper med at følge den.</string>
     <string name="add_title">Tilføj en app</string>
     <string name="add_field_label">Link eller søgning</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -198,8 +198,8 @@
     <string name="signer_unknown">Intet vides om underskriveren endnu. Det tjekkes efter download.</string>
     <string name="signer_first_seen">Første installation: dette certifikat vil blive husket</string>
     <string name="signer_first_seen_claimed">Første installation: filen påstår at have dette certifikat, og det vil blive husket, når Android bekræfter det</string>
-    <string name="signer_matches_pin">Signeret med det certifikat, Jackdaw har for denne app</string>
-    <string name="signer_matches_pin_claimed">Filen påstår at have det certifikat, Jackdaw har for denne app. Android bekræfter det før installation.</string>
+    <string name="signer_matches_pin">Signeret med det certifikat, Stamp har for denne app</string>
+    <string name="signer_matches_pin_claimed">Filen påstår at have det certifikat, Stamp har for denne app. Android bekræfter det før installation.</string>
     <string name="signer_matches_installed">Signeret af den samme udvikler som den installerede app</string>
     <string name="signer_matches_installed_claimed">Filen påstår at have samme udvikler som den installerede app. Android bekræfter det før installation.</string>
     <string name="signer_mismatch">Signeret af en anden end den installerede apps udvikler</string>
@@ -217,17 +217,17 @@
     <string name="fingerprint_copied">Fingeraftryk kopieret</string>
     <string name="checks_virustotal">Slå denne fil op på VirusTotal</string>
     <string name="checks_virustotal_note">Kun filens fingeraftryk sendes af din browser, og en fil, som ingen har uploadet til VirusTotal, vil ikke blive fundet der.</string>
-    <string name="advice_network">Jackdaw kunne ikke nå kilden. Tjek din forbindelse eller proxy, og prøv igen.</string>
+    <string name="advice_network">Stamp kunne ikke nå kilden. Tjek din forbindelse eller proxy, og prøv igen.</string>
     <string name="advice_rate_limited">Kilden begrænser, hvor ofte den kan spørges. Et gemt adgangstoken til denne vært hæver grænsen.</string>
     <string name="advice_not_found">Projektet er muligvis flyttet eller gjort privat. Tjek, at linket stadig åbner i en browser.</string>
     <string name="advice_auth">Kilden afviste adgangstokenet. Udskift det i Indstillinger under adgangstokens.</string>
-    <string name="advice_parse">Kilden svarede med noget, Jackdaw ikke kunne læse. Det kan være en midlertidig fejl på deres side.</string>
-    <string name="advice_no_releases">Projektet har ikke udgivet en udgivelse, Jackdaw kan bruge endnu. Forhåndsudgivelser tæller med, hvis du slår dem til.</string>
+    <string name="advice_parse">Kilden svarede med noget, Stamp ikke kunne læse. Det kan være en midlertidig fejl på deres side.</string>
+    <string name="advice_no_releases">Projektet har ikke udgivet en udgivelse, Stamp kan bruge endnu. Forhåndsudgivelser tæller med, hvis du slår dem til.</string>
     <string name="advice_no_file">Ingen af filerne passer til denne enhed. Vælg selv en under Filvalg, eller skift mønstrene for at inkludere og ekskludere.</string>
     <string name="advice_checksum_mismatch">Filen er ændret, efter den blev udgivet, eller er blevet beskadiget undervejs. Installer den ikke. Prøv igen senere.</string>
-    <string name="advice_signer_mismatch">Filen er signeret med et andet certifikat end det, der er fastgjort for denne app, så Jackdaw nægter. Hvis udvikleren har annonceret en ny nøgle, skal du udskifte det fastgjorte certifikat under Avanceret.</string>
+    <string name="advice_signer_mismatch">Filen er signeret med et andet certifikat end det, der er fastgjort for denne app, så Stamp nægter. Hvis udvikleren har annonceret en ny nøgle, skal du udskifte det fastgjorte certifikat under Avanceret.</string>
     <string name="advice_signer_broken">Signaturerne i denne fil stemmer ikke overens. Installer den ikke, og giv udvikleren besked.</string>
-    <string name="advice_signer_mismatch_installed">Android erstatter ikke en app med en, der er signeret af en anden, og Jackdaw vil ikke forsøge. Hvis udvikleren har annonceret en ny nøgle, skal appen fjernes og installeres igen, hvilket sletter dens data.</string>
+    <string name="advice_signer_mismatch_installed">Android erstatter ikke en app med en, der er signeret af en anden, og Stamp vil ikke forsøge. Hvis udvikleren har annonceret en ny nøgle, skal appen fjernes og installeres igen, hvilket sletter dens data.</string>
     <string name="advice_package_mismatch">Filen er en anden app end den, du følger. Tjek mønstrene for at inkludere og ekskludere under Filvalg.</string>
     <string name="advice_downgrade">Den tilbudte version er ældre end den installerede, og Android installerer ikke oven på en nyere version. At gå tilbage betyder at fjerne appen først, hvilket sletter dens data.</string>
     <string name="advice_install_failed">Android nægtede installationen. Den angivne årsag vises ovenfor.</string>
@@ -240,11 +240,11 @@
     </plurals>
     <string name="detail_gone">Denne app er ikke længere på din liste.</string>
     <string name="moved_title">Dette projekt er flyttet til %1$s</string>
-    <string name="moved_explain">Jackdaw skifter kun, hvis den nye adresse tilbyder den samme app, signeret af den samme udvikler.</string>
+    <string name="moved_explain">Stamp skifter kun, hvis den nye adresse tilbyder den samme app, signeret af den samme udvikler.</string>
     <string name="moved_follow">Følg det dertil</string>
     <string name="moved_keep">Behold den gamle adresse</string>
     <string name="moved_working">Tjekker den nye adresse</string>
-    <string name="moved_done">Jackdaw følger nu den nye adresse.</string>
+    <string name="moved_done">Stamp følger nu den nye adresse.</string>
     <string name="silent_yes">Denne opdatering kan installeres uden at spørge.</string>
     <string name="silent_no">Android vil bede dig om at bekræfte denne opdatering.</string>
     <string name="phase_queued">Venter på, at andre downloads bliver færdige</string>
@@ -352,7 +352,7 @@
     <string name="settings_keep_installers">Behold hentede filer</string>
     <string name="settings_keep_installers_effect">Filer forbliver efter installation og bruger plads. Fra sletter dem.</string>
     <string name="settings_ownership">Vær den eneste, der opdaterer</string>
-    <string name="settings_ownership_effect">Bed Android om kun at lade Jackdaw opdatere de apps, den installerer, så en anden butik ikke kan bytte dem ud.</string>
+    <string name="settings_ownership_effect">Bed Android om kun at lade Stamp opdatere de apps, den installerer, så en anden butik ikke kan bytte dem ud.</string>
     <string name="settings_ownership_unsupported">Kræver Android 14 eller nyere.</string>
     <string name="settings_tokens">Adgangstokens</string>
     <string name="settings_tokens_effect">Et token hæver hastighedsgrænser og åbner private projekter. Det sendes kun til præcis den vært, det er gemt for, og det vises aldrig igen.</string>
@@ -383,13 +383,13 @@
     <string name="theme_light">Lyst</string>
     <string name="theme_dark">Mørkt</string>
     <string name="settings_dynamic_color">Farver fra din baggrund</string>
-    <string name="settings_dynamic_color_effect">Fra bruger Jackdaws egen skiferblå.</string>
+    <string name="settings_dynamic_color_effect">Fra bruger Stamps egen skiferblå.</string>
     <string name="settings_dynamic_color_unsupported">Kræver Android 12 eller nyere.</string>
     <string name="settings_pure_black">Helt sort</string>
     <string name="settings_pure_black_effect">Sorte baggrunde i det mørke tema, mere behageligt for OLED-skærme.</string>
     <string name="settings_data">Import og eksport</string>
     <string name="settings_import">Importer apps</string>
-    <string name="settings_import_effect">Fra en eksport fra Jackdaw eller Obtainium</string>
+    <string name="settings_import_effect">Fra en eksport fra Stamp eller Obtainium</string>
     <string name="settings_export">Eksporter apps</string>
     <string name="settings_exporting">Eksporterer</string>
     <string name="settings_export_effect">Gemmer din liste og indstillinger i en fil. Tokens inkluderes aldrig.</string>
@@ -399,14 +399,14 @@
     </plurals>
     <string name="export_failed">Eksporten kunne ikke skrives.</string>
     <string name="settings_obtainium_links">Åbn Obtainium-links</string>
-    <string name="settings_obtainium_links_effect">Links beregnet til Obtainium åbnes i Jackdaw i stedet. Du bekræfter stadig hver app.</string>
+    <string name="settings_obtainium_links_effect">Links beregnet til Obtainium åbnes i Stamp i stedet. Du bekræfter stadig hver app.</string>
     <string name="settings_about">Om</string>
     <string name="about_version">Version</string>
     <string name="about_licence">Licens</string>
     <string name="about_licence_name">GNU General Public License, version 3 eller nyere</string>
     <string name="about_source">Kildekode</string>
     <string name="import_title">Importer apps</string>
-    <string name="import_explain">Vælg en eksportfil fra Jackdaw eller Obtainium. Intet installeres; appene tilføjes til din liste og tjekkes.</string>
+    <string name="import_explain">Vælg en eksportfil fra Stamp eller Obtainium. Intet installeres; appene tilføjes til din liste og tjekkes.</string>
     <string name="import_pick">Vælg en fil</string>
     <string name="import_pick_other">Vælg en anden fil</string>
     <string name="import_working">Læser filen</string>
@@ -459,19 +459,19 @@
     <string name="import_stars_stop">Stop</string>
     <string name="import_skip_no_file">Intet i dens udgivelser kan installeres på denne enhed.</string>
     <string name="import_skip_no_releases">Den publicerer ingen udgivelser.</string>
-    <string name="import_skip_not_found">Jackdaw kunne ikke finde den.</string>
-    <string name="import_skip_rate_limited">GitHub bad Jackdaw om at vente. Prøv disse igen senere.</string>
+    <string name="import_skip_not_found">Stamp kunne ikke finde den.</string>
+    <string name="import_skip_rate_limited">GitHub bad Stamp om at vente. Prøv disse igen senere.</string>
     <string name="import_skip_network">Forbindelsen mislykkedes.</string>
-    <string name="import_skip_other">Jackdaw kunne ikke læse dens udgivelser.</string>
-    <string name="first_title">Jackdaw</string>
-    <string name="first_line_1">Jackdaw installerer og opdaterer apps direkte fra hvor deres udviklere udgiver dem.</string>
-    <string name="first_line_2">Før Android ser en fil, tjekker Jackdaw, hvem der har signeret den, og om den matcher udgiverens kontrolsum.</string>
+    <string name="import_skip_other">Stamp kunne ikke læse dens udgivelser.</string>
+    <string name="first_title">Stamp</string>
+    <string name="first_line_1">Stamp installerer og opdaterer apps direkte fra hvor deres udviklere udgiver dem.</string>
+    <string name="first_line_2">Før Android ser en fil, tjekker Stamp, hvem der har signeret den, og om den matcher udgiverens kontrolsum.</string>
     <string name="first_line_3">Alt hvad den finder og gør, skrives i aktivitetsloggen, med almindelige ord.</string>
-    <string name="first_notify_explain">Jackdaw kan fortælle dig, når opdateringer er klar. Android vil spørge, om notifikationer skal tillades.</string>
+    <string name="first_notify_explain">Stamp kan fortælle dig, når opdateringer er klar. Android vil spørge, om notifikationer skal tillades.</string>
     <string name="first_notify_denied">Notifikationer er slået fra. Du kan slå dem til senere i Indstillinger.</string>
     <string name="first_notify_allow">Tillad notifikationer</string>
     <string name="first_skip">Ikke nu</string>
-    <string name="install_permission_title">Tillad Jackdaw at installere apps</string>
-    <string name="install_permission_body">Android spørger én gang, før en app må installere en anden. På næste skærm skal du slå kontakten til for Jackdaw og derefter vende tilbage. Installationen fortsætter af sig selv.</string>
+    <string name="install_permission_title">Tillad Stamp at installere apps</string>
+    <string name="install_permission_body">Android spørger én gang, før en app må installere en anden. På næste skærm skal du slå kontakten til for Stamp og derefter vende tilbage. Installationen fortsætter af sig selv.</string>
     <string name="install_permission_open">Åbn indstillinger</string>
 </resources>

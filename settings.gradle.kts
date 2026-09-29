@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "jackdaw"
+rootProject.name = "stamp"
 include(":core", ":app")

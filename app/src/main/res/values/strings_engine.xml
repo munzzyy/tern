@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="engine_cannot_write">Jackdaw could not write to its own storage.</string>
+    <string name="engine_cannot_write">Stamp could not write to its own storage.</string>
     <string name="engine_download_failed">The download failed: %1$s</string>
     <string name="engine_download_failed_plain">The download failed. Check the connection and try again.</string>
     <string name="engine_server_status">The server answered %1$d instead of sending the file.</string>
     <string name="engine_encoded_download">The server sent the file %1$s-encoded, so its bytes cannot be checked.</string>
-    <string name="engine_file_too_large">The file is larger than 4 GiB, which Jackdaw refuses.</string>
+    <string name="engine_file_too_large">The file is larger than 4 GiB, which Stamp refuses.</string>
     <string name="engine_no_space">Not enough free space: this needs %1$s and %2$s is free.</string>
     <string name="engine_download_cut">The download stopped after %1$s of %2$s. Try again to resume it.</string>
 
     <string name="engine_checksum_mismatch">The file does not match the checksum the publisher gave, so it was deleted. It may have been damaged or replaced.</string>
-    <string name="engine_tar_unsupported">This release is a tar archive, which Jackdaw does not open. Pick another file.</string>
-    <string name="engine_not_an_apk">This file is not an APK or an archive Jackdaw can read (%1$s).</string>
+    <string name="engine_tar_unsupported">This release is a tar archive, which Stamp does not open. Pick another file.</string>
+    <string name="engine_not_an_apk">This file is not an APK or an archive Stamp can read (%1$s).</string>
     <string name="engine_archive_no_apk">The archive holds no APK.</string>
     <string name="engine_archive_no_base">The archive holds split APKs but no base APK.</string>
     <string name="engine_unreadable_file">The file could not be read: %1$s</string>
     <string name="engine_no_file_for_device">There is no file for this device.</string>
     <string name="engine_no_file_for_device_detail">There is no file for this device (%1$s).</string>
     <string name="engine_android_refused_file">Android could not read this file, so it is not safe to install.</string>
-    <string name="engine_reads_differently">Android and Jackdaw read this file differently, which is how a tampered file looks. It was not installed.</string>
+    <string name="engine_reads_differently">Android and Stamp read this file differently, which is how a tampered file looks. It was not installed.</string>
     <string name="engine_unsigned">The file carries no valid signature.</string>
     <string name="engine_package_mismatch">This file is %2$s, not %1$s.</string>
     <string name="engine_signer_mismatch">This file is signed with a different key than the app you have. It could come from someone else, so it was not installed.</string>
@@ -32,15 +32,15 @@
     <string name="engine_check_network">The source could not be reached: %1$s</string>
     <string name="engine_check_not_found">The source has nothing at this address any more: %1$s</string>
     <string name="engine_check_auth">The source refused the request. Add or check the token for this site in settings. (%1$s)</string>
-    <string name="engine_check_rate_limited">The source asked Jackdaw to wait. It will not be asked again before %1$s.</string>
+    <string name="engine_check_rate_limited">The source asked Stamp to wait. It will not be asked again before %1$s.</string>
     <string name="engine_check_parse">The answer from the source could not be read: %1$s</string>
-    <string name="engine_check_unsupported">Jackdaw does not support this source: %1$s</string>
+    <string name="engine_check_unsupported">Stamp does not support this source: %1$s</string>
     <string name="engine_check_no_releases">The source has no releases yet.</string>
     <string name="engine_no_release_passes">No release passes this app\'s filters.</string>
     <string name="engine_only_prereleases">Only pre-releases are published. Turn on pre-releases for this app to follow them.</string>
     <string name="engine_pattern_problem">A filter of this app could not be applied, so the app is not checked until the filter changes: %1$s</string>
     <string name="engine_offline">There is no internet connection, so nothing was checked.</string>
-    <string name="engine_track_only">This app is only tracked; Jackdaw does not install it.</string>
+    <string name="engine_track_only">This app is only tracked; Stamp does not install it.</string>
     <string name="engine_no_release">There is no release to install.</string>
 
     <string name="engine_install_conflict">Android refused the update because it conflicts with the installed app, which is probably signed differently.</string>
@@ -62,13 +62,13 @@
     <string name="engine_warn_prerelease">Only a pre-release is published.</string>
     <string name="engine_warn_moved">The project seems to have moved to %1$s.</string>
     <string name="engine_several_apps">This link holds several apps. Import it from settings instead.</string>
-    <string name="engine_not_a_source">Jackdaw found no releases at this address.</string>
+    <string name="engine_not_a_source">Stamp found no releases at this address.</string>
     <string name="engine_move_gone">This app is no longer in the list.</string>
     <string name="engine_move_nothing">There is no new address to follow.</string>
-    <string name="engine_move_not_a_source">Jackdaw found no releases at the new address, so it kept the old one.</string>
+    <string name="engine_move_not_a_source">Stamp found no releases at the new address, so it kept the old one.</string>
     <string name="engine_move_already_tracked">The new address is already in your list as another app, so the old one was kept.</string>
-    <string name="engine_move_unknown_app">Jackdaw does not know yet which app this is, so it cannot tell whether the new address offers the same one. Check the app first.</string>
-    <string name="engine_move_unreadable">Jackdaw could not read which app the new address offers, so it kept the old one.</string>
+    <string name="engine_move_unknown_app">Stamp does not know yet which app this is, so it cannot tell whether the new address offers the same one. Check the app first.</string>
+    <string name="engine_move_unreadable">Stamp could not read which app the new address offers, so it kept the old one.</string>
     <!-- %1$s is the package name of the tracked app, %2$s the one the new address offers. -->
     <string name="engine_move_other_app">The new address offers %2$s, not %1$s, so the old address was kept.</string>
     <string name="engine_move_other_signer">The new address offers the app signed by someone else, so the old address was kept.</string>

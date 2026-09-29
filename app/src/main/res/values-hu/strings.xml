@@ -68,7 +68,7 @@
     <string name="action_failed">Ez nem sikerült. Próbálja újra egy pillanat múlva.</string>
     <string name="save_failed">A módosítás nem lett mentve. Próbálja újra.</string>
     <string name="open_no_launcher">Ennek az alkalmazásnak nincs megnyitható képernyője</string>
-    <string name="offline_banner">Nincs internetkapcsolat. A Jackdaw újra ellenőriz, amint visszatér.</string>
+    <string name="offline_banner">Nincs internetkapcsolat. A Stamp újra ellenőriz, amint visszatér.</string>
     <string name="offline_reason">Internetkapcsolat nélkül nem érhető el</string>
     <string name="apps_search_hint">Keresés az alkalmazásokban</string>
     <string name="filter_all">Összes</string>
@@ -107,7 +107,7 @@
         <item quantity="one">%d app ellenőrzése most?</item>
         <item quantity="other">%d app ellenőrzése most?</item>
     </plurals>
-    <string name="bulk_check_text">A Jackdaw lekéri a legújabb kiadást minden forrástól. Semmit nem telepít.</string>
+    <string name="bulk_check_text">A Stamp lekéri a legújabb kiadást minden forrástól. Semmit nem telepít.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">%d app frissítése?</item>
         <item quantity="other">%d app frissítése?</item>
@@ -121,16 +121,16 @@
         <item quantity="one">%d app követésének leállítása?</item>
         <item quantity="other">%d app követésének leállítása?</item>
     </plurals>
-    <string name="bulk_remove_text">Az alkalmazások telepítve maradnak. A Jackdaw csupán a frissítéseik ellenőrzését állítja le.</string>
+    <string name="bulk_remove_text">Az alkalmazások telepítve maradnak. A Stamp csupán a frissítéseik ellenőrzését állítja le.</string>
     <string name="apps_empty_title">Még nincsenek alkalmazások</string>
-    <string name="apps_empty_text">Illesszen be egy linket egy projektoldalhoz, egy kiadás oldalhoz vagy egy F-Droid tárolóhoz, és a Jackdaw onnantól kezdve naprakészen tartja az alkalmazást.</string>
+    <string name="apps_empty_text">Illesszen be egy linket egy projektoldalhoz, egy kiadás oldalhoz vagy egy F-Droid tárolóhoz, és a Stamp onnantól kezdve naprakészen tartja az alkalmazást.</string>
     <string name="sort_title">Rendezés</string>
     <string name="sort_name">Név szerint</string>
     <string name="sort_recently_checked">Legutóbb ellenőrzött</string>
     <string name="sort_source">Forrás szerint</string>
     <string name="remove_title">Eltávolítja ezt: %s?</string>
-    <string name="remove_text_installed">A Jackdaw nem követi többé. Az alkalmazás telepítve marad.</string>
-    <string name="remove_text">A Jackdaw nem követi többé.</string>
+    <string name="remove_text_installed">A Stamp nem követi többé. Az alkalmazás telepítve marad.</string>
+    <string name="remove_text">A Stamp nem követi többé.</string>
     <string name="add_title">Alkalmazás hozzáadása</string>
     <string name="add_field_label">Link vagy keresés</string>
     <string name="add_field_hint">https://github.com/tulajdonos/app</string>
@@ -198,8 +198,8 @@
     <string name="signer_unknown">Még semmit nem tudunk az aláíróról. A letöltés után kerül ellenőrzésre.</string>
     <string name="signer_first_seen">Első telepítés: ez a tanúsítvány megjegyzésre kerül</string>
     <string name="signer_first_seen_claimed">Első telepítés: a fájlban ez a tanúsítvány szerepel, és az Android megerősítése után megjegyzésre kerül</string>
-    <string name="signer_matches_pin">Az alkalmazáshoz a Jackdaw által rögzített tanúsítvánnyal aláírva</string>
-    <string name="signer_matches_pin_claimed">A fájl az alkalmazáshoz a Jackdaw által rögzített tanúsítványt jelöli meg. Az Android megerősíti a telepítés előtt.</string>
+    <string name="signer_matches_pin">Az alkalmazáshoz a Stamp által rögzített tanúsítvánnyal aláírva</string>
+    <string name="signer_matches_pin_claimed">A fájl az alkalmazáshoz a Stamp által rögzített tanúsítványt jelöli meg. Az Android megerősíti a telepítés előtt.</string>
     <string name="signer_matches_installed">A telepített alkalmazás fejlesztője által aláírva</string>
     <string name="signer_matches_installed_claimed">A fájl szerint a fejlesztő megegyezik a telepített alkalmazáséval. Az Android megerősíti a telepítés előtt.</string>
     <string name="signer_mismatch">A telepített alkalmazás fejlesztőjétől eltérő valaki írta alá</string>
@@ -217,17 +217,17 @@
     <string name="fingerprint_copied">Ujjlenyomat másolva</string>
     <string name="checks_virustotal">Fájl keresése a VirusTotalon</string>
     <string name="checks_virustotal_note">A böngészője csak a fájl ujjlenyomatát küldi el, és olyan fájl, amelyet senki sem töltött még fel a VirusTotalra, nem lesz ott megtalálható.</string>
-    <string name="advice_network">A Jackdaw nem tudta elérni a forrást. Ellenőrizze a kapcsolatot vagy a proxyt, majd próbálja újra.</string>
+    <string name="advice_network">A Stamp nem tudta elérni a forrást. Ellenőrizze a kapcsolatot vagy a proxyt, majd próbálja újra.</string>
     <string name="advice_rate_limited">A forrás korlátozza, hogy milyen gyakran lehet lekérdezni. Egy mentett hozzáférési token ehhez a gazdagéphez megemeli a korlátot.</string>
     <string name="advice_not_found">Lehet, hogy a projekt elköltözött vagy priváttá vált. Ellenőrizze, hogy a link továbbra is megnyílik-e a böngészőben.</string>
     <string name="advice_auth">A forrás elutasította a hozzáférési tokent. Cserélje ki a Beállításokban, a hozzáférési tokenek alatt.</string>
-    <string name="advice_parse">A forrás olyasmivel válaszolt, amit a Jackdaw nem tudott elolvasni. Lehet, hogy átmeneti hiba van az ő oldalukon.</string>
-    <string name="advice_no_releases">A projekt még nem tett közzé olyan kiadást, amelyet a Jackdaw használni tudna. Az előzetes kiadások számítanak, ha bekapcsolja őket.</string>
+    <string name="advice_parse">A forrás olyasmivel válaszolt, amit a Stamp nem tudott elolvasni. Lehet, hogy átmeneti hiba van az ő oldalukon.</string>
+    <string name="advice_no_releases">A projekt még nem tett közzé olyan kiadást, amelyet a Stamp használni tudna. Az előzetes kiadások számítanak, ha bekapcsolja őket.</string>
     <string name="advice_no_file">A fájlok egyike sem felel meg ennek az eszköznek. Válasszon egyet maga a Fájlválasztás alatt, vagy módosítsa a belefoglalási és kizárási mintákat.</string>
     <string name="advice_checksum_mismatch">A fájl a közzététel után megváltozott, vagy megsérült útközben. Ne telepítse. Próbálja újra később.</string>
-    <string name="advice_signer_mismatch">A fájl egy másik tanúsítvánnyal van aláírva, mint amelyik ehhez az alkalmazáshoz van rögzítve, így a Jackdaw elutasítja. Ha a fejlesztő új kulcsot jelentett be, cserélje ki a rögzített tanúsítványt a Haladó menüpont alatt.</string>
+    <string name="advice_signer_mismatch">A fájl egy másik tanúsítvánnyal van aláírva, mint amelyik ehhez az alkalmazáshoz van rögzítve, így a Stamp elutasítja. Ha a fejlesztő új kulcsot jelentett be, cserélje ki a rögzített tanúsítványt a Haladó menüpont alatt.</string>
     <string name="advice_signer_broken">A fájlban lévő aláírások nem egyeznek meg egymással. Ne telepítse, és értesítse a fejlesztőt.</string>
-    <string name="advice_signer_mismatch_installed">Az Android nem cserél le egy alkalmazást olyannal, amelyet valaki más írt alá, és a Jackdaw sem próbálja meg. Ha a fejlesztő új kulcsot jelentett be, az alkalmazást el kell távolítani és újra kell telepíteni, ami törli az adatait.</string>
+    <string name="advice_signer_mismatch_installed">Az Android nem cserél le egy alkalmazást olyannal, amelyet valaki más írt alá, és a Stamp sem próbálja meg. Ha a fejlesztő új kulcsot jelentett be, az alkalmazást el kell távolítani és újra kell telepíteni, ami törli az adatait.</string>
     <string name="advice_package_mismatch">A fájl egy másik alkalmazás, mint amit követ. Ellenőrizze a belefoglalási és kizárási mintákat a Fájlválasztás alatt.</string>
     <string name="advice_downgrade">A felkínált verzió régebbi, mint a telepített, és az Android nem telepít régebbit egy újabbra. A visszatérés azt jelenti, hogy először el kell távolítani az alkalmazást, ami törli az adatait.</string>
     <string name="advice_install_failed">Az Android megtagadta a telepítést. A megadott ok fent látható.</string>
@@ -240,11 +240,11 @@
     </plurals>
     <string name="detail_gone">Ez az alkalmazás már nincs a listáján.</string>
     <string name="moved_title">Ez a projekt ide költözött: %1$s</string>
-    <string name="moved_explain">A Jackdaw csak akkor vált, ha az új cím ugyanazt az alkalmazást kínálja, és ugyanaz a fejlesztő írta alá.</string>
+    <string name="moved_explain">A Stamp csak akkor vált, ha az új cím ugyanazt az alkalmazást kínálja, és ugyanaz a fejlesztő írta alá.</string>
     <string name="moved_follow">Követés oda</string>
     <string name="moved_keep">Régi cím megtartása</string>
     <string name="moved_working">Új cím ellenőrzése</string>
-    <string name="moved_done">A Jackdaw mostantól az új címet követi.</string>
+    <string name="moved_done">A Stamp mostantól az új címet követi.</string>
     <string name="silent_yes">Ez a frissítés kérdés nélkül települhet.</string>
     <string name="silent_no">Az Android megkéri Önt a frissítés megerősítésére.</string>
     <string name="phase_queued">Várakozás a többi letöltés befejezésére</string>
@@ -352,7 +352,7 @@
     <string name="settings_keep_installers">Letöltött fájlok megtartása</string>
     <string name="settings_keep_installers_effect">A fájlok a telepítés után is megmaradnak, tárhelyet használva. Kikapcsolva törli őket.</string>
     <string name="settings_ownership">Legyen az egyetlen frissítő</string>
-    <string name="settings_ownership_effect">Megkéri az Androidot, hogy csak a Jackdaw frissíthesse az általa telepített alkalmazásokat, így más áruház nem cserélheti le őket.</string>
+    <string name="settings_ownership_effect">Megkéri az Androidot, hogy csak a Stamp frissíthesse az általa telepített alkalmazásokat, így más áruház nem cserélheti le őket.</string>
     <string name="settings_ownership_unsupported">Android 14 vagy újabb szükséges.</string>
     <string name="settings_tokens">Hozzáférési tokenek</string>
     <string name="settings_tokens_effect">A token megemeli a korlátokat és megnyitja a privát projekteket. Csak annak a gazdagépnek küldjük el, amelyhez mentve lett, és soha többé nem jelenik meg.</string>
@@ -383,13 +383,13 @@
     <string name="theme_light">Világos</string>
     <string name="theme_dark">Sötét</string>
     <string name="settings_dynamic_color">Színek a háttérképből</string>
-    <string name="settings_dynamic_color_effect">Kikapcsolva a Jackdaw saját palakék színét használja.</string>
+    <string name="settings_dynamic_color_effect">Kikapcsolva a Stamp saját palakék színét használja.</string>
     <string name="settings_dynamic_color_unsupported">Android 12 vagy újabb szükséges.</string>
     <string name="settings_pure_black">Tiszta fekete</string>
     <string name="settings_pure_black_effect">Fekete hátterek a sötét témában, jobban kíméli az OLED képernyőket.</string>
     <string name="settings_data">Importálás és exportálás</string>
     <string name="settings_import">Alkalmazások importálása</string>
-    <string name="settings_import_effect">Jackdaw vagy Obtainium exportálásból</string>
+    <string name="settings_import_effect">Stamp vagy Obtainium exportálásból</string>
     <string name="settings_export">Alkalmazások exportálása</string>
     <string name="settings_exporting">Exportálás</string>
     <string name="settings_export_effect">Fájlba menti a listát és a beállításokat. A tokeneket sosem tartalmazza.</string>
@@ -399,14 +399,14 @@
     </plurals>
     <string name="export_failed">Az exportálást nem sikerült kiírni.</string>
     <string name="settings_obtainium_links">Obtainium linkek megnyitása</string>
-    <string name="settings_obtainium_links_effect">Az Obtainiumnak szánt linkek a Jackdaw-ban nyílnak meg. Továbbra is Ön erősít meg minden alkalmazást.</string>
+    <string name="settings_obtainium_links_effect">Az Obtainiumnak szánt linkek a Stamp-ban nyílnak meg. Továbbra is Ön erősít meg minden alkalmazást.</string>
     <string name="settings_about">Névjegy</string>
     <string name="about_version">Verzió</string>
     <string name="about_licence">Licenc</string>
     <string name="about_licence_name">GNU General Public License, 3-as vagy újabb verzió</string>
     <string name="about_source">Forráskód</string>
     <string name="import_title">Alkalmazások importálása</string>
-    <string name="import_explain">Válasszon ki egy exportált fájlt a Jackdaw vagy Obtainium alkalmazásból. Semmi nem kerül telepítésre; az alkalmazások hozzáadódnak a listához és ellenőrzésre kerülnek.</string>
+    <string name="import_explain">Válasszon ki egy exportált fájlt a Stamp vagy Obtainium alkalmazásból. Semmi nem kerül telepítésre; az alkalmazások hozzáadódnak a listához és ellenőrzésre kerülnek.</string>
     <string name="import_pick">Fájl kiválasztása</string>
     <string name="import_pick_other">Másik fájl kiválasztása</string>
     <string name="import_working">A fájl beolvasása</string>
@@ -459,19 +459,19 @@
     <string name="import_stars_stop">Leállítás</string>
     <string name="import_skip_no_file">A kiadásaiból semmi sem telepíthető erre az eszközre.</string>
     <string name="import_skip_no_releases">Nem tesz közzé kiadásokat.</string>
-    <string name="import_skip_not_found">A Jackdaw nem találta meg.</string>
-    <string name="import_skip_rate_limited">A GitHub arra kérte a Jackdawt, hogy várjon. Próbálja újra ezeket később.</string>
+    <string name="import_skip_not_found">A Stamp nem találta meg.</string>
+    <string name="import_skip_rate_limited">A GitHub arra kérte a Stampt, hogy várjon. Próbálja újra ezeket később.</string>
     <string name="import_skip_network">A kapcsolódás nem sikerült.</string>
-    <string name="import_skip_other">A Jackdaw nem tudta beolvasni a kiadásait.</string>
-    <string name="first_title">Jackdaw</string>
-    <string name="first_line_1">A Jackdaw egyenesen onnan telepíti és frissíti az alkalmazásokat, ahol a fejlesztőik közzéteszik őket.</string>
-    <string name="first_line_2">Mielőtt az Android látna egy fájlt, a Jackdaw ellenőrzi, hogy ki írta alá, és hogy egyezik-e a kiadó ellenőrző összegével.</string>
+    <string name="import_skip_other">A Stamp nem tudta beolvasni a kiadásait.</string>
+    <string name="first_title">Stamp</string>
+    <string name="first_line_1">A Stamp egyenesen onnan telepíti és frissíti az alkalmazásokat, ahol a fejlesztőik közzéteszik őket.</string>
+    <string name="first_line_2">Mielőtt az Android látna egy fájlt, a Stamp ellenőrzi, hogy ki írta alá, és hogy egyezik-e a kiadó ellenőrző összegével.</string>
     <string name="first_line_3">Minden, amit talál és tesz, bekerül a tevékenységnaplóba, egyszerű szavakkal.</string>
-    <string name="first_notify_explain">A Jackdaw értesítheti Önt, ha a frissítések készen állnak. Az Android meg fogja kérdezni, hogy engedélyezi-e az értesítéseket.</string>
+    <string name="first_notify_explain">A Stamp értesítheti Önt, ha a frissítések készen állnak. Az Android meg fogja kérdezni, hogy engedélyezi-e az értesítéseket.</string>
     <string name="first_notify_denied">Az értesítések ki vannak kapcsolva. Később bekapcsolhatja őket a Beállításokban.</string>
     <string name="first_notify_allow">Értesítések engedélyezése</string>
     <string name="first_skip">Most nem</string>
-    <string name="install_permission_title">Alkalmazások telepítésének engedélyezése a Jackdaw számára</string>
-    <string name="install_permission_body">Az Android egyszer rákérdez, mielőtt egy alkalmazás telepíthetne egy másikat. A következő képernyőn kapcsolja be a Jackdaw kapcsolóját, majd térjen vissza. A telepítés magától folytatódik.</string>
+    <string name="install_permission_title">Alkalmazások telepítésének engedélyezése a Stamp számára</string>
+    <string name="install_permission_body">Az Android egyszer rákérdez, mielőtt egy alkalmazás telepíthetne egy másikat. A következő képernyőn kapcsolja be a Stamp kapcsolóját, majd térjen vissza. A telepítés magától folytatódik.</string>
     <string name="install_permission_open">Beállítások megnyitása</string>
 </resources>

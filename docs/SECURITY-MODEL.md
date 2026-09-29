@@ -1,12 +1,12 @@
-# What Jackdaw protects against
+# What Stamp protects against
 
-This page says what Jackdaw checks, in what order, and where its checks end.
+This page says what Stamp checks, in what order, and where its checks end.
 It is written so that someone can disagree with it point by point.
 
 ## Who is trusted
 
 The developer of an app, as identified by the certificate their releases are
-signed with. Jackdaw's job is to make sure that what gets installed comes from
+signed with. Stamp's job is to make sure that what gets installed comes from
 that certificate and is the file the developer published.
 
 Not trusted: the network, a mirror, a repository index that is not signed, a
@@ -15,7 +15,7 @@ link someone sent you, an import file, and any text a server sends.
 ## The first install
 
 Nothing on the phone says who the developer is yet, so the first install is
-trust on first use. Jackdaw shows the certificate the file claims before you
+trust on first use. Stamp shows the certificate the file claims before you
 install, as a fingerprint you can compare with one the developer publishes.
 After Android has installed the file, that certificate is pinned.
 
@@ -38,7 +38,7 @@ covers that case.
 
 ### Two readers
 
-Jackdaw's parser and Android's package parser both read the file. If they
+Stamp's parser and Android's package parser both read the file. If they
 disagree on the package name or version code, the file is refused. Every later
 decision uses the certificates Android reported.
 
@@ -56,13 +56,13 @@ build, and a build for a newer Android than the phone runs.
 
 ### Android
 
-The system installer runs its own checks after all of that. Jackdaw treats an
+The system installer runs its own checks after all of that. Stamp treats an
 install as done when Android reports success and the package manager shows the
 expected version code.
 
 ## Reading a file before downloading it
 
-Jackdaw reads a file's manifest and signing block from the server with range
+Stamp reads a file's manifest and signing block from the server with range
 requests, to show what an update is before fetching it and to decide by version
 code. What it reads there is what the file claims. No signature is verified at
 that point, and the screens say "claims" until Android has read the downloaded
@@ -112,12 +112,12 @@ deadline.
 
 ## Where the checks end
 
-- A developer whose signing key is stolen can sign anything. Jackdaw cannot see
+- A developer whose signing key is stolen can sign anything. Stamp cannot see
   that. A minimum age for updates, which lets a bad release be pulled before it
   reaches you, is the setting that helps.
 - A first install from a compromised release page installs what that page
   offers. Compare the fingerprint with one the developer publishes elsewhere.
-- Jackdaw does not rebuild apps from source. It checks who signed a file, not
+- Stamp does not rebuild apps from source. It checks who signed a file, not
   what is in it.
 - It has been tested on emulators. Vendor builds of Android can behave
   differently.

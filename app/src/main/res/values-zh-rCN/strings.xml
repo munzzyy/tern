@@ -67,7 +67,7 @@
     <string name="action_failed">操作失败。请稍后重试。</string>
     <string name="save_failed">更改未保存。请重试。</string>
     <string name="open_no_launcher">此应用没有可打开的界面</string>
-    <string name="offline_banner">无网络连接。恢复后 Jackdaw 会再次检查。</string>
+    <string name="offline_banner">无网络连接。恢复后 Stamp 会再次检查。</string>
     <string name="offline_reason">需要网络连接才能使用</string>
     <string name="apps_search_hint">搜索应用</string>
     <string name="filter_all">全部</string>
@@ -101,7 +101,7 @@
     <plurals name="bulk_check_title">
         <item quantity="other">现在检查 %d 个应用？</item>
     </plurals>
-    <string name="bulk_check_text">Jackdaw 会向每个来源请求其最新发布。不会安装任何内容。</string>
+    <string name="bulk_check_text">Stamp 会向每个来源请求其最新发布。不会安装任何内容。</string>
     <plurals name="bulk_update_title">
         <item quantity="other">更新 %d 个应用？</item>
     </plurals>
@@ -112,16 +112,16 @@
     <plurals name="bulk_remove_title">
         <item quantity="other">停止跟踪 %d 个应用？</item>
     </plurals>
-    <string name="bulk_remove_text">这些应用仍会保留在设备上。Jackdaw 只会停止检查它们的更新。</string>
+    <string name="bulk_remove_text">这些应用仍会保留在设备上。Stamp 只会停止检查它们的更新。</string>
     <string name="apps_empty_title">暂无应用</string>
-    <string name="apps_empty_text">粘贴项目主页、发布页面或 F-Droid 存储库的链接，Jackdaw 就会从那里保持应用的更新。</string>
+    <string name="apps_empty_text">粘贴项目主页、发布页面或 F-Droid 存储库的链接，Stamp 就会从那里保持应用的更新。</string>
     <string name="sort_title">排序</string>
     <string name="sort_name">按名称</string>
     <string name="sort_recently_checked">最近检查</string>
     <string name="sort_source">按来源</string>
     <string name="remove_title">移除 %s？</string>
-    <string name="remove_text_installed">Jackdaw 将停止跟踪它。应用仍会保留在设备上。</string>
-    <string name="remove_text">Jackdaw 将停止跟踪它。</string>
+    <string name="remove_text_installed">Stamp 将停止跟踪它。应用仍会保留在设备上。</string>
+    <string name="remove_text">Stamp 将停止跟踪它。</string>
     <string name="add_title">添加应用</string>
     <string name="add_field_label">链接或搜索</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -184,8 +184,8 @@
     <string name="signer_unknown">目前还不了解签名者。下载后会进行检查。</string>
     <string name="signer_first_seen">首次安装：将记住此证书</string>
     <string name="signer_first_seen_claimed">首次安装：文件声明了此证书，在 Android 确认后将记住此证书</string>
-    <string name="signer_matches_pin">使用 Jackdaw 为此应用保存的证书签名</string>
-    <string name="signer_matches_pin_claimed">文件声明了 Jackdaw 为此应用保存的证书。Android 会在安装前进行确认。</string>
+    <string name="signer_matches_pin">使用 Stamp 为此应用保存的证书签名</string>
+    <string name="signer_matches_pin_claimed">文件声明了 Stamp 为此应用保存的证书。Android 会在安装前进行确认。</string>
     <string name="signer_matches_installed">与已安装应用由同一开发者签名</string>
     <string name="signer_matches_installed_claimed">文件声明与已安装应用由同一开发者签名。Android 会在安装前进行确认。</string>
     <string name="signer_mismatch">签名者并非已安装应用的开发者</string>
@@ -202,17 +202,17 @@
     <string name="fingerprint_copied">已复制指纹</string>
     <string name="checks_virustotal">在 VirusTotal 上查找此文件</string>
     <string name="checks_virustotal_note">只有文件的指纹会通过您的浏览器发送，如果从未有人将该文件上传至 VirusTotal，则无法在那里找到它。</string>
-    <string name="advice_network">Jackdaw 无法连接到来源。请检查网络连接或代理，然后重试。</string>
+    <string name="advice_network">Stamp 无法连接到来源。请检查网络连接或代理，然后重试。</string>
     <string name="advice_rate_limited">来源限制了请求频率。为此主机保存访问令牌可以提高限制。</string>
     <string name="advice_not_found">项目可能已移动或设为私有。请检查链接是否仍可在浏览器中打开。</string>
     <string name="advice_auth">来源拒绝了访问令牌。请在设置里的访问令牌中替换它。</string>
-    <string name="advice_parse">来源返回的内容 Jackdaw 无法读取。可能是对方的临时故障。</string>
-    <string name="advice_no_releases">项目尚未提供 Jackdaw 可以使用的发布。如果开启，预发布版也会计算在内。</string>
+    <string name="advice_parse">来源返回的内容 Stamp 无法读取。可能是对方的临时故障。</string>
+    <string name="advice_no_releases">项目尚未提供 Stamp 可以使用的发布。如果开启，预发布版也会计算在内。</string>
     <string name="advice_no_file">没有适合此设备的文件。请在文件选择中自行挑选，或者修改包含与排除模式。</string>
     <string name="advice_checksum_mismatch">文件在发布后发生了更改，或者在传输中损坏。请勿安装。稍后再试。</string>
-    <string name="advice_signer_mismatch">该文件使用的签名证书与为此应用固定的证书不同，因此 Jackdaw 拒绝安装。如果开发者宣布了新密钥，请在高级选项中替换固定证书。</string>
+    <string name="advice_signer_mismatch">该文件使用的签名证书与为此应用固定的证书不同，因此 Stamp 拒绝安装。如果开发者宣布了新密钥，请在高级选项中替换固定证书。</string>
     <string name="advice_signer_broken">此文件中的签名互不匹配。请勿安装，并告知开发者。</string>
-    <string name="advice_signer_mismatch_installed">Android 不会用他人签名的应用替换现有应用，Jackdaw 也不会尝试这样做。如果开发者宣布了新密钥，必须先移除应用再重新安装，但这会删除其数据。</string>
+    <string name="advice_signer_mismatch_installed">Android 不会用他人签名的应用替换现有应用，Stamp 也不会尝试这样做。如果开发者宣布了新密钥，必须先移除应用再重新安装，但这会删除其数据。</string>
     <string name="advice_package_mismatch">此文件与您跟踪的应用不同。请检查文件选择中的包含与排除模式。</string>
     <string name="advice_downgrade">提供的版本比已安装的版本旧，Android 不会在较新版本上覆盖安装。若要回退，必须先移除应用，这会删除其数据。</string>
     <string name="advice_install_failed">Android 拒绝了安装。原因显示在上方。</string>
@@ -224,11 +224,11 @@
     </plurals>
     <string name="detail_gone">此应用已不在列表中。</string>
     <string name="moved_title">此项目已移动至 %1$s</string>
-    <string name="moved_explain">仅当新地址提供相同应用并由同一开发者签名时，Jackdaw 才会切换。</string>
+    <string name="moved_explain">仅当新地址提供相同应用并由同一开发者签名时，Stamp 才会切换。</string>
     <string name="moved_follow">跟随至新地址</string>
     <string name="moved_keep">保留旧地址</string>
     <string name="moved_working">正在检查新地址</string>
-    <string name="moved_done">Jackdaw 现在开始跟踪新地址。</string>
+    <string name="moved_done">Stamp 现在开始跟踪新地址。</string>
     <string name="silent_yes">此更新可以静默安装。</string>
     <string name="silent_no">Android 会要求您确认此更新。</string>
     <string name="phase_queued">等待其他下载完成</string>
@@ -334,7 +334,7 @@
     <string name="settings_keep_installers">保留下载的文件</string>
     <string name="settings_keep_installers_effect">安装后保留文件，会占用存储空间。关闭则删除。</string>
     <string name="settings_ownership">成为唯一更新程序</string>
-    <string name="settings_ownership_effect">请求 Android 仅允许 Jackdaw 更新其安装的应用，防止其他商店替换。</string>
+    <string name="settings_ownership_effect">请求 Android 仅允许 Stamp 更新其安装的应用，防止其他商店替换。</string>
     <string name="settings_ownership_unsupported">需要 Android 14 或更高版本。</string>
     <string name="settings_tokens">访问令牌</string>
     <string name="settings_tokens_effect">令牌可以提高速率限制并访问私人项目。它仅发送至其保存的具体主机，且不再显示。</string>
@@ -365,13 +365,13 @@
     <string name="theme_light">浅色</string>
     <string name="theme_dark">深色</string>
     <string name="settings_dynamic_color">壁纸取色</string>
-    <string name="settings_dynamic_color_effect">关闭则使用 Jackdaw 自带的石板蓝。</string>
+    <string name="settings_dynamic_color_effect">关闭则使用 Stamp 自带的石板蓝。</string>
     <string name="settings_dynamic_color_unsupported">需要 Android 12 或更高版本。</string>
     <string name="settings_pure_black">纯黑</string>
     <string name="settings_pure_black_effect">深色主题使用黑色背景，在 OLED 屏幕上更护眼。</string>
     <string name="settings_data">导入与导出</string>
     <string name="settings_import">导入应用</string>
-    <string name="settings_import_effect">从 Jackdaw 或 Obtainium 导出文件</string>
+    <string name="settings_import_effect">从 Stamp 或 Obtainium 导出文件</string>
     <string name="settings_export">导出应用</string>
     <string name="settings_exporting">正在导出</string>
     <string name="settings_export_effect">将列表和设置保存到文件。绝不会包含令牌。</string>
@@ -380,14 +380,14 @@
     </plurals>
     <string name="export_failed">无法写入导出文件。</string>
     <string name="settings_obtainium_links">打开 Obtainium 链接</string>
-    <string name="settings_obtainium_links_effect">用于 Obtainium 的链接将改用 Jackdaw 打开。您仍需确认每个应用。</string>
+    <string name="settings_obtainium_links_effect">用于 Obtainium 的链接将改用 Stamp 打开。您仍需确认每个应用。</string>
     <string name="settings_about">关于</string>
     <string name="about_version">版本</string>
     <string name="about_licence">许可证</string>
     <string name="about_licence_name">GNU 通用公共许可证，第 3 版或更高版本</string>
     <string name="about_source">源代码</string>
     <string name="import_title">导入应用</string>
-    <string name="import_explain">选择 Jackdaw 或 Obtainium 的导出文件。不会安装任何内容；应用将被添加至列表并接受检查。</string>
+    <string name="import_explain">选择 Stamp 或 Obtainium 的导出文件。不会安装任何内容；应用将被添加至列表并接受检查。</string>
     <string name="import_pick">选择文件</string>
     <string name="import_pick_other">选择其他文件</string>
     <string name="import_working">正在读取文件</string>
@@ -433,19 +433,19 @@
     <string name="import_stars_stop">停止</string>
     <string name="import_skip_no_file">其发布中没有可在此设备上安装的内容。</string>
     <string name="import_skip_no_releases">它未发布任何版本。</string>
-    <string name="import_skip_not_found">Jackdaw 找不到它。</string>
-    <string name="import_skip_rate_limited">GitHub 要求 Jackdaw 等待。请稍后重试这些项。</string>
+    <string name="import_skip_not_found">Stamp 找不到它。</string>
+    <string name="import_skip_rate_limited">GitHub 要求 Stamp 等待。请稍后重试这些项。</string>
     <string name="import_skip_network">连接失败。</string>
-    <string name="import_skip_other">Jackdaw 无法读取其发布。</string>
-    <string name="first_title">Jackdaw</string>
-    <string name="first_line_1">Jackdaw 直接从开发者发布的地方安装和更新应用。</string>
-    <string name="first_line_2">在 Android 处理文件之前，Jackdaw 会检查签名者以及文件是否与发布者的校验和相符。</string>
+    <string name="import_skip_other">Stamp 无法读取其发布。</string>
+    <string name="first_title">Stamp</string>
+    <string name="first_line_1">Stamp 直接从开发者发布的地方安装和更新应用。</string>
+    <string name="first_line_2">在 Android 处理文件之前，Stamp 会检查签名者以及文件是否与发布者的校验和相符。</string>
     <string name="first_line_3">它发现和处理的一切都会用清晰的语言记录在活动日志中。</string>
-    <string name="first_notify_explain">Jackdaw 可以在更新准备就绪时通知您。Android 会询问是否允许通知。</string>
+    <string name="first_notify_explain">Stamp 可以在更新准备就绪时通知您。Android 会询问是否允许通知。</string>
     <string name="first_notify_denied">通知已关闭。您稍后可在设置中开启。</string>
     <string name="first_notify_allow">允许通知</string>
     <string name="first_skip">暂不</string>
-    <string name="install_permission_title">允许 Jackdaw 安装应用</string>
-    <string name="install_permission_body">在允许一个应用安装另一个应用前，Android 会询问一次。在下个界面中，打开 Jackdaw 的开关，然后返回。安装将自动继续。</string>
+    <string name="install_permission_title">允许 Stamp 安装应用</string>
+    <string name="install_permission_body">在允许一个应用安装另一个应用前，Android 会询问一次。在下个界面中，打开 Stamp 的开关，然后返回。安装将自动继续。</string>
     <string name="install_permission_open">打开设置</string>
 </resources>

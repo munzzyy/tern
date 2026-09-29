@@ -69,7 +69,7 @@
     <string name="action_failed">To se nepovedlo. Zkuste to za chvíli znovu.</string>
     <string name="save_failed">Změna nebyla uložena. Zkuste to znovu.</string>
     <string name="open_no_launcher">Tato aplikace nemá obrazovku k otevření</string>
-    <string name="offline_banner">Bez připojení k internetu. Jackdaw to zkontroluje znovu, jakmile bude dostupné.</string>
+    <string name="offline_banner">Bez připojení k internetu. Stamp to zkontroluje znovu, jakmile bude dostupné.</string>
     <string name="offline_reason">Nedostupné bez připojení k internetu</string>
     <string name="apps_search_hint">Hledat v aplikacích</string>
     <string name="filter_all">Vše</string>
@@ -113,7 +113,7 @@
         <item quantity="few">Zkontrolovat %d aplikace?</item>
         <item quantity="other">Zkontrolovat %d aplikací?</item>
     </plurals>
-    <string name="bulk_check_text">Jackdaw požádá každý zdroj o nejnovější vydání. Nic se nenainstaluje.</string>
+    <string name="bulk_check_text">Stamp požádá každý zdroj o nejnovější vydání. Nic se nenainstaluje.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">Aktualizovat %d aplikaci?</item>
         <item quantity="few">Aktualizovat %d aplikace?</item>
@@ -130,16 +130,16 @@
         <item quantity="few">Přestat sledovat %d aplikace?</item>
         <item quantity="other">Přestat sledovat %d aplikací?</item>
     </plurals>
-    <string name="bulk_remove_text">Aplikace zůstanou nainstalované. Jackdaw je jen přestane kontrolovat na aktualizace.</string>
+    <string name="bulk_remove_text">Aplikace zůstanou nainstalované. Stamp je jen přestane kontrolovat na aktualizace.</string>
     <string name="apps_empty_title">Zatím žádné aplikace</string>
-    <string name="apps_empty_text">Vložte odkaz na stránku projektu, vydání nebo repozitář F-Droid a Jackdaw odtud bude aplikaci udržovat aktuální.</string>
+    <string name="apps_empty_text">Vložte odkaz na stránku projektu, vydání nebo repozitář F-Droid a Stamp odtud bude aplikaci udržovat aktuální.</string>
     <string name="sort_title">Řadit</string>
     <string name="sort_name">Podle jména</string>
     <string name="sort_recently_checked">Nedávno kontrolované</string>
     <string name="sort_source">Podle zdroje</string>
     <string name="remove_title">Odebrat %s?</string>
-    <string name="remove_text_installed">Jackdaw ji přestane sledovat. Aplikace zůstane nainstalovaná.</string>
-    <string name="remove_text">Jackdaw ji přestane sledovat.</string>
+    <string name="remove_text_installed">Stamp ji přestane sledovat. Aplikace zůstane nainstalovaná.</string>
+    <string name="remove_text">Stamp ji přestane sledovat.</string>
     <string name="add_title">Přidat aplikaci</string>
     <string name="add_field_label">Odkaz nebo hledání</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -212,8 +212,8 @@
     <string name="signer_unknown">O podepisující straně se zatím nic neví. Zkontroluje se po stažení.</string>
     <string name="signer_first_seen">První instalace: tento certifikát si aplikace zapamatuje</string>
     <string name="signer_first_seen_claimed">První instalace: soubor deklaruje tento certifikát a bude zapamatován, jakmile jej Android potvrdí</string>
-    <string name="signer_matches_pin">Podepsáno certifikátem, který Jackdaw pro tuto aplikaci drží</string>
-    <string name="signer_matches_pin_claimed">Soubor deklaruje certifikát, který Jackdaw pro tuto aplikaci drží. Android to před instalací potvrdí.</string>
+    <string name="signer_matches_pin">Podepsáno certifikátem, který Stamp pro tuto aplikaci drží</string>
+    <string name="signer_matches_pin_claimed">Soubor deklaruje certifikát, který Stamp pro tuto aplikaci drží. Android to před instalací potvrdí.</string>
     <string name="signer_matches_installed">Podepsáno stejným vývojářem jako nainstalovaná aplikace</string>
     <string name="signer_matches_installed_claimed">Soubor deklaruje stejného vývojáře jako nainstalovaná aplikace. Android to před instalací potvrdí.</string>
     <string name="signer_mismatch">Podepsáno někým jiným než vývojářem nainstalované aplikace</string>
@@ -232,17 +232,17 @@
     <string name="fingerprint_copied">Otisk zkopírován</string>
     <string name="checks_virustotal">Vyhledat tento soubor na VirusTotal</string>
     <string name="checks_virustotal_note">Váš prohlížeč odešle pouze otisk souboru. Soubor, který na VirusTotal nikdo nenahrál, tam nebude nalezen.</string>
-    <string name="advice_network">Jackdaw se nemohl spojit se zdrojem. Zkontrolujte připojení nebo proxy a zkuste to znovu.</string>
+    <string name="advice_network">Stamp se nemohl spojit se zdrojem. Zkontrolujte připojení nebo proxy a zkuste to znovu.</string>
     <string name="advice_rate_limited">Zdroj omezuje, jak často se ho lze ptát. Uložený přístupový token pro tohoto hostitele limit zvýší.</string>
     <string name="advice_not_found">Projekt se možná přesunul nebo stal soukromým. Zkontrolujte, zda se odkaz stále otevře v prohlížeči.</string>
     <string name="advice_auth">Zdroj odmítl přístupový token. Vyměňte ho v Nastavení, pod přístupovými tokeny.</string>
-    <string name="advice_parse">Zdroj odpověděl něčím, co Jackdaw nepřečetl. Může jít o dočasnou chybu na jejich straně.</string>
-    <string name="advice_no_releases">Projekt zatím nevydal vydání, které by Jackdaw mohl použít. Předběžná vydání se počítají, pokud je zapnete.</string>
+    <string name="advice_parse">Zdroj odpověděl něčím, co Stamp nepřečetl. Může jít o dočasnou chybu na jejich straně.</string>
+    <string name="advice_no_releases">Projekt zatím nevydal vydání, které by Stamp mohl použít. Předběžná vydání se počítají, pokud je zapnete.</string>
     <string name="advice_no_file">Žádný ze souborů se nehodí pro toto zařízení. Vyberte si nějaký v nabídce Výběr souboru, nebo změňte vzory pro zahrnutí a vyloučení.</string>
     <string name="advice_checksum_mismatch">Soubor se po vydání změnil nebo byl poškozen cestou. Neinstalujte ho. Zkuste to znovu později.</string>
-    <string name="advice_signer_mismatch">Soubor je podepsán jiným certifikátem, než jaký je pro tuto aplikaci připnut, takže to Jackdaw odmítá. Pokud vývojář oznámil nový klíč, změňte připnutý certifikát v sekci Pokročilé.</string>
+    <string name="advice_signer_mismatch">Soubor je podepsán jiným certifikátem, než jaký je pro tuto aplikaci připnut, takže to Stamp odmítá. Pokud vývojář oznámil nový klíč, změňte připnutý certifikát v sekci Pokročilé.</string>
     <string name="advice_signer_broken">Podpisy v tomto souboru se navzájem neshodují. Neinstalujte ho a řekněte to vývojáři.</string>
-    <string name="advice_signer_mismatch_installed">Android nenahradí aplikaci jinou, podepsanou někým jiným, a Jackdaw to ani nezkusí. Pokud vývojář oznámil nový klíč, musíte aplikaci odebrat a znovu nainstalovat, což smaže její data.</string>
+    <string name="advice_signer_mismatch_installed">Android nenahradí aplikaci jinou, podepsanou někým jiným, a Stamp to ani nezkusí. Pokud vývojář oznámil nový klíč, musíte aplikaci odebrat a znovu nainstalovat, což smaže její data.</string>
     <string name="advice_package_mismatch">Tento soubor je jiná aplikace než ta, kterou sledujete. Zkontrolujte vzory pro zahrnutí a vyloučení v sekci Výběr souboru.</string>
     <string name="advice_downgrade">Nabízená verze je starší než nainstalovaná a Android přes novější verzi neinstaluje. Krok zpět znamená nejprve odebrat aplikaci, což smaže její data.</string>
     <string name="advice_install_failed">Android odmítl instalaci. Důvod je uveden výše.</string>
@@ -256,11 +256,11 @@
     </plurals>
     <string name="detail_gone">Tato aplikace už není ve vašem seznamu.</string>
     <string name="moved_title">Tento projekt se přesunul na %1$s</string>
-    <string name="moved_explain">Jackdaw přejde pouze v případě, že nová adresa nabízí stejnou aplikaci, podepsanou stejným vývojářem.</string>
+    <string name="moved_explain">Stamp přejde pouze v případě, že nová adresa nabízí stejnou aplikaci, podepsanou stejným vývojářem.</string>
     <string name="moved_follow">Sledovat ho tam</string>
     <string name="moved_keep">Ponechat starou adresu</string>
     <string name="moved_working">Kontroluje se nová adresa</string>
-    <string name="moved_done">Jackdaw nyní sleduje novou adresu.</string>
+    <string name="moved_done">Stamp nyní sleduje novou adresu.</string>
     <string name="silent_yes">Tato aktualizace se může nainstalovat bez ptaní.</string>
     <string name="silent_no">Android vás požádá o potvrzení této aktualizace.</string>
     <string name="phase_queued">Čeká se na dokončení ostatních stahování</string>
@@ -370,7 +370,7 @@
     <string name="settings_keep_installers">Ponechat stažené soubory</string>
     <string name="settings_keep_installers_effect">Soubory po instalaci zůstanou a zabírají místo. Vypnutím se smažou.</string>
     <string name="settings_ownership">Být jediným aktualizátorem</string>
-    <string name="settings_ownership_effect">Požádá Android, aby aplikace nainstalované pomocí Jackdaw mohl aktualizovat pouze Jackdaw, aby je jiný obchod nemohl vyměnit.</string>
+    <string name="settings_ownership_effect">Požádá Android, aby aplikace nainstalované pomocí Stamp mohl aktualizovat pouze Stamp, aby je jiný obchod nemohl vyměnit.</string>
     <string name="settings_ownership_unsupported">Potřebuje Android 14 nebo novější.</string>
     <string name="settings_tokens">Přístupové tokeny</string>
     <string name="settings_tokens_effect">Token zvyšuje limity pro frekvenci dotazů a otevírá soukromé projekty. Odesílá se jen na přesný hostitel, pro který je uložen, a už se nikdy nezobrazí.</string>
@@ -401,13 +401,13 @@
     <string name="theme_light">Světlý</string>
     <string name="theme_dark">Tmavý</string>
     <string name="settings_dynamic_color">Barvy podle tapety</string>
-    <string name="settings_dynamic_color_effect">Vypnutím se použije vlastní břidlicově modrá barva Jackdawa.</string>
+    <string name="settings_dynamic_color_effect">Vypnutím se použije vlastní břidlicově modrá barva Stampa.</string>
     <string name="settings_dynamic_color_unsupported">Potřebuje Android 12 nebo novější.</string>
     <string name="settings_pure_black">Čistě černá</string>
     <string name="settings_pure_black_effect">Černé pozadí v tmavém motivu, šetrnější k OLED obrazovkám.</string>
     <string name="settings_data">Import a export</string>
     <string name="settings_import">Importovat aplikace</string>
-    <string name="settings_import_effect">Z exportu z aplikace Jackdaw nebo Obtainium</string>
+    <string name="settings_import_effect">Z exportu z aplikace Stamp nebo Obtainium</string>
     <string name="settings_export">Exportovat aplikace</string>
     <string name="settings_exporting">Exportuje se</string>
     <string name="settings_export_effect">Uloží váš seznam a nastavení do souboru. Tokeny se nikdy nezahrnují.</string>
@@ -418,14 +418,14 @@
     </plurals>
     <string name="export_failed">Export se nepodařilo zapsat.</string>
     <string name="settings_obtainium_links">Otevírat odkazy Obtainium</string>
-    <string name="settings_obtainium_links_effect">Odkazy určené pro Obtainium se místo toho otevřou v Jackdaw. Každou aplikaci stále potvrzujete vy.</string>
+    <string name="settings_obtainium_links_effect">Odkazy určené pro Obtainium se místo toho otevřou v Stamp. Každou aplikaci stále potvrzujete vy.</string>
     <string name="settings_about">O aplikaci</string>
     <string name="about_version">Verze</string>
     <string name="about_licence">Licence</string>
     <string name="about_licence_name">GNU General Public License, verze 3 nebo novější</string>
     <string name="about_source">Zdrojový kód</string>
     <string name="import_title">Importovat aplikace</string>
-    <string name="import_explain">Vyberte soubor exportu z Jackdaw nebo Obtainium. Nic se nenainstaluje; aplikace se jen přidají do seznamu a zkontrolují.</string>
+    <string name="import_explain">Vyberte soubor exportu z Stamp nebo Obtainium. Nic se nenainstaluje; aplikace se jen přidají do seznamu a zkontrolují.</string>
     <string name="import_pick">Vybrat soubor</string>
     <string name="import_pick_other">Vybrat jiný soubor</string>
     <string name="import_working">Čtení souboru</string>
@@ -485,19 +485,19 @@
     <string name="import_stars_stop">Zastavit</string>
     <string name="import_skip_no_file">Z jeho vydání nelze na toto zařízení nic nainstalovat.</string>
     <string name="import_skip_no_releases">Nevydává žádná vydání.</string>
-    <string name="import_skip_not_found">Jackdaw to nenašel.</string>
-    <string name="import_skip_rate_limited">GitHub požádal Jackdaw, aby počkal. Zkuste to znovu později.</string>
+    <string name="import_skip_not_found">Stamp to nenašel.</string>
+    <string name="import_skip_rate_limited">GitHub požádal Stamp, aby počkal. Zkuste to znovu později.</string>
     <string name="import_skip_network">Připojení selhalo.</string>
-    <string name="import_skip_other">Jackdaw nedokázal přečíst jeho vydání.</string>
-    <string name="first_title">Jackdaw</string>
-    <string name="first_line_1">Jackdaw instaluje a aktualizuje aplikace přímo odtud, kde je jejich vývojáři vydávají.</string>
-    <string name="first_line_2">Než Android uvidí soubor, Jackdaw zkontroluje, kdo ho podepsal a zda odpovídá kontrolnímu součtu vydavatele.</string>
+    <string name="import_skip_other">Stamp nedokázal přečíst jeho vydání.</string>
+    <string name="first_title">Stamp</string>
+    <string name="first_line_1">Stamp instaluje a aktualizuje aplikace přímo odtud, kde je jejich vývojáři vydávají.</string>
+    <string name="first_line_2">Než Android uvidí soubor, Stamp zkontroluje, kdo ho podepsal a zda odpovídá kontrolnímu součtu vydavatele.</string>
     <string name="first_line_3">Vše, co najde a udělá, je srozumitelnými slovy zapsáno do protokolu aktivity.</string>
-    <string name="first_notify_explain">Jackdaw vás může upozornit, když jsou aktualizace připraveny. Android se zeptá, zda povolit oznámení.</string>
+    <string name="first_notify_explain">Stamp vás může upozornit, když jsou aktualizace připraveny. Android se zeptá, zda povolit oznámení.</string>
     <string name="first_notify_denied">Oznámení jsou vypnutá. Můžete je zapnout později v Nastavení.</string>
     <string name="first_notify_allow">Povolit oznámení</string>
     <string name="first_skip">Teď ne</string>
-    <string name="install_permission_title">Povolit Jackdaw instalaci aplikací</string>
-    <string name="install_permission_body">Android se ptá jen jednou, než může jedna aplikace instalovat jinou. Na další obrazovce zapněte přepínač pro Jackdaw a pak se vraťte. Instalace pak pokračuje sama.</string>
+    <string name="install_permission_title">Povolit Stamp instalaci aplikací</string>
+    <string name="install_permission_body">Android se ptá jen jednou, než může jedna aplikace instalovat jinou. Na další obrazovce zapněte přepínač pro Stamp a pak se vraťte. Instalace pak pokračuje sama.</string>
     <string name="install_permission_open">Otevřít nastavení</string>
 </resources>

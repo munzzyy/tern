@@ -68,7 +68,7 @@
     <string name="action_failed">Bu işlem başarısız oldu. Birazdan tekrar deneyin.</string>
     <string name="save_failed">Değişiklik kaydedilmedi. Tekrar deneyin.</string>
     <string name="open_no_launcher">Bu uygulamanın açılacak bir ekranı yok</string>
-    <string name="offline_banner">İnternet bağlantısı yok. Bağlantı geldiğinde Jackdaw tekrar denetler.</string>
+    <string name="offline_banner">İnternet bağlantısı yok. Bağlantı geldiğinde Stamp tekrar denetler.</string>
     <string name="offline_reason">İnternet bağlantısı olmadan kullanılamaz</string>
     <string name="apps_search_hint">Uygulamalarınızda arayın</string>
     <string name="filter_all">Tümü</string>
@@ -107,7 +107,7 @@
         <item quantity="one">%d uygulama şimdi denetlensin mi?</item>
         <item quantity="other">%d uygulama şimdi denetlensin mi?</item>
     </plurals>
-    <string name="bulk_check_text">Jackdaw her kaynağa en yeni sürümünü sorar. Hiçbir şey yüklenmez.</string>
+    <string name="bulk_check_text">Stamp her kaynağa en yeni sürümünü sorar. Hiçbir şey yüklenmez.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">%d uygulama güncellensin mi?</item>
         <item quantity="other">%d uygulama güncellensin mi?</item>
@@ -117,16 +117,16 @@
         <item quantity="one">Seçilen uygulamalardan %d tanesinin yüklenecek güncellemesi yok ve olduğu gibi bırakıldı.</item>
         <item quantity="other">Seçilen uygulamalardan %d tanesinin yüklenecek güncellemesi yok ve olduğu gibi bırakıldı.</item>
     </plurals>
-    <string name="bulk_remove_text">Uygulamalar yüklü kalır. Jackdaw yalnızca güncellemeleri için denetlemeyi bırakır.</string>
+    <string name="bulk_remove_text">Uygulamalar yüklü kalır. Stamp yalnızca güncellemeleri için denetlemeyi bırakır.</string>
     <string name="apps_empty_title">Henüz uygulama yok</string>
-    <string name="apps_empty_text">Bir proje sayfasına, sürüm sayfasına veya F-Droid deposuna bir bağlantı yapıştırın, Jackdaw uygulamayı oradan güncel tutsun.</string>
+    <string name="apps_empty_text">Bir proje sayfasına, sürüm sayfasına veya F-Droid deposuna bir bağlantı yapıştırın, Stamp uygulamayı oradan güncel tutsun.</string>
     <string name="sort_title">Sırala</string>
     <string name="sort_name">Ada göre</string>
     <string name="sort_recently_checked">Son denetlenenler</string>
     <string name="sort_source">Kaynağa göre</string>
     <string name="remove_title">%s kaldırılsın mı?</string>
-    <string name="remove_text_installed">Jackdaw bunu izlemeyi bırakır. Uygulama yüklü kalır.</string>
-    <string name="remove_text">Jackdaw bunu izlemeyi bırakır.</string>
+    <string name="remove_text_installed">Stamp bunu izlemeyi bırakır. Uygulama yüklü kalır.</string>
+    <string name="remove_text">Stamp bunu izlemeyi bırakır.</string>
     <string name="add_title">Uygulama ekle</string>
     <string name="add_field_label">Bağlantı veya arama</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -194,8 +194,8 @@
     <string name="signer_unknown">İmzalayan hakkında henüz hiçbir şey bilinmiyor. İndirildikten sonra denetlenir.</string>
     <string name="signer_first_seen">İlk yükleme: bu sertifika hatırlanacak</string>
     <string name="signer_first_seen_claimed">İlk yükleme: dosya bu sertifikayı iddia ediyor ve Android onayladığında hatırlanacak</string>
-    <string name="signer_matches_pin">Jackdaw\'ın bu uygulama için tuttuğu sertifika ile imzalanmış</string>
-    <string name="signer_matches_pin_claimed">Dosya, Jackdaw\'ın bu uygulama için tuttuğu sertifikayı iddia ediyor. Android yüklemeden önce bunu onaylar.</string>
+    <string name="signer_matches_pin">Stamp\'ın bu uygulama için tuttuğu sertifika ile imzalanmış</string>
+    <string name="signer_matches_pin_claimed">Dosya, Stamp\'ın bu uygulama için tuttuğu sertifikayı iddia ediyor. Android yüklemeden önce bunu onaylar.</string>
     <string name="signer_matches_installed">Yüklü uygulamanın geliştiricisi ile aynı kişi tarafından imzalanmış</string>
     <string name="signer_matches_installed_claimed">Dosya, yüklü uygulamayla aynı geliştiriciyi iddia ediyor. Android yüklemeden önce bunu onaylar.</string>
     <string name="signer_mismatch">Yüklü uygulamanın geliştiricisinden başka biri tarafından imzalanmış</string>
@@ -213,17 +213,17 @@
     <string name="fingerprint_copied">Parmak izi kopyalandı</string>
     <string name="checks_virustotal">Bu dosyayı VirusTotal\'da ara</string>
     <string name="checks_virustotal_note">Tarayıcınız tarafından yalnızca dosyanın parmak izi gönderilir ve VirusTotal\'a kimsenin yüklemediği bir dosya orada bulunamaz.</string>
-    <string name="advice_network">Jackdaw kaynağa ulaşamadı. Bağlantınızı veya proxy ayarınızı kontrol edip tekrar deneyin.</string>
+    <string name="advice_network">Stamp kaynağa ulaşamadı. Bağlantınızı veya proxy ayarınızı kontrol edip tekrar deneyin.</string>
     <string name="advice_rate_limited">Kaynak kendisine ne sıklıkla sorulabileceğini sınırlıyor. Bu sunucu için kaydedilmiş bir erişim belirteci sınırı yükseltir.</string>
     <string name="advice_not_found">Proje taşınmış veya gizli hale getirilmiş olabilir. Bağlantının tarayıcıda hala açıldığını kontrol edin.</string>
     <string name="advice_auth">Kaynak erişim belirtecini reddetti. Onu Ayarlar\'daki erişim belirteçleri altında değiştirin.</string>
-    <string name="advice_parse">Kaynak, Jackdaw\'ın okuyamadığı bir şeyle cevap verdi. Kendi taraflarında geçici bir arıza olabilir.</string>
-    <string name="advice_no_releases">Proje henüz Jackdaw\'ın kullanabileceği bir sürüm yayınlamadı. Ön sürümleri açarsanız onlar da sayılır.</string>
+    <string name="advice_parse">Kaynak, Stamp\'ın okuyamadığı bir şeyle cevap verdi. Kendi taraflarında geçici bir arıza olabilir.</string>
+    <string name="advice_no_releases">Proje henüz Stamp\'ın kullanabileceği bir sürüm yayınlamadı. Ön sürümleri açarsanız onlar da sayılır.</string>
     <string name="advice_no_file">Dosyaların hiçbiri bu cihaza uymuyor. Dosya seçimi altından kendiniz birini seçin veya dahil etme ve atlama kurallarını değiştirin.</string>
     <string name="advice_checksum_mismatch">Dosya yayınlandıktan sonra değişmiş veya yolda hasar görmüş. Yüklemeyin. Daha sonra tekrar deneyin.</string>
-    <string name="advice_signer_mismatch">Dosya, bu uygulama için sabitlenmiş sertifikadan farklı bir sertifika ile imzalanmış, bu yüzden Jackdaw reddediyor. Geliştirici yeni bir anahtar duyurduysa, Gelişmiş altındaki sabitlenmiş sertifikayı değiştirin.</string>
+    <string name="advice_signer_mismatch">Dosya, bu uygulama için sabitlenmiş sertifikadan farklı bir sertifika ile imzalanmış, bu yüzden Stamp reddediyor. Geliştirici yeni bir anahtar duyurduysa, Gelişmiş altındaki sabitlenmiş sertifikayı değiştirin.</string>
     <string name="advice_signer_broken">Bu dosyadaki imzalar birbiriyle uyuşmuyor. Yüklemeyin ve geliştiriciye bildirin.</string>
-    <string name="advice_signer_mismatch_installed">Android, bir uygulamayı başka birinin imzaladığı bir uygulamayla değiştirmez ve Jackdaw da bunu denemez. Geliştirici yeni bir anahtar duyurduysa, uygulamanın kaldırılıp tekrar yüklenmesi gerekir, bu da verilerini siler.</string>
+    <string name="advice_signer_mismatch_installed">Android, bir uygulamayı başka birinin imzaladığı bir uygulamayla değiştirmez ve Stamp da bunu denemez. Geliştirici yeni bir anahtar duyurduysa, uygulamanın kaldırılıp tekrar yüklenmesi gerekir, bu da verilerini siler.</string>
     <string name="advice_package_mismatch">Dosya, izlediğinizden farklı bir uygulama. Dosya seçimi altındaki dahil etme ve atlama kurallarını kontrol edin.</string>
     <string name="advice_downgrade">Sunulan sürüm yüklü olandan daha eski ve Android yeni bir sürümün üzerine yükleme yapmaz. Geriye gitmek, önce uygulamayı kaldırmak demektir, bu da verilerini siler.</string>
     <string name="advice_install_failed">Android yüklemeyi reddetti. Gösterdiği neden yukarıdadır.</string>
@@ -236,11 +236,11 @@
     </plurals>
     <string name="detail_gone">Bu uygulama artık listenizde değil.</string>
     <string name="moved_title">Bu proje şuraya taşındı: %1$s</string>
-    <string name="moved_explain">Jackdaw yalnızca yeni adres aynı geliştirici tarafından imzalanmış aynı uygulamayı sunuyorsa geçiş yapar.</string>
+    <string name="moved_explain">Stamp yalnızca yeni adres aynı geliştirici tarafından imzalanmış aynı uygulamayı sunuyorsa geçiş yapar.</string>
     <string name="moved_follow">Yeni adresi izle</string>
     <string name="moved_keep">Eski adresi tut</string>
     <string name="moved_working">Yeni adres denetleniyor</string>
-    <string name="moved_done">Jackdaw artık yeni adresi izliyor.</string>
+    <string name="moved_done">Stamp artık yeni adresi izliyor.</string>
     <string name="silent_yes">Bu güncelleme sormadan yüklenebilir.</string>
     <string name="silent_no">Android bu güncellemeyi onaylamanızı isteyecek.</string>
     <string name="phase_queued">Diğer indirmelerin bitmesi bekleniyor</string>
@@ -348,7 +348,7 @@
     <string name="settings_keep_installers">İndirilen dosyaları sakla</string>
     <string name="settings_keep_installers_effect">Dosyalar yüklendikten sonra kalarak depolama alanı kullanır. Kapalıysa silinir.</string>
     <string name="settings_ownership">Tek güncelleyici ol</string>
-    <string name="settings_ownership_effect">Başka bir mağazanın değiştirememesi için Android\'den yalnızca Jackdaw\'ın kendi yüklediği uygulamaları güncellemesine izin vermesini iste.</string>
+    <string name="settings_ownership_effect">Başka bir mağazanın değiştirememesi için Android\'den yalnızca Stamp\'ın kendi yüklediği uygulamaları güncellemesine izin vermesini iste.</string>
     <string name="settings_ownership_unsupported">Android 14 veya daha yenisi gerekir.</string>
     <string name="settings_tokens">Erişim belirteçleri</string>
     <string name="settings_tokens_effect">Bir belirteç, hız sınırlarını yükseltir ve gizli projeleri açar. Yalnızca tam olarak kaydedildiği sunucuya gönderilir ve bir daha asla gösterilmez.</string>
@@ -379,13 +379,13 @@
     <string name="theme_light">Açık</string>
     <string name="theme_dark">Koyu</string>
     <string name="settings_dynamic_color">Duvar kağıdınızdaki renkler</string>
-    <string name="settings_dynamic_color_effect">Kapalıyken Jackdaw\'ın kendi arduvaz mavisi kullanılır.</string>
+    <string name="settings_dynamic_color_effect">Kapalıyken Stamp\'ın kendi arduvaz mavisi kullanılır.</string>
     <string name="settings_dynamic_color_unsupported">Android 12 veya daha yenisi gerekir.</string>
     <string name="settings_pure_black">Saf siyah</string>
     <string name="settings_pure_black_effect">OLED ekranları daha az yoran, koyu temada siyah arka planlar.</string>
     <string name="settings_data">İçe ve dışa aktar</string>
     <string name="settings_import">Uygulamaları içe aktar</string>
-    <string name="settings_import_effect">Bir Jackdaw veya Obtainium dışa aktarımından</string>
+    <string name="settings_import_effect">Bir Stamp veya Obtainium dışa aktarımından</string>
     <string name="settings_export">Uygulamaları dışa aktar</string>
     <string name="settings_exporting">Dışa aktarılıyor</string>
     <string name="settings_export_effect">Listenizi ve ayarlarınızı bir dosyaya kaydeder. Belirteçler asla dahil edilmez.</string>
@@ -395,14 +395,14 @@
     </plurals>
     <string name="export_failed">Dışa aktarım dosyaya yazılamadı.</string>
     <string name="settings_obtainium_links">Obtainium bağlantılarını aç</string>
-    <string name="settings_obtainium_links_effect">Obtainium için tasarlanan bağlantılar Jackdaw\'da açılır. Yine de her uygulamayı onaylarsınız.</string>
+    <string name="settings_obtainium_links_effect">Obtainium için tasarlanan bağlantılar Stamp\'da açılır. Yine de her uygulamayı onaylarsınız.</string>
     <string name="settings_about">Hakkında</string>
     <string name="about_version">Sürüm</string>
     <string name="about_licence">Lisans</string>
     <string name="about_licence_name">GNU Genel Kamu Lisansı, sürüm 3 veya daha yenisi</string>
     <string name="about_source">Kaynak kod</string>
     <string name="import_title">Uygulamaları içe aktar</string>
-    <string name="import_explain">Bir Jackdaw veya Obtainium dışa aktarım dosyası seçin. Hiçbir şey yüklenmez; uygulamalar listenize eklenir ve denetlenir.</string>
+    <string name="import_explain">Bir Stamp veya Obtainium dışa aktarım dosyası seçin. Hiçbir şey yüklenmez; uygulamalar listenize eklenir ve denetlenir.</string>
     <string name="import_pick">Bir dosya seçin</string>
     <string name="import_pick_other">Başka bir dosya seçin</string>
     <string name="import_working">Dosya okunuyor</string>
@@ -455,19 +455,19 @@
     <string name="import_stars_stop">Durdur</string>
     <string name="import_skip_no_file">Sürümlerindeki hiçbir şey bu cihaza yüklenemez.</string>
     <string name="import_skip_no_releases">Hiç sürüm yayınlamıyor.</string>
-    <string name="import_skip_not_found">Jackdaw bunu bulamadı.</string>
-    <string name="import_skip_rate_limited">GitHub, Jackdaw\'dan beklemesini istedi. Bunları daha sonra tekrar deneyin.</string>
+    <string name="import_skip_not_found">Stamp bunu bulamadı.</string>
+    <string name="import_skip_rate_limited">GitHub, Stamp\'dan beklemesini istedi. Bunları daha sonra tekrar deneyin.</string>
     <string name="import_skip_network">Bağlantı başarısız oldu.</string>
-    <string name="import_skip_other">Jackdaw sürümlerini okuyamadı.</string>
-    <string name="first_title">Jackdaw</string>
-    <string name="first_line_1">Jackdaw, uygulamaları doğrudan geliştiricilerinin yayınladığı yerden yükler ve günceller.</string>
-    <string name="first_line_2">Jackdaw, Android bir dosyayı görmeden önce onu kimin imzaladığını ve yayıncının sağlama toplamıyla eşleşip eşleşmediğini denetler.</string>
+    <string name="import_skip_other">Stamp sürümlerini okuyamadı.</string>
+    <string name="first_title">Stamp</string>
+    <string name="first_line_1">Stamp, uygulamaları doğrudan geliştiricilerinin yayınladığı yerden yükler ve günceller.</string>
+    <string name="first_line_2">Stamp, Android bir dosyayı görmeden önce onu kimin imzaladığını ve yayıncının sağlama toplamıyla eşleşip eşleşmediğini denetler.</string>
     <string name="first_line_3">Bulduğu ve yaptığı her şey sade bir dille etkinlik günlüğüne yazılır.</string>
-    <string name="first_notify_explain">Jackdaw, güncellemeler hazır olduğunda size haber verebilir. Android bildirimlere izin verilip verilmeyeceğini soracaktır.</string>
+    <string name="first_notify_explain">Stamp, güncellemeler hazır olduğunda size haber verebilir. Android bildirimlere izin verilip verilmeyeceğini soracaktır.</string>
     <string name="first_notify_denied">Bildirimler kapalı. Bunları daha sonra Ayarlar\'dan açabilirsiniz.</string>
     <string name="first_notify_allow">Bildirimlere izin ver</string>
     <string name="first_skip">Şimdi değil</string>
-    <string name="install_permission_title">Jackdaw\'a uygulama yükleme izni verin</string>
-    <string name="install_permission_body">Android, bir uygulamanın başka bir uygulama yüklemesine izin vermeden önce bir kez sorar. Sonraki ekranda Jackdaw için anahtarı açın ve geri dönün. Yükleme kendiliğinden devam eder.</string>
+    <string name="install_permission_title">Stamp\'a uygulama yükleme izni verin</string>
+    <string name="install_permission_body">Android, bir uygulamanın başka bir uygulama yüklemesine izin vermeden önce bir kez sorar. Sonraki ekranda Stamp için anahtarı açın ve geri dönün. Yükleme kendiliğinden devam eder.</string>
     <string name="install_permission_open">Ayarları aç</string>
 </resources>

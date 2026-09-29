@@ -68,7 +68,7 @@
     <string name="action_failed">Dat is niet gelukt. Probeer het zo opnieuw.</string>
     <string name="save_failed">De wijziging is niet opgeslagen. Probeer het opnieuw.</string>
     <string name="open_no_launcher">Deze app heeft geen scherm om te openen</string>
-    <string name="offline_banner">Geen internetverbinding. Jackdaw controleert opnieuw wanneer deze terug is.</string>
+    <string name="offline_banner">Geen internetverbinding. Stamp controleert opnieuw wanneer deze terug is.</string>
     <string name="offline_reason">Niet beschikbaar zonder internetverbinding</string>
     <string name="apps_search_hint">Zoek in je apps</string>
     <string name="filter_all">Alles</string>
@@ -107,7 +107,7 @@
         <item quantity="one">%d app nu controleren?</item>
         <item quantity="other">%d apps nu controleren?</item>
     </plurals>
-    <string name="bulk_check_text">Jackdaw vraagt elke bron om zijn nieuwste release. Er wordt niets geïnstalleerd.</string>
+    <string name="bulk_check_text">Stamp vraagt elke bron om zijn nieuwste release. Er wordt niets geïnstalleerd.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">%d app updaten?</item>
         <item quantity="other">%d apps updaten?</item>
@@ -121,16 +121,16 @@
         <item quantity="one">%d app niet meer volgen?</item>
         <item quantity="other">%d apps niet meer volgen?</item>
     </plurals>
-    <string name="bulk_remove_text">De apps blijven geïnstalleerd. Jackdaw controleert ze alleen niet meer op updates.</string>
+    <string name="bulk_remove_text">De apps blijven geïnstalleerd. Stamp controleert ze alleen niet meer op updates.</string>
     <string name="apps_empty_title">Nog geen apps</string>
-    <string name="apps_empty_text">Plak een link naar een projectpagina, een releasepagina of een F-Droid-repository, en Jackdaw houdt de app vanaf daar up-to-date.</string>
+    <string name="apps_empty_text">Plak een link naar een projectpagina, een releasepagina of een F-Droid-repository, en Stamp houdt de app vanaf daar up-to-date.</string>
     <string name="sort_title">Sorteren</string>
     <string name="sort_name">Op naam</string>
     <string name="sort_recently_checked">Recent gecontroleerd</string>
     <string name="sort_source">Op bron</string>
     <string name="remove_title">%s verwijderen?</string>
-    <string name="remove_text_installed">Jackdaw volgt de app niet meer. De app blijft geïnstalleerd.</string>
-    <string name="remove_text">Jackdaw volgt het niet meer.</string>
+    <string name="remove_text_installed">Stamp volgt de app niet meer. De app blijft geïnstalleerd.</string>
+    <string name="remove_text">Stamp volgt het niet meer.</string>
     <string name="add_title">App toevoegen</string>
     <string name="add_field_label">Link of zoekopdracht</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -198,8 +198,8 @@
     <string name="signer_unknown">Er is nog niets bekend over de ondertekenaar. Deze wordt na het downloaden gecontroleerd.</string>
     <string name="signer_first_seen">Eerste installatie: dit certificaat wordt onthouden</string>
     <string name="signer_first_seen_claimed">Eerste installatie: het bestand claimt dit certificaat, en het wordt onthouden zodra Android het bevestigt</string>
-    <string name="signer_matches_pin">Ondertekend met het certificaat dat Jackdaw voor deze app heeft</string>
-    <string name="signer_matches_pin_claimed">Het bestand claimt het certificaat dat Jackdaw voor deze app heeft. Android bevestigt het voor het installeren.</string>
+    <string name="signer_matches_pin">Ondertekend met het certificaat dat Stamp voor deze app heeft</string>
+    <string name="signer_matches_pin_claimed">Het bestand claimt het certificaat dat Stamp voor deze app heeft. Android bevestigt het voor het installeren.</string>
     <string name="signer_matches_installed">Ondertekend door dezelfde ontwikkelaar als de geïnstalleerde app</string>
     <string name="signer_matches_installed_claimed">Het bestand claimt dezelfde ontwikkelaar als de geïnstalleerde app. Android bevestigt dit voor het installeren.</string>
     <string name="signer_mismatch">Ondertekend door iemand anders dan de ontwikkelaar van de geïnstalleerde app</string>
@@ -217,17 +217,17 @@
     <string name="fingerprint_copied">Vingerafdruk gekopieerd</string>
     <string name="checks_virustotal">Dit bestand opzoeken op VirusTotal</string>
     <string name="checks_virustotal_note">Alleen de vingerafdruk van het bestand wordt verzonden, door je browser, en een bestand dat niemand naar VirusTotal heeft geüpload, wordt daar niet gevonden.</string>
-    <string name="advice_network">Jackdaw kon de bron niet bereiken. Controleer je verbinding of proxy en probeer het opnieuw.</string>
+    <string name="advice_network">Stamp kon de bron niet bereiken. Controleer je verbinding of proxy en probeer het opnieuw.</string>
     <string name="advice_rate_limited">De bron beperkt hoe vaak erom gevraagd kan worden. Een opgeslagen toegangstoken voor deze host verhoogt de limiet.</string>
     <string name="advice_not_found">Het project is mogelijk verplaatst of privé gemaakt. Controleer of de link nog opent in een browser.</string>
     <string name="advice_auth">De bron weigerde het toegangstoken. Vervang het in Instellingen, onder toegangstokens.</string>
-    <string name="advice_parse">De bron antwoordde met iets dat Jackdaw niet kon lezen. Het is mogelijk een tijdelijke storing aan hun kant.</string>
-    <string name="advice_no_releases">Het project heeft nog geen release gepubliceerd die Jackdaw kan gebruiken. Pre-releases tellen mee als je ze aanzet.</string>
+    <string name="advice_parse">De bron antwoordde met iets dat Stamp niet kon lezen. Het is mogelijk een tijdelijke storing aan hun kant.</string>
+    <string name="advice_no_releases">Het project heeft nog geen release gepubliceerd die Stamp kan gebruiken. Pre-releases tellen mee als je ze aanzet.</string>
     <string name="advice_no_file">Geen van de bestanden past op dit apparaat. Kies er zelf een onder Bestandskeuze of pas de patronen voor opnemen en uitsluiten aan.</string>
     <string name="advice_checksum_mismatch">Het bestand is veranderd nadat het was gepubliceerd, of is onderweg beschadigd. Installeer het niet. Probeer het later opnieuw.</string>
-    <string name="advice_signer_mismatch">Het bestand is ondertekend met een ander certificaat dan het vastgezette certificaat voor deze app, dus Jackdaw weigert het. Als de ontwikkelaar een nieuwe sleutel heeft aangekondigd, vervang dan het vastgezette certificaat onder Geavanceerd.</string>
+    <string name="advice_signer_mismatch">Het bestand is ondertekend met een ander certificaat dan het vastgezette certificaat voor deze app, dus Stamp weigert het. Als de ontwikkelaar een nieuwe sleutel heeft aangekondigd, vervang dan het vastgezette certificaat onder Geavanceerd.</string>
     <string name="advice_signer_broken">De handtekeningen in dit bestand komen niet met elkaar overeen. Installeer het niet en laat het de ontwikkelaar weten.</string>
-    <string name="advice_signer_mismatch_installed">Android vervangt geen app door een app die door iemand anders is ondertekend, en Jackdaw zal dit niet proberen. Als de ontwikkelaar een nieuwe sleutel heeft aangekondigd, moet de app worden verwijderd en opnieuw worden geïnstalleerd. Hierbij worden de gegevens gewist.</string>
+    <string name="advice_signer_mismatch_installed">Android vervangt geen app door een app die door iemand anders is ondertekend, en Stamp zal dit niet proberen. Als de ontwikkelaar een nieuwe sleutel heeft aangekondigd, moet de app worden verwijderd en opnieuw worden geïnstalleerd. Hierbij worden de gegevens gewist.</string>
     <string name="advice_package_mismatch">Het bestand is een andere app dan degene die je volgt. Controleer de patronen voor opnemen en uitsluiten onder Bestandskeuze.</string>
     <string name="advice_downgrade">De aangeboden versie is ouder dan de geïnstalleerde versie, en Android installeert niet over een nieuwere versie. Teruggaan betekent dat de app eerst verwijderd moet worden. Hierbij worden de gegevens gewist.</string>
     <string name="advice_install_failed">Android weigerde de installatie. De opgegeven reden staat hierboven.</string>
@@ -240,11 +240,11 @@
     </plurals>
     <string name="detail_gone">Deze app staat niet meer in je lijst.</string>
     <string name="moved_title">Dit project is verplaatst naar %1$s</string>
-    <string name="moved_explain">Jackdaw schakelt alleen over als het nieuwe adres dezelfde app aanbiedt, ondertekend door dezelfde ontwikkelaar.</string>
+    <string name="moved_explain">Stamp schakelt alleen over als het nieuwe adres dezelfde app aanbiedt, ondertekend door dezelfde ontwikkelaar.</string>
     <string name="moved_follow">Het daar volgen</string>
     <string name="moved_keep">Het oude adres behouden</string>
     <string name="moved_working">Het nieuwe adres controleren</string>
-    <string name="moved_done">Jackdaw volgt nu het nieuwe adres.</string>
+    <string name="moved_done">Stamp volgt nu het nieuwe adres.</string>
     <string name="silent_yes">Deze update kan zonder melding worden geïnstalleerd.</string>
     <string name="silent_no">Android zal je vragen om deze update te bevestigen.</string>
     <string name="phase_queued">Wachten tot andere downloads klaar zijn</string>
@@ -352,7 +352,7 @@
     <string name="settings_keep_installers">Gedownloade bestanden bewaren</string>
     <string name="settings_keep_installers_effect">Bestanden blijven na installatie en gebruiken opslag. Uit verwijdert ze.</string>
     <string name="settings_ownership">De enige updater zijn</string>
-    <string name="settings_ownership_effect">Vraag Android om alleen Jackdaw de apps te laten updaten die het installeert, zodat een andere store ze niet kan verwisselen.</string>
+    <string name="settings_ownership_effect">Vraag Android om alleen Stamp de apps te laten updaten die het installeert, zodat een andere store ze niet kan verwisselen.</string>
     <string name="settings_ownership_unsupported">Heeft Android 14 of nieuwer nodig.</string>
     <string name="settings_tokens">Toegangstokens</string>
     <string name="settings_tokens_effect">Een token verhoogt limieten en opent privéprojecten. Het wordt alleen verzonden naar de exacte host waarvoor het is opgeslagen, en het wordt nooit meer getoond.</string>
@@ -383,13 +383,13 @@
     <string name="theme_light">Licht</string>
     <string name="theme_dark">Donker</string>
     <string name="settings_dynamic_color">Kleuren van je achtergrond</string>
-    <string name="settings_dynamic_color_effect">Uit gebruikt Jackdaw\'s eigen leisteenblauw.</string>
+    <string name="settings_dynamic_color_effect">Uit gebruikt Stamp\'s eigen leisteenblauw.</string>
     <string name="settings_dynamic_color_unsupported">Heeft Android 12 of nieuwer nodig.</string>
     <string name="settings_pure_black">Puur zwart</string>
     <string name="settings_pure_black_effect">Zwarte achtergronden in het donkere thema, rustiger voor OLED-schermen.</string>
     <string name="settings_data">Importeren en exporteren</string>
     <string name="settings_import">Apps importeren</string>
-    <string name="settings_import_effect">Van een Jackdaw of Obtainium export</string>
+    <string name="settings_import_effect">Van een Stamp of Obtainium export</string>
     <string name="settings_export">Apps exporteren</string>
     <string name="settings_exporting">Exporteren</string>
     <string name="settings_export_effect">Slaat je lijst en instellingen op in een bestand. Tokens worden nooit meegenomen.</string>
@@ -399,14 +399,14 @@
     </plurals>
     <string name="export_failed">De export kon niet worden geschreven.</string>
     <string name="settings_obtainium_links">Obtainium links openen</string>
-    <string name="settings_obtainium_links_effect">Links bedoeld voor Obtainium openen in plaats daarvan in Jackdaw. Je bevestigt nog steeds elke app.</string>
+    <string name="settings_obtainium_links_effect">Links bedoeld voor Obtainium openen in plaats daarvan in Stamp. Je bevestigt nog steeds elke app.</string>
     <string name="settings_about">Over</string>
     <string name="about_version">Versie</string>
     <string name="about_licence">Licentie</string>
     <string name="about_licence_name">GNU General Public License, versie 3 of nieuwer</string>
     <string name="about_source">Broncode</string>
     <string name="import_title">Apps importeren</string>
-    <string name="import_explain">Kies een exportbestand van Jackdaw of Obtainium. Er wordt niets geïnstalleerd; de apps worden aan je lijst toegevoegd en gecontroleerd.</string>
+    <string name="import_explain">Kies een exportbestand van Stamp of Obtainium. Er wordt niets geïnstalleerd; de apps worden aan je lijst toegevoegd en gecontroleerd.</string>
     <string name="import_pick">Kies een bestand</string>
     <string name="import_pick_other">Kies een ander bestand</string>
     <string name="import_working">Bestand lezen</string>
@@ -459,19 +459,19 @@
     <string name="import_stars_stop">Stoppen</string>
     <string name="import_skip_no_file">Er kan niets uit zijn releases op dit apparaat worden geïnstalleerd.</string>
     <string name="import_skip_no_releases">Het publiceert geen releases.</string>
-    <string name="import_skip_not_found">Jackdaw kon het niet vinden.</string>
-    <string name="import_skip_rate_limited">GitHub vroeg Jackdaw te wachten. Probeer deze later opnieuw.</string>
+    <string name="import_skip_not_found">Stamp kon het niet vinden.</string>
+    <string name="import_skip_rate_limited">GitHub vroeg Stamp te wachten. Probeer deze later opnieuw.</string>
     <string name="import_skip_network">De verbinding is mislukt.</string>
-    <string name="import_skip_other">Jackdaw kon zijn releases niet lezen.</string>
-    <string name="first_title">Jackdaw</string>
-    <string name="first_line_1">Jackdaw installeert en updatet apps rechtstreeks vanaf de plek waar hun ontwikkelaars ze publiceren.</string>
-    <string name="first_line_2">Voordat Android een bestand ziet, controleert Jackdaw wie het heeft ondertekend en of het overeenkomt met de checksum van de uitgever.</string>
+    <string name="import_skip_other">Stamp kon zijn releases niet lezen.</string>
+    <string name="first_title">Stamp</string>
+    <string name="first_line_1">Stamp installeert en updatet apps rechtstreeks vanaf de plek waar hun ontwikkelaars ze publiceren.</string>
+    <string name="first_line_2">Voordat Android een bestand ziet, controleert Stamp wie het heeft ondertekend en of het overeenkomt met de checksum van de uitgever.</string>
     <string name="first_line_3">Alles wat het vindt en doet, wordt in duidelijke taal in het activiteitenlogboek geschreven.</string>
-    <string name="first_notify_explain">Jackdaw kan je vertellen wanneer updates klaar zijn. Android zal vragen of je meldingen wilt toestaan.</string>
+    <string name="first_notify_explain">Stamp kan je vertellen wanneer updates klaar zijn. Android zal vragen of je meldingen wilt toestaan.</string>
     <string name="first_notify_denied">Meldingen staan uit. Je kunt ze later aanzetten in Instellingen.</string>
     <string name="first_notify_allow">Meldingen toestaan</string>
     <string name="first_skip">Nu niet</string>
-    <string name="install_permission_title">Jackdaw toestaan apps te installeren</string>
-    <string name="install_permission_body">Android vraagt eenmalig voordat een app een andere mag installeren. Zet op het volgende scherm de schakelaar voor Jackdaw aan en kom dan terug. De installatie gaat vanzelf verder.</string>
+    <string name="install_permission_title">Stamp toestaan apps te installeren</string>
+    <string name="install_permission_body">Android vraagt eenmalig voordat een app een andere mag installeren. Zet op het volgende scherm de schakelaar voor Stamp aan en kom dan terug. De installatie gaat vanzelf verder.</string>
     <string name="install_permission_open">Instellingen openen</string>
 </resources>

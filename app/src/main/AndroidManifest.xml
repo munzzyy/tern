@@ -35,7 +35,7 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:banner="@drawable/banner"
-        android:theme="@style/Theme.Jackdaw">
+        android:theme="@style/Theme.Stamp">
 
         <activity
             android:name=".MainActivity"
@@ -56,7 +56,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="jackdaw" />
+                <data android:scheme="stamp" />
             </intent-filter>
         </activity>
 

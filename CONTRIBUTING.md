@@ -39,8 +39,8 @@ Sources that republish other people's apps are out of scope.
 A debug build runs the real engine. To get the stand-in with its invented apps:
 
 ```sh
-adb shell run-as io.github.munzzyy.jackdaw.debug touch files/use-stand-in
-adb shell am start -n io.github.munzzyy.jackdaw.debug/io.github.munzzyy.jackdaw.MainActivity --es scenario default
+adb shell run-as io.github.munzzyy.stamp.debug touch files/use-stand-in
+adb shell am start -n io.github.munzzyy.stamp.debug/io.github.munzzyy.stamp.MainActivity --es scenario default
 ```
 
 Other scenarios: `empty`, `firstrun`, `many`, `errors`, `offline`. Check a

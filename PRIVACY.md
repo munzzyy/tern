@@ -1,6 +1,6 @@
 # Privacy
 
-Jackdaw has no server of its own and no account. It collects no analytics and
+Stamp has no server of its own and no account. It collects no analytics and
 sends no crash reports, because there is nobody for it to report to.
 
 ## What leaves the phone

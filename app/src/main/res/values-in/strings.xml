@@ -67,7 +67,7 @@
     <string name="action_failed">Tindakan tersebut tidak berhasil. Coba lagi sebentar lagi.</string>
     <string name="save_failed">Perubahan tidak disimpan. Coba lagi.</string>
     <string name="open_no_launcher">Aplikasi ini tidak memiliki layar untuk dibuka</string>
-    <string name="offline_banner">Tidak ada koneksi internet. Jackdaw akan memeriksa lagi setelah terhubung kembali.</string>
+    <string name="offline_banner">Tidak ada koneksi internet. Stamp akan memeriksa lagi setelah terhubung kembali.</string>
     <string name="offline_reason">Tidak tersedia tanpa koneksi internet</string>
     <string name="apps_search_hint">Cari aplikasi Anda</string>
     <string name="filter_all">Semua</string>
@@ -101,7 +101,7 @@
     <plurals name="bulk_check_title">
         <item quantity="other">Periksa %d aplikasi sekarang?</item>
     </plurals>
-    <string name="bulk_check_text">Jackdaw meminta rilis terbaru dari setiap sumber. Tidak ada yang diinstal.</string>
+    <string name="bulk_check_text">Stamp meminta rilis terbaru dari setiap sumber. Tidak ada yang diinstal.</string>
     <plurals name="bulk_update_title">
         <item quantity="other">Perbarui %d aplikasi?</item>
     </plurals>
@@ -112,16 +112,16 @@
     <plurals name="bulk_remove_title">
         <item quantity="other">Berhenti mengikuti %d aplikasi?</item>
     </plurals>
-    <string name="bulk_remove_text">Aplikasi tetap terinstal. Jackdaw hanya berhenti memeriksanya untuk pembaruan.</string>
+    <string name="bulk_remove_text">Aplikasi tetap terinstal. Stamp hanya berhenti memeriksanya untuk pembaruan.</string>
     <string name="apps_empty_title">Belum ada aplikasi</string>
-    <string name="apps_empty_text">Tempel tautan ke halaman proyek, halaman rilis, atau repositori F-Droid, dan Jackdaw akan terus memperbarui aplikasi dari sana.</string>
+    <string name="apps_empty_text">Tempel tautan ke halaman proyek, halaman rilis, atau repositori F-Droid, dan Stamp akan terus memperbarui aplikasi dari sana.</string>
     <string name="sort_title">Urutkan</string>
     <string name="sort_name">Berdasarkan nama</string>
     <string name="sort_recently_checked">Baru saja diperiksa</string>
     <string name="sort_source">Berdasarkan sumber</string>
     <string name="remove_title">Hapus %s?</string>
-    <string name="remove_text_installed">Jackdaw berhenti mengikutinya. Aplikasi tetap terinstal.</string>
-    <string name="remove_text">Jackdaw berhenti mengikutinya.</string>
+    <string name="remove_text_installed">Stamp berhenti mengikutinya. Aplikasi tetap terinstal.</string>
+    <string name="remove_text">Stamp berhenti mengikutinya.</string>
     <string name="add_title">Tambah aplikasi</string>
     <string name="add_field_label">Tautan atau pencarian</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -181,8 +181,8 @@
     <string name="signer_unknown">Belum ada yang diketahui tentang penandatangan. Ini akan diperiksa setelah diunduh.</string>
     <string name="signer_first_seen">Instal pertama: sertifikat ini akan diingat</string>
     <string name="signer_first_seen_claimed">Instal pertama: file mengklaim sertifikat ini, dan akan diingat setelah Android mengonfirmasinya</string>
-    <string name="signer_matches_pin">Ditandatangani dengan sertifikat yang disimpan Jackdaw untuk aplikasi ini</string>
-    <string name="signer_matches_pin_claimed">File mengklaim sertifikat yang disimpan Jackdaw untuk aplikasi ini. Android mengonfirmasinya sebelum menginstal.</string>
+    <string name="signer_matches_pin">Ditandatangani dengan sertifikat yang disimpan Stamp untuk aplikasi ini</string>
+    <string name="signer_matches_pin_claimed">File mengklaim sertifikat yang disimpan Stamp untuk aplikasi ini. Android mengonfirmasinya sebelum menginstal.</string>
     <string name="signer_matches_installed">Ditandatangani oleh pengembang yang sama dengan aplikasi yang terinstal</string>
     <string name="signer_matches_installed_claimed">File mengklaim pengembang yang sama dengan aplikasi yang terinstal. Android mengonfirmasinya sebelum menginstal.</string>
     <string name="signer_mismatch">Ditandatangani oleh selain pengembang aplikasi yang terinstal</string>
@@ -199,17 +199,17 @@
     <string name="fingerprint_copied">Sidik jari disalin</string>
     <string name="checks_virustotal">Cari file ini di VirusTotal</string>
     <string name="checks_virustotal_note">Hanya sidik jari file yang dikirim, oleh browser Anda, dan file yang belum pernah diunggah oleh siapa pun ke VirusTotal tidak akan ditemukan di sana.</string>
-    <string name="advice_network">Jackdaw tidak dapat menjangkau sumber. Periksa koneksi atau proksi Anda, lalu coba lagi.</string>
+    <string name="advice_network">Stamp tidak dapat menjangkau sumber. Periksa koneksi atau proksi Anda, lalu coba lagi.</string>
     <string name="advice_rate_limited">Sumber membatasi seberapa sering ini dapat diminta. Token akses yang disimpan untuk host ini akan menaikkan batas tersebut.</string>
     <string name="advice_not_found">Proyek mungkin telah dipindahkan atau diubah menjadi privat. Periksa apakah tautan tersebut masih dapat dibuka di browser.</string>
     <string name="advice_auth">Sumber menolak token akses. Ganti di Setelan, di bawah token akses.</string>
-    <string name="advice_parse">Sumber menjawab dengan sesuatu yang tidak dapat dibaca Jackdaw. Mungkin ada kesalahan sementara di pihak mereka.</string>
-    <string name="advice_no_releases">Proyek belum menerbitkan rilis yang dapat digunakan Jackdaw. Pra-rilis dihitung jika Anda menyalakannya.</string>
+    <string name="advice_parse">Sumber menjawab dengan sesuatu yang tidak dapat dibaca Stamp. Mungkin ada kesalahan sementara di pihak mereka.</string>
+    <string name="advice_no_releases">Proyek belum menerbitkan rilis yang dapat digunakan Stamp. Pra-rilis dihitung jika Anda menyalakannya.</string>
     <string name="advice_no_file">Tidak ada file yang cocok untuk perangkat ini. Pilih sendiri di bawah Pilihan file, atau ubah pola sertakan dan kecualikan.</string>
     <string name="advice_checksum_mismatch">File berubah setelah diterbitkan atau rusak di perjalanan. Jangan menginstalnya. Coba lagi nanti.</string>
-    <string name="advice_signer_mismatch">File ditandatangani dengan sertifikat yang berbeda dari yang disematkan untuk aplikasi ini, jadi Jackdaw menolak. Jika pengembang mengumumkan kunci baru, ganti yang disematkan di Lanjutan.</string>
+    <string name="advice_signer_mismatch">File ditandatangani dengan sertifikat yang berbeda dari yang disematkan untuk aplikasi ini, jadi Stamp menolak. Jika pengembang mengumumkan kunci baru, ganti yang disematkan di Lanjutan.</string>
     <string name="advice_signer_broken">Tanda tangan dalam file ini tidak sesuai satu sama lain. Jangan menginstalnya, dan beri tahu pengembang.</string>
-    <string name="advice_signer_mismatch_installed">Android tidak mengganti aplikasi dengan yang ditandatangani oleh orang lain, dan Jackdaw tidak akan mencoba. Jika pengembang mengumumkan kunci baru, aplikasi harus dihapus dan diinstal lagi, yang akan menghapus datanya.</string>
+    <string name="advice_signer_mismatch_installed">Android tidak mengganti aplikasi dengan yang ditandatangani oleh orang lain, dan Stamp tidak akan mencoba. Jika pengembang mengumumkan kunci baru, aplikasi harus dihapus dan diinstal lagi, yang akan menghapus datanya.</string>
     <string name="advice_package_mismatch">File ini adalah aplikasi yang berbeda dari yang Anda ikuti. Periksa pola sertakan dan kecualikan di bawah Pilihan file.</string>
     <string name="advice_downgrade">Versi yang ditawarkan lebih lama dari yang terinstal, dan Android tidak menginstal menimpa versi yang lebih baru. Kembali berarti menghapus aplikasi terlebih dahulu, yang akan menghapus datanya.</string>
     <string name="advice_install_failed">Android menolak instalasi. Alasan yang diberikan ditunjukkan di atas.</string>
@@ -221,11 +221,11 @@
     </plurals>
     <string name="detail_gone">Aplikasi ini tidak lagi ada di daftar Anda.</string>
     <string name="moved_title">Proyek ini pindah ke %1$s</string>
-    <string name="moved_explain">Jackdaw hanya beralih jika alamat baru menawarkan aplikasi yang sama, ditandatangani oleh pengembang yang sama.</string>
+    <string name="moved_explain">Stamp hanya beralih jika alamat baru menawarkan aplikasi yang sama, ditandatangani oleh pengembang yang sama.</string>
     <string name="moved_follow">Ikuti ke sana</string>
     <string name="moved_keep">Pertahankan alamat lama</string>
     <string name="moved_working">Memeriksa alamat baru</string>
-    <string name="moved_done">Jackdaw sekarang mengikuti alamat baru.</string>
+    <string name="moved_done">Stamp sekarang mengikuti alamat baru.</string>
     <string name="silent_yes">Pembaruan ini dapat diinstal tanpa konfirmasi.</string>
     <string name="silent_no">Android akan meminta Anda mengonfirmasi pembaruan ini.</string>
     <string name="phase_queued">Menunggu unduhan lain selesai</string>
@@ -331,7 +331,7 @@
     <string name="settings_keep_installers">Simpan file unduhan</string>
     <string name="settings_keep_installers_effect">File tetap ada setelah menginstal, menggunakan penyimpanan. Mati akan menghapusnya.</string>
     <string name="settings_ownership">Jadi satu-satunya pembaru</string>
-    <string name="settings_ownership_effect">Minta Android agar hanya Jackdaw yang memperbarui aplikasi yang diinstalnya, jadi toko lain tidak dapat menukarnya.</string>
+    <string name="settings_ownership_effect">Minta Android agar hanya Stamp yang memperbarui aplikasi yang diinstalnya, jadi toko lain tidak dapat menukarnya.</string>
     <string name="settings_ownership_unsupported">Membutuhkan Android 14 atau yang lebih baru.</string>
     <string name="settings_tokens">Token akses</string>
     <string name="settings_tokens_effect">Token menaikkan batas frekuensi dan membuka proyek privat. Token ini hanya dikirim ke host persis tempat penyimpanannya, dan tidak akan pernah ditampilkan lagi.</string>
@@ -362,13 +362,13 @@
     <string name="theme_light">Terang</string>
     <string name="theme_dark">Gelap</string>
     <string name="settings_dynamic_color">Warna dari wallpaper Anda</string>
-    <string name="settings_dynamic_color_effect">Mati menggunakan biru batu tulis milik Jackdaw.</string>
+    <string name="settings_dynamic_color_effect">Mati menggunakan biru batu tulis milik Stamp.</string>
     <string name="settings_dynamic_color_unsupported">Membutuhkan Android 12 atau yang lebih baru.</string>
     <string name="settings_pure_black">Hitam pekat</string>
     <string name="settings_pure_black_effect">Latar belakang hitam di tema gelap, lebih nyaman di layar OLED.</string>
     <string name="settings_data">Impor dan ekspor</string>
     <string name="settings_import">Impor aplikasi</string>
-    <string name="settings_import_effect">Dari ekspor Jackdaw atau Obtainium</string>
+    <string name="settings_import_effect">Dari ekspor Stamp atau Obtainium</string>
     <string name="settings_export">Ekspor aplikasi</string>
     <string name="settings_exporting">Mengekspor</string>
     <string name="settings_export_effect">Menyimpan daftar dan setelan Anda ke dalam sebuah file. Token tidak pernah disertakan.</string>
@@ -377,14 +377,14 @@
     </plurals>
     <string name="export_failed">Ekspor tidak dapat ditulis.</string>
     <string name="settings_obtainium_links">Buka tautan Obtainium</string>
-    <string name="settings_obtainium_links_effect">Tautan yang ditujukan untuk Obtainium dibuka di Jackdaw. Anda tetap mengonfirmasi setiap aplikasi.</string>
+    <string name="settings_obtainium_links_effect">Tautan yang ditujukan untuk Obtainium dibuka di Stamp. Anda tetap mengonfirmasi setiap aplikasi.</string>
     <string name="settings_about">Tentang</string>
     <string name="about_version">Versi</string>
     <string name="about_licence">Lisensi</string>
     <string name="about_licence_name">GNU General Public License, versi 3 atau lebih baru</string>
     <string name="about_source">Kode sumber</string>
     <string name="import_title">Impor aplikasi</string>
-    <string name="import_explain">Pilih file ekspor dari Jackdaw atau Obtainium. Tidak ada yang diinstal; aplikasi ditambahkan ke daftar Anda dan diperiksa.</string>
+    <string name="import_explain">Pilih file ekspor dari Stamp atau Obtainium. Tidak ada yang diinstal; aplikasi ditambahkan ke daftar Anda dan diperiksa.</string>
     <string name="import_pick">Pilih file</string>
     <string name="import_pick_other">Pilih file lain</string>
     <string name="import_working">Membaca file</string>
@@ -430,19 +430,19 @@
     <string name="import_stars_stop">Berhenti</string>
     <string name="import_skip_no_file">Tidak ada satu pun di dalam rilisnya yang dapat diinstal di perangkat ini.</string>
     <string name="import_skip_no_releases">Ini tidak menerbitkan rilis apa pun.</string>
-    <string name="import_skip_not_found">Jackdaw tidak dapat menemukannya.</string>
-    <string name="import_skip_rate_limited">GitHub meminta Jackdaw untuk menunggu. Coba lagi nanti.</string>
+    <string name="import_skip_not_found">Stamp tidak dapat menemukannya.</string>
+    <string name="import_skip_rate_limited">GitHub meminta Stamp untuk menunggu. Coba lagi nanti.</string>
     <string name="import_skip_network">Koneksi gagal.</string>
-    <string name="import_skip_other">Jackdaw tidak dapat membaca rilisnya.</string>
-    <string name="first_title">Jackdaw</string>
-    <string name="first_line_1">Jackdaw menginstal dan memperbarui aplikasi langsung dari tempat pengembangnya menerbitkan aplikasi tersebut.</string>
-    <string name="first_line_2">Sebelum Android melihat file, Jackdaw memeriksa siapa yang menandatanganinya dan apakah itu cocok dengan checksum penerbit.</string>
+    <string name="import_skip_other">Stamp tidak dapat membaca rilisnya.</string>
+    <string name="first_title">Stamp</string>
+    <string name="first_line_1">Stamp menginstal dan memperbarui aplikasi langsung dari tempat pengembangnya menerbitkan aplikasi tersebut.</string>
+    <string name="first_line_2">Sebelum Android melihat file, Stamp memeriksa siapa yang menandatanganinya dan apakah itu cocok dengan checksum penerbit.</string>
     <string name="first_line_3">Semua yang ditemukan dan dilakukannya ditulis di log aktivitas, dalam kata-kata yang sederhana.</string>
-    <string name="first_notify_explain">Jackdaw dapat memberi tahu Anda saat pembaruan siap. Android akan bertanya apakah akan mengizinkan notifikasi.</string>
+    <string name="first_notify_explain">Stamp dapat memberi tahu Anda saat pembaruan siap. Android akan bertanya apakah akan mengizinkan notifikasi.</string>
     <string name="first_notify_denied">Notifikasi dimatikan. Anda dapat menyalakannya nanti di Setelan.</string>
     <string name="first_notify_allow">Izinkan notifikasi</string>
     <string name="first_skip">Nanti saja</string>
-    <string name="install_permission_title">Izinkan Jackdaw menginstal aplikasi</string>
-    <string name="install_permission_body">Android bertanya sekali sebelum satu aplikasi dapat menginstal aplikasi lain. Di layar berikutnya, nyalakan sakelar untuk Jackdaw, lalu kembali. Proses instal akan berlanjut dengan sendirinya.</string>
+    <string name="install_permission_title">Izinkan Stamp menginstal aplikasi</string>
+    <string name="install_permission_body">Android bertanya sekali sebelum satu aplikasi dapat menginstal aplikasi lain. Di layar berikutnya, nyalakan sakelar untuk Stamp, lalu kembali. Proses instal akan berlanjut dengan sendirinya.</string>
     <string name="install_permission_open">Buka setelan</string>
 </resources>

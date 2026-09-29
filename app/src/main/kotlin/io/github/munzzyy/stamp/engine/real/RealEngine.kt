@@ -63,11 +63,14 @@ import io.github.munzzyy.stamp.install.Installer
 import io.github.munzzyy.stamp.install.PackageManagerArchiveReader
 import io.github.munzzyy.stamp.install.SessionInstaller
 import io.github.munzzyy.stamp.net.ProxyChoice
+import io.github.munzzyy.stamp.net.ProxyDoor
 import io.github.munzzyy.stamp.net.UrlConnectionHttp
 import io.github.munzzyy.stamp.work.Notifier
 import io.github.munzzyy.stamp.work.Scheduler
 import java.io.Closeable
 import java.io.File
+import java.io.IOException
+import java.net.Proxy
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -212,6 +215,10 @@ class RealEngine(
         checks.reevaluate(appId, network = false)
         publish()
     }
+
+    /** The proxy the user chose, as it is now. Throws when the setting names a proxy that cannot be built. */
+    @Throws(IOException::class)
+    fun proxy(): Proxy = ProxyChoice.of(_settings.value)
 
     override fun resumeInstall(appId: String): Boolean = installs.resume(appId)
 
@@ -646,9 +653,9 @@ class RealEngine(
         @Synchronized
         fun shared(context: Context): RealEngine {
             shared?.let { return it }
-            var engine: RealEngine? = null
-            val http = UrlConnectionHttp(proxy = { ProxyChoice.of(engine?.settings?.value ?: Settings()) })
-            engine = RealEngine(context, http)
+            val door = ProxyDoor()
+            val engine = RealEngine(context, UrlConnectionHttp(proxy = door::proxy))
+            door.follow(engine::proxy)
             shared = engine
             return engine
         }

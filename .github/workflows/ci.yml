@@ -22,6 +22,8 @@ jobs:
         run: bash tools/check-wrapper.sh
       - name: translations match English
         run: python3 tools/strings.py check app/src/main/res
+      - name: the network has one door, and it goes through the proxy
+        run: bash tools/check-network-doors.sh
       - name: core tests
         run: ./gradlew --no-daemon :core:test
       - name: the page of the handoff seals what the device opens

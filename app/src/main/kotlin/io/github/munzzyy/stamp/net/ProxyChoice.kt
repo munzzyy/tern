@@ -24,3 +24,20 @@ object ProxyChoice {
         }
     }
 }
+
+/**
+ * The proxy every request leaves through. It is asked for each request, so a change of the setting
+ * holds from the next request on. While there is nobody to ask, a request fails: the transport is
+ * made before the engine that knows the setting, and must not go direct in between.
+ */
+class ProxyDoor {
+    @Volatile
+    private var ask: (() -> Proxy)? = null
+
+    fun follow(ask: () -> Proxy) {
+        this.ask = ask
+    }
+
+    @Throws(IOException::class)
+    fun proxy(): Proxy = (ask ?: throw ProxySettingsException("The proxy setting is not known yet")).invoke()
+}

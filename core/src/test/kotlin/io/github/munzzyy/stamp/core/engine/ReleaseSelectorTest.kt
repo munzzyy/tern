@@ -99,4 +99,38 @@ class ReleaseSelectorTest {
     fun emptyInputGivesNoCandidate() {
         assertNull(pick(emptyList()).candidate)
     }
+
+    @Test
+    fun aReleaseThatOnlyOffersAnotherAppsFileIsPassedOverForTheNextOne() {
+        val releases = listOf(release("v2.0.0"), release("v1.9.0"))
+        val wrongPackage = setOf("v2.0.0")
+        val picked = ReleaseSelector.select(releases, ReleasePolicy(), now, matchesPackage = { it.id !in wrongPackage }) { it.installable.isNotEmpty() }
+        assertEquals("v1.9.0", picked.candidate!!.id)
+        assertEquals(Rejection.WRONG_PACKAGE, picked.rejected.single().second)
+    }
+
+    @Test
+    fun givesUpAfterFourReleasesOfTheWrongPackageAndTakesTheFifthAsIs() {
+        val releases = (5 downTo 1).map { release("v$it.0.0") }
+        var checked = 0
+        val picked = ReleaseSelector.select(releases, ReleasePolicy(), now, matchesPackage = { checked++; false }) { it.installable.isNotEmpty() }
+        assertEquals("v1.0.0", picked.candidate!!.id)
+        assertEquals(4, checked)
+        assertEquals(4, picked.rejected.count { it.second == Rejection.WRONG_PACKAGE })
+    }
+
+    @Test
+    fun everyInspectedReleaseBeingTheWrongPackageIsReportedAsSuch() {
+        val releases = listOf(release("v2.0.0"), release("v1.9.0"))
+        val picked = ReleaseSelector.select(releases, ReleasePolicy(), now, matchesPackage = { false }) { it.installable.isNotEmpty() }
+        assertNull(picked.candidate)
+        assertEquals(listOf(Rejection.WRONG_PACKAGE, Rejection.WRONG_PACKAGE), picked.rejected.map { it.second })
+    }
+
+    @Test
+    fun withoutAPackageCheckEveryUsableReleaseIsAccepted() {
+        val releases = listOf(release("v2.0.0"), release("v1.9.0"))
+        val picked = ReleaseSelector.select(releases, ReleasePolicy(), now) { it.installable.isNotEmpty() }
+        assertEquals("v2.0.0", picked.candidate!!.id)
+    }
 }

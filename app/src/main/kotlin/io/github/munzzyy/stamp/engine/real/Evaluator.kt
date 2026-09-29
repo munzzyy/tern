@@ -54,7 +54,10 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
             return Evaluation(AppStatus.ERROR, problem = emptyListing(config))
         }
         val selection = try {
-            ReleaseSelector.select(state.releases, config.releases, nowMs()) { config.trackOnly || rank(config, it).isNotEmpty() }
+            ReleaseSelector.select(
+                state.releases, config.releases, nowMs(),
+                matchesPackage = { release -> config.trackOnly || matchesConfiguredPackage(config.packageName, rank(config, release).asSequence().take(MAX_CANDIDATES).map { inspect(it.asset, release.id) }) },
+            ) { config.trackOnly || rank(config, it).isNotEmpty() }
         } catch (e: PatternException) {
             return patternFailure(filters, e.message)
         } catch (e: AssetPolicyException) {
@@ -68,7 +71,7 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
         }
 
         val ranked = rank(config, candidate)
-        val (chosen, facts) = choose(config, installed, candidate, ranked, inspect)
+        val (chosen, facts) = chooseFile(config, installed, candidate, ranked, inspect)
         val app = installed?.app
         var decision = UpdateDecision.decide(
             candidate, app, state.record, facts?.inspection, config.packageName, config.pinnedSigners,
@@ -113,20 +116,6 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
     }
 
     fun rank(config: AppConfig, release: Release): List<Pick> = AssetPicker.rank(release.assets, device, config.assets)
-
-    /**
-     * With something installed or pinned, the first of the best few files that is not known to be
-     * refused wins: a project may sign a store build and a free build differently.
-     */
-    private fun choose(config: AppConfig, installed: DeviceApp?, release: Release, ranked: List<Pick>, inspect: (Asset, String) -> FileFacts?): Pair<Pick, FileFacts?> {
-        val best = ranked.first()
-        if (installed == null && config.pinnedSigners.isEmpty()) return best to inspect(best.asset, release.id)
-        for (pick in ranked.take(MAX_CANDIDATES)) {
-            val facts = inspect(pick.asset, release.id) ?: return pick to null
-            if (UpdateDecision.blockFor(facts.inspection, installed?.app, config.packageName, config.pinnedSigners) == null) return pick to facts
-        }
-        return best to inspect(best.asset, release.id)
-    }
 
     fun verification(config: AppConfig, state: AppState, release: Release, asset: Asset, facts: FileFacts?, installed: DeviceApp?): Verification {
         val signerState = when {
@@ -181,6 +170,7 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
 
     private fun noCandidate(reasons: List<Rejection>, state: AppState): Problem = when {
         reasons.isNotEmpty() && reasons.all { it == Rejection.PRERELEASE } -> Problem(ProblemKind.NO_RELEASES, texts.onlyPrereleases())
+        reasons.isNotEmpty() && reasons.all { it == Rejection.WRONG_PACKAGE } -> Problem(ProblemKind.PACKAGE_MISMATCH, texts.onlyOtherPackage())
         Rejection.NO_USABLE_FILE in reasons -> Problem(ProblemKind.NO_FILE_FOR_DEVICE, texts.noFileForDevice(null))
         state.checkProblem != null -> state.checkProblem
         else -> Problem(ProblemKind.NO_RELEASES, texts.noReleasePasses())
@@ -206,5 +196,34 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
             config.releases.tagFilter, config.releases.titleFilter, config.releases.notesFilter,
             config.releases.versionExtract, config.assets.include, config.assets.exclude,
         ).joinToString("\u0000") { it.orEmpty() }
+
+        /**
+         * With something installed, pinned, or a package configured, the first of the best few
+         * files that is not known to be refused wins: a project may sign a store build and a free
+         * build differently, or publish more than one app's file from the same release.
+         */
+        internal fun chooseFile(config: AppConfig, installed: DeviceApp?, release: Release, ranked: List<Pick>, inspect: (Asset, String) -> FileFacts?): Pair<Pick, FileFacts?> {
+            val best = ranked.first()
+            if (installed == null && config.pinnedSigners.isEmpty() && config.packageName == null) return best to inspect(best.asset, release.id)
+            for (pick in ranked.take(MAX_CANDIDATES)) {
+                val facts = inspect(pick.asset, release.id) ?: return pick to null
+                if (UpdateDecision.blockFor(facts.inspection, installed?.app, config.packageName, config.pinnedSigners) == null) return pick to facts
+            }
+            return best to inspect(best.asset, release.id)
+        }
+
+        /**
+         * True when no package is configured, when one of [facts] reads as it, or when a fact
+         * along the way could not be read at all: an unreadable file settles nothing, so this
+         * behaves as it did before any package was checked here.
+         */
+        internal fun matchesConfiguredPackage(packageName: String?, facts: Sequence<FileFacts?>): Boolean {
+            if (packageName == null) return true
+            for (fact in facts) {
+                if (fact == null) return true
+                if (fact.packageName == packageName) return true
+            }
+            return false
+        }
     }
 }

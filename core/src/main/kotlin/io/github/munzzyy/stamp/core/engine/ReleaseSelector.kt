@@ -5,7 +5,7 @@ import io.github.munzzyy.stamp.core.model.ReleasePolicy
 import io.github.munzzyy.stamp.core.text.SafePattern
 import io.github.munzzyy.stamp.core.version.Version
 
-enum class Rejection { PRERELEASE, TAG_FILTER, TITLE_FILTER, NOTES_FILTER, TOO_NEW, SKIPPED, NO_USABLE_FILE }
+enum class Rejection { PRERELEASE, TAG_FILTER, TITLE_FILTER, NOTES_FILTER, TOO_NEW, SKIPPED, NO_USABLE_FILE, WRONG_PACKAGE }
 
 data class Selection(
     /** The release to offer, with its version already run through the policy's extraction pattern. */
@@ -17,13 +17,26 @@ data class Selection(
 object ReleaseSelector {
     private const val DAY_MS = 24L * 60 * 60 * 1000
 
+    /** How many releases in a row get their package checked before giving up and taking one as-is, as today. */
+    private const val MAX_PACKAGE_CHECKS = 4
+
     /**
-     * [usable] says whether a release offers a file this device can install. The highest version
-     * wins rather than the most recent date, so a maintenance release on an old branch does not
-     * displace a newer major version. Releases whose tag carries no version, such as a rolling
-     * "latest", come after every versioned one, in the order the source gave them.
+     * [usable] says whether a release offers a file this device can install. [matchesPackage] says
+     * whether one of its top-ranked files reads as the app this row tracks; it is only asked of the
+     * first few usable releases, so a repository that publishes several apps from one feed (Bitwarden
+     * and its authenticator, Thunderbird and K-9 Mail) does not stop at a release that only carries
+     * the other app's file. The highest version wins rather than the most recent date, so a
+     * maintenance release on an old branch does not displace a newer major version. Releases whose
+     * tag carries no version, such as a rolling "latest", come after every versioned one, in the
+     * order the source gave them.
      */
-    fun select(releases: List<Release>, policy: ReleasePolicy, nowMs: Long, usable: (Release) -> Boolean): Selection {
+    fun select(
+        releases: List<Release>,
+        policy: ReleasePolicy,
+        nowMs: Long,
+        matchesPackage: (Release) -> Boolean = { true },
+        usable: (Release) -> Boolean,
+    ): Selection {
         val tag = SafePattern.compileOrNull(policy.tagFilter)
         val title = SafePattern.compileOrNull(policy.titleFilter)
         val notes = SafePattern.compileOrNull(policy.notesFilter)
@@ -34,9 +47,15 @@ object ReleaseSelector {
         SafePattern.watched("release filters") { filter(releases, policy, nowMs, tag, title, notes, extract, passed, rejected) }
 
         val ordered = order(passed)
+        var packageChecksLeft = MAX_PACKAGE_CHECKS
         for ((index, release) in ordered.withIndex()) {
-            if (usable(release)) return Selection(release, rejected)
-            rejected.add(release to Rejection.NO_USABLE_FILE)
+            val reason = when {
+                !usable(release) -> Rejection.NO_USABLE_FILE
+                packageChecksLeft > 0 && !matchesPackage(release).also { packageChecksLeft-- } -> Rejection.WRONG_PACKAGE
+                else -> null
+            }
+            if (reason == null) return Selection(release, rejected)
+            rejected.add(release to reason)
             if (!policy.fallbackToOlder && index == 0) break
         }
         return Selection(null, rejected)

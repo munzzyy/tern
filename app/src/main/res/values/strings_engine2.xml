@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">Every release found only offered another app\'s file, not this one\'s.</string>
+</resources>

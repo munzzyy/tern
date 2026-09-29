@@ -57,6 +57,7 @@ class Texts(context: Context) : ImportTexts {
     fun checkNoReleases() = s(R.string.engine_check_no_releases)
     fun noReleasePasses() = s(R.string.engine_no_release_passes)
     fun onlyPrereleases() = s(R.string.engine_only_prereleases)
+    fun onlyOtherPackage() = s(R.string.engine_only_other_package)
     fun patternProblem(detail: String?) = s(R.string.engine_pattern_problem, detail.orEmpty().take(200))
     fun offline() = s(R.string.engine_offline)
     fun moveGone() = s(R.string.engine_move_gone)

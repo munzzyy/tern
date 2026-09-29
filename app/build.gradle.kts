@@ -59,6 +59,18 @@ android {
     }
 }
 
+// BrandTest reads these from disk, so a change to one of them has to run the unit tests again.
+tasks.withType<Test>().configureEach {
+    inputs.files(
+        "src/main/res/values/colors.xml",
+        "src/main/res/values-night/colors.xml",
+        "src/main/res/drawable/ic_launcher_foreground.xml",
+        "src/main/res/drawable/ic_launcher_monochrome.xml",
+        "src/main/res/mipmap-anydpi/ic_launcher.xml",
+        "src/main/res/drawable-xhdpi/banner.png",
+    ).withPropertyName("brandFiles").withPathSensitivity(PathSensitivity.RELATIVE)
+}
+
 dependencies {
     implementation(project(":core"))
 

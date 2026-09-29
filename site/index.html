@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Tern: Android apps straight from their developers</title>
+<meta name="description" content="Install and update Android apps straight from where their developers publish them. Tern checks every file before Android sees it.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="icon.png">
+</head>
+<body data-page="home">
+<main>
+<header>
+  <img src="icon.png" alt="">
+  <h1>Tern</h1>
+</header>
+
+<p class="card" id="from-add" hidden>Tern is not on this device yet. Download it below, open it once, then go back to the page you came from and tap Open in Tern again.</p>
+
+<p class="lead">Install and update Android apps straight from where their developers publish them. Tern checks every file before Android sees it.</p>
+
+<div class="actions">
+  <a class="button" href="https://github.com/munzzyy/tern/releases/latest/download/tern.apk">Download Tern</a>
+  <a class="button second" href="https://github.com/munzzyy/tern/releases/latest">All releases</a>
+</div>
+<p class="quiet">For Android 10 and later, on phones, tablets and TVs. About 4 MB. Each release lists the SHA-256 of its file.</p>
+
+<h2>What it does</h2>
+<ul>
+  <li>Follows the releases of apps on GitHub, GitLab, Codeberg and other Forgejo servers, SourceHut, SourceForge, Jenkins, F-Droid repositories and plain download links.</li>
+  <li>Checks who signed each file, holds every update to the certificate of the first install, and compares the checksum the publisher gave. A file that fails is not installed.</li>
+  <li>Says what it found in plain words, and keeps a log of every download, check and install.</li>
+  <li>Works by remote on Android TV. A phone can send links and your app list to the TV, sealed with a code that never leaves the screen.</li>
+  <li>Goes through Tor with Orbot when you ask it to, and never around it.</li>
+  <li>Reads an export from Obtainium, so your list comes along.</li>
+  <li>Needs no account, and has no analytics and no ads. It is free software under the GPL.</li>
+</ul>
+
+<h2>Put Tern on your app's page</h2>
+<p>A badge in your README lets people add your app to Tern with one tap. Paste the address of your app's releases, then copy the Markdown.</p>
+<div class="card">
+  <label for="repo">Your app's address</label>
+  <input id="repo" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://github.com/you/your-app">
+  <p class="quiet" id="snippet-said" aria-live="polite"></p>
+  <textarea id="snippet" readonly aria-label="Markdown for your README"></textarea>
+  <p><img src="badge.png" alt="Get it with Tern" height="60"></p>
+</div>
+
+<footer class="quiet">
+  <a href="https://github.com/munzzyy/tern">Source code</a> ·
+  <a href="https://github.com/munzzyy/tern/blob/main/PRIVACY.md">Privacy</a> ·
+  <a href="https://github.com/munzzyy/tern/blob/main/docs/SECURITY-MODEL.md">How it keeps you safe</a> ·
+  Made by <a href="https://github.com/munzzyy">Munzzyy</a>
+</footer>
+</main>
+<script src="tern.js"></script>
+</body>
+</html>

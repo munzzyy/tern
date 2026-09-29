@@ -28,6 +28,8 @@ jobs:
         run: ./gradlew --no-daemon :core:test
       - name: the page of the handoff seals what the device opens
         run: bash tools/check-handoff-page.sh --no-browser
+      - name: the add page takes only https addresses and encodes what it passes on
+        run: node tools/check-site.js
       - name: app unit tests
         run: ./gradlew --no-daemon :app:testDebugUnitTest
       - name: release build

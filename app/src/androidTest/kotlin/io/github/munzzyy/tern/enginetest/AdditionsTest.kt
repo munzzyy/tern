@@ -2,6 +2,7 @@ package io.github.munzzyy.tern.enginetest
 
 import android.content.ComponentName
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.tern.core.json.Json
@@ -16,6 +17,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Assume
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -102,6 +104,9 @@ class AdditionsTest {
             repeat(3) { h.addFixture(id = "offline-$it") }
             assertTrue(h.engine.online.value)
             shell("cmd connectivity airplane-mode enable")
+            val system = targetContext.getSystemService(ConnectivityManager::class.java)
+            val gone = runCatching { waitUntil(10_000, "Android to lose its network") { system.activeNetwork == null } }.isSuccess
+            Assume.assumeTrue("airplane mode leaves this device's wired network up, as on a television", gone)
             waitUntil(20_000, "the engine to see the network go") { !h.engine.online.value }
 
             val start = System.nanoTime()

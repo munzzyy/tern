@@ -161,8 +161,10 @@ class GateTest {
             assertTrue("expected a base and its splits, got ${files.size}", files.size > 1)
             val splits = targetContext.packageManager.getApplicationInfo(PKG, 0).splitNames.orEmpty().toList()
             android.util.Log.i("EngineTest", "installed splits: $splits")
-            assertTrue(splits.contains("config.x86_64"))
-            assertTrue(splits.none { it == "config.arm64_v8a" || it == "config.armeabi_v7a" })
+            val built = listOf("arm64-v8a", "x86_64", "armeabi-v7a")
+            val best = "config." + Build.SUPPORTED_ABIS.first { it in built }.replace('-', '_')
+            assertTrue("$splits has no $best", splits.contains(best))
+            assertEquals("one processor's part and no other: $splits", listOf(best), splits.filter { name -> built.any { name == "config." + it.replace('-', '_') } })
             assertEquals(3L, h.state(id).record?.versionCode)
         }
     }

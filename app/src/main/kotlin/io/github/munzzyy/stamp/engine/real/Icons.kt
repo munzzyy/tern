@@ -2,6 +2,7 @@ package io.github.munzzyy.stamp.engine.real
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import androidx.core.graphics.scale
 import io.github.munzzyy.stamp.core.icon.IconAddresses
 import io.github.munzzyy.stamp.core.icon.ImageProbe
 import io.github.munzzyy.stamp.core.net.HttpClient
@@ -234,7 +235,7 @@ internal object IconBitmaps {
         if (longest <= sizePx) return bitmap
         val width = max(1, bitmap.width * sizePx / longest)
         val height = max(1, bitmap.height * sizePx / longest)
-        val fitted = Bitmap.createScaledBitmap(bitmap, width, height, true)
+        val fitted = bitmap.scale(width, height)
         if (fitted !== bitmap) bitmap.recycle()
         return fitted
     }

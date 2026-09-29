@@ -12,6 +12,7 @@ import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.stamp.engine.OrbotState
 import io.github.munzzyy.stamp.engine.ProxyMode
@@ -73,19 +74,27 @@ class OrbotRowTest {
             compose.tagged(ORBOT_TAG).performScrollTo()
             compose.waitForIdle()
             assertEquals("Orbot is asked once when the row comes on screen", 1, fake.orbotAsked)
-            assertEquals(0, compose.onAllNodes(hasText("Start Orbot") or hasText("Get Orbot") or hasText("Ask again")).fetchSemanticsNodes().size)
+            assertEquals(0, compose.onAllNodes(hasText("Open Orbot") or hasText("Get Orbot") or hasText("Ask again")).fetchSemanticsNodes().size)
         }
     }
 
     @Test
-    fun orbotThatIsOffCanBeStarted() {
-        launch("default").use {
+    fun orbotThatIsOffIsOpenedAndAskedAgainOnReturn() {
+        launch("default").use { scenario ->
             fake.orbotAnswer = OrbotState.OFF
             chooseOrbot()
-            says("Orbot is installed and not running.")
+            says("Orbot is installed and not connected.")
+            compose.onNode(hasText("Open Orbot") and inRow).performScrollTo().performClick()
+            compose.waitForIdle()
+            assertEquals("the button opens Orbot", 1, fake.orbotOpened)
+            says("Orbot is installed and not connected.")
+
+            val asked = fake.orbotAsked
             fake.orbotAnswer = OrbotState.ON
-            compose.onNode(hasText("Start Orbot") and inRow).performScrollTo().performClick()
+            scenario.moveToState(Lifecycle.State.STARTED)
+            scenario.moveToState(Lifecycle.State.RESUMED)
             says("Orbot is running. Everything Stamp sends goes through Tor.")
+            assertEquals("Orbot is asked again when Stamp comes back", asked + 1, fake.orbotAsked)
         }
     }
 

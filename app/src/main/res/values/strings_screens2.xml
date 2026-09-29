@@ -50,8 +50,8 @@
     <!-- Orbot is the name of an app that routes traffic through Tor. -->
     <string name="orbot_not_installed">Orbot is not on this device.</string>
     <string name="orbot_get">Get Orbot</string>
-    <string name="orbot_off">Orbot is installed and not running.</string>
-    <string name="orbot_start">Start Orbot</string>
+    <string name="orbot_off">Orbot is installed and not connected.</string>
+    <string name="orbot_open">Open Orbot</string>
     <string name="orbot_starting">Orbot is starting.</string>
     <string name="orbot_on">Orbot is running. Everything Stamp sends goes through Tor.</string>
     <string name="orbot_unknown">Orbot has not answered yet.</string>

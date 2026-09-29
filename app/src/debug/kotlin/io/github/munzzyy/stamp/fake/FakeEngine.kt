@@ -100,6 +100,9 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     /** How often Orbot was asked since the scenario was loaded. */
     @Volatile var orbotAsked = 0
+
+    /** How often Orbot was opened since the scenario was loaded. */
+    @Volatile var orbotOpened = 0
     private val received = java.util.concurrent.CopyOnWriteArrayList<Received>()
     private var handoffJob: Job? = null
     override val online: StateFlow<Boolean> = _online.asStateFlow()
@@ -143,6 +146,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         savedFiles = true
         orbotAnswer = OrbotState.ON
         orbotAsked = 0
+        orbotOpened = 0
         _orbot.value = OrbotState.UNKNOWN
         closeHandoff()
         tokens.value = if (rows.isEmpty()) emptySet() else setOf("api.github.com")
@@ -508,6 +512,13 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
             }
             _orbot.value = orbotAnswer
         }
+    }
+
+    override fun openOrbot(): Boolean {
+        if (orbotAnswer == OrbotState.NOT_INSTALLED) return false
+        orbotOpened++
+        askOrbot()
+        return true
     }
 
     override fun takeReceived(): List<Received> {

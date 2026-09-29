@@ -244,7 +244,7 @@ class RemoteDoorsTest {
                 stops += now
             }
             compose.assertFocusOn(last, "down reaches the last row, by way of $stops")
-            for (wanted in listOf("Permission to install apps", "Keep downloaded files", "Proxy", "Start Orbot", "Look", "Import apps", "Export to the Download folder", "Open Obtainium links")) {
+            for (wanted in listOf("Permission to install apps", "Keep downloaded files", "Proxy", "Open Orbot", "Look", "Import apps", "Export to the Download folder", "Open Obtainium links")) {
                 assertTrue("down passes $wanted: $stops", stops.any { it.contains(wanted) })
             }
             if (withoutTouch) assertTrue("a television has no rows about notifications: $stops", stops.none { it.contains("When updates are found") })

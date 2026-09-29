@@ -11,7 +11,7 @@ class SettingsRowsTest {
     @Test
     fun everyStateOfOrbotHasItsSentenceAndItsAction() {
         assertEquals(OrbotWords(R.string.orbot_not_installed, R.string.orbot_get), orbotWords(OrbotState.NOT_INSTALLED))
-        assertEquals(OrbotWords(R.string.orbot_off, R.string.orbot_start), orbotWords(OrbotState.OFF))
+        assertEquals(OrbotWords(R.string.orbot_off, R.string.orbot_open), orbotWords(OrbotState.OFF))
         assertEquals(OrbotWords(R.string.orbot_starting, null), orbotWords(OrbotState.STARTING))
         assertEquals(OrbotWords(R.string.orbot_on, null), orbotWords(OrbotState.ON))
         assertEquals(OrbotWords(R.string.orbot_unknown, R.string.orbot_ask_again), orbotWords(OrbotState.UNKNOWN))

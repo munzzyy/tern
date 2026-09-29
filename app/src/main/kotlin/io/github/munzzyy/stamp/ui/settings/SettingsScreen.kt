@@ -30,7 +30,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -408,7 +407,7 @@ data class OrbotWords(val sentence: Int, val action: Int?)
 
 fun orbotWords(state: OrbotState): OrbotWords = when (state) {
     OrbotState.NOT_INSTALLED -> OrbotWords(R.string.orbot_not_installed, R.string.orbot_get)
-    OrbotState.OFF -> OrbotWords(R.string.orbot_off, R.string.orbot_start)
+    OrbotState.OFF -> OrbotWords(R.string.orbot_off, R.string.orbot_open)
     OrbotState.STARTING -> OrbotWords(R.string.orbot_starting, null)
     OrbotState.ON -> OrbotWords(R.string.orbot_on, null)
     OrbotState.UNKNOWN -> OrbotWords(R.string.orbot_unknown, R.string.orbot_ask_again)
@@ -421,7 +420,10 @@ private fun OrbotRow(onGet: () -> Unit, focus: Modifier) {
     val look = LocalLook.current
     val scheme = MaterialTheme.colorScheme
     val status = MaterialTheme.status
-    LaunchedEffect(engine) { engine.askOrbot() }
+    LifecycleResumeEffect(engine) {
+        engine.askOrbot()
+        onPauseOrDispose { }
+    }
     val words = orbotWords(state)
     val (glyph, tint) = when (state) {
         OrbotState.ON -> Glyphs.Check to status.verified.color
@@ -434,7 +436,13 @@ private fun OrbotRow(onGet: () -> Unit, focus: Modifier) {
         words.action?.let {
             TonalButton(
                 stringResource(it),
-                onClick = { if (state == OrbotState.NOT_INSTALLED) onGet() else engine.askOrbot() },
+                onClick = {
+                    when (state) {
+                        OrbotState.NOT_INSTALLED -> onGet()
+                        OrbotState.OFF -> if (!engine.openOrbot()) engine.askOrbot()
+                        else -> engine.askOrbot()
+                    }
+                },
                 modifier = focus,
             )
         }

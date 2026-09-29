@@ -164,6 +164,9 @@ interface Engine {
     /** Asks Orbot how it is doing and to start if it is off. Does nothing when Orbot is not installed. */
     fun askOrbot()
 
+    /** Opens Orbot, for the person to connect it there, and asks it to start. False when there is no Orbot to open. */
+    fun openOrbot(): Boolean
+
     /**
      * Repositories [user] has starred, at most 300, for the user to pick from. Nothing is added.
      * Throws [ProblemException] when the name is not valid or the list cannot be had.

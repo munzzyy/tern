@@ -1,5 +1,6 @@
 package io.github.munzzyy.stamp.engine.real
 
+import android.content.ActivityNotFoundException
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -65,6 +66,7 @@ import io.github.munzzyy.stamp.install.InstallGate
 import io.github.munzzyy.stamp.install.Installer
 import io.github.munzzyy.stamp.install.PackageManagerArchiveReader
 import io.github.munzzyy.stamp.install.SessionInstaller
+import io.github.munzzyy.stamp.net.Orbot
 import io.github.munzzyy.stamp.net.ProxyChoice
 import io.github.munzzyy.stamp.net.ProxyDoor
 import io.github.munzzyy.stamp.net.ProxyProbe
@@ -519,6 +521,18 @@ class RealEngine(
     override val orbot: StateFlow<OrbotState> get() = orbotLink.state
 
     override fun askOrbot() = orbotLink.ask()
+
+    override fun openOrbot(): Boolean {
+        val packages = context.packageManager
+        val open = packages.getLaunchIntentForPackage(Orbot.PACKAGE) ?: packages.getLeanbackLaunchIntentForPackage(Orbot.PACKAGE) ?: return false
+        try {
+            context.startActivity(open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        } catch (_: ActivityNotFoundException) {
+            return false
+        }
+        orbotLink.ask()
+        return true
+    }
 
     override suspend fun openHandoff(): Problem? = handoffs.open()
 

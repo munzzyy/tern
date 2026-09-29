@@ -2,6 +2,6 @@ package io.github.munzzyy.jackdaw
 
 import android.content.Context
 import io.github.munzzyy.jackdaw.engine.Engine
+import io.github.munzzyy.jackdaw.fake.FakeEngine
 
-@Suppress("UNUSED_PARAMETER")
-fun createEngine(context: Context): Engine = TODO("wired when the engine lands")
+fun createEngine(context: Context): Engine = FakeEngine(context.applicationContext)

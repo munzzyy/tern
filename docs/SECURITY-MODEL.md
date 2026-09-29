@@ -46,15 +46,65 @@ covers that case.
 ### Two readers
 
 Stamp's parser and Android's package parser both read the file. If they
-disagree on the package name or version code, the file is refused. Every later
+disagree on the package name or version code, the file is refused.
+
+Both also verify the signature. Neither goes by the certificate a file names,
+because naming a certificate costs nothing.
+
+Android verifies a single file, and the base of a bundle, when Stamp asks it
+to read the file. A file Android will not read is refused. Every later
 decision uses the certificates Android reported.
+
+Stamp verifies the same file with a verifier of its own, written from the
+published specification of the APK signature schemes. It checks the signature
+over the signed data, the digest of everything in the file outside the signing
+block, that the public key is the key of the certificate shown, and every link
+of a proof of rotation. It goes by the scheme Android goes by on the version
+the device runs: the newest of v3.1, v3 and v2 that the file carries, and the
+JAR signature where the file carries none of them. A scheme that does not hold
+is never passed over for an older one. A signing block that was taken out of a
+file is noticed, because the older signature says that it was there.
+
+What the two come to:
+
+- Stamp finds that the signature does not hold, or that it holds for other
+  certificates than Android reported: the file is refused.
+- Stamp cannot verify the file, and Android verified it: Android's answer
+  stands.
+- Android gave no reading of a part of a bundle. It gives none of a
+  configuration part on Android 10, and none of a part with a broken signature
+  on Android 16. Stamp's verifier is then the only one: the part has to hold
+  under it and has to be signed by the certificates of the base. A part that
+  does not hold, and a part Stamp cannot verify, both refuse the whole bundle.
+
+Stamp cannot verify, and says so instead of guessing:
+
+- a signer whose strongest signature is over a verity digest (algorithms
+  0x0421, 0x0423 and 0x0425)
+- a signer with no algorithm from the specification of v2 and v3
+- a file with a v3.2 block on Android 17 and later, the scheme with a second,
+  post-quantum signature
+- a rotation that is meant for a preview of the next Android, on the version
+  the preview is built on
+- a ZIP64 file
+- a JAR signature of which the Java runtime takes no entry as signed. The Java
+  of a computer does that to a signature made with SHA-1 and gives no reason.
+  What the runtime of a device does with one has not been measured.
 
 ### The signer
 
 The file must be signed by the signer of the installed app, and by the pinned
-certificate if there is one. A rotated key is accepted where the file proves
-descent from the known one. In a bundle, every part must carry the base's
-signer.
+certificate if there is one. The certificates compared are the ones Android
+reported after verifying the file. A rotated key is accepted where the file
+proves descent from the known one.
+
+In a bundle, every part must be signed by the signers of the base. A part
+Android read is held to what Android reported for it. A part Android did not
+read is held to what Stamp's own verifier found, as described above. No part
+passes on what it claims.
+
+The log shows a file as verified after every file that goes to the installer
+has been verified by Android or by Stamp.
 
 ### Package, version and kind
 
@@ -307,6 +357,17 @@ import it.
   same release pages, at another time. It is no second channel.
 - Stamp does not rebuild apps from source. It checks who signed a file, not
   what is in it.
+- A JAR signature, which old apps carry alone, covers what the entries of a
+  file hold. It does not cover the zip structure around them, so Stamp holds
+  each entry against its own reading of the directory. It does not cover the
+  certificate that comes with it either: a certificate changed in a place
+  that is not its key still verifies, under another fingerprint. The pin
+  refuses such a file as an update. On a first install the fingerprint shown
+  is the one to compare.
+- Stamp's verifier has been tested on a computer, against files signed by
+  apksigner and against files changed after signing. On a device it uses the
+  cryptography and the JAR reader of that device. The tests for that have not
+  been run yet.
 - It has been tested on emulators. Vendor builds of Android can behave
   differently.
 - The handoff has been tested with real connections on a computer, and its

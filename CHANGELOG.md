@@ -11,6 +11,9 @@ The first version.
   before downloading it.
 - Checks every download: publisher's checksum, two parsers, signer against the
   installed app and the pin, package, version, kind.
+- Verifies the signature of every file itself, next to Android: schemes v1, v2,
+  v3 and v3.1, the digest of the whole file, and every link of a rotated key.
+  A part of a bundle that Android does not read is no longer taken at its word.
 - Updates without a prompt where Android allows it, and says so where it does not.
 - Background checks through Android's job scheduler.
 - Imports Obtainium's export file, and adds apps from a GitHub user's stars.

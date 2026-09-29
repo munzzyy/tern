@@ -1,6 +1,7 @@
 package io.github.munzzyy.jackdaw.enginetest
 
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.jackdaw.core.engine.InstallRecord
 import io.github.munzzyy.jackdaw.core.model.AppConfig
@@ -95,6 +96,13 @@ class StorageTest {
             assertEquals(500, events.size)
             assertEquals("event 519", events.first().message)
             assertEquals("event 20", events.last().message)
+        }
+        val path = targetContext.getDatabasePath("storage-events.db").path
+        SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY).use { db ->
+            db.rawQuery("SELECT count(*) FROM events", null).use { c ->
+                c.moveToFirst()
+                assertEquals("rows kept on disk", 500, c.getInt(0))
+            }
         }
         targetContext.deleteDatabase("storage-events.db")
     }

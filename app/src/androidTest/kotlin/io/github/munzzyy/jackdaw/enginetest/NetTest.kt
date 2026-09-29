@@ -157,7 +157,7 @@ class NetTest {
                 local.execute(HttpRequest("http://127.0.0.1:${server.port}/a")).close()
                 fail("followed a redirect loop")
             } catch (_: TooManyRedirectsException) {
-                assertEquals(UrlConnectionHttp.MAX_REDIRECTS + 1, server.requests.size)
+                assertEquals(9, server.requests.size)
             }
         }
     }

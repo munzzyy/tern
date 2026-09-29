@@ -179,6 +179,14 @@ internal class Installs(private val e: RealEngine) {
         } catch (cancel: CancellationException) {
             e.setProgress(appId, null)
             throw cancel
+        } catch (io: IOException) {
+            Log.w(TAG, "Install of $appId stopped: ${io.javaClass.simpleName}: ${io.message}")
+            fail(appId, release, asset, Problem(ProblemKind.STORAGE, e.texts.downloadFailed(io.message)))
+            null
+        } catch (bug: RuntimeException) {
+            Log.e(TAG, "Install of $appId failed unexpectedly", bug)
+            fail(appId, release, asset, Problem(ProblemKind.INSTALL_FAILED, e.texts.installFailed(bug.javaClass.simpleName)))
+            null
         }
     }
 

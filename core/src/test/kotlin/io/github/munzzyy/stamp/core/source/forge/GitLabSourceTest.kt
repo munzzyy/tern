@@ -38,6 +38,13 @@ class GitLabSourceTest {
     }
 
     @Test
+    fun aGitlabOnItsOwnPortKeepsThePortInItsAddress() {
+        val http = FakeHttp().resource("https://git.example.org:8443/api/v4/projects/group%2Fapp", "forge/gitlab_project.json")
+        val spec = source.probe("https://git.example.org:8443/group/app", context(http))
+        assertEquals(SourceSpec(SourceTypes.GITLAB, "https://git.example.org:8443/group/app"), spec)
+    }
+
+    @Test
     fun probeRecognisesSelfHostedGitlabByApiShape() {
         val projectUrl = "https://git.example.org/api/v4/projects/group%2Fapp"
         val http = FakeHttp().resource(projectUrl, "forge/gitlab_project.json")

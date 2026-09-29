@@ -32,11 +32,12 @@ class GitLabSource : Source {
     override fun probe(url: String, context: CheckContext): SourceSpec? {
         val normalized = Urls.normalize(url) ?: return null
         val host = Urls.host(normalized)
+        val at = Urls.authority(normalized)
         if (host == "gitlab.com") return null
         val segments = projectSegments(normalized) ?: return null
         val projectPath = segments.joinToString("/")
 
-        val apiUrl = "https://$host/api/v4/projects/${Urls.encodeSegment(projectPath)}"
+        val apiUrl = "https://$at/api/v4/projects/${Urls.encodeSegment(projectPath)}"
         val response = try {
             context.http.execute(HttpRequest(apiUrl))
         } catch (_: IOException) {
@@ -50,17 +51,18 @@ class GitLabSource : Source {
                 null
             } ?: return null
             val pathWithNamespace = obj.string("path_with_namespace") ?: return null
-            return SourceSpec(type, "https://$host/$pathWithNamespace")
+            return SourceSpec(type, "https://$at/$pathWithNamespace")
         }
     }
 
     override fun check(spec: SourceSpec, context: CheckContext): CheckResult {
         val host = Urls.host(spec.url)
+        val at = Urls.authority(spec.url)
         val segments = Urls.segments(spec.url)
         if (segments.size < 2) throw SourceException(SourceErrorKind.PARSE, "Bad GitLab spec ${spec.url}")
         val projectPath = segments.joinToString("/")
 
-        val url = "https://$host/api/v4/projects/${Urls.encodeSegment(projectPath)}/releases?per_page=20"
+        val url = "https://$at/api/v4/projects/${Urls.encodeSegment(projectPath)}/releases?per_page=20"
         val key = validatorKey(spec, "releases")
         val stored = context.validators.get(key)
         val token = context.tokens.tokenFor(host)
@@ -102,7 +104,7 @@ class GitLabSource : Source {
 
             context.validators.put(key, Validator.from(it.headers))
             val listing = SourceListing(releases = releases, name = segments.last(), author = segments.dropLast(1).joinToString("/"))
-            return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.gitLab(host, projectPath, context, token?.let { t -> "Bearer $t" })))
+            return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.gitLab(at, projectPath, context, token?.let { t -> "Bearer $t" })))
         }
     }
 
@@ -118,9 +120,9 @@ class GitLabSource : Source {
         return cleaned
     }
 
-    private fun projectSpec(url: String, host: String): SourceSpec? {
+    private fun projectSpec(url: String, at: String): SourceSpec? {
         val segments = projectSegments(url) ?: return null
-        return SourceSpec(type, "https://$host/${segments.joinToString("/")}")
+        return SourceSpec(type, "https://$at/${segments.joinToString("/")}")
     }
 
     private fun mapRelease(obj: JsonObject, projectUrl: String): Release? {

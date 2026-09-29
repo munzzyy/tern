@@ -53,6 +53,15 @@ object Urls {
         ""
     }
 
+    /** The host, and the port behind it when the address names one that is not the usual one. */
+    fun authority(url: String): String = try {
+        val uri = URI(url)
+        val host = uri.host?.lowercase().orEmpty()
+        if (host.isEmpty() || uri.port == -1 || uri.port == 443) host else "$host:${uri.port}"
+    } catch (_: URISyntaxException) {
+        ""
+    }
+
     fun segments(url: String): List<String> {
         val path = try {
             URI(url).path

@@ -115,4 +115,12 @@ class UrlsTest {
         assertEquals("https://example.com", Urls.normalize("example.com"))
         assert(brokenNormalize("example.com") != Urls.normalize("example.com"))
     }
+
+    @Test
+    fun theAuthorityKeepsAPortThatIsNotTheUsualOne() {
+        assertEquals("git.example.org", Urls.authority("https://git.example.org/group/app"))
+        assertEquals("git.example.org", Urls.authority("https://git.example.org:443/group/app"))
+        assertEquals("git.example.org:8443", Urls.authority("https://GIT.example.org:8443/group/app"))
+        assertEquals("", Urls.authority("not an address"))
+    }
 }

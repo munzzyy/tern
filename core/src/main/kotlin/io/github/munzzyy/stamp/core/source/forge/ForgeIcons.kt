@@ -26,29 +26,29 @@ internal object ForgeIcons {
     )
 
     /** The project's avatar, then its store listing, then the avatar of the group or user it belongs to. */
-    fun gitLab(host: String, projectPath: String, context: CheckContext, authorization: String?): List<String?> {
-        val project = ask("https://$host/api/v4/projects/${Urls.encodeSegment(projectPath)}", context, authorization)
+    fun gitLab(at: String, projectPath: String, context: CheckContext, authorization: String?): List<String?> {
+        val project = ask("https://$at/api/v4/projects/${Urls.encodeSegment(projectPath)}", context, authorization)
         return listOf(
-            address(host, project?.string("avatar_url")),
-            "https://$host/$projectPath/-/raw/HEAD/$STORE_ICON",
-            address(host, project?.obj("namespace")?.string("avatar_url")),
+            address(at, project?.string("avatar_url")),
+            "https://$at/$projectPath/-/raw/HEAD/$STORE_ICON",
+            address(at, project?.obj("namespace")?.string("avatar_url")),
         )
     }
 
     /** The repository's avatar, then its owner's. */
-    fun forgejo(host: String, owner: String, repo: String, context: CheckContext, authorization: String?): List<String?> {
-        val repository = ask("https://$host/api/v1/repos/$owner/$repo", context, authorization)
+    fun forgejo(at: String, owner: String, repo: String, context: CheckContext, authorization: String?): List<String?> {
+        val repository = ask("https://$at/api/v1/repos/$owner/$repo", context, authorization)
         return listOf(
-            address(host, repository?.string("avatar_url")),
-            address(host, repository?.obj("owner")?.string("avatar_url")),
+            address(at, repository?.string("avatar_url")),
+            address(at, repository?.obj("owner")?.string("avatar_url")),
         )
     }
 
     /** GitLab names some avatars by path alone. */
-    private fun address(host: String, named: String?): String? {
+    private fun address(at: String, named: String?): String? {
         val text = named?.trim().orEmpty()
         if (text.isEmpty()) return null
-        return if (text.startsWith("/") && !text.startsWith("//")) "https://$host$text" else text
+        return if (text.startsWith("/") && !text.startsWith("//")) "https://$at$text" else text
     }
 
     /** An icon is never worth a failed check, so every failure here means no answer. */

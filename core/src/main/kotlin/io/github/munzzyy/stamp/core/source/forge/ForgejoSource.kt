@@ -32,6 +32,7 @@ class ForgejoSource : Source {
     override fun probe(url: String, context: CheckContext): SourceSpec? {
         val normalized = Urls.normalize(url) ?: return null
         val host = Urls.host(normalized)
+        val at = Urls.authority(normalized)
         if (host == "codeberg.org") return null
         val segments = Urls.segments(normalized)
         if (segments.size < 2) return null
@@ -39,7 +40,7 @@ class ForgejoSource : Source {
         val repo = segments[1].removeSuffix(".git")
         if (!RepoNames.isValid(owner) || !RepoNames.isValid(repo)) return null
 
-        val versionUrl = "https://$host/api/v1/version"
+        val versionUrl = "https://$at/api/v1/version"
         val response = try {
             context.http.execute(HttpRequest(versionUrl))
         } catch (_: IOException) {
@@ -53,18 +54,19 @@ class ForgejoSource : Source {
                 null
             } ?: return null
             if (obj.string("version") == null) return null
-            return SourceSpec(type, "https://$host/$owner/$repo")
+            return SourceSpec(type, "https://$at/$owner/$repo")
         }
     }
 
     override fun check(spec: SourceSpec, context: CheckContext): CheckResult {
         val host = Urls.host(spec.url)
+        val at = Urls.authority(spec.url)
         val segments = Urls.segments(spec.url)
         if (segments.size < 2) throw SourceException(SourceErrorKind.PARSE, "Bad Forgejo spec ${spec.url}")
         val owner = segments[0]
         val repo = segments[1].removeSuffix(".git")
 
-        val url = "https://$host/api/v1/repos/$owner/$repo/releases?limit=20"
+        val url = "https://$at/api/v1/repos/$owner/$repo/releases?limit=20"
         val key = validatorKey(spec, "releases")
         val stored = context.validators.get(key)
         val token = context.tokens.tokenFor(host)
@@ -106,17 +108,17 @@ class ForgejoSource : Source {
 
             context.validators.put(key, Validator.from(it.headers))
             val listing = SourceListing(releases = releases, name = repo, author = owner)
-            return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.forgejo(host, owner, repo, context, token?.let { t -> "token $t" })))
+            return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.forgejo(at, owner, repo, context, token?.let { t -> "token $t" })))
         }
     }
 
-    private fun ownerRepoSpec(url: String, host: String): SourceSpec? {
+    private fun ownerRepoSpec(url: String, at: String): SourceSpec? {
         val segments = Urls.segments(url)
         if (segments.size < 2) return null
         val owner = segments[0]
         val repo = segments[1].removeSuffix(".git")
         if (!RepoNames.isValid(owner) || !RepoNames.isValid(repo)) return null
-        return SourceSpec(type, "https://$host/$owner/$repo")
+        return SourceSpec(type, "https://$at/$owner/$repo")
     }
 
     private fun mapRelease(obj: JsonObject): Release? {

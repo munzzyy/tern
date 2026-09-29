@@ -34,6 +34,18 @@ class ForgejoSourceTest {
     }
 
     @Test
+    fun aForgeOnItsOwnPortIsAskedOnThatPort() {
+        val http = FakeHttp()
+            .resource("https://git.example.org:8443/api/v1/version", "forge/forgejo_version.json")
+            .resource("https://git.example.org:8443/api/v1/repos/example/app/releases?limit=20", "forge/forgejo_releases.json")
+        val spec = source.probe("https://git.example.org:8443/example/app", context(http, host = "git.example.org"))
+        assertEquals(SourceSpec(SourceTypes.FORGEJO, "https://git.example.org:8443/example/app"), spec)
+        val listing = (source.check(spec!!, context(http, host = "git.example.org")) as CheckResult.Listing).listing
+        assertTrue(listing.releases.isNotEmpty())
+        assertTrue(listing.releases.flatMap { it.assets }.isNotEmpty())
+    }
+
+    @Test
     fun probeRecognisesForgejoInstanceByVersionEndpoint() {
         val versionUrl = "https://git.example.org/api/v1/version"
         val http = FakeHttp().resource(versionUrl, "forge/forgejo_version.json")

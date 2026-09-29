@@ -163,8 +163,7 @@ class ChecksumsTest {
 
     @Test
     fun markdownDoesNotMatchStrayHexOnlyNeighborLine() {
-        val text = "$hexA\n$hexB\n"
-        assertTrue(Checksums.parse(text)[""] != null)
+        assertEquals(mapOf("" to hexA), Checksums.parse("$hexA\n$hexA\n"))
     }
 
     @Test
@@ -204,5 +203,32 @@ class ChecksumsTest {
         val asset = Asset(name = "app.apk", url = "https://example.com/app.apk")
         val release = Release(id = "1", version = "1.0", notes = "no hash here", assets = listOf(asset))
         assertNull(Checksums.expectedFor(release, asset) { "" })
+    }
+
+    @Test
+    fun twoDifferentSumsWithoutANameAreNoSum() {
+        val a = "a".repeat(64)
+        val b = "b".repeat(64)
+        assertEquals(emptyMap<String, String>(), Checksums.parse("$b\n$a\n"))
+
+        val asset = Asset(name = "app.apk", url = "https://example.com/app.apk")
+        val sums = Asset(name = "app.apk.sha256", url = "https://example.com/app.apk.sha256", kind = AssetKind.CHECKSUM)
+        val release = Release(id = "1", version = "1.0", assets = listOf(asset, sums))
+        assertNull(Checksums.expectedFor(release, asset) { "$b\n$a\n" })
+    }
+
+    @Test
+    fun theSameSumTwiceIsStillThatSum() {
+        val a = "a".repeat(64)
+        assertEquals(mapOf("" to a), Checksums.parse("$a\n$a\n"))
+        assertEquals(mapOf("app.apk" to a), Checksums.parse("$a  app.apk\nSHA256 (app.apk) = $a\n"))
+    }
+
+    @Test
+    fun aFileGivenTwoDifferentSumsHasNone() {
+        val a = "a".repeat(64)
+        val b = "b".repeat(64)
+        val c = "c".repeat(64)
+        assertEquals(mapOf("other.apk" to c), Checksums.parse("$a  app.apk\n$c  other.apk\n$b  app.apk\n"))
     }
 }

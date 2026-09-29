@@ -15,21 +15,30 @@ object Checksums {
     private val BSD_LINE = Regex("^SHA256\\s*\\(([^)]+)\\)\\s*=\\s*([0-9a-fA-F]{64})\\s*$", RegexOption.IGNORE_CASE)
     private val FILENAME = Regex("[A-Za-z0-9][A-Za-z0-9_.+\\-]*\\.[A-Za-z0-9]{1,12}")
 
+    /**
+     * The sums in [text] by the file they are for, with "" for a sum that names no file.
+     * A name that is given two different sums is left out, because nothing says which one is meant.
+     */
     fun parse(text: String): Map<String, String> {
         val capped = text.take(MAX_CHARS)
         val lines = capped.lineSequence().take(MAX_LINES).toList()
         val result = LinkedHashMap<String, String>()
+        val unclear = HashSet<String>()
+        fun put(name: String, hex: String) {
+            val before = result.put(name, hex)
+            if (before != null && before != hex) unclear += name
+        }
         for ((index, rawLine) in lines.withIndex()) {
             val line = rawLine.trim()
             if (line.isEmpty()) continue
             val bsd = BSD_LINE.find(line)
             if (bsd != null) {
-                result[bsd.groupValues[1].trim()] = bsd.groupValues[2].lowercase()
+                put(bsd.groupValues[1].trim(), bsd.groupValues[2].lowercase())
                 continue
             }
             val gnu = GNU_LINE.find(line)
             if (gnu != null) {
-                result[gnu.groupValues[2].trim()] = gnu.groupValues[1].lowercase()
+                put(gnu.groupValues[2].trim(), gnu.groupValues[1].lowercase())
                 continue
             }
             for (m in HEX64.findAll(line)) {
@@ -37,9 +46,10 @@ object Checksums {
                 val name = nearestFilename(line, m.range.first, m.range.last)
                     ?: nearbyFilename(lines, index + 1)
                     ?: nearbyFilename(lines, index - 1)
-                result[name ?: ""] = hex
+                put(name ?: "", hex)
             }
         }
+        unclear.forEach(result::remove)
         return result
     }
 

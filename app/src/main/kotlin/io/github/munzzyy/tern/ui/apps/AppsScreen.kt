@@ -33,6 +33,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -176,12 +178,17 @@ fun AppsScreen(
             OfflineBanner(online)
             if (selection == null) WaitingBanner(state.waiting, onGone = { landAgain++ }) { confirmInstall(engine, it.id, actions) }
             RevealWithRoom {
+            val pull = rememberPullToRefreshState()
+            val noTouch = LocalNoTouch.current
             PullToRefreshBox(
                 isRefreshing = checking,
                 onRefresh = { if (online) actions.run { engine.check() } },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
+                state = pull,
+                // Without touch nobody pulls, and the bar below already shows the check.
+                indicator = { if (!noTouch) PullToRefreshDefaults.Indicator(state = pull, isRefreshing = checking, modifier = Modifier.align(Alignment.TopCenter)) },
             ) {
                 when {
                     !state.loaded -> Unit

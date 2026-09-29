@@ -4,4 +4,14 @@
     <!-- %1$s is a short technical reason in English, such as "Unsupported export schema 2". -->
     <string name="engine_import_unreadable_export">This export from Stamp could not be read (%1$s). If it comes from a newer version of Stamp, update Stamp on this device and try again.</string>
     <string name="engine_import_too_large">The file is larger than %1$d MiB, which is more than a list of apps takes, so Stamp did not read it.</string>
+
+    <string name="engine_link_not_https">Only addresses that start with https:// are accepted.</string>
+    <string name="engine_link_not_an_address">That is not a web address Stamp can open. It should look like https://example.org/stamp-apps.json.</string>
+    <string name="engine_link_leaves_https">That address sends Stamp on to one that is not HTTPS, so nothing was fetched.</string>
+    <string name="engine_link_not_found">There is no file at that address. Check it for typing mistakes.</string>
+    <string name="engine_link_refused">The server refused to hand out the file (it answered %1$d). Stamp sends no login with this request, so the file has to be readable by anyone who has the address.</string>
+    <string name="engine_link_unreachable">The address could not be reached: %1$s</string>
+    <string name="engine_link_unreachable_plain">The address could not be reached. Check the connection and the address, then try again.</string>
+    <string name="engine_link_too_slow">The server took more than a minute to send the file, so Stamp stopped waiting. Try again later.</string>
+    <string name="engine_link_not_an_export">What is at that address is not a list of apps exported from Stamp or Obtainium. The address has to lead to the file itself, not to a page that shows it.</string>
 </resources>

@@ -31,6 +31,16 @@ interface ImportTexts {
     fun importNotAnExport(): String
     fun importUnreadableExport(detail: String?): String
     fun importTooLarge(limitBytes: Int): String
+    fun linkNotHttps(): String
+    fun linkNotAnAddress(): String
+    fun linkLeavesHttps(): String
+    fun linkNotFound(): String
+    fun linkRefused(status: Int): String
+    fun linkUnreachable(detail: String?): String
+    fun linkTooSlow(): String
+    fun linkNotAnExport(): String
+    fun serverStatus(code: Int): String
+    fun checkRateLimited(untilMs: Long?): String
 }
 
 internal class Decoded(val apps: List<AppConfig>, val skipped: List<Pair<String, String>>)
@@ -84,9 +94,12 @@ internal object ImportDecoder {
 }
 
 internal class Interop(private val e: RealEngine) {
+    private val links = Links(e.http, e.texts, e.nowMs)
     private val oneAtATime = Mutex()
 
     suspend fun importFrom(uri: Uri): ImportSummary = bring { ImportDecoder.decode(read(uri), e.texts) }
+
+    suspend fun importFromLink(url: String): ImportSummary = bring { links.read(url) }
 
     /** For bytes that are already here, such as a file another device handed over. */
     suspend fun importBytes(bytes: ByteArray): ImportSummary = bring {

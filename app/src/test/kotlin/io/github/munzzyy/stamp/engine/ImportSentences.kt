@@ -13,6 +13,16 @@ object ImportSentences : ImportTexts {
     override fun importNotAnExport() = "importNotAnExport"
     override fun importUnreadableExport(detail: String?) = "importUnreadableExport($detail)"
     override fun importTooLarge(limitBytes: Int) = "importTooLarge($limitBytes)"
+    override fun linkNotHttps() = "linkNotHttps"
+    override fun linkNotAnAddress() = "linkNotAnAddress"
+    override fun linkLeavesHttps() = "linkLeavesHttps"
+    override fun linkNotFound() = "linkNotFound"
+    override fun linkRefused(status: Int) = "linkRefused($status)"
+    override fun linkUnreachable(detail: String?) = "linkUnreachable($detail)"
+    override fun linkTooSlow() = "linkTooSlow"
+    override fun linkNotAnExport() = "linkNotAnExport"
+    override fun serverStatus(code: Int) = "serverStatus($code)"
+    override fun checkRateLimited(untilMs: Long?) = "checkRateLimited($untilMs)"
 }
 
 fun exportOf(vararg names: String): String = StampExport.write(

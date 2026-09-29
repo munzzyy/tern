@@ -464,7 +464,10 @@ class RealEngine(
 
     override suspend fun importFromFile(file: SavedFile): ImportSummary = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
 
-    override suspend fun importFromLink(url: String): ImportSummary = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
+    override suspend fun importFromLink(url: String): ImportSummary {
+        ready()
+        return interop.importFromLink(url)
+    }
 
     override suspend fun importReceived(file: Received.ExportFile): ImportSummary = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
 

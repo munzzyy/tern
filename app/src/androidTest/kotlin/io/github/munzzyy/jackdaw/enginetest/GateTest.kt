@@ -134,7 +134,7 @@ class GateTest {
             waitUntil(5_000, "the row to show the checksum") { h.row(id).verification?.checksum == ChecksumState.MATCHED }
 
             val verification = h.row(id).verification!!
-            assertEquals("checksum file app-v1.apk.sha256", verification.checksumSource)
+            assertEquals("checksum file app-v1.apk.sha256", plain(verification.checksumSource))
             assertTrue(verification.signersVerified)
             assertEquals(PKG, verification.packageName)
         }

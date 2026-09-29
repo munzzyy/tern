@@ -63,7 +63,8 @@ fun PreviewCard(found: Detection.Found, carried: List<CarriedSetting>, onAdd: (i
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 val release = found.release
                 if (release == null) {
-                    Text(stringResource(R.string.preview_no_release), style = MaterialTheme.typography.bodyLarge)
+                    // A warning below already says what is wrong, such as a release with no file for this device.
+                    if (found.warnings.isEmpty()) Text(stringResource(R.string.preview_no_release), style = MaterialTheme.typography.bodyLarge)
                 } else {
                     val published = release.publishedAtMs?.let { isolate(formatDate(it)) }
                     Text(

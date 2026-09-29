@@ -15,6 +15,13 @@ import java.util.Locale
 /** Wraps a value in first-strong isolates so a version or size keeps its own order inside a right-to-left sentence. */
 fun isolate(value: String): String = "\u2068$value\u2069"
 
+/**
+ * A fingerprint, a file name or an address reads left to right in every language. Left to its
+ * first strong character, one that starts with digits is rearranged inside a right-to-left
+ * paragraph: "35:D2:6C" was drawn with the 35 at the far end.
+ */
+fun ltr(value: String): String = "\u2066$value\u2069"
+
 private val UNITS = arrayOf("B", "KB", "MB", "GB", "TB")
 
 fun formatBytes(bytes: Long, locale: Locale = Locale.getDefault()): String {
@@ -56,7 +63,7 @@ fun versionChange(row: AppRow): VersionChange? {
     val hasRelease = row.latest != null
     val changing = isUpdate(row) || row.status == AppStatus.BLOCKED || row.progress != null
     return when {
-        changing && installed != null && offered != null -> VersionChange.Change(installed, offered)
+        changing && installed != null && offered != null -> spelledAlike(installed, offered).let { (from, to) -> VersionChange.Change(from, to) }
         changing && installed != null && hasRelease -> VersionChange.NewFile(installed)
         installed != null -> VersionChange.Same(installed)
         offered != null -> VersionChange.Same(offered)
@@ -64,6 +71,19 @@ fun versionChange(row: AppRow): VersionChange? {
         else -> null
     }
 }
+
+/**
+ * An app calls itself "0.4.0" and its project tags the next release "v0.4.4". Side by side that
+ * reads as a mistake, so when only one of the two carries the "v", it is shown without.
+ */
+fun spelledAlike(installed: String, offered: String): Pair<String, String> {
+    val a = withoutV(installed)
+    val b = withoutV(offered)
+    return if ((a == installed) != (b == offered)) a to b else installed to offered
+}
+
+private fun withoutV(version: String): String =
+    if (version.length > 1 && version[0] in "vV" && version[1].isDigit()) version.substring(1) else version
 
 /** Whether [release] is what is installed: by version code when both know one, else by version without a leading "v". */
 fun isInstalledRelease(release: Release, installed: InstalledApp?): Boolean {

@@ -42,8 +42,8 @@ fun formatFingerprint(hex: String): String {
     return clean.uppercase().chunked(2).joinToString(":")
 }
 
-/** The same text with a zero-width space after each colon, so a wrapped line never splits a pair. */
-fun breakableFingerprint(formatted: String): String = formatted.replace(":", ":\u200B")
+/** The same text with a zero-width space after each colon, so a wrapped line never splits a pair, kept left to right. */
+fun breakableFingerprint(formatted: String): String = ltr(formatted.replace(":", ":\u200B"))
 
 private const val PERMISSION_PREFIX = "android.permission."
 

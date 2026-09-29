@@ -37,7 +37,7 @@ class FormatTest {
     @Test
     fun theStatusDecidesWhetherAChangeIsShown() {
         val update = testRow(status = AppStatus.UPDATE_AVAILABLE, installed = "0.4.0", offered = "v0.4.4")
-        assertEquals(VersionChange.Change("0.4.0", "v0.4.4"), versionChange(update))
+        assertEquals(VersionChange.Change("0.4.0", "0.4.4"), versionChange(update))
         assertEquals(VersionChange.Same("0.4.4"), versionChange(testRow(status = AppStatus.UP_TO_DATE, installed = "0.4.4", offered = "v0.4.4")))
         assertEquals(VersionChange.Change("4.0", "4.1"), versionChange(testRow(status = AppStatus.BLOCKED, installed = "4.0", offered = "4.1")))
         assertEquals(VersionChange.Same("1.4.2"), versionChange(testRow(status = AppStatus.UP_TO_DATE, installed = "1.4.2", offered = "1.5.0")))
@@ -120,5 +120,21 @@ class FormatTest {
         val ms = 1_790_000_000_000L
         assertEquals(formatDate(ms, ZoneOffset.UTC, Locale.US), formatDate(ms, ZoneOffset.UTC, Locale.US))
         assertTrue(formatDate(ms, ZoneOffset.UTC, Locale.US).contains("2026"))
+    }
+
+    @Test
+    fun aVersionAndATagAreShownSpelledAlike() {
+        assertEquals("0.4.0" to "0.4.4", spelledAlike("0.4.0", "v0.4.4"))
+        assertEquals("1.0" to "2.0", spelledAlike("v1.0", "2.0"))
+        assertEquals("1.0" to "2.0", spelledAlike("V1.0", "2.0"))
+    }
+
+    @Test
+    fun versionsThatAlreadyAgreeAreLeftAsTheyAre() {
+        assertEquals("v1.0" to "v2.0", spelledAlike("v1.0", "v2.0"))
+        assertEquals("1.0" to "2.0", spelledAlike("1.0", "2.0"))
+        assertEquals("vanilla" to "2.0", spelledAlike("vanilla", "2.0"))
+        assertEquals("v" to "2.0", spelledAlike("v", "2.0"))
+        assertEquals("nightly" to "release-7", spelledAlike("nightly", "release-7"))
     }
 }

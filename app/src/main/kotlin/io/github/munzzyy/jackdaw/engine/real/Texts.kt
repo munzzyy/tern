@@ -13,6 +13,9 @@ class Texts(context: Context) {
 
     private fun s(id: Int, vararg args: Any): String = c.getString(id, *args)
 
+    /** Names, addresses and hashes keep their own order inside a right-to-left sentence. */
+    private fun ltr(value: String): String = "\u2066$value\u2069"
+
     private fun q(id: Int, count: Int): String = c.resources.getQuantityString(id, count, count)
 
     private fun bytes(n: Long): String = Formatter.formatShortFileSize(c, n)
@@ -35,7 +38,7 @@ class Texts(context: Context) {
     fun androidRefusedFile() = s(R.string.engine_android_refused_file)
     fun readsDifferently() = s(R.string.engine_reads_differently)
     fun unsigned() = s(R.string.engine_unsigned)
-    fun packageMismatch(expected: String?, actual: String) = s(R.string.engine_package_mismatch, expected.orEmpty(), actual)
+    fun packageMismatch(expected: String?, actual: String) = s(R.string.engine_package_mismatch, ltr(expected.orEmpty()), ltr(actual))
     fun signerMismatch() = s(R.string.engine_signer_mismatch)
     fun pinMismatch() = s(R.string.engine_pin_mismatch)
     fun splitSignerMismatch() = s(R.string.engine_split_signer_mismatch)
@@ -89,18 +92,18 @@ class Texts(context: Context) {
     fun notASource() = s(R.string.engine_not_a_source)
     fun nothingToSearch() = s(R.string.engine_nothing_to_search)
 
-    fun eventAdded(from: String) = s(R.string.engine_event_added, from)
+    fun eventAdded(from: String) = s(R.string.engine_event_added, ltr(from))
     fun eventRemoved() = s(R.string.engine_event_removed)
     fun eventImported() = s(R.string.engine_event_imported)
     fun eventUpdateFound(version: String) = s(R.string.engine_event_update_found, version)
     fun eventDownloaded(size: Long) = s(R.string.engine_event_downloaded, bytes(size))
-    fun eventVerified(packageName: String, versionCode: Long, signer: String) = s(R.string.engine_event_verified, packageName, versionCode, signer)
+    fun eventVerified(packageName: String, versionCode: Long, signer: String) = s(R.string.engine_event_verified, ltr(packageName), versionCode, ltr(signer))
     fun eventInstalled(version: String, versionCode: Long) = s(R.string.engine_event_installed, version, versionCode)
 
     fun checksumGitHub() = s(R.string.engine_checksum_github)
     fun checksumIndex() = s(R.string.engine_checksum_index)
     fun checksumSource() = s(R.string.engine_checksum_source)
-    fun checksumFile(name: String) = s(R.string.engine_checksum_file, name.take(120))
+    fun checksumFile(name: String) = s(R.string.engine_checksum_file, ltr(name.take(120)))
     fun checksumNotes() = s(R.string.engine_checksum_notes)
 
     fun channelUpdates() = s(R.string.engine_channel_updates)

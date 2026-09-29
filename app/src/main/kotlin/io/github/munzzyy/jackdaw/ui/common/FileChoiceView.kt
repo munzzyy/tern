@@ -16,12 +16,13 @@ import io.github.munzzyy.jackdaw.R
 import io.github.munzzyy.jackdaw.engine.FileChoice
 import io.github.munzzyy.jackdaw.ui.text.formatBytes
 import io.github.munzzyy.jackdaw.ui.text.isolate
+import io.github.munzzyy.jackdaw.ui.text.ltr
 
 @Composable
 fun FileChoiceView(choice: FileChoice, modifier: Modifier = Modifier) {
     Column(modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
         SelectionContainer {
-            Text(choice.asset.name, style = MaterialTheme.typography.bodyLarge)
+            Text(ltr(choice.asset.name), style = MaterialTheme.typography.bodyLarge)
         }
         choice.asset.size?.let {
             Text(isolate(formatBytes(it)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)

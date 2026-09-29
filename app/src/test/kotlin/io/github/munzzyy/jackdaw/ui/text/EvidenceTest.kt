@@ -40,10 +40,15 @@ class EvidenceTest {
     }
 
     @Test
-    fun wrappedFingerprintBreaksOnlyBetweenPairs() {
+    fun wrappedFingerprintBreaksOnlyBetweenPairsAndStaysLeftToRight() {
         val shown = breakableFingerprint(formatFingerprint("abcd01"))
-        assertEquals("AB:​CD:​01", shown)
-        assertEquals("AB:CD:01", shown.replace("​", ""))
+        assertEquals("\u2066AB:\u200BCD:\u200B01\u2069", shown)
+        assertEquals("AB:CD:01", shown.filter { it.code < 0x2000 })
+    }
+
+    @Test
+    fun aValueThatStartsWithDigitsIsHeldLeftToRight() {
+        assertEquals("\u206635:D2\u2069", ltr("35:D2"))
     }
 
     @Test

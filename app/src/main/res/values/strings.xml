@@ -1,4 +1,393 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Jackdaw</string>
+
+    <!-- Navigation -->
+    <string name="tab_apps">Apps</string>
+    <string name="tab_add">Add</string>
+    <string name="tab_activity">Activity</string>
+    <string name="tab_settings">Settings</string>
+    <!-- Spoken by TalkBack for the number badge on the Apps tab. -->
+    <plurals name="tab_updates_badge">
+        <item quantity="one">%d update</item>
+        <item quantity="other">%d updates</item>
+    </plurals>
+    <!-- Shown in the right-hand pane on wide screens before an app is picked. -->
+    <string name="pane_nothing_selected">Pick an app to see its details</string>
+
+    <!-- Short status labels on each app row. Keep them to one or two words. -->
+    <string name="status_unknown">Not checked yet</string>
+    <string name="status_up_to_date">Up to date</string>
+    <string name="status_update">Update</string>
+    <!-- Only the version text could be compared, so the update is probable but not certain. -->
+    <string name="status_update_likely">Update likely</string>
+    <string name="status_not_installed">Not installed</string>
+    <!-- For apps the user only follows without installing: a release they have not looked at yet. -->
+    <string name="status_new_release">New release</string>
+    <string name="status_blocked">Blocked</string>
+    <string name="status_error">Check failed</string>
+    <string name="status_rate_limited">Rate limited</string>
+    <string name="status_checking">Checking</string>
+    <string name="status_queued">Queued</string>
+    <string name="status_downloading">Downloading</string>
+    <string name="status_verifying">Checking file</string>
+    <string name="status_installing">Installing</string>
+    <string name="status_waiting">Waiting for you</string>
+
+    <!-- %1$s is the installed version, %2$s the offered one. -->
+    <string name="version_change">%1$s to %2$s</string>
+    <string name="version_change_spoken">Version %1$s to %2$s</string>
+    <string name="version_single_spoken">Version %1$s</string>
+    <!-- %1$s and %2$s are sizes such as "12 MB"; %3$d is a whole percentage. -->
+    <string name="progress_bytes_percent">%1$s of %2$s, %3$d%%</string>
+    <string name="progress_bytes">%1$s so far</string>
+
+    <!-- Actions -->
+    <string name="action_update">Update</string>
+    <string name="action_install">Install</string>
+    <string name="action_open">Open</string>
+    <!-- For follow-only apps: mark the new release as seen. -->
+    <string name="action_mark_seen">Mark as seen</string>
+    <string name="action_check_again">Check again</string>
+    <string name="action_check_now">Check now</string>
+    <string name="action_check_all">Check all apps now</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_details">Details</string>
+    <string name="action_more">More options</string>
+    <string name="action_skip_version">Skip this version</string>
+    <string name="action_remove">Remove</string>
+    <string name="action_update_all">Update all</string>
+    <string name="action_add">Add</string>
+    <string name="action_add_and_install">Add and install</string>
+    <string name="action_add_first">Add your first app</string>
+    <string name="action_back">Back</string>
+    <string name="action_clear_search">Clear search</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_copy_fingerprint">Copy certificate fingerprint</string>
+    <string name="action_paste">Paste</string>
+    <string name="action_find">Find</string>
+    <string name="action_try_again">Try again</string>
+    <string name="action_show_it">Show it</string>
+    <string name="action_install_version">Install this version</string>
+    <!-- %s is a version number. -->
+    <string name="action_install_version_spoken">Install version %s</string>
+    <string name="action_install_file">Install this file</string>
+    <string name="action_save">Save</string>
+    <string name="action_discard">Discard</string>
+    <string name="action_failed">That did not work. Try again in a moment.</string>
+    <string name="save_failed">The change was not saved. Try again.</string>
+    <string name="open_no_launcher">This app has no screen to open</string>
+
+    <!-- Apps screen -->
+    <string name="apps_search_hint">Search your apps</string>
+    <string name="filter_all">All</string>
+    <string name="filter_updates">Updates</string>
+    <string name="filter_installed">Installed</string>
+    <string name="filter_not_installed">Not installed</string>
+    <plurals name="apps_section_updates">
+        <item quantity="one">%d update</item>
+        <item quantity="other">%d updates</item>
+    </plurals>
+    <string name="apps_section_others">Everything else</string>
+    <string name="apps_no_match">No apps match</string>
+    <string name="apps_empty_title">No apps yet</string>
+    <string name="apps_empty_text">Paste a link to a project page, a release page or an F-Droid repository, and Jackdaw keeps the app up to date from there.</string>
+    <string name="sort_title">Sort</string>
+    <string name="sort_name">By name</string>
+    <string name="sort_recently_checked">Recently checked</string>
+    <string name="sort_source">By source</string>
+    <!-- %s is the app name. -->
+    <string name="remove_title">Remove %s?</string>
+    <string name="remove_text_installed">Jackdaw stops following it. The app stays installed.</string>
+    <string name="remove_text">Jackdaw stops following it.</string>
+
+    <!-- Add screen -->
+    <string name="add_title">Add an app</string>
+    <string name="add_field_label">Link or search</string>
+    <string name="add_field_hint">https://github.com/owner/app</string>
+    <string name="add_field_help">A project, release or repository link. Anything else is searched.</string>
+    <string name="add_looking">Looking it up</string>
+    <string name="add_adding">Adding</string>
+    <string name="add_broken">Something went wrong while looking this up.</string>
+    <!-- %s is a person or organisation name. -->
+    <string name="by_author">by %s</string>
+    <!-- %1$s is a source such as "GitHub", %2$s its web address host such as "github.com". -->
+    <string name="source_line">%1$s, %2$s</string>
+    <string name="preview_version">Version %s</string>
+    <string name="preview_no_release">No release found yet</string>
+    <string name="preview_installed">Installed now: %s</string>
+    <string name="preview_file">File to install</string>
+    <plurals name="preview_other_files">
+        <item quantity="one">%d other file is offered. You can pick it after adding.</item>
+        <item quantity="other">%d other files are offered. You can pick one after adding.</item>
+    </plurals>
+    <string name="preview_already_tracked">This app is already in your list.</string>
+    <!-- %s is a date. -->
+    <string name="published_on">Published %s</string>
+    <string name="prerelease">Pre-release</string>
+    <!-- %1$d is the number of results, %2$s what the user typed. -->
+    <plurals name="search_count">
+        <item quantity="one">%1$d result for “%2$s”</item>
+        <item quantity="other">%1$d results for “%2$s”</item>
+    </plurals>
+    <string name="search_none">Nothing found for “%s”</string>
+    <plurals name="search_stars">
+        <item quantity="one">%d star</item>
+        <item quantity="other">%d stars</item>
+    </plurals>
+    <string name="file_why">Why this file</string>
+
+    <!-- Verification panel -->
+    <string name="checks_title">Checks</string>
+    <string name="checks_package">Package name</string>
+    <string name="checks_package_unknown">Not known until the file is read</string>
+    <string name="checks_certificate">Signing certificate (SHA-256)</string>
+    <!-- The certificate was only read from the file header; Android has not verified it yet. -->
+    <string name="checks_certificate_claimed">Signing certificate the file claims (SHA-256)</string>
+    <string name="signer_unknown">Nothing is known about the signer yet. It is checked after download.</string>
+    <string name="signer_first_seen">First install: this certificate will be remembered</string>
+    <string name="signer_first_seen_claimed">First install: the file claims this certificate, and it will be remembered once Android confirms it</string>
+    <string name="signer_matches_pin">Signed with the certificate you pinned</string>
+    <string name="signer_matches_pin_claimed">The file claims the certificate you pinned. Android confirms it before installing.</string>
+    <string name="signer_matches_installed">Signed by the same developer as the installed app</string>
+    <string name="signer_matches_installed_claimed">The file claims the same developer as the installed app. Android confirms it before installing.</string>
+    <string name="signer_mismatch">Signed by someone other than the installed app\'s developer</string>
+    <string name="signer_mismatch_claimed">The file claims a different signer than the installed app</string>
+    <string name="checksum_not_published">The publisher offers no checksum for this file</string>
+    <string name="checksum_pending">The publisher offers a checksum. It is compared after download.</string>
+    <string name="checksum_matched">The file matches the publisher\'s checksum</string>
+    <string name="checksum_mismatch">The file does not match the publisher\'s checksum</string>
+    <!-- %s names where the checksum came from, such as "GitHub release digest". -->
+    <string name="checksum_source">From: %s</string>
+    <string name="permissions_none_new">No new permissions</string>
+    <plurals name="permissions_new">
+        <item quantity="one">Asks for %d new permission</item>
+        <item quantity="other">Asks for %d new permissions</item>
+    </plurals>
+    <string name="fingerprint_copied">Fingerprint copied</string>
+
+    <!-- What the user can do about each problem. -->
+    <string name="advice_network">Jackdaw could not reach the source. Check your connection or proxy, then try again.</string>
+    <string name="advice_rate_limited">The source is limiting how often it can be asked. A saved access token for this host raises the limit.</string>
+    <string name="advice_not_found">The project may have moved or been made private. Check the link, or remove the app and add it again.</string>
+    <string name="advice_auth">The source refused the access token. Replace it in Settings, under access tokens.</string>
+    <string name="advice_parse">The source answered with something Jackdaw could not read. It may be a temporary fault on their side.</string>
+    <string name="advice_no_releases">The project has not published a release Jackdaw can use yet. Pre-releases count if you turn them on.</string>
+    <string name="advice_no_file">None of the files fit this device. Pick one yourself under File choice, or change the include and exclude patterns.</string>
+    <string name="advice_checksum_mismatch">The file changed after it was published or was damaged on the way. Do not install it. Try again later.</string>
+    <string name="advice_signer_mismatch">Installing it would replace the app with one from a different developer, so Jackdaw refuses. If the developer announced a new key, remove the pin under Advanced.</string>
+    <string name="advice_package_mismatch">The file is a different app than the one you follow. Check the include and exclude patterns under File choice.</string>
+    <string name="advice_downgrade">The offered version is older than the installed one. Android would lose the app\'s data, so Jackdaw will not install it.</string>
+    <string name="advice_install_failed">Android refused the install. The reason it gave is shown above.</string>
+    <string name="advice_storage">There is not enough free space. Free some up, then try again.</string>
+    <string name="advice_unsupported">This app needs a newer Android or a different device.</string>
+    <string name="retry_now">You can try again now.</string>
+    <!-- %1$s is a clock time, %2$d a number of minutes until then. -->
+    <plurals name="retry_at">
+        <item quantity="one">It resets at %1$s, in %2$d minute.</item>
+        <item quantity="other">It resets at %1$s, in %2$d minutes.</item>
+    </plurals>
+
+    <!-- App detail -->
+    <string name="detail_gone">This app is no longer in your list.</string>
+    <string name="silent_yes">This update can install without a prompt.</string>
+    <string name="silent_no">Android will ask you to confirm this update.</string>
+    <string name="phase_queued">Waiting for other downloads to finish</string>
+    <string name="phase_downloading">Downloading</string>
+    <string name="phase_verifying">Checking the file before installing</string>
+    <string name="phase_installing">Installing</string>
+    <string name="phase_waiting">Waiting for you to confirm in Android\'s install dialog</string>
+    <!-- %s is a version. -->
+    <string name="notes_title">What\'s new in %s</string>
+    <string name="notes_none">This release has no notes.</string>
+    <string name="notes_failed">The notes could not be loaded.</string>
+    <string name="notes_show">Show notes</string>
+    <string name="notes_hide">Hide notes</string>
+    <string name="versions_title">Versions</string>
+    <string name="versions_none">No versions from the last check.</string>
+    <string name="versions_failed">The versions could not be loaded.</string>
+    <string name="versions_all">Show all %d</string>
+    <string name="versions_fewer">Show fewer</string>
+    <string name="version_offered">Offered</string>
+    <string name="version_installed">Installed</string>
+    <string name="group_updates">Updates</string>
+    <string name="group_files">File choice</string>
+    <string name="group_advanced">Advanced</string>
+    <string name="advanced_show">Show filters, pinned certificates and track only</string>
+    <string name="advanced_hide">Hide advanced settings</string>
+    <string name="setting_update_mode">Updates</string>
+    <string name="mode_notify">Tell me about updates</string>
+    <string name="mode_notify_effect">Checked in the background. You decide when to install.</string>
+    <string name="mode_auto">Install updates by themselves</string>
+    <string name="mode_auto_effect">Installed in the background when Android allows it without asking. Otherwise you get a notification.</string>
+    <string name="mode_manual">Only when I check</string>
+    <string name="mode_manual_effect">Never checked in the background.</string>
+    <string name="setting_prereleases">Include pre-releases</string>
+    <string name="setting_prereleases_on">Test versions count as updates.</string>
+    <string name="setting_prereleases_off">Only stable releases count as updates.</string>
+    <string name="setting_min_age">Wait before updating</string>
+    <string name="setting_min_age_effect">A new release is ignored until it has been out this long, so a bad one can be pulled first.</string>
+    <string name="min_age_none">No wait</string>
+    <plurals name="min_age_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <string name="files_none">No files from the last check.</string>
+    <!-- %d is the position in the ranking, 1 being best. -->
+    <string name="file_recommended">Choice %d, recommended</string>
+    <string name="file_alternative">Choice %d</string>
+    <string name="setting_match_device">Match this device</string>
+    <string name="setting_match_device_effect">When several files are offered, prefer the one built for this phone\'s processor.</string>
+    <string name="setting_include">Only files matching</string>
+    <string name="setting_include_help">A pattern the file name must contain, for example universal</string>
+    <string name="setting_exclude">Skip files matching</string>
+    <string name="setting_exclude_help">A pattern that rules a file out, for example debug</string>
+    <string name="pattern_invalid">This pattern is not valid</string>
+    <string name="setting_tag_filter">Only tags matching</string>
+    <string name="setting_tag_filter_help">Releases whose tag does not match are ignored</string>
+    <string name="setting_title_filter">Only titles matching</string>
+    <string name="setting_title_filter_help">Releases whose title does not match are ignored</string>
+    <string name="setting_notes_filter">Only notes matching</string>
+    <string name="setting_notes_filter_help">Releases whose notes do not match are ignored</string>
+    <string name="setting_version_pattern">Version pattern</string>
+    <string name="setting_version_pattern_help">Picks the version out of the tag, for example v(.+)</string>
+    <string name="setting_categories">Categories</string>
+    <string name="setting_categories_help">Separate them with commas. Each one becomes a filter on the Apps screen.</string>
+    <string name="setting_fallback">Fall back to older releases</string>
+    <string name="setting_fallback_effect">When the newest release has no usable file, offer the newest one that does.</string>
+    <string name="setting_track_only">Track only</string>
+    <string name="setting_track_only_effect">Follow new releases without downloading or installing anything.</string>
+    <string name="pins_title">Pinned certificates</string>
+    <string name="pins_none">None yet. The first certificate is pinned when the app is installed.</string>
+    <string name="pins_effect">Only files signed with one of these certificates are installed.</string>
+    <string name="pins_remove">Remove this certificate</string>
+    <string name="pins_add_label">Add a certificate fingerprint</string>
+    <string name="pins_add_help">SHA-256, with or without colons</string>
+    <string name="pins_add_invalid">That is not a SHA-256 fingerprint. It needs 64 hex characters.</string>
+    <string name="pins_add">Pin certificate</string>
+
+    <!-- Links -->
+    <string name="link_dialog_title">Open this link?</string>
+    <string name="link_open">Open</string>
+    <string name="link_open_with">Open with</string>
+
+    <!-- Activity -->
+    <string name="activity_problems_only">Problems only</string>
+    <string name="activity_empty">Nothing has happened yet.</string>
+    <string name="activity_no_problems">No problems.</string>
+    <string name="activity_clear">Clear activity</string>
+    <string name="activity_clear_title">Clear the activity log?</string>
+    <string name="activity_clear_text">Every entry is deleted. Your apps and settings stay as they are.</string>
+    <string name="day_today">Today</string>
+    <string name="day_yesterday">Yesterday</string>
+
+    <!-- Settings -->
+    <string name="settings_background">Background checks</string>
+    <string name="settings_interval">How often</string>
+    <string name="interval_off">Off</string>
+    <plurals name="interval_hours">
+        <item quantity="one">Every hour</item>
+        <item quantity="other">Every %d hours</item>
+    </plurals>
+    <string name="settings_unmetered">Only on unmetered networks</string>
+    <string name="settings_unmetered_effect">Skip checks on mobile data and metered Wi-Fi.</string>
+    <string name="settings_charging">Only while charging</string>
+    <string name="settings_charging_effect">Skip checks while on battery.</string>
+    <string name="settings_defaults">Defaults for new apps</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_notify_updates">When updates are found</string>
+    <string name="settings_notify_installed">When an update is installed</string>
+    <string name="settings_notify_failures">When a check fails</string>
+    <string name="settings_system_notifications">Android notification settings</string>
+    <string name="settings_system_notifications_effect">Sound, vibration and where notifications show up</string>
+    <string name="settings_installing">Installing</string>
+    <string name="settings_keep_installers">Keep downloaded files</string>
+    <string name="settings_keep_installers_effect">Files stay after installing, using storage. Off deletes them.</string>
+    <!-- Android 14 lets an installer claim that only it may update an app. -->
+    <string name="settings_ownership">Be the only updater</string>
+    <string name="settings_ownership_effect">Ask Android to let only Jackdaw update the apps it installs, so another store cannot swap them.</string>
+    <string name="settings_ownership_unsupported">Needs Android 14 or later.</string>
+    <string name="settings_tokens">Access tokens</string>
+    <string name="settings_tokens_effect">A token raises rate limits and opens private projects. It is sent only to the exact host it is saved for, and it is never shown again.</string>
+    <string name="token_saved">Saved</string>
+    <!-- %s is a host name such as github.com. -->
+    <string name="token_remove">Remove the token for %s</string>
+    <string name="token_host">Host</string>
+    <string name="token_host_help">For example api.github.com or codeberg.org</string>
+    <string name="token_host_invalid">That is not a host name</string>
+    <string name="token_value">Token</string>
+    <string name="token_value_help">Stored on this device only</string>
+    <string name="token_save">Save token</string>
+    <string name="settings_network">Network</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="proxy_none">No proxy</string>
+    <string name="proxy_none_effect">Connect directly.</string>
+    <!-- Orbot is the name of an app that routes traffic through Tor. -->
+    <string name="proxy_orbot">Orbot</string>
+    <string name="proxy_orbot_effect">Everything goes through Tor via Orbot, which must be running.</string>
+    <string name="proxy_custom">Custom SOCKS proxy</string>
+    <string name="proxy_custom_effect">Everything goes through the SOCKS proxy below.</string>
+    <string name="proxy_host">Proxy host</string>
+    <string name="proxy_port">Proxy port</string>
+    <string name="proxy_port_invalid">A number from 1 to 65535</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_theme">Theme</string>
+    <string name="theme_system">Follow the system</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="settings_dynamic_color">Colours from your wallpaper</string>
+    <string name="settings_dynamic_color_effect">Off uses Jackdaw\'s own slate blue.</string>
+    <string name="settings_dynamic_color_unsupported">Needs Android 12 or later.</string>
+    <string name="settings_pure_black">Pure black</string>
+    <string name="settings_pure_black_effect">Black backgrounds in the dark theme, easier on OLED screens.</string>
+    <string name="settings_data">Import and export</string>
+    <string name="settings_import">Import apps</string>
+    <string name="settings_import_effect">From a Jackdaw or Obtainium export</string>
+    <string name="settings_export">Export apps</string>
+    <string name="settings_exporting">Exporting</string>
+    <string name="settings_export_effect">Saves your list and settings to a file. Tokens are never included.</string>
+    <plurals name="exported">
+        <item quantity="one">Exported %d app</item>
+        <item quantity="other">Exported %d apps</item>
+    </plurals>
+    <string name="export_failed">The export could not be written.</string>
+    <string name="settings_obtainium_links">Open Obtainium links</string>
+    <string name="settings_obtainium_links_effect">Links meant for Obtainium open in Jackdaw instead. You still confirm every app.</string>
+    <string name="settings_about">About</string>
+    <string name="about_version">Version</string>
+    <string name="about_licence">Licence</string>
+    <string name="about_licence_name">GNU General Public License, version 3 or later</string>
+    <string name="about_source">Source code</string>
+
+    <!-- Import -->
+    <string name="import_title">Import apps</string>
+    <string name="import_explain">Pick an export file from Jackdaw or Obtainium. Nothing is installed; the apps are added to your list and checked.</string>
+    <string name="import_pick">Pick a file</string>
+    <string name="import_pick_other">Pick another file</string>
+    <string name="import_working">Reading the file</string>
+    <string name="import_failed">The file could not be read.</string>
+    <string name="import_failed_help">It may not be an export, or it may be damaged.</string>
+    <string name="import_done">Import finished</string>
+    <plurals name="import_added">
+        <item quantity="one">%d app added</item>
+        <item quantity="other">%d apps added</item>
+    </plurals>
+    <plurals name="import_present">
+        <item quantity="one">%d was already in your list</item>
+        <item quantity="other">%d were already in your list</item>
+    </plurals>
+    <plurals name="import_skipped">
+        <item quantity="one">%d could not be brought over:</item>
+        <item quantity="other">%d could not be brought over:</item>
+    </plurals>
+
+    <!-- First run -->
+    <string name="first_title">Jackdaw</string>
+    <string name="first_line_1">Jackdaw installs and updates apps straight from where their developers publish them.</string>
+    <string name="first_line_2">Before Android sees a file, Jackdaw checks who signed it and whether it matches the publisher\'s checksum.</string>
+    <string name="first_line_3">Everything it finds and does is written to the activity log, in plain words.</string>
+    <string name="first_notify_explain">Jackdaw can tell you when updates are ready. Android will ask whether to allow notifications.</string>
+    <string name="first_notify_denied">Notifications are off. You can turn them on later in Settings.</string>
+    <string name="first_notify_allow">Allow notifications</string>
+    <string name="first_skip">Not now</string>
 </resources>

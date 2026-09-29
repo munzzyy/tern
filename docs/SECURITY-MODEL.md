@@ -114,10 +114,11 @@ deadline.
 
 A television has no file picker, and typing an address with a remote is slow.
 So Stamp can take links and one export file from a phone on the same network:
-the device shows a QR code, the phone opens a small page that the device
-itself serves, and what is sent there arrives on the device. This is the only
-time Stamp listens for connections. It does so only after the user has opened
-the handoff, and everything Stamp fetches stays HTTPS only.
+the device shows a QR code and a code of 20 letters and digits, the phone opens
+a small page that the device itself serves, and what is sent there arrives on
+the device. This is the only time Stamp listens for connections. It does so
+only after the user has opened the handoff, and everything Stamp fetches stays
+HTTPS only.
 
 ### What is open, and for how long
 
@@ -125,34 +126,91 @@ The page is served on the device's own private IPv4 address, on Wi-Fi or on a
 network cable, on a port the system picks. It never listens on all addresses.
 On a mobile network or behind a VPN the handoff does not open.
 
-It closes after ten minutes, when the user closes it, after five wrong PINs,
-after 200 connections, and when Stamp leaves the screen. Closing frees the
-port at once. Opening again makes a new secret, a new PIN and a new port.
+It closes after ten minutes, when the user closes it, after 200 connections,
+and when Stamp leaves the screen. The device says which of these it was.
+Closing frees the port at once. Opening again makes a new code and a new port.
 
-There are two ways in. The QR code holds the address with a secret of 128
-random bits in it, and that secret is never shown as text. For a phone that
-cannot scan, the screen shows the bare address and a PIN of six random digits.
-The page at the bare address asks for the PIN and sends the browser on to the
-secret address. The secret and the PIN are compared in constant time.
+### The code
+
+The page is plain HTTP, because a device on a home network has no certificate
+that a phone would trust. What keeps the content between the two devices is
+the code.
+
+Each handoff makes 100 random bits and writes them as 20 characters, shown in
+five groups of four. The alphabet is the one of base32: the letters and the
+digits 2 to 7. It has no 0, 1, 8 or 9. The code is never sent over the network
+in any form: not as it is, not hashed, and not as part of an address that is
+asked for.
+
+There are two ways to give it to the page, and they end in the same place.
+
+- The QR code holds the address of the page with the code behind a number
+  sign. A browser keeps that part of an address to itself and asks the device
+  for the page alone. The page reads the code from there and takes it out of
+  the address bar at once.
+- For a phone that cannot scan, the screen shows the bare address, and the
+  page asks for the code. It takes capital and small letters, with spaces and
+  dashes anywhere. A character that the alphabet does not have is refused in a
+  sentence. The page never guesses what was meant.
+
+### How a thing is sealed
+
+The page makes three keys from the code, all with HMAC-SHA256. The master key
+is worked out with the code as the key over the text `stamp handoff v1`. The
+key that encrypts is worked out with the master key over `enc`, and the key
+that signs with the master key over `mac`.
+
+The content is encrypted with ChaCha20 as RFC 8439 describes it, under a nonce
+of 12 random bytes and from block 1. Then the tag is worked out with
+HMAC-SHA256 over one byte that says whether these are links or a file, the
+nonce and the encrypted content. These four travel together, written in
+base64, in the one field of one request.
+
+The device does the following, in this order.
+
+1. It checks the length of the request against the largest file there can be.
+2. It works out the tag and compares it in constant time. Nothing has been
+   decrypted at this point.
+3. It refuses a nonce that it has opened before in this handoff.
+4. It decrypts, and what comes out meets the limits below.
+
+Whatever is wrong with a thing that does not open, the answer is the same
+sentence, to the byte. A thing that does not open does not count towards
+closing the handoff. The 200 connections are the only budget.
+
+A browser gives a page that came over plain HTTP no `crypto.subtle`, so the
+page carries SHA-256, HMAC and ChaCha20 written out in its script, in 32 bit
+arithmetic, where anyone can read them in the source of the page. The random
+bytes come from `crypto.getRandomValues`. On the device HMAC is the one of
+the platform. ChaCha20 is written out there as well, because Android
+lets an app start its own ChaCha20 at a block of its choosing only from
+API 35. The tests hold both against the vectors of RFC 8439 and RFC 4231,
+against OpenSSL, and against each other, and the one on the device against
+the cipher of the JDK.
 
 ### What the page can do
 
 It can send up to 20 links of up to 2000 characters each, and one file of up to
-2 MiB. Nothing else. The server knows five requests: the page, the two forms
-on it, the page that asks for the PIN, and the PIN itself. Every other request
-gets the same answer, whether the address is unknown, the secret is wrong, or
-the request names another host. The last of these keeps out a web page that
-points a name of its own at the device.
+2 MiB. Nothing else. The server knows two requests: the page, and a sealed
+thing that is sent to it. Every other request gets the same answer, whether
+the address is unknown or the request names another host. The last of these
+keeps out a web page that points a name of its own at the device.
 
 A request may have 8 KiB of headers and ten seconds to send them, and a body
 has thirty seconds. A body is read only where one is expected and only when
 the request says how long it is. Four connections are served at a time and the
-others wait. The file has to arrive as the one part of the page's own form.
-At most 40 things wait on the device, and at most 8 MiB of files.
+others wait. At most 40 things wait on the device, and at most 8 MiB of files.
 
 The page is one document. It loads no picture, no font and no script from
-anywhere, and its headers forbid the browser to. No answer holds anything the
-phone sent.
+anywhere. Its Content-Security-Policy names the SHA-256 of its one script and
+of its one style, which are the same for every handoff, and allows nothing
+else: no other script, no style in an attribute, no form that is submitted,
+and no request except to the device itself.
+
+With scripts turned off the page says that it needs them and offers nothing
+to send, because without its script it could only send things unsealed. No
+field of the page has a name, so no browser can send what was typed into it
+as a plain form. No answer holds anything the phone sent.
 
 ### What arrives is a suggestion
 
@@ -162,22 +220,34 @@ A link then goes the way of a link typed by hand, and a file the way of any
 import. A file is not even read as a list of apps before the user chooses to
 import it.
 
-### What someone on the same network gains
+### What this gives, and what it does not
 
-The page is plain HTTP, because a device on a home network has no certificate
-that a phone would trust.
-
-- Someone who can read the traffic sees the secret, the links and the export
-  file. Links and exports hold app addresses and certificate fingerprints.
-  They never hold a token.
-- Someone who can change the traffic, or who has read the secret, can change
-  what arrives and send things of their own while the handoff is open. The
-  user sees what arrived on the device before saying yes, and an import that
-  brings pinned certificates or filters names them.
-- Someone who guesses has five tries at the PIN, which is five in a million,
-  and no chance at the secret.
-- Anyone on the network can end a handoff early, with five wrong PINs or 200
-  connections. Ending it is all they get.
+- Someone who only listens learns that a handoff took place, when, whether
+  links or a file were sent, how many bytes, and what the device answered.
+  For a file the number of bytes says roughly how long the list of apps is.
+  They cannot read what was sent, cannot send anything the device accepts,
+  and cannot send a recorded message a second time.
+- Someone who can change traffic on the network, and not only read it, can
+  replace the page with one of their own and get the code from whoever types
+  or scans it. They can also change what the device answers. Nothing that a
+  page on a local address can do prevents that, because the page itself
+  arrives over plain HTTP. What they then send is still only a suggestion: it
+  is shown on the device, and nothing is added until the person there has
+  looked at it and said yes. An import that brings pinned certificates or
+  filters names them.
+- Someone who guesses needs no answer from the device. One recorded message
+  is enough to try codes against, as fast as their machines work. The code
+  has 100 bits so that it can still be typed. Guessing it takes up to 2 to
+  the power of 100 tries, each of them a few runs of HMAC-SHA256, and that
+  is out of reach.
+- Someone who has recorded a handoff and learns its code later, from a
+  photograph of the screen for one, can read what was sent in it. The keys
+  come from the code alone. The code is shown only while the handoff is open,
+  and the next handoff has another.
+- Someone who can see the screen can read the code, and the app that scans
+  the QR code reads it too. The code keeps out the network, not the room.
+- Anyone on the network can end a handoff early with 200 connections. Ending
+  it is all they get.
 
 ### What the door cannot do
 
@@ -200,6 +270,7 @@ that a phone would trust.
   what is in it.
 - It has been tested on emulators. Vendor builds of Android can behave
   differently.
-- The handoff has been tested with real connections on a computer. How it
-  finds the device's address and how it closes when Stamp leaves the screen
-  has tests for a device that have not been run yet.
+- The handoff has been tested with real connections on a computer, and its
+  page in Chromium on a computer. No phone has loaded the page yet. How the
+  handoff finds the device's address and how it closes when Stamp leaves the
+  screen has tests for a device that have not been run yet.

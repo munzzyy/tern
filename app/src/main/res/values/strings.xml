@@ -116,7 +116,7 @@
         <item quantity="one">%d selected</item>
         <item quantity="other">%d selected</item>
     </plurals>
-    <string name="apps_select_hint">Tap apps to pick them.</string>
+    <string name="apps_select_hint">Pick apps from the list.</string>
     <string name="action_add_to_category">Add to category</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Add %d app to a category</item>
@@ -149,8 +149,8 @@
         <item quantity="other">Stop tracking %d apps?</item>
     </plurals>
     <string name="bulk_remove_text">The apps stay installed. Stamp only stops checking them for updates.</string>
-    <string name="apps_empty_title">No apps yet</string>
-    <string name="apps_empty_text">Paste a link to a project page, a release page or an F-Droid repository, and Stamp keeps the app up to date from there.</string>
+    <string name="apps_empty_title">Nothing here yet</string>
+    <string name="apps_empty_text">Add an app by its link, or start with one that many people use.</string>
     <string name="sort_title">Sort</string>
     <string name="sort_name">By name</string>
     <string name="sort_recently_checked">Recently checked</string>
@@ -540,7 +540,7 @@
     <string name="first_title">Stamp</string>
     <string name="first_line_1">Stamp installs and updates apps straight from where their developers publish them.</string>
     <string name="first_line_2">Before Android sees a file, Stamp checks who signed it and whether it matches the publisher\'s checksum.</string>
-    <string name="first_line_3">Everything it finds and does is written to the activity log, in plain words.</string>
+    <string name="first_line_3">Everything it finds and does is written down in plain words.</string>
     <string name="first_notify_explain">Stamp can tell you when updates are ready. Android will ask whether to allow notifications.</string>
     <string name="first_notify_denied">Notifications are off. You can turn them on later in Settings.</string>
     <string name="first_notify_allow">Allow notifications</string>

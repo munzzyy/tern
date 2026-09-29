@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.munzzyy.stamp.engine.AppRow
 import io.github.munzzyy.stamp.engine.Engine
+import io.github.munzzyy.stamp.ui.text.isWaitingForUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,24 +21,36 @@ data class AppsState(
     val sections: AppSections = AppSections(emptyList(), emptyList()),
     val categories: List<String> = emptyList(),
     val updatable: Int = 0,
+    /** The filters to show, none when there is nothing to tell apart. */
+    val filters: List<AppFilter> = emptyList(),
+    /** Apps whose install waits for the user, whatever the search and the filter hide. */
+    val waiting: List<AppRow> = emptyList(),
 )
 
-class AppsViewModel(engine: Engine) : ViewModel() {
+/** What the list shows of [rows]: the apps in [gone] were removed and can still be taken back, so they are left out. */
+fun listState(rows: List<AppRow>, query: ListQuery, gone: Set<String>): AppsState {
+    val shown = if (gone.isEmpty()) rows else rows.filterNot { it.id in gone }
+    val categories = categoriesOf(shown)
+    val filter = query.filter
+    val effective = if (filter is AppFilter.Category && filter.name !in categories) query.copy(filter = AppFilter.All) else query
+    val everything = arrange(shown, ListQuery(sort = query.sort))
+    return AppsState(
+        loaded = true,
+        total = shown.size,
+        sections = arrange(shown, effective),
+        categories = categories,
+        updatable = updatableCount(shown),
+        filters = offeredFilters(shown, categories, effective.filter),
+        waiting = (everything.updates + everything.others).filter(::isWaitingForUser),
+    )
+}
+
+class AppsViewModel(engine: Engine, hidden: StateFlow<Set<String>> = MutableStateFlow(emptySet())) : ViewModel() {
     private val _query = MutableStateFlow(ListQuery())
     val query: StateFlow<ListQuery> = _query.asStateFlow()
 
-    val state: StateFlow<AppsState> = combine(engine.apps, _query) { rows: List<AppRow>, q: ListQuery ->
-        val categories = categoriesOf(rows)
-        val filter = q.filter
-        val effective = if (filter is AppFilter.Category && filter.name !in categories) q.copy(filter = AppFilter.All) else q
-        AppsState(
-            loaded = true,
-            total = rows.size,
-            sections = arrange(rows, effective),
-            categories = categories,
-            updatable = updatableCount(rows),
-        )
-    }.flowOn(Dispatchers.Default).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), AppsState())
+    val state: StateFlow<AppsState> = combine(engine.apps, _query, hidden, ::listState)
+        .flowOn(Dispatchers.Default).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), AppsState())
 
     fun setText(text: String) {
         _query.value = _query.value.copy(text = text.take(200))

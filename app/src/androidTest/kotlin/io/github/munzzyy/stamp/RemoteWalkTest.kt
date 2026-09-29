@@ -39,19 +39,19 @@ class RemoteWalkTest {
     fun downFromTheTopBarGoesIntoTheList() {
         launch("default").use {
             compose.assertFocusOn(row, "the list opens with focus on its first app")
-            compose.moveTo(hasContentDescription("Sort"), KEYCODE_DPAD_UP)
+            compose.moveTo(hasContentDescription("Search your apps") or hasContentDescription("Check all apps now") or hasContentDescription("More options"), KEYCODE_DPAD_UP)
             compose.press(KEYCODE_DPAD_DOWN)
-            compose.assertFocusOn(hasSetTextAction(), "down from Sort lands on the search field right under it")
+            compose.assertFocusOn(hasSetTextAction() or hasText("Confirm"), "down from the top bar lands on what is right under it, the banner or the search field")
         }
     }
 
     @Test
     fun anEmptyListKeepsUpAndDownOffTheRail() {
         launch("empty").use {
-            val addFirst = hasText("Add your first app")
-            compose.assertFocusOn(addFirst, "an empty list opens on its only action")
+            val addFirst = hasText("Add an app")
+            compose.assertFocusOn(addFirst, "an empty list opens on its first action")
             compose.press(KEYCODE_DPAD_UP)
-            compose.assertFocusOn(hasContentDescription("Sort") or hasContentDescription("Check all apps now"), "up from the list reaches its top bar")
+            compose.assertFocusOn(hasContentDescription("Check all apps now"), "up from the list reaches its top bar")
             compose.press(KEYCODE_DPAD_DOWN)
             compose.assertFocusOn(addFirst, "down from the top bar comes back into the list")
         }

@@ -81,6 +81,7 @@ import io.github.munzzyy.stamp.ui.common.focusHighlight
 import io.github.munzzyy.stamp.ui.common.verticalFocusStaysInside
 import io.github.munzzyy.stamp.ui.common.lacksTouch
 import io.github.munzzyy.stamp.ui.apps.AppsScreen
+import io.github.munzzyy.stamp.ui.apps.openHandoff
 import io.github.munzzyy.stamp.ui.detail.DetailScreen
 import io.github.munzzyy.stamp.ui.firstrun.FirstRunScreen
 import io.github.munzzyy.stamp.ui.icons.Glyphs
@@ -262,6 +263,7 @@ private fun Pane(stack: BackStack, holder: SaveableStateHolder, current: Route, 
                             selectedId = (current as? Route.Detail)?.appId,
                             onOpen = { if ((current as? Route.Detail)?.appId == it) reopened++ else stack.showDetail(it) },
                             onAdd = { stack.select(Tab.ADD) },
+                            onHandoff = { openHandoff(stack) },
                             listState = listState,
                         )
                     }
@@ -316,6 +318,7 @@ private fun Screen(stack: BackStack, route: Route, listState: LazyListState, two
             selectedId = null,
             onOpen = { stack.showDetail(it) },
             onAdd = { stack.select(Tab.ADD) },
+            onHandoff = { openHandoff(stack) },
             listState = listState,
         )
         is Route.Add -> AddScreen(

@@ -96,7 +96,7 @@ class BulkSelectionTest {
         launch("default").use {
             compose.onNodeWithContentDescription("More options").performClick()
             compose.onNodeWithText("Select").performClick()
-            compose.onNodeWithText("Tap apps to pick them.").assertIsDisplayed()
+            compose.onNodeWithText("Pick apps from the list.").assertIsDisplayed()
             compose.onNodeWithText("0 selected").assertIsDisplayed()
             assertEquals(0, compose.onAllNodes(hasText("Update") and hasAncestorTag(BULK_BAR_TAG)).fetchSemanticsNodes().size)
             compose.shownRow("Pocket Notes").performClick()

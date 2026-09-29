@@ -3,10 +3,12 @@ package io.github.munzzyy.stamp
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.stamp.fake.FakeLinks
 import io.github.munzzyy.stamp.ui.add.ADD_FIELD_TAG
+import io.github.munzzyy.stamp.ui.apps.APP_LIST_TAG
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -44,7 +46,7 @@ class IncomingIntentTest {
     fun linkThatIsNotHttpsLeavesAddAlone() {
         val view = mainIntent("default").setAction(Intent.ACTION_VIEW).setData(Uri.parse("stamp://add?url=http%3A%2F%2Fexample.org"))
         launch("default", view).use {
-            compose.waitForText("Search your apps")
+            compose.waitFor(hasTestTag(APP_LIST_TAG))
             assertTrue(compose.textCount("Add an app") == 0)
         }
     }

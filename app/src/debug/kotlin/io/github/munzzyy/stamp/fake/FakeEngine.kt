@@ -103,6 +103,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         val (rows, events) = when (name) {
             "empty", "firstrun" -> emptyList<AppRow>() to emptyList()
             "many" -> invent.manyRows(300) to invent.events()
+            "three" -> invent.manyRows(3) to invent.events()
+            "thirty" -> invent.manyRows(30) to invent.events()
             "offline" -> invent.offlineRows() to invent.events()
             "errors" -> invent.errorRows() to invent.events().filter { it.kind in setOf(EventKind.BLOCKED, EventKind.FAILED, EventKind.CHECK_FAILED) }
             else -> invent.defaultRows() to invent.events()
@@ -148,6 +150,9 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     }
 
     private fun row(id: String): AppRow? = _apps.value.firstOrNull { it.id == id }
+
+    /** Tests call it to put an app into the phase they need, or out of every phase with null. */
+    fun play(appId: String, progress: Progress?) = edit(appId) { it.copy(progress = progress) }
 
     private fun log(row: AppRow?, kind: EventKind, message: String) {
         val e = Event(eventIds.incrementAndGet(), System.currentTimeMillis(), row?.id, row?.config?.name, kind, message)

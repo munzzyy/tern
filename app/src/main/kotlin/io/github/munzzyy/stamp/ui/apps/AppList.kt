@@ -1,5 +1,6 @@
 package io.github.munzzyy.stamp.ui.apps
 
+import androidx.compose.ui.unit.Dp
 import io.github.munzzyy.stamp.engine.AppRow
 import io.github.munzzyy.stamp.ui.text.canUpdateNow
 import io.github.munzzyy.stamp.ui.text.isUpdate
@@ -62,3 +63,40 @@ fun arrange(rows: List<AppRow>, query: ListQuery, locale: Locale = Locale.getDef
 }
 
 fun updatableCount(rows: List<AppRow>): Int = rows.count(::canUpdateNow)
+
+private const val SEARCH_SHOWN_FROM = 8
+private const val STACK_FONT_SCALE = 1.5f
+private const val ICONS_PER_ROW = 9
+
+/** Where the one action of a row goes. */
+enum class ActionPlace { BESIDE, UNDER, NOWHERE }
+
+/**
+ * The action stands beside the words of a row where there is room for both. Where the text is
+ * large, or the list so narrow, measured in icons, that the words would be squeezed into a few
+ * letters a line, it goes under them. Without a touch screen it is left out there instead: a
+ * button under every row would double the presses it takes to walk the list, and the detail
+ * that opens beside or over the list has the same action under the same key.
+ */
+fun actionPlace(width: Dp, icon: Dp, fontScale: Float, noTouch: Boolean): ActionPlace = when {
+    fontScale < STACK_FONT_SCALE && width >= icon * ICONS_PER_ROW -> ActionPlace.BESIDE
+    noTouch -> ActionPlace.NOWHERE
+    else -> ActionPlace.UNDER
+}
+
+/**
+ * A short list needs no search field in the way: it is folded into a glyph at the top of the
+ * screen. On a television it always is, where typing is the last thing anyone wants to do.
+ */
+fun foldsSearch(total: Int, television: Boolean = false): Boolean = television || total < SEARCH_SHOWN_FROM
+
+/**
+ * The filters worth showing: All, and each one that keeps some rows and drops others. Empty
+ * when the rows are all of one kind, so there is nothing to filter. [current] is always among
+ * them, so a filter that was taken can be left again.
+ */
+fun offeredFilters(rows: List<AppRow>, categories: List<String>, current: AppFilter): List<AppFilter> {
+    val narrowing = listOf(AppFilter.Updates, AppFilter.Installed, AppFilter.NotInstalled) + categories.map { AppFilter.Category(it) }
+    val useful = narrowing.filter { filter -> filter == current || rows.count { passes(it, filter) } in 1 until rows.size }
+    return if (useful.isEmpty()) emptyList() else listOf(AppFilter.All) + useful
+}

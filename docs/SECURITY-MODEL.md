@@ -110,6 +110,85 @@ no web view. Links open in the browser after their full address has been shown.
 Patterns written by the user or carried in an import are matched under a
 deadline.
 
+## The handoff from a phone
+
+A television has no file picker, and typing an address with a remote is slow.
+So Stamp can take links and one export file from a phone on the same network:
+the device shows a QR code, the phone opens a small page that the device
+itself serves, and what is sent there arrives on the device. This is the only
+time Stamp listens for connections. It does so only after the user has opened
+the handoff, and everything Stamp fetches stays HTTPS only.
+
+### What is open, and for how long
+
+The page is served on the device's own private IPv4 address, on Wi-Fi or on a
+network cable, on a port the system picks. It never listens on all addresses.
+On a mobile network or behind a VPN the handoff does not open.
+
+It closes after ten minutes, when the user closes it, after five wrong PINs,
+after 200 connections, and when Stamp leaves the screen. Closing frees the
+port at once. Opening again makes a new secret, a new PIN and a new port.
+
+There are two ways in. The QR code holds the address with a secret of 128
+random bits in it, and that secret is never shown as text. For a phone that
+cannot scan, the screen shows the bare address and a PIN of six random digits.
+The page at the bare address asks for the PIN and sends the browser on to the
+secret address. The secret and the PIN are compared in constant time.
+
+### What the page can do
+
+It can send up to 20 links of up to 2000 characters each, and one file of up to
+2 MiB. Nothing else. The server knows five requests: the page, the two forms
+on it, the page that asks for the PIN, and the PIN itself. Every other request
+gets the same answer, whether the address is unknown, the secret is wrong, or
+the request names another host. The last of these keeps out a web page that
+points a name of its own at the device.
+
+A request may have 8 KiB of headers and ten seconds to send them, and a body
+has thirty seconds. A body is read only where one is expected and only when
+the request says how long it is. Four connections are served at a time and the
+others wait. The file has to arrive as the one part of the page's own form.
+At most 40 things wait on the device, and at most 8 MiB of files.
+
+The page is one document. It loads no picture, no font and no script from
+anywhere, and its headers forbid the browser to. No answer holds anything the
+phone sent.
+
+### What arrives is a suggestion
+
+Links and files wait in a list. Stamp adds nothing by itself: what arrived is
+shown on the device, and nothing is added until the user has said yes there.
+A link then goes the way of a link typed by hand, and a file the way of any
+import. A file is not even read as a list of apps before the user chooses to
+import it.
+
+### What someone on the same network gains
+
+The page is plain HTTP, because a device on a home network has no certificate
+that a phone would trust.
+
+- Someone who can read the traffic sees the secret, the links and the export
+  file. Links and exports hold app addresses and certificate fingerprints.
+  They never hold a token.
+- Someone who can change the traffic, or who has read the secret, can change
+  what arrives and send things of their own while the handoff is open. The
+  user sees what arrived on the device before saying yes, and an import that
+  brings pinned certificates or filters names them.
+- Someone who guesses has five tries at the PIN, which is five in a million,
+  and no chance at the secret.
+- Anyone on the network can end a handoff early, with five wrong PINs or 200
+  connections. Ending it is all they get.
+
+### What the door cannot do
+
+- It cannot add, install, update or remove an app, or change a setting.
+- It cannot read anything. No answer holds the list of apps, a token, a
+  setting or a file of the device.
+- It cannot make Stamp fetch anything. A link is text until the user adds it.
+- It cannot stay open in the background, or past its ten minutes.
+- It cannot be reached from outside the local network, unless that network
+  passes connections from outside on to the device.
+
 ## Where the checks end
 
 - A developer whose signing key is stolen can sign anything. Stamp cannot see
@@ -121,3 +200,6 @@ deadline.
   what is in it.
 - It has been tested on emulators. Vendor builds of Android can behave
   differently.
+- The handoff has been tested with real connections on a computer. How it
+  finds the device's address and how it closes when Stamp leaves the screen
+  has tests for a device that have not been run yet.

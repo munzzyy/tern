@@ -25,6 +25,7 @@ import io.github.munzzyy.stamp.core.source.SourceListing
 import io.github.munzzyy.stamp.core.source.SourceOptions
 import io.github.munzzyy.stamp.core.source.SourceTypes
 import io.github.munzzyy.stamp.core.source.guarded
+import io.github.munzzyy.stamp.core.text.Shown
 import io.github.munzzyy.stamp.core.verify.Fingerprints
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -62,10 +63,10 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         return SourceSpec(type, base, options)
     }
 
-    /** One app found while listing everything a repository without a chosen package offers. */
+    /** One app found while listing everything a repository without a chosen package offers. Its texts are fit to be shown. */
     data class RepoApp(val packageName: String, val name: String, val summary: String?)
 
-    /** What listing found: the repository's own name, the fingerprint learned or confirmed while reading it, and its apps. */
+    /** What listing found: the repository's own name, fit to be shown, the fingerprint learned or confirmed while reading it, and its apps. */
     data class RepoListing(val apps: List<RepoApp>, val more: Boolean, val repositoryName: String?, val fingerprint: String)
 
     /**
@@ -122,9 +123,9 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         val first = FirstByName(MAX_LIST_APPS)
         for (a in root.array("apps")?.objects().orEmpty()) {
             val pkg = a.string("packageName")?.takeIf { BinaryManifest.isValidName(it) } ?: continue
-            first.offer(RepoApp(pkg, a.string("name")?.take(MAX_APP_STRING) ?: pkg, a.string("summary")?.take(MAX_APP_STRING)))
+            first.offer(RepoApp(pkg, Shown.lineOrNull(a.string("name"), MAX_APP_STRING) ?: pkg, Shown.lineOrNull(a.string("summary"), MAX_APP_STRING)))
         }
-        val repoName = root.obj("repo")?.string("name")?.take(MAX_APP_STRING)
+        val repoName = Shown.lineOrNull(root.obj("repo")?.string("name"), MAX_APP_STRING)
         return RepoListing(first.apps(), first.more, repoName, verification.fingerprint)
     }
 
@@ -144,7 +145,7 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
                     when (reader.nextName()) {
                         "repo" -> {
                             val repo = reader.readValue() as? JsonObject
-                            repoName = (localized(repo?.obj("name")) ?: repo?.string("name"))?.take(MAX_APP_STRING)
+                            repoName = Shown.lineOrNull(localized(repo?.obj("name")) ?: repo?.string("name"), MAX_APP_STRING)
                         }
                         "packages" -> {
                             reader.beginObject()
@@ -156,8 +157,8 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
                                 }
                                 val value = reader.readValue() as? JsonObject
                                 val metadata = value?.obj("metadata")
-                                val name = localized(metadata?.obj("name"))?.take(MAX_APP_STRING) ?: pkg
-                                val summary = localized(metadata?.obj("summary"))?.take(MAX_APP_STRING)
+                                val name = Shown.lineOrNull(localized(metadata?.obj("name")), MAX_APP_STRING) ?: pkg
+                                val summary = Shown.lineOrNull(localized(metadata?.obj("summary")), MAX_APP_STRING)
                                 first.offer(RepoApp(pkg, name, summary))
                             }
                             reader.endObject()

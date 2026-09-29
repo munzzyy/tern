@@ -11,6 +11,7 @@ import android.provider.Settings
 import android.util.Log
 import io.github.munzzyy.stamp.core.engine.InstalledApp
 import io.github.munzzyy.stamp.core.model.DeviceProfile
+import io.github.munzzyy.stamp.core.text.Shown
 import io.github.munzzyy.stamp.install.PackageManagerArchiveReader
 
 /** An installed app as PackageManager reports it, with what silent updates depend on. */
@@ -61,7 +62,7 @@ class Device(context: Context) {
             installer = installer,
             updateOwner = owner,
             permissions = info.requestedPermissions.orEmpty().toSet(),
-            label = info.applicationInfo?.let { pm.getApplicationLabel(it).toString().trim().take(200) }?.takeIf { it.isNotEmpty() && it != packageName },
+            label = info.applicationInfo?.let { Shown.lineOrNull(pm.getApplicationLabel(it).toString(), 200) }?.takeIf { it != packageName },
         )
     }
 

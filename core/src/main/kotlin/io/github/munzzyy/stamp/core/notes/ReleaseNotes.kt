@@ -1,6 +1,7 @@
 package io.github.munzzyy.stamp.core.notes
 
 import io.github.munzzyy.stamp.core.model.NotesFormat
+import io.github.munzzyy.stamp.core.text.Shown
 
 sealed interface Span {
     data class Text(val text: String) : Span
@@ -26,8 +27,9 @@ private const val INLINE_WINDOW = 500
 private const val TAG_WINDOW = 2000
 
 object ReleaseNotes {
+    /** Parsed from what [Shown.prose] leaves of [text], so no block or link holds a character that is not drawn. */
     fun parse(text: String, format: NotesFormat): List<Block> {
-        val capped = text.take(MAX_INPUT)
+        val capped = Shown.prose(text.take(MAX_INPUT), MAX_INPUT)
         return try {
             when (format) {
                 NotesFormat.MARKDOWN -> MarkdownParser(capped).parse()

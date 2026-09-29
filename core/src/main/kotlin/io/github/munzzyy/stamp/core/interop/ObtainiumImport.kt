@@ -23,6 +23,7 @@ import io.github.munzzyy.stamp.core.source.web.DirectSource
 import io.github.munzzyy.stamp.core.source.web.JenkinsSource
 import io.github.munzzyy.stamp.core.source.web.SourceForgeSource
 import io.github.munzzyy.stamp.core.source.web.SourceHutSource
+import io.github.munzzyy.stamp.core.text.Shown
 import io.github.munzzyy.stamp.core.verify.Fingerprints
 
 class ObtainiumImportException(message: String) : Exception(message)
@@ -58,7 +59,7 @@ object ObtainiumImport {
             val source = mapSource(url, overrideSource, settings)
             if (source == null) {
                 val reason = if (Urls.normalize(url) == null) "Its address is not a web address Stamp can open" else unsupportedReason(overrideSource)
-                skipped.add(Skipped(name.take(MAX_NAME), url.take(MAX_NAME), reason))
+                skipped.add(Skipped(Shown.line(name, MAX_NAME), Shown.line(url, MAX_NAME), reason))
                 continue
             }
 
@@ -104,7 +105,7 @@ object ObtainiumImport {
                 ),
             )
         }
-        return ImportResult(apps, skipped)
+        return ImportResult(apps.map(::shown), skipped)
     }
 
     private fun mapSource(url: String, overrideSource: String?, settings: JsonObject): SourceSpec? {

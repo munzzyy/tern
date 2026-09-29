@@ -9,6 +9,7 @@ import io.github.munzzyy.stamp.core.source.CheckResult
 import io.github.munzzyy.stamp.core.source.SourceErrorKind
 import io.github.munzzyy.stamp.core.source.SourceException
 import io.github.munzzyy.stamp.core.source.SourceListing
+import io.github.munzzyy.stamp.core.text.Shown
 import io.github.munzzyy.stamp.data.FileFacts
 import io.github.munzzyy.stamp.data.StateJson
 import io.github.munzzyy.stamp.engine.AppStatus
@@ -152,7 +153,7 @@ internal class Checks(private val e: RealEngine) {
         val stored = e.stored[id] ?: return false
         if (stored.state.announcedReleaseId == latest.id) return false
         e.saveState(id) { it.copy(announcedReleaseId = latest.id) }
-        e.event(id, EventKind.UPDATE_FOUND, e.texts.eventUpdateFound(latest.version.ifBlank { latest.id }))
+        e.event(id, EventKind.UPDATE_FOUND, e.texts.eventUpdateFound(Shown.line(latest.version.ifBlank { latest.id }, MAX_VERSION)))
         return true
     }
 
@@ -166,13 +167,14 @@ internal class Checks(private val e: RealEngine) {
 
     fun problemOf(ex: SourceException): Problem {
         val t = e.texts
+        val detail = Shown.lineOrNull(ex.message, MAX_DETAIL)
         return when (ex.kind) {
-            SourceErrorKind.NETWORK -> Problem(ProblemKind.NETWORK, t.checkNetwork(ex.message))
-            SourceErrorKind.NOT_FOUND -> Problem(ProblemKind.NOT_FOUND, t.checkNotFound(ex.message))
-            SourceErrorKind.AUTH -> Problem(ProblemKind.AUTH, t.checkAuth(ex.message))
+            SourceErrorKind.NETWORK -> Problem(ProblemKind.NETWORK, t.checkNetwork(detail))
+            SourceErrorKind.NOT_FOUND -> Problem(ProblemKind.NOT_FOUND, t.checkNotFound(detail))
+            SourceErrorKind.AUTH -> Problem(ProblemKind.AUTH, t.checkAuth(detail))
             SourceErrorKind.RATE_LIMITED -> Problem(ProblemKind.RATE_LIMITED, t.checkRateLimited(ex.retryAtMs), ex.retryAtMs)
-            SourceErrorKind.PARSE -> Problem(ProblemKind.PARSE, t.checkParse(ex.message))
-            SourceErrorKind.UNSUPPORTED -> Problem(ProblemKind.UNSUPPORTED, t.checkUnsupported(ex.message))
+            SourceErrorKind.PARSE -> Problem(ProblemKind.PARSE, t.checkParse(detail))
+            SourceErrorKind.UNSUPPORTED -> Problem(ProblemKind.UNSUPPORTED, t.checkUnsupported(detail))
             SourceErrorKind.NO_RELEASES -> Problem(ProblemKind.NO_RELEASES, t.checkNoReleases())
         }
     }
@@ -181,5 +183,7 @@ internal class Checks(private val e: RealEngine) {
         const val MAX_PARALLEL = 4
         const val PER_HOST = 2
         const val MAX_ADDRESS = 2048
+        const val MAX_DETAIL = 200
+        const val MAX_VERSION = 100
     }
 }

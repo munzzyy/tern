@@ -186,4 +186,69 @@ class ReleaseNotesTest {
         val blocks = ReleaseNotes.parse(input, NotesFormat.MARKDOWN)
         assertTrue(blocks.size <= 2000)
     }
+
+    private fun everyText(blocks: List<Block>): List<String> {
+        fun of(span: Span): List<String> = when (span) {
+            is Span.Text -> listOf(span.text)
+            is Span.Bold -> span.spans.flatMap(::of)
+            is Span.Italic -> span.spans.flatMap(::of)
+            is Span.CodeSpan -> listOf(span.text)
+            is Span.Link -> span.spans.flatMap(::of) + span.url
+        }
+        return blocks.flatMap { block ->
+            when (block) {
+                is Block.Heading -> block.spans.flatMap(::of)
+                is Block.Paragraph -> block.spans.flatMap(::of)
+                is Block.ListItem -> block.spans.flatMap(::of)
+                is Block.Quote -> block.spans.flatMap(::of)
+                is Block.Code -> listOf(block.text)
+                Block.Rule -> emptyList()
+            }
+        }
+    }
+
+    private val notDrawn = listOf("‪", "‫", "‬", "‭", "‮", "⁦", "⁧", "⁨", "⁩", "‎", "‏", "​", "﻿", "\u0000", "\u001B")
+
+    @Test
+    fun noFormatLetsAMarkThatTurnsTheDirectionOfWritingThrough() {
+        val inputs = mapOf(
+            NotesFormat.MARKDOWN to "# Ti%stle\n\nsha256: %sabcdef **bo%sld** `co%sde` [la%sbel](https://example.org/%spath)\n\n    indented %scode\n\n> quo%sted\n\n- it%sem",
+            NotesFormat.HTML to "<h1>Ti%stle</h1><p>sha256: %sabcdef <b>bo%sld</b> <code>co%sde</code> <a href=\"https://example.org/%spath\">la%sbel</a></p><pre>pre%s</pre><ul><li>it%sem</li></ul>",
+            NotesFormat.PLAIN to "first %sparagraph\n\nsecond %sparagraph",
+        )
+        for ((format, template) in inputs) {
+            for (mark in notDrawn) {
+                val texts = everyText(ReleaseNotes.parse(template.replace("%s", mark), format))
+                assertTrue("$format gave nothing", texts.isNotEmpty())
+                for (text in texts) assertTrue("$format let U+%04X through in: $text".format(mark[0].code), !text.contains(mark))
+            }
+        }
+    }
+
+    @Test
+    fun theShapeOfTheNotesIsKeptWhenCharactersAreLeftOut() {
+        val blocks = ReleaseNotes.parse("# Ti‮tle\n\nHello​ world.\n\n- one\n- two", NotesFormat.MARKDOWN)
+        assertEquals(4, blocks.size)
+        assertEquals("Title", ((blocks[0] as Block.Heading).spans[0] as Span.Text).text)
+        assertEquals("Hello world.", ((blocks[1] as Block.Paragraph).spans[0] as Span.Text).text)
+        assertTrue(blocks[2] is Block.ListItem && blocks[3] is Block.ListItem)
+    }
+
+    @Test
+    fun anAddressIsJudgedAfterTheCharactersAreLeftOut() {
+        val script = ReleaseNotes.parse("[click](java\u0000script:alert)", NotesFormat.MARKDOWN)
+        assertTrue((script[0] as Block.Paragraph).spans.none { it is Span.Link })
+        val html = ReleaseNotes.parse("<a href=\"‮javascript:alert\">click</a>", NotesFormat.HTML)
+        assertTrue((html[0] as Block.Paragraph).spans.none { it is Span.Link })
+        val web = ReleaseNotes.parse("[site](ht​tps://example.org/a‮b)", NotesFormat.MARKDOWN)
+        val link = (web[0] as Block.Paragraph).spans.single() as Span.Link
+        assertEquals("https://example.org/ab", link.url)
+    }
+
+    @Test
+    fun theJoinersThatSomeScriptsAreWrittenWithStay() {
+        val persian = "می‌خواهم"
+        val blocks = ReleaseNotes.parse(persian, NotesFormat.MARKDOWN)
+        assertEquals(persian, ((blocks[0] as Block.Paragraph).spans[0] as Span.Text).text)
+    }
 }

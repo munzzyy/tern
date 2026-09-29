@@ -33,7 +33,7 @@ object StampExport {
         val apps = root.array("apps") ?: throw StampExportException("Missing apps array")
         return apps.objects().map { obj ->
             try {
-                AppConfigJson.decode(obj)
+                shown(AppConfigJson.decode(obj))
             } catch (e: AppConfigJsonException) {
                 throw StampExportException("Invalid app entry: ${e.message}")
             }

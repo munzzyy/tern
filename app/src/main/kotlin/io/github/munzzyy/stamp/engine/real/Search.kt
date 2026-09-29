@@ -8,6 +8,7 @@ import io.github.munzzyy.stamp.core.net.HttpClient
 import io.github.munzzyy.stamp.core.net.HttpRequest
 import io.github.munzzyy.stamp.core.net.Urls
 import io.github.munzzyy.stamp.core.source.TokenProvider
+import io.github.munzzyy.stamp.core.text.Shown
 import io.github.munzzyy.stamp.engine.SearchHit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -65,12 +66,12 @@ class Search(private val http: HttpClient, private val tokens: TokenProvider) {
         }
     }
 
-    private fun hit(obj: JsonObject, origin: String, name: String?, owner: String?, url: String?, stars: Long?): SearchHit? {
+    internal fun hit(obj: JsonObject, origin: String, name: String?, owner: String?, url: String?, stars: Long?): SearchHit? {
         val safeUrl = url?.takeIf { Urls.isHttps(it) }?.let(Urls::normalize) ?: return null
         return SearchHit(
-            name = name?.take(200) ?: return null,
-            owner = owner?.take(200),
-            description = obj.string("description")?.take(500),
+            name = Shown.lineOrNull(name, 200) ?: return null,
+            owner = Shown.lineOrNull(owner, 200),
+            description = Shown.lineOrNull(obj.string("description"), 500),
             url = safeUrl,
             origin = origin,
             stars = stars?.coerceIn(0, Int.MAX_VALUE.toLong())?.toInt(),

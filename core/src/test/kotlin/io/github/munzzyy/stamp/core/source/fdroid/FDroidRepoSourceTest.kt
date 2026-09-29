@@ -323,6 +323,17 @@ class FDroidRepoSourceTest {
     }
 
     @Test
+    fun theNamesOfARepositoryAreFitToBeShown() {
+        for (http in listOf(listingHttp(), olderListingHttp())) {
+            val listing = source.listApps(SourceSpec(source.type, repoUrl), CheckContext(http, InMemoryValidatorStore()))
+            val hidden = listing.apps.single { it.packageName == "org.example.hidden" }
+            assertEquals("BankknaB of Names", hidden.name)
+            assertEquals("A summary in two lines", hidden.summary)
+            assertEquals("Listing Test Repo", listing.repositoryName)
+        }
+    }
+
+    @Test
     fun anAddressKeepsItsShapeWhateverThePackageSays() {
         val address = FDroidRepoSource.appAddress(repoUrl, "x&fingerprint=abc", fingerprint)
         assertEquals("$repoUrl?package=x%26fingerprint%3Dabc&fingerprint=$fingerprint", address)

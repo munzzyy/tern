@@ -10,6 +10,7 @@ import io.github.munzzyy.stamp.core.net.RateLimitedException
 import io.github.munzzyy.stamp.core.source.CheckContext
 import io.github.munzzyy.stamp.core.source.SourceErrorKind
 import io.github.munzzyy.stamp.core.source.SourceException
+import io.github.munzzyy.stamp.core.text.Shown
 import java.io.IOException
 
 data class StarredRepo(
@@ -94,12 +95,9 @@ object GitHubStars {
         val name = obj.string("name")?.takeIf(RepoNames::isValid) ?: return null
         val owner = obj.obj("owner")?.string("login")?.takeIf(RepoNames::isValid) ?: return null
         val stars = obj.long("stargazers_count")?.coerceIn(0, Int.MAX_VALUE.toLong())?.toInt() ?: 0
-        val description = obj.string("description")?.let(::plain)?.takeIf { it.isNotEmpty() }
+        val description = Shown.lineOrNull(obj.string("description"), MAX_DESCRIPTION)
         return StarredRepo(name, owner, description, "https://github.com/$owner/$name", stars)
     }
-
-    private fun plain(text: String): String =
-        text.filterNot { it.isISOControl() || Character.getType(it) == Character.FORMAT.toInt() }.trim().take(MAX_DESCRIPTION)
 
     private const val MAX_DESCRIPTION = 500
     private const val MAX_EPOCH_SECONDS = 32_503_680_000L

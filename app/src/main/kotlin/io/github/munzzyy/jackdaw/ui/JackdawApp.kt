@@ -45,6 +45,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -230,6 +231,7 @@ private fun Shell(stack: BackStack) {
 @Composable
 private fun Pane(stack: BackStack, holder: SaveableStateHolder, current: Route, twoPane: Boolean) {
     val listState = rememberLazyListState()
+    var reopened by remember { mutableIntStateOf(0) }
     val showList = twoPane && (current == Route.Apps || current is Route.Detail)
     if (showList) {
         Row(Modifier.fillMaxSize()) {
@@ -237,7 +239,7 @@ private fun Pane(stack: BackStack, holder: SaveableStateHolder, current: Route, 
                 holder.SaveableStateProvider("apps") {
                     AppsScreen(
                         selectedId = (current as? Route.Detail)?.appId,
-                        onOpen = { stack.showDetail(it) },
+                        onOpen = { if ((current as? Route.Detail)?.appId == it) reopened++ else stack.showDetail(it) },
                         onAdd = { stack.select(Tab.ADD) },
                         listState = listState,
                     )
@@ -246,7 +248,7 @@ private fun Pane(stack: BackStack, holder: SaveableStateHolder, current: Route, 
             VerticalDivider()
             Box(Modifier.weight(1f).fillMaxHeight().verticalFocusStaysInside()) {
                 if (current is Route.Detail) {
-                    Screens(stack, holder, current, listState, twoPane = true)
+                    Screens(stack, holder, current, listState, twoPane = true, reopened = reopened)
                 } else {
                     NothingSelected()
                 }
@@ -264,6 +266,7 @@ private fun Screens(
     current: Route,
     listState: LazyListState,
     twoPane: Boolean,
+    reopened: Int = 0,
 ) {
     val reducedMotion = LocalReducedMotion.current
     AnimatedContent(
@@ -279,13 +282,13 @@ private fun Screens(
         label = "screen",
     ) { route ->
         holder.SaveableStateProvider(encodeRoute(route)) {
-            Screen(stack, route, listState, twoPane)
+            Screen(stack, route, listState, twoPane, reopened)
         }
     }
 }
 
 @Composable
-private fun Screen(stack: BackStack, route: Route, listState: LazyListState, twoPane: Boolean) {
+private fun Screen(stack: BackStack, route: Route, listState: LazyListState, twoPane: Boolean, reopened: Int) {
     when (route) {
         Route.Apps -> AppsScreen(
             selectedId = null,
@@ -308,6 +311,7 @@ private fun Screen(stack: BackStack, route: Route, listState: LazyListState, two
         is Route.Detail -> DetailScreen(
             appId = route.appId,
             onBack = if (twoPane) null else ({ stack.pop() }),
+            focusAgain = reopened,
             onRemoved = { stack.pop() },
         )
         Route.Activity -> ActivityScreen(onOpenApp = { stack.showDetail(it) })

@@ -85,7 +85,7 @@ const val DETAIL_LIST_TAG = "detail_list"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit) {
+fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit, focusAgain: Int = 0) {
     val engine = LocalEngine.current
     val vm = viewModel(key = "detail:$appId") { DetailViewModel(engine, appId) }
     val row by vm.row.collectAsStateWithLifecycle()
@@ -93,7 +93,7 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit) {
     val current = row
     val listState = rememberLazyListState()
     val headerGone by remember { derivedStateOf { listState.firstVisibleItemIndex > 0 } }
-    val screen = rememberScreenFocus()
+    val screen = rememberScreenFocus(again = focusAgain)
 
     Scaffold(
         topBar = {

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -39,6 +40,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.focused
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 
 /** True on a device without a touch screen, where a remote or a keyboard is all the user has. */
 val LocalNoTouch = staticCompositionLocalOf { false }
@@ -61,13 +63,17 @@ fun drivenByKeys(): Boolean = LocalNoTouch.current || LocalInputModeManager.curr
 fun Modifier.textFieldKeys(): Modifier = composed {
     if (!LocalNoTouch.current) return@composed verticalKeysLeave()
     val field = remember { FocusRequester() }
+    val reveal = remember { BringIntoViewRequester() }
+    val scope = rememberCoroutineScope()
     val keyboard = LocalSoftwareKeyboardController.current
     var onStop by remember { mutableStateOf(false) }
     var inside by remember { mutableStateOf(false) }
-    onFocusChanged {
-        onStop = it.isFocused
-        inside = it.hasFocus
-    }
+    bringIntoViewRequester(reveal)
+        .onFocusChanged {
+            if (it.isFocused && !onStop) scope.launch { reveal.bringIntoView() }
+            onStop = it.isFocused
+            inside = it.hasFocus
+        }
         .onKeyEvent { event ->
             if (onStop && event.type == KeyEventType.KeyDown && event.key in OPEN_KEYS) {
                 field.requestFocus()
@@ -119,14 +125,14 @@ fun <T> landingOrder(last: String?, slots: Map<String, T>, first: T, backup: T, 
     }
 }
 
-/** [active] false holds focus where it is, as the list does while a detail beside it has focus. */
+/** [active] false holds focus where it is, as the list does while a detail beside it has focus; a new [again] lands once more. */
 @Composable
-fun rememberScreenFocus(active: Boolean = true): ScreenFocus {
+fun rememberScreenFocus(active: Boolean = true, again: Int = 0): ScreenFocus {
     val screen = rememberSaveable(saver = Saver<ScreenFocus, String>(save = { it.last.orEmpty() }, restore = { ScreenFocus(it.ifEmpty { null }) })) {
         ScreenFocus(null)
     }
     val keys = drivenByKeys()
-    LaunchedEffect(screen, active) { if (active && keys) screen.land() }
+    LaunchedEffect(screen, active, again) { if (active && keys) screen.land() }
     return screen
 }
 

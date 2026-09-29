@@ -27,6 +27,7 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
 
 private val RING_WIDTH = 3.dp
@@ -42,10 +43,11 @@ fun Modifier.focusRing(shape: Shape = RoundedCornerShape(RING_CORNER)): Modifier
         .then(if (focused) Modifier.border(RING_WIDTH, color, shape) else Modifier)
 }
 
-/** One ring around whichever control inside has focus under keys; Material's own focus tint is too faint across a room. */
+/** One ring around whichever control has focus in the active window under keys; Material's own focus tint is too faint across a room. */
 @OptIn(ExperimentalFoundationApi::class)
 fun Modifier.focusHighlight(): Modifier = composed {
     val keys = drivenByKeys()
+    val window = LocalWindowInfo.current
     val color = MaterialTheme.colorScheme.primary
     var own by remember { mutableStateOf<LayoutCoordinates?>(null, neverEqualPolicy()) }
     var target by remember { mutableStateOf<LayoutCoordinates?>(null, neverEqualPolicy()) }
@@ -55,7 +57,7 @@ fun Modifier.focusHighlight(): Modifier = composed {
             drawContent()
             val self = own ?: return@drawWithContent
             val focused = target ?: return@drawWithContent
-            if (!keys || !self.isAttached || !focused.isAttached) return@drawWithContent
+            if (!keys || !window.isWindowFocused || !self.isAttached || !focused.isAttached) return@drawWithContent
             val bounds = self.localBoundingBoxOf(focused, clipBounds = true)
             if (bounds.isEmpty) return@drawWithContent
             val ring = ringRect(bounds, RING_GAP.toPx(), RING_WIDTH.toPx())

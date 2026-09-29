@@ -13,6 +13,8 @@ data class Asset(
     val kind: AssetKind = kindOf(name),
     /** True when the download needs the source's token (for example a CI artifact). */
     val needsAuth: Boolean = false,
+    /** SHA-256 of the signing certificates, when a signed index names them. Lowercase hex. */
+    val signers: List<String> = emptyList(),
 ) {
     companion object {
         fun kindOf(name: String): AssetKind {

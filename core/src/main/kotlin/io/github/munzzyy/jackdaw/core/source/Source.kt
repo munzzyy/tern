@@ -1,5 +1,6 @@
 package io.github.munzzyy.jackdaw.core.source
 
+import io.github.munzzyy.jackdaw.core.model.DeviceProfile
 import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
 import io.github.munzzyy.jackdaw.core.net.HttpClient
@@ -19,6 +20,8 @@ class CheckContext(
     val validators: ValidatorStore,
     val tokens: TokenProvider = TokenProvider.NONE,
     val nowMs: () -> Long = System::currentTimeMillis,
+    /** Lets a source that publishes one file per architecture leave out the ones that cannot run here. */
+    val device: DeviceProfile? = null,
 )
 
 data class SourceListing(
@@ -31,6 +34,8 @@ data class SourceListing(
     val iconUrl: String? = null,
     /** Set when the project moved; the caller decides whether to follow it. */
     val movedTo: String? = null,
+    /** Options learned on first contact that the caller must store in the spec, such as a repository fingerprint. */
+    val learnedOptions: Map<String, String> = emptyMap(),
 )
 
 sealed interface CheckResult {

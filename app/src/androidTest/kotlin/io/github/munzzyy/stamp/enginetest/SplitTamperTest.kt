@@ -4,6 +4,8 @@ import android.os.Build
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.stamp.engine.AppStatus
+import io.github.munzzyy.stamp.engine.EventKind
+import io.github.munzzyy.stamp.engine.ProblemKind
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.util.zip.ZipInputStream
@@ -14,6 +16,7 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
@@ -21,8 +24,8 @@ import org.junit.runner.RunWith
 
 /**
  * A part of a bundle that was changed after it was signed still names the right certificate, and
- * Android does not read every part by itself. Whoever refuses it, the gate or Android when the
- * session is committed, nothing may be installed and the row has to say so.
+ * Android does not read every part by itself. The gate verifies such a part itself and refuses the
+ * bundle before a session exists; nothing may be installed and the row has to say so.
  */
 @RunWith(AndroidJUnit4::class)
 class SplitTamperTest {
@@ -76,12 +79,20 @@ class SplitTamperTest {
             val state = h.state(id)
             Log.i("EngineTest", "tampered part: refused by ${if (state.block != null) "the gate" else "Android"}: ${state.block?.problem ?: state.installProblem}; ${h.describe(id)}")
 
+            assertNotNull("the gate let the bundle through and left the refusal to Android: ${state.installProblem}", state.block)
+            assertEquals(ProblemKind.SIGNER_MISMATCH, state.block?.problem?.kind)
+            assertEquals("a session was prepared", 0, h.installer.prepared.get())
+            assertEquals("a session was committed", 0, h.installer.committed.get())
+            assertTrue("the log says the file was verified", h.eventsFor(id).none { it.kind == EventKind.VERIFIED || it.kind == EventKind.INSTALLED })
+            assertTrue(h.eventsFor(id).any { it.kind == EventKind.BLOCKED })
+
             assertNull("the app was installed", installedVersionCode())
             assertNull("an install was recorded", state.record)
+            waitUntil(5_000, "the row to show the block") { h.row(id).progress == null }
             val row = h.row(id)
-            assertNotNull("the row says nothing about it", row.problem)
+            assertEquals(ProblemKind.SIGNER_MISMATCH, row.problem?.kind)
             assertEquals(null, row.installed)
-            assertEquals(true, row.status == AppStatus.BLOCKED || row.status == AppStatus.NOT_INSTALLED || row.status == AppStatus.ERROR)
+            assertEquals(AppStatus.BLOCKED, row.status)
         }
     }
 
@@ -106,6 +117,7 @@ class SplitTamperTest {
             h.engine.install(id)
             waitUntil(30_000, "the session to be committed") { h.installer.committed.get() == 1 || h.state(id).block != null }
             assertNull(h.state(id).block?.problem?.message, h.state(id).block)
+            assertTrue(h.eventsFor(id).any { it.kind == EventKind.VERIFIED })
             h.confirm(id)
             waitUntil(60_000, "the bundle to be installed") { installedVersionCode() == 3L && h.state(id).pending == null }
         }

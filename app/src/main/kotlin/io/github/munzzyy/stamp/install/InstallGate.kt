@@ -1,5 +1,6 @@
 package io.github.munzzyy.stamp.install
 
+import android.util.Log
 import io.github.munzzyy.stamp.core.apk.ApkFormatException
 import io.github.munzzyy.stamp.core.apk.ApkInfo
 import io.github.munzzyy.stamp.core.apk.ApkInspector
@@ -8,6 +9,7 @@ import io.github.munzzyy.stamp.core.apk.BundleIndex
 import io.github.munzzyy.stamp.core.apk.FileSource
 import io.github.munzzyy.stamp.core.apk.IncompatibleDeviceException
 import io.github.munzzyy.stamp.core.apk.ManifestInfo
+import io.github.munzzyy.stamp.core.apk.SignatureVerdict
 import io.github.munzzyy.stamp.core.apk.SplitSelector
 import io.github.munzzyy.stamp.core.apk.WindowSource
 import io.github.munzzyy.stamp.core.apk.ZipEntry
@@ -28,7 +30,10 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
 
-/** What passed the gate: the files to hand to the installer, and what Android itself read from them. */
+/**
+ * What passed the gate: the files to hand to the installer, and what Android itself read from the
+ * base. Every file among them had its signature verified, by Android or by Stamp's own verifier.
+ */
 data class GatePass(val apks: List<File>, val facts: FileFacts, val split: Boolean)
 
 data class GateRequest(
@@ -52,7 +57,11 @@ fun interface Gate {
 }
 
 /** Nothing reaches the installer without passing every step here, in order. */
-class InstallGate(private val reader: ArchiveReader, private val texts: Texts) : Gate {
+class InstallGate(
+    private val reader: ArchiveReader,
+    private val texts: Texts,
+    private val signatures: SignatureReader = SignatureReader.OWN,
+) : Gate {
     override fun check(request: GateRequest): GatePass {
         checksum(request)
         request.staging.deleteRecursively()
@@ -152,9 +161,11 @@ class InstallGate(private val reader: ArchiveReader, private val texts: Texts) :
         return entry
     }
 
+    private class Part(val android: AndroidReading?, val ours: ApkInfo, val own: SignatureVerdict)
+
     private fun judge(request: GateRequest, chosen: Chosen): GatePass {
         var base: Pair<AndroidReading, ApkInfo>? = null
-        val parts = ArrayList<Pair<AndroidReading?, ApkInfo>>()
+        val parts = ArrayList<Part>()
         for (apk in chosen.apks) {
             val ours = try {
                 FileSource(apk).use { ApkInspector.inspect(it) }
@@ -165,8 +176,13 @@ class InstallGate(private val reader: ArchiveReader, private val texts: Texts) :
             if (android != null && (android.packageName != ours.manifest.packageName || android.versionCode != ours.manifest.versionCode)) {
                 throw StepFailure(ProblemKind.PACKAGE_MISMATCH, texts.readsDifferently())
             }
+            val own = signatures.read(apk, request.device.sdk)
+            if (own !is SignatureVerdict.Holds) Log.w(TAG, "Own check of ${ours.manifest.split ?: "the base"}: ${own.toString().take(MAX_LOGGED)}")
+            if (android != null && SignerJudge.readByAndroid(android.signers, own) != SignerFinding.ACCEPTED) {
+                throw StepFailure(ProblemKind.SIGNER_MISMATCH, texts.readsDifferently())
+            }
             if (ours.manifest.split != null) {
-                parts += android to ours
+                parts += Part(android, ours, own)
                 continue
             }
             if (android == null) throw StepFailure(ProblemKind.PARSE, texts.androidRefusedFile())
@@ -175,13 +191,21 @@ class InstallGate(private val reader: ArchiveReader, private val texts: Texts) :
         }
         val (android, ours) = base ?: throw StepFailure(ProblemKind.PARSE, texts.archiveHasNoBase())
         if (android.signers.isEmpty()) throw StepFailure(ProblemKind.SIGNER_MISMATCH, texts.unsigned())
-        for ((read, part) in parts) {
-            if (part.manifest.packageName != android.packageName || part.manifest.versionCode != android.versionCode) {
+        for (part in parts) {
+            if (part.ours.manifest.packageName != android.packageName || part.ours.manifest.versionCode != android.versionCode) {
                 throw StepFailure(ProblemKind.PACKAGE_MISMATCH, texts.readsDifferently())
             }
             // Android reads a split by itself on some versions and not on others; either way its signer must be the base's.
-            val signers = read?.signers?.toSet() ?: part.signersFor(request.device.sdk).map { it.sha256 }.toSet()
-            if (signers != android.signers.toSet()) throw StepFailure(ProblemKind.SIGNER_MISMATCH, texts.splitSignerMismatch())
+            val finding = when {
+                part.android == null -> SignerJudge.notReadByAndroid(android.signers, part.own)
+                part.android.signers.toSet() == android.signers.toSet() -> SignerFinding.ACCEPTED
+                else -> SignerFinding.PART_OTHER_SIGNER
+            }
+            when (finding) {
+                SignerFinding.ACCEPTED -> Unit
+                SignerFinding.PART_OTHER_SIGNER -> throw StepFailure(ProblemKind.SIGNER_MISMATCH, texts.splitSignerMismatch())
+                SignerFinding.PART_UNPROVEN, SignerFinding.READ_DIFFERENTLY -> throw StepFailure(ProblemKind.SIGNER_MISMATCH, texts.partNotSigned())
+            }
         }
 
         val inspection = Inspection(android.packageName, android.versionCode, android.versionName, android.signers, android.lineage)
@@ -221,6 +245,8 @@ class InstallGate(private val reader: ArchiveReader, private val texts: Texts) :
     }
 
     companion object {
+        private const val TAG = "InstallGate"
         private const val MAX_APKS = 512
+        private const val MAX_LOGGED = 300
     }
 }

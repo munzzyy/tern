@@ -70,6 +70,8 @@ tasks.withType<Test>().configureEach {
         "src/main/res/mipmap-anydpi/ic_launcher.xml",
         "src/main/res/drawable-xhdpi/banner.png",
     ).withPropertyName("brandFiles").withPathSensitivity(PathSensitivity.RELATIVE)
+    // SignerJudgeTest reads the parts of the test bundle from core.
+    inputs.dir("../core/src/test/resources/fixtures/apk").withPropertyName("bundleParts").withPathSensitivity(PathSensitivity.RELATIVE)
 }
 
 dependencies {

@@ -5,7 +5,8 @@ import io.github.munzzyy.stamp.core.engine.Inspection
 
 /**
  * What one file said about itself. [verified] is true only when the signers came from Android's own
- * parser over the downloaded file; otherwise they are what our reader found in the file's header.
+ * parser over the downloaded file, and every part of a bundle had its signature verified by Android
+ * or by Stamp's own verifier; otherwise they are what our reader found in the file's header.
  */
 data class FileFacts(
     val packageName: String,

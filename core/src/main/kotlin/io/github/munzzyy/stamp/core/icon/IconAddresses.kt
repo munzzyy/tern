@@ -26,6 +26,13 @@ object IconAddresses {
             .toList()
     }
 
+    /**
+     * What to store after a check. A listing that names nothing usable keeps what was [known],
+     * as far as the source at [sourceUrl] may still name it.
+     */
+    fun afterCheck(sourceUrl: String, named: List<String>, known: List<String>): List<String> =
+        accepted(sourceUrl, named).ifEmpty { accepted(sourceUrl, known) }
+
     private fun clean(address: String): String? {
         val trimmed = address.trim()
         if (trimmed.length > MAX_LENGTH || !Urls.isHttps(trimmed)) return null

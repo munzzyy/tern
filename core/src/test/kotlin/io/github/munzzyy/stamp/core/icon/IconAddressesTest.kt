@@ -81,6 +81,25 @@ class IconAddressesTest {
     }
 
     @Test
+    fun aListingThatNamesAnIconReplacesTheOneKnown() {
+        val stored = IconAddresses.afterCheck(forge, listOf("https://codeberg.org/new"), listOf("https://codeberg.org/old"))
+        assertEquals(listOf("https://codeberg.org/new"), stored)
+    }
+
+    @Test
+    fun aListingThatNamesNothingUsableKeepsTheIconKnown() {
+        val known = listOf("https://codeberg.org/old", "https://codeberg.org/older")
+        assertEquals(known, IconAddresses.afterCheck(forge, emptyList(), known))
+        assertEquals(known, IconAddresses.afterCheck(forge, listOf("http://codeberg.org/plain", "https://elsewhere.example.net/a"), known))
+    }
+
+    @Test
+    fun theIconKnownDoesNotOutliveAMoveToAnotherHost() {
+        val known = listOf("https://codeberg.org/old", "https://git.example.org/avatars/kept")
+        assertEquals(listOf("https://git.example.org/avatars/kept"), IconAddresses.afterCheck("https://git.example.org/example/app", emptyList(), known))
+    }
+
+    @Test
     fun aSourceWithoutAHostNamesNothing() {
         assertTrue(IconAddresses.accepted("not an address", listOf("https://codeberg.org/a")).isEmpty())
     }

@@ -91,8 +91,7 @@ internal class Checks(private val e: RealEngine) {
             val listed = listing.packageName
             if (config.packageName == null && listed != null && BinaryManifest.isValidName(listed)) config = config.copy(packageName = listed)
             val releases = listing.releases.take(StateJson.MAX_RELEASES).map { it.copy(notes = it.notes?.take(StateJson.MAX_NOTES)) }
-            // A listing that names no icon keeps the one known, unless the source has moved to another host since.
-            val icons = IconAddresses.accepted(config.source.url, listing.iconUrls.ifEmpty { s.state.iconUrls })
+            val icons = IconAddresses.afterCheck(config.source.url, listing.iconUrls, s.state.iconUrls)
             s.copy(
                 config = config,
                 state = s.state.copy(

@@ -29,13 +29,18 @@ An import from a link fetches the one address you typed, without a token.
 
 With a proxy set, every request goes through it, and host names are resolved
 by the proxy. While the proxy cannot be reached, Tern reaches nothing. It
-never goes round the proxy. With Orbot chosen, Tern asks Orbot on this device
-to start and to say how it is doing. That stays on the device.
+never goes round the proxy. With Orbot chosen, Tern says hello to the proxy at
+Orbot's port on this device to learn whether Orbot is connected, and asks an
+older Orbot to start. That stays on the device.
 
 A stored access token is sent to the host it was stored for and to no other.
 
 Links to VirusTotal, a release page or a project page open in your browser,
 under your browser's rules.
+
+"Check with AppVerifier" hands the package name of an app and the certificate
+Tern holds it to to AppVerifier, another app on this device, and only when you
+press it. Nothing goes over the network for that.
 
 ## Send from a phone
 
@@ -65,6 +70,10 @@ until they are installed, and any tokens, which are encrypted under a key in
 the Android Keystore. None of it is included in Android's cloud backup or in a
 device-to-device transfer.
 
+Notifications name the apps they are about, and a lock screen can show them.
+Turn off "Name the apps in notifications" in Settings and they only say how
+many.
+
 An export contains your app list and settings, and never tokens. On a device
 without a file picker, such as a television, the export is written to
 `Download/Tern/` on the shared storage, where other apps with access to your
@@ -77,7 +86,7 @@ files can read it.
 | Internet, network state | To reach the sources, to know when the device is offline, and to find the local address for "Send from a phone" |
 | Install packages, update without user action | To install and update apps |
 | Delete packages | To open Android's uninstall dialog |
-| Query all packages | To read the installed version and signer of the apps you follow, and to see whether Orbot is installed |
+| Query all packages | To read the installed version and signer of the apps you follow, and to see whether Orbot and AppVerifier are installed |
 | Enforce update ownership | For the optional update ownership setting |
 | Notifications | To tell you about updates |
 | Run at startup | To put the background check back after a reboot |

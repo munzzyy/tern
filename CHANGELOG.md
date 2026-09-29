@@ -26,3 +26,23 @@ The first version.
 - Asks for Android's permission to install apps before the first install, and
   carries on with the install afterwards.
 - English and 28 machine translations, right-to-left languages included.
+- Send from a phone: a TV shows a QR code and a code of 20 characters, the
+  phone's browser seals the links or the export file with it, and the TV opens
+  only what was sealed with that code. Nothing is added until you look at it.
+- Tor through Orbot. Every request goes through the proxy or fails and says so.
+  Settings shows whether Orbot is connected and opens it when it is not.
+- Carries the developer's certificate of 15 well-known apps, so even their first
+  install is checked, and offers well-known apps to start from.
+- A look of your own: the theme, colours from the wallpaper, a palette or a
+  colour you pick, contrast, density, corners and icon shapes, with a preview.
+- The app list, the page of an app, the activity log and the first run were
+  drawn again, with every check explained where it is shown.
+- Import and export on a device without a file picker, as most TVs are.
+- A switch keeps the names of apps out of notifications and off the lock screen.
+- A second check with AppVerifier, where AppVerifier is installed.
+- A redirect from the internet into the local network is refused, and Android 16
+  is asked for certificate transparency.
+- The build is reproducible, and everything it downloads is held to a hash.
+- No in Android's installer is a cancel: the row goes back to what it was, and
+  the file stays for the next try.
+- A "Get it with Tern" badge for a README opens the app in Tern with one tap.

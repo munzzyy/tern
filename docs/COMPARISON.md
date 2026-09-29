@@ -13,13 +13,13 @@ Android 16 emulator on 2026-09-29.
 
 | | Obtainium | Tern |
 |---|---|---|
-| Release APK, arm64 | 26,088,490 bytes (v1.6.17, `app-arm64-v8a-fdroid-release.apk`) | 4,205,357 bytes, all architectures, 29 languages |
+| Release APK, arm64 | 26,088,490 bytes (v1.6.17, `app-arm64-v8a-fdroid-release.apk`) | 5,072,017 bytes, all architectures, 29 languages |
 | Toolkit | Flutter | Kotlin and Jetpack Compose |
-| Cold start to first frame | not measured | 687 ms, the middle of three cold starts (`am start -W`, release build) |
+| Cold start to first frame | not measured | 913 ms, the middle of five cold starts (`am start -W`, release build, on a host that was busy with other emulators) |
 
 Tern's APK carries one native library, a 10 KB path helper that comes with
 Compose, built for all four architectures. One file serves every device. The
-translations are 1.1 MB of the total.
+table of strings, which holds the translations, is 1.7 MB of the total.
 
 ## Whether an update exists
 
@@ -105,6 +105,26 @@ Not yet observed: behaviour in Doze over many hours, and after a reboot.
 | Older versions | 2934 | The version history installs any listed release; going back needs the app removed first, which Android requires |
 | Update ownership | 2078 | A setting, off by default. Not yet tested |
 | VirusTotal | 462 | A link to the file's page there, by its SHA-256. Nothing is uploaded |
+
+## Tern and the other installers
+
+Obtainium is the closest relative, and the rest of this page is about it. These
+are the others a person might choose instead, with what each does that Tern
+does not. Sources are their own pages, read on 2026-09-29.
+
+| App | What it is | What it has that Tern has not | Where Tern differs |
+|---|---|---|---|
+| F-Droid client | The client for F-Droid's own repository and for any other in its format | Apps built from source by F-Droid. Two independent security audits, the second of which found nothing in its nearby swap (f-droid.org/en/2022/12/22/third-audit-results.html) | Tern takes the file the developer published and holds it to the developer's certificate. It reads repositories in F-Droid's format with the same checks: signed index, pinned signer, no replay |
+| Droid-ify, Neo Store | Other clients for repositories in F-Droid's format | Installs without a prompt through Shizuku | The same repository checks, and sources outside repositories |
+| Accrescent | A store with its own signed repository | The signing key of every app is pinned before the first install, by the store's signed metadata (accrescent.app/faq) | Tern pins before the first install for repositories with a signed index, for a pin carried by a link, and for the well-known apps whose certificate it carries. For an address typed by hand the first install is trust on first use, as in Obtainium |
+| GrapheneOS App Store | The store of one operating system | Verification tied to the system's verified boot | Runs on any Android from 10 on |
+| AppVerifier | Compares an installed app's certificate with a list kept by people | That list | Tern shows the certificate before an install and hands package and certificate to AppVerifier in its own format, for a second opinion from a tool that shares no code with Tern |
+| Aurora Store | A client for Google Play without an account | Google Play's catalogue | Tern checks who signed a file. Aurora Store's own forum says it does not (forum.f-droid.org/t/is-aurora-store-safe-for-banking-apps/6900) |
+| Zapstore | Releases signed by the developer's Nostr key | A trust anchor that needs no forge and no repository | Tern's anchor is the Android signing certificate, which every app already has |
+
+What none of this replaces: a review by people who are paid to break it. Tern
+has had none. Its checks are written down in `docs/SECURITY-MODEL.md` so that
+such a review has something to disagree with.
 
 ## What Obtainium does that Tern does not
 

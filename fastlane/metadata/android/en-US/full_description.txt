@@ -14,7 +14,13 @@ On Android 12 and newer, updates go in without asking once Tern has installed th
 
 No account. Nothing is reported to anyone. HTTPS only.
 
-Works on phones, tablets and Android TV, where the remote is all you need. English and 28 other languages; the translations are machine-made and corrections are welcome.
+Works on phones, tablets and Android TV, where the remote is all you need. On a TV, choose Send from a phone: scan the code it shows, and your phone sends links or your app list, sealed with that code so nobody else on the network can read or change them.
+
+Choose Orbot in the settings and everything Tern sends goes through Tor. If Orbot is not there, nothing is sent at all.
+
+For well-known apps Tern already carries the developer's certificate, so even the first install is checked. Make it look the way you like: colours from your wallpaper or your own, contrast, density, corners and icon shapes.
+
+English and 28 other languages; the translations are machine-made and corrections are welcome.
 
 Obtainium user? Import your export file and your apps come along.
 

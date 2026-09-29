@@ -151,21 +151,44 @@ changes the host, the token is dropped for the rest of the chain. Tokens are not
 part of exports and are never written to the log.
 
 With a SOCKS proxy set, host names are resolved by the proxy. This was checked
-with a logging proxy and a packet capture, not with Orbot itself.
+with a logging proxy and a packet capture, and with a real Orbot on an emulator:
+Tor Project's own check answered `{"IsTor":true}` for a request Tern sent.
 
 A proxy that is set is never gone round. A request goes through it or fails,
 also when the proxy does not answer and when the setting names no proxy at
 all. One file opens connections, `net/UrlConnectionHttp.kt`, and
 `tools/check-network-doors.sh` fails in CI when a second one appears, when
 anything outside the handoff makes a socket, or when a name is resolved on the
-device. Device tests for this exist and have not been run yet.
+device. Device tests send a check, a download and an icon through a proxy that
+is not there and count the requests that arrive: none. When a request through a
+proxy on the device fails, Tern asks the proxy whether it is there at all. If
+not, the failure says "The proxy did not answer, so nothing was sent" instead of
+what the socket said.
 
-With the setting on Orbot, Tern asks Orbot how it is doing and uses the port
-Orbot reports. Any app on the device can send such an answer, so Tern takes
-nothing from one but the status and a port on `127.0.0.1`. An answer can point
-Tern at another port of the device. It cannot point it at another host and
-cannot make a request go direct. Tern does not check who signed the app that
-holds Orbot's package name.
+With the setting on Orbot, Tern finds out whether Orbot is connected by saying
+hello to a SOCKS proxy on `127.0.0.1` at Orbot's port, the way SOCKS 5 begins,
+and hanging up. Orbot took out the way for other apps to ask it on 2026-09-15.
+An older Orbot is still sent the request and can answer with its status and
+port. Any app on the device can send such an answer, so Tern takes nothing from
+one but the status and a port on `127.0.0.1`. An answer can point Tern at
+another port of the device. It cannot point it at another host and cannot make
+a request go direct.
+
+The limit of this: an app on the same device that listens on Orbot's port while
+Orbot is off looks like Orbot to Tern, and Tern's requests then go to it. That
+app sees which hosts Tern asks for, and the traffic stays HTTPS, so it can read
+no more and change nothing without a certificate the device trusts. Every app
+that uses Orbot's port shares this limit. Tern does not check who signed the
+app that holds Orbot's package name.
+
+## Notifications
+
+A notification can be read on a locked screen. Every notification Tern posts
+has a version without app names, which is what a lock screen set to hide
+sensitive content shows. Android shows the full notification on a lock screen
+that is not set that way, and that is how phones come, so Settings has a switch,
+"Name the apps in notifications". Off, a notification says how many apps and
+never which.
 
 ## Links, shares and imports
 
@@ -237,6 +260,12 @@ There are two ways to give it to the page, and they end in the same place.
   page asks for the code. It takes capital and small letters, with spaces and
   dashes anywhere. A character that the alphabet does not have is refused in a
   sentence. The page never guesses what was meant.
+
+The code is on the screen for anyone in the room, which is the point of it.
+The screen does not forbid screenshots. The picture Android keeps of the last
+screen for its list of recent apps is taken as Tern leaves the foreground, and
+leaving the foreground closes the handoff, so the code in that picture no
+longer opens anything.
 
 ### How a thing is sealed
 

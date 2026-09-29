@@ -17,9 +17,12 @@ import io.github.munzzyy.stamp.core.select.AssetPicker
 import io.github.munzzyy.stamp.core.source.CheckContext
 import io.github.munzzyy.stamp.core.source.CheckResult
 import io.github.munzzyy.stamp.core.source.SourceListing
+import io.github.munzzyy.stamp.core.source.SourceOptions
 import io.github.munzzyy.stamp.core.source.SourceRegistry
 import io.github.munzzyy.stamp.core.source.SourceTypes
+import io.github.munzzyy.stamp.core.source.fdroid.FDroidRepoSource
 import io.github.munzzyy.stamp.core.suggest.Catalog
+import io.github.munzzyy.stamp.core.suggest.ConfirmedBy
 import io.github.munzzyy.stamp.core.suggest.SuggestedApp
 import io.github.munzzyy.stamp.core.version.Version
 import org.junit.Assert.assertTrue
@@ -65,6 +68,39 @@ class SuggestionsLiveTest {
         assertTrue("Not proven today: $unproven", unproven.isEmpty())
     }
 
+    /**
+     * What F-Droid's signed index names as the signer of each entry it carries, one line for each.
+     * F-Droid signs most apps with a key of its own. Where the index names the signer of the
+     * developer's own file instead, F-Droid has built the same file from the source and ships the
+     * developer's signature, and then the two places confirm each other. The index is downloaded
+     * once for all entries.
+     */
+    @Test
+    fun whatFDroidNamesAsTheSignerOfEachEntry() {
+        val only = System.getenv("STAMP_SUGGEST").orEmpty().split(',').map { it.trim().lowercase() }.filter { it.isNotEmpty() }
+        val wanted = Catalog.all.filter { only.isEmpty() || it.name.lowercase() in only }.associateWith { it.fdroidId ?: it.packageName }
+        val repository = FDroidRepoSource { wanted.values.toSet() }
+        val differing = ArrayList<String>()
+        for ((app, id) in wanted) {
+            val spec = SourceSpec(SourceTypes.FDROID_REPO, FDROID_REPOSITORY, mapOf(SourceOptions.PACKAGE to id))
+            val line = try {
+                val listing = (repository.check(spec, CheckContext(http, InMemoryValidatorStore())) as CheckResult.Listing).listing
+                val newest = listing.releases.first()
+                val signers = newest.assets.flatMap { it.signers }.distinct()
+                val earlier = listing.releases.drop(1).flatMap { r -> r.assets.flatMap { it.signers } }.distinct() - signers.toSet()
+                if (app.confirmedBy == ConfirmedBy.FDROID && signers.none { it in app.signers }) differing += app.name
+                "$id ${newest.version} | the index names as its signer ${signers.joinToString().ifEmpty { "nobody" }}" +
+                    (if (earlier.isEmpty()) "" else ", and for earlier versions ${earlier.joinToString()}") +
+                    " | the index is signed by ${listing.learnedOptions[SourceOptions.FINGERPRINT]}"
+            } catch (e: Exception) {
+                if (app.confirmedBy == ConfirmedBy.FDROID) differing += app.name
+                "$id | ${e.javaClass.simpleName}: ${e.message}"
+            }
+            println("FDROID | ${app.name} | $line")
+        }
+        assertTrue("F-Droid no longer names the signer the list carries: $differing", differing.isEmpty())
+    }
+
     private class Fit(val text: String, val info: ApkInfo? = null, val installs: Boolean = false, val early: Boolean = false)
 
     private fun prove(app: SuggestedApp): Pair<List<String>, String> {
@@ -81,16 +117,23 @@ class SuggestionsLiveTest {
         val onTelevision = fit(listing, television)
         if (!onPhone.installs) problems += "nothing for a 64-bit phone"
         if (app.television && !onTelevision.installs) problems += "nothing for a 32-bit television"
-        for (info in listOfNotNull(onPhone.info, onTelevision.info).distinct()) {
+        val signedBy = LinkedHashSet<String>()
+        for ((info, device) in listOf(onPhone.info to phone, onTelevision.info to television)) {
+            if (info == null) continue
             if (info.manifest.packageName != app.packageName) problems += "serves ${info.manifest.packageName}, not ${app.packageName}"
             if (info.manifest.debuggable) problems += "offers a debug build"
+            val signers = info.signersFor(device.sdk).map { it.sha256 }
+            signedBy += signers
+            if (app.signers.isNotEmpty() && signers.none { it in app.signers }) problems += "is signed by ${signers.joinToString()}, which the list does not carry"
         }
         if (onPhone.early || onTelevision.early) problems += "offers a pre-release as the newest release"
         if (app.television && onTelevision.info?.manifest?.features?.contains(LEANBACK) != true) problems += "does not declare $LEANBACK"
 
         val carried = app.fdroidId?.let { if (carries(it)) "F-Droid carries $it" else "F-Droid does not carry $it".also(problems::add) }
         val ground = carried ?: app.publisher?.let { "published by $it" } ?: if (app.own) "the author's own" else "no ground".also(problems::add)
-        return problems to "${spec.type} ${spec.url} | phone: ${onPhone.text} | television: ${onTelevision.text} | $ground"
+        val pins = if (app.signers.isEmpty()) "the list carries no certificate" else "the list carries it"
+        val signed = "the file names as its signer ${signedBy.joinToString().ifEmpty { "nobody" }}, $pins"
+        return problems.distinct() to "${spec.type} ${spec.url} | phone: ${onPhone.text} | television: ${onTelevision.text} | $ground | $signed"
     }
 
     /** What Stamp would offer [device] with the settings a new app starts with, and whether that file can be installed there. */
@@ -128,5 +171,6 @@ class SuggestionsLiveTest {
 
     private companion object {
         const val LEANBACK = "android.software.leanback"
+        const val FDROID_REPOSITORY = "https://f-droid.org/repo"
     }
 }

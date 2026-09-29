@@ -59,6 +59,91 @@ downloading the file. The entry is proven when all of this holds:
 - The file is not a debug build, and neither its name nor its version reads as
   a pre-release.
 - F-Droid's main repository carries the id the entry names as its ground.
+- Where the list carries a certificate for the entry, the file names that
+  certificate as its signer.
+
+The line the test prints for an entry ends with the certificate the file names.
+
+## The certificates the list carries
+
+Stamp pins the certificate of an app at its first install and holds every later
+file to it. That first file is taken on trust. For an entry of this list Stamp
+can do better, because the list ships inside Stamp: where the list carries the
+certificate, the first file is held to it too. A file signed by anyone else is
+refused, with a sentence that says Stamp carries this app's certificate and the
+file is signed with another.
+
+A certificate is on the list only when two places name the same one:
+
+1. The file at the entry's address, which is the developer's own place of
+   release. The live test reads the signer the file names. Each file was also
+   downloaded whole and checked with `apksigner verify --min-sdk-version 29
+   --print-certs`, which ended with 0 and printed the same certificate.
+2. A second place that does not depend on the first. Two were accepted:
+   - F-Droid's signed index at `https://f-droid.org/repo`. F-Droid signs most
+     apps with a key of its own. For some it builds the app from the source,
+     finds the same file the developer published, and ships the developer's
+     signature. Only then does its index name the developer's certificate.
+     The second test of `SuggestionsLiveTest` prints what the index names.
+   - The list of known apps inside AppVerifier,
+     `app/src/main/kotlin/dev/soupslurpr/appverifier/InternalVerificationInfoDatabase.kt`
+     in `github.com/soupslurpr/AppVerifier`, read at tree
+     `d39e32effd1ac2ef9d93d9669cd8b5e2a21cf6da`. It names the places each
+     certificate was seen at, and those are given below as it names them.
+
+Read on 2026-09-29:
+
+| App | Certificate, SHA-256 | Second place |
+|---|---|---|
+| Jellyfin for Android TV | `d881796ed2a67ff6ef9f676828723c6b1fa18e09388962cba4abc4a594a69131` | F-Droid's index, for org.jellyfin.androidtv 0.19.10 |
+| Mullvad VPN | `7be21930c3b4d73906b08930450a1d3afbd22c98d9d8e987df8c1fbc2d0c90bb` | AppVerifier, seen at the app's website and GitHub |
+| Proton VPN | `dcc9439ec1a6c6a8d0203f3423ee42bcc8b970628e53cb73a0393f398dd5b853` | AppVerifier, seen at the app's website, GitHub and Google Play |
+| Fossify Gallery | `affdb124d3f4720c2f98dbca9eacba0514fba4306e20a2786c861c3c0d6ff292` | F-Droid's index, for org.fossify.gallery 1.13.1 |
+| Breezy Weather | `29d435f70aa9aec3c1faff7f7ffa6e15785088d87f06ecfcab9c3cc62dc269d8` | F-Droid's index, for org.breezyweather 6.2.2_freenet. AppVerifier names it too |
+| F-Droid | `43238d512c1e5eb2d6569f4a3afbf5523418b82e0a3ed1552770abb9a9c9ccab` | AppVerifier, seen at F-Droid |
+| HeliBoard | `5ec0a5313aa43558ee75b20b58ccd8194cdbf066df94a43ba288d933d60b86ce` | F-Droid's index, for helium314.keyboard 4.1 |
+| Obtainium | `b353601f6a1d5fd6603ae2f50be80cf301367b86b6ab8b1f66243da96cd57362` | F-Droid's index, for dev.imranr.obtainium.fdroid 1.6.17. The project's own README names it too |
+| Aegis Authenticator | `c6db80a8e14e5230c1de8415ef820d13dc901d8fe33cf3acb57b6862d858a823` | AppVerifier, seen at GitHub and Google Play |
+| KeePassDX | `7d55b8af210381aabf960f07e17cf7857b6d2a642ca2da6bf0bdf1b200362f04` | AppVerifier, seen at GitHub |
+| Element X | `6a2fdc3148049ce0d5c6e85010723b83fb207d20c7477f5c22ac53c877e92d47` | F-Droid's index, for io.element.android.x 26.09.1. AppVerifier names it too |
+| FairEmail | `e02067249f5a350e0ec703fe9df4dd682e0291a09f0c2e041050bbe7c064f5c9` | AppVerifier, seen at GitHub and Google Play |
+| Organic Maps | `b9c7ae79a5a90270df08a132e536b9c666f5bef1f59b304fcecf8687865e4b5b` | AppVerifier, seen at GitHub |
+| Magpie | `35d26c85cf963570aafda3dccce4d28fcb041f712cf15cd24ab8cc7d694be526` | F-Droid's index, for io.github.munzzyy.magpie 0.4.3 |
+| Starling | `dbb0c491530f7475409c4c2953e9f68a52519c2f681dd9e5f69938f3bf9b8c9e` | F-Droid's index, for app.starlingmap 0.13.0 |
+
+Three things to know about this table:
+
+- AppVerifier's list is kept by people who look at the same places of release.
+  It is a second pair of eyes at another time, not a second channel. A
+  developer's account that was taken over before both looked would fool both.
+- For F-Droid itself the two places are close: the file comes from F-Droid and
+  AppVerifier saw the certificate at F-Droid.
+- A project that changes its key and proves the descent of the new key from
+  the old one in the file passes. A project that changes its key without that
+  is refused until the list is corrected.
+
+## Entries without a certificate
+
+No second place was found for these, so the list carries no certificate for
+them and their first file is taken on trust as before. The certificate the
+developer's file names today is given so that the next search has something to
+compare with. It is not in the app.
+
+| App | The developer's file names | Looked at |
+|---|---|---|
+| Just Player | 3cb97dba57d3d0bc190bae5f1f3a841643bcd9399bc31028ce25775d93d0109d | F-Droid signs it with 0dd37a73...; not in AppVerifier; not in the README |
+| mpv-android | fae7f9d02385cc24d96e88436603e23ea6aec7649ad1250abbb4837daab82fff | F-Droid signs it with 43509443...; not in AppVerifier; not in the README |
+| Nova Video Player | 05af6804bcad9e7e6d22d2ffc39fca1857a4aeb4385097cad91b11e5bac1f615 | F-Droid signs it with dabea196...; not in AppVerifier; not in the README |
+| Material Files | 873b9b60c77cf7f3cd5fae66d0fe112c4a86973e118ee8a29c346c4c673c97f0 | F-Droid signs it with 9c22a742...; not in AppVerifier; not in the README |
+| Moonlight | d6ce3a4df15060fe488fe52441a549dee4ba199b36e2cb1ed9085cca8bfa1aca | F-Droid signs it with e781cffb...; not in AppVerifier; not in the README |
+| KOReader | fd492a4fe001f17058b826da4358a1dceac38d26686f342522c5a497bcd4dccc | F-Droid signs it with 8c86266c...; not in AppVerifier; not in the README |
+| Tusky | 9510eada78ea6eb0007b8a11888b1fcc3b67a51d31bc32e91f8516e3efe12fae | F-Droid signs it with e946901f...; not in AppVerifier; not in the README, not on tusky.app |
+| OsmAnd | d192f4fffff2fae37f2821e4ca44f4cbe2483e7ffa24a8472043f685dd5bed27 | F-Droid signs net.osmand.plus with 38294eaa...; not in AppVerifier; not in the README |
+| Sepia | ad9d5b2504baf0fc2e888f6bd08cd7a63a5342071b6d358b7d64d6a75d503a44 | F-Droid does not carry it |
+| Sweep | 10319fc7dd916baa9e6e2e49a2323fa1b3ea395d50d36c4b966086e67b7e12e8 | F-Droid does not carry it |
+
+Only the README at the head of each repository and the one site named were
+read. A project may name its certificate somewhere else.
 
 ## Adding an app
 
@@ -72,6 +157,11 @@ downloading the file. The entry is proven when all of this holds:
 4. Run the live test for the new entry alone:
    `STAMP_SUGGEST="Name of the app" ./gradlew :core:cleanTest :core:test --tests '*SuggestionsLiveTest' -Dstamp.live=true`
 5. Put the line it prints into the commit message.
+6. The line ends with the certificate the file names. Look for a second place
+   that names the same one, as the section on certificates says. With one,
+   add `.signedBy("<the certificate>", <the place>)` to the entry and a row to
+   the table of certificates. Without one, add a row to the table of entries
+   without a certificate. Never add a certificate that only the file names.
 
 Without `STAMP_SUGGEST` the live test runs over the whole list. It sends no
 credentials, and GitHub answers 60 such requests an hour from one address. A

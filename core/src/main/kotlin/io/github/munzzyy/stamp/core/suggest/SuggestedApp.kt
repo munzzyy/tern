@@ -22,4 +22,19 @@ data class SuggestedApp(
     val publisher: String? = null,
     /** Written by the author of Stamp. */
     val own: Boolean = false,
+    /**
+     * SHA-256 of each certificate the app's releases are signed with, lowercase hex. The file at
+     * [url] names it, and so does the second place in [confirmedBy]. Empty without such a place.
+     */
+    val signers: List<String> = emptyList(),
+    val confirmedBy: ConfirmedBy? = null,
 )
+
+/** The second place that names the same certificate as the developer's own file. docs/SUGGESTIONS.md has the particulars. */
+enum class ConfirmedBy {
+    /** F-Droid's signed index names it, which it does only where F-Droid ships the developer's signature. */
+    FDROID,
+
+    /** The list of known apps inside AppVerifier names it. */
+    APP_VERIFIER,
+}

@@ -15,10 +15,14 @@ import javax.xml.parsers.DocumentBuilderFactory
 class CatalogTest {
     private val summaries: Map<String, String> by lazy { readSummaries() }
 
-    private fun readSummaries(): Map<String, String> {
+    private fun projectFile(path: String): File {
         var dir: File? = File(System.getProperty("user.dir")).absoluteFile
         while (dir != null && !File(dir, "settings.gradle.kts").exists()) dir = dir.parentFile
-        val file = File(checkNotNull(dir) { "not inside the project" }, "app/src/main/res/values/strings_suggest.xml")
+        return File(checkNotNull(dir) { "not inside the project" }, path)
+    }
+
+    private fun readSummaries(): Map<String, String> {
+        val file = projectFile("app/src/main/res/values/strings_suggest.xml")
         val nodes = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file).getElementsByTagName("string")
         return (0 until nodes.length).associate { i ->
             val node = nodes.item(i)
@@ -92,6 +96,60 @@ class CatalogTest {
             val text = "${app.name} ${app.url} ${app.packageName}".lowercase().filter { it.isLetterOrDigit() }
             assertEquals("${app.name} is on the list", emptyList<String>(), refused.filter { it in text })
         }
+    }
+
+    @Test
+    fun everyFingerprintIsSixtyFourLowercaseHexCharacters() {
+        val shape = Regex("^[0-9a-f]{64}$")
+        for (app in Catalog.all) {
+            for (fingerprint in app.signers) assertTrue("${app.name}: $fingerprint", shape.matches(fingerprint))
+            assertEquals("${app.name} names a fingerprint twice", app.signers.distinct(), app.signers)
+        }
+    }
+
+    @Test
+    fun noTwoAppsShareAFingerprint() {
+        val holders = Catalog.all.flatMap { app -> app.signers.map { it to app.name } }.groupBy({ it.first }, { it.second })
+        assertEquals(emptyMap<String, List<String>>(), holders.filterValues { it.size > 1 })
+    }
+
+    @Test
+    fun aFingerprintIsOnlyCarriedWithTheSecondPlaceThatConfirmedIt() {
+        for (app in Catalog.all) {
+            assertEquals("${app.name}: ${app.signers.size} fingerprints, confirmed by ${app.confirmedBy}", app.signers.isNotEmpty(), app.confirmedBy != null)
+        }
+        assertTrue(Catalog.all.any { it.signers.isNotEmpty() })
+        assertTrue(Catalog.all.any { it.signers.isEmpty() })
+    }
+
+    @Test
+    fun theDocumentNamesEveryFingerprintAndNoOther() {
+        val text = projectFile("docs/SUGGESTIONS.md").readText()
+        val carried = Catalog.all.flatMap { it.signers }.toSet()
+        for (app in Catalog.all) {
+            for (fingerprint in app.signers) {
+                val line = text.lineSequence().firstOrNull { it.contains(fingerprint) }
+                assertNotNull("${app.name}: docs/SUGGESTIONS.md does not name $fingerprint", line)
+                assertTrue("${app.name}: $fingerprint stands in the line of another app: $line", line!!.startsWith("| ${app.name} |"))
+            }
+        }
+        val pinned = text.substringAfter("## The certificates the list carries").substringBefore("\n## ")
+        val named = Regex("`([0-9a-f]{64})`").findAll(pinned).map { it.groupValues[1] }.toSet()
+        assertEquals("the document names as carried what the list does not carry", emptySet<String>(), named - carried)
+    }
+
+    @Test
+    fun anEntryIsFoundByItsAddressInAnyCase() {
+        val aegis = Catalog.all.first { it.name == "Aegis Authenticator" }
+        assertEquals(aegis, Catalog.entryAt("https://github.com/beemdevelopment/Aegis"))
+        assertEquals(aegis, Catalog.entryAt("https://github.com/BeemDevelopment/aegis"))
+        assertEquals(aegis, Catalog.entryAt(" https://github.com/beemdevelopment/Aegis/ "))
+        assertEquals("OsmAnd", Catalog.entryAt("https://download.osmand.net/releases")?.name)
+        assertEquals(null, Catalog.entryAt("https://github.com/beemdevelopment/Aegis-fork"))
+        assertEquals(null, Catalog.entryAt("https://github.com/beemdevelopment"))
+        assertEquals(null, Catalog.entryAt("https://example.org/github.com/beemdevelopment/Aegis"))
+        assertEquals(null, Catalog.entryAt(""))
+        for (app in Catalog.all) assertEquals(app, Catalog.entryAt(app.url))
     }
 
     @Test

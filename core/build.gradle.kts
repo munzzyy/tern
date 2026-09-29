@@ -23,6 +23,9 @@ dependencies {
 
 tasks.test {
     useJUnit()
+    // CatalogTest reads these from disk, so a change to one of them has to run the tests again.
+    inputs.files("../docs/SUGGESTIONS.md", "../app/src/main/res/values/strings_suggest.xml")
+        .withPropertyName("catalogFiles").withPathSensitivity(PathSensitivity.RELATIVE)
     systemProperty("stamp.live", System.getProperty("stamp.live") ?: "false")
     systemProperty("stamp.index", System.getProperty("stamp.index") ?: "")
     testLogging.showStandardStreams = System.getProperty("stamp.live") == "true" || System.getProperty("stamp.index") != null

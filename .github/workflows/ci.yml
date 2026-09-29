@@ -24,6 +24,8 @@ jobs:
         run: python3 tools/strings.py check app/src/main/res
       - name: core tests
         run: ./gradlew --no-daemon :core:test
+      - name: the page of the handoff seals what the device opens
+        run: bash tools/check-handoff-page.sh --no-browser
       - name: app unit tests
         run: ./gradlew --no-daemon :app:testDebugUnitTest
       - name: release build

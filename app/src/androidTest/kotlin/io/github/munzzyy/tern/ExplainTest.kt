@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern
 
+import android.os.Build
 import android.view.KeyEvent.KEYCODE_DPAD_CENTER
 import android.view.KeyEvent.KEYCODE_DPAD_DOWN
 import androidx.compose.ui.test.assertIsDisplayed
@@ -96,11 +97,19 @@ class ExplainTest {
     fun theLineAboutThePromptExplainsItself() {
         launch("default").use {
             open("Trail Map")
-            compose.onNodeWithText("Android will ask you to confirm this update.").assertIsDisplayed()
-            ask(
-                EXPLAIN_PROMPT_TAG, "Updates without a prompt",
-                "Android lets an app update another without asking when that app installed it and the device runs Android 12 or later. Android decides each time.",
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                compose.onNodeWithText("Android will ask you to confirm this update.").assertIsDisplayed()
+                ask(
+                    EXPLAIN_PROMPT_TAG, "Updates without a prompt",
+                    "Android lets an app update another without asking when that app installed it and the device runs Android 12 or later. Android decides each time.",
+                )
+            } else {
+                compose.onNodeWithText("This device always asks before an update is installed.").assertIsDisplayed()
+                ask(
+                    EXPLAIN_PROMPT_TAG, "This device always asks",
+                    "This device runs Android ${Build.VERSION.RELEASE}, which asks before every install. Tern downloads and checks the update in the background and tells you when it is ready.",
+                )
+            }
         }
     }
 

@@ -122,6 +122,7 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit, fo
             return@Scaffold
         }
         RevealWithRoom {
+        val verifier = rememberAppVerifier(current)
         LazyColumn(
             state = listState,
             verticalArrangement = Arrangement.spacedBy(look.gap),
@@ -145,6 +146,7 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit, fo
                     }
                 }
             }
+            verifier?.let { intent -> item(key = "appverifier") { AppVerifierCard(intent) } }
             history(vm, current)
             settings(vm, current, onRemoved)
         }

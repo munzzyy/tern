@@ -39,6 +39,9 @@ import java.util.concurrent.atomic.AtomicLong
 
 /** In-memory stand-in for the real engine: invented apps in every state the contract has. */
 class FakeEngine(private val context: Context) : Engine, Scenarios {
+    /** tools/check-apk.sh looks for this text in a release build; class names do not survive R8. */
+    val marker: String = "jackdaw-stand-in-engine"
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val jobs = ConcurrentHashMap<String, Job>()
     private var ticker: Job? = null

@@ -192,7 +192,7 @@ private fun ActionArea(row: AppRow) {
         }
         row.problem?.let { p ->
             val body = buildString {
-                append(stringResource(problemAdvice(p.kind)))
+                append(stringResource(problemAdvice(p.kind, installed = row.installed != null)))
                 if (p.kind == ProblemKind.RATE_LIMITED) p.retryAtMs?.let { append(" ").append(retryText(it)) }
             }
             ProblemBox(title = p.message, body = body)

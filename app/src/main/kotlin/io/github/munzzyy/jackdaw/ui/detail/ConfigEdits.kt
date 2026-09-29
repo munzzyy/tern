@@ -1,7 +1,7 @@
 package io.github.munzzyy.jackdaw.ui.detail
 
-import io.github.munzzyy.jackdaw.core.engine.PatternException
-import io.github.munzzyy.jackdaw.core.engine.SafePattern
+import io.github.munzzyy.jackdaw.core.text.PatternException
+import io.github.munzzyy.jackdaw.core.text.SafePattern
 import io.github.munzzyy.jackdaw.core.model.AppConfig
 
 private val HEX = Regex("[0-9a-f]{64}")

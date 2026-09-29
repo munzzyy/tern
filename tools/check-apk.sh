@@ -42,10 +42,13 @@ else
   echo "ok   apk is not debuggable"
 fi
 
-netconfig=$("$AAPT" dump xmltree --file res/xml/network_security_config.xml "$APK" 2>/dev/null || true)
-if [ -z "$netconfig" ]; then
-  # Resource shrinking may rename the file; find it through the manifest reference instead.
-  netconfig=$(unzip -Z1 "$APK" | grep -E '^res/.*\.xml$' | while read -r f; do "$AAPT" dump xmltree --file "$f" "$APK" 2>/dev/null | grep -q 'network-security-config' && "$AAPT" dump xmltree --file "$f" "$APK"; done)
+# Release builds shorten resource paths (res/8G.xml), so the file is looked up by its resource name.
+netfile=$("$AAPT" dump resources "$APK" | awk '
+  /resource 0x[0-9a-f]+ xml\/network_security_config/ { found = 1; next }
+  found && /\(file\)/ { print $3; exit }')
+netconfig=""
+if [ -n "$netfile" ]; then
+  netconfig=$("$AAPT" dump xmltree --file "$netfile" "$APK" || true)
 fi
 if [ -z "$netconfig" ]; then
   echo "FAIL network security config is missing from the apk"; fail=1
@@ -62,7 +65,8 @@ else
   echo "ok   apk is $size bytes (budget $MAX_BYTES)"
 fi
 
-leftovers=$(unzip -p "$APK" 'classes*.dex' | strings | grep -E 'FakeEngine|forge\.test' | head -3 || true)
+# Text, not class names: R8 renames classes, so a class name is absent even when the class is there.
+leftovers=$(unzip -p "$APK" 'classes*.dex' | strings | grep -E 'jackdaw-stand-in-engine|forge\.test' | head -3 || true)
 if [ -n "$leftovers" ]; then
   echo "FAIL test code reached the release apk:"; echo "$leftovers"; fail=1
 else

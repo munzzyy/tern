@@ -99,7 +99,8 @@ fun canUpdateNow(row: AppRow): Boolean =
     row.status == AppStatus.UPDATE_AVAILABLE && !row.config.trackOnly && !isBusy(row)
 
 @StringRes
-fun problemAdvice(kind: ProblemKind): Int = when (kind) {
+/** [installed] matters for a signer mismatch: a pin can be changed, what Android refuses cannot. */
+fun problemAdvice(kind: ProblemKind, installed: Boolean = false): Int = when (kind) {
     ProblemKind.NETWORK -> R.string.advice_network
     ProblemKind.RATE_LIMITED -> R.string.advice_rate_limited
     ProblemKind.NOT_FOUND -> R.string.advice_not_found
@@ -108,7 +109,7 @@ fun problemAdvice(kind: ProblemKind): Int = when (kind) {
     ProblemKind.NO_RELEASES -> R.string.advice_no_releases
     ProblemKind.NO_FILE_FOR_DEVICE -> R.string.advice_no_file
     ProblemKind.CHECKSUM_MISMATCH -> R.string.advice_checksum_mismatch
-    ProblemKind.SIGNER_MISMATCH -> R.string.advice_signer_mismatch
+    ProblemKind.SIGNER_MISMATCH -> if (installed) R.string.advice_signer_mismatch_installed else R.string.advice_signer_mismatch
     ProblemKind.PACKAGE_MISMATCH -> R.string.advice_package_mismatch
     ProblemKind.DOWNGRADE -> R.string.advice_downgrade
     ProblemKind.INSTALL_FAILED -> R.string.advice_install_failed

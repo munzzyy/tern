@@ -138,7 +138,7 @@ fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: 
                     is Detection.Results -> SearchResults(d, onPick = { vm.detect(it.url) })
                     is Detection.Failed -> ProblemBox(
                         title = d.problem.message,
-                        body = stringResource(io.github.munzzyy.jackdaw.ui.text.problemAdvice(d.problem.kind)),
+                        body = stringResource(io.github.munzzyy.jackdaw.ui.text.problemAdvice(d.problem.kind, installed = false)),
                         action = stringResource(R.string.action_try_again),
                         onAction = { vm.detect() },
                     )

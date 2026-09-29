@@ -1,5 +1,6 @@
 package io.github.munzzyy.jackdaw.ui.text
 
+import io.github.munzzyy.jackdaw.R
 import io.github.munzzyy.jackdaw.engine.AppStatus
 import io.github.munzzyy.jackdaw.engine.Phase
 import io.github.munzzyy.jackdaw.engine.Problem
@@ -85,5 +86,12 @@ class StatusTest {
     fun everyProblemKindHasAdvice() {
         val advice = ProblemKind.entries.map(::problemAdvice)
         assertEquals(ProblemKind.entries.size, advice.toSet().size)
+    }
+
+    @Test
+    fun aSignerMismatchOnAnInstalledAppDoesNotPointAtThePin() {
+        assertEquals(R.string.advice_signer_mismatch_installed, problemAdvice(ProblemKind.SIGNER_MISMATCH, installed = true))
+        assertEquals(R.string.advice_signer_mismatch, problemAdvice(ProblemKind.SIGNER_MISMATCH, installed = false))
+        assertEquals(problemAdvice(ProblemKind.NETWORK, installed = true), problemAdvice(ProblemKind.NETWORK, installed = false))
     }
 }

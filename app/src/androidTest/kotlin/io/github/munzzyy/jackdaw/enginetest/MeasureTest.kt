@@ -3,7 +3,18 @@ package io.github.munzzyy.jackdaw.enginetest
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import io.github.munzzyy.jackdaw.core.model.SourceSpec
+import io.github.munzzyy.jackdaw.core.net.HttpClient
 import io.github.munzzyy.jackdaw.core.net.HttpRequest
+import io.github.munzzyy.jackdaw.core.net.HttpResponse
+import io.github.munzzyy.jackdaw.core.source.CheckContext
+import io.github.munzzyy.jackdaw.core.source.CheckResult
+import io.github.munzzyy.jackdaw.core.source.SourceException
+import io.github.munzzyy.jackdaw.core.source.SourceOptions
+import io.github.munzzyy.jackdaw.core.source.SourceTypes
+import java.io.FilterInputStream
+import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
 import io.github.munzzyy.jackdaw.engine.Detection
 import io.github.munzzyy.jackdaw.engine.ProxyMode
 import io.github.munzzyy.jackdaw.engine.Settings
@@ -70,7 +81,60 @@ class MeasureTest {
         }
     }
 
+    @Test
+    fun readTheFDroidRepositoryOnTheDevice() = runBlocking<Unit> {
+        assumeTrue(args.getString("engineMeasure") == "fdroid")
+        val store = "enginetest-fdroid.db"
+        targetContext.deleteDatabase(store)
+        val counting = CountingHttp(UrlConnectionHttp())
+        val engine = RealEngine(targetContext, counting, storeName = store, prefsPrefix = "enginetest-fdroid-")
+        try {
+            engine.ready()
+            val spec = SourceSpec(
+                SourceTypes.FDROID_REPO, "https://f-droid.org/repo",
+                mapOf(SourceOptions.PACKAGE to "org.fdroid.fdroid", SourceOptions.FINGERPRINT to F_DROID_FINGERPRINT),
+            )
+            repeat(2) { round ->
+                val before = counting.bytes.get()
+                val requests = counting.requests.get()
+                val start = System.nanoTime()
+                val outcome = try {
+                    when (val result = engine.registry.check(spec, CheckContext(engine.http, engine.store, engine.tokens, engine.nowMs, engine.device.profile))) {
+                        is CheckResult.Listing -> "listing: ${result.listing.releases.size} releases, newest ${result.listing.releases.firstOrNull()?.version} code ${result.listing.releases.firstOrNull()?.versionCode}, first file sha256 ${result.listing.releases.firstOrNull()?.assets?.firstOrNull()?.sha256}"
+                        CheckResult.Unchanged -> "unchanged"
+                    }
+                } catch (e: SourceException) {
+                    "SourceException ${e.kind}: ${e.message} (${e.cause?.javaClass?.simpleName}: ${e.cause?.message})"
+                }
+                val ms = (System.nanoTime() - start) / 1_000_000
+                Log.i(TAG, "F-Droid round ${round + 1}: $outcome; ${counting.requests.get() - requests} requests, ${counting.bytes.get() - before} body bytes after decoding, $ms ms")
+            }
+        } finally {
+            engine.close()
+            targetContext.deleteDatabase(store)
+        }
+    }
+
+    /** Counts requests and the bytes the caller read from response bodies. */
+    private class CountingHttp(private val real: HttpClient) : HttpClient {
+        val requests = AtomicInteger()
+        val bytes = AtomicLong()
+
+        override fun execute(request: HttpRequest): HttpResponse {
+            requests.incrementAndGet()
+            Log.i(TAG, "request ${request.method} ${request.url.substringBefore('?')}")
+            val response = real.execute(request)
+            val counted = object : FilterInputStream(response.body) {
+                override fun read(): Int = super.read().also { if (it >= 0) bytes.incrementAndGet() }
+
+                override fun read(b: ByteArray, off: Int, len: Int): Int = super.read(b, off, len).also { if (it > 0) bytes.addAndGet(it.toLong()) }
+            }
+            return HttpResponse(response.status, response.headers, counted, response.url)
+        }
+    }
+
     private companion object {
         const val TAG = "EngineMeasure"
+        const val F_DROID_FINGERPRINT = "43238d512c1e5eb2d6569f4a3afbf5523418b82e0a3ed1552770abb9a9c9ccab"
     }
 }

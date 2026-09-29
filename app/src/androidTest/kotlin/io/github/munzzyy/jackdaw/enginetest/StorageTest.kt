@@ -89,6 +89,19 @@ class StorageTest {
     }
 
     @Test
+    fun aHalfMegabyteValidatorComesBackWhole() {
+        val big = buildString { while (length < 500 * 1024) append("{\"versionCode\":${length},\"name\":\"é中\"},") }
+        freshStore("storage-bigvalidator.db").use { it.put("fdroid-repo|https://example.org/repo|app:com.example.app", Validator(big, "1727568000000")) }
+        Store(targetContext, "storage-bigvalidator.db").use { reopened ->
+            val back = reopened.get("fdroid-repo|https://example.org/repo|app:com.example.app")!!
+            assertEquals(big.length, back.etag!!.length)
+            assertEquals(big, back.etag)
+            assertEquals("1727568000000", back.lastModified)
+        }
+        targetContext.deleteDatabase("storage-bigvalidator.db")
+    }
+
+    @Test
     fun theEventLogKeepsTheNewestFiveHundred() {
         freshStore("storage-events.db").use { store ->
             repeat(520) { store.addEvent(it.toLong(), "a1", "Fixture", EventKind.UPDATE_FOUND, "event $it") }

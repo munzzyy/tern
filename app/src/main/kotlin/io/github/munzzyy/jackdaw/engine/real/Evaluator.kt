@@ -48,7 +48,9 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
             return Evaluation(AppStatus.ERROR, problem = Problem(ProblemKind.PARSE, texts.patternProblem(it.message)), patternProblem = it)
         }
         if (state.releases.isEmpty()) {
-            return Evaluation(if (state.checkProblem != null) AppStatus.ERROR else AppStatus.UNKNOWN, problem = state.checkProblem)
+            if (state.checkProblem != null) return Evaluation(AppStatus.ERROR, problem = state.checkProblem)
+            if (state.lastCheckedMs == null) return Evaluation(AppStatus.UNKNOWN)
+            return Evaluation(AppStatus.ERROR, problem = emptyListing(config))
         }
         val selection = try {
             ReleaseSelector.select(state.releases, config.releases, nowMs()) { config.trackOnly || rank(config, it).isNotEmpty() }
@@ -179,6 +181,12 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
         Rejection.NO_USABLE_FILE in reasons -> Problem(ProblemKind.NO_FILE_FOR_DEVICE, texts.noFileForDevice(null))
         state.checkProblem != null -> state.checkProblem
         else -> Problem(ProblemKind.NO_RELEASES, texts.noReleasePasses())
+    }
+
+    /** A source that answered with no releases at all; a repository does that when nothing in it fits this device. */
+    private fun emptyListing(config: AppConfig): Problem = when (config.source.type) {
+        SourceTypes.FDROID, SourceTypes.FDROID_REPO -> Problem(ProblemKind.NO_FILE_FOR_DEVICE, texts.noFileForDevice(null))
+        else -> Problem(ProblemKind.NO_RELEASES, texts.checkNoReleases())
     }
 
     private fun patternFailure(filters: String, message: String?): Evaluation {

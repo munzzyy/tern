@@ -25,7 +25,9 @@ import io.github.munzzyy.jackdaw.core.verify.Fingerprints
 import io.github.munzzyy.jackdaw.core.net.HttpClient
 import io.github.munzzyy.jackdaw.core.net.PoliteHttp
 import io.github.munzzyy.jackdaw.core.net.RateLimiter
+import io.github.munzzyy.jackdaw.core.source.SourceOptions
 import io.github.munzzyy.jackdaw.core.source.SourceRegistry
+import io.github.munzzyy.jackdaw.core.source.SourceTypes
 import io.github.munzzyy.jackdaw.core.source.TokenProvider
 import io.github.munzzyy.jackdaw.core.source.fdroid.FDroidRepoSource
 import io.github.munzzyy.jackdaw.core.source.fdroid.FDroidSource
@@ -106,7 +108,7 @@ class RealEngine(
     internal val http: HttpClient = PoliteHttp(transport, RateLimiter(nowMs), "Jackdaw/${BuildConfig.VERSION_NAME}")
     internal val registry = SourceRegistry(
         listOf(
-            GitHubSource(), GitHubActionsSource(), GitLabSource(), ForgejoSource(), FDroidSource(), FDroidRepoSource(),
+            GitHubSource(), GitHubActionsSource(), GitLabSource(), ForgejoSource(), FDroidSource(), FDroidRepoSource(::trackedInRepository),
             SourceForgeSource(), SourceHutSource(), JenkinsSource(), DirectSource(), HtmlSource(),
         ),
     )
@@ -479,6 +481,13 @@ class RealEngine(
         _lastRunProblem.value = null
         installs.runScheduled(_settings.value)
     }
+
+    /** Every package the user follows in one repository, so a single index download serves them all. */
+    private fun trackedInRepository(repositoryUrl: String): Set<String> = stored.values.asSequence()
+        .map { it.config.source }
+        .filter { it.type == SourceTypes.FDROID_REPO && it.url.equals(repositoryUrl, ignoreCase = true) }
+        .mapNotNull { it.option(SourceOptions.PACKAGE) }
+        .toSet()
 
     internal fun findBySpec(spec: SourceSpec): String? =
         stored.values.firstOrNull { it.config.source.type == spec.type && it.config.source.url.equals(spec.url, ignoreCase = true) }?.config?.id

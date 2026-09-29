@@ -85,7 +85,7 @@ internal class Detector(private val e: RealEngine) {
             packageName = listed,
             releases = ReleasePolicy(includePrereleases = settings.includePrereleasesByDefault, minAgeDays = settings.minAgeDaysByDefault),
         )
-        val state = AppState(releases = listing.releases)
+        val state = AppState(releases = listing.releases, lastCheckedMs = e.nowMs())
         val warnings = ArrayList<String>()
 
         var eval = e.evaluator.evaluate(config, state, e.readInstalled(config.packageName), e.inspector::inspect)

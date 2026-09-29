@@ -13,6 +13,7 @@ import io.github.munzzyy.stamp.core.handoff.HandoffServer
 import io.github.munzzyy.stamp.core.handoff.LocalAddress
 import io.github.munzzyy.stamp.core.qr.QrEncoder
 import io.github.munzzyy.stamp.engine.Handoff
+import io.github.munzzyy.stamp.engine.HandoffEnd
 import io.github.munzzyy.stamp.engine.Problem
 import io.github.munzzyy.stamp.engine.ProblemKind
 import io.github.munzzyy.stamp.engine.QrCode
@@ -44,8 +45,9 @@ sealed interface LocalNetwork {
 }
 
 /**
- * Opens and closes the handoff and keeps [handoff] in step with it. What has arrived stays until it
- * is taken, until [close], or until the next handoff opens, also when the handoff has ended by itself.
+ * Opens and closes the handoff and keeps [handoff] and [handoffEnd] in step with it. What has arrived
+ * stays until it is taken, until [close], or until the next handoff opens, also when the handoff has
+ * ended by itself.
  */
 internal class Handoffs(
     private val network: () -> LocalNetwork,
@@ -56,9 +58,15 @@ internal class Handoffs(
     private val state = MutableStateFlow<Handoff?>(null)
     val handoff: StateFlow<Handoff?> = state.asStateFlow()
 
+    private val ended = MutableStateFlow<HandoffEnd?>(null)
+
+    /** Why the last handoff ended. Null while one is open, and before the first. */
+    val handoffEnd: StateFlow<HandoffEnd?> = ended.asStateFlow()
+
     private val lock = Any()
     private var server: HandoffServer? = null
     private var qr: QrCode? = null
+    private var left = false
     private var onScreen = true
     private var stopWatching: () -> Unit = {}
 
@@ -70,21 +78,25 @@ internal class Handoffs(
         }
         synchronized(lock) {
             if (!onScreen) return@withContext Problem(ProblemKind.UNSUPPORTED, texts.notOnScreen())
+            val wasOpen = server?.isOpen == true
             drop()
             val opened = try {
                 HandoffServer.open(address, limits, nowMs = nowMs, onChange = ::publish)
             } catch (e: IOException) {
+                if (wasOpen) ended.value = HandoffEnd.CLOSED
                 return@withContext Problem(ProblemKind.NETWORK, texts.cannotOpen(e.message))
             }
             val squares = QrEncoder.encode(opened.addressWithCode)
             server = opened
             qr = QrCode(squares.size, squares.squares())
+            left = false
             publish()
         }
         null
     }
 
     fun close() = synchronized(lock) {
+        if (server?.isOpen == true) ended.value = HandoffEnd.CLOSED
         drop()
         publish()
     }
@@ -111,20 +123,31 @@ internal class Handoffs(
     /** Ends the handoff. What has arrived stays, for the moment Stamp is on the screen again. */
     fun leftScreen() = synchronized(lock) {
         onScreen = false
+        left = server?.isOpen == true
         server?.close()
         publish()
     }
 
     private fun drop() {
-        server?.close()
+        val old = server
         server = null
         qr = null
+        old?.close()
     }
 
     private fun publish() = synchronized(lock) {
-        val open = server?.takeIf { it.isOpen }
+        val current = server
         val squares = qr
-        state.value = if (open == null || squares == null) null else Handoff(address = open.address, code = open.code, qr = squares, closesAtMs = open.closesAtMs, waiting = open.waiting())
+        val end = current?.end
+        if (current != null) {
+            ended.value = when (end) {
+                null -> null
+                HandoffServer.End.EXPIRED -> HandoffEnd.EXPIRED
+                HandoffServer.End.USED_UP -> HandoffEnd.USED_UP
+                HandoffServer.End.CLOSED -> if (left) HandoffEnd.LEFT_SCREEN else HandoffEnd.CLOSED
+            }
+        }
+        state.value = if (current == null || squares == null || end != null) null else Handoff(address = current.address, code = current.code, qr = squares, closesAtMs = current.closesAtMs, waiting = current.waiting())
     }
 
     companion object {

@@ -494,8 +494,7 @@ class RealEngine(
 
     override val handoff: StateFlow<Handoff?> get() = handoffs.handoff
 
-    private val _handoffEnd = MutableStateFlow<HandoffEnd?>(null)
-    override val handoffEnd: StateFlow<HandoffEnd?> = _handoffEnd.asStateFlow()
+    override val handoffEnd: StateFlow<HandoffEnd?> get() = handoffs.handoffEnd
 
     private val _orbot = MutableStateFlow(OrbotState.UNKNOWN)
     override val orbot: StateFlow<OrbotState> = _orbot.asStateFlow()

@@ -89,6 +89,64 @@ class HandoffsTest {
     }
 
     @Test
+    fun thereIsNoEndBeforeTheFirstHandoffAndWhileOneIsOpen() {
+        assertNull(handoffs.handoffEnd.value)
+        handoffs.close()
+        handoffs.leftScreen()
+        handoffs.cameOnScreen()
+        assertNull(handoffs.handoffEnd.value)
+        val handoff = open()
+        assertNull(handoffs.handoffEnd.value)
+        assertEquals(200, links(handoff, "example.org").status)
+        handoffs.take()
+        assertNull(handoffs.handoffEnd.value)
+    }
+
+    @Test
+    fun aHandoffThatWasClosedHereSaysSoUntilTheNextOneOpens() {
+        open()
+        handoffs.close()
+        assertEquals(HandoffEnd.CLOSED, handoffs.handoffEnd.value)
+        handoffs.close()
+        handoffs.take()
+        assertEquals(HandoffEnd.CLOSED, handoffs.handoffEnd.value)
+        open()
+        assertNull(handoffs.handoffEnd.value)
+        open()
+        assertNull(handoffs.handoffEnd.value)
+    }
+
+    @Test
+    fun aHandoffThatCouldNotBeOpenedAgainWasClosedHere() {
+        val handoff = open()
+        network = LocalNetwork.At(InetAddress.getByName("192.0.2.1"))
+        assertEquals(ProblemKind.NETWORK, runBlocking { handoffs.open() }!!.kind)
+        assertNull(handoffs.handoff.value)
+        assertEquals(HandoffEnd.CLOSED, handoffs.handoffEnd.value)
+        assertThrows(ConnectException::class.java) { get(handoff, "/") }
+    }
+
+    @Test
+    fun aHandoffWhoseTimeIsOverSaysSoWhateverIsDoneAfterwards() {
+        val short = Handoffs({ network }, Sentences, { 5_000_000L }, quick.copy(lifeMs = 300))
+        try {
+            assertNull(runBlocking { short.open() })
+            assertNull(short.handoffEnd.value)
+            val deadline = System.nanoTime() + 5_000_000_000L
+            while (short.handoff.value != null && System.nanoTime() < deadline) Thread.sleep(10)
+            assertNull(short.handoff.value)
+            assertEquals(HandoffEnd.EXPIRED, short.handoffEnd.value)
+            short.leftScreen()
+            short.cameOnScreen()
+            assertEquals(HandoffEnd.EXPIRED, short.handoffEnd.value)
+            short.close()
+            assertEquals(HandoffEnd.EXPIRED, short.handoffEnd.value)
+        } finally {
+            short.shutDown()
+        }
+    }
+
+    @Test
     fun thePageNeverHoldsTheCode() {
         val handoff = open()
         val page = get(handoff, "/")
@@ -181,6 +239,7 @@ class HandoffsTest {
         assertEquals(200, links(handoff, "example.org").status)
         handoffs.leftScreen()
         assertNull(handoffs.handoff.value)
+        assertEquals(HandoffEnd.LEFT_SCREEN, handoffs.handoffEnd.value)
         assertThrows(ConnectException::class.java) { get(handoff, "/") }
         assertEquals(Problem(ProblemKind.UNSUPPORTED, "notOnScreen"), runBlocking { handoffs.open() })
         assertNull(handoffs.handoff.value)
@@ -188,7 +247,11 @@ class HandoffsTest {
         handoffs.cameOnScreen()
         assertNull(handoffs.handoff.value)
         assertEquals(listOf<Received>(Received.Link("example.org")), handoffs.take())
+        assertEquals(HandoffEnd.LEFT_SCREEN, handoffs.handoffEnd.value)
         assertEquals(0, open().waiting)
+        assertNull(handoffs.handoffEnd.value)
+        handoffs.close()
+        assertEquals(HandoffEnd.CLOSED, handoffs.handoffEnd.value)
     }
 
     @Test
@@ -203,8 +266,10 @@ class HandoffsTest {
             assertEquals(handoff.copy(waiting = 1), few.handoff.value)
             assertEquals(429, get(handoff, "/").status)
             assertNull(few.handoff.value)
+            assertEquals(HandoffEnd.USED_UP, few.handoffEnd.value)
             assertEquals(listOf<Received>(Received.Link("example.org")), few.take())
             assertNull(few.handoff.value)
+            assertEquals(HandoffEnd.USED_UP, few.handoffEnd.value)
         } finally {
             few.shutDown()
         }

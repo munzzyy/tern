@@ -11,6 +11,7 @@ import io.github.munzzyy.stamp.core.model.AppConfig
 import io.github.munzzyy.stamp.core.model.SourceSpec
 import io.github.munzzyy.stamp.core.source.SourceTypes
 import io.github.munzzyy.stamp.engine.Handoff
+import io.github.munzzyy.stamp.engine.HandoffEnd
 import io.github.munzzyy.stamp.engine.Received
 import java.net.ConnectException
 import java.net.InetSocketAddress
@@ -85,8 +86,10 @@ class HandoffTest {
             assertEquals(0, h.engine.handoff.value!!.waiting)
             assertEquals(emptyList<String>(), h.engine.apps.value.map { it.config.name })
 
+            assertNull(h.engine.handoffEnd.value)
             h.engine.closeHandoff()
             assertNull(h.engine.handoff.value)
+            assertEquals(HandoffEnd.CLOSED, h.engine.handoffEnd.value)
             assertThrows(ConnectException::class.java) { send(handoff, "GET / HTTP/1.1\r\nHost: HOST\r\n\r\n") }
         }
     }
@@ -98,6 +101,7 @@ class HandoffTest {
                 val handoff = open(h)
                 screen.moveToState(Lifecycle.State.CREATED)
                 waitUntil(5_000, "the handoff to end") { h.engine.handoff.value == null }
+                assertEquals(HandoffEnd.LEFT_SCREEN, h.engine.handoffEnd.value)
                 assertThrows(ConnectException::class.java) { send(handoff, "GET / HTTP/1.1\r\nHost: HOST\r\n\r\n") }
                 assertEquals("Stamp has to be on the screen while it takes links from a phone. Open Stamp and try again.", runBlocking { h.engine.openHandoff() }?.message)
 
@@ -114,6 +118,7 @@ class HandoffTest {
                 val handoff = open(h)
                 screen.recreate()
                 assertEquals(handoff, h.engine.handoff.value)
+                assertNull(h.engine.handoffEnd.value)
                 assertEquals(200, send(handoff, "GET / HTTP/1.1\r\nHost: HOST\r\n\r\n").status)
             }
         }

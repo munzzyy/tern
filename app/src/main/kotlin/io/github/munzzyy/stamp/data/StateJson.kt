@@ -1,12 +1,14 @@
 package io.github.munzzyy.stamp.data
 
 import io.github.munzzyy.stamp.core.engine.InstallRecord
+import io.github.munzzyy.stamp.core.icon.IconAddresses
 import io.github.munzzyy.stamp.core.json.Json
 import io.github.munzzyy.stamp.core.json.JsonArray
 import io.github.munzzyy.stamp.core.json.JsonObject
 import io.github.munzzyy.stamp.core.model.Asset
 import io.github.munzzyy.stamp.core.model.NotesFormat
 import io.github.munzzyy.stamp.core.model.Release
+import io.github.munzzyy.stamp.core.net.Urls
 import io.github.munzzyy.stamp.core.verify.Fingerprints
 import io.github.munzzyy.stamp.engine.Problem
 import io.github.munzzyy.stamp.engine.ProblemKind
@@ -31,6 +33,7 @@ object StateJson {
             "patternProblem" to state.patternProblem?.let { Json.obj("filters" to it.filters, "message" to it.message) },
             "description" to state.description,
             "announcedReleaseId" to state.announcedReleaseId,
+            "iconUrls" to state.iconUrls.take(IconAddresses.MAX_ADDRESSES),
         ),
     )
 
@@ -58,6 +61,7 @@ object StateJson {
             },
             description = obj.string("description"),
             announcedReleaseId = obj.string("announcedReleaseId"),
+            iconUrls = obj.array("iconUrls")?.strings().orEmpty().filter(Urls::isHttps).take(IconAddresses.MAX_ADDRESSES),
         )
     }
 

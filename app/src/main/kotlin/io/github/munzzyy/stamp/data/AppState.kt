@@ -40,4 +40,6 @@ data class AppState(
     val patternProblem: PatternProblem? = null,
     val description: String? = null,
     val announcedReleaseId: String? = null,
+    /** Where the source says the icon can be had, the best first. */
+    val iconUrls: List<String> = emptyList(),
 )

@@ -41,8 +41,18 @@ class StateJsonTest {
             patternProblem = PatternProblem("a\u0000b", "slow"),
             description = "d",
             announcedReleaseId = "v2",
+            iconUrls = listOf("https://example.org/store/icon.png", "https://example.org/avatars/owner?s=192"),
         )
         assertEquals(state, StateJson.decode(StateJson.encode(state)))
+    }
+
+    @Test
+    fun iconAddressesAreReadBackOnlyOverHttpsAndOnlyAFew() {
+        val stored = "{\"iconUrls\":[\"http://example.org/plain.png\",7,\"file:///data/icon.png\",\"https://example.org/0\"," +
+            (1..9).joinToString(",") { "\"https://example.org/$it\"" } + "]}"
+        assertEquals(List(4) { "https://example.org/$it" }, StateJson.decode(stored).iconUrls)
+        assertEquals(emptyList<String>(), StateJson.decode("{\"iconUrls\":\"https://example.org/0\"}").iconUrls)
+        assertEquals(4, StateJson.decode(StateJson.encode(AppState(iconUrls = List(9) { "https://example.org/$it" }))).iconUrls.size)
     }
 
     @Test

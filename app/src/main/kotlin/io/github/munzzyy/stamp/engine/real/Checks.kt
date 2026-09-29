@@ -1,6 +1,7 @@
 package io.github.munzzyy.stamp.engine.real
 
 import io.github.munzzyy.stamp.core.apk.BinaryManifest
+import io.github.munzzyy.stamp.core.icon.IconAddresses
 import io.github.munzzyy.stamp.core.model.Asset
 import io.github.munzzyy.stamp.core.net.Urls
 import io.github.munzzyy.stamp.core.source.CheckContext
@@ -90,6 +91,8 @@ internal class Checks(private val e: RealEngine) {
             val listed = listing.packageName
             if (config.packageName == null && listed != null && BinaryManifest.isValidName(listed)) config = config.copy(packageName = listed)
             val releases = listing.releases.take(StateJson.MAX_RELEASES).map { it.copy(notes = it.notes?.take(StateJson.MAX_NOTES)) }
+            // A listing that names no icon keeps the one known, unless the source has moved to another host since.
+            val icons = IconAddresses.accepted(config.source.url, listing.iconUrls.ifEmpty { s.state.iconUrls })
             s.copy(
                 config = config,
                 state = s.state.copy(
@@ -98,6 +101,7 @@ internal class Checks(private val e: RealEngine) {
                     checkProblem = null,
                     movedTo = listing.movedTo?.takeIf { Urls.isHttps(it) && it.length <= MAX_ADDRESS },
                     description = listing.description?.take(1000) ?: s.state.description,
+                    iconUrls = icons,
                 ),
             )
         }

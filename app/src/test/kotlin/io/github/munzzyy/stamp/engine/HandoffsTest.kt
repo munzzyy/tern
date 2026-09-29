@@ -61,13 +61,13 @@ class HandoffsTest {
         send(handoff, "POST $path HTTP/1.1\r\nHost: HOST\r\nContent-Type: $type\r\nContent-Length: ${body.toByteArray().size}\r\n\r\n$body")
 
     /** The way a phone that cannot scan gets to the page: the PIN is answered with the secret address. */
-    private fun page(handoff: Handoff): String = post(handoff, "/pin", "application/x-www-form-urlencoded", "pin=${handoff.pin}").location!!
+    private fun page(handoff: Handoff): String = post(handoff, "/pin", "application/x-www-form-urlencoded", "pin=${handoff.code}").location!!
 
     @Test
     fun anOpenHandoffShowsItsAddressItsPinAndACodeOfTheSecretAddress() {
         val handoff = open()
         assertTrue(handoff.address, Regex("http://127\\.0\\.0\\.1:[0-9]{4,5}").matches(handoff.address))
-        assertTrue(handoff.pin, Regex("[0-9]{6}").matches(handoff.pin))
+        assertTrue(handoff.code, Regex("[0-9]{6}").matches(handoff.code))
         assertEquals(5_000_000L + 10 * 60_000, handoff.closesAtMs)
         assertEquals(0, handoff.waiting)
 
@@ -169,7 +169,7 @@ class HandoffsTest {
     fun aHandoffThatEndsByItselfIsGoneFromTheScreenAndKeepsWhatHasArrived() {
         val handoff = open()
         assertEquals(200, post(handoff, "${page(handoff)}/links", "application/x-www-form-urlencoded", "links=example.org").status)
-        val wrong = if (handoff.pin == "000000") "000001" else "000000"
+        val wrong = if (handoff.code == "000000") "000001" else "000000"
         repeat(5) { assertEquals(403, post(handoff, "/pin", "application/x-www-form-urlencoded", "pin=$wrong").status) }
         assertNull(handoffs.handoff.value)
         assertEquals(listOf<Received>(Received.Link("example.org")), handoffs.take())

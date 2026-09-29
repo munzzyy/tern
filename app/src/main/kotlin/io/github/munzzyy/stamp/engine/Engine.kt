@@ -144,6 +144,9 @@ interface Engine {
     /** The open handoff, or null while there is none. */
     val handoff: StateFlow<Handoff?>
 
+    /** Why the last handoff ended. Null while one is open, and before the first. */
+    val handoffEnd: StateFlow<HandoffEnd?>
+
     /**
      * Opens the handoff for ten minutes, or until [closeHandoff]. Returns why not when this device
      * is on no local network.
@@ -154,6 +157,12 @@ interface Engine {
 
     /** Takes what has arrived, oldest first. What is taken is gone from the handoff. */
     fun takeReceived(): List<Received>
+
+    /** How Orbot is doing. It changes after [askOrbot] and whenever Orbot says something by itself. */
+    val orbot: StateFlow<OrbotState>
+
+    /** Asks Orbot how it is doing and to start if it is off. Does nothing when Orbot is not installed. */
+    fun askOrbot()
 
     /**
      * Repositories [user] has starred, at most 300, for the user to pick from. Nothing is added.

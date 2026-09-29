@@ -6,8 +6,9 @@ import io.github.munzzyy.stamp.engine.SuggestionKind
 
 /** Invented apps, so that no screenshot or test of the stand-in names a real project. */
 object FakeSuggestions {
+    /** Every app whose name has an even number of letters comes with its certificate, so a list shows both kinds. */
     private fun s(name: String, summary: String, kind: SuggestionKind, tv: Boolean = false) =
-        Suggestion(name, summary, FakeLinks.SUGGESTED_PREFIX + name.lowercase().filter { it.isLetterOrDigit() }, kind, tv)
+        Suggestion(name, summary, FakeLinks.SUGGESTED_PREFIX + name.lowercase().filter { it.isLetterOrDigit() }, kind, tv, pinned = name.length % 2 == 0)
 
     val all: List<Suggestion> = listOf(
         s("Lantern Player", "Plays video from your own shelves", SuggestionKind.MEDIA, tv = true),

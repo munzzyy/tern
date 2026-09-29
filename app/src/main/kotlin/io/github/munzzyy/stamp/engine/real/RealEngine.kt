@@ -42,6 +42,8 @@ import io.github.munzzyy.stamp.engine.Engine
 import io.github.munzzyy.stamp.engine.Event
 import io.github.munzzyy.stamp.engine.EventKind
 import io.github.munzzyy.stamp.engine.Handoff
+import io.github.munzzyy.stamp.engine.HandoffEnd
+import io.github.munzzyy.stamp.engine.OrbotState
 import io.github.munzzyy.stamp.engine.ImportSummary
 import io.github.munzzyy.stamp.engine.NoteBlock
 import io.github.munzzyy.stamp.engine.Problem
@@ -491,6 +493,14 @@ class RealEngine(
     override fun canOpenInstallSettings(): Boolean = device.canOpenInstallSettings()
 
     override val handoff: StateFlow<Handoff?> get() = handoffs.handoff
+
+    private val _handoffEnd = MutableStateFlow<HandoffEnd?>(null)
+    override val handoffEnd: StateFlow<HandoffEnd?> = _handoffEnd.asStateFlow()
+
+    private val _orbot = MutableStateFlow(OrbotState.UNKNOWN)
+    override val orbot: StateFlow<OrbotState> = _orbot.asStateFlow()
+
+    override fun askOrbot() = Unit
 
     override suspend fun openHandoff(): Problem? = handoffs.open()
 

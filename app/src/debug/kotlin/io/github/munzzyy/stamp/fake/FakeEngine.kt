@@ -23,6 +23,8 @@ import io.github.munzzyy.stamp.engine.Suggestion
 import io.github.munzzyy.stamp.engine.SavedFile
 import io.github.munzzyy.stamp.engine.Received
 import io.github.munzzyy.stamp.engine.Handoff
+import io.github.munzzyy.stamp.engine.HandoffEnd
+import io.github.munzzyy.stamp.engine.OrbotState
 import io.github.munzzyy.stamp.engine.NoteBlock
 import io.github.munzzyy.stamp.engine.Phase
 import io.github.munzzyy.stamp.engine.Problem
@@ -80,6 +82,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     private val _online = MutableStateFlow(true)
     private val _handoff = MutableStateFlow<Handoff?>(null)
     override val handoff: StateFlow<Handoff?> = _handoff.asStateFlow()
+    private val _handoffEnd = MutableStateFlow<HandoffEnd?>(null)
+    override val handoffEnd: StateFlow<HandoffEnd?> = _handoffEnd.asStateFlow()
     private val received = java.util.concurrent.CopyOnWriteArrayList<Received>()
     private var handoffJob: Job? = null
     override val online: StateFlow<Boolean> = _online.asStateFlow()
@@ -431,7 +435,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     override suspend fun openHandoff(): Problem? {
         if (!localNetwork) return Problem(ProblemKind.NETWORK, "This device is on no local network, so a phone cannot reach it.")
         received.clear()
-        _handoff.value = Handoff("http://192.168.1.23:48211", "402917", FakeSuggestions.pattern(), System.currentTimeMillis() + 600_000, 0)
+        _handoffEnd.value = null
+        _handoff.value = Handoff("http://192.168.1.23:48211", "k4mz q7wd x2np h5tc r9vb", FakeSuggestions.pattern(), System.currentTimeMillis() + 600_000, 0)
         handoffJob?.cancel()
         handoffJob = scope.launch {
             delay(stepMs * 40)
@@ -447,10 +452,30 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         _handoff.update { it?.copy(waiting = received.size) }
     }
 
-    override fun closeHandoff() {
+    override fun closeHandoff() = endHandoff(HandoffEnd.CLOSED)
+
+    /** Ends the handoff the way the real one can end by itself; tests call it with the reason they want to see. */
+    fun endHandoff(why: HandoffEnd) {
         handoffJob?.cancel()
-        received.clear()
+        if (why == HandoffEnd.CLOSED) received.clear()
+        if (_handoff.value != null) _handoffEnd.value = why
         _handoff.value = null
+    }
+
+    private val _orbot = MutableStateFlow(OrbotState.UNKNOWN)
+    override val orbot: StateFlow<OrbotState> = _orbot.asStateFlow()
+
+    /** What Orbot answers when it is asked; tests set it. */
+    @Volatile var orbotAnswer = OrbotState.ON
+
+    override fun askOrbot() {
+        scope.launch {
+            if (orbotAnswer == OrbotState.ON) {
+                _orbot.value = OrbotState.STARTING
+                delay(stepMs * 8)
+            }
+            _orbot.value = orbotAnswer
+        }
     }
 
     override fun takeReceived(): List<Received> {

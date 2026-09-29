@@ -70,7 +70,7 @@ class HandoffTest {
     fun whatArrivesWaitsUntilItIsTakenAndClosingFreesThePort() {
         Harness("handoff-door").use { h ->
             val handoff = open(h)
-            val page = form(handoff, "/pin", "pin=${handoff.pin}").location!!
+            val page = form(handoff, "/pin", "pin=${handoff.code}").location!!
             assertEquals(200, form(handoff, "$page/links", "links=https%3A%2F%2Fgithub.com%2Fexample%2Fwren").status)
             waitUntil(5_000, "the link to be counted") { h.engine.handoff.value?.waiting == 1 }
             assertEquals(listOf<Received>(Received.Link("https://github.com/example/wren")), h.engine.takeReceived())

@@ -167,6 +167,8 @@ sealed interface Detection {
         val carried: AppConfig? = null,
         /** Where the source says an icon can be had, best first. The engine decides whether to ask. */
         val iconUrls: List<String> = emptyList(),
+        /** True when the certificate this app is held to is one Stamp itself carries for it, and not one that came with a link or a file. */
+        val builtInPin: Boolean = false,
     ) : Detection
 
     /**
@@ -254,6 +256,8 @@ data class Suggestion(
     val kind: SuggestionKind,
     /** Made for a television, or at home on one. */
     val forTelevision: Boolean,
+    /** Stamp carries the certificate this app has to be signed with, so its first install is checked against it too. */
+    val pinned: Boolean = false,
 )
 
 /** A file the app can read or has written without a file picker. */
@@ -281,16 +285,44 @@ class QrCode(val size: Int, private val dark: BooleanArray) {
  * the user has looked at it here.
  */
 data class Handoff(
-    /** The page without the secret in it, short enough to type: the page then asks for [pin]. */
+    /** The page, short enough to type into a browser. */
     val address: String,
-    /** Six digits, shown next to [address] for typing by hand. */
-    val pin: String,
-    /** [address] with the long secret in it, which is what [qr] holds. */
+    /**
+     * What seals everything the phone sends, in groups for typing by hand. [qr] carries it too, so
+     * a phone that scans has nothing to type. It never travels over the network.
+     */
+    val code: String,
+    /** [address] and [code] together. */
     val qr: QrCode,
     val closesAtMs: Long,
     /** How many things have arrived and wait in [Engine.takeReceived]. */
     val waiting: Int,
 )
+
+/** Why a handoff is no longer open. */
+enum class HandoffEnd {
+    /** Closed from this device. */
+    CLOSED,
+
+    /** Its ten minutes are over. */
+    EXPIRED,
+
+    /** It answered as many requests as one handoff answers, which no person reaches by hand. */
+    USED_UP,
+
+    /** Stamp left the screen. */
+    LEFT_SCREEN,
+}
+
+/** How Orbot is doing, as far as Orbot says. */
+enum class OrbotState {
+    /** Not asked yet, or Orbot has not answered. */
+    UNKNOWN,
+    NOT_INSTALLED,
+    OFF,
+    STARTING,
+    ON,
+}
 
 sealed interface Received {
     data class Link(val text: String) : Received

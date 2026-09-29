@@ -124,7 +124,7 @@ internal class Handoffs(
     private fun publish() = synchronized(lock) {
         val open = server?.takeIf { it.isOpen }
         val squares = code
-        state.value = if (open == null || squares == null) null else Handoff(open.address, open.pin, squares, open.closesAtMs, open.waiting())
+        state.value = if (open == null || squares == null) null else Handoff(address = open.address, code = open.pin, qr = squares, closesAtMs = open.closesAtMs, waiting = open.waiting())
     }
 
     companion object {

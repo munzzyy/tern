@@ -37,8 +37,8 @@ class Invent(private val now: Long) {
     }
 
     fun apk(repo: String, version: String, abi: String = "arm64-v8a", withSha: Boolean = true) = Asset(
-        name = "$repo-$version-$abi.apk",
-        url = "https://downloads.example.org/$repo/$version/$repo-$version-$abi.apk",
+        name = "$repo-${version.ifBlank { "latest" }}-$abi.apk",
+        url = "https://downloads.example.org/$repo/${version.ifBlank { "latest" }}/$repo-$abi.apk",
         size = 8_000_000L + (repo.length * 731_117L) % 40_000_000L,
         sha256 = if (withSha) fakeHash("$repo$version$abi") else null,
     )
@@ -192,8 +192,19 @@ class Invent(private val now: Long) {
         row("arnotes", "مفكرة الجيب", AppStatus.UPDATE_AVAILABLE, "1.2", "1.3", author = "مختبر المثال"),
         row("hecal", "לוח שנה פשוט", AppStatus.UP_TO_DATE, "4.0", "4.0"),
         row("harborterm", "Harbor Terminal", AppStatus.UPDATE_AVAILABLE, "29.0.0", "30.0.0", categories = listOf("Tools")),
+        row("nightlypad", "Nightly Pad", AppStatus.UPDATE_AVAILABLE, "1.4.2", "", type = "html", certain = false),
+        row("latestapk", "Latest Build Viewer", AppStatus.NOT_INSTALLED, null, "", type = "html", signer = SignerState.FIRST_SEEN, checksum = ChecksumState.NOT_PUBLISHED, withSha = false),
         row("fieldguide", "Field Guide", AppStatus.UNKNOWN, null, null, checkedHoursAgo = 0).copy(lastCheckedMs = null),
     )
+
+    /** What a real engine shows after checks ran without a connection: some rows failed on the network. */
+    fun offlineRows(): List<AppRow> = defaultRows().map { r ->
+        if (r.id in setOf("pocketnotes", "harborterm", "kestrelmail")) {
+            r.copy(status = AppStatus.ERROR, problem = Problem(ProblemKind.NETWORK, "Could not reach ${r.config.source.url.substringAfter("://").substringBefore('/')}."))
+        } else {
+            r
+        }
+    }
 
     fun errorRows(): List<AppRow> = ProblemKind.entries.mapIndexed { i, kind ->
         val blocked = kind in setOf(

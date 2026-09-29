@@ -65,6 +65,12 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     private val _checkingAll = MutableStateFlow(false)
     override val checkingAll: StateFlow<Boolean> = _checkingAll.asStateFlow()
 
+    private val _online = MutableStateFlow(true)
+    override val online: StateFlow<Boolean> = _online.asStateFlow()
+
+    /** Tests set this to play an install whose confirmation Android has already dropped. */
+    @Volatile var nothingWaits = false
+
     init {
         loadScenario("default")
     }
@@ -77,12 +83,16 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         val (rows, events) = when (name) {
             "empty", "firstrun" -> emptyList<AppRow>() to emptyList()
             "many" -> invent.manyRows(300) to invent.events()
+            "offline" -> invent.offlineRows() to invent.events()
             "errors" -> invent.errorRows() to invent.events().filter { it.kind in setOf(EventKind.BLOCKED, EventKind.FAILED, EventKind.CHECK_FAILED) }
             else -> invent.defaultRows() to invent.events()
         }
         _apps.value = ordered(rows)
         _events.value = events
         _checkingAll.value = false
+        _settings.value = Settings()
+        _online.value = name != "offline"
+        nothingWaits = false
         tokens.value = if (rows.isEmpty()) emptySet() else setOf("api.github.com")
         if (name == "default") startTicker()
     }
@@ -124,9 +134,6 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         return fakeDetect(input, Invent(System.currentTimeMillis()))
     }
 
-    private val _online = MutableStateFlow(true)
-    override val online: StateFlow<Boolean> = _online.asStateFlow()
-
     override fun proposedConfig(found: Detection.Found): AppConfig {
         val base = found.spec.url.trimEnd('/').substringAfterLast('/').lowercase().filter { it.isLetterOrDigit() }.ifEmpty { "app" }
         var id = base
@@ -144,8 +151,17 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override fun resumeInstall(appId: String): Boolean {
         val waiting = row(appId)?.progress?.phase == Phase.WAITING_FOR_USER
-        if (waiting) install(appId)
-        return waiting
+        if (!waiting || nothingWaits || jobs.containsKey(appId)) return false
+        jobs[appId] = scope.launch {
+            try {
+                edit(appId) { it.copy(progress = Progress(Phase.INSTALLING)) }
+                delay(stepMs * 5)
+                finishInstall(appId, null)
+            } finally {
+                jobs.remove(appId)
+            }
+        }
+        return true
     }
 
     override suspend fun add(found: Detection.Found, install: Boolean): String {
@@ -170,6 +186,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     }
 
     override suspend fun check(appId: String?) {
+        if (!_online.value) return
         val ids = appId?.let { listOf(it) } ?: _apps.value.map { it.id }
         if (appId == null) _checkingAll.value = true
         ids.forEach { id -> edit(id) { it.copy(checking = true) } }
@@ -184,7 +201,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
                 } else {
                     r
                 }
-                known.copy(checking = false, lastCheckedMs = now)
+                val stale = nothingWaits && known.progress?.phase == Phase.WAITING_FOR_USER
+                known.copy(checking = false, lastCheckedMs = now, progress = if (stale) null else known.progress)
             }
         }
         if (appId == null) _checkingAll.value = false
@@ -219,8 +237,12 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         }
         log(row(appId), EventKind.VERIFIED, "Signer and checksum checked.")
         delay(stepMs * 5)
+        finishInstall(appId, releaseId)
+    }
+
+    private fun finishInstall(appId: String, releaseId: String?) {
         edit(appId) { r ->
-            val version = releaseId?.removePrefix("v") ?: r.latest?.version ?: "1.0"
+            val version = releaseId?.removePrefix("v")?.ifEmpty { null } ?: r.latest?.version?.ifBlank { null } ?: "1.0"
             val pkg = r.config.packageName ?: "org.example.${r.id}"
             val signers = r.verification?.signers.orEmpty()
             r.copy(

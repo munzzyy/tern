@@ -1,6 +1,10 @@
 package io.github.munzzyy.jackdaw.fake
 
+import io.github.munzzyy.jackdaw.core.model.AppConfig
+import io.github.munzzyy.jackdaw.core.model.AssetPolicy
+import io.github.munzzyy.jackdaw.core.model.ReleasePolicy
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
+import io.github.munzzyy.jackdaw.core.model.UpdateMode
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
 import io.github.munzzyy.jackdaw.engine.ChecksumState
 import io.github.munzzyy.jackdaw.engine.Detection
@@ -15,13 +19,36 @@ object FakeLinks {
     const val WARNED_APP = "https://codeberg.org/example/wren"
     const val TRACKED_APP = "https://github.com/example/trailmap"
     const val MISSING = "https://gitlab.com/example/missing"
+
+    /** Comes with settings of its own, the way an Obtainium link or an import does. */
+    const val CARRIED = "https://github.com/example/finch"
 }
 
 fun fakeDetect(input: String, invent: Invent): Detection {
     val text = input.trim()
     val lower = text.lowercase()
     return when {
-        lower.startsWith("obtainium://") -> found(invent, "Imported Link App", SourceTypes.GITHUB, "linked", listOf("Settings carried in the link were applied. Check them after adding."))
+        lower.startsWith("obtainium://") -> found(invent, "Imported Link App", SourceTypes.GITHUB, "linked", emptyList()).let {
+            it.copy(carried = it.plain().copy(releases = ReleasePolicy(includePrereleases = true)))
+        }
+        lower.startsWith(FakeLinks.CARRIED) -> found(invent, "Finch", SourceTypes.GITHUB, "finch", emptyList()).let {
+            it.copy(
+                carried = it.plain().copy(
+                    updates = UpdateMode.MANUAL,
+                    releases = ReleasePolicy(
+                        includePrereleases = true,
+                        tagFilter = "^v[0-9]",
+                        titleFilter = "stable",
+                        notesFilter = "android",
+                        versionExtract = "v(.+)",
+                        minAgeDays = 3,
+                    ),
+                    assets = AssetPolicy(include = "universal", exclude = "debug"),
+                    pinnedSigners = listOf(fakeHash("signer:carried:finch")),
+                    trackOnly = false,
+                ),
+            )
+        }
         lower.startsWith(FakeLinks.NEW_APP) -> found(invent, "Sparrow", SourceTypes.GITHUB, "sparrow", emptyList())
         lower.startsWith(FakeLinks.WARNED_APP) -> found(
             invent, "Wren", SourceTypes.FORGEJO, "wren",
@@ -43,6 +70,8 @@ fun fakeDetect(input: String, invent: Invent): Detection {
         )
     }
 }
+
+private fun Detection.Found.plain() = AppConfig(id = "", source = spec, name = name, author = author)
 
 private fun found(
     invent: Invent,

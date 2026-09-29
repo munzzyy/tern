@@ -6,7 +6,7 @@ import io.github.munzzyy.jackdaw.engine.NoteSpan
 private fun t(s: String) = NoteSpan.Text(s)
 
 fun shortNotes(version: String): List<NoteBlock> = listOf(
-    NoteBlock.Paragraph(listOf(t("Version $version fixes a crash when the list is empty and makes startup "), NoteSpan.Bold(listOf(t("faster"))), t(" on older phones."))),
+    NoteBlock.Paragraph(listOf(t("${if (version.isBlank()) "This release" else "Version $version"} fixes a crash when the list is empty and makes startup "), NoteSpan.Bold(listOf(t("faster"))), t(" on older phones."))),
     NoteBlock.ListItem(0, false, 0, listOf(t("Smaller download"))),
     NoteBlock.ListItem(0, false, 0, listOf(t("Clearer error messages"))),
 )

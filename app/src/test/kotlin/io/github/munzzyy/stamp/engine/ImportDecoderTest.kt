@@ -25,6 +25,25 @@ class ImportDecoderTest {
     }
 
     @Test
+    fun anAppOnALocalNetworkIsLeftOutAndNamed() {
+        val decoded = decode(
+            """[{"url":"https://github.com/example/wren","name":"Wren"},
+               {"url":"https://192.168.1.20/group/app","name":"Router","overrideSource":"GitLab"},
+               {"url":"https://127.0.0.1/app.apk","name":"Loop","overrideSource":"DirectAPKLink"},
+               {"url":"https://git.lan/group/app","name":"Shelf","overrideSource":"Codeberg"}]""",
+        )
+        assertEquals(listOf("Wren"), decoded.apps.map { it.name })
+        assertEquals(listOf("Router", "Loop", "Shelf").map { it to "importLocalAddress" }, decoded.skipped)
+    }
+
+    @Test
+    fun aFileWithNothingButLocalAddressesSaysSoAndIsNoEmptyFile() {
+        val decoded = decode("""[{"url":"https://10.0.0.5/group/app","name":"Shelf","overrideSource":"GitLab"}]""")
+        assertEquals(emptyList<String>(), decoded.apps.map { it.name })
+        assertEquals(listOf("Shelf" to "importLocalAddress"), decoded.skipped)
+    }
+
+    @Test
     fun aByteOrderMarkInFrontIsSkipped() {
         val marked = byteArrayOf(0xEF.toByte(), 0xBB.toByte(), 0xBF.toByte()) + exportOf("Wren").toByteArray()
         assertEquals(listOf("Wren"), ImportDecoder.decode(marked, ImportSentences).apps.map { it.name })

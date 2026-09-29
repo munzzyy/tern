@@ -5,6 +5,7 @@ import io.github.munzzyy.stamp.core.net.HttpClient
 import io.github.munzzyy.stamp.core.net.HttpRequest
 import io.github.munzzyy.stamp.core.net.HttpResponse
 import io.github.munzzyy.stamp.core.net.InsecureUrlException
+import io.github.munzzyy.stamp.core.net.Urls
 import java.io.ByteArrayInputStream
 import java.io.FilterInputStream
 import java.io.IOException
@@ -16,6 +17,9 @@ import java.net.URL
 
 class TooManyRedirectsException(url: String) : IOException("Too many redirects starting at $url")
 
+/** A server on the internet sent the request on to the device itself or to the network it sits in. */
+class LocalRedirectException(url: String) : IOException("Refusing a redirect from $url to an address on the local network")
+
 /**
  * The platform's HttpURLConnection with redirects followed by hand, so every hop is checked for
  * HTTPS and the Authorization header never follows a redirect to another host.
@@ -26,6 +30,7 @@ class UrlConnectionHttp(
     private val cleartextHostsForTests: Set<String> = emptySet(),
     private val connectTimeoutMs: Int = 15_000,
     private val readTimeoutMs: Int = 30_000,
+    private val isLocal: (host: String) -> Boolean = Urls::isLocal,
 ) : HttpClient {
     override fun execute(request: HttpRequest): HttpResponse {
         var url = checked(request.url, request.url)
@@ -50,6 +55,7 @@ class UrlConnectionHttp(
                     throw IOException("Unreadable redirect from $url", e)
                 }
                 url = checked(next.toString(), request.url)
+                if (isLocal(url.host) && !isLocal(originalHost)) throw LocalRedirectException(request.url)
                 if (!url.host.equals(originalHost, ignoreCase = true)) authorization = null
                 if (status == 303 && method != "HEAD") method = "GET"
                 return@repeat

@@ -3,6 +3,7 @@ package io.github.munzzyy.stamp.engine
 import com.sun.net.httpserver.HttpServer
 import io.github.munzzyy.stamp.core.net.HttpRequest
 import io.github.munzzyy.stamp.core.net.InsecureUrlException
+import io.github.munzzyy.stamp.net.LocalRedirectException
 import io.github.munzzyy.stamp.net.UrlConnectionHttp
 import java.net.InetSocketAddress
 import java.util.concurrent.CopyOnWriteArrayList
@@ -56,6 +57,22 @@ class RedirectTest {
     fun aHeaderNamedAuthorizationInThePlainHeadersIsNeverSent() {
         http.execute(HttpRequest("http://127.0.0.1:$port/back", headers = mapOf("authorization" to "Bearer leak"))).close()
         assertNull(seen.single().second)
+    }
+
+    @Test
+    fun aServerOnTheInternetCannotSendARequestOnToTheLocalNetwork() {
+        val fromOutside = UrlConnectionHttp(cleartextHostsForTests = setOf("127.0.0.1", "localhost"), isLocal = { it == "localhost" })
+        try {
+            fromOutside.execute(HttpRequest("http://127.0.0.1:$port/same")).close()
+            fail("followed a redirect to the local network")
+        } catch (_: LocalRedirectException) {
+            assertEquals(listOf("127.0.0.1/same"), seen.map { it.first })
+        }
+    }
+
+    @Test
+    fun aServerOnTheLocalNetworkMaySendARequestOnWithinIt() {
+        assertEquals("ok", http.execute(HttpRequest("http://127.0.0.1:$port/same")).text())
     }
 
     @Test

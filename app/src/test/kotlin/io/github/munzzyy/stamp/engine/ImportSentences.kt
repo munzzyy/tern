@@ -12,6 +12,7 @@ import org.junit.Assert.fail
 object ImportSentences : ImportTexts {
     override fun importNotAnExport() = "importNotAnExport"
     override fun importEmpty() = "importEmpty"
+    override fun importLocalAddress() = "importLocalAddress"
     override fun importUnreadableExport(detail: String?) = "importUnreadableExport($detail)"
     override fun importTooLarge(limitBytes: Int) = "importTooLarge($limitBytes)"
     override fun linkNotHttps() = "linkNotHttps"

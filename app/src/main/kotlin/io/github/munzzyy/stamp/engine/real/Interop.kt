@@ -9,6 +9,7 @@ import io.github.munzzyy.stamp.core.interop.StampExportException
 import io.github.munzzyy.stamp.core.json.Json
 import io.github.munzzyy.stamp.core.json.JsonException
 import io.github.munzzyy.stamp.core.model.AppConfig
+import io.github.munzzyy.stamp.core.net.Urls
 import io.github.munzzyy.stamp.data.AppState
 import io.github.munzzyy.stamp.data.StoredApp
 import io.github.munzzyy.stamp.engine.EventKind
@@ -31,6 +32,7 @@ import kotlinx.coroutines.withContext
 interface ImportTexts {
     fun importNotAnExport(): String
     fun importEmpty(): String
+    fun importLocalAddress(): String
     fun importUnreadableExport(detail: String?): String
     fun importTooLarge(limitBytes: Int): String
     fun linkNotHttps(): String
@@ -73,10 +75,17 @@ internal object ImportDecoder {
     private const val STAMP_FORMAT = "stamp-export"
 
     fun decode(bytes: ByteArray, texts: ImportTexts, notAnExport: String = texts.importNotAnExport()): Decoded {
-        val decoded = read(bytes, texts, notAnExport)
+        val decoded = withoutLocalAddresses(read(bytes, texts, notAnExport), texts)
         // An empty list reads as an export of nothing, and "imported 0 apps" would pass for success.
         if (decoded.apps.isEmpty() && decoded.skipped.isEmpty()) throw ProblemException(Problem(ProblemKind.PARSE, texts.importEmpty()))
         return decoded
+    }
+
+    /** A file from somebody else must not make this device call into its own network. An address that is local has to be added by hand. */
+    private fun withoutLocalAddresses(decoded: Decoded, texts: ImportTexts): Decoded {
+        val (local, other) = decoded.apps.partition { Urls.isLocal(Urls.host(it.source.url)) }
+        if (local.isEmpty()) return decoded
+        return Decoded(other, decoded.skipped + local.map { it.name to texts.importLocalAddress() })
     }
 
     private fun read(bytes: ByteArray, texts: ImportTexts, notAnExport: String): Decoded {

@@ -1,6 +1,8 @@
 package io.github.munzzyy.stamp.core.net
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Assert.assertNull
 import org.junit.Test
 
@@ -110,17 +112,35 @@ class UrlsTest {
     }
 
     @Test
-    fun negativeControlDetectsBrokenNormalize() {
-        fun brokenNormalize(input: String): String? = input.trim()
-        assertEquals("https://example.com", Urls.normalize("example.com"))
-        assert(brokenNormalize("example.com") != Urls.normalize("example.com"))
-    }
-
-    @Test
     fun theAuthorityKeepsAPortThatIsNotTheUsualOne() {
         assertEquals("git.example.org", Urls.authority("https://git.example.org/group/app"))
         assertEquals("git.example.org", Urls.authority("https://git.example.org:443/group/app"))
         assertEquals("git.example.org:8443", Urls.authority("https://GIT.example.org:8443/group/app"))
         assertEquals("", Urls.authority("not an address"))
+    }
+
+    @Test
+    fun anAddressOnTheDeviceOrItsNetworkIsLocalHoweverItIsSpelled() {
+        val local = listOf(
+            "127.0.0.1", "127.1", "0x7f.0.0.1", "0x7f.1", "017700000001", "2130706433", "0.0.0.0", "0",
+            "10.0.0.5", "10.255.255.255", "172.16.0.1", "172.31.255.254", "192.168.1.20", "169.254.169.254",
+            "100.64.0.1", "100.127.255.255", "224.0.0.251", "255.255.255.255",
+            "[::1]", "::1", "[::]", "[::ffff:127.0.0.1]", "[::ffff:7f00:1]", "[fc00::1]", "[fd12:3456::1]", "[fe80::1%wlan0]", "[ff02::1]",
+            "[64:ff9b::a00:1]", "[64:ff9b::10.0.0.1]",
+            "localhost", "LOCALHOST", "localhost.", "printer.local", "nas.lan", "git.internal", "forge.home.arpa", "router", "",
+            "1.2.3.4.5", "999.1.1.1", "12.0x", "0x",
+        )
+        for (host in local) assertTrue("$host should count as local", Urls.isLocal(host))
+    }
+
+    @Test
+    fun anAddressOnTheInternetIsNotLocal() {
+        val public = listOf(
+            "github.com", "codeberg.org", "f-droid.org", "example.co.uk", "localhost.example.org", "lan.example.org",
+            "8.8.8.8", "1.1.1.1", "172.15.0.1", "172.32.0.1", "100.63.255.255", "100.128.0.1", "192.167.1.1", "169.253.1.1", "11.0.0.1", "223.255.255.255",
+            "[2001:db8::1]", "[2606:4700:4700::1111]", "[64:ff9b::808:808]",
+            "3com.example.org", "0x.example.org", "1e100.net",
+        )
+        for (host in public) assertFalse("$host should not count as local", Urls.isLocal(host))
     }
 }

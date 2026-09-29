@@ -320,6 +320,20 @@ def prove(serial):
         say(not any("forged" in value for value in on_screen(serial)), "nothing that was refused is on the screen")
         say(sum(LINK in value for value in on_screen(serial)) == 1, "the link sent twice is on the screen once")
 
+        say(request(wire, "GET", "/", {}) == 200, "after all of that the page still answers")
+        key(serial, "HOME")
+        time.sleep(3)
+        try:
+            gone = request(wire, "GET", "/", {}) != 200
+        except OSError:
+            gone = True
+        say(gone, "the page stops answering once Tern has left the screen")
+        adb(serial, "shell", "am", "start", "-n", ACTIVITY)
+        said = wait_for(serial, "It closed because Tern left the screen.")
+        say(said, "back in Tern, the screen says why the handoff ended")
+        if not said:
+            print("     the screen says: " + " | ".join(on_screen(serial)))
+
         key(serial, "BACK")
         time.sleep(1)
         open_tab(serial, "Apps")

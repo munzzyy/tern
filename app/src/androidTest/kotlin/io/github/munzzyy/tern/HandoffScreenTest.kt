@@ -217,6 +217,22 @@ class HandoffScreenTest {
     }
 
     @Test
+    fun theReasonIsInSightWhenTheHandoffEndsWithArrivalsBelowIt() {
+        launch(FakeEngine.BARE).use {
+            openHandoff()
+            val links = (1..10).map { "https://codeberg.org/example/app-$it" }
+            for (link in links) fake.receive(Received.Link(link))
+            val last = hasText(links.last(), substring = true) and inArrivals
+            compose.waitFor(last)
+            compose.onNode(last).performScrollTo()
+            fake.endHandoff(HandoffEnd.LEFT_SCREEN)
+            compose.waitForText("It closed because Tern left the screen.", 5_000)
+            compose.waitUntil(5_000) { runCatching { compose.onNodeWithText("It closed because Tern left the screen.").assertIsDisplayed() }.isSuccess }
+            compose.onNodeWithText("It closed because Tern left the screen.").assertIsDisplayed()
+        }
+    }
+
+    @Test
     fun whereThePageCannotBeOpenedTheScreenSaysSoInTheEnginesWords() {
         launch(FakeEngine.BARE).use {
             fake.localNetwork = false

@@ -64,6 +64,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.tern.R
+import io.github.munzzyy.tern.engine.HandoffEnd
 import io.github.munzzyy.tern.engine.Handoff
 import io.github.munzzyy.tern.engine.QrCode
 import io.github.munzzyy.tern.ui.LocalEngine
@@ -135,6 +136,9 @@ fun HandoffScreen(onBack: () -> Unit, onLook: (String) -> Unit, onOpenApp: (Stri
         onDispose { if (activity?.isChangingConfigurations != true) vm.leave() }
     }
     KeepScreenOn(handoff != null)
+    val scroll = rememberScrollState()
+    // The reason sits above what arrived, where a list that took focus may have scrolled it away.
+    LaunchedEffect(end) { if (end != null && end != HandoffEnd.CLOSED) scroll.animateScrollTo(0) }
 
     Scaffold(
         topBar = {
@@ -150,7 +154,7 @@ fun HandoffScreen(onBack: () -> Unit, onLook: (String) -> Unit, onOpenApp: (Stri
                 verticalArrangement = Arrangement.spacedBy(look.gap),
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+                    .verticalScroll(scroll)
                     .padding(horizontal = look.screenPadding)
                     .padding(bottom = look.gapSection)
                     .widthIn(max = look.contentMaxWidth * WIDEST),

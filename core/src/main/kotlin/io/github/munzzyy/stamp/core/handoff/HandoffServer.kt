@@ -14,11 +14,12 @@ import java.util.concurrent.TimeUnit
 
 /**
  * A page on the local network that takes links and one export file from a phone and keeps them
- * until [take] is called. It adds nothing anywhere by itself.
+ * until [take] is called. It adds nothing anywhere by itself, and it takes nothing that was not
+ * sealed with [code].
  *
- * It listens on one address, answers five requests and nothing else, serves [HandoffLimits.connections]
+ * It listens on one address, answers two requests and nothing else, serves [HandoffLimits.connections]
  * connections at a time and lets the others wait, and closes for good after [HandoffLimits.lifeMs],
- * after [HandoffLimits.wrongPins] wrong PINs, after [HandoffLimits.requests] connections, or on [close].
+ * after [HandoffLimits.requests] connections, or on [close].
  */
 class HandoffServer private constructor(
     private val listener: ServerSocket,
@@ -28,18 +29,16 @@ class HandoffServer private constructor(
     private val onChange: () -> Unit,
 ) : Closeable {
     private val host = "${listener.inetAddress.hostAddress}:${listener.localPort}"
-    private val secret = Secrets.secret(random)
-    private val pagePath = "/$secret"
-    private val linksPath = "/$secret/links"
-    private val filePath = "/$secret/file"
+    private val plainCode = Secrets.code(random)
+    private val seal = Seal(plainCode)
 
-    /** The page that asks for [pin]. */
     val address: String = "http://$host"
 
-    /** The page itself, for the QR code. It is never shown as text. */
-    val secretAddress: String = address + pagePath
+    /** What seals everything the phone sends, in groups for typing by hand. It never travels over the network. */
+    val code: String = Secrets.grouped(plainCode)
 
-    val pin: String = Secrets.pin(random)
+    /** For the QR code: the page with the code behind a number sign, which is the part of an address a browser keeps to itself. */
+    val addressWithCode: String = "$address/#$plainCode"
 
     val closesAtMs: Long = nowMs() + limits.lifeMs
 
@@ -48,15 +47,20 @@ class HandoffServer private constructor(
     private val slots = Semaphore(limits.connections)
     private val lock = Any()
     private val accepting = Any()
-    private var open = true
+    private var ended: End? = null
     private var taken = 0
-    private var wrongPins = 0
     private val serving = HashSet<Connection>()
     private val queue = ArrayList<HandoffItem>()
     private var queuedBytes = 0L
     private val acceptor = Thread(::run, "stamp-handoff").apply { isDaemon = true }
 
-    val isOpen: Boolean get() = synchronized(lock) { open }
+    /** Why a handoff is no longer open. */
+    enum class End { CLOSED, EXPIRED, USED_UP }
+
+    val isOpen: Boolean get() = synchronized(lock) { ended == null }
+
+    /** Null while the handoff is open. */
+    val end: End? get() = synchronized(lock) { ended }
 
     /** How many things have arrived and wait to be taken. */
     fun waiting(): Int = synchronized(lock) { queue.size }
@@ -70,31 +74,25 @@ class HandoffServer private constructor(
     }
 
     /** Frees the port at once and ends every request that is open. */
-    override fun close() = shut(null)
+    override fun close() = shut(End.CLOSED, null)
 
     private class Connection(val socket: Socket, val due: Long)
-
-    private class Outcome(val answer: Answer, val closes: Boolean = false)
-
-    private enum class Route { PIN_PAGE, PIN, PAGE, LINKS, FILE, NOT_FOUND }
-
-    private enum class Guess { RIGHT, WRONG, LAST_WRONG, TOO_LATE }
 
     private fun run() {
         try {
             while (true) {
                 val now = System.nanoTime()
                 sweep(now)
-                val (listening, busy) = synchronized(lock) { open to serving.isNotEmpty() }
+                val (listening, busy) = synchronized(lock) { (ended == null) to serving.isNotEmpty() }
                 when {
-                    listening && now - endsAt >= 0 -> shut(null)
+                    listening && now - endsAt >= 0 -> shut(End.EXPIRED, null)
                     listening -> acceptOne()
                     busy -> Thread.sleep(tickMs)
                     else -> return
                 }
             }
         } catch (_: Exception) {
-            shut(null)
+            shut(End.CLOSED, null)
         }
     }
 
@@ -105,7 +103,7 @@ class HandoffServer private constructor(
         } catch (_: SocketTimeoutException) {
             null
         } catch (_: IOException) {
-            shut(null)
+            shut(End.CLOSED, null)
             null
         }
         if (socket == null) {
@@ -114,7 +112,7 @@ class HandoffServer private constructor(
         }
         val connection = Connection(socket, System.nanoTime() + (limits.headMs + limits.bodyMs + limits.lingerMs + SLACK_MS) * NANOS_PER_MS)
         val over = synchronized(lock) {
-            if (!open) return@synchronized null
+            if (ended != null) return@synchronized null
             serving += connection
             ++taken > limits.requests
         }
@@ -123,7 +121,7 @@ class HandoffServer private constructor(
             slots.release()
             return
         }
-        if (over) shut(connection)
+        if (over) shut(End.USED_UP, connection)
         try {
             Thread({ serve(connection, over) }, "stamp-handoff-request").apply { isDaemon = true }.start()
         } catch (_: OutOfMemoryError) {
@@ -142,22 +140,23 @@ class HandoffServer private constructor(
             val socket = connection.socket
             socket.tcpNoDelay = true
             val wire = Wire(socket)
-            val outcome = if (over) {
-                Outcome(Pages.usedUp())
+            val answer = if (over) {
+                Pages.usedUp()
             } else {
                 try {
                     answerTo(wire)
                 } catch (refused: Refused) {
-                    Outcome(refused.answer)
+                    refused.answer
+                } catch (_: OutOfMemoryError) {
+                    Pages.busy()
                 }
             }
-            if (outcome.closes) shut(connection)
             socket.getOutputStream().apply {
-                write(outcome.answer.bytes())
+                write(answer.bytes())
                 flush()
             }
             socket.shutdownOutput()
-            wire.drain(DRAIN_FILES * limits.fileBodyBytes, limits.lingerMs)
+            wire.drain(DRAIN_BODIES * limits.sendBytes, limits.lingerMs)
         } catch (_: Exception) {
             // Nobody is left to tell, and an exception that leaves a thread ends the whole app on Android.
         } finally {
@@ -171,16 +170,14 @@ class HandoffServer private constructor(
         slots.release()
     }
 
-    private fun answerTo(wire: Wire): Outcome {
+    private fun answerTo(wire: Wire): Answer {
         val head = wire.head(limits.headBytes, limits.headMs)
         val length = lengthOf(head, wire)
-        return when (route(head)) {
-            Route.NOT_FOUND -> Outcome(Pages.notFound())
-            Route.PIN_PAGE -> Outcome(Pages.pinPage(null, limits))
-            Route.PAGE -> page(null)
-            Route.PIN -> pin(wire, head, length)
-            Route.LINKS -> links(wire, head, length)
-            Route.FILE -> file(wire, head, length)
+        return when {
+            head.header("host") != host -> Pages.notFound()
+            head.method == "GET" && head.target == "/" -> Pages.page(null, limits)
+            head.method == "POST" && head.target == "/send" -> send(wire, head, length)
+            else -> Pages.notFound()
         }
     }
 
@@ -201,69 +198,41 @@ class HandoffServer private constructor(
         return 0
     }
 
-    private fun route(head: Head): Route {
-        val target = head.target
-        val page = Secrets.same(pagePath, target)
-        val links = Secrets.same(linksPath, target)
-        val file = Secrets.same(filePath, target)
-        val get = head.method == "GET"
-        val post = head.method == "POST"
-        return when {
-            head.header("host") != host -> Route.NOT_FOUND
-            get && target == "/" -> Route.PIN_PAGE
-            post && target == "/pin" -> Route.PIN
-            get && page -> Route.PAGE
-            post && links -> Route.LINKS
-            post && file -> Route.FILE
-            else -> Route.NOT_FOUND
+    private fun send(wire: Wire, head: Head, length: Int): Answer {
+        if (Forms.typeOf(head.header("content-type")) != Forms.TYPE) return said(Notice.UNREADABLE)
+        if (length > limits.sendBytes) return said(Notice.TOO_LARGE)
+        val sealed = Forms.sealed(wire.body(length, limits.bodyMs)) ?: return said(Notice.DID_NOT_OPEN)
+        val opened = seal.open(sealed) ?: return said(Notice.DID_NOT_OPEN)
+        return when (opened.kind) {
+            Seal.LINKS -> links(opened.plain)
+            Seal.FILE -> file(opened.plain)
+            else -> said(Notice.DID_NOT_OPEN)
         }
     }
 
-    private fun page(notice: Notice?) = Outcome(Pages.page(secret, notice, limits))
+    private fun said(notice: Notice) = Pages.page(notice, limits)
 
-    private fun pin(wire: Wire, head: Head, length: Int): Outcome {
-        if (Forms.typeOf(head.header("content-type")) != Forms.TYPE || length > MAX_PIN_BODY) throw Refused(Pages.badRequest())
-        val given = Forms.field(wire.body(length, limits.bodyMs), Pages.PIN_FIELD) ?: throw Refused(Pages.badRequest())
-        val guess = synchronized(lock) {
-            when {
-                !open || wrongPins >= limits.wrongPins -> Guess.TOO_LATE
-                Secrets.same(pin, given.trim()) -> Guess.RIGHT
-                ++wrongPins >= limits.wrongPins -> Guess.LAST_WRONG
-                else -> Guess.WRONG
-            }
-        }
-        return when (guess) {
-            Guess.RIGHT -> Outcome(Pages.pinRight(secret))
-            Guess.WRONG -> Outcome(Pages.pinPage(Notice.WRONG_PIN, limits))
-            Guess.LAST_WRONG -> Outcome(Pages.pinClosed(), closes = true)
-            Guess.TOO_LATE -> Outcome(Pages.closed())
-        }
-    }
-
-    private fun links(wire: Wire, head: Head, length: Int): Outcome {
-        if (Forms.typeOf(head.header("content-type")) != Forms.TYPE) return page(Notice.LINKS_UNREADABLE)
-        if (length > limits.formBytes) return page(Notice.LINKS_TOO_LARGE)
-        val text = Forms.field(wire.body(length, limits.bodyMs), Pages.LINKS_FIELD) ?: return page(Notice.LINKS_UNREADABLE)
+    private fun links(plain: ByteArray): Answer {
+        if (plain.size > limits.linksBytes) return said(Notice.LINKS_TOO_LARGE)
+        val text = Forms.utf8(plain) ?: return said(Notice.UNREADABLE)
         return when (val read = Forms.links(text, limits)) {
-            is Forms.Links.Refused -> page(read.notice)
-            is Forms.Links.Taken -> page(offer(read.links.map { HandoffItem.Link(it) }, 0, Notice.LINKS_SENT))
+            is Forms.Links.Refused -> said(read.notice)
+            is Forms.Links.Taken -> said(offer(read.links.map { HandoffItem.Link(it) }, 0, Notice.LINKS_SENT))
         }
     }
 
-    private fun file(wire: Wire, head: Head, length: Int): Outcome {
-        val boundary = Multipart.boundary(head.header("content-type")) ?: return page(Notice.FILE_UNREADABLE)
-        if (length > limits.fileBodyBytes) return page(Notice.FILE_TOO_LARGE)
-        val part = Multipart.single(wire.body(length, limits.bodyMs), boundary, Pages.FILE_FIELD) ?: return page(Notice.FILE_UNREADABLE)
+    private fun file(plain: ByteArray): Answer {
+        val file = Forms.file(plain) ?: return said(Notice.UNREADABLE)
         return when {
-            part.content.isEmpty() -> page(Notice.NO_FILE)
-            part.content.size > limits.fileBytes -> page(Notice.FILE_TOO_LARGE)
-            else -> page(offer(listOf(HandoffItem.ExportFile(part.fileName, part.content)), part.content.size, Notice.FILE_SENT))
+            file.content.isEmpty() -> said(Notice.NO_FILE)
+            file.content.size > limits.fileBytes -> said(Notice.FILE_TOO_LARGE)
+            else -> said(offer(listOf(HandoffItem.ExportFile(file.name, file.content)), file.content.size, Notice.FILE_SENT))
         }
     }
 
     private fun offer(items: List<HandoffItem>, bytes: Int, sent: Notice): Notice {
         synchronized(lock) {
-            if (!open) throw Refused(Pages.closed())
+            if (ended != null) throw Refused(Pages.closed())
             if (queue.size + items.size > limits.waiting || queuedBytes + bytes > limits.waitingBytes) return Notice.TOO_MUCH_WAITS
             queue += items
             queuedBytes += bytes
@@ -272,11 +241,11 @@ class HandoffServer private constructor(
         return sent
     }
 
-    /** Closes for good. The connection in [keep] stays, so that it can still be given the answer that says so. */
-    private fun shut(keep: Connection?) {
+    /** Closes for good, for the first reason that comes. The connection in [keep] stays, so that it can still be given the answer that says so. */
+    private fun shut(why: End, keep: Connection?) {
         val others = synchronized(lock) {
-            if (!open) return
-            open = false
+            if (ended != null) return
+            ended = why
             serving.filter { it !== keep }
         }
         closeQuietly(listener)
@@ -306,9 +275,8 @@ class HandoffServer private constructor(
         private const val NANOS_PER_MS = 1_000_000L
         private const val SLACK_MS = 5_000L
         private const val BACKLOG = 8
-        private const val MAX_PIN_BODY = 64
         private const val MAX_LENGTH_DIGITS = 9
-        private const val DRAIN_FILES = 8L
+        private const val DRAIN_BODIES = 8L
 
         /**
          * Opens a handoff on [bind], which has to be one IPv4 address of this device and never all of

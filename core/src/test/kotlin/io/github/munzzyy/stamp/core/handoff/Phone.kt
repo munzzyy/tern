@@ -6,6 +6,7 @@ import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Socket
 import java.net.URI
+import java.security.SecureRandom
 import java.util.concurrent.atomic.AtomicInteger
 
 class Reply(val raw: ByteArray) {
@@ -16,14 +17,16 @@ class Reply(val raw: ByteArray) {
 
     fun header(name: String): String? = head.drop(1).firstOrNull { it.startsWith("$name:", ignoreCase = true) }?.substringAfter(':')?.trim()
 
-    override fun toString(): String = "${head[0]} / ${body.substringAfter("<main>").take(300)}"
+    override fun toString(): String = "${head[0]} / ${body.substringAfter("<h1>").take(300)}"
 }
 
-/** Talks to a handoff over real sockets, byte for byte as the test writes them. */
+/** Talks to a handoff over real sockets, byte for byte as the test writes them. It seals the way the page does. */
 class Phone(val server: HandoffServer) {
     val port: Int = URI(server.address).port
     val host: String = "127.0.0.1:$port"
-    val secret: String = server.secretAddress.substringAfterLast('/')
+    val code: String = server.code.replace(" ", "")
+    private val seal = Seal(code)
+    private val random = SecureRandom()
 
     fun connect(readTimeoutMs: Int = 10_000): Socket {
         val socket = Socket()
@@ -65,19 +68,25 @@ class Phone(val server: HandoffServer) {
 
     fun form(path: String, body: String): Reply? = post(path, Forms.TYPE, body.toByteArray(Charsets.ISO_8859_1))
 
-    fun links(vararg links: String): Reply? = form("/$secret/links", "links=" + links.joinToString("%0D%0A") { java.net.URLEncoder.encode(it, "UTF-8") })
+    fun sealed(kind: Int, plain: ByteArray): ByteArray = seal.seal(kind, ByteArray(Seal.NONCE).also(random::nextBytes), plain)
 
-    fun file(name: String, content: ByteArray): Reply? = post("/$secret/file", "multipart/form-data; boundary=$BOUNDARY", multipart(name, content))
+    fun send(sealed: ByteArray): Reply? = form("/send", field(sealed))
 
-    fun pin(pin: String): Reply? = form("/pin", "pin=$pin")
+    fun plain(kind: Int, plain: ByteArray): Reply? = send(sealed(kind, plain))
+
+    fun links(vararg links: String): Reply? = plain(Seal.LINKS, links.joinToString("\n").toByteArray())
+
+    fun file(name: String, content: ByteArray): Reply? = plain(Seal.FILE, named(name, content))
 
     companion object {
-        const val BOUNDARY = "----StampTestBoundary7MA4YWxk"
         val LOOPBACK: InetAddress = InetAddress.getByAddress(byteArrayOf(127, 0, 0, 1))
 
-        fun multipart(name: String, content: ByteArray): ByteArray =
-            "--$BOUNDARY\r\nContent-Disposition: form-data; name=\"file\"; filename=\"$name\"\r\nContent-Type: application/json\r\n\r\n".toByteArray() +
-                content + "\r\n--$BOUNDARY--\r\n".toByteArray()
+        fun field(sealed: ByteArray): String = "sealed=" + Seal.text(sealed)
+
+        fun named(name: String, content: ByteArray): ByteArray {
+            val bytes = name.toByteArray()
+            return byteArrayOf(bytes.size.toByte()) + bytes + content
+        }
     }
 }
 
@@ -108,3 +117,7 @@ fun waitFor(what: String, timeoutMs: Long = 5_000, condition: () -> Boolean) {
     }
     throw AssertionError("Timed out after $timeoutMs ms waiting for $what")
 }
+
+fun hex(bytes: ByteArray): String = bytes.joinToString("") { "%02x".format(it) }
+
+fun unhex(text: String): ByteArray = ByteArray(text.length / 2) { text.substring(2 * it, 2 * it + 2).toInt(16).toByte() }

@@ -12,11 +12,10 @@ data class HandoffLimits(
     val connections: Int = 4,
     /** Connections taken in the life of one handoff, whether a request came over them or not. */
     val requests: Int = 200,
-    val wrongPins: Int = 5,
     val links: Int = 20,
     val linkLength: Int = 2000,
-    /** The body of a request that brings links, which is longer than the links because of how a form writes them. */
-    val formBytes: Int = 128 * 1024,
+    /** The links of one request as text, which is more bytes than characters where a link is not ASCII. */
+    val linksBytes: Int = 128 * 1024,
     val fileBytes: Int = 2 * 1024 * 1024,
     val waiting: Int = 40,
     /** All files that wait, taken together. */
@@ -24,12 +23,12 @@ data class HandoffLimits(
 ) {
     init {
         require(lifeMs > 0 && headMs > 0 && bodyMs > 0 && lingerMs >= 0) { "Times have to be positive" }
-        require(headBytes >= 256 && formBytes > 0 && fileBytes in 1..MAX_FILE && waitingBytes >= fileBytes) { "Sizes are out of range" }
-        require(connections > 0 && requests > 0 && wrongPins > 0 && links > 0 && linkLength > 0 && waiting > 0) { "Counts have to be positive" }
+        require(headBytes >= 256 && linksBytes in 1..MAX_FILE && fileBytes in 1..MAX_FILE && waitingBytes >= fileBytes) { "Sizes are out of range" }
+        require(connections > 0 && requests > 0 && links > 0 && linkLength > 0 && waiting > 0) { "Counts have to be positive" }
     }
 
-    /** The body of a request that brings a file: the file and what a form puts around it. */
-    internal val fileBodyBytes: Int get() = fileBytes + Multipart.MAX_WRAPPING
+    /** The longest body of a request that sends: the field's name, and the largest thing sealed and written as text. */
+    internal val sendBytes: Int get() = Forms.FIELD.length + 1 + Seal.textLength(maxOf(linksBytes, 1 + Forms.MAX_NAME + fileBytes))
 
     private companion object {
         const val MAX_FILE = 64 * 1024 * 1024

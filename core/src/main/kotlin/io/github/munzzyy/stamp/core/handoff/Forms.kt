@@ -1,42 +1,35 @@
 package io.github.munzzyy.stamp.core.handoff
 
-import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import java.nio.charset.CharacterCodingException
 import java.nio.charset.CodingErrorAction
+import java.util.Base64
 
-/** Reads what a plain form sends. Anything that is not the one expected shape comes back as null. */
+/** Reads what the page sends. Anything that is not the one expected shape comes back as null. */
 internal object Forms {
     const val TYPE = "application/x-www-form-urlencoded"
+    const val FIELD = "sealed"
+    const val MAX_NAME = 80
+    private const val FALLBACK_NAME = "export.json"
+
+    class Named(val name: String, val content: ByteArray)
 
     fun typeOf(contentType: String?): String = contentType.orEmpty().substringBefore(';').trim().lowercase()
 
-    /** The value of a form that has the single field [name]. */
-    fun field(body: ByteArray, name: String): String? {
-        val start = "$name=".toByteArray(Charsets.US_ASCII)
+    /** The bytes in the single field of the form, which holds nothing but the letters of base64 for addresses. */
+    fun sealed(body: ByteArray): ByteArray? {
+        val start = "$FIELD=".toByteArray(Charsets.US_ASCII)
         if (body.size < start.size) return null
         for (i in start.indices) if (body[i] != start[i]) return null
-        val out = ByteArrayOutputStream(body.size)
-        var i = start.size
-        while (i < body.size) {
-            val b = body[i].toInt() and 0xFF
-            when {
-                b == '&'.code -> return null
-                b == '+'.code -> out.write(' '.code)
-                b == '%'.code -> {
-                    if (i + 2 >= body.size) return null
-                    val high = hex(body[i + 1])
-                    val low = hex(body[i + 2])
-                    if (high < 0 || low < 0) return null
-                    out.write(high * 16 + low)
-                    i += 2
-                }
-                b <= 0x20 || b >= 0x7F -> return null
-                else -> out.write(b)
-            }
-            i++
+        for (i in start.size until body.size) {
+            val c = body[i].toInt().toChar()
+            if (!(c in 'A'..'Z' || c in 'a'..'z' || c in '0'..'9' || c == '-' || c == '_')) return null
         }
-        return utf8(out.toByteArray())
+        return try {
+            Base64.getUrlDecoder().decode(body.copyOfRange(start.size, body.size))
+        } catch (_: IllegalArgumentException) {
+            null
+        }
     }
 
     fun utf8(bytes: ByteArray): String? = try {
@@ -47,13 +40,6 @@ internal object Forms {
             .toString()
     } catch (_: CharacterCodingException) {
         null
-    }
-
-    private fun hex(b: Byte): Int = when (val c = b.toInt().toChar()) {
-        in '0'..'9' -> c - '0'
-        in 'a'..'f' -> c - 'a' + 10
-        in 'A'..'F' -> c - 'A' + 10
-        else -> -1
     }
 
     sealed interface Links {
@@ -88,4 +74,20 @@ internal object Forms {
         }
         return true
     }
+
+    /** A file the way the page writes it: one byte that says how long the name is, the name, then the file. */
+    fun file(plain: ByteArray): Named? {
+        if (plain.isEmpty()) return null
+        val length = plain[0].toInt() and 0xFF
+        if (length > MAX_NAME || 1 + length > plain.size) return null
+        val name = utf8(plain.copyOfRange(1, 1 + length)) ?: return null
+        return Named(tidy(name), plain.copyOfRange(1 + length, plain.size))
+    }
+
+    /** A name is only ever shown, never used as a path. It is still cut down to what a name needs. */
+    fun tidy(name: String): String = name.substringAfterLast('/').substringAfterLast('\\')
+        .filter { it.isLetterOrDigit() || it in " ._-()" }
+        .trim().trimStart('.').trim()
+        .take(MAX_NAME)
+        .ifEmpty { FALLBACK_NAME }
 }

@@ -1,6 +1,7 @@
 package io.github.munzzyy.stamp.engine
 
 import io.github.munzzyy.stamp.core.handoff.HandoffLimits
+import io.github.munzzyy.stamp.core.handoff.Seal
 import io.github.munzzyy.stamp.core.qr.QrEncoder
 import io.github.munzzyy.stamp.engine.real.HandoffTexts
 import io.github.munzzyy.stamp.engine.real.Handoffs
@@ -14,6 +15,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
@@ -33,6 +35,7 @@ class HandoffsTest {
     private var network: LocalNetwork = LocalNetwork.At(loopback)
     private val quick = HandoffLimits(headMs = 1_500, bodyMs = 1_500, lingerMs = 300)
     private val handoffs = Handoffs({ network }, Sentences, { 5_000_000L }, quick)
+    private var sent = 0
 
     @After
     fun close() = handoffs.shutDown()
@@ -42,54 +45,67 @@ class HandoffsTest {
         return handoffs.handoff.value!!
     }
 
-    private class Reply(val status: Int, val location: String?)
+    private class Reply(val status: Int, val text: String)
 
-    private fun send(handoff: Handoff, request: String): Reply {
+    private fun send(handoff: Handoff, request: ByteArray): Reply {
         val port = URI(handoff.address).port
         val text = Socket().use { socket ->
             socket.connect(InetSocketAddress(loopback, port), 2_000)
             socket.soTimeout = 5_000
-            socket.getOutputStream().write(request.replace("HOST", "127.0.0.1:$port").toByteArray())
+            socket.getOutputStream().write(request)
             socket.getOutputStream().flush()
             String(socket.getInputStream().readBytes())
         }
-        val head = text.substringBefore("\r\n\r\n").split("\r\n")
-        return Reply(head[0].split(' ')[1].toInt(), head.firstOrNull { it.startsWith("Location: ") }?.removePrefix("Location: "))
+        return Reply(text.substringBefore("\r\n").split(' ')[1].toInt(), text)
     }
 
-    private fun post(handoff: Handoff, path: String, type: String, body: String): Reply =
-        send(handoff, "POST $path HTTP/1.1\r\nHost: HOST\r\nContent-Type: $type\r\nContent-Length: ${body.toByteArray().size}\r\n\r\n$body")
+    private fun get(handoff: Handoff, path: String): Reply =
+        send(handoff, "GET $path HTTP/1.1\r\nHost: 127.0.0.1:${URI(handoff.address).port}\r\n\r\n".toByteArray())
 
-    /** The way a phone that cannot scan gets to the page: the PIN is answered with the secret address. */
-    private fun page(handoff: Handoff): String = post(handoff, "/pin", "application/x-www-form-urlencoded", "pin=${handoff.code}").location!!
+    /** What the page does in the browser of the phone: seal with the code the screen shows, and post. */
+    private fun post(handoff: Handoff, kind: Int, plain: ByteArray, code: String = handoff.code): Reply {
+        val nonce = ByteArray(Seal.NONCE).also { it[0] = (++sent).toByte() }
+        val body = "sealed=" + Seal.text(Seal(code.replace(" ", "")).seal(kind, nonce, plain))
+        val head = "POST /send HTTP/1.1\r\nHost: 127.0.0.1:${URI(handoff.address).port}\r\n" +
+            "Content-Type: application/x-www-form-urlencoded\r\nContent-Length: ${body.length}\r\n\r\n"
+        return send(handoff, (head + body).toByteArray())
+    }
+
+    private fun links(handoff: Handoff, vararg links: String): Reply = post(handoff, Seal.LINKS, links.joinToString("\n").toByteArray())
 
     @Test
-    fun anOpenHandoffShowsItsAddressItsPinAndACodeOfTheSecretAddress() {
+    fun anOpenHandoffShowsItsAddressItsCodeAndAQrCodeOfBoth() {
         val handoff = open()
         assertTrue(handoff.address, Regex("http://127\\.0\\.0\\.1:[0-9]{4,5}").matches(handoff.address))
-        assertTrue(handoff.code, Regex("[0-9]{6}").matches(handoff.code))
+        assertTrue(handoff.code, Regex("[a-z2-7]{4}( [a-z2-7]{4}){4}").matches(handoff.code))
         assertEquals(5_000_000L + 10 * 60_000, handoff.closesAtMs)
         assertEquals(0, handoff.waiting)
 
-        val path = page(handoff)
-        assertTrue(path, Regex("/[a-z2-7]{26}").matches(path))
-        assertEquals(200, send(handoff, "GET $path HTTP/1.1\r\nHost: HOST\r\n\r\n").status)
-        val expected = QrEncoder.encode(handoff.address + path)
+        val expected = QrEncoder.encode(handoff.address + "/#" + handoff.code.replace(" ", ""))
         assertEquals(expected.size, handoff.qr.size)
         val drawn = BooleanArray(expected.size * expected.size) { handoff.qr.isDark(it % expected.size, it / expected.size) }
         assertArrayEquals(expected.squares(), drawn)
+        assertTrue("version ${expected.version}", expected.version <= 4)
+    }
+
+    @Test
+    fun thePageNeverHoldsTheCode() {
+        val handoff = open()
+        val page = get(handoff, "/")
+        assertEquals(200, page.status)
+        assertFalse(page.text.contains(handoff.code))
+        assertFalse(page.text.contains(handoff.code.replace(" ", "")))
+        assertFalse(links(handoff, "example.org").text.contains(handoff.code.replace(" ", "")))
     }
 
     @Test
     fun whatAPhoneSendsIsCountedAndHandedOutOnce() {
         val handoff = open()
-        val path = page(handoff)
-        assertEquals(200, post(handoff, "$path/links", "application/x-www-form-urlencoded", "links=https%3A%2F%2Fgithub.com%2Fexample%2Fwren%0D%0Acodeberg.org%2Fexample%2Fdunnock").status)
+        assertEquals(200, links(handoff, "https://github.com/example/wren", "codeberg.org/example/dunnock").status)
         assertEquals(2, handoffs.handoff.value!!.waiting)
-        val boundary = "----StampTestBoundary"
         val export = exportOf("Wren")
-        val file = "--$boundary\r\nContent-Disposition: form-data; name=\"file\"; filename=\"stamp-apps.json\"\r\nContent-Type: application/json\r\n\r\n$export\r\n--$boundary--\r\n"
-        assertEquals(200, post(handoff, "$path/file", "multipart/form-data; boundary=$boundary", file).status)
+        val name = "stamp-apps.json".toByteArray()
+        assertEquals(200, post(handoff, Seal.FILE, byteArrayOf(name.size.toByte()) + name + export.toByteArray()).status)
         assertEquals(3, handoffs.handoff.value!!.waiting)
         assertEquals(handoff.copy(waiting = 3), handoffs.handoff.value)
 
@@ -100,6 +116,16 @@ class HandoffsTest {
         assertEquals(export, String(received.bytes))
         assertEquals(0, handoffs.handoff.value!!.waiting)
         assertEquals(emptyList<Received>(), handoffs.take())
+    }
+
+    @Test
+    fun whatWasNotSealedWithTheCodeOnTheScreenDoesNotArrive() {
+        val handoff = open()
+        val other = if (handoff.code.endsWith('a')) handoff.code.dropLast(1) + 'b' else handoff.code.dropLast(1) + 'a'
+        repeat(10) { assertEquals(403, post(handoff, Seal.LINKS, "example.org".toByteArray(), other).status) }
+        assertEquals(handoff, handoffs.handoff.value)
+        assertEquals(emptyList<Received>(), handoffs.take())
+        assertEquals(200, links(handoff, "example.org").status)
     }
 
     @Test
@@ -128,10 +154,10 @@ class HandoffsTest {
     @Test
     fun closingFreesThePortAndDropsWhatWasNotTaken() {
         val handoff = open()
-        assertEquals(200, post(handoff, "${page(handoff)}/links", "application/x-www-form-urlencoded", "links=example.org").status)
+        assertEquals(200, links(handoff, "example.org").status)
         handoffs.close()
         assertNull(handoffs.handoff.value)
-        assertThrows(ConnectException::class.java) { send(handoff, "GET / HTTP/1.1\r\nHost: HOST\r\n\r\n") }
+        assertThrows(ConnectException::class.java) { get(handoff, "/") }
         assertEquals(emptyList<Received>(), handoffs.take())
         handoffs.close()
     }
@@ -139,23 +165,23 @@ class HandoffsTest {
     @Test
     fun openingAgainClosesTheFirstAndMakesEverythingNew() {
         val first = open()
-        val firstPath = page(first)
-        assertEquals(200, post(first, "$firstPath/links", "application/x-www-form-urlencoded", "links=example.org").status)
+        assertEquals(200, links(first, "example.org").status)
         val second = open()
-        assertThrows(ConnectException::class.java) { send(first, "GET / HTTP/1.1\r\nHost: HOST\r\n\r\n") }
+        assertThrows(ConnectException::class.java) { get(first, "/") }
         assertEquals(0, second.waiting)
         assertEquals(emptyList<Received>(), handoffs.take())
-        assertNotEquals(firstPath, page(second))
-        assertEquals(404, send(second, "GET $firstPath HTTP/1.1\r\nHost: HOST\r\n\r\n").status)
+        assertNotEquals(first.code, second.code)
+        assertNotEquals(first.address, second.address)
+        assertEquals(403, post(second, Seal.LINKS, "example.org".toByteArray(), first.code).status)
     }
 
     @Test
     fun leavingTheScreenEndsTheHandoffAndKeepsWhatHasArrived() {
         val handoff = open()
-        assertEquals(200, post(handoff, "${page(handoff)}/links", "application/x-www-form-urlencoded", "links=example.org").status)
+        assertEquals(200, links(handoff, "example.org").status)
         handoffs.leftScreen()
         assertNull(handoffs.handoff.value)
-        assertThrows(ConnectException::class.java) { send(handoff, "GET / HTTP/1.1\r\nHost: HOST\r\n\r\n") }
+        assertThrows(ConnectException::class.java) { get(handoff, "/") }
         assertEquals(Problem(ProblemKind.UNSUPPORTED, "notOnScreen"), runBlocking { handoffs.open() })
         assertNull(handoffs.handoff.value)
 
@@ -167,12 +193,20 @@ class HandoffsTest {
 
     @Test
     fun aHandoffThatEndsByItselfIsGoneFromTheScreenAndKeepsWhatHasArrived() {
-        val handoff = open()
-        assertEquals(200, post(handoff, "${page(handoff)}/links", "application/x-www-form-urlencoded", "links=example.org").status)
-        val wrong = if (handoff.code == "000000") "000001" else "000000"
-        repeat(5) { assertEquals(403, post(handoff, "/pin", "application/x-www-form-urlencoded", "pin=$wrong").status) }
-        assertNull(handoffs.handoff.value)
-        assertEquals(listOf<Received>(Received.Link("example.org")), handoffs.take())
-        assertNull(handoffs.handoff.value)
+        val few = Handoffs({ network }, Sentences, { 5_000_000L }, quick.copy(requests = 3))
+        try {
+            assertNull(runBlocking { few.open() })
+            val handoff = few.handoff.value!!
+            assertEquals(200, links(handoff, "example.org").status)
+            assertEquals(200, get(handoff, "/").status)
+            assertEquals(404, get(handoff, "/nothing").status)
+            assertEquals(handoff.copy(waiting = 1), few.handoff.value)
+            assertEquals(429, get(handoff, "/").status)
+            assertNull(few.handoff.value)
+            assertEquals(listOf<Received>(Received.Link("example.org")), few.take())
+            assertNull(few.handoff.value)
+        } finally {
+            few.shutDown()
+        }
     }
 }

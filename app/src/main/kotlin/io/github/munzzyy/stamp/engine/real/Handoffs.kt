@@ -58,7 +58,7 @@ internal class Handoffs(
 
     private val lock = Any()
     private var server: HandoffServer? = null
-    private var code: QrCode? = null
+    private var qr: QrCode? = null
     private var onScreen = true
     private var stopWatching: () -> Unit = {}
 
@@ -76,9 +76,9 @@ internal class Handoffs(
             } catch (e: IOException) {
                 return@withContext Problem(ProblemKind.NETWORK, texts.cannotOpen(e.message))
             }
-            val squares = QrEncoder.encode(opened.secretAddress)
+            val squares = QrEncoder.encode(opened.addressWithCode)
             server = opened
-            code = QrCode(squares.size, squares.squares())
+            qr = QrCode(squares.size, squares.squares())
             publish()
         }
         null
@@ -118,13 +118,13 @@ internal class Handoffs(
     private fun drop() {
         server?.close()
         server = null
-        code = null
+        qr = null
     }
 
     private fun publish() = synchronized(lock) {
         val open = server?.takeIf { it.isOpen }
-        val squares = code
-        state.value = if (open == null || squares == null) null else Handoff(address = open.address, code = open.pin, qr = squares, closesAtMs = open.closesAtMs, waiting = open.waiting())
+        val squares = qr
+        state.value = if (open == null || squares == null) null else Handoff(address = open.address, code = open.code, qr = squares, closesAtMs = open.closesAtMs, waiting = open.waiting())
     }
 
     companion object {

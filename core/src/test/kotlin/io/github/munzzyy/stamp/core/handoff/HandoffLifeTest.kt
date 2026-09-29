@@ -24,28 +24,20 @@ class HandoffLifeTest {
     @After
     fun closeAll() = handoffs.closeAll()
 
-    private fun assertClosed(phone: Phone) {
+    private fun assertClosed(phone: Phone, why: HandoffServer.End) {
         assertFalse(phone.server.isOpen)
-        assertThrows(ConnectException::class.java) { phone.get("/${phone.secret}") }
-        assertThrows(ConnectException::class.java) { phone.pin(phone.server.pin) }
+        assertEquals(why, phone.server.end)
+        assertThrows(ConnectException::class.java) { phone.get("/") }
+        assertThrows(ConnectException::class.java) { phone.links("https://example.org/app") }
     }
 
     @Test
-    fun fiveWrongPinsCloseTheHandoffForGoodAndTheRightOneComesTooLate() {
+    fun anOpenHandoffHasNoEnd() {
         val phone = handoffs.open()
-        assertEquals(5, limits.wrongPins)
-        val wrong = if (phone.server.pin == "000000") "000001" else "000000"
-        repeat(4) {
-            assertEquals(403, phone.pin(wrong)!!.status)
-            assertTrue(phone.server.isOpen)
-        }
-        assertEquals(0, handoffs.changes.get())
-        val fifth = phone.pin(wrong)!!
-        assertEquals(403, fifth.status)
-        assertTrue(fifth.toString(), fifth.body.contains("Too many wrong PINs were typed, so the handoff is closed."))
-        assertFalse(fifth.body.contains("<form"))
-        assertClosed(phone)
-        assertEquals(1, handoffs.changes.get())
+        assertTrue(phone.server.isOpen)
+        assertNull(phone.server.end)
+        assertEquals(200, phone.links("https://example.org/app")!!.status)
+        assertNull(phone.server.end)
     }
 
     @Test
@@ -53,7 +45,7 @@ class HandoffLifeTest {
         val phone = handoffs.open()
         assertEquals(200, phone.links("https://example.org/app")!!.status)
         phone.server.close()
-        assertClosed(phone)
+        assertClosed(phone, HandoffServer.End.CLOSED)
         assertEquals(1, phone.server.waiting())
         assertEquals(listOf(HandoffItem.Link("https://example.org/app")), phone.server.take())
     }
@@ -62,17 +54,26 @@ class HandoffLifeTest {
     fun theTwoHundredAndFirstRequestClosesTheHandoff() {
         val phone = handoffs.open()
         assertEquals(200, limits.requests)
-        repeat(100) { assertEquals("request ${2 * it + 1}", 200, phone.get("/")!!.status) }
-        repeat(99) { assertEquals("request ${2 * it + 102}", 404, phone.get("/nothing")!!.status) }
-        assertEquals(200, phone.get("/${phone.secret}")!!.status)
+        val other = Seal(phone.code.dropLast(1) + if (phone.code.last() == 'a') 'b' else 'a')
+        repeat(60) { assertEquals("request ${it + 1}", 200, phone.get("/")!!.status) }
+        repeat(60) { assertEquals("request ${it + 61}", 404, phone.get("/nothing")!!.status) }
+        repeat(79) {
+            val sealed = other.seal(Seal.LINKS, ByteArray(12) { n -> (it + n).toByte() }, "https://example.org/app".toByteArray())
+            assertEquals("request ${it + 121}", 403, phone.send(sealed)!!.status)
+        }
         assertTrue(phone.server.isOpen)
         assertEquals(0, handoffs.changes.get())
+        assertEquals(200, phone.links("https://example.org/app")!!.status)
+        assertTrue(phone.server.isOpen)
+        assertEquals(1, handoffs.changes.get())
 
-        val last = phone.get("/${phone.secret}")!!
+        val last = phone.links("https://example.org/one-more")!!
         assertEquals(429, last.status)
         assertTrue(last.toString(), last.body.contains("This handoff has answered as many requests as it will, so it is closed."))
-        assertClosed(phone)
-        assertEquals(1, handoffs.changes.get())
+        assertFalse(last.body.contains("<form"))
+        assertClosed(phone, HandoffServer.End.USED_UP)
+        assertEquals(2, handoffs.changes.get())
+        assertEquals(1, phone.server.waiting())
     }
 
     @Test
@@ -82,7 +83,7 @@ class HandoffLifeTest {
         phone.connect().close()
         assertEquals(200, phone.get("/")!!.status)
         assertEquals(429, phone.get("/")!!.status)
-        assertClosed(phone)
+        assertClosed(phone, HandoffServer.End.USED_UP)
     }
 
     @Test
@@ -91,22 +92,25 @@ class HandoffLifeTest {
         val server = HandoffServer.open(Phone.LOOPBACK, limits.copy(lifeMs = 600), nowMs = { 1_000_000L }, onChange = { handoffs.changes.incrementAndGet() })
         val phone = Phone(server)
         assertEquals(1_000_600L, server.closesAtMs)
-        assertEquals(200, phone.get("/${phone.secret}")!!.status)
+        assertEquals(200, phone.get("/")!!.status)
         assertEquals(200, phone.links("https://example.org/app")!!.status)
         assertTrue(server.isOpen)
         waitFor("the handoff to close") { !server.isOpen }
         val lived = (System.nanoTime() - began) / 1_000_000
         assertTrue("$lived ms", lived in 600..1_500)
-        assertClosed(phone)
+        assertClosed(phone, HandoffServer.End.EXPIRED)
         assertEquals(2, handoffs.changes.get())
         assertEquals(1, server.take().size)
+        server.close()
+        assertEquals(HandoffServer.End.EXPIRED, server.end)
+        assertEquals(2, handoffs.changes.get())
     }
 
     @Test
     fun closingEndsARequestThatIsOpenAndFreesThePortAtOnce() {
         val phone = handoffs.open()
         phone.connect().use { waiting ->
-            waiting.getOutputStream().write(phone.head("POST", "/${phone.secret}/links", "Content-Type: ${Forms.TYPE}", "Content-Length: 50").toByteArray() + "links=".toByteArray())
+            waiting.getOutputStream().write(phone.head("POST", "/send", "Content-Type: ${Forms.TYPE}", "Content-Length: 200").toByteArray() + "sealed=".toByteArray())
             waiting.getOutputStream().flush()
             Thread.sleep(200)
             val began = System.nanoTime()
@@ -115,7 +119,7 @@ class HandoffLifeTest {
             val took = (System.nanoTime() - began) / 1_000_000
             assertTrue("$took ms", took < 500)
         }
-        assertClosed(phone)
+        assertClosed(phone, HandoffServer.End.CLOSED)
         ServerSocket(phone.port, 1, Phone.LOOPBACK).close()
         assertEquals(0, phone.server.waiting())
         assertEquals(1, handoffs.changes.get())
@@ -168,7 +172,7 @@ class HandoffLifeTest {
         val four = List(4) { phone.connect() }
         try {
             phone.connect(readTimeoutMs = 700).use { fifth ->
-                fifth.getOutputStream().write(phone.head("GET", "/${phone.secret}").toByteArray())
+                fifth.getOutputStream().write(phone.head("GET", "/").toByteArray())
                 fifth.getOutputStream().flush()
                 assertThrows(SocketTimeoutException::class.java) { phone.read(fifth) }
                 four[2].close()
@@ -186,7 +190,7 @@ class HandoffLifeTest {
         val began = System.nanoTime()
         val four = List(4) { phone.connect() }
         try {
-            assertEquals(200, phone.get("/${phone.secret}")!!.status)
+            assertEquals(200, phone.get("/")!!.status)
             val waited = (System.nanoTime() - began) / 1_000_000
             assertTrue("$waited ms", waited in 450..2_000)
             for (idle in four) assertEquals(408, phone.read(idle)!!.status)
@@ -198,7 +202,7 @@ class HandoffLifeTest {
     @Test
     fun aClientThatSendsOneByteASecondIsCutOffAfterTenSeconds() {
         val phone = handoffs.open(HandoffLimits())
-        val request = phone.head("GET", "/${phone.secret}", "X-Slow: " + "s".repeat(40)).toByteArray()
+        val request = phone.head("GET", "/", "X-Slow: " + "s".repeat(40)).toByteArray()
         val stop = AtomicBoolean()
         phone.connect(readTimeoutMs = 20_000).use { socket ->
             val writer = Thread {
@@ -230,20 +234,21 @@ class HandoffLifeTest {
             }
         }
         assertTrue(phone.server.isOpen)
-        assertEquals(200, phone.get("/${phone.secret}")!!.status)
+        assertEquals(200, phone.get("/")!!.status)
     }
 
     @Test
     fun aSlowBodyIsCutOffToo() {
         val phone = handoffs.open(limits.copy(bodyMs = 600))
+        val body = Phone.field(phone.sealed(Seal.LINKS, "https://example.org/slowly".toByteArray())).toByteArray()
         phone.connect().use { socket ->
             val out = socket.getOutputStream()
-            out.write("POST /${phone.secret}/links HTTP/1.1\r\nHost: ${phone.host}\r\nContent-Type: ${Forms.TYPE}\r\nContent-Length: 40\r\n\r\n".toByteArray())
+            out.write("POST /send HTTP/1.1\r\nHost: ${phone.host}\r\nContent-Type: ${Forms.TYPE}\r\nContent-Length: ${body.size}\r\n\r\n".toByteArray())
             out.flush()
             val began = System.nanoTime()
             val writer = Thread {
                 try {
-                    for (b in "links=https%3A%2F%2Fexample.org%2Fslowly".toByteArray()) {
+                    for (b in body) {
                         out.write(b.toInt())
                         out.flush()
                         Thread.sleep(100)
@@ -288,7 +293,7 @@ class HandoffLifeTest {
     fun limitsThatMakeNoSenseAreRefused() {
         for (make in listOf<() -> HandoffLimits>(
             { HandoffLimits(lifeMs = 0) }, { HandoffLimits(headMs = 0) }, { HandoffLimits(bodyMs = -1) }, { HandoffLimits(connections = 0) },
-            { HandoffLimits(requests = 0) }, { HandoffLimits(wrongPins = 0) }, { HandoffLimits(fileBytes = 0) }, { HandoffLimits(headBytes = 10) },
+            { HandoffLimits(requests = 0) }, { HandoffLimits(linksBytes = 0) }, { HandoffLimits(fileBytes = 0) }, { HandoffLimits(headBytes = 10) },
             { HandoffLimits(fileBytes = Int.MAX_VALUE) }, { HandoffLimits(fileBytes = 4096, waitingBytes = 1024) }, { HandoffLimits(waiting = 0) },
         )) {
             assertThrows(IllegalArgumentException::class.java) { make() }

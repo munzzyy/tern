@@ -19,18 +19,18 @@ class HandoffDoorTest {
     private fun said(reply: Reply?, notice: Notice): Boolean = reply!!.body.contains(">${notice.text(limits)}</p>")
 
     @Test
-    fun theCodeLeadsToThePageAndWhatIsSentWaitsToBeTaken() {
+    fun thePageIsAtTheBareAddressAndWhatIsSentSealedWaitsToBeTaken() {
         val phone = handoffs.open()
-        assertEquals("http://127.0.0.1:${phone.port}/${phone.secret}", phone.server.secretAddress)
-        val page = phone.get("/${phone.secret}")!!
+        assertEquals("http://127.0.0.1:${phone.port}", phone.server.address)
+        val page = phone.get("/")!!
         assertEquals(200, page.status)
-        assertTrue(page.body.contains("action=\"/${phone.secret}/links\""))
-        assertTrue(page.body.contains("action=\"/${phone.secret}/file\""))
+        assertTrue(page.body.contains("<form id=\"links-form\""))
+        assertTrue(page.body.contains("<form id=\"file-form\""))
 
         val links = phone.links("https://github.com/example/wren", "codeberg.org/example/dunnock")
         assertEquals(200, links!!.status)
         assertTrue(links.toString(), said(links, Notice.LINKS_SENT))
-        assertTrue(links.body.contains("action=\"/${phone.secret}/links\""))
+        assertTrue(links.body.contains("<form id=\"links-form\""))
         assertEquals(2, phone.server.waiting())
 
         val export = "{\"format\":\"stamp-export\",\"schema\":1,\"apps\":[]}\r\n".toByteArray()
@@ -50,36 +50,41 @@ class HandoffDoorTest {
     }
 
     @Test
-    fun thePinLeadsToThePageForAPhoneThatCannotScan() {
+    fun theCodeIsShownInGroupsAndNoAnswerEverHoldsIt() {
         val phone = handoffs.open()
-        assertEquals("http://127.0.0.1:${phone.port}", phone.server.address)
-        assertTrue(phone.server.pin, Regex("[0-9]{6}").matches(phone.server.pin))
-        val asks = phone.get("/")!!
-        assertEquals(200, asks.status)
-        assertTrue(asks.body.contains("name=\"pin\""))
-        assertFalse(asks.text.contains(phone.secret))
-
-        val right = phone.pin(phone.server.pin)!!
-        assertEquals(303, right.status)
-        assertEquals("/${phone.secret}", right.header("Location"))
-        assertEquals(200, phone.get(right.header("Location")!!)!!.status)
-        assertEquals(303, phone.form("/pin", "pin=+${phone.server.pin}+")!!.status)
+        assertTrue(phone.server.code, Regex("[a-z2-7]{4}( [a-z2-7]{4}){4}").matches(phone.server.code))
+        assertEquals("http://127.0.0.1:${phone.port}/#${phone.code}", phone.server.addressWithCode)
+        val answers = listOfNotNull(
+            phone.get("/"),
+            phone.get("/nothing"),
+            phone.links("https://example.org/app"),
+            phone.file("apps.json", "{}".toByteArray()),
+            phone.send(Seal(if (phone.code == "a".repeat(20)) "b".repeat(20) else "a".repeat(20)).seal(Seal.LINKS, ByteArray(12), "example.org".toByteArray())),
+            phone.form("/send", "sealed=AAAA"),
+        )
+        assertEquals(6, answers.size)
+        for (answer in answers) {
+            assertFalse(answer.toString(), answer.text.contains(phone.code, ignoreCase = true))
+            assertFalse(answer.toString(), answer.text.contains(phone.server.code, ignoreCase = true))
+            assertFalse(answer.toString(), answer.text.contains(phone.code.take(8), ignoreCase = true))
+            assertFalse(answer.toString(), answer.text.contains(phone.code.takeLast(8), ignoreCase = true))
+        }
     }
 
     @Test
-    fun aWrongPinIsToldSoAndFourOfThemLeaveTheHandoffOpen() {
+    fun whatWasSealedWithAnotherCodeDoesNotOpenAndDoesNotCloseTheHandoff() {
         val phone = handoffs.open()
-        val wrong = if (phone.server.pin == "000000") "000001" else "000000"
-        for (guess in listOf(wrong, "", "12345", "${phone.server.pin}0")) {
-            val reply = phone.pin(guess)!!
-            assertEquals(guess, 403, reply.status)
-            assertTrue(reply.toString(), said(reply, Notice.WRONG_PIN))
-            assertTrue(reply.body.contains("name=\"pin\""))
-            assertFalse(reply.text.contains(phone.secret))
-            assertEquals(null, reply.header("Location"))
+        val last = if (phone.code.last() == 'a') 'b' else 'a'
+        val other = Seal(phone.code.dropLast(1) + last)
+        repeat(25) {
+            val reply = phone.send(other.seal(Seal.LINKS, ByteArray(12) { n -> (it + n).toByte() }, "https://example.org/app".toByteArray()))!!
+            assertEquals(403, reply.status)
+            assertTrue(reply.toString(), said(reply, Notice.DID_NOT_OPEN))
         }
         assertTrue(phone.server.isOpen)
-        assertEquals(303, phone.pin(phone.server.pin)!!.status)
+        assertEquals(0, phone.server.waiting())
+        assertEquals(0, handoffs.changes.get())
+        assertTrue(said(phone.links("https://example.org/app"), Notice.LINKS_SENT))
     }
 
     @Test
@@ -109,18 +114,23 @@ class HandoffDoorTest {
     }
 
     @Test
+    fun twentyLinksOfTwoThousandCharactersThatAreNotAsciiAreTaken() {
+        val phone = handoffs.open()
+        val twenty = Array(20) { "https://example.org/$it/".padEnd(2000, '\u6771') }
+        assertTrue(twenty.joinToString("\n").toByteArray().size in 100_000..limits.linksBytes)
+        assertTrue(said(phone.links(*twenty), Notice.LINKS_SENT))
+        assertEquals(twenty.map { HandoffItem.Link(it) }, phone.server.take())
+    }
+
+    @Test
     fun linksThatAreNoLinksAreRefusedInASentence() {
         val phone = handoffs.open()
-        assertTrue(said(phone.form("/${phone.secret}/links", "links="), Notice.NO_LINKS))
-        assertTrue(said(phone.form("/${phone.secret}/links", "links=+%0D%0A+"), Notice.NO_LINKS))
-        assertTrue(said(phone.form("/${phone.secret}/links", "links=https%3A%2F%2Fexample.org%2F%E2%80%AEgnp.exe"), Notice.LINK_UNREADABLE))
-        assertTrue(said(phone.form("/${phone.secret}/links", "links=a%00b"), Notice.LINK_UNREADABLE))
-        assertTrue(said(phone.form("/${phone.secret}/links", "links=a&links=b"), Notice.LINKS_UNREADABLE))
-        assertTrue(said(phone.form("/${phone.secret}/links", "other=a"), Notice.LINKS_UNREADABLE))
-        assertTrue(said(phone.form("/${phone.secret}/links", "links=%FF"), Notice.LINKS_UNREADABLE))
-        assertTrue(said(phone.post("/${phone.secret}/links", "text/plain", "links=a".toByteArray()), Notice.LINKS_UNREADABLE))
-        assertTrue(said(phone.post("/${phone.secret}/links", "application/json", "[\"a\"]".toByteArray()), Notice.LINKS_UNREADABLE))
-        assertTrue(said(phone.form("/${phone.secret}/links", "links=" + "a".repeat(limits.formBytes)), Notice.LINKS_TOO_LARGE))
+        assertTrue(said(phone.links(), Notice.NO_LINKS))
+        assertTrue(said(phone.links(" ", "", " "), Notice.NO_LINKS))
+        assertTrue(said(phone.links("https://example.org/\u202egnp.exe"), Notice.LINK_UNREADABLE))
+        assertTrue(said(phone.links("a\u0000b"), Notice.LINK_UNREADABLE))
+        assertTrue(said(phone.plain(Seal.LINKS, byteArrayOf(0x4B, 0xF6.toByte(), 0x6C, 0x6E)), Notice.UNREADABLE))
+        assertTrue(said(phone.plain(Seal.LINKS, ByteArray(limits.linksBytes + 1) { 'a'.code.toByte() }), Notice.LINKS_TOO_LARGE))
         assertEquals(0, phone.server.waiting())
         assertEquals(0, handoffs.changes.get())
     }
@@ -130,23 +140,46 @@ class HandoffDoorTest {
         val phone = handoffs.open()
         assertEquals(2 * 1024 * 1024, limits.fileBytes)
         val full = ByteArray(limits.fileBytes) { (it * 31).toByte() }
-        assertTrue(said(phone.file("full.json", full), Notice.FILE_SENT))
+        assertTrue(said(phone.file("n".repeat(80), full), Notice.FILE_SENT))
         assertArrayEquals(full, (phone.server.take().single() as HandoffItem.ExportFile).bytes)
 
         val over = phone.file("over.json", full + byteArrayOf(1))!!
         assertEquals(413, over.status)
         assertTrue(over.toString(), said(over, Notice.FILE_TOO_LARGE))
         val farOver = phone.file("far-over.json", ByteArray(3 * limits.fileBytes))!!
-        assertTrue(farOver.toString(), said(farOver, Notice.FILE_TOO_LARGE))
+        assertEquals(413, farOver.status)
+        assertTrue(farOver.toString(), said(farOver, Notice.TOO_LARGE))
         assertEquals(0, phone.server.waiting())
     }
 
     @Test
-    fun aFormWithoutAFileIsToldSo() {
+    fun aFileWithNothingInItIsToldSo() {
         val phone = handoffs.open()
-        val empty = phone.file("", ByteArray(0))!!
+        val empty = phone.file("apps.json", ByteArray(0))!!
         assertEquals(400, empty.status)
         assertTrue(empty.toString(), said(empty, Notice.NO_FILE))
+        assertEquals(0, phone.server.waiting())
+    }
+
+    @Test
+    fun aFileThatIsNotWrittenAsThePageWritesItIsToldSo() {
+        val phone = handoffs.open()
+        for (plain in listOf(ByteArray(0), byteArrayOf(9, 'a'.code.toByte()), byteArrayOf(81) + ByteArray(100), byteArrayOf(1, 0xC3.toByte(), 1, 2))) {
+            val reply = phone.plain(Seal.FILE, plain)!!
+            assertEquals(400, reply.status)
+            assertTrue(reply.toString(), said(reply, Notice.UNREADABLE))
+        }
+        assertEquals(0, phone.server.waiting())
+    }
+
+    @Test
+    fun aKindThatThePageDoesNotSendIsNotTaken() {
+        val phone = handoffs.open()
+        for (kind in listOf(0, 3, 255)) {
+            val reply = phone.plain(kind, "https://example.org/app".toByteArray())!!
+            assertEquals(403, reply.status)
+            assertTrue(reply.toString(), said(reply, Notice.DID_NOT_OPEN))
+        }
         assertEquals(0, phone.server.waiting())
     }
 
@@ -201,13 +234,16 @@ class HandoffDoorTest {
     }
 
     @Test
-    fun openingAgainMakesANewSecretThatTheOldOneDoesNotOpen() {
+    fun openingAgainMakesANewCodeAndTheOldOneOpensNothing() {
         val first = handoffs.open()
+        val sealedForFirst = first.sealed(Seal.LINKS, "https://example.org/app".toByteArray())
         first.server.close()
         val second = handoffs.open()
-        assertNotEquals(first.secret, second.secret)
-        assertEquals(26, second.secret.length)
-        assertEquals(404, second.get("/${first.secret}")!!.status)
-        assertEquals(200, second.get("/${second.secret}")!!.status)
+        assertNotEquals(first.code, second.code)
+        assertEquals(20, second.code.length)
+        val reply = second.send(sealedForFirst)!!
+        assertEquals(403, reply.status)
+        assertTrue(reply.toString(), said(reply, Notice.DID_NOT_OPEN))
+        assertEquals(0, second.server.waiting())
     }
 }

@@ -10,44 +10,55 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SecretsTest {
-    /** Hands out the bytes and the number it was made with, so that a test knows what has to come out. */
-    private class Fixed(private val fill: Byte, private val number: Int) : SecureRandom() {
-        override fun nextBytes(bytes: ByteArray) = bytes.fill(fill)
-
-        override fun nextInt(bound: Int): Int = number
-    }
-
-    @Test
-    fun base32IsTheOneOfTheStandardInLowerCaseAndWithoutPadding() {
-        val vectors = mapOf("" to "", "f" to "my", "fo" to "mzxq", "foo" to "mzxw6", "foob" to "mzxw6yq", "fooba" to "mzxw6ytb", "foobar" to "mzxw6ytboi")
-        for ((plain, encoded) in vectors) assertEquals(encoded, Secrets.base32(plain.toByteArray()))
-    }
-
-    @Test
-    fun aSecretHolds128BitsIn26Characters() {
-        assertEquals("a".repeat(26), Secrets.secret(Fixed(0, 0)))
-        assertEquals("7".repeat(25) + "4", Secrets.secret(Fixed(-1, 0)))
-        val secret = Secrets.secret(SecureRandom())
-        assertEquals(26, secret.length)
-        assertTrue(secret, secret.all { it in 'a'..'z' || it in '2'..'7' })
-        assertNotEquals(secret, Secrets.secret(SecureRandom()))
-    }
-
-    @Test
-    fun aPinHasSixDigitsAlsoWhenTheNumberIsSmall() {
-        assertEquals("000042", Secrets.pin(Fixed(0, 42)))
-        assertEquals("000000", Secrets.pin(Fixed(0, 0)))
-        assertEquals("999999", Secrets.pin(Fixed(0, 999_999)))
-    }
-
-    @Test
-    fun onlyTheSameTextIsTheSame() {
-        assertTrue(Secrets.same("402917", "402917"))
-        for (other in listOf("", "4", "40291", "4029170", "402918", "502917", "402917402917", "\u0000", "\uFF14\uFF10\uFF12\uFF19\uFF11\uFF17")) {
-            assertFalse(other, Secrets.same("402917", other))
+    /** Hands out the bytes it was made with, over and over, so that a test knows what has to come out. */
+    private class Fixed(private vararg val bytes: Int) : SecureRandom() {
+        override fun nextBytes(into: ByteArray) {
+            for (i in into.indices) into[i] = bytes[i % bytes.size].toByte()
         }
-        assertTrue(Secrets.same("", ""))
-        assertFalse(Secrets.same("", "a"))
+    }
+
+    @Test
+    fun aCodeIsTwentyCharactersOfTheAlphabetOfBase32() {
+        assertEquals("abcdefghijklmnopqrstuvwxyz234567", Secrets.ALPHABET)
+        assertEquals("a".repeat(20), Secrets.code(Fixed(0)))
+        assertEquals("7".repeat(20), Secrets.code(Fixed(31)))
+        assertEquals("7".repeat(20), Secrets.code(Fixed(255)))
+        assertEquals("abcdefghijklmnopqrst", Secrets.code(Fixed(*IntArray(20) { it })))
+        assertEquals("uvwxyz234567abcdefgh", Secrets.code(Fixed(*IntArray(20) { 0xE0 + 20 + it })))
+        val code = Secrets.code(SecureRandom())
+        assertEquals(20, code.length)
+        assertTrue(code, code.all { it in 'a'..'z' || it in '2'..'7' })
+        assertNotEquals(code, Secrets.code(SecureRandom()))
+    }
+
+    @Test
+    fun everyCharacterOfACodeComesAsOftenAsAnyOther() {
+        val random = SecureRandom()
+        val counts = IntArray(32)
+        repeat(8_000) { for (c in Secrets.code(random)) counts[Secrets.ALPHABET.indexOf(c)]++ }
+        // 160000 draws, 5000 for each character with a deviation of 70. Nine deviations is what chance does not do.
+        for (i in counts.indices) assertTrue("${Secrets.ALPHABET[i]} came ${counts[i]} times", counts[i] in 4_370..5_630)
+    }
+
+    @Test
+    fun aCodeIsShownInFiveGroupsOfFour() {
+        assertEquals("k4mz q7wd x2np h5tc r3vb", Secrets.grouped("k4mzq7wdx2nph5tcr3vb"))
+    }
+
+    @Test
+    fun onlyTheSameBytesAreTheSame() {
+        val tag = ByteArray(32) { (it * 7).toByte() }
+        assertTrue(Secrets.same(tag, tag.copyOf()))
+        for (i in tag.indices) {
+            for (bit in 0 until 8) {
+                val other = tag.copyOf().also { it[i] = (it[i].toInt() xor (1 shl bit)).toByte() }
+                assertFalse("byte $i bit $bit", Secrets.same(tag, other))
+            }
+        }
+        assertFalse(Secrets.same(tag, tag.copyOf(31)))
+        assertFalse(Secrets.same(tag, tag.copyOf(33)))
+        assertFalse(Secrets.same(tag, ByteArray(0)))
+        assertTrue(Secrets.same(ByteArray(0), ByteArray(0)))
     }
 
     @Test

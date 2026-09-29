@@ -5,6 +5,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.stamp.MainActivity
+import io.github.munzzyy.stamp.core.handoff.Seal
 import io.github.munzzyy.stamp.core.interop.StampExport
 import io.github.munzzyy.stamp.core.model.AppConfig
 import io.github.munzzyy.stamp.core.model.SourceSpec
@@ -15,6 +16,7 @@ import java.net.ConnectException
 import java.net.InetSocketAddress
 import java.net.Socket
 import java.net.URI
+import java.security.SecureRandom
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -30,7 +32,7 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class HandoffTest {
-    private class Reply(val status: Int, val location: String?)
+    private class Reply(val status: Int)
 
     private fun send(handoff: Handoff, request: String): Reply {
         val address = URI(handoff.address)
@@ -41,12 +43,15 @@ class HandoffTest {
             socket.getOutputStream().flush()
             String(socket.getInputStream().readBytes())
         }
-        val head = text.substringBefore("\r\n\r\n").split("\r\n")
-        return Reply(head[0].split(' ')[1].toInt(), head.firstOrNull { it.startsWith("Location: ") }?.removePrefix("Location: "))
+        return Reply(text.substringBefore("\r\n").split(' ')[1].toInt())
     }
 
-    private fun form(handoff: Handoff, path: String, body: String): Reply =
-        send(handoff, "POST $path HTTP/1.1\r\nHost: HOST\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: ${body.length}\r\n\r\n$body")
+    /** What the page does in the browser of the phone: seal with the code the screen shows, and post. */
+    private fun links(handoff: Handoff, links: String, code: String = handoff.code): Reply {
+        val sealed = Seal(code.replace(" ", "")).seal(Seal.LINKS, ByteArray(Seal.NONCE).also(SecureRandom()::nextBytes), links.toByteArray())
+        val body = "sealed=" + Seal.text(sealed)
+        return send(handoff, "POST /send HTTP/1.1\r\nHost: HOST\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: ${body.length}\r\n\r\n$body")
+    }
 
     private fun open(h: Harness): Handoff {
         assertNull(runBlocking { h.engine.openHandoff() })
@@ -70,8 +75,11 @@ class HandoffTest {
     fun whatArrivesWaitsUntilItIsTakenAndClosingFreesThePort() {
         Harness("handoff-door").use { h ->
             val handoff = open(h)
-            val page = form(handoff, "/pin", "pin=${handoff.code}").location!!
-            assertEquals(200, form(handoff, "$page/links", "links=https%3A%2F%2Fgithub.com%2Fexample%2Fwren").status)
+            assertTrue(handoff.code, Regex("[a-z2-7]{4}( [a-z2-7]{4}){4}").matches(handoff.code))
+            val other = handoff.code.dropLast(1) + if (handoff.code.endsWith('a')) 'b' else 'a'
+            assertEquals(403, links(handoff, "https://github.com/example/wren", other).status)
+            assertEquals(0, h.engine.handoff.value!!.waiting)
+            assertEquals(200, links(handoff, "https://github.com/example/wren").status)
             waitUntil(5_000, "the link to be counted") { h.engine.handoff.value?.waiting == 1 }
             assertEquals(listOf<Received>(Received.Link("https://github.com/example/wren")), h.engine.takeReceived())
             assertEquals(0, h.engine.handoff.value!!.waiting)

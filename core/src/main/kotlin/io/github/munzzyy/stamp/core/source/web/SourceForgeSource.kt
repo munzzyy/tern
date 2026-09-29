@@ -47,7 +47,9 @@ class SourceForgeSource : Source {
             val channel = root.child("channel") ?: root
             val grouped = LinkedHashMap<String, MutableList<Asset>>()
             for (item in channel.children("item")) {
-                val link = item.childText("link") ?: item.childText("guid") ?: continue
+                val named = item.childText("link") ?: item.childText("guid") ?: continue
+                val link = Urls.resolve(feedUrl, named) ?: continue
+                if (Urls.authority(link) != Urls.authority(spec.url)) continue
                 val stripped = link.removeSuffix("/download")
                 val path = stripped.substringBefore('?').lowercase()
                 if (INSTALLABLE.none { path.endsWith(it) }) continue

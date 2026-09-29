@@ -154,4 +154,36 @@ class GitHubActionsSourceTest {
         assertEquals("Bearer secret", http.requestsTo(runsUrl).single().authorization)
         assertEquals("Bearer secret", http.requestsTo(artifactsUrl).single().authorization)
     }
+
+    private fun artifacts(vararg urls: String): List<String> {
+        val body = """{"artifacts": [""" + urls.joinToString(",") { """{"name": "app", "archive_download_url": "$it"}""" } + "]}"
+        val http = FakeHttp().resource(runsUrl, "forge/github_workflow_runs.json").text(artifactsUrl, body)
+        val result = try {
+            source.check(spec, context(http))
+        } catch (e: SourceException) {
+            assertEquals(SourceErrorKind.NO_RELEASES, e.kind)
+            return emptyList()
+        }
+        return (result as CheckResult.Listing).listing.releases[0].assets.map { it.url }
+    }
+
+    @Test
+    fun aFileIsOnlyTakenFromTheHostThatGetsTheToken() {
+        val good = "https://api.github.com/repos/example/app/actions/artifacts/9/zip"
+        assertEquals(
+            listOf(good),
+            artifacts(
+                "https://files.example.org/repos/example/app/actions/artifacts/9/zip",
+                "https://api.github.com.example.org/artifacts/9/zip",
+                "https://api.github.com:8443/artifacts/9/zip",
+                "https://api.github.com@files.example.org/artifacts/9/zip",
+                good,
+            ),
+        )
+    }
+
+    @Test
+    fun withNoFileOnThatHostThereIsNothingToInstall() {
+        assertEquals(emptyList<String>(), artifacts("https://files.example.org/artifacts/9/zip"))
+    }
 }

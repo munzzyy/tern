@@ -53,4 +53,33 @@ class JenkinsSourceTest {
             assertEquals(SourceErrorKind.NOT_FOUND, e.kind)
         }
     }
+
+    private fun artifactUrls(relativePath: String): List<String> {
+        val jobUrl = "https://ci.example.com/job/app"
+        val body = """{"number": 42, "artifacts": [{"fileName": "app.apk", "relativePath": "$relativePath"}]}"""
+        val http = FakeHttp().text("$jobUrl/lastSuccessfulBuild/api/json", body)
+        val result = source.check(SourceSpec(source.type, jobUrl), CheckContext(http, InMemoryValidatorStore()))
+        return (result as CheckResult.Listing).listing.releases[0].assets.map { it.url }
+    }
+
+    @Test
+    fun aPathThatClimbsOutOfTheBuildIsLeftOut() {
+        assertEquals(emptyList<String>(), artifactUrls("../../../../job/other/lastSuccessfulBuild/artifact/app.apk"))
+        assertEquals(emptyList<String>(), artifactUrls("build/./app.apk"))
+        assertEquals(emptyList<String>(), artifactUrls("/etc/app.apk"))
+        assertEquals(emptyList<String>(), artifactUrls("build//app.apk"))
+    }
+
+    @Test
+    fun aPathWithALineBreakIsLeftOut() {
+        assertEquals(emptyList<String>(), artifactUrls("build/app.apk\\r\\nHost: other.example.org"))
+    }
+
+    @Test
+    fun whatAPathHoldsStaysInsideItsPart() {
+        assertEquals(
+            listOf("https://ci.example.com/job/app/lastSuccessfulBuild/artifact/out/my%20app%3Fx%3D1%23top%252e.apk"),
+            artifactUrls("out/my app?x=1#top%2e.apk"),
+        )
+    }
 }

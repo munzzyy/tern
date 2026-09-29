@@ -48,11 +48,18 @@ class JenkinsSource : Source {
             val assets = obj.array("artifacts")?.objects().orEmpty().mapNotNull { artifact ->
                 val relativePath = artifact.string("relativePath") ?: return@mapNotNull null
                 val fileName = artifact.string("fileName") ?: relativePath.substringAfterLast('/')
-                Asset(name = fileName, url = "${spec.url}/lastSuccessfulBuild/artifact/$relativePath")
+                Asset(name = fileName, url = artifactUrl(spec.url, relativePath) ?: return@mapNotNull null)
             }
             val release = Release(id = number.toString(), version = number.toString(), publishedAtMs = timestamp, assets = assets)
             return CheckResult.Listing(SourceListing(releases = listOf(release)))
         }
+    }
+
+    /** The server names the path. Each part of it is written as one part, so it cannot leave the build's folder. */
+    private fun artifactUrl(job: String, relativePath: String): String? {
+        val parts = relativePath.split('/')
+        if (parts.any { it.isEmpty() || it == "." || it == ".." || it.any(Char::isISOControl) }) return null
+        return Urls.normalize("$job/lastSuccessfulBuild/artifact/" + parts.joinToString("/", transform = Urls::encodeSegment))
     }
 
     companion object {

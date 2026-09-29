@@ -32,7 +32,7 @@ class GitHubActionsSource : Source {
         val workflow = spec.option(SourceOptions.WORKFLOW)
             ?: throw SourceException(SourceErrorKind.UNSUPPORTED, "A workflow file name is required for a GitHub Actions source")
         val branch = spec.option(SourceOptions.BRANCH)
-        val token = context.tokens.tokenFor("api.github.com")
+        val token = context.tokens.tokenFor(API_HOST)
             ?: throw SourceException(SourceErrorKind.AUTH, "A token is required to fetch CI artifacts from GitHub Actions")
 
         val runsUrl = buildString {
@@ -101,8 +101,9 @@ class GitHubActionsSource : Source {
 
     private fun mapArtifact(obj: JsonObject): Asset? {
         val name = obj.string("name") ?: return null
-        val url = obj.string("archive_download_url") ?: return null
-        if (!Urls.isHttps(url) || Urls.normalize(url) == null) return null
+        val named = obj.string("archive_download_url") ?: return null
+        if (!Urls.isHttps(named)) return null
+        val url = Urls.normalize(named)?.takeIf { Urls.authority(it) == API_HOST } ?: return null
         return Asset(
             name = "$name.zip",
             url = url,
@@ -135,4 +136,9 @@ class GitHubActionsSource : Source {
         } catch (e: IOException) {
             throw SourceException(SourceErrorKind.NETWORK, "Failed to fetch $url", cause = e)
         }
+
+    private companion object {
+        /** The only host that is sent the token, so the only one a file may be fetched from. */
+        const val API_HOST = "api.github.com"
+    }
 }

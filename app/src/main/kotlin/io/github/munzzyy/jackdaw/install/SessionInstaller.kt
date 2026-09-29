@@ -73,7 +73,9 @@ class SessionInstaller(private val context: Context) : Installer {
     override fun abandonOlderThan(maxAgeMs: Long, nowMs: Long): Int {
         var count = 0
         for (session in installer.mySessions) {
-            if (nowMs - session.createdMillis > maxAgeMs) {
+            // Android 10 does not say when a session was made, only when it was last written to.
+            val since = if (Build.VERSION.SDK_INT >= 30) session.createdMillis else session.updatedMillis
+            if (nowMs - since > maxAgeMs) {
                 abandon(session.sessionId)
                 count++
             }

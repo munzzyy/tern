@@ -63,10 +63,19 @@ class Device(context: Context) {
     }
 
     private fun installSource(packageName: String): Pair<String?, String?> = try {
-        val source = pm.getInstallSourceInfo(packageName)
-        val owner = if (Build.VERSION.SDK_INT >= 34) source.updateOwnerPackageName else null
-        source.installingPackageName to owner
+        if (Build.VERSION.SDK_INT >= 30) {
+            val source = pm.getInstallSourceInfo(packageName)
+            val owner = if (Build.VERSION.SDK_INT >= 34) source.updateOwnerPackageName else null
+            source.installingPackageName to owner
+        } else {
+            // Android 10 has only the older call.
+            @Suppress("DEPRECATION")
+            pm.getInstallerPackageName(packageName) to null
+        }
     } catch (e: PackageManager.NameNotFoundException) {
+        Log.w(TAG, "No install source for $packageName: ${e.message}")
+        null to null
+    } catch (e: IllegalArgumentException) {
         Log.w(TAG, "No install source for $packageName: ${e.message}")
         null to null
     }

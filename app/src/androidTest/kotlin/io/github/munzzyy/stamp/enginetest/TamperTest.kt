@@ -1,8 +1,9 @@
 package io.github.munzzyy.stamp.enginetest
 
-import android.content.pm.PackageManager
+import android.os.Build
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import io.github.munzzyy.stamp.core.apk.ApkInspector
 import io.github.munzzyy.stamp.core.apk.BytesSource
 import io.github.munzzyy.stamp.core.apk.ZipIndex
 import io.github.munzzyy.stamp.core.model.Asset
@@ -43,6 +44,14 @@ class TamperTest {
         assertEquals(1, reading.signers.size)
         val pass = gate.check(request(file))
         assertTrue(pass.facts.verified)
+    }
+
+    @Test
+    fun androidNamesTheSignerThatOurOwnReaderNames() {
+        val file = write("pristine.apk", pristine)
+        val ours = ApkInspector.inspect(BytesSource(pristine)).signersFor(Build.VERSION.SDK_INT).map { it.sha256 }
+        assertEquals(1, ours.size)
+        assertEquals(ours, assertNotNullReading(file).signers)
     }
 
     @Test
@@ -113,10 +122,10 @@ class TamperTest {
     }
 
     private fun record(what: String, file: File) {
-        val withCerts = pm.getPackageArchiveInfo(file.path, PackageManager.GET_SIGNING_CERTIFICATES)
+        val withCerts = pm.getPackageArchiveInfo(file.path, PackageManagerArchiveReader.ARCHIVE_FLAGS)
         val plain = pm.getPackageArchiveInfo(file.path, 0)
         val certs = withCerts?.let { PackageManagerArchiveReader.reading(it).signers }
-        Log.i(TAG, "$what: with GET_SIGNING_CERTIFICATES -> ${withCerts?.let { "${it.packageName} ${it.longVersionCode} signers=$certs" } ?: "null"}; with flags 0 -> ${plain?.let { "${it.packageName} ${it.longVersionCode}" } ?: "null"}")
+        Log.i(TAG, "$what: with flags ${PackageManagerArchiveReader.ARCHIVE_FLAGS} -> ${withCerts?.let { "${it.packageName} ${it.longVersionCode} signers=$certs" } ?: "null"}; with flags 0 -> ${plain?.let { "${it.packageName} ${it.longVersionCode}" } ?: "null"}")
     }
 
     private fun assertNotNullReading(file: File) = reader.read(file).also { assertNotNull("Android refused the pristine file", it) }!!

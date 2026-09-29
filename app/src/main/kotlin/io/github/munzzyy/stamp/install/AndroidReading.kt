@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.Signature
 import android.content.pm.SigningInfo
+import android.os.Build
 import io.github.munzzyy.stamp.core.verify.Fingerprints
 import java.io.File
 
@@ -27,11 +28,17 @@ fun interface ArchiveReader {
 
 class PackageManagerArchiveReader(private val pm: PackageManager) : ArchiveReader {
     override fun read(file: File): AndroidReading? {
-        val info = pm.getPackageArchiveInfo(file.path, PackageManager.GET_SIGNING_CERTIFICATES) ?: return null
+        val info = pm.getPackageArchiveInfo(file.path, ARCHIVE_FLAGS) ?: return null
         return reading(info)
     }
 
     companion object {
+        // Before Android 11 a file's signature is only verified and read when the old flag is asked for too.
+        @Suppress("DEPRECATION")
+        val ARCHIVE_FLAGS: Int =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) PackageManager.GET_SIGNING_CERTIFICATES
+            else PackageManager.GET_SIGNING_CERTIFICATES or PackageManager.GET_SIGNATURES
+
         fun reading(info: PackageInfo): AndroidReading {
             val app: ApplicationInfo? = info.applicationInfo
             val (signers, lineage) = certificates(info.signingInfo)

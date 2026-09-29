@@ -696,8 +696,9 @@ fun ChoiceChips(
                         else -> return@onPreviewKeyEvent false
                     }
                     if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent true
-                    var lines = options.size
-                    while (focus.moveFocus(direction) && inside && --lines > 0) Unit
+                    repeat(options.size) {
+                        if (!focus.moveFocus(direction) || !inside) return@onPreviewKeyEvent true
+                    }
                     true
                 },
         ) {

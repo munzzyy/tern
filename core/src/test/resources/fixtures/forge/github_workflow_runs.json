@@ -1,0 +1,14 @@
+{
+  "total_count": 1,
+  "workflow_runs": [
+    {
+      "id": 555,
+      "run_number": 42,
+      "head_sha": "abcdef1234567890",
+      "updated_at": "2026-01-02T00:00:00Z",
+      "html_url": "https://github.com/example/app/actions/runs/555",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ]
+}

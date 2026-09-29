@@ -1,0 +1,17 @@
+{
+  "total_count": 2,
+  "artifacts": [
+    {
+      "name": "app-debug",
+      "archive_download_url": "https://api.github.com/repos/example/app/actions/artifacts/1/zip",
+      "size_in_bytes": 1000,
+      "expired": false
+    },
+    {
+      "name": "old-artifact",
+      "archive_download_url": "https://api.github.com/repos/example/app/actions/artifacts/2/zip",
+      "size_in_bytes": 2000,
+      "expired": true
+    }
+  ]
+}

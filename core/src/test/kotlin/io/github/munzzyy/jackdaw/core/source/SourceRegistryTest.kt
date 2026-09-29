@@ -1,0 +1,67 @@
+package io.github.munzzyy.jackdaw.core.source
+
+import io.github.munzzyy.jackdaw.core.net.InMemoryValidatorStore
+import io.github.munzzyy.jackdaw.core.source.forge.ForgejoSource
+import io.github.munzzyy.jackdaw.core.source.forge.GitHubActionsSource
+import io.github.munzzyy.jackdaw.core.source.forge.GitHubSource
+import io.github.munzzyy.jackdaw.core.source.forge.GitLabSource
+import io.github.munzzyy.jackdaw.core.testing.FakeHttp
+import io.github.munzzyy.jackdaw.core.testing.Fixtures
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertSame
+import org.junit.Test
+
+class SourceRegistryTest {
+    private val github = GitHubSource()
+    private val githubActions = GitHubActionsSource()
+    private val gitlab = GitLabSource()
+    private val forgejo = ForgejoSource()
+    private val registry = SourceRegistry(listOf(github, gitlab, forgejo, githubActions))
+
+    private fun context(http: FakeHttp) = CheckContext(http, InMemoryValidatorStore())
+
+    @Test
+    fun getFindsByType() {
+        assertSame(github, registry.get(SourceTypes.GITHUB))
+        assertSame(gitlab, registry.get(SourceTypes.GITLAB))
+        assertNull(registry.get("nope"))
+    }
+
+    @Test
+    fun matchPicksFirstOwningSource() {
+        val spec = registry.match("github.com/example/app")
+        assertEquals(SourceTypes.GITHUB, spec?.type)
+    }
+
+    @Test
+    fun matchReturnsNullForUnrecognisedUrl() {
+        assertNull(registry.match("not a url"))
+        assertNull(registry.match("https://example.com/nothing"))
+    }
+
+    @Test
+    fun detectFallsBackToProbeForSelfHostedGitlab() {
+        val projectUrl = "https://git.example.org/api/v4/projects/group%2Fapp"
+        val versionUrl = "https://git.example.org/api/v1/version"
+        val http = FakeHttp()
+            .on(versionUrl) { io.github.munzzyy.jackdaw.core.net.HttpResponse.of(404, "", url = versionUrl) }
+            .resource(projectUrl, "forge/gitlab_project.json")
+        val spec = registry.detect("https://git.example.org/group/app", context(http))
+        assertEquals(SourceTypes.GITLAB, spec?.type)
+    }
+
+    @Test
+    fun detectSwallowsProbeIoException() {
+        val http = FakeHttp()
+        val spec = registry.detect("https://unreachable.example.org/group/app", context(http))
+        assertNull(spec)
+    }
+
+    @Test
+    fun matchIsIndependentOfRegistrationOrder() {
+        val reordered = SourceRegistry(listOf(gitlab, github))
+        val spec = reordered.match("github.com/example/app")
+        assertEquals(SourceTypes.GITHUB, spec?.type)
+    }
+}

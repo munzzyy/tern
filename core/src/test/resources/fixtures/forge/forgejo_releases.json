@@ -1,0 +1,28 @@
+[
+  {
+    "tag_name": "v3.0.0",
+    "name": "v3.0.0",
+    "body": "Notes",
+    "draft": false,
+    "prerelease": false,
+    "published_at": "2026-04-01T00:00:00Z",
+    "html_url": "https://codeberg.org/example/app/releases/tag/v3.0.0",
+    "assets": [
+      {
+        "name": "app.apk",
+        "browser_download_url": "https://codeberg.org/example/app/releases/download/v3.0.0/app.apk",
+        "size": 5000
+      }
+    ]
+  },
+  {
+    "tag_name": "v3.1.0-draft",
+    "name": "draft",
+    "body": "wip",
+    "draft": true,
+    "prerelease": false,
+    "published_at": "2026-05-01T00:00:00Z",
+    "html_url": "https://codeberg.org/example/app/releases/tag/v3.1.0-draft",
+    "assets": []
+  }
+]

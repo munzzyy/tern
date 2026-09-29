@@ -1,0 +1,19 @@
+A lot of good Android apps never reach a store, or reach it days late. Their developers put releases on GitHub, GitLab, Codeberg, a repository they run, or a plain web page. Jackdaw follows those places for you. Paste a link or share one from the browser and it figures out what it is looking at.
+
+Then it checks the file, because a release page can be tampered with and a download can be swapped on the way.
+
+The signature has to be from the same certificate as the app already on your phone. Jackdaw remembers that certificate from the first install, and your export carries it to your next phone.
+
+If the publisher gave a checksum, the file has to match it.
+
+The file has to be the app you asked for, and not an older version of it.
+
+Jackdaw reads the version and the signer out of a file while it is still on the server, a few kilobytes of it, so an update is only offered when there really is one.
+
+On Android 12 and newer, updates go in without asking once Jackdaw has installed the app. If Android does want a confirmation, you get a notification. Background checks use Android's own scheduler, and you choose whether they run on mobile data or only while charging.
+
+No account. Nothing is reported to anyone. HTTPS only.
+
+Obtainium user? Import your export file and your apps come along.
+
+Reads: GitHub releases and Actions builds, GitLab, Forgejo, Gitea, Codeberg, F-Droid, IzzyOnDroid, any F-Droid format repository (signature checked), web pages, direct links, Jenkins, SourceHut, SourceForge.

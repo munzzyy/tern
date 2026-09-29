@@ -76,6 +76,32 @@ class IncomingLinksTest {
     }
 
     @Test
+    fun whatAPhoneSentIsKeptAsItIsWhenAllOfItIsDrawn() {
+        assertEquals("https://github.com/example/app", fromHandoff("  https://github.com/example/app \n"))
+        assertEquals("https://example.org/\u00FCber/\u6F22\u5B57", fromHandoff("https://example.org/\u00FCber/\u6F22\u5B57"))
+        assertEquals("a \uD83D\uDE00 b", fromHandoff("a \uD83D\uDE00 b"))
+    }
+
+    @Test
+    fun whatAPhoneSentLosesWhatIsNotDrawn() {
+        assertEquals("https://example.org/gpj.exe", fromHandoff("https://example.org/\u202Egpj.exe"))
+        assertEquals("https://example.org/ab", fromHandoff("https://example.org/a\u200B\u200D\u2060\uFEFFb"))
+        assertEquals("ab", fromHandoff("a\u0000\u0007\u001B\r\n\tb"))
+        assertEquals("ab", fromHandoff("a\u2028\u2029b"))
+        assertEquals("ab", fromHandoff("a\uE000\uDC00b"))
+        assertEquals("ab", fromHandoff("a\u2066\u2067\u2068\u2069b"))
+        assertNull(fromHandoff("\u200B\u202E \n"))
+        assertNull(fromHandoff(""))
+    }
+
+    @Test
+    fun whatAPhoneSentIsCapped() {
+        assertEquals(MAX_INCOMING_CHARS, fromHandoff("a".repeat(50_000))!!.length)
+        val cutInsideAPair = "a".repeat(MAX_INCOMING_CHARS - 1) + "\uD83D\uDE00"
+        assertEquals("a".repeat(MAX_INCOMING_CHARS - 1), fromHandoff(cutInsideAPair))
+    }
+
+    @Test
     fun otherActionsAndSchemesAreIgnored() {
         assertNull(incomingAddInput("android.intent.action.MAIN", "stamp://add?url=https%3A%2F%2Fa.example.org", null))
         assertNull(incomingAddInput(ACTION_VIEW, "https://github.com/example/app", null))

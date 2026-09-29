@@ -64,6 +64,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
@@ -279,17 +280,14 @@ fun ActionRow(
     icon: ImageVector? = null,
     tint: Color = Color.Unspecified,
     modifier: Modifier = Modifier,
+    iconTint: Color = tint,
+    trailing: ImageVector? = null,
 ) {
     PressedRow(modifier, Modifier.selectable(selected = false, role = Role.Button, onClick = onClick)) {
-        if (icon != null) {
-            Icon(
-                icon,
-                contentDescription = null,
-                tint = if (tint == Color.Unspecified) MaterialTheme.colorScheme.onSurfaceVariant else tint,
-                modifier = Modifier.size(LocalLook.current.glyph),
-            )
-        }
+        val glyphTint = if (iconTint == Color.Unspecified) MaterialTheme.colorScheme.onSurfaceVariant else iconTint
+        if (icon != null) Icon(icon, contentDescription = null, tint = glyphTint, modifier = Modifier.size(LocalLook.current.glyph))
         RowWords(title, summary, tint)
+        if (trailing != null) Icon(trailing, contentDescription = null, tint = glyphTint, modifier = Modifier.size(LocalLook.current.glyph))
     }
 }
 
@@ -397,6 +395,100 @@ fun InfoRow(title: String, value: String, modifier: Modifier = Modifier) {
     ) {
         Text(title, style = MaterialTheme.typography.bodyLarge)
         Text(value, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+
+/** What opens under a row of a card when the row is pressed: a ground of its own, set in from the card's sides. */
+@Composable
+fun Nest(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
+    val look = LocalLook.current
+    Surface(
+        color = MaterialTheme.colorScheme.surfaceContainerHighest,
+        shape = MaterialTheme.shapes.medium,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = look.cardPadding - look.focusRoom, vertical = look.gapSmall / 2),
+    ) {
+        Column(Modifier.padding(vertical = look.gapSmall / 2), content = content)
+    }
+}
+
+/** Words that have to be read. Without a touch screen they take focus, because a remote scrolls by moving focus, and TalkBack reads them as one. */
+@Composable
+fun ReadBlock(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
+    val look = LocalLook.current
+    val reach = if (LocalNoTouch.current) Modifier.focusLook().clip(MaterialTheme.shapes.medium).focusable() else Modifier
+    Column(
+        verticalArrangement = Arrangement.spacedBy(look.gapSmall),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = look.focusRoom, vertical = look.focusRoom / 2)
+            .then(reach)
+            .semantics(mergeDescendants = true) {}
+            .padding(horizontal = look.rowPaddingHorizontal - look.focusRoom, vertical = look.rowPaddingVertical),
+        content = content,
+    )
+}
+
+/**
+ * A row that is pressed as a whole, with what it does drawn at its end by [RowAction]. From text
+ * size 1.5 on the action goes under the words, and also where [below] asks for it, as a narrow
+ * screen does for a row that holds a long address.
+ */
+@Composable
+fun PressRow(
+    action: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    below: Boolean = false,
+    leading: @Composable () -> Unit = {},
+    words: @Composable ColumnScope.() -> Unit,
+) {
+    val look = LocalLook.current
+    val stacked = below || LocalDensity.current.fontScale >= STACK_FONT_SCALE
+    Row(
+        verticalAlignment = if (stacked) Alignment.Top else Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(look.gap),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = look.focusRoom, vertical = look.focusRoom / 2)
+            .focusLook()
+            .clip(MaterialTheme.shapes.medium)
+            .clickable(enabled = enabled, onClickLabel = action, role = Role.Button, onClick = onClick)
+            .heightIn(min = look.rowHeight - look.focusRoom)
+            .padding(horizontal = look.rowPaddingHorizontal - look.focusRoom, vertical = look.rowPaddingVertical),
+    ) {
+        leading()
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
+            words()
+            if (stacked) RowAction(action, enabled = enabled)
+        }
+        if (!stacked) RowAction(action, enabled = enabled)
+    }
+}
+
+/** What a row does when the whole row is pressed: drawn like a tonal button, with no press and no focus of its own. */
+@Composable
+fun RowAction(text: String, modifier: Modifier = Modifier, enabled: Boolean = true) {
+    val look = LocalLook.current
+    val scheme = MaterialTheme.colorScheme
+    val shape = LocalOutlines.current.button
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .clip(shape)
+            .background(if (enabled) scheme.secondaryContainer else scheme.onSurface.copy(alpha = 0.12f))
+            .heightIn(min = look.buttonHeight)
+            .padding(horizontal = look.gap * 3 / 2, vertical = look.gapSmall / 2)
+            .clearAndSetSemantics { },
+    ) {
+        Text(
+            text,
+            style = MaterialTheme.typography.labelLarge,
+            color = if (enabled) scheme.onSecondaryContainer else scheme.onSurface.copy(alpha = 0.38f),
+            textAlign = TextAlign.Center,
+        )
     }
 }
 

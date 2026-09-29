@@ -17,13 +17,16 @@ sealed interface Route {
     data object Import : Route
 
     data object Look : Route
+
+    /** The open door for a phone. It is open for as long as this route is on screen. */
+    data object Handoff : Route
 }
 
 enum class Tab { APPS, ADD, ACTIVITY, SETTINGS }
 
 fun Route.tab(): Tab = when (this) {
     Route.Apps, is Route.Detail -> Tab.APPS
-    is Route.Add -> Tab.ADD
+    is Route.Add, Route.Handoff -> Tab.ADD
     Route.Activity -> Tab.ACTIVITY
     Route.Settings, Route.Import, Route.Look -> Tab.SETTINGS
 }
@@ -38,6 +41,7 @@ fun encodeRoute(route: Route): String = when (route) {
     Route.Settings -> "settings"
     Route.Import -> "import"
     Route.Look -> "look"
+    Route.Handoff -> "handoff"
 }
 
 fun decodeRoute(s: String): Route? {
@@ -50,6 +54,7 @@ fun decodeRoute(s: String): Route? {
         "settings" -> Route.Settings
         "import" -> Route.Import
         "look" -> Route.Look
+        "handoff" -> Route.Handoff
         else -> null
     }
 }
@@ -95,6 +100,20 @@ class BackStack(initial: List<Route>) {
 
     fun openAdd(input: String?, nonce: Long) {
         routes = listOf(Route.Apps, Route.Add(input, nonce))
+    }
+
+    /** The Add screen was opened on top of another screen when more than the list lies under it. */
+    val addIsOnTop: Boolean get() = top is Route.Add && routes.size > 2
+
+    /** After an app was added, its detail takes the place of the Add screen. Back returns to whatever offered the link. */
+    fun showAdded(appId: String) {
+        routes = if (addIsOnTop) routes.dropLast(1) + Route.Detail(appId) else listOf(Route.Apps, Route.Detail(appId))
+    }
+
+    /** Looks [input] up on top of the screen that offered it, so that back returns there. */
+    fun lookAt(input: String, nonce: Long) {
+        val base = if (top is Route.Add) routes.dropLast(1) else routes
+        routes = base + Route.Add(input, nonce)
     }
 
     fun encode(): List<String> = routes.map(::encodeRoute)

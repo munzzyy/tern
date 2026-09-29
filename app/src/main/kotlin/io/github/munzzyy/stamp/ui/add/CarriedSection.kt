@@ -13,8 +13,6 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.unit.dp
 import io.github.munzzyy.stamp.R
 import io.github.munzzyy.stamp.ui.common.TrustLine
 import io.github.munzzyy.stamp.ui.detail.updateModeLabel
@@ -22,13 +20,16 @@ import io.github.munzzyy.stamp.ui.text.Trust
 import io.github.munzzyy.stamp.ui.text.breakableFingerprint
 import io.github.munzzyy.stamp.ui.text.formatFingerprint
 import io.github.munzzyy.stamp.ui.text.isolate
+import io.github.munzzyy.stamp.ui.theme.LocalLook
+import io.github.munzzyy.stamp.ui.theme.fingerprint
 
 const val CARRIED_TAG = "add_carried"
 
 @Composable
 fun CarriedSection(settings: List<CarriedSetting>) {
     if (settings.isEmpty()) return
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.testTag(CARRIED_TAG)) {
+    val look = LocalLook.current
+    Column(verticalArrangement = Arrangement.spacedBy(look.gapSmall), modifier = Modifier.testTag(CARRIED_TAG)) {
         Text(
             stringResource(R.string.carried_title),
             style = MaterialTheme.typography.titleMedium,
@@ -36,7 +37,7 @@ fun CarriedSection(settings: List<CarriedSetting>) {
         )
         for (setting in settings.filterNot { it is CarriedSetting.Pin }) {
             Row {
-                Text("•", modifier = Modifier.width(16.dp), style = MaterialTheme.typography.bodyMedium)
+                Text("\u2022", modifier = Modifier.width(look.gap), style = MaterialTheme.typography.bodyMedium)
                 Text(sentence(setting), style = MaterialTheme.typography.bodyMedium)
             }
         }
@@ -44,11 +45,7 @@ fun CarriedSection(settings: List<CarriedSetting>) {
         if (pins.isNotEmpty()) {
             TrustLine(Trust.BAD, pluralStringResource(R.plurals.carried_pins_warning, pins.size))
             for (pin in pins) {
-                Text(
-                    breakableFingerprint(formatFingerprint(pin.sha256)),
-                    style = MaterialTheme.typography.bodySmall,
-                    fontFamily = FontFamily.Monospace,
-                )
+                Text(breakableFingerprint(formatFingerprint(pin.sha256)), style = MaterialTheme.typography.bodyMedium.fingerprint())
             }
         }
     }

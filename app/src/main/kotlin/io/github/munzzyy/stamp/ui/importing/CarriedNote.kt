@@ -1,6 +1,5 @@
 package io.github.munzzyy.stamp.ui.importing
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -10,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.stamp.R
 import io.github.munzzyy.stamp.engine.AppRow
@@ -19,6 +17,7 @@ import io.github.munzzyy.stamp.ui.LocalEngine
 import io.github.munzzyy.stamp.ui.common.LinkText
 import io.github.munzzyy.stamp.ui.common.TrustLine
 import io.github.munzzyy.stamp.ui.text.Trust
+import io.github.munzzyy.stamp.ui.theme.LocalLook
 
 /**
  * Pairs each name with a different app of that name, preferring one that [fits], in list order.
@@ -54,7 +53,7 @@ fun CarriedNote(summary: ImportSummary, onOpenApp: (String) -> Unit) {
 @Composable
 private fun Group(title: String, names: List<Pair<String, String?>>, onOpenApp: (String) -> Unit) {
     if (names.isEmpty()) return
-    Column(Modifier.padding(start = 32.dp), verticalArrangement = Arrangement.spacedBy(0.dp)) {
+    Column(Modifier.padding(start = LocalLook.current.gap * 2)) {
         Text(title, style = MaterialTheme.typography.bodyMedium)
         for ((name, id) in names) {
             if (id == null) {

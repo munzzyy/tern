@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- A button: look at this app before anything is added. A verb, not the look of the app. -->
+    <string name="action_look_at">Look</string>
+    <string name="action_import">Import</string>
+
+    <!-- Add screen -->
+    <string name="add_clear">Clear the field</string>
+    <string name="starter_title">Well known apps</string>
+    <string name="starter_explain">Each one comes from its developer\'s own address. Nothing is added until you say so.</string>
+    <string name="starter_for_television">For this television</string>
+    <string name="starter_for_any_device">For any device</string>
+    <!-- A short label on an app whose signing certificate is built into Stamp. -->
+    <string name="starter_pinned">Certificate known</string>
+    <string name="preview_built_in_pin">Stamp carries the certificate of this app\'s developer. A file signed by anyone else is refused, also at the first install.</string>
+    <!-- %1$s is the repository's own name, or its host such as apps.example.org. -->
+    <string name="repo_heading">Apps in %1$s</string>
+    <string name="repo_more">This repository holds more apps than are shown here. Add one of the others by the address of its own page in the repository.</string>
+
+    <!-- Send from a phone -->
+    <string name="handoff_title">Send from a phone</string>
+    <string name="handoff_effect">Links and your app list, without typing on this device.</string>
+    <string name="handoff_step_1">1. Put the phone on the same network as this device.</string>
+    <string name="handoff_step_2">2. Scan the code with the phone\'s camera.</string>
+    <string name="handoff_step_3">3. Paste links or pick your export file on the page that opens.</string>
+    <!-- %1$s is a web address such as http://192.168.1.20:40123. The code follows on a line of its own. -->
+    <string name="handoff_by_hand">Or open %1$s in a browser and type this code:</string>
+    <string name="handoff_code_note">The code seals what is sent, so nobody else on the network can read or change it. It is never sent itself.</string>
+    <plurals name="handoff_time_left">
+        <item quantity="one">Open for %1$d more minute</item>
+        <item quantity="other">Open for %1$d more minutes</item>
+    </plurals>
+    <string name="handoff_arrived">Arrived from the phone</string>
+    <string name="handoff_open_again">Open again</string>
+    <string name="handoff_end_expired">The ten minutes are over. Open it again when you need it.</string>
+    <string name="handoff_end_left_screen">It closed because Stamp left the screen.</string>
+    <string name="handoff_end_used_up">It closed because it was asked too many times. That does not happen by hand.</string>
+    <string name="handoff_footer">Nothing that arrives is added until you have looked at it here.</string>
+    <string name="handoff_opening">Opening the page for the phone</string>
+    <string name="handoff_failed">This device could not open the page for the phone.</string>
+    <!-- Read by TalkBack for the picture of the QR code. -->
+    <string name="handoff_qr_spoken">A code for the phone\'s camera. It holds the address and the code written next to it.</string>
+    <!-- Read by TalkBack. %1$s is the code with a pause after every character. -->
+    <string name="handoff_code_spoken">The code, one character at a time: %1$s</string>
+    <!-- A short label on a link that was opened from the list of what arrived. -->
+    <string name="handoff_looked">Looked at</string>
+    <!-- %1$s is the name of a file, %2$s its size such as 18 KB. -->
+    <string name="handoff_file_line">%1$s, %2$s</string>
+
+    <!-- Orbot is the name of an app that routes traffic through Tor. -->
+    <string name="orbot_not_installed">Orbot is not on this device.</string>
+    <string name="orbot_get">Get Orbot</string>
+    <string name="orbot_off">Orbot is installed and not running.</string>
+    <string name="orbot_start">Start Orbot</string>
+    <string name="orbot_starting">Orbot is starting.</string>
+    <string name="orbot_on">Orbot is running. Everything Stamp sends goes through Tor.</string>
+    <string name="orbot_unknown">Orbot has not answered yet.</string>
+    <string name="orbot_ask_again">Ask again</string>
+    <string name="orbot_note">While Orbot is chosen and not running, Stamp reaches nothing. It never goes round the proxy.</string>
+
+    <!-- Import and export on a device without a file picker, which is the usual case on a television. -->
+    <string name="door_export">Export to the Download folder</string>
+    <!-- %1$s is the name of the file, %2$s the folder such as Download/Stamp. -->
+    <string name="door_export_done">Saved as %1$s in %2$s</string>
+    <string name="door_explain">Bring in an export from Stamp or Obtainium. Nothing is installed; the apps are added to your list and checked.</string>
+    <string name="door_files">Import from this device</string>
+    <string name="door_files_effect">Exports Stamp saved itself, and files in its own import folder.</string>
+    <string name="door_files_loading">Looking for export files</string>
+    <string name="door_no_files">No export file was found. Stamp can read what it saved itself, and files placed in its own import folder.</string>
+    <!-- Under the name of a file: %1$s is the folder, %2$s a date, %3$s a size such as 18 KB. -->
+    <string name="door_file_line">%1$s, %2$s, %3$s</string>
+    <string name="door_link">Import from a link</string>
+    <string name="door_link_effect">An export file that a server hands out over https.</string>
+    <string name="door_link_label">Link to an export file</string>
+    <string name="door_link_help">An https address that serves the file.</string>
+    <string name="door_link_working">Fetching the file</string>
+
+    <!-- The permission to install apps -->
+    <string name="permit_manual_body">Android asks once before one app may install another, and this device has no page Stamp can open for you. Look in the settings of the device for a list called Unknown sources or Install unknown apps, and turn Stamp on there.</string>
+    <string name="permit_where_android_tv">Android TV and Google TV: Settings, Apps, Security and restrictions, Unknown sources</string>
+    <string name="permit_where_fire_tv">Fire TV: Settings, My Fire TV, Developer options, Install unknown apps</string>
+    <string name="permit_done">I have done it</string>
+    <string name="permit_row">Permission to install apps</string>
+    <string name="permit_row_given">Given. Android lets Stamp install apps on this device.</string>
+    <string name="permit_row_missing">Not given yet. Android asks once before one app may install another.</string>
+</resources>

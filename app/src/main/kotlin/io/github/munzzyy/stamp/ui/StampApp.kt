@@ -7,7 +7,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.LocalBringIntoViewSpec
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
@@ -59,6 +61,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -84,6 +87,7 @@ import io.github.munzzyy.stamp.ui.apps.AppsScreen
 import io.github.munzzyy.stamp.ui.apps.openHandoff
 import io.github.munzzyy.stamp.ui.detail.DetailScreen
 import io.github.munzzyy.stamp.ui.firstrun.FirstRunScreen
+import io.github.munzzyy.stamp.ui.handoff.HandoffScreen
 import io.github.munzzyy.stamp.ui.icons.Glyphs
 import io.github.munzzyy.stamp.ui.importing.ImportScreen
 import io.github.munzzyy.stamp.ui.look.LookScreen
@@ -99,6 +103,7 @@ private val TWO_PANE_WIDTH = 840.dp
 private val LIST_PANE_WIDTH = 400.dp
 private const val LIST_PANE_SHARE = 0.45f
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StampApp(
     engine: Engine,
@@ -114,12 +119,16 @@ fun StampApp(
     val noTouch = remember(configuration) { context.lacksTouch() }
     val guarded = viewModel(key = "install-guard") { GuardHolder(engine, PreferenceWishStore(context)) }.guarded
     LaunchedEffect(guarded) { guarded.start(guarded.guard.carriedOver()) }
+    val density = LocalDensity.current
+    val room = LocalLook.current.focusRoom * 2
+    val scrolling = remember(density, room) { ScrollToShow(with(density) { room.toPx() }) }
     CompositionLocalProvider(
         LocalNoTouch provides noTouch,
         LocalEngine provides guarded,
         LocalSnackbar provides snackbar,
         LocalActionScope provides scope,
         LocalReducedMotion provides reducedMotion,
+        LocalBringIntoViewSpec provides scrolling,
     ) {
         val look = LocalLook.current
         Box(
@@ -324,14 +333,10 @@ private fun Screen(stack: BackStack, route: Route, listState: LazyListState, two
         is Route.Add -> AddScreen(
             prefill = route.input,
             nonce = route.nonce,
-            onAdded = { id ->
-                stack.select(Tab.APPS)
-                stack.showDetail(id)
-            },
-            onShow = { id ->
-                stack.select(Tab.APPS)
-                stack.showDetail(id)
-            },
+            onAdded = { id -> stack.showAdded(id) },
+            onShow = { id -> stack.showAdded(id) },
+            onHandoff = { stack.push(Route.Handoff) },
+            onBack = if (stack.addIsOnTop) ({ stack.pop() }) else null,
         )
         is Route.Detail -> DetailScreen(
             appId = route.appId,
@@ -340,9 +345,18 @@ private fun Screen(stack: BackStack, route: Route, listState: LazyListState, two
             onRemoved = { stack.pop() },
         )
         Route.Activity -> ActivityScreen(onOpenApp = { stack.showDetail(it) })
-        Route.Settings -> SettingsScreen(onImport = { stack.push(Route.Import) }, onLook = { stack.push(Route.Look) })
-        Route.Import -> ImportScreen(onBack = { stack.pop() }, onOpenApp = { stack.showDetail(it) })
+        Route.Settings -> SettingsScreen(
+            onImport = { stack.push(Route.Import) },
+            onLook = { stack.push(Route.Look) },
+            onAdd = { stack.lookAt(it, System.nanoTime()) },
+        )
+        Route.Import -> ImportScreen(onBack = { stack.pop() }, onOpenApp = { stack.showDetail(it) }, onHandoff = { stack.push(Route.Handoff) })
         Route.Look -> LookScreen(onBack = { stack.pop() })
+        Route.Handoff -> HandoffScreen(
+            onBack = { stack.pop() },
+            onLook = { stack.lookAt(it, System.nanoTime()) },
+            onOpenApp = { stack.showDetail(it) },
+        )
     }
 }
 

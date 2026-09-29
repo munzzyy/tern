@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.munzzyy.stamp.engine.Engine
+import io.github.munzzyy.stamp.engine.ProblemException
+import io.github.munzzyy.stamp.engine.SavedFile
 import io.github.munzzyy.stamp.engine.Settings
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -50,6 +52,26 @@ class SettingsViewModel(private val engine: Engine) : ViewModel() {
             val count = attempt { engine.exportTo(uri) }
             _exporting.value = false
             onDone(count)
+        }
+    }
+
+    /** Hands back the file that was written, or else the engine's sentence about why not, which is null when it gave none. */
+    fun exportToFolder(onDone: (SavedFile?, String?) -> Unit) {
+        if (_exporting.value) return
+        _exporting.value = true
+        viewModelScope.launch {
+            val (saved, problem) = try {
+                engine.exportToFolder() to null
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: ProblemException) {
+                null to e.problem.message
+            } catch (_: Exception) {
+                null to null
+            } finally {
+                _exporting.value = false
+            }
+            onDone(saved, problem)
         }
     }
 

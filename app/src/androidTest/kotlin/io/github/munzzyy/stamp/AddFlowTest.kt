@@ -45,7 +45,7 @@ class AddFlowTest {
 
             compose.tagged(ADD_FIND_TAG).performClick()
             compose.waitForText("Sparrow")
-            compose.onNodeWithText("File to install").assertIsDisplayed()
+            compose.onNodeWithText("File to install").performScrollTo().assertIsDisplayed()
             compose.tagged(ADD_INSTALL_TAG).performScrollTo().assertIsDisplayed()
             assertTrue("nothing is added before the user confirms", fake.apps.value.none { it.id == "sparrow" })
 

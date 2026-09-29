@@ -35,7 +35,7 @@ class StarsImportTest {
         compose.onNodeWithText("Import apps").performScrollTo().performClick()
         compose.onNodeWithTag(IMPORT_LIST_TAG).performScrollToNode(hasTestTag(STARS_USER_TAG))
         compose.tagged(STARS_USER_TAG).performTextReplacement(user)
-        compose.tagged(STARS_SHOW_TAG).performClick()
+        compose.tagged(STARS_SHOW_TAG).performScrollTo().performClick()
     }
 
     private fun tick(name: String) {

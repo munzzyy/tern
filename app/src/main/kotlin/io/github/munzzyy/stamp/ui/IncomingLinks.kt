@@ -80,6 +80,30 @@ private fun obtainiumLink(raw: String, rest: String): String? {
     }
 }
 
+/**
+ * What a phone sent through the handoff, as text for the list of what arrived and for the Add
+ * screen. Characters that are not drawn are left out, so that no link can look like another one.
+ * Null when nothing is left.
+ */
+fun fromHandoff(text: String): String? {
+    val capped = text.take(MAX_INCOMING_CHARS)
+    val kept = StringBuilder(capped.length)
+    var i = 0
+    while (i < capped.length) {
+        val point = capped.codePointAt(i)
+        if (isDrawn(point)) kept.appendCodePoint(point)
+        i += Character.charCount(point)
+    }
+    return kept.toString().trim().takeIf { it.isNotEmpty() }
+}
+
+private fun isDrawn(point: Int): Boolean = when (Character.getType(point).toByte()) {
+    Character.CONTROL, Character.FORMAT, Character.SURROGATE, Character.PRIVATE_USE, Character.UNASSIGNED,
+    Character.LINE_SEPARATOR, Character.PARAGRAPH_SEPARATOR,
+    -> false
+    else -> true
+}
+
 private fun isHttps(url: String): Boolean =
     url.startsWith(HTTPS, ignoreCase = true) && url.length > HTTPS.length && url.none { it.isWhitespace() || it.isISOControl() }
 

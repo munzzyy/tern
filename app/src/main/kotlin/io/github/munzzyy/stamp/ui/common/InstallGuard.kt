@@ -8,20 +8,41 @@ import android.os.Build
 import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import io.github.munzzyy.stamp.R
 import io.github.munzzyy.stamp.engine.Detection
 import io.github.munzzyy.stamp.engine.Engine
+import io.github.munzzyy.stamp.ui.theme.LocalLook
 
 /** What the user asked for while Android had not yet allowed Stamp to install apps. */
 sealed interface Wanted {
@@ -201,33 +222,118 @@ class GuardHolder(engine: Engine, store: WishStore = WishStore.None) : ViewModel
     val guarded = GuardedEngine(engine, InstallGuard(engine::mayInstall, store))
 }
 
+const val PERMIT_DIALOG_TAG = "install_permission"
+
+fun installSettingsIntent(context: Context): Intent =
+    Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:${context.packageName}"))
+
 @Composable
 fun InstallPermissionDialog(engine: GuardedEngine) {
     val guard = engine.guard
     if (guard.waiting.isEmpty()) return
-    val context = LocalContext.current
     val start = engine::start
-    val settings = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { start(guard.release()) }
+    InstallPermissionQuestion(
+        canOpenSettings = remember(engine) { engine.canOpenInstallSettings() },
+        onReturned = { start(guard.release()) },
+        onDone = { start(guard.release(anyway = true)) },
+        onDismiss = guard::forget,
+    )
+}
+
+/**
+ * Asks for the permission to install apps: by way of the settings page where the device has one
+ * that can be opened, and with the way to the switch in words where it has none. [onReturned] is
+ * called when the user is back from the settings page, [onDone] when they say they have turned
+ * the switch on by hand.
+ */
+@Composable
+fun InstallPermissionQuestion(canOpenSettings: Boolean, onReturned: () -> Unit, onDone: () -> Unit, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val look = LocalLook.current
+    var byHand by rememberSaveable { mutableStateOf(!canOpenSettings) }
+    val settings = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { onReturned() }
     AlertDialog(
-        modifier = Modifier.focusHighlight(),
-        onDismissRequest = guard::forget,
+        modifier = Modifier
+            .focusHighlight()
+            .testTag(PERMIT_DIALOG_TAG),
+        onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.install_permission_title)) },
         text = {
-            val body = stringResource(R.string.install_permission_body)
-            Text(if (closesOnAllow()) body + "\n\n" + stringResource(R.string.install_permission_closes) else body)
+            Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(look.gapSmall)) {
+                Paragraph(stringResource(if (byHand) R.string.permit_manual_body else R.string.install_permission_body))
+                if (byHand) {
+                    Surface(color = MaterialTheme.colorScheme.surfaceContainerHighest, shape = MaterialTheme.shapes.medium) {
+                        Column(Modifier.padding(vertical = look.gapSmall / 2)) {
+                            Paragraph(stringResource(R.string.permit_where_android_tv), inset = true)
+                            Paragraph(stringResource(R.string.permit_where_fire_tv), inset = true)
+                        }
+                    }
+                }
+                if (closesOnAllow()) Paragraph(stringResource(R.string.install_permission_closes))
+            }
         },
         confirmButton = {
             TextButton(
-                modifier = Modifier.focusWhenShown(),
+                modifier = Modifier.focusOnceTheWindowHasIt(),
                 onClick = {
-                    try {
-                        settings.launch(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:${context.packageName}")))
-                    } catch (_: ActivityNotFoundException) {
-                        start(guard.release(anyway = true))
+                    if (byHand) {
+                        onDone()
+                    } else {
+                        try {
+                            settings.launch(installSettingsIntent(context))
+                        } catch (_: ActivityNotFoundException) {
+                            byHand = true
+                        }
                     }
                 },
-            ) { Text(stringResource(R.string.install_permission_open)) }
+            ) { Text(stringResource(if (byHand) R.string.permit_done else R.string.install_permission_open)) }
         },
-        dismissButton = { TextButton(onClick = guard::forget) { Text(stringResource(R.string.first_skip)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.first_skip)) } },
     )
+}
+
+/**
+ * Gives focus to the answer of a question under keys. A window that has just opened hands its
+ * focus to the first thing in it, which is the way out, so the answer asks again for a few frames
+ * after the window has taken focus.
+ */
+private fun Modifier.focusOnceTheWindowHasIt(): Modifier = composed {
+    val requester = remember { FocusRequester() }
+    val window = LocalWindowInfo.current
+    val keys = drivenByKeys()
+    var held by remember { mutableStateOf(false) }
+    LaunchedEffect(window.isWindowFocused, keys) {
+        if (!keys || !window.isWindowFocused) return@LaunchedEffect
+        repeat(ANSWER_FRAMES) {
+            withFrameNanos {}
+            if (!held) {
+                try {
+                    requester.requestFocus()
+                } catch (_: IllegalStateException) {
+                    // Not laid out yet. The next frame asks again.
+                }
+            }
+        }
+    }
+    focusRequester(requester).onFocusChanged { held = it.isFocused }
+}
+
+private const val ANSWER_FRAMES = 12
+
+/** A remote scrolls by moving focus, so on a device without touch each paragraph of the question takes focus. [inset] is for a paragraph on a ground of its own. */
+@Composable
+private fun Paragraph(text: String, inset: Boolean = false) {
+    val look = LocalLook.current
+    val frame = when {
+        LocalNoTouch.current ->
+            Modifier
+                .padding(horizontal = look.focusRoom, vertical = look.focusRoom / 2)
+                .focusLook()
+                .clip(MaterialTheme.shapes.small)
+                .focusable()
+                .padding(horizontal = look.gapSmall, vertical = look.gapSmall / 2)
+        inset -> Modifier.padding(horizontal = look.gapSmall + look.focusRoom, vertical = look.gapSmall / 2)
+        else -> Modifier
+    }
+    Text(text, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.fillMaxWidth().then(frame))
 }

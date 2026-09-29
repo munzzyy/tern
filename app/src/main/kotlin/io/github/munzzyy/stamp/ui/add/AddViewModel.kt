@@ -68,10 +68,23 @@ class AddViewModel(private val engine: Engine) : ViewModel() {
         }
     }
 
+    /** Looks an address up that the screen itself offered, as if it had been pasted. Nothing is added. */
+    fun look(url: String) {
+        edit(url)
+        detect()
+    }
+
     fun cancel() {
         job?.cancel()
         job = null
         _state.value = AddState.Idle
+    }
+
+    /** Empties the field and forgets the answer, which brings the well known apps back. */
+    fun clear() {
+        if (_state.value is AddState.Adding) return
+        cancel()
+        input = ""
     }
 
     fun add(found: Detection.Found, install: Boolean) {

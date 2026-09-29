@@ -62,6 +62,14 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     private val eventIds = AtomicLong(10_000)
     private val tokens = MutableStateFlow(setOf<String>())
 
+    companion object {
+        /** A device that has no file picker, no settings page for installs, and has not allowed installs yet. */
+        const val BARE = "bare"
+
+        /** "end-expired" ends the open handoff that way and leaves everything else as it is, for a look at the screen by hand. */
+        const val END_PREFIX = "end-"
+    }
+
     /** Tests shorten this to make installs finish quickly. */
     @Volatile var stepMs = 120L
 
@@ -84,6 +92,14 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     override val handoff: StateFlow<Handoff?> = _handoff.asStateFlow()
     private val _handoffEnd = MutableStateFlow<HandoffEnd?>(null)
     override val handoffEnd: StateFlow<HandoffEnd?> = _handoffEnd.asStateFlow()
+    private val _orbot = MutableStateFlow(OrbotState.UNKNOWN)
+    override val orbot: StateFlow<OrbotState> = _orbot.asStateFlow()
+
+    /** What Orbot answers when it is asked; tests set it. */
+    @Volatile var orbotAnswer = OrbotState.ON
+
+    /** How often Orbot was asked since the scenario was loaded. */
+    @Volatile var orbotAsked = 0
     private val received = java.util.concurrent.CopyOnWriteArrayList<Received>()
     private var handoffJob: Job? = null
     override val online: StateFlow<Boolean> = _online.asStateFlow()
@@ -96,6 +112,10 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     }
 
     override fun loadScenario(name: String) {
+        if (name.startsWith(END_PREFIX)) {
+            HandoffEnd.entries.firstOrNull { it.name.equals(name.removePrefix(END_PREFIX), ignoreCase = true) }?.let(::endHandoff)
+            return
+        }
         jobs.values.forEach { it.cancel() }
         jobs.clear()
         ticker?.cancel()
@@ -107,6 +127,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
             "thirty" -> invent.manyRows(30) to invent.events()
             "offline" -> invent.offlineRows() to invent.events()
             "errors" -> invent.errorRows() to invent.events().filter { it.kind in setOf(EventKind.BLOCKED, EventKind.FAILED, EventKind.CHECK_FAILED) }
+            BARE -> invent.defaultRows() to invent.events()
             else -> invent.defaultRows() to invent.events()
         }
         _apps.value = ordered(rows)
@@ -115,10 +136,14 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         _settings.value = Settings()
         _online.value = name != "offline"
         nothingWaits = false
-        installsAllowed = true
-        filePicker = true
-        installSettings = true
+        installsAllowed = name != BARE
+        filePicker = name != BARE
+        installSettings = name != BARE
         localNetwork = true
+        savedFiles = true
+        orbotAnswer = OrbotState.ON
+        orbotAsked = 0
+        _orbot.value = OrbotState.UNKNOWN
         closeHandoff()
         tokens.value = if (rows.isEmpty()) emptySet() else setOf("api.github.com")
         if (name == "default") startTicker()
@@ -415,8 +440,12 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         return SavedFile("stamp-apps-2026-09-29.json", "Download/Stamp", "/storage/emulated/0/Download/Stamp/stamp-apps-2026-09-29.json", System.currentTimeMillis(), 18_432)
     }
 
+    /** Switched off by a test to stand for a device that holds no export file. */
+    @Volatile var savedFiles = true
+
     override suspend fun importableFiles(): List<SavedFile> {
         delay(stepMs * 4)
+        if (!savedFiles) return emptyList()
         val now = System.currentTimeMillis()
         return listOf(
             SavedFile("stamp-apps-2026-09-29.json", "Download/Stamp", "/storage/emulated/0/Download/Stamp/stamp-apps-2026-09-29.json", now - 3_600_000, 18_432),
@@ -447,6 +476,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         handoffJob = scope.launch {
             delay(stepMs * 40)
             receive(Received.Link(FakeLinks.NEW_APP))
+            delay(stepMs * 10)
+            receive(Received.ExportFile("stamp-apps-2026-09-29.json", ByteArray(18_432)))
         }
         return null
     }
@@ -468,13 +499,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         _handoff.value = null
     }
 
-    private val _orbot = MutableStateFlow(OrbotState.UNKNOWN)
-    override val orbot: StateFlow<OrbotState> = _orbot.asStateFlow()
-
-    /** What Orbot answers when it is asked; tests set it. */
-    @Volatile var orbotAnswer = OrbotState.ON
-
     override fun askOrbot() {
+        orbotAsked++
         scope.launch {
             if (orbotAnswer == OrbotState.ON) {
                 _orbot.value = OrbotState.STARTING

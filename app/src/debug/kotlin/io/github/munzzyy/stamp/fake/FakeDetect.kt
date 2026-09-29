@@ -29,6 +29,9 @@ object FakeLinks {
     /** A repository with releases but nothing an Android device can install, like most starred ones. */
     const val NO_FILE_PREFIX = "https://github.com/example/tool-"
 
+    /** A repository given by its address, which answers with the apps it holds and says that there are more. */
+    const val REPOSITORY = "https://apps.example.org/fdroid/repo"
+
     /** Where Harbor Terminal moved: the same app and signer, so following it works. */
     const val MOVED_HOME = "https://github.com/example-org/harborterm"
 
@@ -63,8 +66,17 @@ fun fakeDetect(input: String, invent: Invent): Detection {
         }
         lower.startsWith(FakeLinks.NEW_APP) -> found(invent, "Sparrow", SourceTypes.GITHUB, "sparrow", emptyList())
         lower.startsWith(FakeLinks.SUGGESTED_PREFIX) -> text.trimEnd('/').substringAfterLast('/').let { slug ->
-            found(invent, FakeSuggestions.all.firstOrNull { it.url.endsWith("/$slug") }?.name ?: slug, SourceTypes.FORGEJO, slug, emptyList())
+            val suggested = FakeSuggestions.all.firstOrNull { it.url.endsWith("/$slug") }
+            found(invent, suggested?.name ?: slug, SourceTypes.FORGEJO, slug, emptyList()).copy(builtInPin = suggested?.pinned == true)
         }
+        lower.startsWith(FakeLinks.REPOSITORY) -> Detection.Results(
+            text,
+            listOf("Lantern Player", "Pocket Notes", "Tide Table").map { name ->
+                val slug = name.lowercase().filter { it.isLetterOrDigit() }
+                SearchHit(name, null, "An invented app of an invented repository.", FakeLinks.SUGGESTED_PREFIX + slug, "Example Apps")
+            },
+            more = true,
+        )
         lower.startsWith(FakeLinks.WARNED_APP) -> found(
             invent, "Wren", SourceTypes.FORGEJO, "wren",
             listOf("The newest release is a pre-release. It is offered because it is the only one with a file.", "This project publishes no checksums, so only the signature can be checked."),

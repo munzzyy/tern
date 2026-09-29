@@ -12,13 +12,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,70 +24,84 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import io.github.munzzyy.stamp.R
 import io.github.munzzyy.stamp.engine.SearchHit
+import io.github.munzzyy.stamp.ui.add.brief
 import io.github.munzzyy.stamp.ui.common.ProblemBox
-import io.github.munzzyy.stamp.ui.common.SectionHeader
+import io.github.munzzyy.stamp.ui.common.QuietButton
+import io.github.munzzyy.stamp.ui.common.ReadBlock
+import io.github.munzzyy.stamp.ui.common.SectionCard
+import io.github.munzzyy.stamp.ui.common.TonalButton
+import io.github.munzzyy.stamp.ui.common.focusLook
 import io.github.munzzyy.stamp.ui.common.textFieldKeys
+import io.github.munzzyy.stamp.ui.theme.LocalLook
 
 const val STARS_USER_TAG = "stars_user"
 const val STARS_SHOW_TAG = "stars_show"
 const val STARS_ADD_TAG = "stars_add"
 
+private const val MAX_STAR_DESCRIPTION = 160
+
 fun LazyListScope.starsSection(state: StarsState, vm: StarsViewModel) {
-    item(key = "stars-heading") { SectionHeader(stringResource(R.string.import_stars_heading)) }
-    item(key = "stars-explain") {
-        Padded { Text(stringResource(R.string.import_stars_explain), style = MaterialTheme.typography.bodyLarge) }
-    }
-    when (state) {
-        StarsState.Idle -> item(key = "stars-ask") { AskUser(vm::look, problem = null) }
-        is StarsState.Failed -> item(key = "stars-ask") { AskUser(vm::look, problem = state) }
-        StarsState.Loading -> item(key = "stars-loading") {
-            Padded { Working(stringResource(R.string.import_stars_loading), stringResource(R.string.action_cancel), vm::reset) }
-        }
-        is StarsState.Listed -> {
-            item(key = "stars-count") {
-                Padded {
+    item(key = "stars") {
+        val look = LocalLook.current
+        SectionCard(
+            title = stringResource(R.string.import_stars_heading),
+            modifier = Modifier
+                .padding(top = look.gap)
+                .widthIn(max = look.contentMaxWidth),
+        ) {
+            // What a list has not laid out yet gets focus only through something that holds its place, which the stop in front of a field does not.
+            ReadBlock { Text(stringResource(R.string.import_stars_explain), style = MaterialTheme.typography.bodyLarge) }
+            val inside = Modifier.padding(horizontal = look.cardPadding, vertical = look.gapSmall / 2)
+            when (state) {
+                StarsState.Idle -> AskUser(vm::look, problem = null)
+                is StarsState.Failed -> AskUser(vm::look, problem = state)
+                StarsState.Loading -> Working(stringResource(R.string.import_stars_loading), stringResource(R.string.action_cancel), vm::reset, inside)
+                is StarsState.Listed -> {
                     val n = state.hits.size
-                    Text(
-                        if (n == 0) stringResource(R.string.import_stars_none, state.user) else pluralStringResource(R.plurals.import_stars_count, n, n, state.user),
-                        style = MaterialTheme.typography.bodyLarge,
+                    Words(if (n == 0) stringResource(R.string.import_stars_none, state.user) else pluralStringResource(R.plurals.import_stars_count, n, n, state.user))
+                    QuietButton(stringResource(R.string.import_stars_other_user), onClick = vm::reset, modifier = Modifier.padding(horizontal = look.focusRoom))
+                }
+                is StarsState.Adding -> {
+                    Working(pluralStringResource(R.plurals.import_stars_adding, state.total, state.done, state.total), stringResource(R.string.import_stars_stop), vm::stop, inside)
+                    LinearProgressIndicator(
+                        progress = { if (state.total == 0) 0f else state.done.toFloat() / state.total },
+                        modifier = inside.fillMaxWidth(),
                     )
-                    TextButton(onClick = vm::reset) { Text(stringResource(R.string.import_stars_other_user)) }
+                }
+                is StarsState.Done -> {
+                    val o = state.outcome
+                    Column(inside) { ImportSummaryView(o.added, o.present, o.skipped.map { (name, reason) -> name to skipText(reason) }) }
+                    QuietButton(stringResource(R.string.import_stars_other_user), onClick = vm::reset, modifier = Modifier.padding(horizontal = look.focusRoom))
                 }
             }
-            items(state.hits, key = { "star:" + it.url }, contentType = { "star" }) { hit ->
-                StarRow(hit, picked = hit.url in state.picked, onToggle = { vm.toggle(hit.url) })
-            }
         }
-        is StarsState.Adding -> item(key = "stars-adding") {
-            Padded {
-                Working(pluralStringResource(R.plurals.import_stars_adding, state.total, state.done, state.total), stringResource(R.string.import_stars_stop), vm::stop)
-                LinearProgressIndicator(progress = { if (state.total == 0) 0f else state.done.toFloat() / state.total }, modifier = Modifier.fillMaxWidth())
-            }
-        }
-        is StarsState.Done -> item(key = "stars-done") {
-            Padded {
-                val o = state.outcome
-                ImportSummaryView(o.added, o.present, o.skipped.map { (name, reason) -> name to skipText(reason) })
-                TextButton(onClick = vm::reset) { Text(stringResource(R.string.import_stars_other_user)) }
-            }
+    }
+    if (state is StarsState.Listed) {
+        items(state.hits, key = { "star:" + it.url }, contentType = { "star" }) { hit ->
+            StarRow(hit, picked = hit.url in state.picked, onToggle = { vm.toggle(hit.url) })
         }
     }
 }
 
 @Composable
 private fun AskUser(onLook: (String) -> Unit, problem: StarsState.Failed?) {
+    val look = LocalLook.current
     var user by rememberSaveable { mutableStateOf("") }
     val ready = user.isNotBlank()
-    Padded {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(look.gapSmall),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = look.cardPadding, vertical = look.gapSmall / 2),
+    ) {
         problem?.let {
             ProblemBox(
                 title = it.problem?.message ?: stringResource(R.string.import_stars_failed),
@@ -108,31 +120,35 @@ private fun AskUser(onLook: (String) -> Unit, problem: StarsState.Failed?) {
                 .textFieldKeys()
                 .testTag(STARS_USER_TAG),
         )
-        Button(onClick = { onLook(user) }, enabled = ready, modifier = Modifier.testTag(STARS_SHOW_TAG)) {
-            Text(stringResource(R.string.import_stars_show))
-        }
+        TonalButton(stringResource(R.string.import_stars_show), onClick = { onLook(user) }, enabled = ready, modifier = Modifier.testTag(STARS_SHOW_TAG))
     }
 }
 
 @Composable
 private fun StarRow(hit: SearchHit, picked: Boolean, onToggle: () -> Unit) {
+    val look = LocalLook.current
+    val scheme = MaterialTheme.colorScheme
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(look.gap),
         modifier = Modifier
+            .widthIn(max = look.contentMaxWidth)
             .fillMaxWidth()
-            .heightIn(min = 56.dp)
+            .padding(horizontal = look.focusRoom, vertical = look.focusRoom / 2)
+            .focusLook()
+            .clip(MaterialTheme.shapes.medium)
             .toggleable(value = picked, role = Role.Checkbox, onValueChange = { onToggle() })
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .widthIn(max = 720.dp),
+            .heightIn(min = look.settingHeight - look.focusRoom)
+            .padding(horizontal = look.rowPaddingHorizontal - look.focusRoom, vertical = look.rowPaddingVertical),
     ) {
         Checkbox(checked = picked, onCheckedChange = null)
-        Column(Modifier.weight(1f).padding(start = 16.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(hit.owner?.let { "$it/${hit.name}" } ?: hit.name, style = MaterialTheme.typography.titleSmall)
-            hit.description?.let {
-                Text(it, style = MaterialTheme.typography.bodyMedium, maxLines = 2, overflow = TextOverflow.Ellipsis, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(look.gapSmall / 4)) {
+            Text(hit.owner?.let { "$it/${hit.name}" } ?: hit.name, style = MaterialTheme.typography.titleMedium)
+            hit.description?.takeIf { it.isNotBlank() }?.let {
+                Text(brief(it, MAX_STAR_DESCRIPTION), style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
             }
             hit.stars?.let {
-                Text(pluralStringResource(R.plurals.search_stars, it, it), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(pluralStringResource(R.plurals.search_stars, it, it), style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
             }
         }
     }

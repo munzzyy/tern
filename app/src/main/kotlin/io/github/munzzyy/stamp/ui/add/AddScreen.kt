@@ -1,85 +1,115 @@
 package io.github.munzzyy.stamp.ui.add
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.stamp.R
 import io.github.munzzyy.stamp.engine.Detection
-import io.github.munzzyy.stamp.engine.SearchHit
 import io.github.munzzyy.stamp.ui.LocalEngine
 import io.github.munzzyy.stamp.ui.LocalOnline
-import io.github.munzzyy.stamp.ui.common.OfflineBanner
 import io.github.munzzyy.stamp.ui.LocalSnackbar
+import io.github.munzzyy.stamp.ui.MAX_INCOMING_CHARS
+import io.github.munzzyy.stamp.ui.common.ActionRow
+import io.github.munzzyy.stamp.ui.common.LocalNoTouch
+import io.github.munzzyy.stamp.ui.common.OfflineBanner
+import io.github.munzzyy.stamp.ui.common.PrimaryButton
 import io.github.munzzyy.stamp.ui.common.ProblemBox
+import io.github.munzzyy.stamp.ui.common.QuietButton
+import io.github.munzzyy.stamp.ui.common.ScreenTop
+import io.github.munzzyy.stamp.ui.common.SectionCard
+import io.github.munzzyy.stamp.ui.common.TonalButton
 import io.github.munzzyy.stamp.ui.common.firstFocus
 import io.github.munzzyy.stamp.ui.common.focusWhenShown
-import io.github.munzzyy.stamp.ui.common.rememberScreenFocus
-import io.github.munzzyy.stamp.ui.common.textFieldKeys
 import io.github.munzzyy.stamp.ui.common.rememberActions
-import io.github.munzzyy.stamp.ui.MAX_INCOMING_CHARS
+import io.github.munzzyy.stamp.ui.common.rememberScreenFocus
+import io.github.munzzyy.stamp.ui.common.returnFocus
+import io.github.munzzyy.stamp.ui.common.textFieldKeys
+import io.github.munzzyy.stamp.ui.handoff.HandoffGlyphs
+import io.github.munzzyy.stamp.ui.suggest.Starters
+import io.github.munzzyy.stamp.ui.text.problemAdvice
+import io.github.munzzyy.stamp.ui.theme.LocalLook
 
 const val ADD_FIELD_TAG = "add_field"
 const val ADD_FIND_TAG = "add_find"
 const val ADD_CONFIRM_TAG = "add_confirm"
 const val ADD_INSTALL_TAG = "add_install"
+const val ADD_HANDOFF_TAG = "add_handoff"
 
-@OptIn(ExperimentalMaterial3Api::class)
+private const val HANDOFF_KEY = "handoff"
+
+/** A device that cannot be typed on with ease, or cannot pick a file, is offered the phone instead. */
+fun offersHandoff(noTouch: Boolean, filePicker: Boolean): Boolean = noTouch || !filePicker
+
+/** [onBack] is given when the screen was opened on top of another one, to look at a link that screen offered. */
 @Composable
-fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: (String) -> Unit) {
+fun AddScreen(
+    prefill: String?,
+    nonce: Long,
+    onAdded: (String) -> Unit,
+    onShow: (String) -> Unit,
+    onHandoff: () -> Unit = {},
+    onBack: (() -> Unit)? = null,
+) {
     val engine = LocalEngine.current
-    val vm = viewModel(key = "add") { AddViewModel(engine) }
+    // A link that another screen offered is looked at by itself, and leaves the Add tab as the user left it.
+    val vm = viewModel(key = if (onBack == null) "add" else "add-on-top") { AddViewModel(engine) }
     val state by vm.state.collectAsStateWithLifecycle()
     val added by vm.added.collectAsStateWithLifecycle()
     val clipboard = LocalClipboard.current
     val actions = rememberActions()
+    val look = LocalLook.current
+    val noTouch = LocalNoTouch.current
 
     val online = LocalOnline.current
     val offlineReason = stringResource(R.string.offline_reason)
-    val screen = rememberScreenFocus()
+    var cleared by rememberSaveable { mutableIntStateOf(0) }
+    var listAt by rememberSaveable { mutableIntStateOf(0) }
+    val screen = rememberScreenFocus(again = cleared)
+    val scroll = rememberScrollState()
+    val suggestions = remember(engine) { engine.suggestions() }
+    val handoff = remember(engine, noTouch) { offersHandoff(noTouch, engine.hasFilePicker()) }
+    val starting = state == AddState.Idle && vm.input.isBlank()
+
     LaunchedEffect(prefill, nonce) { vm.prefill(prefill, nonce) }
     LaunchedEffect(added) {
         added?.let {
@@ -87,9 +117,20 @@ fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: 
             onAdded(it)
         }
     }
+    LaunchedEffect(cleared) { if (cleared > 0) scroll.scrollTo(listAt) }
+    val clear: () -> Unit = {
+        vm.clear()
+        cleared++
+    }
+    val find: () -> Unit = {
+        listAt = 0
+        screen.last = null
+        vm.detect()
+    }
+    BackHandler(enabled = onBack == null && !starting && state !is AddState.Adding, onBack = clear)
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text(stringResource(R.string.add_title)) }) },
+        topBar = { ScreenTop(stringResource(R.string.add_title), onBack = onBack) },
         snackbarHost = { SnackbarHost(LocalSnackbar.current) },
     ) { padding ->
         Column(
@@ -99,12 +140,14 @@ fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: 
         ) {
             OfflineBanner(online)
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(look.gap),
                 modifier = Modifier
-                    .fillMaxWidth()
                     .weight(1f)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .verticalScroll(scroll)
+                    .padding(horizontal = look.screenPadding)
+                    .padding(bottom = look.gapSection)
+                    .widthIn(max = look.contentMaxWidth)
+                    .fillMaxWidth(),
             ) {
                 val busy = state is AddState.Looking || state is AddState.Adding
                 OutlinedTextField(
@@ -113,32 +156,73 @@ fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: 
                     label = { Text(stringResource(R.string.add_field_label)) },
                     placeholder = { Text(stringResource(R.string.add_field_hint)) },
                     supportingText = { Text(stringResource(R.string.add_field_help)) },
+                    trailingIcon = if (vm.input.isEmpty() || noTouch) {
+                        null
+                    } else {
+                        {
+                            IconButton(onClick = clear) { Icon(Icons.Filled.Clear, contentDescription = stringResource(R.string.add_clear)) }
+                        }
+                    },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri, imeAction = ImeAction.Go),
-                    keyboardActions = KeyboardActions(onGo = { if (online) vm.detect() }),
+                    keyboardActions = KeyboardActions(onGo = { if (online) find() }),
                     modifier = Modifier
                         .fillMaxWidth()
                         .testTag(ADD_FIELD_TAG)
                         .firstFocus(screen)
                         .textFieldKeys(),
                 )
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End), modifier = Modifier.fillMaxWidth()) {
-                    TextButton(onClick = {
-                        actions.run {
-                            val text = clipboard.getClipEntry()?.clipData?.takeIf { it.itemCount > 0 }?.getItemAt(0)?.text
-                            if (!text.isNullOrBlank()) vm.edit(text.toString().take(MAX_INCOMING_CHARS))
-                        }
-                    }) { Text(stringResource(R.string.action_paste)) }
-                    Button(
-                        onClick = { vm.detect() },
-                        enabled = vm.input.isNotBlank() && !busy && online,
-                        modifier = Modifier
-                            .testTag(ADD_FIND_TAG)
-                            .then(if (online) Modifier else Modifier.semantics { stateDescription = offlineReason }),
-                    ) { Text(stringResource(R.string.action_find)) }
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2, Alignment.End),
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = look.focusRoom),
+                ) {
+                    QuietButton(
+                        stringResource(R.string.action_paste),
+                        onClick = {
+                            actions.run {
+                                val text = clipboard.getClipEntry()?.clipData?.takeIf { it.itemCount > 0 }?.getItemAt(0)?.text
+                                if (!text.isNullOrBlank()) vm.edit(text.toString().take(MAX_INCOMING_CHARS))
+                            }
+                        },
+                    )
+                    val findButton = Modifier
+                        .testTag(ADD_FIND_TAG)
+                        .then(if (online) Modifier else Modifier.semantics { stateDescription = offlineReason })
+                    val ready = vm.input.isNotBlank() && !busy && online
+                    // One filled button on the screen: once an app is shown, adding it is what matters.
+                    if (state is AddState.Answer) {
+                        TonalButton(stringResource(R.string.action_find), onClick = find, modifier = findButton, enabled = ready)
+                    } else {
+                        PrimaryButton(stringResource(R.string.action_find), onClick = find, modifier = findButton, enabled = ready)
+                    }
                 }
                 when (val s = state) {
-                    AddState.Idle -> Unit
+                    AddState.Idle -> if (starting) {
+                        if (handoff) {
+                            SectionCard {
+                                ActionRow(
+                                    title = stringResource(R.string.handoff_title),
+                                    summary = stringResource(R.string.handoff_effect),
+                                    icon = HandoffGlyphs.Phone,
+                                    onClick = onHandoff,
+                                    modifier = Modifier
+                                        .testTag(ADD_HANDOFF_TAG)
+                                        .returnFocus(screen, HANDOFF_KEY),
+                                )
+                            }
+                        }
+                        Starters(
+                            suggestions = suggestions,
+                            onLook = {
+                                listAt = scroll.value
+                                vm.look(it.url)
+                            },
+                            rowFocus = { Modifier.returnFocus(screen, it.url) },
+                        )
+                    }
                     is AddState.Looking -> Busy(stringResource(R.string.add_looking), onCancel = vm::cancel)
                     is AddState.Adding -> Busy(stringResource(R.string.add_adding), onCancel = null)
                     AddState.Broken -> ProblemBox(
@@ -156,10 +240,10 @@ fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: 
                                 onAdd = { install -> vm.add(d, install) },
                                 onShow = onShow,
                             )
-                            is Detection.Results -> SearchResults(d, onPick = { vm.detect(it.url) })
+                            is Detection.Results -> ResultsList(d, onPick = { vm.look(it.url) })
                             is Detection.Failed -> ProblemBox(
                                 title = d.problem.message,
-                                body = stringResource(io.github.munzzyy.stamp.ui.text.problemAdvice(d.problem.kind, installed = false)),
+                                body = stringResource(problemAdvice(d.problem.kind, installed = false)),
                                 action = stringResource(R.string.action_try_again),
                                 onAction = { vm.detect() },
                             )
@@ -173,48 +257,17 @@ fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: 
 
 @Composable
 private fun Busy(text: String, onCancel: (() -> Unit)?) {
+    val look = LocalLook.current
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(look.gap),
         modifier = Modifier
             .fillMaxWidth()
+            .padding(horizontal = look.cardPadding)
             .semantics { liveRegion = LiveRegionMode.Polite },
     ) {
-        CircularProgressIndicator()
+        CircularProgressIndicator(Modifier.size(look.glyph + look.gapSmall))
         Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-        onCancel?.let { TextButton(onClick = it, modifier = Modifier.focusWhenShown()) { Text(stringResource(R.string.action_cancel)) } }
-    }
-}
-
-@Composable
-private fun SearchResults(results: Detection.Results, onPick: (SearchHit) -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Text(
-            if (results.hits.isEmpty()) {
-                stringResource(R.string.search_none, results.query)
-            } else {
-                pluralStringResource(R.plurals.search_count, results.hits.size, results.hits.size, results.query)
-            },
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.primary,
-        )
-        for (hit in results.hits) {
-            val stars = hit.stars?.let { pluralStringResource(R.plurals.search_stars, it, it) }
-            val source = listOfNotNull(hit.owner, hit.origin, stars).joinToString(" · ")
-            ListItem(
-                headlineContent = { Text(hit.name) },
-                supportingContent = {
-                    Column {
-                        Text(source)
-                        hit.description?.let { Text(it, maxLines = 3) }
-                    }
-                },
-                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                modifier = Modifier
-                    .heightIn(min = 56.dp)
-                    .widthIn(max = 720.dp)
-                    .selectable(selected = false, role = Role.Button, onClick = { onPick(hit) }),
-            )
-        }
+        onCancel?.let { QuietButton(stringResource(R.string.action_cancel), onClick = it, modifier = Modifier.focusWhenShown()) }
     }
 }

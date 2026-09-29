@@ -3,6 +3,7 @@ package io.github.munzzyy.stamp.net
 import java.io.IOException
 import java.net.InetAddress
 import java.net.InetSocketAddress
+import java.net.Proxy
 import java.net.Socket
 
 /**
@@ -14,6 +15,13 @@ object ProxyProbe {
     private val THIS_DEVICE = byteArrayOf(127, 0, 0, 1)
     private const val SOCKS_5 = 5
     private const val NO_LOGIN = 0
+
+    /** Whether [proxy] answers, when it is on this device. One elsewhere is not asked and counts as answering. */
+    fun answers(proxy: Proxy): Boolean {
+        val address = proxy.address() as? InetSocketAddress ?: return true
+        if (address.hostString != "127.0.0.1" && !address.hostString.equals("localhost", ignoreCase = true)) return true
+        return answers(address.port)
+    }
 
     fun answers(port: Int, withinMs: Int = 1_500): Boolean {
         if (port !in 1..65535) return false

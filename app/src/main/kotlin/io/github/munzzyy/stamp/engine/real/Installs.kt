@@ -201,7 +201,7 @@ internal class Installs(private val e: RealEngine) {
             throw cancel
         } catch (io: IOException) {
             Log.w(TAG, "Install of $appId stopped: ${io.javaClass.simpleName}: ${io.message}")
-            fail(appId, release, asset, Problem(ProblemKind.STORAGE, e.texts.downloadFailed(io.message)))
+            fail(appId, release, asset, Problem(ProblemKind.STORAGE, e.texts.downloadFailed(io)))
             null
         } catch (bug: RuntimeException) {
             Log.e(TAG, "Install of $appId failed unexpectedly", bug)
@@ -242,7 +242,7 @@ internal class Installs(private val e: RealEngine) {
                 }
             }
         } catch (ex: IOException) {
-            throw StepFailure(ProblemKind.NETWORK, e.texts.downloadFailed(ex.message))
+            throw StepFailure(ProblemKind.NETWORK, e.texts.downloadFailed(ex))
         } ?: return null
         val source = fetched?.let { e.texts.checksumFile(it.name) } ?: e.texts.checksumNotes()
         return normalized(sha) to source

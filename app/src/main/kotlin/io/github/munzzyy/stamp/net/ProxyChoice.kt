@@ -7,6 +7,11 @@ import java.net.Proxy
 
 class ProxySettingsException(message: String) : IOException(message)
 
+/** A request through a proxy failed, and the proxy did not answer when it was asked. Nothing went round it. */
+class ProxySilentException(cause: IOException) : IOException("The proxy did not answer", cause)
+
+fun Throwable.isProxySilent(): Boolean = generateSequence(this) { it.cause }.take(8).any { it is ProxySilentException }
+
 object ProxyChoice {
     const val ORBOT_HOST = "127.0.0.1"
     const val ORBOT_PORT = 9050

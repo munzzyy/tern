@@ -4,8 +4,10 @@ import com.sun.net.httpserver.HttpServer
 import io.github.munzzyy.stamp.core.net.HttpRequest
 import io.github.munzzyy.stamp.net.ProxyChoice
 import io.github.munzzyy.stamp.net.ProxyDoor
+import io.github.munzzyy.stamp.net.ProxyProbe
 import io.github.munzzyy.stamp.net.ProxySettingsException
 import io.github.munzzyy.stamp.net.UrlConnectionHttp
+import io.github.munzzyy.stamp.net.isProxySilent
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.net.Proxy
@@ -13,6 +15,7 @@ import java.net.ServerSocket
 import java.util.concurrent.CopyOnWriteArrayList
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertSame
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
@@ -157,5 +160,36 @@ class ProxyChoiceTest {
         settings = Settings()
         assertEquals("ok", http.execute(HttpRequest(address)).text())
         assertEquals(listOf("/file", "/file"), seen.toList())
+    }
+
+    @Test
+    fun aRequestThroughAProxyOnThisDeviceThatDoesNotAnswerSaysSo() {
+        val http = UrlConnectionHttp({ UrlConnectionHttp.socks("127.0.0.1", nobodyListens()) }, cleartextHostsForTests = setOf("127.0.0.1"), connectTimeoutMs = 5_000, proxyAnswers = ProxyProbe::answers)
+        try {
+            http.execute(HttpRequest(address)).close()
+            fail("a request went through a proxy that does not exist")
+        } catch (e: IOException) {
+            assertTrue("${e.javaClass.simpleName}: ${e.message}", e.isProxySilent())
+        }
+        assertEquals(emptyList<String>(), seen)
+    }
+
+    @Test
+    fun aProxyThatAnswersIsNotBlamedForAFailure() {
+        val http = UrlConnectionHttp({ UrlConnectionHttp.socks("127.0.0.1", nobodyListens()) }, cleartextHostsForTests = setOf("127.0.0.1"), connectTimeoutMs = 5_000, proxyAnswers = { true })
+        try {
+            http.execute(HttpRequest(address)).close()
+            fail("a request went through a proxy that does not exist")
+        } catch (e: IOException) {
+            assertFalse("${e.javaClass.simpleName}: ${e.message}", e.isProxySilent())
+        }
+    }
+
+    @Test
+    fun onlyAProxyOnThisDeviceIsAsked() {
+        assertTrue(ProxyProbe.answers(UrlConnectionHttp.socks("proxy.example.org", 1080)))
+        assertTrue(ProxyProbe.answers(UrlConnectionHttp.socks("10.0.0.1", nobodyListens())))
+        assertFalse(ProxyProbe.answers(UrlConnectionHttp.socks("127.0.0.1", nobodyListens())))
+        assertFalse(ProxyProbe.answers(UrlConnectionHttp.socks("localhost", nobodyListens())))
     }
 }

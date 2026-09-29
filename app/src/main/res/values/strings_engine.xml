@@ -29,6 +29,7 @@
     <string name="engine_test_only">This file is a test build, which Android refuses to install from an app store.</string>
     <string name="engine_needs_newer_android">This version needs Android API level %1$d or later.</string>
 
+    <string name="engine_proxy_silent">The proxy did not answer, so nothing was sent. Stamp never goes round it.</string>
     <string name="engine_check_network">The source could not be reached: %1$s</string>
     <string name="engine_check_not_found">The source has nothing at this address any more: %1$s</string>
     <string name="engine_check_auth">The source refused the request. Add or check the token for this site in settings. (%1$s)</string>

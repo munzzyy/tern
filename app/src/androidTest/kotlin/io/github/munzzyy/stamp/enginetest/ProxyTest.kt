@@ -11,7 +11,9 @@ import io.github.munzzyy.stamp.engine.ProblemKind
 import io.github.munzzyy.stamp.engine.ProxyMode
 import io.github.munzzyy.stamp.enginetest.LoopbackServer.Companion.head
 import io.github.munzzyy.stamp.install.Installer
+import io.github.munzzyy.stamp.engine.real.Texts
 import io.github.munzzyy.stamp.net.ProxyDoor
+import io.github.munzzyy.stamp.net.ProxyProbe
 import io.github.munzzyy.stamp.net.UrlConnectionHttp
 import java.io.Closeable
 import java.io.DataInputStream
@@ -66,7 +68,7 @@ class ProxyTest {
         val door = ProxyDoor()
         private val server = LoopbackServer { request, out -> answer(request, out) }
         private val local = "http://127.0.0.1:${server.port}"
-        private val real = UrlConnectionHttp(door::proxy, cleartextHostsForTests = setOf("127.0.0.1"), connectTimeoutMs = 5_000, readTimeoutMs = 10_000)
+        private val real = UrlConnectionHttp(door::proxy, cleartextHostsForTests = setOf("127.0.0.1"), connectTimeoutMs = 5_000, readTimeoutMs = 10_000, proxyAnswers = ProxyProbe::answers)
 
         /** Sends what is meant for the forge to the socket on this device. Nothing else about the request changes. */
         val http = HttpClient { request ->
@@ -201,6 +203,7 @@ class ProxyTest {
                 h.engine.check(id)
                 assertEquals(h.describe(id), AppStatus.ERROR, h.row(id).status)
                 assertEquals(h.describe(id), ProblemKind.NETWORK, h.row(id).problem?.kind)
+                assertEquals(h.describe(id), Texts(targetContext).proxySilent(), h.row(id).problem?.message)
                 assertEquals("requests arrived although the proxy did not answer", 0, wire.arrived)
 
                 h.direct()
@@ -254,6 +257,7 @@ class ProxyTest {
                 h.engine.install(id)
                 waitUntil(30_000, "the download to give up") { h.state(id).installProblem != null && h.row(id).progress == null }
                 assertEquals(h.describe(id), ProblemKind.NETWORK, h.state(id).installProblem?.kind)
+                assertEquals(h.describe(id), Texts(targetContext).proxySilent(), h.state(id).installProblem?.message)
                 assertEquals(h.describe(id), ProblemKind.NETWORK, h.row(id).problem?.kind)
                 assertEquals("requests arrived although the proxy did not answer", 0, wire.arrived)
                 assertNull(h.engine.downloader.kept(id, file))

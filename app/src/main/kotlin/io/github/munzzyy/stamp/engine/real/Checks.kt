@@ -15,6 +15,7 @@ import io.github.munzzyy.stamp.data.StateJson
 import io.github.munzzyy.stamp.engine.AppStatus
 import io.github.munzzyy.stamp.engine.EventKind
 import io.github.munzzyy.stamp.engine.Problem
+import io.github.munzzyy.stamp.net.isProxySilent
 import io.github.munzzyy.stamp.engine.ProblemKind
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.Dispatchers
@@ -169,7 +170,7 @@ internal class Checks(private val e: RealEngine) {
         val t = e.texts
         val detail = Shown.lineOrNull(ex.message, MAX_DETAIL)
         return when (ex.kind) {
-            SourceErrorKind.NETWORK -> Problem(ProblemKind.NETWORK, t.checkNetwork(detail))
+            SourceErrorKind.NETWORK -> Problem(ProblemKind.NETWORK, if (ex.isProxySilent()) t.proxySilent() else t.checkNetwork(detail))
             SourceErrorKind.NOT_FOUND -> Problem(ProblemKind.NOT_FOUND, t.checkNotFound(detail))
             SourceErrorKind.AUTH -> Problem(ProblemKind.AUTH, t.checkAuth(detail))
             SourceErrorKind.RATE_LIMITED -> Problem(ProblemKind.RATE_LIMITED, t.checkRateLimited(ex.retryAtMs), ex.retryAtMs)

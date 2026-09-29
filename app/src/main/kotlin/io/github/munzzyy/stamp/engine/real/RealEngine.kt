@@ -67,6 +67,7 @@ import io.github.munzzyy.stamp.install.PackageManagerArchiveReader
 import io.github.munzzyy.stamp.install.SessionInstaller
 import io.github.munzzyy.stamp.net.ProxyChoice
 import io.github.munzzyy.stamp.net.ProxyDoor
+import io.github.munzzyy.stamp.net.ProxyProbe
 import io.github.munzzyy.stamp.net.UrlConnectionHttp
 import io.github.munzzyy.stamp.work.Notifier
 import io.github.munzzyy.stamp.work.Scheduler
@@ -666,7 +667,7 @@ class RealEngine(
         fun shared(context: Context): RealEngine {
             shared?.let { return it }
             val door = ProxyDoor()
-            val engine = RealEngine(context, UrlConnectionHttp(proxy = door::proxy))
+            val engine = RealEngine(context, UrlConnectionHttp(proxy = door::proxy, proxyAnswers = ProxyProbe::answers))
             door.follow(engine::proxy)
             shared = engine
             return engine

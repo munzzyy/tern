@@ -5,6 +5,8 @@ import android.text.format.DateFormat
 import android.text.format.Formatter
 import io.github.munzzyy.stamp.R
 import io.github.munzzyy.stamp.core.select.PickReason
+import io.github.munzzyy.stamp.net.isProxySilent
+import java.io.IOException
 import java.util.Date
 
 /** Every sentence the engine shows, from resources so it can be translated. */
@@ -22,6 +24,8 @@ class Texts(context: Context) : ImportTexts {
 
 
     fun cannotWrite() = s(R.string.engine_cannot_write)
+    fun proxySilent() = s(R.string.engine_proxy_silent)
+    fun downloadFailed(e: IOException) = if (e.isProxySilent()) proxySilent() else downloadFailed(e.message)
     fun downloadFailed(detail: String?) = if (detail.isNullOrBlank()) s(R.string.engine_download_failed_plain) else s(R.string.engine_download_failed, detail)
     override fun serverStatus(code: Int) = s(R.string.engine_server_status, code)
     fun encodedDownload(encoding: String) = s(R.string.engine_encoded_download, encoding.take(40))

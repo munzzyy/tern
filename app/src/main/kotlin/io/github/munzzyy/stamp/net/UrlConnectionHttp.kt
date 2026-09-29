@@ -31,6 +31,7 @@ class UrlConnectionHttp(
     private val connectTimeoutMs: Int = 15_000,
     private val readTimeoutMs: Int = 30_000,
     private val isLocal: (host: String) -> Boolean = Urls::isLocal,
+    private val proxyAnswers: (Proxy) -> Boolean = { true },
 ) : HttpClient {
     override fun execute(request: HttpRequest): HttpResponse {
         var url = checked(request.url, request.url)
@@ -43,7 +44,7 @@ class UrlConnectionHttp(
                 connection.responseCode
             } catch (e: IOException) {
                 connection.disconnect()
-                throw e
+                throw silentProxy(e)
             }
             if (status in REDIRECTS) {
                 val location = connection.getHeaderField("Location")
@@ -63,6 +64,16 @@ class UrlConnectionHttp(
             return respond(connection, status, url)
         }
         throw TooManyRedirectsException(request.url)
+    }
+
+    /** What the socket said matters less than that the proxy was not there, so that is what a failure says then. */
+    private fun silentProxy(e: IOException): IOException {
+        val via = try {
+            proxy()
+        } catch (_: IOException) {
+            return e
+        }
+        return if (via.type() == Proxy.Type.SOCKS && !proxyAnswers(via)) ProxySilentException(e) else e
     }
 
     private fun open(url: URL, method: String, headers: Map<String, String>, authorization: String?): HttpURLConnection {

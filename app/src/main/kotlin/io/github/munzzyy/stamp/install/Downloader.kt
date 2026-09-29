@@ -133,7 +133,7 @@ class Downloader(
         val response = try {
             http.execute(HttpRequest(url, headers = headers, authorization = authorization))
         } catch (e: IOException) {
-            throw StepFailure(ProblemKind.NETWORK, texts.downloadFailed(e.message))
+            throw StepFailure(ProblemKind.NETWORK, texts.downloadFailed(e))
         }
         return response.use { copy(it, files, url, resumeFrom, meta?.validator, onProgress) }
     }
@@ -220,7 +220,7 @@ class Downloader(
                         response.body.read(buffer)
                     } catch (e: IOException) {
                         ensureActive()
-                        throw StepFailure(ProblemKind.NETWORK, texts.downloadFailed(e.message))
+                        throw StepFailure(ProblemKind.NETWORK, texts.downloadFailed(e))
                     }
                     if (n < 0) break
                     done += n

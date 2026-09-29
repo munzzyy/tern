@@ -22,6 +22,13 @@ After Android has installed the file, that certificate is pinned.
 A pin can also arrive with an import or a link. Such a pin is a decision somebody
 else made, and the Add screen says so before anything is stored.
 
+For fifteen apps of the starter list the first install is not taken on trust.
+Stamp carries the certificate they are signed with, and a first file signed by
+anyone else is refused. A certificate is carried only when a second place names
+the same one as the developer's own file. `docs/SUGGESTIONS.md` has the list,
+the second place for each, and the ten entries for which none was found. A pin
+that arrives with a link or an import does not take the place of a carried one.
+
 ## Every install after that
 
 The checks run in this order, and the first one that fails ends it.
@@ -96,6 +103,20 @@ part of exports and are never written to the log.
 With a SOCKS proxy set, host names are resolved by the proxy. This was checked
 with a logging proxy and a packet capture, not with Orbot itself.
 
+A proxy that is set is never gone round. A request goes through it or fails,
+also when the proxy does not answer and when the setting names no proxy at
+all. One file opens connections, `net/UrlConnectionHttp.kt`, and
+`tools/check-network-doors.sh` fails in CI when a second one appears, when
+anything outside the handoff makes a socket, or when a name is resolved on the
+device. Device tests for this exist and have not been run yet.
+
+With the setting on Orbot, Stamp asks Orbot how it is doing and uses the port
+Orbot reports. Any app on the device can send such an answer, so Stamp takes
+nothing from one but the status and a port on `127.0.0.1`. An answer can point
+Stamp at another port of the device. It cannot point it at another host and
+cannot make a request go direct. Stamp does not check who signed the app that
+holds Orbot's package name.
+
 ## Links, shares and imports
 
 A link or a shared text fills in the Add screen and nothing more. `obtainium://`
@@ -103,9 +124,23 @@ links are handled only after the user turns that on. An import file is checked
 when read: known source types, web addresses, real package names, bounded
 lengths. Filters and pins that came from outside are shown as such.
 
+No file switches on updates that install by themselves. An app that arrives in
+an import is stored as "tell me" even when the file asked for more, because a
+file can come from anyone. That is for the user of the device to switch on,
+app by app.
+
 ## Text from servers
 
-Release notes are parsed into a small block model and drawn by the app. There is
+Names, authors, descriptions, versions, release titles, file names and the
+names of repositories are cleaned where they enter, before they can reach a
+screen or a notification: control and format characters, among them the marks
+that turn the direction of writing and the characters of no width, are left
+out, and white space is made one space. The same is done to the names in an
+import file, to the label of an installed app and to the words of a failed
+check. Without that, a name can be made to look like another.
+
+Release notes are cleaned the same way, keeping their line breaks, and then
+parsed into a small block model and drawn by the app. There is
 no web view. Links open in the browser after their full address has been shown.
 Patterns written by the user or carried in an import are matched under a
 deadline.
@@ -265,7 +300,11 @@ import it.
   that. A minimum age for updates, which lets a bad release be pulled before it
   reaches you, is the setting that helps.
 - A first install from a compromised release page installs what that page
-  offers. Compare the fingerprint with one the developer publishes elsewhere.
+  offers, unless Stamp carries the app's certificate. Compare the fingerprint
+  with one the developer publishes elsewhere.
+- The certificates Stamp carries were confirmed by F-Droid's signed index or
+  by AppVerifier's list. AppVerifier's list is kept by people who look at the
+  same release pages, at another time. It is no second channel.
 - Stamp does not rebuild apps from source. It checks who signed a file, not
   what is in it.
 - It has been tested on emulators. Vendor builds of Android can behave

@@ -4,6 +4,7 @@ import io.github.munzzyy.jackdaw.core.model.Asset
 import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
 import io.github.munzzyy.jackdaw.core.net.HttpRequest
+import io.github.munzzyy.jackdaw.core.net.Urls
 import io.github.munzzyy.jackdaw.core.net.Validator
 import io.github.munzzyy.jackdaw.core.source.CheckContext
 import io.github.munzzyy.jackdaw.core.source.CheckResult
@@ -12,6 +13,7 @@ import io.github.munzzyy.jackdaw.core.source.SourceErrorKind
 import io.github.munzzyy.jackdaw.core.source.SourceException
 import io.github.munzzyy.jackdaw.core.source.SourceListing
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
+import io.github.munzzyy.jackdaw.core.source.guarded
 import io.github.munzzyy.jackdaw.core.xml.XmlScanner
 
 class SourceHutSource : Source {
@@ -25,7 +27,9 @@ class SourceHutSource : Source {
         return SourceSpec(type, "https://git.sr.ht$path")
     }
 
-    override fun check(spec: SourceSpec, context: CheckContext): CheckResult {
+    override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
+
+    private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {
         val feedUrl = "${spec.url}/refs/rss.xml"
         val key = validatorKey(spec, feedUrl)
         val validator = context.validators.get(key)
@@ -61,7 +65,7 @@ class SourceHutSource : Source {
         return response.use { page ->
             if (!page.isSuccess) return emptyList()
             LinkScanner.anchors(page.text(4 * 1024 * 1024)).mapNotNull { link ->
-                val resolved = Urls.resolveHttps(page.url, link.href) ?: return@mapNotNull null
+                val resolved = Urls.resolve(page.url, link.href) ?: return@mapNotNull null
                 val path = resolved.substringBefore('?').lowercase()
                 if (INSTALLABLE.none { path.endsWith(it) }) return@mapNotNull null
                 Asset(name = resolved.substringAfterLast('/'), url = resolved)

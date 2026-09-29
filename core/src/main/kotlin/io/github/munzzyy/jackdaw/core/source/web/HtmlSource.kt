@@ -6,6 +6,7 @@ import io.github.munzzyy.jackdaw.core.model.Asset
 import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
 import io.github.munzzyy.jackdaw.core.net.HttpRequest
+import io.github.munzzyy.jackdaw.core.net.Urls
 import io.github.munzzyy.jackdaw.core.net.Validator
 import io.github.munzzyy.jackdaw.core.source.CheckContext
 import io.github.munzzyy.jackdaw.core.source.CheckResult
@@ -15,9 +16,8 @@ import io.github.munzzyy.jackdaw.core.source.SourceException
 import io.github.munzzyy.jackdaw.core.source.SourceListing
 import io.github.munzzyy.jackdaw.core.source.SourceOptions
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
-import io.github.munzzyy.jackdaw.core.verify.Fingerprints
+import io.github.munzzyy.jackdaw.core.source.guarded
 import io.github.munzzyy.jackdaw.core.version.Version
-import java.nio.charset.StandardCharsets
 import java.util.regex.PatternSyntaxException
 
 class HtmlSource : Source {
@@ -25,7 +25,11 @@ class HtmlSource : Source {
 
     override fun match(url: String): SourceSpec? = null
 
-    override fun check(spec: SourceSpec, context: CheckContext): CheckResult {
+    override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
+
+    private class Found(val url: String, val version: String?, val order: Int)
+
+    private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {
         var currentUrl = spec.url
         for (pattern in parseSteps(spec)) {
             currentUrl = followStep(currentUrl, pattern, context)
@@ -36,48 +40,72 @@ class HtmlSource : Source {
         val response = context.http.execute(HttpRequest(currentUrl, headers = validator?.conditionalHeaders() ?: emptyMap()))
         val html: String
         val finalUrl: String
+        val pageValidator: Validator
         response.use {
             if (it.isNotModified) return CheckResult.Unchanged
+            if (it.status == 404) throw SourceException(SourceErrorKind.NOT_FOUND, "There is no page at $currentUrl")
             if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${it.status} for $currentUrl")
-            context.validators.put(key, Validator.from(it.headers))
+            pageValidator = Validator.from(it.headers)
             html = it.text(PAGE_CAP)
-            finalUrl = it.url
+            finalUrl = Urls.normalize(it.url) ?: currentUrl
         }
 
-        val base = LinkScanner.baseHref(html)?.let { Urls.resolveHttps(finalUrl, it) } ?: finalUrl
+        val base = LinkScanner.baseHref(html)?.let { Urls.resolve(finalUrl, it) } ?: finalUrl
         val linkFilter = compileOrThrow(spec.option(SourceOptions.LINK_FILTER), SourceOptions.LINK_FILTER) ?: DEFAULT_LINK_FILTER
         val versionFrom = spec.option(SourceOptions.VERSION_FROM) ?: "link"
         val sort = spec.option(SourceOptions.SORT) ?: "version"
 
-        data class Match(val url: String, val version: String?, val order: Int)
-
-        val matches = LinkScanner.anchors(html).mapIndexedNotNull { index, anchor ->
-            val resolved = Urls.resolveHttps(base, anchor.href) ?: return@mapIndexedNotNull null
+        val found = LinkScanner.anchors(html).mapIndexedNotNull { index, anchor ->
+            val resolved = Urls.resolve(base, anchor.href) ?: return@mapIndexedNotNull null
             if (!matchesCapped(linkFilter, resolved)) return@mapIndexedNotNull null
             val candidate = when (versionFrom) {
                 "text" -> anchor.text
                 "page" -> html
-                else -> resolved
+                else -> resolved.substringAfter("://").substringAfter('/')
             }
-            Match(resolved, VersionGuess.find(candidate.take(2000)), index)
-        }
-        if (matches.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No installable link on ${spec.url}")
+            Found(resolved, VersionGuess.find(candidate.take(2000)), index)
+        }.distinctBy { it.url }
+        if (found.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No installable link on ${spec.url}")
 
-        val grouped = LinkedHashMap<String, MutableList<Asset>>()
-        val firstSeenAt = LinkedHashMap<String, Int>()
-        for (match in matches) {
-            val id = match.version ?: Fingerprints.sha256(match.url.toByteArray(StandardCharsets.UTF_8))
-            grouped.getOrPut(id) { ArrayList() }.add(Asset(name = match.url.substringAfterLast('/').substringBefore('?'), url = match.url))
-            firstSeenAt.putIfAbsent(id, match.order)
-        }
-
+        val releases = ArrayList<Release>()
+        val versioned = found.filter { it.version != null }.groupBy { it.version!! }
         val ordered = if (sort == "page") {
-            grouped.entries.sortedBy { firstSeenAt.getValue(it.key) }
+            versioned.entries.sortedBy { entry -> entry.value.minOf { it.order } }
         } else {
-            grouped.entries.sortedWith(compareByDescending { Version.parse(it.key) })
+            versioned.entries.sortedWith(compareByDescending { Version.parse(it.key) })
         }
-        val releases = ordered.take(30).map { (id, assets) -> Release(id = id, version = id, assets = assets) }
-        return CheckResult.Listing(SourceListing(releases = releases))
+        for ((version, links) in ordered.take(MAX_RELEASES)) {
+            releases.add(Release(id = version, version = version, pageUrl = finalUrl, assets = links.map { Asset(fileName(it.url), it.url) }))
+        }
+
+        val unversioned = found.filter { it.version == null }.take(MAX_UNVERSIONED)
+        if (unversioned.isNotEmpty()) {
+            releases.add(followedByContent(unversioned, finalUrl, context))
+        } else {
+            context.validators.put(key, pageValidator)
+        }
+        return CheckResult.Listing(SourceListing(releases = releases.take(MAX_RELEASES), name = LinkScanner.title(html)))
+    }
+
+    /**
+     * A link such as latest.apk says nothing about what it holds, and the page around it does not
+     * change when the file does. Its identity is therefore taken from the file itself, and the page
+     * is fetched in full every time.
+     */
+    private fun followedByContent(links: List<Found>, pageUrl: String, context: CheckContext): Release {
+        val identities = ArrayList<String>()
+        val assets = links.map { link ->
+            val probe = DirectSource.probe(link.url, context)
+            identities.add(probe.identity ?: link.url)
+            Asset(fileName(link.url), link.url, size = probe.size)
+        }
+        val id = "file:" + identities.joinToString("|").take(400)
+        return Release(id = id, version = "", pageUrl = pageUrl, assets = assets)
+    }
+
+    private fun fileName(url: String): String {
+        val last = Urls.segments(url).lastOrNull() ?: return "download.apk"
+        return last.take(200)
     }
 
     private fun followStep(url: String, pattern: Regex, context: CheckContext): String {
@@ -85,9 +113,10 @@ class HtmlSource : Source {
         return response.use {
             if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${it.status} for $url")
             val text = it.text(PAGE_CAP)
-            val base = LinkScanner.baseHref(text)?.let { b -> Urls.resolveHttps(it.url, b) } ?: it.url
+            val pageUrl = Urls.normalize(it.url) ?: url
+            val base = LinkScanner.baseHref(text)?.let { b -> Urls.resolve(pageUrl, b) } ?: pageUrl
             LinkScanner.anchors(text).asSequence()
-                .mapNotNull { anchor -> Urls.resolveHttps(base, anchor.href) }
+                .mapNotNull { anchor -> Urls.resolve(base, anchor.href) }
                 .firstOrNull { candidate -> matchesCapped(pattern, candidate) }
                 ?: throw SourceException(SourceErrorKind.UNSUPPORTED, "No link on $url matched a step pattern")
         }
@@ -109,6 +138,7 @@ class HtmlSource : Source {
 
     private fun compileOrThrow(raw: String?, optionName: String): Regex? {
         if (raw == null) return null
+        if (raw.length > MAX_PATTERN) throw SourceException(SourceErrorKind.UNSUPPORTED, "Option $optionName is longer than $MAX_PATTERN characters")
         return try {
             Regex(raw, RegexOption.IGNORE_CASE)
         } catch (e: PatternSyntaxException) {
@@ -121,6 +151,9 @@ class HtmlSource : Source {
     companion object {
         private const val PAGE_CAP = 4 * 1024 * 1024
         private const val MAX_STEPS = 5
+        private const val MAX_RELEASES = 30
+        private const val MAX_UNVERSIONED = 4
+        private const val MAX_PATTERN = 500
         private val DEFAULT_LINK_FILTER = Regex("(?i)\\.(apk|xapk|apks|apkm)(\\?.*)?$")
     }
 }

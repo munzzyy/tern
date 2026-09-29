@@ -38,6 +38,15 @@ object Urls {
         return "https://$host$portPart$path$query"
     }
 
+    /** [normalize], handed back as a URI for callers that need its parts. */
+    fun parseHttps(input: String): URI? = normalize(input)?.let {
+        try {
+            URI(it)
+        } catch (_: URISyntaxException) {
+            null
+        }
+    }
+
     fun host(url: String): String = try {
         URI(url).host?.lowercase().orEmpty()
     } catch (_: URISyntaxException) {

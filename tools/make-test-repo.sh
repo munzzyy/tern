@@ -94,6 +94,7 @@ index = {
             "versions": {
                 "v5": {
                     "added": 1697000000000,
+                    "whatsNew": {"de": "Fehler behoben.", "en-US": "Fixed the crash on start."},
                     "file": {"name": "/org.example.two_5.apk", "sha256": hex64(6), "size": 600},
                     "manifest": {
                         "versionName": "0.5",
@@ -146,6 +147,34 @@ cp "$WORK/entry.jar" "$OUT/repo/entry.jar"
 jarsigner -keystore "$WORK/other.jks" -storepass "$STOREPASS" -sigalg SHA256withRSA -digestalg SHA-256 \
   "$WORK/entry-rekeyed.jar" other >/dev/null
 cp "$WORK/entry-rekeyed.jar" "$OUT/repo/entry-rekeyed.jar"
+
+# Validly signed by the good key, but wrong in a way only the content shows:
+# an index published before the one above, and an index name that leaves the repository.
+signed_variant() {
+  local name="$1" timestamp="$2" index_name="$3"
+  mkdir -p "$WORK/$name"
+  python3 - "$WORK/$name/entry.json" "$INDEX_SHA" "$INDEX_SIZE" "$timestamp" "$index_name" <<'PY'
+import json, sys
+
+path, index_sha, index_size, timestamp, index_name = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), sys.argv[5]
+entry = {
+    "timestamp": timestamp,
+    "version": 20000,
+    "maxAge": 14,
+    "index": {"name": index_name, "sha256": index_sha, "size": index_size, "numPackages": 2},
+    "diffs": {},
+}
+with open(path, "w") as f:
+    json.dump(entry, f, sort_keys=True)
+PY
+  (cd "$WORK/$name" && jar cf "../$name.jar" entry.json)
+  jarsigner -keystore "$WORK/good.jks" -storepass "$STOREPASS" -sigalg SHA256withRSA -digestalg SHA-256 \
+    "$WORK/$name.jar" good >/dev/null
+  cp "$WORK/$name.jar" "$OUT/repo/$name.jar"
+}
+signed_variant entry-older 1600000000000 "/index-v2.json"
+signed_variant entry-newer 1800000000000 "/index-v2.json"
+signed_variant entry-escaping 1700000000000 "/../../other/index-v2.json"
 
 python3 - "$WORK/entry.jar" "$WORK/entry-tampered.jar" <<'PY'
 import json, sys, zipfile

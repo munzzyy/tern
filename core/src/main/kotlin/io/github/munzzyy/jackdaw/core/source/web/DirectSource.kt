@@ -5,6 +5,8 @@ import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
 import io.github.munzzyy.jackdaw.core.net.Headers
 import io.github.munzzyy.jackdaw.core.net.HttpRequest
+import io.github.munzzyy.jackdaw.core.net.HttpResponse
+import io.github.munzzyy.jackdaw.core.net.Urls
 import io.github.munzzyy.jackdaw.core.net.Validator
 import io.github.munzzyy.jackdaw.core.source.CheckContext
 import io.github.munzzyy.jackdaw.core.source.CheckResult
@@ -13,6 +15,7 @@ import io.github.munzzyy.jackdaw.core.source.SourceErrorKind
 import io.github.munzzyy.jackdaw.core.source.SourceException
 import io.github.munzzyy.jackdaw.core.source.SourceListing
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
+import io.github.munzzyy.jackdaw.core.source.guarded
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -23,39 +26,26 @@ class DirectSource : Source {
         val uri = Urls.parseHttps(url) ?: return null
         val path = uri.path?.lowercase() ?: return null
         if (INSTALLABLE.none { path.endsWith(it) }) return null
-        return SourceSpec(type, url)
+        return SourceSpec(type, uri.toString())
     }
 
-    override fun check(spec: SourceSpec, context: CheckContext): CheckResult {
+    override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
+
+    private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {
         val key = validatorKey(spec, "asset")
-        val validator = context.validators.get(key)
-        val conditional = validator?.conditionalHeaders() ?: emptyMap()
-        var response = context.http.execute(HttpRequest(spec.url, method = "HEAD", headers = conditional))
-        if (response.status == 403 || response.status == 405) {
-            response.close()
-            response = context.http.execute(HttpRequest(spec.url, method = "GET", headers = conditional + ("Range" to "bytes=0-0")))
-        }
-        response.use {
+        val conditional = context.validators.get(key)?.conditionalHeaders() ?: emptyMap()
+        ask(spec.url, conditional, context).use {
             if (it.isNotModified) return CheckResult.Unchanged
-            if (!it.isSuccess && it.status != 206) {
-                throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${it.status} for ${spec.url}")
-            }
+            if (it.status == 404) throw SourceException(SourceErrorKind.NOT_FOUND, "There is no file at ${spec.url}")
+            if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${it.status} for ${spec.url}")
+            val probe = Probe.of(it.headers)
+            val id = probe.identity ?: throw SourceException(SourceErrorKind.NO_RELEASES, "The server says nothing that identifies ${spec.url}")
+            val version = it.headers["Last-Modified"]?.let(::formatDate) ?: ""
+            val name = Urls.segments(spec.url).lastOrNull()?.take(200) ?: "download.apk"
             context.validators.put(key, Validator.from(it.headers))
-            val etag = it.headers["ETag"]
-            val lastModified = it.headers["Last-Modified"]
-            val size = contentSize(it.headers)
-            val id = etag ?: lastModified ?: size?.toString()
-                ?: throw SourceException(SourceErrorKind.NO_RELEASES, "No identity for ${spec.url}")
-            val version = lastModified?.let(::formatDate) ?: id.take(12)
-            val name = spec.url.substringAfterLast('/').substringBefore('?')
-            val release = Release(id = id, version = version, assets = listOf(Asset(name = name, url = spec.url, size = size)))
+            val release = Release(id = id, version = version, assets = listOf(Asset(name = name, url = spec.url, size = probe.size)))
             return CheckResult.Listing(SourceListing(releases = listOf(release), name = name))
         }
-    }
-
-    private fun contentSize(headers: Headers): Long? {
-        headers["Content-Range"]?.substringAfterLast('/')?.toLongOrNull()?.let { return it }
-        return headers["Content-Length"]?.toLongOrNull()
     }
 
     private fun formatDate(header: String): String? = try {
@@ -65,7 +55,32 @@ class DirectSource : Source {
         null
     }
 
+    /** What a server says about a file without sending it. */
+    internal class Probe(val identity: String?, val size: Long?) {
+        companion object {
+            fun of(headers: Headers): Probe {
+                val size = headers["Content-Range"]?.substringAfterLast('/')?.toLongOrNull() ?: headers["Content-Length"]?.toLongOrNull()
+                val identity = headers["ETag"]?.takeIf { it.isNotBlank() }
+                    ?: headers["Last-Modified"]?.takeIf { it.isNotBlank() }
+                    ?: size?.takeIf { it > 0 }?.toString()
+                return Probe(identity?.take(200), size?.takeIf { it > 0 })
+            }
+        }
+    }
+
     companion object {
         private val INSTALLABLE = listOf(".apk", ".xapk", ".apks", ".apkm")
+
+        /** HEAD, or the first byte where a server refuses HEAD. */
+        private fun ask(url: String, headers: Map<String, String>, context: CheckContext): HttpResponse {
+            val head = context.http.execute(HttpRequest(url, method = "HEAD", headers = headers))
+            if (head.status != 403 && head.status != 405 && head.status != 501) return head
+            head.close()
+            return context.http.execute(HttpRequest(url, headers = headers + mapOf("Range" to "bytes=0-0", "Accept-Encoding" to "identity")))
+        }
+
+        internal fun probe(url: String, context: CheckContext): Probe = ask(url, emptyMap(), context).use {
+            if (it.isSuccess) Probe.of(it.headers) else Probe(null, null)
+        }
     }
 }

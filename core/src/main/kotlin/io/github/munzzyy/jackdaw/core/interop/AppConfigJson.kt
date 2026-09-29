@@ -7,6 +7,10 @@ import io.github.munzzyy.jackdaw.core.model.AssetPolicy
 import io.github.munzzyy.jackdaw.core.model.ReleasePolicy
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
 import io.github.munzzyy.jackdaw.core.model.UpdateMode
+import io.github.munzzyy.jackdaw.core.apk.BinaryManifest
+import io.github.munzzyy.jackdaw.core.net.Urls
+import io.github.munzzyy.jackdaw.core.source.SourceTypes
+import io.github.munzzyy.jackdaw.core.verify.Fingerprints
 
 class AppConfigJsonException(message: String) : Exception(message)
 
@@ -44,12 +48,17 @@ object AppConfigJson {
     )
 
     fun decode(obj: JsonObject): AppConfig {
-        val id = obj.string("id") ?: throw AppConfigJsonException("Missing id")
+        val id = short(obj.string("id"), "id") ?: throw AppConfigJsonException("Missing id")
         val sourceObj = obj.obj("source") ?: throw AppConfigJsonException("Missing source")
         val type = sourceObj.string("type") ?: throw AppConfigJsonException("Missing source.type")
-        val url = sourceObj.string("url") ?: throw AppConfigJsonException("Missing source.url")
-        val options = sourceObj.obj("options")?.fields?.mapValues { (_, v) -> stringValue(v) ?: "" } ?: emptyMap()
-        val name = obj.string("name") ?: throw AppConfigJsonException("Missing name")
+        if (type !in KNOWN_TYPES) throw AppConfigJsonException("Unknown source type ${type.take(40)}")
+        val url = sourceObj.string("url")?.let(Urls::normalize) ?: throw AppConfigJsonException("source.url is not a web address")
+        val options = sourceObj.obj("options")?.fields.orEmpty()
+            .entries.take(MAX_OPTIONS)
+            .associate { (k, v) -> k.take(MAX_SHORT) to (stringValue(v) ?: "").take(MAX_LONG) }
+        val name = short(obj.string("name"), "name") ?: throw AppConfigJsonException("Missing name")
+        val packageName = obj.string("packageName")
+        if (packageName != null && !BinaryManifest.isValidName(packageName)) throw AppConfigJsonException("packageName is not a package name")
 
         val releasesObj = obj.obj("releases")
         val releases = ReleasePolicy(
@@ -58,7 +67,7 @@ object AppConfigJson {
             titleFilter = releasesObj?.string("titleFilter"),
             notesFilter = releasesObj?.string("notesFilter"),
             versionExtract = releasesObj?.string("versionExtract"),
-            minAgeDays = releasesObj?.long("minAgeDays")?.toInt() ?: 0,
+            minAgeDays = (releasesObj?.long("minAgeDays") ?: 0L).coerceIn(0L, 365L).toInt(),
             skippedReleaseId = releasesObj?.string("skippedReleaseId"),
             fallbackToOlder = releasesObj?.bool("fallbackToOlder") ?: true,
         )
@@ -78,18 +87,31 @@ object AppConfigJson {
             id = id,
             source = SourceSpec(type, url, options),
             name = name,
-            author = obj.string("author"),
-            packageName = obj.string("packageName"),
+            author = short(obj.string("author"), "author"),
+            packageName = packageName,
             releases = releases,
             assets = assets,
             updates = updates,
             trackOnly = obj.bool("trackOnly") ?: false,
-            pinnedSigners = obj.array("pinnedSigners")?.strings() ?: emptyList(),
-            categories = obj.array("categories")?.strings() ?: emptyList(),
+            pinnedSigners = obj.array("pinnedSigners")?.strings().orEmpty().mapNotNull(Fingerprints::normalize).distinct().take(MAX_OPTIONS),
+            categories = obj.array("categories")?.strings().orEmpty().map { it.take(MAX_SHORT) }.take(MAX_OPTIONS),
             favorite = obj.bool("favorite") ?: false,
-            notes = obj.string("notes"),
+            notes = obj.string("notes")?.take(MAX_LONG),
         )
     }
+
+    private fun short(value: String?, field: String): String? {
+        if (value != null && value.length > MAX_SHORT) throw AppConfigJsonException("$field is longer than $MAX_SHORT characters")
+        return value
+    }
+
+    private const val MAX_SHORT = 200
+    private const val MAX_LONG = 4000
+    private const val MAX_OPTIONS = 32
+    private val KNOWN_TYPES = setOf(
+        SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS, SourceTypes.GITLAB, SourceTypes.FORGEJO, SourceTypes.FDROID,
+        SourceTypes.FDROID_REPO, SourceTypes.HTML, SourceTypes.DIRECT, SourceTypes.JENKINS, SourceTypes.SOURCEHUT, SourceTypes.SOURCEFORGE,
+    )
 
     private fun stringValue(value: io.github.munzzyy.jackdaw.core.json.JsonValue): String? = when (value) {
         is io.github.munzzyy.jackdaw.core.json.JsonString -> value.value

@@ -11,8 +11,12 @@ import io.github.munzzyy.jackdaw.core.model.AssetPolicy
 import io.github.munzzyy.jackdaw.core.model.ReleasePolicy
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
 import io.github.munzzyy.jackdaw.core.model.UpdateMode
+import io.github.munzzyy.jackdaw.core.net.Urls
 import io.github.munzzyy.jackdaw.core.source.SourceOptions
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
+import io.github.munzzyy.jackdaw.core.source.forge.ForgejoSource
+import io.github.munzzyy.jackdaw.core.source.forge.GitHubSource
+import io.github.munzzyy.jackdaw.core.source.forge.GitLabSource
 import io.github.munzzyy.jackdaw.core.source.fdroid.FDroidRepoSource
 import io.github.munzzyy.jackdaw.core.source.fdroid.FDroidSource
 import io.github.munzzyy.jackdaw.core.source.web.DirectSource
@@ -42,16 +46,19 @@ object ObtainiumImport {
 
         val apps = ArrayList<AppConfig>()
         val skipped = ArrayList<Skipped>()
+        if (appsArray.size > MAX_APPS) throw ObtainiumImportException("More than $MAX_APPS apps in one file")
         for (entry in appsArray.objects()) {
             val url = entry.string("url") ?: continue
-            val name = entry.string("name")?.takeIf { it.isNotEmpty() } ?: url
+            val name = (entry.string("name")?.takeIf { it.isNotBlank() } ?: url).take(MAX_NAME)
             val overrideSource = entry.string("overrideSource")
-            val settings = entry.string("additionalSettings")?.let { raw -> runCatching { Json.parseObject(raw) }.getOrNull() }
+            val settings = entry.obj("additionalSettings")
+                ?: entry.string("additionalSettings")?.let { raw -> runCatching { Json.parseObject(raw) }.getOrNull() }
                 ?: JsonObject(emptyMap())
 
             val source = mapSource(url, overrideSource, settings)
             if (source == null) {
-                skipped.add(Skipped(name, url, unsupportedReason(overrideSource)))
+                val reason = if (Urls.normalize(url) == null) "Its address is not a web address Jackdaw can open" else unsupportedReason(overrideSource)
+                skipped.add(Skipped(name.take(MAX_NAME), url.take(MAX_NAME), reason))
                 continue
             }
 
@@ -70,17 +77,17 @@ object ObtainiumImport {
 
             apps.add(
                 AppConfig(
-                    id = id ?: url,
+                    id = id ?: source.url,
                     source = source,
                     name = name,
-                    author = entry.string("author")?.takeIf { it.isNotEmpty() },
+                    author = entry.string("author")?.takeIf { it.isNotBlank() }?.take(MAX_NAME),
                     packageName = id,
                     releases = ReleasePolicy(
                         includePrereleases = settingBool(settings, "includePrereleases") ?: false,
                         titleFilter = settingString(settings, "filterReleaseTitlesByRegEx"),
                         notesFilter = settingString(settings, "filterReleaseNotesByRegEx"),
                         versionExtract = settingString(settings, "versionExtractionRegEx"),
-                        minAgeDays = settingInt(settings, "minimumUpdateAgeDays") ?: 0,
+                        minAgeDays = (settingInt(settings, "minimumUpdateAgeDays") ?: 0).coerceIn(0, 365),
                         fallbackToOlder = settingBool(settings, "fallbackToOlderReleases") ?: true,
                     ),
                     assets = AssetPolicy(
@@ -91,52 +98,75 @@ object ObtainiumImport {
                     updates = if (settingBool(settings, "exemptFromBackgroundUpdates") == true) UpdateMode.MANUAL else UpdateMode.NOTIFY,
                     trackOnly = settingBool(settings, "trackOnly") ?: false,
                     pinnedSigners = pinnedSigners,
-                    categories = categories,
+                    categories = categories.map { it.take(MAX_NAME) }.take(32),
                     favorite = pinned,
-                    notes = settingString(settings, "about"),
+                    notes = settingString(settings, "about")?.take(4000),
                 ),
             )
         }
         return ImportResult(apps, skipped)
     }
 
-    private fun mapSource(url: String, overrideSource: String?, settings: JsonObject): SourceSpec? = when (overrideSource) {
-        "GitHub" -> SourceSpec(SourceTypes.GITHUB, url)
-        "GitLab" -> SourceSpec(SourceTypes.GITLAB, url)
-        "Codeberg" -> SourceSpec(SourceTypes.FORGEJO, url)
-        "FDroid" -> SourceSpec(SourceTypes.FDROID, url)
-        "IzzyOnDroid" -> SourceSpec(SourceTypes.FDROID, url)
-        "FDroidRepo" -> {
-            val appIdOrName = settingString(settings, "appIdOrName")
-            SourceSpec(SourceTypes.FDROID_REPO, url, buildMap { if (appIdOrName != null) put(SourceOptions.PACKAGE, appIdOrName) })
+    private fun mapSource(url: String, overrideSource: String?, settings: JsonObject): SourceSpec? {
+        if (overrideSource in UNSUPPORTED_SOURCES) return null
+        val address = Urls.normalize(url) ?: return null
+        return when (overrideSource) {
+            "GitHub" -> GitHubSource().match(address)
+            "GitLab" -> GitLabSource().match(address) ?: repository(SourceTypes.GITLAB, address, minSegments = 2, maxSegments = 12)
+            "Codeberg" -> ForgejoSource().match(address) ?: repository(SourceTypes.FORGEJO, address, minSegments = 2, maxSegments = 2)
+            "FDroid", "IzzyOnDroid" -> FDroidSource().match(address)
+            "FDroidRepo" -> repositoryApp(address, settings)
+            "HTML" -> html(address, settings)
+            "DirectAPKLink" -> SourceSpec(SourceTypes.DIRECT, address)
+            "Jenkins" -> JenkinsSource().match(address)
+            "SourceHut" -> SourceHutSource().match(address)
+            "SourceForge" -> SourceForgeSource().match(address)
+            null -> matchByUrl(address, settings)
+            else -> null
         }
-        "HTML" -> {
-            val filter = settingString(settings, "customLinkFilterRegex")
-            SourceSpec(SourceTypes.HTML, url, buildMap { if (filter != null) put(SourceOptions.LINK_FILTER, filter) })
-        }
-        "DirectAPKLink" -> SourceSpec(SourceTypes.DIRECT, url)
-        "Jenkins" -> SourceSpec(SourceTypes.JENKINS, url)
-        "SourceHut" -> SourceSpec(SourceTypes.SOURCEHUT, url)
-        "SourceForge" -> SourceSpec(SourceTypes.SOURCEFORGE, url)
-        null -> matchByUrl(url)
-        in UNSUPPORTED_SOURCES -> null
-        else -> null
     }
 
-    private fun matchByUrl(url: String): SourceSpec? {
-        FDroidSource().match(url)?.let { return it }
-        FDroidRepoSource().match(url)?.let { return it }
-        JenkinsSource().match(url)?.let { return it }
-        SourceHutSource().match(url)?.let { return it }
-        SourceForgeSource().match(url)?.let { return it }
-        DirectSource().match(url)?.let { return it }
-        val host = runCatching { java.net.URI(url).host?.lowercase() }.getOrNull()
-        return when (host) {
-            "github.com", "www.github.com" -> SourceSpec(SourceTypes.GITHUB, url)
-            "gitlab.com" -> SourceSpec(SourceTypes.GITLAB, url)
-            "codeberg.org" -> SourceSpec(SourceTypes.FORGEJO, url)
-            else -> if (host != null && host !in UNSUPPORTED_HOSTS) SourceSpec(SourceTypes.HTML, url) else null
-        }
+    /** A self-hosted forge the user told Obtainium about by hand: keep the host, cut the path to the project. */
+    private fun repository(type: String, address: String, minSegments: Int, maxSegments: Int): SourceSpec? {
+        val segments = Urls.segments(address).takeWhile { it != "-" }.take(maxSegments)
+        if (segments.size < minSegments) return null
+        val last = segments.last().removeSuffix(".git")
+        val path = (segments.dropLast(1) + last).joinToString("/") { Urls.encodeSegment(it) }
+        val uri = Urls.parseHttps(address) ?: return null
+        return SourceSpec(type, "https://${uri.authority}/$path")
+    }
+
+    private fun repositoryApp(address: String, settings: JsonObject): SourceSpec? {
+        val spec = FDroidRepoSource().match(address) ?: return null
+        val app = settingString(settings, "appIdOrName") ?: Urls.queryParam(address, "appId")
+        return if (app == null) spec else spec.copy(options = spec.options + (SourceOptions.PACKAGE to app))
+    }
+
+    private fun html(address: String, settings: JsonObject): SourceSpec {
+        val options = LinkedHashMap<String, String>()
+        settingString(settings, "customLinkFilterRegex")?.let { options[SourceOptions.LINK_FILTER] = it }
+        val steps = settings.array("intermediateLink")?.objects().orEmpty()
+            .mapNotNull { settingString(it, "customLinkFilterRegex") }
+            .take(MAX_STEPS)
+        if (steps.isNotEmpty()) options[SourceOptions.STEPS] = Json.write(Json.of(steps))
+        if (settingBool(settings, "skipSort") == true) options[SourceOptions.SORT] = "page"
+        if (settingBool(settings, "filterByLinkText") == true) options[SourceOptions.VERSION_FROM] = "text"
+        if (settingBool(settings, "versionExtractWholePage") == true) options[SourceOptions.VERSION_FROM] = "page"
+        return SourceSpec(SourceTypes.HTML, address, options)
+    }
+
+    private fun matchByUrl(address: String, settings: JsonObject): SourceSpec? {
+        if (Urls.host(address).removePrefix("www.") in UNSUPPORTED_HOSTS) return null
+        GitHubSource().match(address)?.let { return it }
+        GitLabSource().match(address)?.let { return it }
+        ForgejoSource().match(address)?.let { return it }
+        FDroidSource().match(address)?.let { return it }
+        if (FDroidRepoSource().match(address) != null) return repositoryApp(address, settings)
+        JenkinsSource().match(address)?.let { return it }
+        SourceHutSource().match(address)?.let { return it }
+        SourceForgeSource().match(address)?.let { return it }
+        DirectSource().match(address)?.let { return it }
+        return html(address, settings)
     }
 
     private fun unsupportedReason(overrideSource: String?): String = when (overrideSource) {
@@ -180,6 +210,10 @@ object ObtainiumImport {
         is JsonString -> v.value.toIntOrNull()
         else -> null
     }
+
+    private const val MAX_APPS = 5000
+    private const val MAX_NAME = 200
+    private const val MAX_STEPS = 5
 
     private val UNSUPPORTED_SOURCES = setOf(
         "APKPure", "APKMirror", "APKCombo", "Aptoide", "Uptodown", "HuaweiAppGallery", "SamsungGalaxyStore",

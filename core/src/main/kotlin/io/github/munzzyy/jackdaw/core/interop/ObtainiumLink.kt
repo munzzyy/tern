@@ -1,24 +1,26 @@
 package io.github.munzzyy.jackdaw.core.interop
 
-import java.net.URI
-
 sealed interface ObtainiumLink {
     data class Add(val url: String) : ObtainiumLink
     data class App(val json: String) : ObtainiumLink
     data class Apps(val json: String) : ObtainiumLink
 
     companion object {
+        private const val PREFIX = "obtainium://"
+        private const val MAX_LENGTH = 200_000
+
+        /** Read by hand: payloads arrive with raw braces and quotes that a strict URI parser refuses. */
         fun parse(uri: String): ObtainiumLink? {
-            val parsed = try {
-                URI(uri.trim())
-            } catch (_: Exception) {
-                return null
+            val text = uri.trim()
+            if (text.length > MAX_LENGTH || !text.startsWith(PREFIX, ignoreCase = true)) return null
+            val rest = text.substring(PREFIX.length)
+            val action = rest.substringBefore('/').substringBefore('?').lowercase()
+            val afterAction = rest.substring(action.length)
+            val data = when {
+                afterAction.startsWith("/") && afterAction.length > 1 -> percentDecode(afterAction.substring(1))
+                afterAction.startsWith("?") -> queryParam(afterAction.substring(1), "url") ?: ""
+                else -> ""
             }
-            if (!parsed.scheme.equals("obtainium", ignoreCase = true)) return null
-            val action = parsed.host?.lowercase() ?: return null
-            val fromQuery = parsed.rawQuery?.let { queryParam(it, "url") }
-            val fromPath = parsed.rawPath?.takeIf { it.length > 1 }?.let { percentDecode(it.substring(1)) }
-            val data = fromQuery ?: fromPath ?: ""
             return when (action) {
                 "add" -> Add(data)
                 "app" -> App(data)

@@ -68,16 +68,23 @@ object Checksums {
         val siblingNames = setOf("${asset.name}.sha256", "${asset.name}.sha256sum")
         release.assets.firstOrNull { it.kind == AssetKind.CHECKSUM && it.name in siblingNames }?.let { sibling ->
             val parsed = parse(fetch(sibling))
-            parsed[asset.name]?.let { return it }
+            named(parsed, asset.name)?.let { return it }
             parsed[""]?.let { return it }
         }
 
         release.assets.firstOrNull { it.kind == AssetKind.CHECKSUM && it.name.lowercase() in SHARED_SUMS_NAMES }?.let { shared ->
-            parse(fetch(shared))[asset.name]?.let { return it }
+            named(parse(fetch(shared)), asset.name)?.let { return it }
         }
 
-        release.notes?.let { notes -> parse(notes)[asset.name]?.let { return it } }
+        release.notes?.let { notes -> named(parse(notes), asset.name)?.let { return it } }
         return null
+    }
+
+    /** Sums files often list a file with the folder it was built in; the file name alone decides. */
+    private fun named(sums: Map<String, String>, name: String): String? {
+        sums[name]?.let { return it }
+        val matches = sums.filterKeys { it.replace('\\', '/').substringAfterLast('/') == name }.values.toSet()
+        return matches.singleOrNull()
     }
 
     private fun nearbyFilename(lines: List<String>, at: Int): String? =

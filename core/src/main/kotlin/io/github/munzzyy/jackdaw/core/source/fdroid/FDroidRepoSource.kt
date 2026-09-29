@@ -5,9 +5,11 @@ import io.github.munzzyy.jackdaw.core.json.JsonObject
 import io.github.munzzyy.jackdaw.core.json.JsonReader
 import io.github.munzzyy.jackdaw.core.json.JsonString
 import io.github.munzzyy.jackdaw.core.model.Asset
+import io.github.munzzyy.jackdaw.core.model.NotesFormat
 import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
 import io.github.munzzyy.jackdaw.core.net.HttpRequest
+import io.github.munzzyy.jackdaw.core.net.Urls
 import io.github.munzzyy.jackdaw.core.net.Validator
 import io.github.munzzyy.jackdaw.core.source.CheckContext
 import io.github.munzzyy.jackdaw.core.source.CheckResult
@@ -17,6 +19,7 @@ import io.github.munzzyy.jackdaw.core.source.SourceException
 import io.github.munzzyy.jackdaw.core.source.SourceListing
 import io.github.munzzyy.jackdaw.core.source.SourceOptions
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
+import io.github.munzzyy.jackdaw.core.source.guarded
 import io.github.munzzyy.jackdaw.core.verify.Fingerprints
 import java.io.ByteArrayInputStream
 import java.io.IOException
@@ -37,12 +40,29 @@ class FDroidRepoSource : Source {
         if (path.isEmpty()) return null
         if (!path.endsWith("/repo") && !path.contains("/fdroid/repo")) return null
         val base = "https://${uri.authority}$path"
-        val fingerprint = queryParam(uri.rawQuery, "fingerprint")?.let(Fingerprints::normalize)
+        val fingerprint = Urls.queryParam(uri.toString(), "fingerprint")?.let(Fingerprints::normalize)
         val options = buildMap { if (fingerprint != null) put(SourceOptions.FINGERPRINT, fingerprint) }
         return SourceSpec(type, base, options)
     }
 
-    override fun check(spec: SourceSpec, context: CheckContext): CheckResult {
+    /** A validly signed index that is older than one already seen is a replay, used to hide updates. */
+    private fun refuseReplay(spec: SourceSpec, context: CheckContext, timestamp: Long?) {
+        if (timestamp == null) throw SourceException(SourceErrorKind.PARSE, "The repository index carries no timestamp")
+        val key = validatorKey(spec, "timestamp")
+        val seen = context.validators.get(key)?.etag?.toLongOrNull()
+        if (seen != null && timestamp < seen) {
+            throw SourceException(SourceErrorKind.AUTH, "The repository served an index older than the one seen before")
+        }
+        context.validators.put(key, Validator(timestamp.toString(), null))
+    }
+
+    private fun insideRepository(name: String): Boolean =
+        name.startsWith("/") && !name.startsWith("//") && name.length <= 512 &&
+            name.split('/').none { it == ".." || it == "." } && name.none { it == '\\' || it == '?' || it == '#' || it.code < 0x20 }
+
+    override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
+
+    private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {
         val pkg = spec.option(SourceOptions.PACKAGE) ?: throw SourceException(SourceErrorKind.UNSUPPORTED, "Missing package option")
         val pinned = spec.option(SourceOptions.FINGERPRINT)
 
@@ -79,6 +99,8 @@ class FDroidRepoSource : Source {
             val indexName = indexInfo.string("name") ?: throw SourceException(SourceErrorKind.PARSE, "entry.json index has no name")
             val indexSha = indexInfo.string("sha256") ?: throw SourceException(SourceErrorKind.PARSE, "entry.json index has no sha256")
             val indexSize = indexInfo.long("size") ?: throw SourceException(SourceErrorKind.PARSE, "entry.json index has no size")
+            if (!insideRepository(indexName)) throw SourceException(SourceErrorKind.PARSE, "entry.json names an index outside the repository")
+            refuseReplay(spec, context, entryObj.long("timestamp"))
 
             val indexUrl = "${spec.url}$indexName"
             val found = fetchIndexV2(indexUrl, indexSha, indexSize, pkg, context)
@@ -109,6 +131,7 @@ class FDroidRepoSource : Source {
         } catch (e: Exception) {
             throw SourceException(SourceErrorKind.PARSE, "index-v1.json is not valid JSON", cause = e)
         }
+        refuseReplay(spec, context, root.obj("repo")?.long("timestamp"))
         val releases = buildV1Releases(root, pkg, spec.url, context)
         if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No installable releases for $pkg")
         return CheckResult.Listing(SourceListing(releases = releases, packageName = pkg, learnedOptions = learned))
@@ -215,7 +238,7 @@ class FDroidRepoSource : Source {
         val device = context.device
         val releases = versions.values.filterIsInstance<JsonObject>().mapNotNull { version ->
             val file = version.obj("file") ?: return@mapNotNull null
-            val fileName = file.string("name") ?: return@mapNotNull null
+            val fileName = file.string("name")?.takeIf(::insideRepository) ?: return@mapNotNull null
             val manifest = version.obj("manifest") ?: return@mapNotNull null
             val versionName = manifest.string("versionName") ?: return@mapNotNull null
             val versionCode = manifest.long("versionCode") ?: return@mapNotNull null
@@ -231,10 +254,19 @@ class FDroidRepoSource : Source {
                 name = fileName.substringAfterLast('/'),
                 url = repoBase + fileName,
                 size = file.long("size"),
-                sha256 = file.string("sha256"),
-                signers = signerHashes,
+                sha256 = file.string("sha256")?.let(Fingerprints::normalize),
+                signers = signerHashes.mapNotNull(Fingerprints::normalize),
             )
-            Release(id = versionCode.toString(), version = versionName, versionCode = versionCode, prerelease = prerelease, assets = listOf(asset))
+            Release(
+                id = versionCode.toString(),
+                version = versionName,
+                versionCode = versionCode,
+                notes = localized(version.obj("whatsNew")),
+                notesFormat = NotesFormat.PLAIN,
+                publishedAtMs = version.long("added"),
+                prerelease = prerelease,
+                assets = listOf(asset),
+            )
         }
         return releases.sortedByDescending { it.versionCode }.take(MAX_RELEASES)
     }
@@ -245,26 +277,23 @@ class FDroidRepoSource : Source {
         val releases = entries.filter { it.string("packageName") == pkg }.mapNotNull { entry ->
             val versionName = entry.string("versionName") ?: return@mapNotNull null
             val versionCode = entry.long("versionCode") ?: return@mapNotNull null
-            val apkName = entry.string("apkName") ?: return@mapNotNull null
+            val apkName = entry.string("apkName")?.takeIf { insideRepository("/$it") } ?: return@mapNotNull null
             val nativecode = entry.array("nativecode")?.strings().orEmpty()
             val minSdk = entry.long("minSdkVersion")
             if (device != null) {
                 if (nativecode.isNotEmpty() && nativecode.none { it in device.abis }) return@mapNotNull null
                 if (minSdk != null && minSdk > device.sdk) return@mapNotNull null
             }
-            val asset = Asset(name = apkName, url = "$repoBase/$apkName", size = entry.long("size"), sha256 = entry.string("hash"))
-            Release(id = versionCode.toString(), version = versionName, versionCode = versionCode, assets = listOf(asset))
+            val asset = Asset(
+                name = apkName,
+                url = "$repoBase/$apkName",
+                size = entry.long("size"),
+                sha256 = entry.string("hash")?.takeIf { entry.string("hashType").equals("sha256", ignoreCase = true) }?.let(Fingerprints::normalize),
+                signers = listOfNotNull(entry.string("signer")?.let(Fingerprints::normalize)),
+            )
+            Release(id = versionCode.toString(), version = versionName, versionCode = versionCode, publishedAtMs = entry.long("added"), assets = listOf(asset))
         }
         return releases.sortedByDescending { it.versionCode }.take(MAX_RELEASES)
-    }
-
-    private fun queryParam(rawQuery: String?, name: String): String? {
-        if (rawQuery == null) return null
-        for (pair in rawQuery.split('&')) {
-            val parts = pair.split('=', limit = 2)
-            if (parts.size == 2 && parts[0] == name) return java.net.URLDecoder.decode(parts[1], "UTF-8")
-        }
-        return null
     }
 
     companion object {

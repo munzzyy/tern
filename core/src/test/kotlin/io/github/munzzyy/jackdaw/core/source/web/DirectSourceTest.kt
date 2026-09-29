@@ -27,8 +27,9 @@ class DirectSourceTest {
     }
 
     @Test
-    fun doesNotMatchHttp() {
-        assertNull(source.match("http://example.com/app.apk"))
+    fun upgradesATypedHttpAddress() {
+        assertEquals("https://example.com/app.apk", source.match("http://example.com/app.apk")?.url)
+        assertNull(source.match("ftp://example.com/app.apk"))
     }
 
     @Test

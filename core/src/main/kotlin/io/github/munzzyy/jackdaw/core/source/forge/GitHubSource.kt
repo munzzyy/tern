@@ -28,7 +28,7 @@ class GitHubSource : Source {
 
     override fun match(url: String): SourceSpec? {
         val normalized = Urls.normalize(url) ?: return null
-        if (Urls.host(normalized) != "github.com") return null
+        if (Urls.host(normalized).removePrefix("www.") != "github.com") return null
         val segments = Urls.segments(normalized)
         if (segments.size < 2) return null
         val owner = segments[0]

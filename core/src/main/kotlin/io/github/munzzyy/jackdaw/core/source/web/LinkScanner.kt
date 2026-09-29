@@ -40,7 +40,7 @@ internal object LinkScanner {
             }
             val attrs = html.substring(after, gt)
             val href = attribute(attrs, "href")
-            val closeIdx = html.indexOf("</a", gt + 1, ignoreCase = true)
+            val closeIdx = boundedIndexOf(html, "</a", gt + 1, TEXT_WINDOW)
             val textEnd = if (closeIdx == -1) minOf(html.length, gt + 1 + TEXT_WINDOW) else closeIdx
             val text = XmlScanner.decode(stripTags(html.substring(gt + 1, textEnd))).trim()
             if (href != null) out.add(AnchorLink(XmlScanner.decode(href), text))
@@ -99,6 +99,26 @@ internal object LinkScanner {
             if (attrName.equals(name, ignoreCase = true) && value != null) return value
         }
         return null
+    }
+
+    fun title(html: String): String? {
+        val open = html.indexOf("<title", 0, ignoreCase = true)
+        if (open == -1) return null
+        val start = boundedIndexOf(html, '>', open + 6, TAG_WINDOW)
+        if (start == -1) return null
+        val end = boundedIndexOf(html, "</title", start + 1, 500)
+        if (end == -1) return null
+        return XmlScanner.decode(html.substring(start + 1, end)).replace(Regex("\\s+"), " ").trim().takeIf { it.isNotEmpty() }
+    }
+
+    private fun boundedIndexOf(s: String, target: String, from: Int, window: Int): Int {
+        val end = minOf(s.length, from + window)
+        var i = from
+        while (i <= end - target.length) {
+            if (s.regionMatches(i, target, 0, target.length, ignoreCase = true)) return i
+            i++
+        }
+        return -1
     }
 
     private fun boundedIndexOf(s: String, target: Char, from: Int, window: Int): Int {

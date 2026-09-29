@@ -4,6 +4,7 @@ import io.github.munzzyy.jackdaw.core.model.Asset
 import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
 import io.github.munzzyy.jackdaw.core.net.HttpRequest
+import io.github.munzzyy.jackdaw.core.net.Urls
 import io.github.munzzyy.jackdaw.core.net.Validator
 import io.github.munzzyy.jackdaw.core.source.CheckContext
 import io.github.munzzyy.jackdaw.core.source.CheckResult
@@ -12,6 +13,7 @@ import io.github.munzzyy.jackdaw.core.source.SourceErrorKind
 import io.github.munzzyy.jackdaw.core.source.SourceException
 import io.github.munzzyy.jackdaw.core.source.SourceListing
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
+import io.github.munzzyy.jackdaw.core.source.guarded
 import io.github.munzzyy.jackdaw.core.version.Version
 import io.github.munzzyy.jackdaw.core.xml.XmlScanner
 
@@ -26,7 +28,9 @@ class SourceForgeSource : Source {
         return SourceSpec(type, "https://sourceforge.net/projects/${match.groupValues[1]}")
     }
 
-    override fun check(spec: SourceSpec, context: CheckContext): CheckResult {
+    override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
+
+    private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {
         val feedUrl = "${spec.url}/rss?path=/"
         val key = validatorKey(spec, feedUrl)
         val validator = context.validators.get(key)

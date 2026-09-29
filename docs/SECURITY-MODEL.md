@@ -14,7 +14,7 @@ link someone sent you, an import file, and any text a server sends.
 
 ## The first install
 
-Nothing on the phone says who the developer is yet, so the first install is
+Nothing on the device says who the developer is yet, so the first install is
 trust on first use. Stamp shows the certificate the file claims before you
 install, as a fingerprint you can compare with one the developer publishes.
 After Android has installed the file, that certificate is pinned.
@@ -59,7 +59,7 @@ signer.
 ### Package, version and kind
 
 A file for another package is refused. So is an older version code, a test-only
-build, and a build for a newer Android than the phone runs.
+build, and a build for a newer Android than the device runs.
 
 ### Android
 

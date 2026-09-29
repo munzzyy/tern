@@ -287,7 +287,11 @@ internal class Installs(private val e: RealEngine) {
         e.saveApp(appId) { s ->
             val pins = s.config.pinnedSigners.ifEmpty { now.app.signers }
             s.copy(
-                config = s.config.copy(pinnedSigners = pins, packageName = s.config.packageName ?: pending.packageName),
+                config = s.config.copy(
+                    pinnedSigners = pins,
+                    packageName = s.config.packageName ?: pending.packageName,
+                    name = Naming.afterInstall(s.config, now.label),
+                ),
                 state = s.state.copy(pending = null, record = record, installProblem = null, block = null),
             )
         }

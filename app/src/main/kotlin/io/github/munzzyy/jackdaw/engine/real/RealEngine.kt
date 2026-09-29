@@ -252,6 +252,7 @@ class RealEngine(
             lastCheckedMs = entry.state.lastCheckedMs,
             silentUpdate = if (installed == null) null else device.silentUpdateLikely(installed, eval.facts?.targetSdk),
             checking = id in checking,
+            movedTo = entry.state.movedTo,
         )
     }
 
@@ -306,6 +307,7 @@ class RealEngine(
                 name = found.name.take(200).ifBlank { found.spec.url.take(200) },
                 author = found.author?.take(200),
                 packageName = found.verification?.packageName ?: base.packageName ?: found.installed?.packageName,
+                pinnedSigners = base.pinnedSigners.ifEmpty { found.installed?.signers.orEmpty() },
             ),
         )
     }

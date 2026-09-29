@@ -18,6 +18,8 @@ data class DeviceApp(
     val installer: String?,
     val updateOwner: String?,
     val permissions: Set<String>,
+    /** The name the app gives itself, as the launcher shows it. */
+    val label: String? = null,
 )
 
 class Device(context: Context) {
@@ -56,6 +58,7 @@ class Device(context: Context) {
             installer = installer,
             updateOwner = owner,
             permissions = info.requestedPermissions.orEmpty().toSet(),
+            label = info.applicationInfo?.let { pm.getApplicationLabel(it).toString().trim().take(200) }?.takeIf { it.isNotEmpty() && it != packageName },
         )
     }
 

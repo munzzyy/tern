@@ -112,6 +112,8 @@ data class AppRow(
     /** True when Android will let this update install without a prompt; null when unknown. */
     val silentUpdate: Boolean? = null,
     val checking: Boolean = false,
+    /** Where the source says the project lives now. Shown as a suggestion, never followed silently. */
+    val movedTo: String? = null,
 ) {
     val id: String get() = config.id
 }

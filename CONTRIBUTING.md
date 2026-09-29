@@ -15,10 +15,16 @@ and tested without a network.
 
 ```sh
 export ANDROID_HOME=~/Android/Sdk
-./gradlew :core:test :app:testDebugUnitTest :app:assembleRelease
+./gradlew :core:test :app:testDebugUnitTest :app:assembleRelease :app:lintRelease
 bash tools/check-apk.sh app/build/outputs/apk/release/app-release-unsigned.apk
-./gradlew :app:connectedDebugAndroidTest   # needs an emulator or a phone
+./gradlew :app:assembleDebug :app:assembleDebugAndroidTest
+bash tools/device-suite.sh <serial>   # needs an emulator or a phone
 ```
+
+Run the device tests with `tools/device-suite.sh` and not with Gradle's connected
+task. The connected task drops a permission that Android 10 and 11 only take from
+the host, and the tests that install something then step aside without a word.
+The script names every test that was skipped and why.
 
 A change to a parser or a check comes with a test that fails without it. Break
 your fix on purpose once and watch the test fail; a test that cannot fail is

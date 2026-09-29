@@ -1,5 +1,8 @@
 # Tern
 
+[![ci](https://github.com/munzzyy/tern/actions/workflows/ci.yml/badge.svg)](https://github.com/munzzyy/tern/actions/workflows/ci.yml)
+[![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
+
 Android apps, straight from where their developers publish them, checked before they install.
 
 Most open source Android apps put their releases on GitHub, GitLab, Codeberg or a
@@ -11,7 +14,16 @@ whether it matches the checksum the publisher gave. Only then does Android's
 installer see it.
 
 It is a native app of about 5 MB, with no analytics and no account. It talks to
-the sources you add and to nobody else.
+the sources you add and to nobody else. [PRIVACY.md](PRIVACY.md) says what
+leaves the device.
+
+- Every signature is verified twice: by Tern's own verifier and by Android.
+- Each app stays tied to the certificate of its first install. For 15
+  well-known apps Tern knows the certificate before that.
+- Android TV works by remote, and a phone can send links to it sealed with a
+  code the TV shows.
+- With Orbot chosen, everything goes through Tor and nothing goes around it.
+- An Obtainium export brings your list along.
 
 [<img src="site/badge.png" alt="Get it with Tern" height="80">](https://munzzyy.github.io/tern/add/?url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Ftern)
 
@@ -51,7 +63,8 @@ After the download:
 
 An install counts when Android says it succeeded and the package manager then
 shows the new version code. Until both are true the app's row says what is
-really on the phone.
+really on the phone. [docs/SECURITY-MODEL.md](docs/SECURITY-MODEL.md) says who is
+trusted with what, and where each check ends.
 
 For a file whose SHA-256 is known, the same panel links to the file's page on
 VirusTotal. Your browser opens it. Tern uploads nothing and needs no key. When
@@ -134,6 +147,20 @@ Tern can also open `obtainium://` links, which is how the
 [crowdsourced configurations](https://apps.obtainium.imranr.dev/) are shared.
 That is off until you turn it on in Settings, and a link only ever fills in the
 Add screen: nothing is stored or installed until you press the button.
+
+## A badge for your own app
+
+If you publish an Android app on GitHub or anywhere else Tern reads, a badge in
+your README lets people add it to Tern with one tap:
+
+```markdown
+[<img src="https://munzzyy.github.io/tern/badge.png" alt="Get it with Tern" height="80">](https://munzzyy.github.io/tern/add/?url=https%3A%2F%2Fgithub.com%2FYOU%2FYOUR-APP)
+```
+
+The [site](https://munzzyy.github.io/tern/) writes this line for you from your
+address. The link opens a small page that hands the address to Tern, which
+shows the app first and adds nothing until the person presses Add. Without Tern
+the page offers the download.
 
 ## Languages and screens
 
@@ -224,6 +251,13 @@ debuggable, if it is over 5 MiB, or if test code reached it.
 `python3 tools/strings.py check app/src/main/res` compares every translation
 with the English: the same placeholders, the plural forms the language needs,
 nothing that exists in one and not the other.
+
+## Taking part
+
+Bugs and ideas go to the [issue tracker](https://github.com/munzzyy/tern/issues),
+and [CONTRIBUTING.md](CONTRIBUTING.md) has the setup and the house rules. A
+security problem goes to me privately first, as [SECURITY.md](SECURITY.md)
+describes.
 
 ## Licence
 

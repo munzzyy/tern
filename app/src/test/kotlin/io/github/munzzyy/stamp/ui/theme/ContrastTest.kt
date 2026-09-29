@@ -100,7 +100,7 @@ class ContrastTest {
             for (dark in listOf(false, true)) {
                 for (black in listOf(false, true)) {
                     for (contrast in Contrast.entries) {
-                        val table = drawn(seed.hue, seed.strength, dark, contrast, black)
+                        val table = drawn(seed.hue, seed.strength, dark, contrast).let { if (dark && black) it.blackened() else it }
                         val measured = table.fitted(contrast)
                         for (role in Role.entries) {
                             val moved = abs(toneOf(table[role]) - toneOf(measured[role]))

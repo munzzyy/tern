@@ -184,19 +184,30 @@ private fun Ramp.chroma(strength: Double, dark: Boolean): Double {
  * Every colour of a scheme from one hue, in degrees, and one strength, from 0 for nearly grey to
  * 1 for vivid. [pureBlack] applies to a dark scheme only.
  */
-fun roles(hue: Int, strength: Double, dark: Boolean, contrast: Contrast, pureBlack: Boolean = false): Roles =
-    drawn(hue, strength, dark, contrast, pureBlack).fitted(contrast)
+fun roles(hue: Int, strength: Double, dark: Boolean, contrast: Contrast, pureBlack: Boolean = false): Roles {
+    val table = drawn(hue, strength, dark, contrast)
+    return (if (dark && pureBlack) table.blackened() else table).fitted(contrast)
+}
 
 /** The scheme as the table of tones gives it, before any pair is measured. */
-internal fun drawn(hue: Int, strength: Double, dark: Boolean, contrast: Contrast, pureBlack: Boolean): Roles {
+internal fun drawn(hue: Int, strength: Double, dark: Boolean, contrast: Contrast): Roles {
+    return Roles(IntArray(Role.entries.size) { tableColor(Role.entries[it], hue, strength, dark, contrast) })
+}
+
+/** One role straight from the table of tones: enough for a swatch, without working out the scheme around it. */
+fun tableColor(role: Role, hue: Int, strength: Double, dark: Boolean, contrast: Contrast): Int {
     val seed = ((hue % 360) + 360) % 360.0
-    val force = strength.coerceIn(0.0, 1.0)
-    val argb = IntArray(Role.entries.size) { index ->
-        val role = Role.entries[index]
-        val tone = if (dark && pureBlack && role.black != null) role.black else (if (dark) role.dark else role.light).at(contrast)
-        toned(role.ramp.hue(seed), role.ramp.chroma(force, dark), tone.toDouble())
+    val tone = (if (dark) role.dark else role.light).at(contrast)
+    return toned(role.ramp.hue(seed), role.ramp.chroma(strength.coerceIn(0.0, 1.0), dark), tone.toDouble())
+}
+
+/** Pure black: the backgrounds of a dark scheme go to black and the surfaces on them to the tones next to it. */
+fun Roles.blackened(): Roles = changed { argb ->
+    for (role in Role.entries) {
+        val tone = role.black ?: continue
+        val from = oklchOf(argb[role.ordinal])
+        argb[role.ordinal] = toned(from.hue, from.chroma, tone.toDouble())
     }
-    return Roles(argb)
 }
 
 private val CARRIERS: List<Role> by lazy { Role.entries.flatMap { it.readOn }.distinct() }

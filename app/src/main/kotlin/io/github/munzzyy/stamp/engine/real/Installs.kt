@@ -165,6 +165,7 @@ internal class Installs(private val e: RealEngine) {
                 installedOf = { pkg -> e.readInstalled(pkg)?.app },
                 device = e.device.profile,
                 staging = staging,
+                builtInPin = e.builtIn.hold(config),
             )
             val pass = runInterruptible { e.gate.check(request) }
             val facts = pass.facts.copy(checksumMatchedFrom = expected?.second, fileSha256 = download.sha256)

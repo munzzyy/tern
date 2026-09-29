@@ -43,6 +43,8 @@ data class GateRequest(
     val installedOf: (String) -> InstalledApp?,
     val device: DeviceProfile,
     val staging: File,
+    /** True when [pinnedSigners] are certificates Stamp itself carries for this app, which changes what a refusal says. */
+    val builtInPin: Boolean = false,
 )
 
 fun interface Gate {
@@ -188,7 +190,7 @@ class InstallGate(private val reader: ArchiveReader, private val texts: Texts) :
             throw when (block) {
                 Block.PACKAGE_MISMATCH -> StepFailure(ProblemKind.PACKAGE_MISMATCH, texts.packageMismatch(request.expectedPackage ?: installed?.packageName, android.packageName))
                 Block.SIGNER_MISMATCH -> StepFailure(ProblemKind.SIGNER_MISMATCH, texts.signerMismatch())
-                Block.PIN_MISMATCH -> StepFailure(ProblemKind.PIN_MISMATCH, texts.pinMismatch())
+                Block.PIN_MISMATCH -> StepFailure(ProblemKind.PIN_MISMATCH, if (request.builtInPin) texts.builtInPinMismatch() else texts.pinMismatch())
             }
         }
         if (installed != null && android.versionCode < installed.versionCode) {

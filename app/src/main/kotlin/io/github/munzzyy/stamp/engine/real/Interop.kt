@@ -148,7 +148,12 @@ internal class Interop(private val e: RealEngine) {
                 continue
             }
             val config = try {
-                e.validated(imported.copy(id = if (e.stored.containsKey(imported.id)) e.newId() else imported.id))
+                e.validated(
+                    imported.copy(
+                        id = if (e.stored.containsKey(imported.id)) e.newId() else imported.id,
+                        pinnedSigners = e.builtIn.orElse(imported.source.url, imported.pinnedSigners),
+                    ),
+                )
             } catch (ex: IllegalArgumentException) {
                 skipped += imported.name to (ex.message ?: "")
                 continue
@@ -158,7 +163,7 @@ internal class Interop(private val e: RealEngine) {
             e.event(config.id, EventKind.IMPORTED, e.texts.eventImported())
             fresh += config.id
             added++
-            if (config.pinnedSigners.isNotEmpty()) withPins += config.name
+            if (imported.pinnedSigners.isNotEmpty()) withPins += config.name
             if (hasFilters(config)) withFilters += config.name
         }
         e.publish()

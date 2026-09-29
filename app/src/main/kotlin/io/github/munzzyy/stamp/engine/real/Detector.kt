@@ -106,6 +106,7 @@ internal class Detector(private val e: RealEngine) {
     private fun found(spec: SourceSpec, listing: SourceListing, carried: AppConfig?): Detection.Found {
         val settings = e.settings.value
         val listed = listing.packageName?.takeIf { BinaryManifest.isValidName(it) }
+        val builtIn = e.builtIn.of(spec.url)
         var config = carried?.copy(id = "detect", source = spec, packageName = carried.packageName ?: listed) ?: AppConfig(
             id = "detect",
             source = spec,
@@ -114,6 +115,7 @@ internal class Detector(private val e: RealEngine) {
             packageName = listed,
             releases = ReleasePolicy(includePrereleases = settings.includePrereleasesByDefault, minAgeDays = settings.minAgeDaysByDefault),
         )
+        if (builtIn.isNotEmpty()) config = config.copy(pinnedSigners = builtIn)
         val state = AppState(releases = listing.releases, lastCheckedMs = e.nowMs())
         val warnings = ArrayList<String>()
 
@@ -132,6 +134,7 @@ internal class Detector(private val e: RealEngine) {
         val tracked = e.findBySpec(spec)
         if (tracked != null) warnings += e.texts.warnTracked()
         if (installed != null && eval.verification?.signerState == SignerState.MISMATCH) warnings += e.texts.warnSignedDifferently()
+        if (builtIn.isNotEmpty() && eval.problem?.kind == ProblemKind.PIN_MISMATCH) warnings += e.texts.warnBuiltInPin()
         if (eval.problem?.kind == ProblemKind.NO_FILE_FOR_DEVICE) warnings += e.texts.warnNoFile()
         val readPackage = eval.facts?.packageName
         if (carried?.packageName != null && readPackage != null && readPackage != carried.packageName) {
@@ -150,8 +153,9 @@ internal class Detector(private val e: RealEngine) {
             installed = installed?.app,
             alreadyTracked = tracked,
             warnings = warnings,
-            carried = carried,
+            carried = if (builtIn.isEmpty()) carried else carried?.copy(pinnedSigners = builtIn),
             iconUrls = IconAddresses.accepted(spec.url, listing.iconUrls),
+            builtInPin = builtIn.isNotEmpty(),
         )
     }
 

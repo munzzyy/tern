@@ -29,6 +29,8 @@ import io.github.munzzyy.stamp.core.source.SourceOptions
 import io.github.munzzyy.stamp.core.source.SourceRegistry
 import io.github.munzzyy.stamp.core.source.SourceTypes
 import io.github.munzzyy.stamp.core.source.TokenProvider
+import io.github.munzzyy.stamp.core.suggest.Catalog
+import io.github.munzzyy.stamp.core.suggest.SuggestedApp
 import io.github.munzzyy.stamp.core.verify.Fingerprints
 import io.github.munzzyy.stamp.data.AppState
 import io.github.munzzyy.stamp.data.SettingsStore
@@ -100,6 +102,7 @@ class RealEngine(
     gate: Gate? = null,
     downloadsDir: File? = null,
     orbotInstalled: (() -> Boolean)? = null,
+    private val catalog: List<SuggestedApp> = Catalog.all,
 ) : Engine, Closeable {
     internal val context: Context = context.applicationContext
     internal val store = Store(this.context, storeName)
@@ -111,7 +114,8 @@ class RealEngine(
     internal val http: HttpClient = PoliteHttp(transport, RateLimiter(nowMs), "Stamp/${BuildConfig.VERSION_NAME}")
     internal val registry = SourceRegistry.standard(::trackedInRepository)
     internal val inspector = FileInspector(http, store, tokens, device.sdk)
-    internal val evaluator = Evaluator(texts, device.profile, nowMs)
+    internal val builtIn = BuiltInPins(catalog)
+    internal val evaluator = Evaluator(texts, device.profile, builtIn, nowMs)
     internal val downloader = Downloader(http, downloadsDir ?: File(this.context.filesDir, "downloads"), texts)
     internal val gate: Gate = gate ?: InstallGate(archiveReader ?: PackageManagerArchiveReader(this.context.packageManager), texts)
     internal val installer: Installer = installer ?: SessionInstaller(this.context)
@@ -328,7 +332,7 @@ class RealEngine(
                 name = found.name.take(200).ifBlank { found.spec.url.take(200) },
                 author = found.author?.take(200),
                 packageName = found.verification?.packageName ?: base.packageName ?: found.installed?.packageName,
-                pinnedSigners = base.pinnedSigners.ifEmpty { found.installed?.signers.orEmpty() },
+                pinnedSigners = builtIn.orElse(found.spec.url, base.pinnedSigners.ifEmpty { found.installed?.signers.orEmpty() }),
             ),
         )
     }
@@ -503,7 +507,7 @@ class RealEngine(
         return interop.importBytes(file.bytes)
     }
 
-    override fun suggestions(): List<Suggestion> = Suggestions.list(device.profile.television, context::getString)
+    override fun suggestions(): List<Suggestion> = Suggestions.list(device.profile.television, catalog, context::getString)
 
     override fun canOpenInstallSettings(): Boolean = device.canOpenInstallSettings()
 

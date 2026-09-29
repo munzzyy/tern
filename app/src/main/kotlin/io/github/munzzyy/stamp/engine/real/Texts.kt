@@ -42,6 +42,8 @@ class Texts(context: Context) : ImportTexts {
     fun packageMismatch(expected: String?, actual: String) = s(R.string.engine_package_mismatch, ltr(expected.orEmpty()), ltr(actual))
     fun signerMismatch() = s(R.string.engine_signer_mismatch)
     fun pinMismatch() = s(R.string.engine_pin_mismatch)
+    fun builtInPinMismatch() = s(R.string.engine_built_in_pin_mismatch)
+    fun warnBuiltInPin() = s(R.string.engine_warn_built_in_pin)
     fun splitSignerMismatch() = s(R.string.engine_split_signer_mismatch)
     fun downgrade(installed: String?, offered: String?) = s(R.string.engine_downgrade, installed ?: "?", offered ?: "?")
     fun testOnly() = s(R.string.engine_test_only)

@@ -13,6 +13,8 @@ import io.github.munzzyy.stamp.core.model.SourceSpec
 import io.github.munzzyy.stamp.core.model.UpdateMode
 import io.github.munzzyy.stamp.core.net.HttpClient
 import io.github.munzzyy.stamp.core.source.SourceTypes
+import io.github.munzzyy.stamp.core.suggest.Catalog
+import io.github.munzzyy.stamp.core.suggest.SuggestedApp
 import io.github.munzzyy.stamp.data.AppState
 import io.github.munzzyy.stamp.data.StoredApp
 import io.github.munzzyy.stamp.engine.AppRow
@@ -158,7 +160,15 @@ class CountingInstaller(private val real: Installer) : Installer by real {
     }
 }
 
-class Harness(name: String, gate: Gate? = null, installer: Installer? = null, http: HttpClient? = null, private val freshPrefs: Boolean = true, private val keepPrefs: Boolean = false) : Closeable {
+class Harness(
+    name: String,
+    gate: Gate? = null,
+    installer: Installer? = null,
+    http: HttpClient? = null,
+    private val freshPrefs: Boolean = true,
+    private val keepPrefs: Boolean = false,
+    catalog: List<SuggestedApp> = Catalog.all,
+) : Closeable {
     val forge = FakeForge()
     val installer = CountingInstaller(installer ?: SessionInstaller(targetContext))
     private val store = "enginetest-$name.db"
@@ -176,7 +186,7 @@ class Harness(name: String, gate: Gate? = null, installer: Installer? = null, ht
 
     val engine = RealEngine(
         targetContext, http ?: forge, storeName = store, prefsPrefix = prefs,
-        installer = this.installer, gate = gate, downloadsDir = downloads,
+        installer = this.installer, gate = gate, downloadsDir = downloads, catalog = catalog,
     )
 
     init {

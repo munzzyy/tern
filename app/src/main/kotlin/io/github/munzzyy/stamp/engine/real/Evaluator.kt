@@ -41,7 +41,9 @@ data class Evaluation(
     val patternProblem: PatternProblem? = null,
 )
 
-class Evaluator(private val texts: Texts, private val device: DeviceProfile, private val nowMs: () -> Long) {
+class Evaluator(private val texts: Texts, private val device: DeviceProfile, private val builtIn: BuiltInPins, private val nowMs: () -> Long) {
+    constructor(texts: Texts, device: DeviceProfile, nowMs: () -> Long) : this(texts, device, BuiltInPins(), nowMs)
+
     /** [inspect] returns what a file says, or null when that cannot be known now. */
     fun evaluate(config: AppConfig, state: AppState, installed: DeviceApp?, inspect: (Asset, String) -> FileFacts?): Evaluation {
         val filters = filtersKey(config)
@@ -95,7 +97,7 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
             when (blocked.block) {
                 Block.PACKAGE_MISMATCH -> Problem(ProblemKind.PACKAGE_MISMATCH, texts.packageMismatch(config.packageName ?: app?.packageName, facts?.packageName ?: "?"))
                 Block.SIGNER_MISMATCH -> Problem(ProblemKind.SIGNER_MISMATCH, texts.signerMismatch())
-                Block.PIN_MISMATCH -> Problem(ProblemKind.PIN_MISMATCH, texts.pinMismatch())
+                Block.PIN_MISMATCH -> Problem(ProblemKind.PIN_MISMATCH, if (builtIn.hold(config)) texts.builtInPinMismatch() else texts.pinMismatch())
             }
         }
         val gateBlock = state.block?.takeIf { it.releaseId == candidate.id && it.assetUrl == chosen.asset.url }

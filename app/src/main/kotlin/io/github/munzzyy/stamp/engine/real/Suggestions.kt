@@ -2,6 +2,7 @@ package io.github.munzzyy.stamp.engine.real
 
 import io.github.munzzyy.stamp.R
 import io.github.munzzyy.stamp.core.suggest.Catalog
+import io.github.munzzyy.stamp.core.suggest.SuggestedApp
 import io.github.munzzyy.stamp.core.suggest.SuggestedKind
 import io.github.munzzyy.stamp.engine.Suggestion
 import io.github.munzzyy.stamp.engine.SuggestionKind
@@ -50,8 +51,10 @@ internal object Suggestions {
     }
 
     /** [text] turns a string resource into its text. */
-    fun list(television: Boolean, text: (Int) -> String): List<Suggestion> = Catalog.ordered(television).mapNotNull { app ->
+    fun list(television: Boolean, text: (Int) -> String): List<Suggestion> = list(television, Catalog.all, text)
+
+    fun list(television: Boolean, catalog: List<SuggestedApp>, text: (Int) -> String): List<Suggestion> = Catalog.ordered(television, catalog).mapNotNull { app ->
         val summary = summaryOf(app.summaryKey) ?: return@mapNotNull null
-        Suggestion(app.name, text(summary), app.url, kindOf(app.kind), app.television)
+        Suggestion(app.name, text(summary), app.url, kindOf(app.kind), app.television, pinned = app.signers.isNotEmpty())
     }
 }

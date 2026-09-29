@@ -2,6 +2,7 @@ package io.github.munzzyy.stamp.enginetest
 
 import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import android.os.ParcelFileDescriptor
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -24,6 +25,7 @@ import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.regex.Pattern
 import kotlinx.coroutines.runBlocking
+import org.junit.Assume
 
 const val PKG = "com.example.app"
 
@@ -31,15 +33,33 @@ val targetContext: Context get() = InstrumentationRegistry.getInstrumentation().
 
 fun asset(name: String): ByteArray = InstrumentationRegistry.getInstrumentation().context.assets.open(name).use { it.readBytes() }
 
-/** Runs a shell command as the shell user and returns what it printed. */
+/**
+ * Runs a shell command as the shell user and returns what it printed. Android 14 also hands back
+ * what went to the error stream. Before Android 12 a test cannot feed a command anything, so a
+ * test that needs [stdin] is skipped there.
+ */
 fun shell(command: String, stdin: ByteArray? = null): String {
     val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
-    val fds = automation.executeShellCommandRwe(command)
-    if (stdin != null) ParcelFileDescriptor.AutoCloseOutputStream(fds[1]).use { it.write(stdin) } else fds[1].close()
-    val out = ParcelFileDescriptor.AutoCloseInputStream(fds[0]).use { String(it.readBytes()) }
-    val err = ParcelFileDescriptor.AutoCloseInputStream(fds[2]).use { String(it.readBytes()) }
-    return out + err
+    if (Build.VERSION.SDK_INT >= 34) {
+        val fds = automation.executeShellCommandRwe(command)
+        if (stdin != null) ParcelFileDescriptor.AutoCloseOutputStream(fds[1]).use { it.write(stdin) } else fds[1].close()
+        val out = ParcelFileDescriptor.AutoCloseInputStream(fds[0]).use { String(it.readBytes()) }
+        val err = ParcelFileDescriptor.AutoCloseInputStream(fds[2]).use { String(it.readBytes()) }
+        return out + err
+    }
+    if (Build.VERSION.SDK_INT >= 31) {
+        val fds = automation.executeShellCommandRw(command)
+        if (stdin != null) ParcelFileDescriptor.AutoCloseOutputStream(fds[1]).use { it.write(stdin) } else fds[1].close()
+        return ParcelFileDescriptor.AutoCloseInputStream(fds[0]).use { String(it.readBytes()) }
+    }
+    Assume.assumeTrue("Android ${Build.VERSION.RELEASE} gives a test no way to feed a command", stdin == null)
+    return ParcelFileDescriptor.AutoCloseInputStream(automation.executeShellCommand(command)).use { String(it.readBytes()) }
 }
+
+val television: Boolean get() = targetContext.packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_LEANBACK)
+
+/** Android installs an update without asking from version 12 on. Tests of that are skipped below it. */
+fun assumeSilentUpdates() = Assume.assumeTrue("Android ${Build.VERSION.RELEASE} asks before every install", Build.VERSION.SDK_INT >= 31)
 
 /** Installs as the shell user, so Stamp is not the installer of record. */
 fun shellInstall(bytes: ByteArray): String = shell("pm install -r -d -S ${bytes.size}", bytes)
@@ -62,10 +82,19 @@ fun installedVersionCode(): Long? = try {
  */
 fun prepareDevice() {
     val own = targetContext.packageName
-    shell("appops set $own REQUEST_INSTALL_PACKAGES allow")
-    shell("pm grant $own android.permission.POST_NOTIFICATIONS")
-    shell("pm set-silent-updates-policy --reset")
-    shell("pm set-silent-updates-policy --allow-unlimited-silent-updates $own")
+    // Before Android 12 a change of this setting kills the app, and the test runs inside the app.
+    if (!targetContext.packageManager.canRequestPackageInstalls()) {
+        Assume.assumeTrue(
+            "On Android ${Build.VERSION.RELEASE} grant it from the host first: adb shell appops set $own REQUEST_INSTALL_PACKAGES allow",
+            Build.VERSION.SDK_INT >= 31,
+        )
+        shell("appops set $own REQUEST_INSTALL_PACKAGES allow")
+    }
+    if (Build.VERSION.SDK_INT >= 33) shell("pm grant $own android.permission.POST_NOTIFICATIONS")
+    if (Build.VERSION.SDK_INT >= 31) {
+        shell("pm set-silent-updates-policy --reset")
+        shell("pm set-silent-updates-policy --allow-unlimited-silent-updates $own")
+    }
     val installer = targetContext.packageManager.packageInstaller
     for (session in installer.mySessions) runCatching { installer.abandonSession(session.sessionId) }
     // Android takes a moment to let a session go, and the answer to an abandoned one can still post a notification.
@@ -92,6 +121,7 @@ fun plain(text: String?): String? = text?.filterNot { it in '\u2066'..'\u2069' }
  * than the limit even the first silent update is refused. This waits until that time has passed.
  */
 fun throttleSilentUpdates(seconds: Int) {
+    assumeSilentUpdates()
     shell("pm set-silent-updates-policy --reset")
     shell("pm set-silent-updates-policy --throttle-time $seconds")
     val wait = seconds * 1000L + 2_000 - android.os.SystemClock.uptimeMillis()
@@ -177,8 +207,8 @@ class Harness(name: String, gate: Gate? = null, installer: Installer? = null, ht
     }
 
     /** Confirms the system installer's dialog for [id], and says what the engine held when none came. */
-    fun confirm(id: String): String = try {
-        Prompt.confirm()
+    fun confirm(id: String, timeoutMs: Long = 30_000): String = try {
+        Prompt.confirm(timeoutMs) { engine.resumeInstall(id) }
     } catch (e: AssertionError) {
         throw AssertionError("${e.message}; ${describe(id)}; on screen: ${Prompt.onScreen()}", e)
     }
@@ -211,12 +241,25 @@ object Prompt {
     private val device: UiDevice get() = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
     /** Confirms the system installer's dialog, opening it from the notification when it was posted there. Returns how it was found. */
-    fun confirm(timeoutMs: Long = 30_000): String {
+    /**
+     * A television shows no notifications, so nothing can be tapped there. Its user opens the app
+     * and presses Confirm, which is what [reopen] stands for.
+     */
+    fun confirm(timeoutMs: Long = 30_000, reopen: (() -> Boolean)? = null): String {
         val deadline = System.currentTimeMillis() + timeoutMs
         while (System.currentTimeMillis() < deadline) {
             device.wait(Until.findObject(By.pkg(INSTALLER).text(CONFIRM)), 2_000)?.let {
                 it.click()
                 return "dialog"
+            }
+            if (television) {
+                if (reopen?.invoke() == true) {
+                    device.wait(Until.findObject(By.pkg(INSTALLER).text(CONFIRM)), 10_000)?.let {
+                        it.click()
+                        return "app"
+                    }
+                }
+                continue
             }
             device.openNotification()
             val tap = device.wait(Until.findObject(By.textStartsWith("Tap to finish installing")), 2_000)

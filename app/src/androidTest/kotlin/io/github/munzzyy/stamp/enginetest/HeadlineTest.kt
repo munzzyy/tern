@@ -1,5 +1,6 @@
 package io.github.munzzyy.stamp.enginetest
 
+import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.stamp.core.model.UpdateMode
 import io.github.munzzyy.stamp.core.source.SourceTypes
@@ -13,6 +14,7 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Assume
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,6 +32,7 @@ class HeadlineTest {
 
     @Test
     fun installsOnceWithAPromptThenUpdatesInTheBackgroundWithout() = runBlocking {
+        assumeSilentUpdates()
         Harness("headline").use { h ->
             val v1 = asset("apk/app-v1.apk")
             val v2 = asset("apk/app-v2.apk")
@@ -72,6 +75,33 @@ class HeadlineTest {
     }
 
     @Test
+    fun beforeAndroid12EveryUpdateAsksAndTheRowSaysSo() = runBlocking {
+        Assume.assumeTrue("Android ${Build.VERSION.RELEASE} can update without asking", Build.VERSION.SDK_INT < 31)
+        Harness("asks-always").use { h ->
+            val v1 = FakeForge.Release("v1.0", listOf(FakeForge.File("app-v1.apk", asset("apk/app-v1.apk"))))
+            val v2 = FakeForge.Release("v2.0", listOf(FakeForge.File("app-v2.apk", asset("apk/app-v2.apk"))))
+            h.forge.releases = listOf(v1)
+            val id = h.engine.add(h.engine.detect(FakeForge.PROJECT) as Detection.Found, install = true)
+            h.confirm(id)
+            waitUntil(60_000, "v1 to be installed and settled") { h.settledOn(id, 1) }
+            assertEquals(h.describe(id), false, h.row(id).silentUpdate)
+
+            h.engine.configure(id) { it.copy(updates = UpdateMode.AUTO) }
+            h.forge.releases = listOf(v2, v1)
+            h.engine.runScheduledCheck()
+
+            assertFalse("the installer's dialog opened over whatever the user was doing", Prompt.visible())
+            assertEquals(h.describe(id), 1L, installedVersionCode())
+            assertEquals(h.describe(id), Phase.WAITING_FOR_USER, h.row(id).progress?.phase)
+            assertTrue(h.describe(id), h.eventsFor(id).none { it.kind == EventKind.FAILED })
+
+            h.confirm(id)
+            waitUntil(60_000, "v2 to be installed once confirmed") { h.settledOn(id, 2) }
+            assertEquals("v2.0", h.state(id).record?.releaseId)
+        }
+    }
+
+    @Test
     fun whenAndroidAsksAnywayTheBackgroundUpdateWaitsForTheUserAndThenFinishes() = runBlocking {
         throttleSilentUpdates(120)
         Harness("throttled").use { h ->
@@ -105,7 +135,7 @@ class HeadlineTest {
             assertEquals(h.describe(id), null, waiting.problem)
             assertTrue(h.describe(id), h.eventsFor(id).none { it.kind == EventKind.FAILED })
 
-            assertEquals("notification", h.confirm(id))
+            assertEquals(if (television) "app" else "notification", h.confirm(id))
             waitUntil(60_000, "v2 to be installed once confirmed") {
                 installedVersionCode() == 2L && h.state(id).pending == null && h.row(id).status == AppStatus.UP_TO_DATE && h.row(id).progress == null
             }

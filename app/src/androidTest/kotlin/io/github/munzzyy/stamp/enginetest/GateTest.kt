@@ -1,5 +1,6 @@
 package io.github.munzzyy.stamp.enginetest
 
+import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.stamp.core.apk.ApkInspector
 import io.github.munzzyy.stamp.core.apk.BytesSource
@@ -19,6 +20,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Assume
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -70,7 +72,7 @@ class GateTest {
             h.engine.install(id)
             waitUntil(30_000, "the session to be committed") { h.installer.committed.get() == 1 }
             try {
-                Prompt.confirm(timeoutMs = 15_000)
+                h.confirm(id, timeoutMs = 15_000)
             } catch (e: AssertionError) {
                 android.util.Log.i("EngineTest", "no confirmation was asked for the downgrade: ${e.message}")
             }
@@ -142,6 +144,8 @@ class GateTest {
 
     @Test
     fun aSplitBundleInstallsAsOneSession() = runBlocking {
+        // The fixture is built for three processors, and a 32-bit x86 image runs none of them.
+        Assume.assumeTrue("no part of the fixture runs on ${Build.SUPPORTED_ABIS.toList()}", Build.SUPPORTED_ABIS.any { it in setOf("arm64-v8a", "x86_64", "armeabi-v7a") })
         Harness("split").use { h ->
             h.forge.releases = listOf(FakeForge.Release("v3.0", listOf(FakeForge.File("app-3.0.xapk", asset("apk/bundle.xapk")))))
             val id = h.addFixture()
@@ -149,7 +153,7 @@ class GateTest {
             h.engine.install(id)
             waitUntil(30_000, "the session to be committed") { h.installer.committed.get() == 1 || h.state(id).block != null }
             assertNull(h.state(id).block?.problem?.message, h.state(id).block)
-            Prompt.confirm()
+            h.confirm(id)
             waitUntil(60_000, "the bundle to be installed") { installedVersionCode() == 3L && h.state(id).pending == null }
 
             assertEquals(1, h.installer.prepared.get())

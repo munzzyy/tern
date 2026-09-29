@@ -11,6 +11,16 @@ of those sees what any web server sees, which is your address, the time, and
 the project you asked about. A search on the Add screen asks GitHub, Codeberg
 and gitlab.com for the words you typed.
 
+Until an app is installed, its row shows the icon its source offers. For an app
+from GitHub that is a request to raw.githubusercontent.com, for the icon the
+project keeps with its store listing, and where there is none a second one to
+avatars.githubusercontent.com. For an app from GitLab, Codeberg, another
+Forgejo or Gitea server, F-Droid, IzzyOnDroid or a repository in F-Droid's
+format, the request goes to the host the app comes from, and follows a redirect
+from there only over HTTPS. It carries no token and no cookie, and an icon that
+was fetched is kept for seven days before it is asked for again. The setting
+for icons from the source turns all of this off, and rows then show a letter.
+
 With a proxy set, those requests go through it, and host names are resolved by
 the proxy.
 

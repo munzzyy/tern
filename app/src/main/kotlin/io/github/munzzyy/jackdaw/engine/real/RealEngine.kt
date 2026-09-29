@@ -207,6 +207,11 @@ class RealEngine(
 
     internal suspend fun ready() = startup.join()
 
+    /**
+     * One at a time. Rows are published from the check, the installer's answer and the package
+     * broadcasts at once, and without a lock a snapshot taken earlier could be the one written last.
+     */
+    @Synchronized
     internal fun publish() {
         val rows = stored.values.map(::row)
         _apps.value = rows.sortedWith(
@@ -217,6 +222,7 @@ class RealEngine(
         _transfers.value = progress.filterKeys { it in userTransfers }
     }
 
+    @Synchronized
     internal fun publishEvents() {
         _events.value = store.events()
     }
@@ -380,12 +386,11 @@ class RealEngine(
         return true
     }
 
-    override suspend fun save(config: AppConfig) {
+    override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
         ready()
-        val checked = validated(config)
         withContext(Dispatchers.IO) {
-            saveApp(checked.id) { it.copy(config = checked) } ?: return@withContext
-            checks.reevaluate(checked.id, network = false)
+            saveApp(appId) { it.copy(config = validated(change(it.config).copy(id = appId))) } ?: return@withContext
+            checks.reevaluate(appId, network = false)
             publish()
         }
     }

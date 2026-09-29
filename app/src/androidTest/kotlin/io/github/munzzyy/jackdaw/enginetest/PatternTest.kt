@@ -51,7 +51,7 @@ class PatternTest {
         Harness("pattern").use { h ->
             h.forge.releases = listOf(FakeForge.Release("a".repeat(40) + "!", listOf(FakeForge.File("app-v1.apk", asset("apk/app-v1.apk")))))
             val id = h.addFixture()
-            h.engine.save(h.row(id).config.copy(releases = ReleasePolicy(tagFilter = "^(a+)+$")))
+            h.engine.configure(id) { it.copy(releases = ReleasePolicy(tagFilter = "^(a+)+$")) }
 
             val first = System.nanoTime()
             h.engine.check(id)
@@ -67,7 +67,7 @@ class PatternTest {
             assertEquals(AppStatus.ERROR, h.row(id).status)
             assertTrue("the filter was tried again: $secondMs ms", secondMs < SafePattern.BATCH_TIMEOUT_MS)
 
-            h.engine.save(h.row(id).config.copy(releases = ReleasePolicy(tagFilter = "^a+!$")))
+            h.engine.configure(id) { it.copy(releases = ReleasePolicy(tagFilter = "^a+!$")) }
             h.engine.check(id)
             assertNull(h.state(id).patternProblem)
             assertEquals(AppStatus.NOT_INSTALLED, h.row(id).status)

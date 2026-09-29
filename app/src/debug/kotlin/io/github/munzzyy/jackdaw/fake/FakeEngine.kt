@@ -289,8 +289,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override fun open(appId: String): Boolean = row(appId)?.let { it.installed != null && it.id != "tidetable" } ?: false
 
-    override suspend fun save(config: AppConfig) {
-        edit(config.id) { it.copy(config = config) }
+    override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
+        edit(appId) { it.copy(config = change(it.config).copy(id = appId)) }
     }
 
     override suspend fun followMove(appId: String): Problem? {

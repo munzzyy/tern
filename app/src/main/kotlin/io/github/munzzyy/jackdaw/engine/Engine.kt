@@ -69,7 +69,12 @@ interface Engine {
     /** Opens the installed app. False when it has no launcher. */
     fun open(appId: String): Boolean
 
-    suspend fun save(config: AppConfig)
+    /**
+     * Changes the app's settings. [change] is given the settings as they are stored, not as they
+     * were last drawn, so what an install learned in the meantime (the signer, the package name)
+     * is kept. Throws IllegalArgumentException when the result is not valid.
+     */
+    suspend fun configure(appId: String, change: (AppConfig) -> AppConfig)
 
     /**
      * Replaces the app's source with the address in [AppRow.movedTo], after detecting it afresh.

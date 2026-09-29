@@ -150,7 +150,7 @@ fun BulkDialog(action: BulkAction, picked: List<AppRow>, categories: List<String
             CategoryDialog(n, categories, onDismiss) { name ->
                 val chosen = canonicalCategory(name, categories)
                 actions.run {
-                    for (row in touched) engine.save(withCategory(row.config, chosen))
+                    for (row in touched) engine.configure(row.id) { withCategory(it, chosen) }
                     actions.say(filed.getQuantityString(R.plurals.bulk_category_done, n, n, chosen))
                 }
                 onDone()

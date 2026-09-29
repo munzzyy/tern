@@ -130,11 +130,10 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
     /** Saves at once; the list flow brings the change back to the screen. */
     fun save(change: (AppConfig) -> AppConfig, onFailed: () -> Unit) {
         val config = row.value?.config ?: return
-        val next = change(config)
-        if (next == config) return
+        if (change(config) == config) return
         viewModelScope.launch {
             try {
-                engine.save(next)
+                engine.configure(config.id, change)
             } catch (e: CancellationException) {
                 throw e
             } catch (_: Exception) {

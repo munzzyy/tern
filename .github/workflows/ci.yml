@@ -1,0 +1,26 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: core tests
+        run: ./gradlew --no-daemon :core:test
+      - name: app unit tests
+        run: ./gradlew --no-daemon :app:testDebugUnitTest
+      - name: release build
+        run: ./gradlew --no-daemon :app:assembleRelease
+      - name: shipped apk keeps its promises
+        run: bash tools/check-apk.sh app/build/outputs/apk/release/app-release-unsigned.apk

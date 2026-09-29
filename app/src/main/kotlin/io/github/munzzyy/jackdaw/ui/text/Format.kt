@@ -2,7 +2,10 @@ package io.github.munzzyy.jackdaw.ui.text
 
 import io.github.munzzyy.jackdaw.core.model.SourceSpec
 import io.github.munzzyy.jackdaw.core.source.SourceTypes
+import io.github.munzzyy.jackdaw.core.engine.InstalledApp
+import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.engine.AppRow
+import io.github.munzzyy.jackdaw.engine.AppStatus
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -43,18 +46,32 @@ sealed interface VersionChange {
 /** Null for a missing or blank version, so no label ever prints an empty gap. */
 fun knownVersion(version: String?): String? = version?.trim()?.takeIf { it.isNotEmpty() }
 
+/**
+ * The status decides whether a change is shown, never a comparison of the two strings: an installed
+ * "0.4.4" and a tag "v0.4.4" are the same release.
+ */
 fun versionChange(row: AppRow): VersionChange? {
     val offered = knownVersion(row.latest?.version)
     val installed = knownVersion(row.installed?.versionName)
     val hasRelease = row.latest != null
+    val changing = isUpdate(row) || row.status == AppStatus.BLOCKED || row.progress != null
     return when {
-        offered != null && installed != null && installed != offered -> VersionChange.Change(installed, offered)
-        offered != null -> VersionChange.Same(offered)
-        installed != null && hasRelease && isUpdate(row) -> VersionChange.NewFile(installed)
+        changing && installed != null && offered != null -> VersionChange.Change(installed, offered)
+        changing && installed != null && hasRelease -> VersionChange.NewFile(installed)
         installed != null -> VersionChange.Same(installed)
+        offered != null -> VersionChange.Same(offered)
         hasRelease -> VersionChange.Unknown
         else -> null
     }
+}
+
+/** Whether [release] is what is installed: by version code when both know one, else by version without a leading "v". */
+fun isInstalledRelease(release: Release, installed: InstalledApp?): Boolean {
+    if (installed == null) return false
+    release.versionCode?.let { return it == installed.versionCode }
+    val a = knownVersion(release.version)?.removePrefix("v")?.removePrefix("V") ?: return false
+    val b = knownVersion(installed.versionName)?.removePrefix("v")?.removePrefix("V") ?: return false
+    return a == b
 }
 
 /** "https://github.com/example/app/" becomes "github.com/example/app". */

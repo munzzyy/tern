@@ -56,6 +56,14 @@ class AppListTest {
     }
 
     @Test
+    fun theDisplayedNameDrivesSortAndSearch() {
+        val named = listOf(testRow("magpie", "Magpie"), testRow("b", "birch"), testRow("z", "Zeta"))
+        assertEquals(listOf("birch", "Magpie", "Zeta"), arrange(named, ListQuery(), Locale.US).others.map { it.config.name })
+        assertEquals(listOf("Magpie"), arrange(named, ListQuery(text = "magp"), Locale.US).others.map { it.config.name })
+        assertEquals("M", io.github.munzzyy.jackdaw.ui.text.avatarLetter(named[0].config.name))
+    }
+
+    @Test
     fun updateAllCountsOnlyWhatCanStartNow() {
         assertEquals(1, updatableCount(rows))
     }

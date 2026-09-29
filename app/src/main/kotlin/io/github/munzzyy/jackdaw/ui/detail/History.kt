@@ -34,6 +34,7 @@ import io.github.munzzyy.jackdaw.ui.LocalEngine
 import io.github.munzzyy.jackdaw.ui.notes.NotesView
 import io.github.munzzyy.jackdaw.ui.text.canPickInstall
 import io.github.munzzyy.jackdaw.ui.text.formatDate
+import io.github.munzzyy.jackdaw.ui.text.isInstalledRelease
 import io.github.munzzyy.jackdaw.ui.text.isolate
 import io.github.munzzyy.jackdaw.ui.text.knownVersion
 
@@ -106,13 +107,13 @@ private fun ReleaseEntry(vm: DetailViewModel, row: AppRow, release: Release) {
             release.publishedAtMs?.let { isolate(formatDate(it)) },
             if (release.prerelease) stringResource(R.string.prerelease) else null,
             if (release.id == row.latest?.id) stringResource(R.string.version_offered) else null,
-            if (version != null && knownVersion(row.installed?.versionName) == version) stringResource(R.string.version_installed) else null,
+            if (isInstalledRelease(release, row.installed)) stringResource(R.string.version_installed) else null,
         )
         if (meta.isNotEmpty()) {
             Text(meta.joinToString(" · "), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), itemVerticalAlignment = Alignment.CenterVertically) {
-            val isInstalled = version != null && knownVersion(row.installed?.versionName) == version
+            val isInstalled = isInstalledRelease(release, row.installed)
             val installable = canPickInstall(row) && !isInstalled && release.installable.isNotEmpty()
             if (installable) {
                 val spoken = version?.let { stringResource(R.string.action_install_version_spoken, it) } ?: stringResource(R.string.action_install_version)

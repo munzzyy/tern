@@ -194,8 +194,9 @@
     <string name="signer_unknown">Nothing is known about the signer yet. It is checked after download.</string>
     <string name="signer_first_seen">First install: this certificate will be remembered</string>
     <string name="signer_first_seen_claimed">First install: the file claims this certificate, and it will be remembered once Android confirms it</string>
-    <string name="signer_matches_pin">Signed with the certificate you pinned</string>
-    <string name="signer_matches_pin_claimed">The file claims the certificate you pinned. Android confirms it before installing.</string>
+    <!-- The pin may come from the user or from Jackdaw remembering the first install, so the sentence names neither. -->
+    <string name="signer_matches_pin">Signed with the certificate Jackdaw holds for this app</string>
+    <string name="signer_matches_pin_claimed">The file claims the certificate Jackdaw holds for this app. Android confirms it before installing.</string>
     <string name="signer_matches_installed">Signed by the same developer as the installed app</string>
     <string name="signer_matches_installed_claimed">The file claims the same developer as the installed app. Android confirms it before installing.</string>
     <string name="signer_mismatch">Signed by someone other than the installed app\'s developer</string>

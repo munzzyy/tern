@@ -4,6 +4,7 @@ import io.github.munzzyy.jackdaw.core.model.SourceSpec
 import io.github.munzzyy.jackdaw.engine.AppStatus
 import io.github.munzzyy.jackdaw.ui.testRow
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -34,12 +35,29 @@ class FormatTest {
     }
 
     @Test
-    fun versionChangeShowsBothSidesOnlyWhenTheyDiffer() {
-        assertEquals(VersionChange.Change("1.4.2", "1.5.0"), versionChange(testRow(installed = "1.4.2", offered = "1.5.0")))
+    fun theStatusDecidesWhetherAChangeIsShown() {
+        val update = testRow(status = AppStatus.UPDATE_AVAILABLE, installed = "0.4.0", offered = "v0.4.4")
+        assertEquals(VersionChange.Change("0.4.0", "v0.4.4"), versionChange(update))
+        assertEquals(VersionChange.Same("0.4.4"), versionChange(testRow(status = AppStatus.UP_TO_DATE, installed = "0.4.4", offered = "v0.4.4")))
+        assertEquals(VersionChange.Change("4.0", "4.1"), versionChange(testRow(status = AppStatus.BLOCKED, installed = "4.0", offered = "4.1")))
+        assertEquals(VersionChange.Same("1.4.2"), versionChange(testRow(status = AppStatus.UP_TO_DATE, installed = "1.4.2", offered = "1.5.0")))
         assertEquals(VersionChange.Same("2.0"), versionChange(testRow(installed = "2.0", offered = "2.0")))
         assertEquals(VersionChange.Same("3.0"), versionChange(testRow(installed = null, offered = "3.0")))
         assertEquals(VersionChange.Same("1.0"), versionChange(testRow(installed = "1.0", offered = null)))
         assertNull(versionChange(testRow(installed = null, offered = null)))
+    }
+
+    @Test
+    fun theInstalledReleaseIsFoundByCodeOrByVersionWithoutItsV() {
+        val installed = io.github.munzzyy.jackdaw.core.engine.InstalledApp("org.example.app", "0.4.4", 44, emptyList())
+        fun rel(version: String, code: Long? = null) = io.github.munzzyy.jackdaw.core.model.Release("v", version, versionCode = code)
+        assertTrue(isInstalledRelease(rel("v0.4.4"), installed))
+        assertTrue(isInstalledRelease(rel("0.4.4"), installed))
+        assertTrue(isInstalledRelease(rel("renamed", 44), installed))
+        assertFalse(isInstalledRelease(rel("0.4.4", 45), installed))
+        assertFalse(isInstalledRelease(rel("v0.4.5"), installed))
+        assertFalse(isInstalledRelease(rel(""), installed.copy(versionName = "")))
+        assertFalse(isInstalledRelease(rel("0.4.4"), null))
     }
 
     @Test

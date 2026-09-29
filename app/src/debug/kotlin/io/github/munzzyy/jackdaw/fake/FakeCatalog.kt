@@ -192,6 +192,7 @@ class Invent(private val now: Long) {
         row("arnotes", "مفكرة الجيب", AppStatus.UPDATE_AVAILABLE, "1.2", "1.3", author = "مختبر المثال"),
         row("hecal", "לוח שנה פשוט", AppStatus.UP_TO_DATE, "4.0", "4.0"),
         row("harborterm", "Harbor Terminal", AppStatus.UPDATE_AVAILABLE, "29.0.0", "30.0.0", categories = listOf("Tools")),
+        row("tagged", "Tagged Weather", AppStatus.UP_TO_DATE, "0.4.4", "v0.4.4"),
         row("nightlypad", "Nightly Pad", AppStatus.UPDATE_AVAILABLE, "1.4.2", "", type = "html", certain = false),
         row("latestapk", "Latest Build Viewer", AppStatus.NOT_INSTALLED, null, "", type = "html", signer = SignerState.FIRST_SEEN, checksum = ChecksumState.NOT_PUBLISHED, withSha = false),
         row("fieldguide", "Field Guide", AppStatus.UNKNOWN, null, null, checkedHoursAgo = 0).copy(lastCheckedMs = null),

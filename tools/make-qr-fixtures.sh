@@ -35,7 +35,7 @@ texts = [
     ("05-address-short", "http://10.0.0.2:1024/" + "a" * 26),
     ("06-address-usual", "http://192.168.1.23:48211/mfrggzdfmztwq2lknnwg23tpoa"),
     ("07-address-longest", "http://192.168.100.200:65535/abcdefghijklmnopqrstuvwxyz"),
-    ("08-not-ascii", "Grüße aus Köln, 東京"),
+    ("08-not-ascii", "Gr\u00fc\u00dfe aus K\u00f6ln, \u6771\u4eac"),
     ("09-version-5", cut(84)),
     ("10-version-6", cut(106)),
     ("11-version-7", cut(122)),

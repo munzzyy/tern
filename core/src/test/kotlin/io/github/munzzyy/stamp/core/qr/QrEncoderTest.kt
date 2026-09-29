@@ -49,14 +49,14 @@ class QrEncoderTest {
 
     @Test
     fun theLengthIsCountedInBytesAndNotInLetters() {
-        assertEquals(1, QrEncoder.encode("ü".repeat(7)).version)
-        assertEquals(2, QrEncoder.encode("ü".repeat(8)).version)
+        assertEquals(1, QrEncoder.encode("\u00fc".repeat(7)).version)
+        assertEquals(2, QrEncoder.encode("\u00fc".repeat(8)).version)
     }
 
     @Test
     fun whatDoesNotFitIsRefused() {
         assertThrows(IllegalArgumentException::class.java) { QrEncoder.encode("a".repeat(214)) }
-        assertThrows(IllegalArgumentException::class.java) { QrEncoder.encode("東".repeat(72)) }
+        assertThrows(IllegalArgumentException::class.java) { QrEncoder.encode("\u6771".repeat(72)) }
     }
 
     @Test

@@ -8,7 +8,8 @@
 # the permission to install apps: the change kills the app they run in. Without it every test that
 # installs something steps aside, and a run with fifteen tests skipped looks like a pass.
 # This installs both files, gives the permission from the host, runs the tests and prints every
-# skipped test by name.
+# skipped test by name. When the app dies in the middle, it names the test that was running and
+# prints what Android wrote down about the crash.
 set -euo pipefail
 
 serial="${1:?usage: tools/device-suite.sh <serial> [arguments for am instrument]}"
@@ -29,14 +30,17 @@ fi
 "$adb" -s "$serial" shell appops set "$package" REQUEST_INSTALL_PACKAGES allow
 
 raw="$(mktemp)"
-trap 'rm -f "$raw"' EXIT
+crash="$(mktemp)"
+trap 'rm -f "$raw" "$crash"' EXIT
+"$adb" -s "$serial" logcat -b crash -c || true
 "$adb" -s "$serial" shell am instrument -w -r "$@" "$package.test/androidx.test.runner.AndroidJUnitRunner" > "$raw" || true
+"$adb" -s "$serial" logcat -b crash -d > "$crash" 2> /dev/null || true
 
-python3 - "$raw" <<'EOF'
+python3 - "$raw" "$crash" <<'EOF'
 import sys
 
 passed, failed, skipped = [], [], []
-fields, key, finished = {}, None, False
+fields, key, finished, running, last = {}, None, False, None, []
 for line in open(sys.argv[1], errors="replace").read().splitlines():
     if line.startswith("INSTRUMENTATION_STATUS: "):
         key, _, value = line[len("INSTRUMENTATION_STATUS: "):].partition("=")
@@ -44,6 +48,7 @@ for line in open(sys.argv[1], errors="replace").read().splitlines():
     elif line.startswith("INSTRUMENTATION_STATUS_CODE: "):
         code = int(line.split(": ")[1])
         name = fields.get("class", "?").rsplit(".", 1)[-1] + "." + fields.get("test", "?")
+        running = name if code == 1 else None
         if code == 0:
             passed.append(name)
         elif code in (-1, -2):
@@ -55,6 +60,7 @@ for line in open(sys.argv[1], errors="replace").read().splitlines():
         finished = line.strip().endswith("-1")
     elif line.startswith("INSTRUMENTATION_RESULT: ") or line.startswith("INSTRUMENTATION_"):
         key = None
+        last.append(line)
     elif key is not None:
         fields[key] += "\n" + line
 
@@ -67,6 +73,11 @@ for name, why in skipped:
 print(f"{len(passed)} passed, {len(failed)} failed, {len(skipped)} skipped")
 if not finished:
     print("FAIL the run did not finish: the app under test was killed or crashed")
+    print("     while running:", running or "no test, between two of them")
+    for row in last[-4:]:
+        print("     " + row[:300])
+    for row in open(sys.argv[2], errors="replace").read().splitlines()[-40:]:
+        print("     " + row[:300])
     sys.exit(1)
 if not passed and not failed:
     print("FAIL no test ran")

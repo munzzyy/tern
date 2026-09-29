@@ -116,6 +116,7 @@ def holders(text):
 
 def problems(res, locale):
     english = dump(Path(res) / "values")
+    app = next((v for values in english.values() for k, v in values.items() if k == "app_name"), None)
     found = []
     for name in english:
         path = Path(res) / f"values-{locale}" / name
@@ -139,6 +140,12 @@ def problems(res, locale):
                 # Left in English on purpose: Android falls back to the default string.
                 continue
             value = local[key]
+            if app and isinstance(app, str):
+                said = " ".join(source.values()) if isinstance(source, dict) else source
+                kept = " ".join(value.values()) if isinstance(value, dict) else value
+                # The name is a common word, and a translator who does not know that will translate it.
+                if app in said and isinstance(kept, str) and app not in kept:
+                    found.append(f"{locale}/{name}: {key} lost the name {app}")
             if isinstance(source, dict) != isinstance(value, dict):
                 found.append(f"{locale}/{name}: {key} changed kind")
                 continue

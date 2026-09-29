@@ -2,6 +2,7 @@ package io.github.munzzyy.jackdaw.core.engine
 
 import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.core.model.ReleasePolicy
+import io.github.munzzyy.jackdaw.core.text.SafePattern
 import io.github.munzzyy.jackdaw.core.version.Version
 
 enum class Rejection { PRERELEASE, TAG_FILTER, TITLE_FILTER, NOTES_FILTER, TOO_NEW, SKIPPED, NO_USABLE_FILE }
@@ -19,7 +20,8 @@ object ReleaseSelector {
     /**
      * [usable] says whether a release offers a file this device can install. The highest version
      * wins rather than the most recent date, so a maintenance release on an old branch does not
-     * displace a newer major version.
+     * displace a newer major version. Releases whose tag carries no version, such as a rolling
+     * "latest", come after every versioned one, in the order the source gave them.
      */
     fun select(releases: List<Release>, policy: ReleasePolicy, nowMs: Long, usable: (Release) -> Boolean): Selection {
         val tag = SafePattern.compileOrNull(policy.tagFilter)
@@ -29,6 +31,28 @@ object ReleaseSelector {
 
         val rejected = ArrayList<Pair<Release, Rejection>>()
         val passed = ArrayList<Release>()
+        SafePattern.watched("release filters") { filter(releases, policy, nowMs, tag, title, notes, extract, passed, rejected) }
+
+        val ordered = order(passed)
+        for ((index, release) in ordered.withIndex()) {
+            if (usable(release)) return Selection(release, rejected)
+            rejected.add(release to Rejection.NO_USABLE_FILE)
+            if (!policy.fallbackToOlder && index == 0) break
+        }
+        return Selection(null, rejected)
+    }
+
+    private fun filter(
+        releases: List<Release>,
+        policy: ReleasePolicy,
+        nowMs: Long,
+        tag: SafePattern?,
+        title: SafePattern?,
+        notes: SafePattern?,
+        extract: SafePattern?,
+        passed: MutableList<Release>,
+        rejected: MutableList<Pair<Release, Rejection>>,
+    ) {
         for (original in releases) {
             val release = if (extract == null) original else original.copy(version = extract.extract(original.version) ?: original.version)
             val reason = when {
@@ -42,14 +66,6 @@ object ReleaseSelector {
             }
             if (reason == null) passed.add(release) else rejected.add(release to reason)
         }
-
-        val ordered = order(passed)
-        for ((index, release) in ordered.withIndex()) {
-            if (usable(release)) return Selection(release, rejected)
-            rejected.add(release to Rejection.NO_USABLE_FILE)
-            if (!policy.fallbackToOlder && index == 0) break
-        }
-        return Selection(null, rejected)
     }
 
     private fun tooNew(release: Release, policy: ReleasePolicy, nowMs: Long): Boolean {
@@ -59,11 +75,11 @@ object ReleaseSelector {
     }
 
     private fun order(releases: List<Release>): List<Release> {
-        val versions = releases.associateWith { Version.parse(it.version) }
-        if (versions.values.any { !it.isComparable }) return releases
-        return releases.withIndex().sortedWith { a, b ->
-            val byVersion = versions.getValue(b.value).compareTo(versions.getValue(a.value))
+        val parsed = releases.map { it to Version.parse(it.version) }
+        val versioned = parsed.withIndex().filter { it.value.second.isComparable }.sortedWith { a, b ->
+            val byVersion = b.value.second.compareTo(a.value.second)
             if (byVersion != 0) byVersion else a.index.compareTo(b.index)
-        }.map { it.value }
+        }.map { it.value.first }
+        return versioned + parsed.filter { !it.second.isComparable }.map { it.first }
     }
 }

@@ -3,6 +3,7 @@ package io.github.munzzyy.jackdaw.core.engine
 import io.github.munzzyy.jackdaw.core.model.Asset
 import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.core.model.ReleasePolicy
+import io.github.munzzyy.jackdaw.core.text.PatternException
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
@@ -26,9 +27,12 @@ class ReleaseSelectorTest {
     }
 
     @Test
-    fun keepsSourceOrderWhenAVersionCannotBeCompared() {
-        val picked = pick(listOf(release("latest", daysAgo = 1), release("v2.0.1", daysAgo = 20)))
-        assertEquals("latest", picked.candidate!!.id)
+    fun aTagWithoutAVersionComesAfterTheVersionedOnes() {
+        val mixed = listOf(release("continuous", daysAgo = 1), release("v1.9.5", daysAgo = 5), release("v2.0.1", daysAgo = 20))
+        assertEquals("v2.0.1", pick(mixed).candidate!!.id)
+        assertEquals("continuous", pick(mixed, ReleasePolicy(tagFilter = "^continuous$")).candidate!!.id)
+        val rolling = listOf(release("continuous", daysAgo = 1), release("weekly", daysAgo = 3))
+        assertEquals("continuous", pick(rolling).candidate!!.id)
     }
 
     @Test

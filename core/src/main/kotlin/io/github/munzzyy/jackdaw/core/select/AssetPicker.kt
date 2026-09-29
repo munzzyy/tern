@@ -4,7 +4,8 @@ import io.github.munzzyy.jackdaw.core.model.Asset
 import io.github.munzzyy.jackdaw.core.model.AssetKind
 import io.github.munzzyy.jackdaw.core.model.AssetPolicy
 import io.github.munzzyy.jackdaw.core.model.DeviceProfile
-import java.util.regex.PatternSyntaxException
+import io.github.munzzyy.jackdaw.core.text.PatternException
+import io.github.munzzyy.jackdaw.core.text.SafePattern
 
 data class Pick(val asset: Asset, val score: Int, val reasons: List<String>)
 
@@ -51,9 +52,15 @@ object AssetPicker {
             else -> null
         }
 
-        val picks = assets
-            .filter { it.kind == AssetKind.APK || it.kind == AssetKind.BUNDLE }
-            .mapNotNull { asset -> rankOne(asset, deviceAbis, deviceVariant, policy, include, exclude) }
+        val picks = try {
+            SafePattern.watched("file filters") {
+                assets
+                    .filter { it.kind == AssetKind.APK || it.kind == AssetKind.BUNDLE }
+                    .mapNotNull { asset -> rankOne(asset, deviceAbis, deviceVariant, policy, include, exclude) }
+            }
+        } catch (e: PatternException) {
+            throw AssetPolicyException(e.message ?: "The file filter could not be applied")
+        }
 
         return picks.sortedWith(compareByDescending<Pick> { it.score }.thenBy { it.asset.name })
     }
@@ -63,12 +70,16 @@ object AssetPicker {
         deviceAbis: List<String>,
         deviceVariant: String?,
         policy: AssetPolicy,
-        include: Regex?,
-        exclude: Regex?,
+        include: SafePattern?,
+        exclude: SafePattern?,
     ): Pick? {
         val name = asset.name.take(MAX_NAME_LENGTH)
-        if (include != null && !include.containsMatchIn(name)) return null
-        if (exclude != null && exclude.containsMatchIn(name)) return null
+        try {
+            if (include != null && !include.matches(name)) return null
+            if (exclude != null && exclude.matches(name)) return null
+        } catch (e: PatternException) {
+            throw AssetPolicyException(e.message ?: "The file filter could not be applied")
+        }
 
         val tokens = tokenize(name)
         var score = 0
@@ -135,13 +146,9 @@ object AssetPicker {
         return found + rest
     }
 
-    private fun compile(pattern: String?): Regex? {
-        if (pattern == null) return null
-        val capped = pattern.take(MAX_NAME_LENGTH)
-        return try {
-            Regex(capped, RegexOption.IGNORE_CASE)
-        } catch (e: PatternSyntaxException) {
-            throw AssetPolicyException("Invalid asset filter pattern: ${e.message}")
-        }
+    private fun compile(pattern: String?): SafePattern? = try {
+        SafePattern.compileOrNull(pattern)
+    } catch (e: PatternException) {
+        throw AssetPolicyException(e.message ?: "The file filter is not a valid pattern")
     }
 }

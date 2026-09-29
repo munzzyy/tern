@@ -130,4 +130,20 @@ class RateLimiterTest {
         executor.shutdown()
         assertEquals(0, failures.get())
     }
+
+    @Test
+    fun aWrongClockOnThePhoneDoesNotStretchTheWait() {
+        val phoneNow = 1_000_000_000_000L
+        val serverNow = phoneNow + 2 * 60 * 60 * 1000L
+        val reset = (serverNow / 1000) + 90
+        val date = java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME.format(
+            java.time.Instant.ofEpochMilli(serverNow).atZone(java.time.ZoneOffset.UTC),
+        )
+        val limiter = RateLimiter { phoneNow }
+        val until = limiter.record(
+            "api.example.com",
+            response(403, mapOf("x-ratelimit-remaining" to "0", "x-ratelimit-reset" to reset.toString(), "Date" to date)),
+        )
+        assertEquals(phoneNow + 90_000L, until!! / 1000 * 1000)
+    }
 }

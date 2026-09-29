@@ -30,10 +30,16 @@ class RateLimiter(private val nowMs: () -> Long = System::currentTimeMillis) {
         val blocked = response.status == 429 || remaining == 0L || (refused && retryAfterMs != null)
         if (!blocked) return null
 
-        val target = retryAfterMs ?: resetMs ?: (now + DEFAULT_BLOCK_MS)
+        val target = retryAfterMs ?: resetMs?.let { onOurClock(it, headers, now) } ?: (now + DEFAULT_BLOCK_MS)
         val capped = minOf(target, now + MAX_BLOCK_MS)
         blockedUntilMs[host] = capped
         return capped
+    }
+
+    /** A reset time is on the server's clock; a phone whose clock is off would wait hours too long or not at all. */
+    private fun onOurClock(resetMs: Long, headers: Headers, now: Long): Long {
+        val serverNow = headers["Date"]?.let { parseHttpDate(it) } ?: return resetMs
+        return now + (resetMs - serverNow).coerceAtLeast(0)
     }
 
     private fun limitPair(headers: Headers, remainingName: String, resetName: String): Pair<Long?, Long?> {
@@ -44,12 +50,14 @@ class RateLimiter(private val nowMs: () -> Long = System::currentTimeMillis) {
 
     private fun parseRetryAfter(value: String, now: Long): Long? {
         val trimmed = value.trim()
-        trimmed.toLongOrNull()?.let { seconds -> return now + (seconds.coerceAtLeast(0) * 1000) }
-        return try {
-            ZonedDateTime.parse(trimmed, DateTimeFormatter.RFC_1123_DATE_TIME).toInstant().toEpochMilli()
-        } catch (_: Exception) {
-            null
-        }
+        trimmed.toLongOrNull()?.let { seconds -> return now + (seconds.coerceIn(0, MAX_BLOCK_MS / 1000) * 1000) }
+        return parseHttpDate(trimmed)
+    }
+
+    private fun parseHttpDate(value: String): Long? = try {
+        ZonedDateTime.parse(value.trim(), DateTimeFormatter.RFC_1123_DATE_TIME).toInstant().toEpochMilli()
+    } catch (_: Exception) {
+        null
     }
 
     private companion object {

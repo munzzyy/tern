@@ -1,5 +1,6 @@
 package io.github.munzzyy.jackdaw.core.engine
 
+import io.github.munzzyy.jackdaw.core.model.Asset
 import io.github.munzzyy.jackdaw.core.model.Release
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -40,8 +41,46 @@ class UpdateDecisionTest {
 
     @Test
     fun aDecoratedTagDoesNotCauseAnUpdateLoop() {
-        assertEquals(Decision.UpToDate(release("v1.2.3-fdroid")), decide(release("v1.2.3-fdroid"), installed("1.2.3", 10)))
-        assertEquals(Decision.UpToDate(release("release-2024.10.01")), decide(release("release-2024.10.01"), installed("2024.10.1", 10)))
+        val r = release("v1.2.3-fdroid")
+        assertEquals(Decision.NeedsInspection(r), decide(r, installed("1.2.3", 10)))
+        assertEquals(Decision.UpToDate(r), decide(r, installed("1.2.3", 10), inspection = inspection(10)))
+        assertEquals(Decision.UpToDate(r), UpdateDecision.guess(r, installed("1.2.3", 10), null))
+    }
+
+    @Test
+    fun aRebuildUnderTheSameNameIsNotMissed() {
+        val r = release("v1.2.3")
+        assertEquals(Decision.NeedsInspection(r), decide(r, installed("1.2.3", 10)))
+        assertEquals(Decision.UpdateAvailable(r, certain = true), decide(r, installed("1.2.3", 10), inspection = inspection(11)))
+    }
+
+    @Test
+    fun aReplacedFileUnderTheSameReleaseIsInspected() {
+        val r = release("v1.2.3")
+        val app = installed("1.2.3", 10)
+        val record = InstallRecord("v1.2.3", "v1.2.3", 10, fileSha256 = "a".repeat(64), fileSize = 500)
+        fun file(sha: String?, size: Long?) = Asset("app.apk", "https://example.org/app.apk", size = size, sha256 = sha)
+
+        assertEquals(Decision.UpToDate(r), UpdateDecision.decide(r, app, record, null, null, emptyList(), file = file("A".repeat(64), 500)))
+        assertEquals(Decision.NeedsInspection(r), UpdateDecision.decide(r, app, record, null, null, emptyList(), file = file("b".repeat(64), 500)))
+        assertEquals(Decision.UpToDate(r), UpdateDecision.decide(r, app, record, null, null, emptyList(), file = file(null, 500)))
+        assertEquals(Decision.NeedsInspection(r), UpdateDecision.decide(r, app, record, null, null, emptyList(), file = file(null, 501)))
+        assertEquals(Decision.UpToDate(r), UpdateDecision.decide(r, app, record, null, null, emptyList(), file = file(null, null)))
+    }
+
+    @Test
+    fun anInspectionGoesByTheSchemeTheDeviceUses() {
+        val info = io.github.munzzyy.jackdaw.core.apk.ApkInspector.inspect(
+            io.github.munzzyy.jackdaw.core.apk.BytesSource(io.github.munzzyy.jackdaw.core.testing.Fixtures.bytes("apk/app-rotated.apk")),
+        )
+        val original = "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+        val rotated = "b09831fa62fc9415839a8d1bd7e6b32c607bf8fccd64a0893f5dba368ee62c86"
+        val modern = Inspection.of(info, 36)
+        assertEquals(listOf(rotated), modern.signers)
+        assertEquals(listOf(original, rotated), modern.lineage)
+        assertEquals(4L, modern.versionCode)
+        assertEquals("com.example.app", modern.packageName)
+        assertEquals(listOf(original), Inspection.of(info, 30).signers)
     }
 
     @Test

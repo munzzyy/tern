@@ -1,5 +1,7 @@
 package io.github.munzzyy.jackdaw.core.engine
 
+import io.github.munzzyy.jackdaw.core.apk.ApkInfo
+import io.github.munzzyy.jackdaw.core.model.Asset
 import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.core.version.Version
 
@@ -11,8 +13,24 @@ data class InstalledApp(
     val signers: List<String>,
 )
 
-/** What Jackdaw itself last installed for an app. */
-data class InstallRecord(val releaseId: String, val version: String, val versionCode: Long)
+/** What Jackdaw itself last installed for an app, and which file it was. */
+data class InstallRecord(
+    val releaseId: String,
+    val version: String,
+    val versionCode: Long,
+    val fileSha256: String? = null,
+    val fileSize: Long? = null,
+) {
+    /** False when the publisher replaced the file under the same release. */
+    fun sameFile(asset: Asset?): Boolean {
+        if (asset == null) return true
+        val sha = asset.sha256
+        if (fileSha256 != null && sha != null) return fileSha256.equals(sha, ignoreCase = true)
+        val size = asset.size
+        if (fileSize != null && size != null) return fileSize == size
+        return true
+    }
+}
 
 /** What a file says about itself, read from the server or from disk. */
 data class Inspection(
@@ -22,7 +40,21 @@ data class Inspection(
     val signers: List<String>,
     /** Earlier certificates the current signer proves descent from. */
     val lineage: List<String> = emptyList(),
-)
+) {
+    companion object {
+        /** Takes the signers a device running [sdk] goes by, not every certificate the file names. */
+        fun of(info: ApkInfo, sdk: Int): Inspection {
+            val signers = info.signersFor(sdk)
+            return Inspection(
+                packageName = info.manifest.packageName,
+                versionCode = info.manifest.versionCode,
+                versionName = info.manifest.versionName,
+                signers = signers.map { it.sha256 },
+                lineage = signers.flatMap { it.lineage }.distinct(),
+            )
+        }
+    }
+}
 
 enum class Block { PACKAGE_MISMATCH, SIGNER_MISMATCH }
 
@@ -43,8 +75,10 @@ sealed interface Decision {
 
 object UpdateDecision {
     /**
-     * Decides from the most reliable fact available: the file's own versionCode when an inspection
-     * or a signed index provides one, then Jackdaw's record of what it installed, then version text.
+     * Decides from the file's own version code, which an inspection or a signed index provides.
+     * Without one, only Jackdaw's record of having installed this very file settles it. Version
+     * text never does: a rebuilt release keeps its name, and a name that differs says nothing
+     * about the code. [guess] is for files that cannot be inspected.
      */
     fun decide(
         release: Release,
@@ -54,6 +88,7 @@ object UpdateDecision {
         expectedPackage: String?,
         pinnedSigners: List<String>,
         indexSigners: List<String> = emptyList(),
+        file: Asset? = null,
     ): Decision {
         if (inspection != null) {
             blockFor(inspection, installed, expectedPackage, pinnedSigners)?.let { (block, detail) ->
@@ -71,12 +106,9 @@ object UpdateDecision {
         release.versionCode?.let { return byCode(release, installed, it) }
 
         if (installed == null) return Decision.NotInstalled(release)
-        if (record != null && record.versionCode == installed.versionCode && record.releaseId == release.id) {
-            return Decision.UpToDate(release)
-        }
-        val installedName = installed.versionName
-        if (installedName != null && Version.same(release.version, installedName)) return Decision.UpToDate(release)
-        return Decision.NeedsInspection(release)
+        val stillWhatWeInstalled = record != null && record.versionCode == installed.versionCode &&
+            record.releaseId == release.id && record.sameFile(file)
+        return if (stillWhatWeInstalled) Decision.UpToDate(release) else Decision.NeedsInspection(release)
     }
 
     /** For a file that cannot be inspected before download. Compares version text and says so. */

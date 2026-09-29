@@ -212,6 +212,12 @@ private fun NotificationsSection(s: Settings, update: Update) {
         SwitchRow(stringResource(R.string.settings_notify_updates), s.notifyUpdates, { v -> update { it.copy(notifyUpdates = v) } })
         SwitchRow(stringResource(R.string.settings_notify_installed), s.notifyInstalled, { v -> update { it.copy(notifyInstalled = v) } })
         SwitchRow(stringResource(R.string.settings_notify_failures), s.notifyFailures, { v -> update { it.copy(notifyFailures = v) } })
+        SwitchRow(
+            stringResource(R.string.settings_notify_names),
+            s.notifyNames,
+            { v -> update { it.copy(notifyNames = v) } },
+            summary = stringResource(R.string.settings_notify_names_help),
+        )
         ActionRow(
             title = stringResource(R.string.settings_system_notifications),
             summary = stringResource(R.string.settings_system_notifications_effect),

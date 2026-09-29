@@ -125,7 +125,7 @@ class OrbotRowTest {
 class SettingsRowsScreenTest {
     @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
 
-    private val notificationRows = listOf("Notifications", "When updates are found", "When an update is installed", "When a check fails", "Android notification settings")
+    private val notificationRows = listOf("Notifications", "When updates are found", "When an update is installed", "When a check fails", "Name the apps in notifications", "Android notification settings")
     private val sections = listOf("Background checks", "Defaults for new apps", "Installing", "Access tokens", "Network", "Appearance", "Import and export", "About")
 
     private fun show(television: Boolean) {
@@ -149,6 +149,15 @@ class SettingsRowsScreenTest {
         val tops = order.map { compose.onNodeWithText(it).fetchSemanticsNode().positionInRoot.y }
         assertEquals("the sections stand in this order: $order", tops.sorted(), tops)
         assertEquals(order.size, tops.distinct().size)
+    }
+
+    @Test
+    fun namesCanBeKeptOutOfNotifications() {
+        show(television = false)
+        assertTrue(fake.settings.value.notifyNames)
+        compose.onNodeWithText("A notification can be read on the lock screen.", substring = true).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("Name the apps in notifications").performScrollTo().performClick()
+        compose.waitUntil(3_000) { !fake.settings.value.notifyNames }
     }
 
     @Test

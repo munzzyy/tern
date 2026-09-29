@@ -401,7 +401,7 @@ internal class Installs(private val e: RealEngine) {
         const val SUMS_LIMIT = 1024 * 1024
         const val INSTALL_WAIT_MS = 3 * 60 * 1000L
         val GATE_KINDS = setOf(
-            ProblemKind.CHECKSUM_MISMATCH, ProblemKind.SIGNER_MISMATCH, ProblemKind.PACKAGE_MISMATCH,
+            ProblemKind.CHECKSUM_MISMATCH, ProblemKind.SIGNER_MISMATCH, ProblemKind.PIN_MISMATCH, ProblemKind.PACKAGE_MISMATCH,
             ProblemKind.DOWNGRADE, ProblemKind.UNSUPPORTED, ProblemKind.NO_FILE_FOR_DEVICE, ProblemKind.PARSE,
         )
     }

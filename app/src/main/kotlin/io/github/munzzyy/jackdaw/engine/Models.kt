@@ -33,7 +33,11 @@ enum class ProblemKind {
     NO_RELEASES,
     NO_FILE_FOR_DEVICE,
     CHECKSUM_MISMATCH,
+    /** Signed by someone other than the signer of the installed app; Android itself refuses such a file. */
     SIGNER_MISMATCH,
+
+    /** Signed by someone other than the certificate pinned for this app. */
+    PIN_MISMATCH,
     PACKAGE_MISMATCH,
     DOWNGRADE,
     INSTALL_FAILED,

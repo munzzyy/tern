@@ -34,6 +34,8 @@ class Texts(context: Context) {
     fun unsigned() = s(R.string.engine_unsigned)
     fun packageMismatch(expected: String?, actual: String) = s(R.string.engine_package_mismatch, expected.orEmpty(), actual)
     fun signerMismatch() = s(R.string.engine_signer_mismatch)
+    fun pinMismatch() = s(R.string.engine_pin_mismatch)
+    fun splitSignerMismatch() = s(R.string.engine_split_signer_mismatch)
     fun downgrade(installed: String?, offered: String?) = s(R.string.engine_downgrade, installed ?: "?", offered ?: "?")
     fun testOnly() = s(R.string.engine_test_only)
     fun needsNewerAndroid(minSdk: Int) = s(R.string.engine_needs_newer_android, minSdk)

@@ -22,6 +22,9 @@
     <string name="engine_unsigned">The file carries no valid signature.</string>
     <string name="engine_package_mismatch">This file is %2$s, not %1$s.</string>
     <string name="engine_signer_mismatch">This file is signed with a different key than the app you have. It could come from someone else, so it was not installed.</string>
+    <string name="engine_pin_mismatch">This file is signed with a different key than the one pinned for this app, so it was not installed.</string>
+    <!-- A bundle is a base file plus add-on files (splits); all of them must come from the same signer. -->
+    <string name="engine_split_signer_mismatch">One part of this bundle is signed with a different key than the rest. It was not installed.</string>
     <string name="engine_downgrade">The installed version (%1$s) is newer than this file (%2$s). Android only accepts an older version after the installed app is removed, and removing it deletes its data.</string>
     <string name="engine_test_only">This file is a test build, which Android refuses to install from an app store.</string>
     <string name="engine_needs_newer_android">This version needs Android API level %1$d or later.</string>

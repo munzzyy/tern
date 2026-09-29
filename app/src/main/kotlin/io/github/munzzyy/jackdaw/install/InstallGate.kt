@@ -152,7 +152,7 @@ class InstallGate(private val reader: ArchiveReader, private val texts: Texts) :
 
     private fun judge(request: GateRequest, chosen: Chosen): GatePass {
         var base: Pair<AndroidReading, ApkInfo>? = null
-        val splits = ArrayList<ApkInfo>()
+        val parts = ArrayList<Pair<AndroidReading?, ApkInfo>>()
         for (apk in chosen.apks) {
             val ours = try {
                 FileSource(apk).use { ApkInspector.inspect(it) }
@@ -160,24 +160,26 @@ class InstallGate(private val reader: ArchiveReader, private val texts: Texts) :
                 throw StepFailure(ProblemKind.PARSE, texts.notAnApk(e.message))
             }
             val android = reader.read(apk)
-            if (android == null) {
-                if (ours.manifest.split == null) throw StepFailure(ProblemKind.PARSE, texts.androidRefusedFile())
-                splits += ours
-                continue
-            }
-            if (android.packageName != ours.manifest.packageName || android.versionCode != ours.manifest.versionCode) {
+            if (android != null && (android.packageName != ours.manifest.packageName || android.versionCode != ours.manifest.versionCode)) {
                 throw StepFailure(ProblemKind.PACKAGE_MISMATCH, texts.readsDifferently())
             }
-            if (ours.manifest.split == null) base = android to ours
+            if (ours.manifest.split != null) {
+                parts += android to ours
+                continue
+            }
+            if (android == null) throw StepFailure(ProblemKind.PARSE, texts.androidRefusedFile())
+            if (base != null) throw StepFailure(ProblemKind.PARSE, texts.archiveHasNoBase())
+            base = android to ours
         }
         val (android, ours) = base ?: throw StepFailure(ProblemKind.PARSE, texts.archiveHasNoBase())
         if (android.signers.isEmpty()) throw StepFailure(ProblemKind.SIGNER_MISMATCH, texts.unsigned())
-        for (split in splits) {
-            val claimed = split.signersFor(request.device.sdk).map { it.sha256 }.toSet()
-            if (split.manifest.packageName != android.packageName || split.manifest.versionCode != android.versionCode) {
+        for ((read, part) in parts) {
+            if (part.manifest.packageName != android.packageName || part.manifest.versionCode != android.versionCode) {
                 throw StepFailure(ProblemKind.PACKAGE_MISMATCH, texts.readsDifferently())
             }
-            if (claimed != android.signers.toSet()) throw StepFailure(ProblemKind.SIGNER_MISMATCH, texts.signerMismatch())
+            // Android reads a split by itself on some versions and not on others; either way its signer must be the base's.
+            val signers = read?.signers?.toSet() ?: part.signersFor(request.device.sdk).map { it.sha256 }.toSet()
+            if (signers != android.signers.toSet()) throw StepFailure(ProblemKind.SIGNER_MISMATCH, texts.splitSignerMismatch())
         }
 
         val inspection = Inspection(android.packageName, android.versionCode, android.versionName, android.signers, android.lineage)
@@ -186,6 +188,7 @@ class InstallGate(private val reader: ArchiveReader, private val texts: Texts) :
             throw when (block) {
                 Block.PACKAGE_MISMATCH -> StepFailure(ProblemKind.PACKAGE_MISMATCH, texts.packageMismatch(request.expectedPackage ?: installed?.packageName, android.packageName))
                 Block.SIGNER_MISMATCH -> StepFailure(ProblemKind.SIGNER_MISMATCH, texts.signerMismatch())
+                Block.PIN_MISMATCH -> StepFailure(ProblemKind.PIN_MISMATCH, texts.pinMismatch())
             }
         }
         if (installed != null && android.versionCode < installed.versionCode) {

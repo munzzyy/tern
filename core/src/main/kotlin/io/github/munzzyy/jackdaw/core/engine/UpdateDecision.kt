@@ -56,7 +56,15 @@ data class Inspection(
     }
 }
 
-enum class Block { PACKAGE_MISMATCH, SIGNER_MISMATCH }
+enum class Block {
+    PACKAGE_MISMATCH,
+
+    /** Signed by someone other than the signer of the installed app. Android itself would refuse it. */
+    SIGNER_MISMATCH,
+
+    /** Signed by someone other than the certificate pinned for this app. */
+    PIN_MISMATCH,
+}
 
 sealed interface Decision {
     data class NotInstalled(val release: Release) : Decision
@@ -98,9 +106,8 @@ object UpdateDecision {
         }
 
         if (indexSigners.isNotEmpty()) {
-            val allowed = allowedSigners(installed, pinnedSigners)
-            if (allowed.isNotEmpty() && indexSigners.none { it in allowed }) {
-                return Decision.Blocked(release, Block.SIGNER_MISMATCH, "The repository lists a different signing certificate")
+            signerBlock(indexSigners, emptyList(), installed, pinnedSigners)?.let { (block, detail) ->
+                return Decision.Blocked(release, block, detail)
             }
         }
         release.versionCode?.let { return byCode(release, installed, it) }
@@ -142,16 +149,27 @@ object UpdateDecision {
         if (installed != null && inspection.packageName != installed.packageName) {
             return Block.PACKAGE_MISMATCH to "Installed app is ${installed.packageName} but the file is ${inspection.packageName}"
         }
-        val allowed = allowedSigners(installed, pinnedSigners)
-        if (allowed.isEmpty()) return null
-        if (inspection.signers.isEmpty()) return Block.SIGNER_MISMATCH to "The file carries no signing certificate"
-        val known = inspection.signers.any { it in allowed } || inspection.lineage.any { it in allowed }
-        return if (known) null else Block.SIGNER_MISMATCH to "The file is signed with a different certificate"
+        return signerBlock(inspection.signers, inspection.lineage, installed, pinnedSigners)
     }
 
-    /** A pin is a promise made by the user or an import; it outranks whatever is installed. */
-    private fun allowedSigners(installed: InstalledApp?, pinned: List<String>): Set<String> =
-        if (pinned.isNotEmpty()) pinned.mapTo(HashSet()) { it.lowercase() } else installed?.signers.orEmpty().mapTo(HashSet()) { it.lowercase() }
+    /**
+     * The installed app and the pin must both agree. A pin can arrive with an import, so it may
+     * add a condition but never lift the one Android enforces: the signer of what is installed.
+     * A rotated key counts where it proves descent from the known one.
+     */
+    private fun signerBlock(signers: List<String>, lineage: List<String>, installed: InstalledApp?, pinned: List<String>): Pair<Block, String>? {
+        val onPhone = installed?.signers.orEmpty()
+        if (onPhone.isEmpty() && pinned.isEmpty()) return null
+        if (signers.isEmpty()) return Block.SIGNER_MISMATCH to "The file carries no signing certificate"
+        val presented = (signers + lineage).mapTo(HashSet()) { it.lowercase() }
+        if (onPhone.isNotEmpty() && onPhone.none { it.lowercase() in presented }) {
+            return Block.SIGNER_MISMATCH to "The file is signed with a different certificate than the installed app"
+        }
+        if (pinned.isNotEmpty() && pinned.none { it.lowercase() in presented }) {
+            return Block.PIN_MISMATCH to "The file is signed with a different certificate than the one pinned for this app"
+        }
+        return null
+    }
 
     private fun byCode(release: Release, installed: InstalledApp?, offered: Long): Decision = when {
         installed == null -> Decision.NotInstalled(release)

@@ -90,6 +90,7 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
             when (blocked.block) {
                 Block.PACKAGE_MISMATCH -> Problem(ProblemKind.PACKAGE_MISMATCH, texts.packageMismatch(config.packageName ?: app?.packageName, facts?.packageName ?: "?"))
                 Block.SIGNER_MISMATCH -> Problem(ProblemKind.SIGNER_MISMATCH, texts.signerMismatch())
+                Block.PIN_MISMATCH -> Problem(ProblemKind.PIN_MISMATCH, texts.pinMismatch())
             }
         }
         val gateBlock = state.block?.takeIf { it.releaseId == candidate.id && it.assetUrl == chosen.asset.url }
@@ -130,7 +131,7 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
         val signerState = when {
             facts == null || facts.signers.isEmpty() -> SignerState.UNKNOWN
             else -> {
-                val blocked = UpdateDecision.blockFor(facts.inspection, installed?.app, null, config.pinnedSigners)?.first == Block.SIGNER_MISMATCH
+                val blocked = UpdateDecision.blockFor(facts.inspection, installed?.app, null, config.pinnedSigners)?.first in SIGNER_BLOCKS
                 when {
                     blocked -> SignerState.MISMATCH
                     config.pinnedSigners.isNotEmpty() -> SignerState.MATCHES_PIN
@@ -196,6 +197,7 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
 
     companion object {
         const val MAX_CANDIDATES = 4
+        private val SIGNER_BLOCKS = setOf(Block.SIGNER_MISMATCH, Block.PIN_MISMATCH)
         private val SHARED_SUMS = setOf("sha256sums", "sha256sums.txt", "checksums.txt", "checksums-sha256.txt")
 
         fun filtersKey(config: AppConfig): String = listOf(

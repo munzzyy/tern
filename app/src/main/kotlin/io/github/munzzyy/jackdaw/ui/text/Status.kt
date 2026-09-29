@@ -109,7 +109,8 @@ fun problemAdvice(kind: ProblemKind, installed: Boolean = false): Int = when (ki
     ProblemKind.NO_RELEASES -> R.string.advice_no_releases
     ProblemKind.NO_FILE_FOR_DEVICE -> R.string.advice_no_file
     ProblemKind.CHECKSUM_MISMATCH -> R.string.advice_checksum_mismatch
-    ProblemKind.SIGNER_MISMATCH -> if (installed) R.string.advice_signer_mismatch_installed else R.string.advice_signer_mismatch
+    ProblemKind.SIGNER_MISMATCH -> if (installed) R.string.advice_signer_mismatch_installed else R.string.advice_signer_broken
+    ProblemKind.PIN_MISMATCH -> R.string.advice_signer_mismatch
     ProblemKind.PACKAGE_MISMATCH -> R.string.advice_package_mismatch
     ProblemKind.DOWNGRADE -> R.string.advice_downgrade
     ProblemKind.INSTALL_FAILED -> R.string.advice_install_failed

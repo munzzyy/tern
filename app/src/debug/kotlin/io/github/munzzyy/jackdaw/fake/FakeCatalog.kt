@@ -197,7 +197,7 @@ class Invent(private val now: Long) {
 
     fun errorRows(): List<AppRow> = ProblemKind.entries.mapIndexed { i, kind ->
         val blocked = kind in setOf(
-            ProblemKind.CHECKSUM_MISMATCH, ProblemKind.SIGNER_MISMATCH, ProblemKind.PACKAGE_MISMATCH,
+            ProblemKind.CHECKSUM_MISMATCH, ProblemKind.SIGNER_MISMATCH, ProblemKind.PIN_MISMATCH, ProblemKind.PACKAGE_MISMATCH,
             ProblemKind.DOWNGRADE, ProblemKind.NO_FILE_FOR_DEVICE, ProblemKind.UNSUPPORTED,
         )
         val words = kind.name.lowercase().replace('_', ' ').replaceFirstChar { it.uppercase() }
@@ -207,7 +207,7 @@ class Invent(private val now: Long) {
             status = if (blocked) AppStatus.BLOCKED else AppStatus.ERROR,
             installed = if (i % 3 == 0) null else "1.$i",
             offered = if (blocked) "2.$i" else null,
-            signer = if (kind == ProblemKind.SIGNER_MISMATCH) SignerState.MISMATCH else SignerState.MATCHES_INSTALLED,
+            signer = if (kind == ProblemKind.SIGNER_MISMATCH || kind == ProblemKind.PIN_MISMATCH) SignerState.MISMATCH else SignerState.MATCHES_INSTALLED,
             checksum = if (kind == ProblemKind.CHECKSUM_MISMATCH) ChecksumState.MISMATCH else ChecksumState.MATCHED,
             problem = Problem(kind, problemMessage(kind), retryAtMs = if (kind == ProblemKind.RATE_LIMITED) now + 12 * 60_000 else null),
         )
@@ -223,6 +223,7 @@ class Invent(private val now: Long) {
         ProblemKind.NO_FILE_FOR_DEVICE -> "No file is built for x86_64."
         ProblemKind.CHECKSUM_MISMATCH -> "The downloaded file does not match the published checksum."
         ProblemKind.SIGNER_MISMATCH -> "The file is signed by a different certificate than the installed app."
+        ProblemKind.PIN_MISMATCH -> "The file is signed by a different certificate than the one pinned for this app."
         ProblemKind.PACKAGE_MISMATCH -> "The file is a different app: org.example.other."
         ProblemKind.DOWNGRADE -> "The offered version is older than the installed one."
         ProblemKind.INSTALL_FAILED -> "Android said: the package conflicts with an existing package."

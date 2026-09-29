@@ -118,7 +118,7 @@ class UpdateDecisionTest {
         val r = release("v2")
         val foreign = inspection(11, signers = listOf(keyB))
         assertEquals(Block.SIGNER_MISMATCH, (decide(r, installed("1", 10), inspection = foreign) as Decision.Blocked).block)
-        assertEquals(Block.SIGNER_MISMATCH, (decide(r, null, inspection = foreign, pinned = listOf(keyA)) as Decision.Blocked).block)
+        assertEquals(Block.PIN_MISMATCH, (decide(r, null, inspection = foreign, pinned = listOf(keyA)) as Decision.Blocked).block)
         val unsigned = inspection(11, signers = emptyList())
         assertEquals(Block.SIGNER_MISMATCH, (decide(r, installed("1", 10), inspection = unsigned) as Decision.Blocked).block)
     }
@@ -130,10 +130,38 @@ class UpdateDecisionTest {
     }
 
     @Test
-    fun aPinOutranksTheInstalledSigner() {
+    fun thePinAndTheInstalledAppMustBothAgree() {
         val r = release("v2")
-        val decision = decide(r, installed("1", 10, signers = listOf(keyB)), inspection = inspection(11, signers = listOf(keyB)), pinned = listOf(keyA))
+        fun block(installedKey: String, fileKey: String, pin: String) =
+            (decide(r, installed("1", 10, signers = listOf(installedKey)), inspection = inspection(11, signers = listOf(fileKey)), pinned = listOf(pin)) as? Decision.Blocked)?.block
+
+        assertEquals(Block.PIN_MISMATCH, block(installedKey = keyB, fileKey = keyB, pin = keyA))
+        assertEquals(null, block(installedKey = keyA, fileKey = keyA, pin = keyA))
+    }
+
+    @Test
+    fun aPinThatCameWithAnImportCannotExcuseAFileTheInstalledAppWouldRefuse() {
+        val r = release("v2")
+        val decision = decide(r, installed("1", 10, signers = listOf(keyA)), inspection = inspection(11, signers = listOf(keyB)), pinned = listOf(keyB))
         assertEquals(Block.SIGNER_MISMATCH, (decision as Decision.Blocked).block)
+        val fromIndex = decide(release("12", 12), installed("1", 10, signers = listOf(keyA)), pinned = listOf(keyB), indexSigners = listOf(keyB))
+        assertEquals(Block.SIGNER_MISMATCH, (fromIndex as Decision.Blocked).block)
+    }
+
+    @Test
+    fun aRotatedKeyMustDescendFromWhatIsInstalledAndFromThePin() {
+        val r = release("v2")
+        val rotated = inspection(11, signers = listOf(keyB), lineage = listOf(keyOld, keyB))
+        val onPhone = installed("1", 10, signers = listOf(keyOld))
+        assertEquals(Decision.UpdateAvailable(r, certain = true), decide(r, onPhone, inspection = rotated, pinned = listOf(keyOld)))
+        assertEquals(Decision.UpdateAvailable(r, certain = true), decide(r, onPhone, inspection = rotated, pinned = listOf(keyB)))
+        assertEquals(Block.PIN_MISMATCH, (decide(r, onPhone, inspection = rotated, pinned = listOf(keyA)) as Decision.Blocked).block)
+    }
+
+    @Test
+    fun anInstalledAppWhoseSignerCouldNotBeReadBlocksNothingByItself() {
+        val r = release("v2")
+        assertEquals(Decision.UpdateAvailable(r, certain = true), decide(r, installed("1", 10, signers = emptyList()), inspection = inspection(11, signers = listOf(keyB))))
     }
 
     @Test
@@ -153,6 +181,7 @@ class UpdateDecisionTest {
     fun blocksWhenASignedIndexNamesAnotherSigner() {
         val r = release("12", 12)
         assertEquals(Block.SIGNER_MISMATCH, (decide(r, installed("1", 10), indexSigners = listOf(keyB)) as Decision.Blocked).block)
+        assertEquals(Block.PIN_MISMATCH, (decide(r, null, pinned = listOf(keyA), indexSigners = listOf(keyB)) as Decision.Blocked).block)
         assertEquals(Decision.UpdateAvailable(r, certain = true), decide(r, installed("1", 10), indexSigners = listOf(keyA)))
     }
 

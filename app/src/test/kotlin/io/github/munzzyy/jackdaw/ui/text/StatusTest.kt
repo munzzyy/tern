@@ -91,7 +91,9 @@ class StatusTest {
     @Test
     fun aSignerMismatchOnAnInstalledAppDoesNotPointAtThePin() {
         assertEquals(R.string.advice_signer_mismatch_installed, problemAdvice(ProblemKind.SIGNER_MISMATCH, installed = true))
-        assertEquals(R.string.advice_signer_mismatch, problemAdvice(ProblemKind.SIGNER_MISMATCH, installed = false))
+        assertEquals(R.string.advice_signer_broken, problemAdvice(ProblemKind.SIGNER_MISMATCH, installed = false))
+        assertEquals(R.string.advice_signer_mismatch, problemAdvice(ProblemKind.PIN_MISMATCH, installed = true))
+        assertEquals(R.string.advice_signer_mismatch, problemAdvice(ProblemKind.PIN_MISMATCH, installed = false))
         assertEquals(problemAdvice(ProblemKind.NETWORK, installed = true), problemAdvice(ProblemKind.NETWORK, installed = false))
     }
 }

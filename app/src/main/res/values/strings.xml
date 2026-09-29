@@ -177,6 +177,7 @@
     <string name="advice_no_file">None of the files fit this device. Pick one yourself under File choice, or change the include and exclude patterns.</string>
     <string name="advice_checksum_mismatch">The file changed after it was published or was damaged on the way. Do not install it. Try again later.</string>
     <string name="advice_signer_mismatch">The file is signed with a different certificate than the one pinned for this app, so Jackdaw refuses. If the developer announced a new key, replace the pin under Advanced.</string>
+    <string name="advice_signer_broken">The signatures in this file do not agree with each other. Do not install it, and tell the developer.</string>
     <!-- Shown when the app is on the phone: no setting in Jackdaw can get past this, Android itself refuses. -->
     <string name="advice_signer_mismatch_installed">Android does not replace an app with one signed by someone else, and Jackdaw will not try. If the developer announced a new key, the app has to be removed and installed again, which deletes its data.</string>
     <string name="advice_package_mismatch">The file is a different app than the one you follow. Check the include and exclude patterns under File choice.</string>

@@ -11,6 +11,7 @@ import org.junit.Assert.fail
 /** Names each sentence instead of writing it, so a test can tell which one was chosen. */
 object ImportSentences : ImportTexts {
     override fun importNotAnExport() = "importNotAnExport"
+    override fun importEmpty() = "importEmpty"
     override fun importUnreadableExport(detail: String?) = "importUnreadableExport($detail)"
     override fun importTooLarge(limitBytes: Int) = "importTooLarge($limitBytes)"
     override fun linkNotHttps() = "linkNotHttps"

@@ -72,6 +72,7 @@ class Texts(context: Context) : ImportTexts {
     fun starsNoUser(user: String) = s(R.string.engine_stars_no_user, user.take(40))
 
     override fun importNotAnExport() = s(R.string.engine_import_not_an_export)
+    override fun importEmpty() = s(R.string.engine_import_empty)
     override fun importUnreadableExport(detail: String?) = s(R.string.engine_import_unreadable_export, detail.orEmpty().take(200))
     override fun importTooLarge(limitBytes: Int) = s(R.string.engine_import_too_large, limitBytes / (1024 * 1024))
     fun importFileGone() = s(R.string.engine_import_file_gone)

@@ -48,4 +48,11 @@ class ImportDecoderTest {
     fun aDoorMayPutItsOwnWordsOnWhatIsNoExport() {
         refused(ProblemKind.PARSE, "from the door") { ImportDecoder.decode("{}".toByteArray(), ImportSentences, "from the door") }
     }
+
+    @Test
+    fun aFileThatHoldsNoAppsIsNotAnImportOfNothing() {
+        for (empty in listOf("[]", """{"apps":[]}""", exportOf())) {
+            refused(ProblemKind.PARSE, "importEmpty") { decode(empty) }
+        }
+    }
 }

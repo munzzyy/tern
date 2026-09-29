@@ -30,6 +30,7 @@ import kotlinx.coroutines.withContext
 /** The sentences an import can fail with, kept apart from Android so that the doors run on the JVM. */
 interface ImportTexts {
     fun importNotAnExport(): String
+    fun importEmpty(): String
     fun importUnreadableExport(detail: String?): String
     fun importTooLarge(limitBytes: Int): String
     fun linkNotHttps(): String
@@ -72,6 +73,13 @@ internal object ImportDecoder {
     private const val STAMP_FORMAT = "stamp-export"
 
     fun decode(bytes: ByteArray, texts: ImportTexts, notAnExport: String = texts.importNotAnExport()): Decoded {
+        val decoded = read(bytes, texts, notAnExport)
+        // An empty list reads as an export of nothing, and "imported 0 apps" would pass for success.
+        if (decoded.apps.isEmpty() && decoded.skipped.isEmpty()) throw ProblemException(Problem(ProblemKind.PARSE, texts.importEmpty()))
+        return decoded
+    }
+
+    private fun read(bytes: ByteArray, texts: ImportTexts, notAnExport: String): Decoded {
         val text = String(bytes, Charsets.UTF_8).trimStart { it.code == BYTE_ORDER_MARK }
         return try {
             Decoded(StampExport.read(text), emptyList())

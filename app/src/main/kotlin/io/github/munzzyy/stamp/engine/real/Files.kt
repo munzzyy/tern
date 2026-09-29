@@ -11,9 +11,11 @@ import io.github.munzzyy.stamp.engine.ProblemException
 import io.github.munzzyy.stamp.engine.ProblemKind
 import io.github.munzzyy.stamp.engine.SavedFile
 import java.io.File
-import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
+import java.nio.file.Files
+import java.nio.file.LinkOption
+import java.nio.file.StandardOpenOption
 import java.time.Instant
 import java.time.ZoneId
 
@@ -40,6 +42,17 @@ internal object Importable {
     const val MAX_LISTED = 50
 
     fun isExportName(name: String): Boolean = name.endsWith(".json", ignoreCase = true)
+
+    /** Plain files in [folder], never a link, which could point at a file of Stamp's own. */
+    fun dropped(folder: File, most: Int): List<File> =
+        folder.listFiles().orEmpty().asSequence()
+            .take(most)
+            .filter { isExportName(it.name) && Files.isRegularFile(it.toPath(), LinkOption.NOFOLLOW_LINKS) }
+            .toList()
+
+    /** Opens [file] only if it is still no link when it is opened. */
+    fun openDropped(file: File): InputStream =
+        Files.newInputStream(file.toPath(), StandardOpenOption.READ, LinkOption.NOFOLLOW_LINKS)
 
     fun <T> newestFirst(found: List<T>, file: (T) -> SavedFile): List<T> =
         found.sortedWith(compareByDescending<T> { file(it).modifiedAtMs }.thenBy { file(it).name }).take(MAX_LISTED)
@@ -106,7 +119,7 @@ internal class Files(context: Context, private val texts: Texts, private val now
     }
 
     private fun open(entry: Entry): InputStream =
-        if (entry.uri == null) FileInputStream(entry.file.path) else resolver.openInputStream(entry.uri) ?: throw IOException("MediaStore opened no file")
+        if (entry.uri == null) Importable.openDropped(File(entry.file.path)) else resolver.openInputStream(entry.uri) ?: throw IOException("MediaStore opened no file")
 
     private fun entries(): List<Entry> = Importable.newestFirst(asked { exports() }.orEmpty() + dropped()) { it.file }
 
@@ -148,11 +161,8 @@ internal class Files(context: Context, private val texts: Texts, private val now
     private fun dropped(): List<Entry> {
         val folder = dropFolder() ?: return emptyList()
         val place = folder.path.removePrefix(shared.path).trim('/')
-        return folder.listFiles().orEmpty().asSequence()
-            .take(MAX_ROWS)
-            .filter { it.isFile && Importable.isExportName(it.name) }
+        return Importable.dropped(folder, MAX_ROWS)
             .map { Entry(SavedFile(it.name, place, it.path, it.lastModified(), it.length()), null) }
-            .toList()
     }
 
     private fun dropFolder(): File? {

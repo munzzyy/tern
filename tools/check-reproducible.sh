@@ -20,8 +20,8 @@ mkdir -p "$work"
 if [ -n "$(ls -A "$work")" ]; then
   echo "FAIL $work is not empty"; exit 1
 fi
-first="$work/a/stamp"
-second="$work/another/and/deeper/folder/stamp"
+first="$work/a/tern"
+second="$work/another/and/deeper/folder/tern"
 mkdir -p "$(dirname "$first")" "$(dirname "$second")"
 git clone --quiet "$root" "$first"
 git clone --quiet "$root" "$second"

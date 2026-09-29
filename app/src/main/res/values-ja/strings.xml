@@ -67,7 +67,7 @@
     <string name="action_failed">失敗しました。少し待ってから再試行してください。</string>
     <string name="save_failed">変更は保存されませんでした。再試行してください。</string>
     <string name="open_no_launcher">このアプリには開く画面がありません</string>
-    <string name="offline_banner">インターネット接続がありません。接続されるとStampが再確認します。</string>
+    <string name="offline_banner">インターネット接続がありません。接続されるとTernが再確認します。</string>
     <string name="offline_reason">インターネット接続がないため利用できません</string>
     <string name="apps_search_hint">アプリを検索</string>
     <string name="filter_all">すべて</string>
@@ -101,7 +101,7 @@
     <plurals name="bulk_check_title">
         <item quantity="other">今すぐ %d 個のアプリを確認しますか？</item>
     </plurals>
-    <string name="bulk_check_text">Stampが各提供元に最新のリリースを問い合わせます。インストールはされません。</string>
+    <string name="bulk_check_text">Ternが各提供元に最新のリリースを問い合わせます。インストールはされません。</string>
     <plurals name="bulk_update_title">
         <item quantity="other">%d 個のアプリを更新しますか？</item>
     </plurals>
@@ -112,16 +112,16 @@
     <plurals name="bulk_remove_title">
         <item quantity="other">%d 個のアプリの追跡を停止しますか？</item>
     </plurals>
-    <string name="bulk_remove_text">アプリはインストールされたままです。Stampでの更新の確認のみを停止します。</string>
+    <string name="bulk_remove_text">アプリはインストールされたままです。Ternでの更新の確認のみを停止します。</string>
     <string name="apps_empty_title">アプリはまだありません</string>
-    <string name="apps_empty_text">プロジェクトページ、リリースページ、またはF-Droidリポジトリのリンクを貼り付けると、Stampがそのアプリを最新に保ちます。</string>
+    <string name="apps_empty_text">プロジェクトページ、リリースページ、またはF-Droidリポジトリのリンクを貼り付けると、Ternがそのアプリを最新に保ちます。</string>
     <string name="sort_title">並べ替え</string>
     <string name="sort_name">名前順</string>
     <string name="sort_recently_checked">最近確認したもの</string>
     <string name="sort_source">提供元順</string>
     <string name="remove_title">%s を削除しますか？</string>
-    <string name="remove_text_installed">Stampでの追跡を停止します。アプリはインストールされたままです。</string>
-    <string name="remove_text">Stampでの追跡を停止します。</string>
+    <string name="remove_text_installed">Ternでの追跡を停止します。アプリはインストールされたままです。</string>
+    <string name="remove_text">Ternでの追跡を停止します。</string>
     <string name="add_title">アプリを追加</string>
     <string name="add_field_label">リンクまたは検索</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -184,8 +184,8 @@
     <string name="signer_unknown">署名者についてはまだ不明です。ダウンロード後に確認されます。</string>
     <string name="signer_first_seen">初回インストール: この証明書は記憶されます</string>
     <string name="signer_first_seen_claimed">初回インストール: ファイルはこの証明書を主張しており、Androidが確認した後に記憶されます</string>
-    <string name="signer_matches_pin">Stampがこのアプリに保持している証明書で署名されています</string>
-    <string name="signer_matches_pin_claimed">ファイルはStampがこのアプリに保持している証明書を主張しています。Androidがインストール前に確認します。</string>
+    <string name="signer_matches_pin">Ternがこのアプリに保持している証明書で署名されています</string>
+    <string name="signer_matches_pin_claimed">ファイルはTernがこのアプリに保持している証明書を主張しています。Androidがインストール前に確認します。</string>
     <string name="signer_matches_installed">インストール済みのアプリと同じ開発者によって署名されています</string>
     <string name="signer_matches_installed_claimed">ファイルはインストール済みのアプリと同じ開発者を主張しています。Androidがインストール前に確認します。</string>
     <string name="signer_mismatch">インストール済みのアプリの開発者以外によって署名されています</string>
@@ -202,17 +202,17 @@
     <string name="fingerprint_copied">フィンガープリントをコピーしました</string>
     <string name="checks_virustotal">VirusTotalでこのファイルを検索</string>
     <string name="checks_virustotal_note">ブラウザからファイルのフィンガープリントのみが送信されます。誰もVirusTotalにアップロードしていないファイルは見つかりません。</string>
-    <string name="advice_network">Stampは提供元にアクセスできませんでした。接続やプロキシを確認して再試行してください。</string>
+    <string name="advice_network">Ternは提供元にアクセスできませんでした。接続やプロキシを確認して再試行してください。</string>
     <string name="advice_rate_limited">提供元はリクエストの頻度を制限しています。このホストのアクセストークンを保存すると、制限が緩和されます。</string>
     <string name="advice_not_found">プロジェクトが移動したか非公開になった可能性があります。リンクがブラウザで開けるか確認してください。</string>
     <string name="advice_auth">提供元はアクセストークンを拒否しました。［設定］の［アクセストークン］で新しいものに置き換えてください。</string>
-    <string name="advice_parse">提供元からStampが読み取れない応答がありました。提供元側の一時的な障害の可能性があります。</string>
-    <string name="advice_no_releases">プロジェクトにはStampが使用できるリリースがまだありません。プレリリースをオンにすると対象になります。</string>
+    <string name="advice_parse">提供元からTernが読み取れない応答がありました。提供元側の一時的な障害の可能性があります。</string>
+    <string name="advice_no_releases">プロジェクトにはTernが使用できるリリースがまだありません。プレリリースをオンにすると対象になります。</string>
     <string name="advice_no_file">この端末に合うファイルがありません。ファイル選択から自分で選ぶか、包含・除外パターンを変更してください。</string>
     <string name="advice_checksum_mismatch">ファイルは公開後に変更されたか、途中で破損しました。インストールしないでください。後で再試行してください。</string>
-    <string name="advice_signer_mismatch">ファイルはアプリにピン留めされた証明書とは異なるもので署名されているため、Stampは拒否しました。開発者が新しい鍵を発表した場合は、詳細設定でピン留めを置き換えてください。</string>
+    <string name="advice_signer_mismatch">ファイルはアプリにピン留めされた証明書とは異なるもので署名されているため、Ternは拒否しました。開発者が新しい鍵を発表した場合は、詳細設定でピン留めを置き換えてください。</string>
     <string name="advice_signer_broken">このファイル内の署名が一致しません。インストールしないで、開発者に報告してください。</string>
-    <string name="advice_signer_mismatch_installed">Androidはアプリを別人の署名があるものに置き換えることはなく、Stampも試行しません。開発者が新しい鍵を発表した場合、アプリを一度削除してからインストールし直す必要があります（データは消去されます）。</string>
+    <string name="advice_signer_mismatch_installed">Androidはアプリを別人の署名があるものに置き換えることはなく、Ternも試行しません。開発者が新しい鍵を発表した場合、アプリを一度削除してからインストールし直す必要があります（データは消去されます）。</string>
     <string name="advice_package_mismatch">ファイルは追跡しているアプリと異なります。ファイル選択で包含・除外パターンを確認してください。</string>
     <string name="advice_downgrade">提供されたバージョンはインストール済みのものより古く、Androidは新しいバージョンの上へのインストールを許可しません。戻すにはまずアプリを削除する必要があり、データは消去されます。</string>
     <string name="advice_install_failed">Androidがインストールを拒否しました。理由は上記に表示されています。</string>
@@ -224,11 +224,11 @@
     </plurals>
     <string name="detail_gone">このアプリはもうリストにありません。</string>
     <string name="moved_title">このプロジェクトは %1$s に移動しました</string>
-    <string name="moved_explain">新しいアドレスが同じ開発者によって署名された同じアプリを提供している場合のみ、Stampは切り替えます。</string>
+    <string name="moved_explain">新しいアドレスが同じ開発者によって署名された同じアプリを提供している場合のみ、Ternは切り替えます。</string>
     <string name="moved_follow">移動先で追跡</string>
     <string name="moved_keep">古いアドレスを保持</string>
     <string name="moved_working">新しいアドレスを確認中</string>
-    <string name="moved_done">Stampは新しいアドレスを追跡しています。</string>
+    <string name="moved_done">Ternは新しいアドレスを追跡しています。</string>
     <string name="silent_yes">この更新は確認なしでインストールできます。</string>
     <string name="silent_no">Androidはこの更新について確認を求めます。</string>
     <string name="phase_queued">他のダウンロードの完了を待っています</string>
@@ -334,7 +334,7 @@
     <string name="settings_keep_installers">ダウンロードしたファイルを保持</string>
     <string name="settings_keep_installers_effect">インストール後もファイルが残り、ストレージを消費します。オフにすると削除されます。</string>
     <string name="settings_ownership">唯一のアップデーターになる</string>
-    <string name="settings_ownership_effect">Stampがインストールしたアプリの更新をStampのみに許可するようAndroidに要求し、他のストアによる差し替えを防ぎます。</string>
+    <string name="settings_ownership_effect">Ternがインストールしたアプリの更新をTernのみに許可するようAndroidに要求し、他のストアによる差し替えを防ぎます。</string>
     <string name="settings_ownership_unsupported">Android 14以降が必要です。</string>
     <string name="settings_tokens">アクセストークン</string>
     <string name="settings_tokens_effect">トークンを使うと制限が緩和され、非公開プロジェクトにアクセスできます。保存したホストにのみ送信され、二度と表示されません。</string>
@@ -365,13 +365,13 @@
     <string name="theme_light">ライト</string>
     <string name="theme_dark">ダーク</string>
     <string name="settings_dynamic_color">壁紙からの色</string>
-    <string name="settings_dynamic_color_effect">オフにするとStamp独自のブルーグレーを使用します。</string>
+    <string name="settings_dynamic_color_effect">オフにするとTern独自のブルーグレーを使用します。</string>
     <string name="settings_dynamic_color_unsupported">Android 12以降が必要です。</string>
     <string name="settings_pure_black">ピュアブラック</string>
     <string name="settings_pure_black_effect">ダークテーマで背景を黒にし、OLED画面での見やすさを向上させます。</string>
     <string name="settings_data">インポートとエクスポート</string>
     <string name="settings_import">アプリをインポート</string>
-    <string name="settings_import_effect">StampまたはObtainiumのエクスポートから</string>
+    <string name="settings_import_effect">TernまたはObtainiumのエクスポートから</string>
     <string name="settings_export">アプリをエクスポート</string>
     <string name="settings_exporting">エクスポート中</string>
     <string name="settings_export_effect">リストと設定をファイルに保存します。トークンは含まれません。</string>
@@ -380,14 +380,14 @@
     </plurals>
     <string name="export_failed">エクスポートを書き込めませんでした。</string>
     <string name="settings_obtainium_links">Obtainiumのリンクを開く</string>
-    <string name="settings_obtainium_links_effect">Obtainium用のリンクをStampで開きます。アプリの確認は引き続き行われます。</string>
+    <string name="settings_obtainium_links_effect">Obtainium用のリンクをTernで開きます。アプリの確認は引き続き行われます。</string>
     <string name="settings_about">アプリについて</string>
     <string name="about_version">バージョン</string>
     <string name="about_licence">ライセンス</string>
     <string name="about_licence_name">GNU General Public License（バージョン3以降）</string>
     <string name="about_source">ソースコード</string>
     <string name="import_title">アプリをインポート</string>
-    <string name="import_explain">StampまたはObtainiumのエクスポートファイルを選択してください。インストールはされず、アプリがリストに追加され確認されます。</string>
+    <string name="import_explain">TernまたはObtainiumのエクスポートファイルを選択してください。インストールはされず、アプリがリストに追加され確認されます。</string>
     <string name="import_pick">ファイルを選択</string>
     <string name="import_pick_other">別のファイルを選択</string>
     <string name="import_working">ファイルを読み込み中</string>
@@ -433,19 +433,19 @@
     <string name="import_stars_stop">停止</string>
     <string name="import_skip_no_file">そのリリースには、この端末にインストールできるものがありません。</string>
     <string name="import_skip_no_releases">リリースを公開していません。</string>
-    <string name="import_skip_not_found">Stampはそれを見つけられませんでした。</string>
-    <string name="import_skip_rate_limited">GitHubからStampに待機要求がありました。後で再試行してください。</string>
+    <string name="import_skip_not_found">Ternはそれを見つけられませんでした。</string>
+    <string name="import_skip_rate_limited">GitHubからTernに待機要求がありました。後で再試行してください。</string>
     <string name="import_skip_network">接続に失敗しました。</string>
-    <string name="import_skip_other">Stampはそのリリースを読み取れませんでした。</string>
-    <string name="first_title">Stamp</string>
-    <string name="first_line_1">Stampは、開発者が公開している場所から直接アプリをインストール・更新します。</string>
-    <string name="first_line_2">Androidにファイルが渡る前に、Stampは誰が署名したか、提供元のチェックサムと一致するかを確認します。</string>
+    <string name="import_skip_other">Ternはそのリリースを読み取れませんでした。</string>
+    <string name="first_title">Tern</string>
+    <string name="first_line_1">Ternは、開発者が公開している場所から直接アプリをインストール・更新します。</string>
+    <string name="first_line_2">Androidにファイルが渡る前に、Ternは誰が署名したか、提供元のチェックサムと一致するかを確認します。</string>
     <string name="first_line_3">検出した内容や実行した操作はすべて、わかりやすい言葉でアクティビティログに記録されます。</string>
-    <string name="first_notify_explain">Stampは更新の準備ができたときに通知できます。Androidから通知を許可するかどうかを尋ねられます。</string>
+    <string name="first_notify_explain">Ternは更新の準備ができたときに通知できます。Androidから通知を許可するかどうかを尋ねられます。</string>
     <string name="first_notify_denied">通知はオフになっています。後で設定からオンにできます。</string>
     <string name="first_notify_allow">通知を許可する</string>
     <string name="first_skip">今はしない</string>
-    <string name="install_permission_title">Stampにアプリのインストールを許可</string>
-    <string name="install_permission_body">Androidは、アプリが別のアプリをインストールする前に一度だけ確認します。次の画面でStampのスイッチをオンにして、戻ってきてください。インストールは自動的に続行されます。</string>
+    <string name="install_permission_title">Ternにアプリのインストールを許可</string>
+    <string name="install_permission_body">Androidは、アプリが別のアプリをインストールする前に一度だけ確認します。次の画面でTernのスイッチをオンにして、戻ってきてください。インストールは自動的に続行されます。</string>
     <string name="install_permission_open">設定を開く</string>
 </resources>

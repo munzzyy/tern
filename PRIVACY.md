@@ -1,6 +1,6 @@
 # Privacy
 
-Stamp has no server of its own and no account. It collects no analytics and
+Tern has no server of its own and no account. It collects no analytics and
 sends no crash reports, because there is nobody for it to report to.
 
 ## What leaves the device
@@ -11,7 +11,7 @@ of those sees what any web server sees, which is your address, the time, and
 the project you asked about. A search on the Add screen asks GitHub, Codeberg
 and gitlab.com for the words you typed.
 
-The list of well known apps is part of Stamp. Showing it asks nobody
+The list of well known apps is part of Tern. Showing it asks nobody
 anything. A request goes out when you press Look on one of them, to that app's
 own address, the same as for a link you typed.
 
@@ -28,8 +28,8 @@ for icons from the source turns all of this off, and rows then show a letter.
 An import from a link fetches the one address you typed, without a token.
 
 With a proxy set, every request goes through it, and host names are resolved
-by the proxy. While the proxy cannot be reached, Stamp reaches nothing. It
-never goes round the proxy. With Orbot chosen, Stamp asks Orbot on this device
+by the proxy. While the proxy cannot be reached, Tern reaches nothing. It
+never goes round the proxy. With Orbot chosen, Tern asks Orbot on this device
 to start and to say how it is doing. That stays on the device.
 
 A stored access token is sent to the host it was stored for and to no other.
@@ -39,7 +39,7 @@ under your browser's rules.
 
 ## Send from a phone
 
-When you open "Send from a phone", Stamp serves one small page on the local
+When you open "Send from a phone", Tern serves one small page on the local
 network for ten minutes, or until you leave the screen. The page takes links
 and one export file from a phone or a computer on the same network.
 
@@ -50,7 +50,7 @@ and how large it was. They cannot read it, change it, or send something of
 their own.
 
 Somebody who can change the traffic on your network, and not only read it,
-can put a page of their own in the place of Stamp's and learn the code from
+can put a page of their own in the place of Tern's and learn the code from
 whoever uses it. No page served on a local address can prevent that. What
 arrives is only ever a suggestion: it is shown on the device, and nothing is
 added until you have looked at it there.
@@ -67,7 +67,7 @@ device-to-device transfer.
 
 An export contains your app list and settings, and never tokens. On a device
 without a file picker, such as a television, the export is written to
-`Download/Stamp/` on the shared storage, where other apps with access to your
+`Download/Tern/` on the shared storage, where other apps with access to your
 files can read it.
 
 ## Permissions

@@ -68,7 +68,7 @@
     <string name="action_failed">No ha funcionat. Torna-ho a provar d\'aquí a un moment.</string>
     <string name="save_failed">No s\'ha desat el canvi. Torna-ho a provar.</string>
     <string name="open_no_launcher">Aquesta aplicació no té pantalla per obrir</string>
-    <string name="offline_banner">No hi ha connexió a internet. Stamp tornarà a comprovar-ho quan n\'hi hagi.</string>
+    <string name="offline_banner">No hi ha connexió a internet. Tern tornarà a comprovar-ho quan n\'hi hagi.</string>
     <string name="offline_reason">No disponible sense connexió a internet</string>
     <string name="apps_search_hint">Cerca a les teves aplicacions</string>
     <string name="filter_all">Totes</string>
@@ -107,7 +107,7 @@
         <item quantity="one">Vols comprovar %d aplicació ara?</item>
         <item quantity="other">Vols comprovar %d aplicacions ara?</item>
     </plurals>
-    <string name="bulk_check_text">Stamp demana a cada origen el seu llançament més nou. No s\'instal·la res.</string>
+    <string name="bulk_check_text">Tern demana a cada origen el seu llançament més nou. No s\'instal·la res.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">Vols actualitzar %d aplicació?</item>
         <item quantity="other">Vols actualitzar %d aplicacions?</item>
@@ -121,16 +121,16 @@
         <item quantity="one">Vols deixar de seguir %d aplicació?</item>
         <item quantity="other">Vols deixar de seguir %d aplicacions?</item>
     </plurals>
-    <string name="bulk_remove_text">Les aplicacions continuen instal·lades. Stamp només deixa de comprovar-ne les actualitzacions.</string>
+    <string name="bulk_remove_text">Les aplicacions continuen instal·lades. Tern només deixa de comprovar-ne les actualitzacions.</string>
     <string name="apps_empty_title">Encara no hi ha aplicacions</string>
-    <string name="apps_empty_text">Enganxa un enllaç a una pàgina de projecte, a una pàgina de llançament o a un repositori de F-Droid, i Stamp mantindrà l\'aplicació actualitzada des d\'allà.</string>
+    <string name="apps_empty_text">Enganxa un enllaç a una pàgina de projecte, a una pàgina de llançament o a un repositori de F-Droid, i Tern mantindrà l\'aplicació actualitzada des d\'allà.</string>
     <string name="sort_title">Ordena</string>
     <string name="sort_name">Per nom</string>
     <string name="sort_recently_checked">Comprovades recentment</string>
     <string name="sort_source">Per origen</string>
     <string name="remove_title">Vols suprimir %s?</string>
-    <string name="remove_text_installed">Stamp deixarà de seguir-la. L\'aplicació continuarà instal·lada.</string>
-    <string name="remove_text">Stamp deixarà de seguir-la.</string>
+    <string name="remove_text_installed">Tern deixarà de seguir-la. L\'aplicació continuarà instal·lada.</string>
+    <string name="remove_text">Tern deixarà de seguir-la.</string>
     <string name="add_title">Afegeix una aplicació</string>
     <string name="add_field_label">Enllaç o cerca</string>
     <string name="add_field_hint">https://github.com/propietari/aplicacio</string>
@@ -194,8 +194,8 @@
     <string name="signer_unknown">Encara no se sap res del signant. Es comprova un cop baixat.</string>
     <string name="signer_first_seen">Primera instal·lació: es recordarà aquest certificat</string>
     <string name="signer_first_seen_claimed">Primera instal·lació: el fitxer al·lega aquest certificat, i es recordarà un cop Android el confirmi</string>
-    <string name="signer_matches_pin">Signat amb el certificat que Stamp té per a aquesta aplicació</string>
-    <string name="signer_matches_pin_claimed">El fitxer al·lega el certificat que Stamp té per a aquesta aplicació. Android el confirma abans d\'instal·lar-lo.</string>
+    <string name="signer_matches_pin">Signat amb el certificat que Tern té per a aquesta aplicació</string>
+    <string name="signer_matches_pin_claimed">El fitxer al·lega el certificat que Tern té per a aquesta aplicació. Android el confirma abans d\'instal·lar-lo.</string>
     <string name="signer_matches_installed">Signat pel mateix desenvolupador que l\'aplicació instal·lada</string>
     <string name="signer_matches_installed_claimed">El fitxer al·lega el mateix desenvolupador que l\'aplicació instal·lada. Android el confirma abans d\'instal·lar-lo.</string>
     <string name="signer_mismatch">Signat per algú que no és el desenvolupador de l\'aplicació instal·lada</string>
@@ -213,17 +213,17 @@
     <string name="fingerprint_copied">S\'ha copiat l\'empremta digital</string>
     <string name="checks_virustotal">Cerca aquest fitxer a VirusTotal</string>
     <string name="checks_virustotal_note">El teu navegador només envia l\'empremta digital del fitxer, i un fitxer que ningú no ha pujat a VirusTotal no s\'hi trobarà.</string>
-    <string name="advice_network">Stamp no ha pogut contactar amb l\'origen. Comprova la connexió o el proxy i torna-ho a provar.</string>
+    <string name="advice_network">Tern no ha pogut contactar amb l\'origen. Comprova la connexió o el proxy i torna-ho a provar.</string>
     <string name="advice_rate_limited">L\'origen està limitant la freqüència amb què se li pot preguntar. Un token d\'accés desat per a aquest amfitrió augmenta el límit.</string>
     <string name="advice_not_found">Pot ser que el projecte s\'hagi mogut o s\'hagi fet privat. Comprova que l\'enllaç encara s\'obre en un navegador.</string>
     <string name="advice_auth">L\'origen ha rebutjat el token d\'accés. Reemplaça\'l a la Configuració, sota els tokens d\'accés.</string>
-    <string name="advice_parse">L\'origen ha respost amb quelcom que Stamp no ha pogut llegir. Pot ser un error temporal per part seva.</string>
-    <string name="advice_no_releases">El projecte encara no ha publicat cap llançament que Stamp pugui usar. Els prellançaments compten si els actives.</string>
+    <string name="advice_parse">L\'origen ha respost amb quelcom que Tern no ha pogut llegir. Pot ser un error temporal per part seva.</string>
+    <string name="advice_no_releases">El projecte encara no ha publicat cap llançament que Tern pugui usar. Els prellançaments compten si els actives.</string>
     <string name="advice_no_file">Cap dels fitxers és adequat per a aquest dispositiu. Tria\'n un tu mateix a Tria de fitxers, o canvia els patrons d\'inclusió i exclusió.</string>
     <string name="advice_checksum_mismatch">El fitxer ha canviat des que es va publicar o s\'ha fet malbé pel camí. No l\'instal·lis. Torna-ho a provar més tard.</string>
-    <string name="advice_signer_mismatch">El fitxer està signat amb un certificat diferent del fixat per a aquesta aplicació, de manera que Stamp el rebutja. Si el desenvolupador ha anunciat una clau nova, reemplaça el certificat fixat a Avançat.</string>
+    <string name="advice_signer_mismatch">El fitxer està signat amb un certificat diferent del fixat per a aquesta aplicació, de manera que Tern el rebutja. Si el desenvolupador ha anunciat una clau nova, reemplaça el certificat fixat a Avançat.</string>
     <string name="advice_signer_broken">Les signatures d\'aquest fitxer no concorden entre si. No l\'instal·lis i digues-ho al desenvolupador.</string>
-    <string name="advice_signer_mismatch_installed">Android no reemplaça una aplicació per una de signada per algú altre, i Stamp no ho intentarà. Si el desenvolupador ha anunciat una clau nova, caldrà suprimir l\'aplicació i tornar-la a instal·lar, cosa que n\'esborrarà les dades.</string>
+    <string name="advice_signer_mismatch_installed">Android no reemplaça una aplicació per una de signada per algú altre, i Tern no ho intentarà. Si el desenvolupador ha anunciat una clau nova, caldrà suprimir l\'aplicació i tornar-la a instal·lar, cosa que n\'esborrarà les dades.</string>
     <string name="advice_package_mismatch">El fitxer és una aplicació diferent de la que segueixes. Comprova els patrons d\'inclusió i exclusió a Tria de fitxers.</string>
     <string name="advice_downgrade">La versió oferta és més antiga que la instal·lada, i Android no la instal·la per sobre d\'una versió més nova. Per tornar enrere cal suprimir primer l\'aplicació, cosa que n\'esborrarà les dades.</string>
     <string name="advice_install_failed">Android ha rebutjat la instal·lació. El motiu que ha donat es mostra a dalt.</string>
@@ -236,11 +236,11 @@
     </plurals>
     <string name="detail_gone">Aquesta aplicació ja no és a la teva llista.</string>
     <string name="moved_title">Aquest projecte s\'ha mogut a %1$s</string>
-    <string name="moved_explain">Stamp només canvia si la nova adreça ofereix la mateixa aplicació, signada pel mateix desenvolupador.</string>
+    <string name="moved_explain">Tern només canvia si la nova adreça ofereix la mateixa aplicació, signada pel mateix desenvolupador.</string>
     <string name="moved_follow">Segueix-lo allà</string>
     <string name="moved_keep">Mantén l\'adreça antiga</string>
     <string name="moved_working">Comprovant la nova adreça</string>
-    <string name="moved_done">Stamp ara segueix la nova adreça.</string>
+    <string name="moved_done">Tern ara segueix la nova adreça.</string>
     <string name="silent_yes">Aquesta actualització es pot instal·lar sense cap avís.</string>
     <string name="silent_no">Android et demanarà que confirmis aquesta actualització.</string>
     <string name="phase_queued">Esperant que acabin altres baixades</string>
@@ -348,7 +348,7 @@
     <string name="settings_keep_installers">Conserva els fitxers baixats</string>
     <string name="settings_keep_installers_effect">Els fitxers es conserven després d\'instal·lar-se, ocupant espai. Si es desactiva, s\'esborren.</string>
     <string name="settings_ownership">Sigues l\'únic actualitzador</string>
-    <string name="settings_ownership_effect">Demana a Android que només deixi a Stamp actualitzar les aplicacions que instal·la, perquè una altra botiga no les canviï.</string>
+    <string name="settings_ownership_effect">Demana a Android que només deixi a Tern actualitzar les aplicacions que instal·la, perquè una altra botiga no les canviï.</string>
     <string name="settings_ownership_unsupported">Necessita Android 14 o superior.</string>
     <string name="settings_tokens">Tokens d\'accés</string>
     <string name="settings_tokens_effect">Un token augmenta els límits de freqüència i obre projectes privats. S\'envia només a l\'amfitrió exacte per al qual s\'ha desat, i no es torna a mostrar mai més.</string>
@@ -379,13 +379,13 @@
     <string name="theme_light">Clar</string>
     <string name="theme_dark">Fosc</string>
     <string name="settings_dynamic_color">Colors del teu fons de pantalla</string>
-    <string name="settings_dynamic_color_effect">Si es desactiva, s\'usa el blau pissarra de Stamp.</string>
+    <string name="settings_dynamic_color_effect">Si es desactiva, s\'usa el blau pissarra de Tern.</string>
     <string name="settings_dynamic_color_unsupported">Necessita Android 12 o superior.</string>
     <string name="settings_pure_black">Negre pur</string>
     <string name="settings_pure_black_effect">Fons negres en el tema fosc, millor per a pantalles OLED.</string>
     <string name="settings_data">Importació i exportació</string>
     <string name="settings_import">Importa aplicacions</string>
-    <string name="settings_import_effect">D\'una exportació de Stamp o Obtainium</string>
+    <string name="settings_import_effect">D\'una exportació de Tern o Obtainium</string>
     <string name="settings_export">Exporta aplicacions</string>
     <string name="settings_exporting">S\'està exportant</string>
     <string name="settings_export_effect">Desa la teva llista i la configuració en un fitxer. Mai s\'inclouen els tokens.</string>
@@ -395,14 +395,14 @@
     </plurals>
     <string name="export_failed">No s\'ha pogut escriure l\'exportació.</string>
     <string name="settings_obtainium_links">Obre enllaços d\'Obtainium</string>
-    <string name="settings_obtainium_links_effect">Els enllaços per a Obtainium s\'obren a Stamp. Encara hauràs de confirmar cada aplicació.</string>
+    <string name="settings_obtainium_links_effect">Els enllaços per a Obtainium s\'obren a Tern. Encara hauràs de confirmar cada aplicació.</string>
     <string name="settings_about">Quant a</string>
     <string name="about_version">Versió</string>
     <string name="about_licence">Llicència</string>
     <string name="about_licence_name">GNU General Public License, versió 3 o posterior</string>
     <string name="about_source">Codi font</string>
     <string name="import_title">Importa aplicacions</string>
-    <string name="import_explain">Tria un fitxer d\'exportació de Stamp o Obtainium. No s\'instal·la res; les aplicacions s\'afegeixen a la teva llista i es comproven.</string>
+    <string name="import_explain">Tria un fitxer d\'exportació de Tern o Obtainium. No s\'instal·la res; les aplicacions s\'afegeixen a la teva llista i es comproven.</string>
     <string name="import_pick">Tria un fitxer</string>
     <string name="import_pick_other">Tria un altre fitxer</string>
     <string name="import_working">S\'està llegint el fitxer</string>
@@ -455,19 +455,19 @@
     <string name="import_stars_stop">Atura</string>
     <string name="import_skip_no_file">Res dels seus llançaments es pot instal·lar en aquest dispositiu.</string>
     <string name="import_skip_no_releases">No publica cap llançament.</string>
-    <string name="import_skip_not_found">Stamp no ho ha pogut trobar.</string>
-    <string name="import_skip_rate_limited">GitHub ha demanat a Stamp que s\'esperi. Torna-ho a provar més tard.</string>
+    <string name="import_skip_not_found">Tern no ho ha pogut trobar.</string>
+    <string name="import_skip_rate_limited">GitHub ha demanat a Tern que s\'esperi. Torna-ho a provar més tard.</string>
     <string name="import_skip_network">La connexió ha fallat.</string>
-    <string name="import_skip_other">Stamp no ha pogut llegir els seus llançaments.</string>
-    <string name="first_title">Stamp</string>
-    <string name="first_line_1">Stamp instal·la i actualitza aplicacions directament des d\'on les publiquen els seus desenvolupadors.</string>
-    <string name="first_line_2">Abans que Android vegi un fitxer, Stamp comprova qui l\'ha signat i si coincideix amb la suma de verificació de l\'editor.</string>
+    <string name="import_skip_other">Tern no ha pogut llegir els seus llançaments.</string>
+    <string name="first_title">Tern</string>
+    <string name="first_line_1">Tern instal·la i actualitza aplicacions directament des d\'on les publiquen els seus desenvolupadors.</string>
+    <string name="first_line_2">Abans que Android vegi un fitxer, Tern comprova qui l\'ha signat i si coincideix amb la suma de verificació de l\'editor.</string>
     <string name="first_line_3">Tot el que troba i fa s\'escriu al registre d\'activitat, en paraules clares.</string>
-    <string name="first_notify_explain">Stamp et pot avisar quan hi ha actualitzacions a punt. Android et demanarà si permets les notificacions.</string>
+    <string name="first_notify_explain">Tern et pot avisar quan hi ha actualitzacions a punt. Android et demanarà si permets les notificacions.</string>
     <string name="first_notify_denied">Les notificacions estan desactivades. Pots activar-les més tard a la Configuració.</string>
     <string name="first_notify_allow">Permet les notificacions</string>
     <string name="first_skip">Ara no</string>
-    <string name="install_permission_title">Permet a Stamp instal·lar aplicacions</string>
-    <string name="install_permission_body">Android ho demana una vegada abans que una aplicació en pugui instal·lar una altra. A la pantalla següent, activa l\'interruptor per a Stamp i després torna. La instal·lació continuarà sola.</string>
+    <string name="install_permission_title">Permet a Tern instal·lar aplicacions</string>
+    <string name="install_permission_body">Android ho demana una vegada abans que una aplicació en pugui instal·lar una altra. A la pantalla següent, activa l\'interruptor per a Tern i després torna. La instal·lació continuarà sola.</string>
     <string name="install_permission_open">Obre la configuració</string>
 </resources>

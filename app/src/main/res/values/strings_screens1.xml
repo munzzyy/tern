@@ -34,17 +34,17 @@
     <string name="explain_silent_title">Updates without a prompt</string>
     <string name="explain_always_asks_title">This device always asks</string>
     <string name="explain_package">Every Android app has one name that never changes. A file that carried another name would be a different app, whatever it called itself.</string>
-    <string name="explain_signer_installed">A developer signs every release with a key only they hold. Stamp compares the signature of this file with the app on this device and with the certificate it remembered at the first install. A file signed by anyone else is refused, even if it comes from the right address.</string>
-    <string name="explain_signer_first">There is nothing to compare with yet. The file says who signed it, Android confirms that when it installs, and from then on Stamp holds every update to the same certificate.</string>
-    <string name="explain_checksum_matched">A checksum is a fingerprint of the file itself. The publisher gave one, and the file Stamp downloaded has the same, so it arrived as it was published.</string>
-    <string name="explain_checksum_pending">A checksum is a fingerprint of the file itself. The publisher gave one, and Stamp compares it with the file as soon as the file is downloaded.</string>
-    <string name="explain_checksum_mismatch">A checksum is a fingerprint of the file itself. The publisher gave one, and the file Stamp downloaded has another, so it is not the file that was published.</string>
+    <string name="explain_signer_installed">A developer signs every release with a key only they hold. Tern compares the signature of this file with the app on this device and with the certificate it remembered at the first install. A file signed by anyone else is refused, even if it comes from the right address.</string>
+    <string name="explain_signer_first">There is nothing to compare with yet. The file says who signed it, Android confirms that when it installs, and from then on Tern holds every update to the same certificate.</string>
+    <string name="explain_checksum_matched">A checksum is a fingerprint of the file itself. The publisher gave one, and the file Tern downloaded has the same, so it arrived as it was published.</string>
+    <string name="explain_checksum_pending">A checksum is a fingerprint of the file itself. The publisher gave one, and Tern compares it with the file as soon as the file is downloaded.</string>
+    <string name="explain_checksum_mismatch">A checksum is a fingerprint of the file itself. The publisher gave one, and the file Tern downloaded has another, so it is not the file that was published.</string>
     <string name="explain_checksum_none">This publisher gives no checksum. The signature is still checked, and it is the stronger of the two.</string>
     <string name="explain_permissions">What this version asks to be allowed to do that the installed one did not.</string>
-    <string name="explain_virustotal">Opens the page for this exact file at VirusTotal in your browser. Stamp sends nothing there.</string>
+    <string name="explain_virustotal">Opens the page for this exact file at VirusTotal in your browser. Tern sends nothing there.</string>
     <string name="explain_silent">Android lets an app update another without asking when that app installed it and the device runs Android 12 or later. Android decides each time.</string>
     <!-- %1$s is the version of Android on the device, such as 11. -->
-    <string name="explain_always_asks">This device runs Android %1$s, which asks before every install. Stamp downloads and checks the update in the background and tells you when it is ready.</string>
+    <string name="explain_always_asks">This device runs Android %1$s, which asks before every install. Tern downloads and checks the update in the background and tells you when it is ready.</string>
 
     <!-- Activity: one entry for one thing that happened. %1$s is a version. -->
     <string name="activity_installed">Installed %1$s</string>

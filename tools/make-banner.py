@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draws the banner a television shows for Stamp: the seal and the name on ink.
+"""Draws the banner a television shows for Tern: the seal and the name on ink.
 
   tools/make-banner.py [--font <file.ttf>]
 
@@ -59,7 +59,7 @@ def name_font(path, room):
     size = NAME_SIZE * FINER
     while size > FINER:
         font = ImageFont.truetype(path, size)
-        left, _, right, _ = font.getbbox("Stamp", anchor="ls")
+        left, _, right, _ = font.getbbox("Tern", anchor="ls")
         if right - left <= room:
             return font, left
         size -= FINER
@@ -78,7 +78,7 @@ def main():
     seal(draw, (MARGIN + SEAL_RADIUS) * FINER, middle, SEAL_RADIUS * FINER, 255)
     start = (MARGIN + 2 * SEAL_RADIUS + GAP) * FINER
     font, bearing = name_font(args.font, (WIDTH - MARGIN) * FINER - start)
-    draw.text((start - bearing, middle), "Stamp", font=font, fill=255, anchor="lm")
+    draw.text((start - bearing, middle), "Tern", font=font, fill=255, anchor="lm")
     picture = cover.resize((WIDTH, HEIGHT), Image.LANCZOS).convert("P")
     picture.putpalette([round(g + (p - g) * step / 255) for step in range(256) for g, p in zip(ground, paper)])
     OUT.parent.mkdir(parents=True, exist_ok=True)

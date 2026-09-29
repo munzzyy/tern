@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "io.github.munzzyy.stamp"
+    namespace = "io.github.munzzyy.tern"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "io.github.munzzyy.stamp"
+        applicationId = "io.github.munzzyy.tern"
         minSdk = 29
         targetSdk = 36
         versionCode = 100

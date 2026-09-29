@@ -35,8 +35,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 ADB = os.path.join(os.environ.get("ANDROID_HOME", os.path.expanduser("~/Android/Sdk")), "platform-tools", "adb")
 APK = ROOT / "app/build/outputs/apk/debug/app-debug.apk"
-PACKAGE = "io.github.munzzyy.stamp.debug"
-ACTIVITY = PACKAGE + "/io.github.munzzyy.stamp.MainActivity"
+PACKAGE = "io.github.munzzyy.tern.debug"
+ACTIVITY = PACKAGE + "/io.github.munzzyy.tern.MainActivity"
 STAND_IN = "files/use-stand-in"
 PREFS = "shared_prefs/ui.xml"
 TABS = ["Apps", "Add", "Activity", "Settings"]
@@ -45,7 +45,7 @@ FILE_NAME = "handoff-proof-export.json"
 FORGED = "https://codeberg.org/example/forged"
 OTHER_CODE = "k4mzq7wdx2nph5tcr3vb"
 EXPORT = (
-    '{"format":"stamp-export","schema":1,"exportedAt":0,"appVersion":"proof","apps":['
+    '{"format":"tern-export","schema":1,"exportedAt":0,"appVersion":"proof","apps":['
     '{"schema":1,"id":"proof","source":{"type":"forgejo","url":"https://codeberg.org/example/handoff-proof","options":{}},"name":"Handoff proof"}'
     "]}"
 )
@@ -89,7 +89,7 @@ def chacha20(key, nonce, counter, data):
 
 
 def seal(code, kind, plain, nonce=None):
-    master = hmac.new(code.encode("ascii"), b"stamp handoff v1", hashlib.sha256).digest()
+    master = hmac.new(code.encode("ascii"), b"tern handoff v1", hashlib.sha256).digest()
     enc = hmac.new(master, b"enc", hashlib.sha256).digest()
     mac = hmac.new(master, b"mac", hashlib.sha256).digest()
     nonce = nonce or os.urandom(12)

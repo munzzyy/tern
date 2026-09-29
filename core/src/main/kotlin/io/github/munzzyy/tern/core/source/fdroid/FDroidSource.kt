@@ -1,0 +1,92 @@
+package io.github.munzzyy.tern.core.source.fdroid
+
+import io.github.munzzyy.tern.core.apk.BinaryManifest
+import io.github.munzzyy.tern.core.json.Json
+import io.github.munzzyy.tern.core.model.Asset
+import io.github.munzzyy.tern.core.model.Release
+import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.net.HttpRequest
+import io.github.munzzyy.tern.core.net.Urls
+import io.github.munzzyy.tern.core.net.Validator
+import io.github.munzzyy.tern.core.source.CheckContext
+import io.github.munzzyy.tern.core.source.CheckResult
+import io.github.munzzyy.tern.core.source.Source
+import io.github.munzzyy.tern.core.source.SourceErrorKind
+import io.github.munzzyy.tern.core.source.SourceException
+import io.github.munzzyy.tern.core.source.SourceListing
+import io.github.munzzyy.tern.core.source.SourceOptions
+import io.github.munzzyy.tern.core.source.SourceTypes
+import io.github.munzzyy.tern.core.source.guarded
+
+class FDroidSource : Source {
+    override val type: String = SourceTypes.FDROID
+
+    override fun match(url: String): SourceSpec? {
+        val uri = Urls.parseHttps(url) ?: return null
+        val host = uri.host?.lowercase()?.removePrefix("www.") ?: return null
+        val path = uri.path?.trimEnd('/') ?: return null
+        val pkg = when (host) {
+            "f-droid.org" -> FDROID_PATH.find(path)?.groupValues?.get(1)
+            "apt.izzysoft.de" -> IZZY_APT_PATH.find(path)?.groupValues?.get(1)
+            "android.izzysoft.de" -> IZZY_ANDROID_PATH.find(path)?.groupValues?.get(1)
+            else -> null
+        } ?: return null
+        if (!isValidPackage(pkg)) return null
+        val canonical = if (host == "f-droid.org") "https://f-droid.org/packages/$pkg" else "https://apt.izzysoft.de/fdroid/index/apk/$pkg"
+        return SourceSpec(type, canonical, mapOf(SourceOptions.PACKAGE to pkg))
+    }
+
+    override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
+
+    private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {
+        val pkg = packageOption(spec)
+        val izzy = Urls.host(spec.url).let { it == "izzysoft.de" || it.endsWith(".izzysoft.de") }
+        val apiUrl = if (izzy) "https://apt.izzysoft.de/fdroid/api/v1/packages/$pkg" else "https://f-droid.org/api/v1/packages/$pkg"
+        val repoBase = if (izzy) "https://apt.izzysoft.de/fdroid/repo" else "https://f-droid.org/repo"
+        val key = validatorKey(spec, apiUrl)
+        val validator = context.validators.get(key)
+        val response = context.http.execute(HttpRequest(apiUrl, headers = validator?.conditionalHeaders() ?: emptyMap()))
+        response.use {
+            if (it.isNotModified) return CheckResult.Unchanged
+            if (it.status == 404) throw SourceException(SourceErrorKind.NOT_FOUND, "Package $pkg not found")
+            if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${it.status} for $apiUrl")
+            context.validators.put(key, Validator.from(it.headers))
+            val obj = Json.parseObject(it.text(2 * 1024 * 1024))
+            // The answer may not rename the app that was asked for: the name goes into file and icon addresses.
+            val packageName = pkg
+            if (obj.string("packageName")?.let { it != pkg } == true) {
+                throw SourceException(SourceErrorKind.PARSE, "Asked for $pkg and was answered for another package")
+            }
+            val suggested = obj.long("suggestedVersionCode") ?: Long.MAX_VALUE
+            val entries = obj.array("packages")?.objects().orEmpty()
+            val releases = entries.mapNotNull { entry ->
+                val versionCode = entry.long("versionCode") ?: return@mapNotNull null
+                val versionName = entry.string("versionName") ?: return@mapNotNull null
+                val assetName = "${packageName}_$versionCode.apk"
+                Release(
+                    id = versionCode.toString(),
+                    version = versionName,
+                    versionCode = versionCode,
+                    prerelease = versionCode > suggested,
+                    assets = listOf(Asset(name = assetName, url = "$repoBase/$assetName")),
+                )
+            }.sortedByDescending { it.versionCode }.take(MAX_RELEASES)
+            if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $pkg")
+            val listing = SourceListing(releases = releases, packageName = packageName)
+            return CheckResult.Listing(listing.withIcons(spec.url, listOf(FDroidIcons.byConvention(repoBase, packageName))))
+        }
+    }
+
+    companion object {
+        private const val MAX_RELEASES = 30
+        private val FDROID_PATH = Regex("^(?:/[a-zA-Z-]{2,7})?/packages/([^/]+)$")
+        private val IZZY_APT_PATH = Regex("^/fdroid/index/apk/([^/]+)$")
+        private val IZZY_ANDROID_PATH = Regex("^/repo/apk/([^/]+)$")
+        private val SEGMENT = Regex("^[A-Za-z][A-Za-z0-9_]*$")
+
+        fun isValidPackage(pkg: String): Boolean {
+            val segments = pkg.split('.')
+            return segments.size >= 2 && segments.all { SEGMENT.matches(it) }
+        }
+    }
+}

@@ -105,7 +105,7 @@ else
 fi
 
 # Text, not class names: R8 renames classes, so a class name is absent even when the class is there.
-leftovers=$(unzip -p "$APK" 'classes*.dex' | strings | grep -E 'stamp-stand-in-engine|forge\.test' | head -3 || true)
+leftovers=$(unzip -p "$APK" 'classes*.dex' | strings | grep -E 'tern-stand-in-engine|forge\.test' | head -3 || true)
 if [ -n "$leftovers" ]; then
   echo "FAIL test code reached the release apk:"; echo "$leftovers"; fail=1
 else

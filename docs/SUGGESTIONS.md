@@ -1,20 +1,20 @@
 # The starter list
 
-A new install of Stamp shows an empty list and a field that wants a link. The
+A new install of Tern shows an empty list and a field that wants a link. The
 starter list is a short set of well known apps that can be added with one press
 instead. It matters most on a television, where typing a link with a remote is
 slow.
 
 The list is built into the app. It is never fetched, so showing it needs no
 network and tells nobody anything. An entry is only an address: pressing it does
-what pasting that address would do, and every check Stamp makes on a file is
+what pasting that address would do, and every check Tern makes on a file is
 made on these files too.
 
 | What | Where |
 |---|---|
-| The entries | `core/src/main/kotlin/io/github/munzzyy/stamp/core/suggest/Catalog.kt` |
+| The entries | `core/src/main/kotlin/io/github/munzzyy/tern/core/suggest/Catalog.kt` |
 | The summary lines | `app/src/main/res/values/strings_suggest.xml` |
-| Which line belongs to which entry | `app/src/main/kotlin/io/github/munzzyy/stamp/engine/real/Suggestions.kt` |
+| Which line belongs to which entry | `app/src/main/kotlin/io/github/munzzyy/tern/engine/real/Suggestions.kt` |
 | The rules as tests | `CatalogTest` in core, `SuggestionsTest` in app |
 | The proof against the real services | `SuggestionsLiveTest` in core |
 
@@ -22,7 +22,7 @@ made on these files too.
 
 1. The app is open source, and one of these holds: F-Droid's main repository
    carries it, a well known organisation publishes it, or it is by the author
-   of Stamp. Every entry names which.
+   of Tern. Every entry names which.
 2. A client that exists to remove the advertising from a video site is not
    listed, however popular it is. Neither is an app whose source is closed.
    Anyone can still add such an app by link or by search.
@@ -34,8 +34,8 @@ made on these files too.
    television.
 6. The summary line has at most 50 characters, says what the app is for, and
    praises nothing.
-7. Apps by the author of Stamp come last in their kind, and their summary
-   line ends in "by Stamp's author".
+7. Apps by the author of Tern come last in their kind, and their summary
+   line ends in "by Tern's author".
 
 The order is: on a television the television entries first, then by kind, then
 by name.
@@ -53,7 +53,7 @@ downloading the file. The entry is proven when all of this holds:
   16). Current phones are like that, and a file built for 32-bit only fails on
   them after the download.
 - A television entry also installs on a 32-bit television (armeabi-v7a) with
-  Android 10, the oldest Android that Stamp runs on, and its manifest declares
+  Android 10, the oldest Android that Tern runs on, and its manifest declares
   `android.software.leanback`.
 - The file's application id is the one the entry names.
 - The file is not a debug build, and neither its name nor its version reads as
@@ -66,11 +66,11 @@ The line the test prints for an entry ends with the certificate the file names.
 
 ## The certificates the list carries
 
-Stamp pins the certificate of an app at its first install and holds every later
-file to it. That first file is taken on trust. For an entry of this list Stamp
-can do better, because the list ships inside Stamp: where the list carries the
+Tern pins the certificate of an app at its first install and holds every later
+file to it. That first file is taken on trust. For an entry of this list Tern
+can do better, because the list ships inside Tern: where the list carries the
 certificate, the first file is held to it too. A file signed by anyone else is
-refused, with a sentence that says Stamp carries this app's certificate and the
+refused, with a sentence that says Tern carries this app's certificate and the
 file is signed with another.
 
 A certificate is on the list only when two places name the same one:
@@ -155,7 +155,7 @@ read. A project may name its certificate somewhere else.
 3. Run the unit tests. They say what was forgotten:
    `./gradlew :core:test --tests '*CatalogTest' :app:testDebugUnitTest --tests '*SuggestionsTest'`
 4. Run the live test for the new entry alone:
-   `STAMP_SUGGEST="Name of the app" ./gradlew :core:cleanTest :core:test --tests '*SuggestionsLiveTest' -Dstamp.live=true`
+   `TERN_SUGGEST="Name of the app" ./gradlew :core:cleanTest :core:test --tests '*SuggestionsLiveTest' -Dtern.live=true`
 5. Put the line it prints into the commit message.
 6. The line ends with the certificate the file names. Look for a second place
    that names the same one, as the section on certificates says. With one,
@@ -163,7 +163,7 @@ read. A project may name its certificate somewhere else.
    the table of certificates. Without one, add a row to the table of entries
    without a certificate. Never add a certificate that only the file names.
 
-Without `STAMP_SUGGEST` the live test runs over the whole list. It sends no
+Without `TERN_SUGGEST` the live test runs over the whole list. It sends no
 credentials, and GitHub answers 60 such requests an hour from one address. A
 full run costs one of them for each entry that lives on GitHub.
 
@@ -179,7 +179,7 @@ such reason. An entry also comes off when its developer asks.
 Delete its line in `Catalog.kt`, its string, and its pair in `Suggestions.kt`.
 The unit tests fail until all three are gone.
 
-Nothing changes for people who already added the app. Stamp keeps following it
+Nothing changes for people who already added the app. Tern keeps following it
 like any other app they added by link.
 
 ## The list on 2026-09-29
@@ -220,9 +220,9 @@ These did not pass:
 
 | App | Why |
 |---|---|
-| Kodi | The files are in a download directory, `mirrors.kodi.tv/releases/android/arm/`. It holds betas with names like `kodi-22.0-Piers_beta1-armeabi-v7a.apk`. Stamp's page reader takes 22.0 from that name and misses the stage, so it offers beta 1 as the newest stable release. The directory holds the 32-bit files only, and each download is handed to a mirror. |
-| VLC | `get.videolan.org` hands each download to a mirror. One request in six was sent to a plain HTTP address, which Stamp refuses. |
-| LocalSend | Its files are named `arm32v7` and `arm64v8`. Stamp's file picker does not read those as processors, so a 64-bit phone is offered the 32-bit file. |
+| Kodi | The files are in a download directory, `mirrors.kodi.tv/releases/android/arm/`. It holds betas with names like `kodi-22.0-Piers_beta1-armeabi-v7a.apk`. Tern's page reader takes 22.0 from that name and misses the stage, so it offers beta 1 as the newest stable release. The directory holds the 32-bit files only, and each download is handed to a mirror. |
+| VLC | `get.videolan.org` hands each download to a mirror. One request in six was sent to a plain HTTP address, which Tern refuses. |
+| LocalSend | Its files are named `arm32v7` and `arm64v8`. Tern's file picker does not read those as processors, so a 64-bit phone is offered the 32-bit file. |
 | Termux | The files it publishes on GitHub are debug builds. |
 | AntennaPod | Its releases on GitHub carry no files. |
 | Findroid | Does not declare leanback, so it is no television entry. |

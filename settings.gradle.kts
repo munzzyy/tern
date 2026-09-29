@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "stamp"
+rootProject.name = "tern"
 include(":core", ":app")

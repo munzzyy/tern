@@ -5,5 +5,5 @@
     <!-- %1$s is a short technical reason in English, such as "Permission denied". -->
     <string name="engine_handoff_cannot_open">This device could not open a page on the local network: %1$s</string>
     <string name="engine_handoff_cannot_open_plain">This device could not open a page on the local network.</string>
-    <string name="engine_handoff_not_on_screen">Stamp has to be on the screen while it takes links from a phone. Open Stamp and try again.</string>
+    <string name="engine_handoff_not_on_screen">Tern has to be on the screen while it takes links from a phone. Open Tern and try again.</string>
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="engine_built_in_pin_mismatch">Stamp carries the certificate this app is signed with, and this file is signed with another. It could come from someone else, so it was not installed.</string>
-    <string name="engine_warn_built_in_pin">Stamp carries the certificate this app is signed with, and the offered file is signed with another.</string>
+    <string name="engine_built_in_pin_mismatch">Tern carries the certificate this app is signed with, and this file is signed with another. It could come from someone else, so it was not installed.</string>
+    <string name="engine_warn_built_in_pin">Tern carries the certificate this app is signed with, and the offered file is signed with another.</string>
 </resources>

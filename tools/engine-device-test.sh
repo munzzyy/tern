@@ -7,7 +7,7 @@ export JAVA_HOME=${JAVA_HOME:-/home/cole/.gradle/jdks/eclipse_adoptium-21-amd64-
 export ANDROID_SERIAL=${ANDROID_SERIAL:-emulator-5592}
 filter=()
 if [[ $# -gt 0 ]]; then
-    [[ -n $1 ]] && filter=("-Pandroid.testInstrumentationRunnerArguments.class=io.github.munzzyy.stamp.enginetest.$1")
+    [[ -n $1 ]] && filter=("-Pandroid.testInstrumentationRunnerArguments.class=io.github.munzzyy.tern.enginetest.$1")
     shift
 fi
 cd "$root"

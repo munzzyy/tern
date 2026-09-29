@@ -67,7 +67,7 @@
     <string name="action_failed">操作失敗，請稍候再試。</string>
     <string name="save_failed">無法儲存變更，請再試一次。</string>
     <string name="open_no_launcher">此應用程式沒有可開啟的畫面</string>
-    <string name="offline_banner">沒有網際網路連線。Stamp 會在恢復連線時再次檢查。</string>
+    <string name="offline_banner">沒有網際網路連線。Tern 會在恢復連線時再次檢查。</string>
     <string name="offline_reason">沒有網際網路連線時無法使用</string>
     <string name="apps_search_hint">搜尋您的應用程式</string>
     <string name="filter_all">全部</string>
@@ -101,7 +101,7 @@
     <plurals name="bulk_check_title">
         <item quantity="other">立即檢查 %d 個應用程式？</item>
     </plurals>
-    <string name="bulk_check_text">Stamp 會向每個來源詢問其最新的發行版本。不會安裝任何東西。</string>
+    <string name="bulk_check_text">Tern 會向每個來源詢問其最新的發行版本。不會安裝任何東西。</string>
     <plurals name="bulk_update_title">
         <item quantity="other">更新 %d 個應用程式？</item>
     </plurals>
@@ -112,16 +112,16 @@
     <plurals name="bulk_remove_title">
         <item quantity="other">停止追蹤 %d 個應用程式？</item>
     </plurals>
-    <string name="bulk_remove_text">應用程式會保留在裝置上。Stamp 只會停止為它們檢查更新。</string>
+    <string name="bulk_remove_text">應用程式會保留在裝置上。Tern 只會停止為它們檢查更新。</string>
     <string name="apps_empty_title">還沒有應用程式</string>
-    <string name="apps_empty_text">貼上專案頁面、發行版本頁面或 F-Droid 軟體庫的連結，Stamp 就會從該處為您更新應用程式。</string>
+    <string name="apps_empty_text">貼上專案頁面、發行版本頁面或 F-Droid 軟體庫的連結，Tern 就會從該處為您更新應用程式。</string>
     <string name="sort_title">排序</string>
     <string name="sort_name">依名稱</string>
     <string name="sort_recently_checked">最近檢查</string>
     <string name="sort_source">依來源</string>
     <string name="remove_title">要移除 %s 嗎？</string>
-    <string name="remove_text_installed">Stamp 將停止追蹤它。應用程式會保留在裝置上。</string>
-    <string name="remove_text">Stamp 將停止追蹤它。</string>
+    <string name="remove_text_installed">Tern 將停止追蹤它。應用程式會保留在裝置上。</string>
+    <string name="remove_text">Tern 將停止追蹤它。</string>
     <string name="add_title">新增應用程式</string>
     <string name="add_field_label">連結或搜尋</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -184,8 +184,8 @@
     <string name="signer_unknown">目前還不知道簽署者的資訊。下載後會進行檢查。</string>
     <string name="signer_first_seen">首次安裝：會記住這個憑證</string>
     <string name="signer_first_seen_claimed">首次安裝：檔案聲稱擁有此憑證，在 Android 確認後將記住此憑證</string>
-    <string name="signer_matches_pin">使用 Stamp 為此應用程式釘選的憑證所簽署</string>
-    <string name="signer_matches_pin_claimed">檔案聲稱擁有 Stamp 為此應用程式釘選的憑證。Android 會在安裝前進行確認。</string>
+    <string name="signer_matches_pin">使用 Tern 為此應用程式釘選的憑證所簽署</string>
+    <string name="signer_matches_pin_claimed">檔案聲稱擁有 Tern 為此應用程式釘選的憑證。Android 會在安裝前進行確認。</string>
     <string name="signer_matches_installed">與已安裝的應用程式由相同的開發者簽署</string>
     <string name="signer_matches_installed_claimed">檔案聲稱與已安裝的應用程式擁有相同的開發者。Android 會在安裝前進行確認。</string>
     <string name="signer_mismatch">簽署者與已安裝應用程式的開發者不同</string>
@@ -202,17 +202,17 @@
     <string name="fingerprint_copied">已複製指紋</string>
     <string name="checks_virustotal">在 VirusTotal 上尋找此檔案</string>
     <string name="checks_virustotal_note">您的瀏覽器只會傳送檔案的指紋；而且如果沒有人將該檔案上傳至 VirusTotal，那裡就不會找到它。</string>
-    <string name="advice_network">Stamp 無法連上來源。請檢查您的連線或代理伺服器，然後再試一次。</string>
+    <string name="advice_network">Tern 無法連上來源。請檢查您的連線或代理伺服器，然後再試一次。</string>
     <string name="advice_rate_limited">來源正在限制被存取的頻率。在「設定」中為此主機儲存存取權杖可以提高限制。</string>
     <string name="advice_not_found">專案可能已經移動或變為私密。請檢查連結是否還能在瀏覽器中開啟。</string>
     <string name="advice_auth">來源拒絕了存取權杖。請在「設定」的存取權杖中進行更換。</string>
-    <string name="advice_parse">來源傳回了 Stamp 無法讀取的內容。這可能是對方暫時發生故障。</string>
-    <string name="advice_no_releases">該專案尚未發佈 Stamp 可用的發行版本。如果您開啟了預先發行版本，它們也會被納入考慮。</string>
+    <string name="advice_parse">來源傳回了 Tern 無法讀取的內容。這可能是對方暫時發生故障。</string>
+    <string name="advice_no_releases">該專案尚未發佈 Tern 可用的發行版本。如果您開啟了預先發行版本，它們也會被納入考慮。</string>
     <string name="advice_no_file">沒有適合此裝置的檔案。請在「檔案選擇」中自行挑選一個，或變更包含與略過模式。</string>
     <string name="advice_checksum_mismatch">檔案在發佈後被修改過，或是傳輸過程中損壞。請勿安裝它，稍後再試一次。</string>
-    <string name="advice_signer_mismatch">該檔案使用不同於此應用程式所釘選的憑證簽署，因此 Stamp 拒絕安裝。如果開發者宣布了新金鑰，請在「進階」底下更換釘選的憑證。</string>
+    <string name="advice_signer_mismatch">該檔案使用不同於此應用程式所釘選的憑證簽署，因此 Tern 拒絕安裝。如果開發者宣布了新金鑰，請在「進階」底下更換釘選的憑證。</string>
     <string name="advice_signer_broken">這個檔案裡的簽名彼此不一致。請勿安裝，並通知開發者。</string>
-    <string name="advice_signer_mismatch_installed">Android 不會使用其他人簽署的應用程式來覆蓋目前的，Stamp 也不會嘗試這麼做。如果開發者宣布了新金鑰，就必須先移除該應用程式再重新安裝，而這會刪除它的資料。</string>
+    <string name="advice_signer_mismatch_installed">Android 不會使用其他人簽署的應用程式來覆蓋目前的，Tern 也不會嘗試這麼做。如果開發者宣布了新金鑰，就必須先移除該應用程式再重新安裝，而這會刪除它的資料。</string>
     <string name="advice_package_mismatch">這個檔案與您追蹤的應用程式不同。請檢查「檔案選擇」底下的包含與略過模式。</string>
     <string name="advice_downgrade">提供的版本比已安裝的還要舊，而且 Android 不允許直接安裝較舊的版本。要退回舊版，必須先移除應用程式，而這會刪除它的資料。</string>
     <string name="advice_install_failed">Android 拒絕安裝。它給的理由顯示在上方。</string>
@@ -224,11 +224,11 @@
     </plurals>
     <string name="detail_gone">這個應用程式已經不在您的清單中。</string>
     <string name="moved_title">此專案已移至 %1$s</string>
-    <string name="moved_explain">Stamp 只有在新網址提供相同的應用程式，且由相同的開發者簽署時才會切換。</string>
+    <string name="moved_explain">Tern 只有在新網址提供相同的應用程式，且由相同的開發者簽署時才會切換。</string>
     <string name="moved_follow">追蹤新網址</string>
     <string name="moved_keep">保留舊網址</string>
     <string name="moved_working">正在檢查新網址</string>
-    <string name="moved_done">Stamp 現在已追蹤新網址。</string>
+    <string name="moved_done">Tern 現在已追蹤新網址。</string>
     <string name="silent_yes">此更新可在不提示的情況下安裝。</string>
     <string name="silent_no">Android 會要求您確認這個更新。</string>
     <string name="phase_queued">正在等待其他下載完成</string>
@@ -334,7 +334,7 @@
     <string name="settings_keep_installers">保留下載的檔案</string>
     <string name="settings_keep_installers_effect">安裝後檔案會留存並佔用空間。關閉則會刪除檔案。</string>
     <string name="settings_ownership">成為唯一的更新者</string>
-    <string name="settings_ownership_effect">要求 Android 只讓 Stamp 更新它所安裝的應用程式，這樣其他商店就無法替換它們。</string>
+    <string name="settings_ownership_effect">要求 Android 只讓 Tern 更新它所安裝的應用程式，這樣其他商店就無法替換它們。</string>
     <string name="settings_ownership_unsupported">需要 Android 14 或以上版本。</string>
     <string name="settings_tokens">存取權杖</string>
     <string name="settings_tokens_effect">權杖能提高速率限制並開放存取私密專案。它只會傳送給您為其儲存的特定主機，且再也不會顯示。</string>
@@ -365,13 +365,13 @@
     <string name="theme_light">淺色</string>
     <string name="theme_dark">深色</string>
     <string name="settings_dynamic_color">配合桌布色彩</string>
-    <string name="settings_dynamic_color_effect">關閉時會使用 Stamp 自己的石板藍。</string>
+    <string name="settings_dynamic_color_effect">關閉時會使用 Tern 自己的石板藍。</string>
     <string name="settings_dynamic_color_unsupported">需要 Android 12 或以上版本。</string>
     <string name="settings_pure_black">純黑</string>
     <string name="settings_pure_black_effect">深色主題下的黑色背景，在 OLED 螢幕上較為舒適。</string>
     <string name="settings_data">匯入與匯出</string>
     <string name="settings_import">匯入應用程式</string>
-    <string name="settings_import_effect">從 Stamp 或 Obtainium 的匯出檔</string>
+    <string name="settings_import_effect">從 Tern 或 Obtainium 的匯出檔</string>
     <string name="settings_export">匯出應用程式</string>
     <string name="settings_exporting">正在匯出</string>
     <string name="settings_export_effect">將您的清單與設定儲存至檔案。絕不會包含權杖。</string>
@@ -380,14 +380,14 @@
     </plurals>
     <string name="export_failed">無法寫入匯出檔。</string>
     <string name="settings_obtainium_links">開啟 Obtainium 連結</string>
-    <string name="settings_obtainium_links_effect">原本用於 Obtainium 的連結會改由 Stamp 開啟。您仍然可以確認每個應用程式。</string>
+    <string name="settings_obtainium_links_effect">原本用於 Obtainium 的連結會改由 Tern 開啟。您仍然可以確認每個應用程式。</string>
     <string name="settings_about">關於</string>
     <string name="about_version">版本</string>
     <string name="about_licence">授權</string>
     <string name="about_licence_name">GNU 一般公共授權條款，第 3 版或更新版本</string>
     <string name="about_source">原始碼</string>
     <string name="import_title">匯入應用程式</string>
-    <string name="import_explain">從 Stamp 或 Obtainium 挑選匯出檔。不會安裝任何東西；應用程式會新增至您的清單並進行檢查。</string>
+    <string name="import_explain">從 Tern 或 Obtainium 挑選匯出檔。不會安裝任何東西；應用程式會新增至您的清單並進行檢查。</string>
     <string name="import_pick">挑選檔案</string>
     <string name="import_pick_other">挑選其他檔案</string>
     <string name="import_working">正在讀取檔案</string>
@@ -433,19 +433,19 @@
     <string name="import_stars_stop">停止</string>
     <string name="import_skip_no_file">其發行版本中沒有任何內容可以安裝在此裝置上。</string>
     <string name="import_skip_no_releases">它沒有發佈任何發行版本。</string>
-    <string name="import_skip_not_found">Stamp 找不到它。</string>
-    <string name="import_skip_rate_limited">GitHub 要求 Stamp 稍候。請稍後再試一次。</string>
+    <string name="import_skip_not_found">Tern 找不到它。</string>
+    <string name="import_skip_rate_limited">GitHub 要求 Tern 稍候。請稍後再試一次。</string>
     <string name="import_skip_network">連線失敗。</string>
-    <string name="import_skip_other">Stamp 無法讀取其發行版本。</string>
-    <string name="first_title">Stamp</string>
-    <string name="first_line_1">Stamp 會直接從開發者發佈的地方安裝和更新應用程式。</string>
-    <string name="first_line_2">在 Android 看到檔案之前，Stamp 會先檢查是誰簽署了檔案，以及它是否符合發佈者的檢查碼。</string>
+    <string name="import_skip_other">Tern 無法讀取其發行版本。</string>
+    <string name="first_title">Tern</string>
+    <string name="first_line_1">Tern 會直接從開發者發佈的地方安裝和更新應用程式。</string>
+    <string name="first_line_2">在 Android 看到檔案之前，Tern 會先檢查是誰簽署了檔案，以及它是否符合發佈者的檢查碼。</string>
     <string name="first_line_3">它找到和所做的一切都會以簡單易懂的文字寫入活動紀錄中。</string>
-    <string name="first_notify_explain">當有更新準備就緒時，Stamp 會通知您。Android 會詢問您是否允許通知。</string>
+    <string name="first_notify_explain">當有更新準備就緒時，Tern 會通知您。Android 會詢問您是否允許通知。</string>
     <string name="first_notify_denied">通知已關閉。您稍後可以在「設定」中開啟。</string>
     <string name="first_notify_allow">允許通知</string>
     <string name="first_skip">以後再說</string>
-    <string name="install_permission_title">允許 Stamp 安裝應用程式</string>
-    <string name="install_permission_body">Android 會在一個應用程式安裝另一個應用程式前詢問一次。在下一個畫面中，開啟 Stamp 的開關，然後返回。安裝將會自行繼續。</string>
+    <string name="install_permission_title">允許 Tern 安裝應用程式</string>
+    <string name="install_permission_body">Android 會在一個應用程式安裝另一個應用程式前詢問一次。在下一個畫面中，開啟 Tern 的開關，然後返回。安裝將會自行繼續。</string>
     <string name="install_permission_open">開啟設定</string>
 </resources>

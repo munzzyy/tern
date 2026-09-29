@@ -6,13 +6,13 @@ next to it.
 ## Once: the signing key
 
 The key lives outside the repository and its password in the system keyring.
-Losing the key means nobody who installed Stamp can ever be updated, so back
+Losing the key means nobody who installed Tern can ever be updated, so back
 it up before the first release.
 
 ```sh
-keytool -genkeypair -alias stamp-release -keystore ~/keys/stamp-release.jks \
+keytool -genkeypair -alias tern-release -keystore ~/keys/tern-release.jks \
   -keyalg RSA -keysize 4096 -validity 10950 -dname "CN=Munzzyy"
-secret-tool store --label "Stamp release keystore" service stamp-keystore key release
+secret-tool store --label "Tern release keystore" service tern-keystore key release
 ```
 
 ## Each release
@@ -25,11 +25,11 @@ secret-tool store --label "Stamp release keystore" service stamp-keystore key re
    because it drops the install permission that old Android only takes from the host, and the
    tests that install something then step aside without a word. The script names every test
    that was skipped.
-3. `bash tools/check-reproducible.sh ~/.cache/stamp-reproducible` on the commit to release.
+3. `bash tools/check-reproducible.sh ~/.cache/tern-reproducible` on the commit to release.
 4. `bash tools/release.sh`. It runs the JVM tests, builds the release, runs
    `tools/check-apk.sh` on it, signs it with apksigner 34.0.0, and writes
-   `dist/stamp-<version>.apk`, `dist/stamp.apk` and their `.sha256` files.
-5. Install `dist/stamp-<version>.apk` on an emulator over the previous
+   `dist/tern-<version>.apk`, `dist/tern.apk` and their `.sha256` files.
+5. Install `dist/tern-<version>.apk` on an emulator over the previous
    release and walk through adding, installing and updating an app.
 6. Tag, push, and create the release with both APK files and both checksum files.
 

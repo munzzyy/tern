@@ -68,7 +68,7 @@
     <string name="action_failed">അത് പ്രവർത്തിച്ചില്ല. അൽപ്പസമയം കഴിഞ്ഞ് വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="save_failed">മാറ്റം സേവ് ചെയ്തില്ല. വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="open_no_launcher">തുറക്കാൻ ഈ ആപ്പിന് സ്‌ക്രീനില്ല</string>
-    <string name="offline_banner">ഇൻ്റർനെറ്റ് കണക്ഷനില്ല. വരുമ്പോൾ Stamp വീണ്ടും പരിശോധിക്കും.</string>
+    <string name="offline_banner">ഇൻ്റർനെറ്റ് കണക്ഷനില്ല. വരുമ്പോൾ Tern വീണ്ടും പരിശോധിക്കും.</string>
     <string name="offline_reason">ഇൻ്റർനെറ്റ് കണക്ഷൻ ഇല്ലാതെ ലഭ്യമല്ല</string>
     <string name="apps_search_hint">നിങ്ങളുടെ ആപ്പുകൾ തിരയുക</string>
     <string name="filter_all">എല്ലാം</string>
@@ -107,7 +107,7 @@
         <item quantity="one">%d ആപ്പ് ഇപ്പോൾ പരിശോധിക്കണോ?</item>
         <item quantity="other">%d ആപ്പുകൾ ഇപ്പോൾ പരിശോധിക്കണോ?</item>
     </plurals>
-    <string name="bulk_check_text">ഏറ്റവും പുതിയ റിലീസിനായി Stamp ഓരോ ഉറവിടത്തോടും ചോദിക്കുന്നു. ഒന്നും ഇൻസ്റ്റാൾ ചെയ്യില്ല.</string>
+    <string name="bulk_check_text">ഏറ്റവും പുതിയ റിലീസിനായി Tern ഓരോ ഉറവിടത്തോടും ചോദിക്കുന്നു. ഒന്നും ഇൻസ്റ്റാൾ ചെയ്യില്ല.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">%d ആപ്പ് അപ്ഡേറ്റ് ചെയ്യണോ?</item>
         <item quantity="other">%d ആപ്പുകൾ അപ്ഡേറ്റ് ചെയ്യണോ?</item>
@@ -121,16 +121,16 @@
         <item quantity="one">%d ആപ്പ് പിന്തുടരുന്നത് നിർത്തണോ?</item>
         <item quantity="other">%d ആപ്പുകൾ പിന്തുടരുന്നത് നിർത്തണോ?</item>
     </plurals>
-    <string name="bulk_remove_text">ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്ത നിലയിൽ തുടരും. അവയുടെ അപ്ഡേറ്റുകൾക്കായി പരിശോധിക്കുന്നത് Stamp നിർത്തുക മാത്രമേ ചെയ്യുന്നുള്ളൂ.</string>
+    <string name="bulk_remove_text">ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്ത നിലയിൽ തുടരും. അവയുടെ അപ്ഡേറ്റുകൾക്കായി പരിശോധിക്കുന്നത് Tern നിർത്തുക മാത്രമേ ചെയ്യുന്നുള്ളൂ.</string>
     <string name="apps_empty_title">ആപ്പുകളൊന്നുമില്ല</string>
-    <string name="apps_empty_text">ഒരു പ്രോജക്റ്റ് പേജ്, റിലീസ് പേജ് അല്ലെങ്കിൽ F-Droid റെപ്പോസിറ്ററി എന്നിവയുടെ ലിങ്ക് ഒട്ടിക്കുക, അവിടെ നിന്ന് Stamp ആപ്പ് അപ്ഡേറ്റ് ചെയ്തു നിലനിർത്തും.</string>
+    <string name="apps_empty_text">ഒരു പ്രോജക്റ്റ് പേജ്, റിലീസ് പേജ് അല്ലെങ്കിൽ F-Droid റെപ്പോസിറ്ററി എന്നിവയുടെ ലിങ്ക് ഒട്ടിക്കുക, അവിടെ നിന്ന് Tern ആപ്പ് അപ്ഡേറ്റ് ചെയ്തു നിലനിർത്തും.</string>
     <string name="sort_title">ക്രമീകരിക്കുക</string>
     <string name="sort_name">പേര് പ്രകാരം</string>
     <string name="sort_recently_checked">അടുത്തിടെ പരിശോധിച്ചത്</string>
     <string name="sort_source">ഉറവിടം പ്രകാരം</string>
     <string name="remove_title">%s നീക്കംചെയ്യണോ?</string>
-    <string name="remove_text_installed">Stamp അത് പിന്തുടരുന്നത് നിർത്തുന്നു. ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്ത നിലയിൽ തുടരും.</string>
-    <string name="remove_text">Stamp അത് പിന്തുടരുന്നത് നിർത്തുന്നു.</string>
+    <string name="remove_text_installed">Tern അത് പിന്തുടരുന്നത് നിർത്തുന്നു. ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്ത നിലയിൽ തുടരും.</string>
+    <string name="remove_text">Tern അത് പിന്തുടരുന്നത് നിർത്തുന്നു.</string>
     <string name="add_title">ഒരു ആപ്പ് ചേർക്കുക</string>
     <string name="add_field_label">ലിങ്ക് അല്ലെങ്കിൽ തിരയൽ</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -198,8 +198,8 @@
     <string name="signer_unknown">ഒപ്പിട്ടയാളെക്കുറിച്ച് ഇതുവരെ ഒന്നും അറിയില്ല. ഡൗൺലോഡ് ചെയ്ത ശേഷം ഇത് പരിശോധിക്കും.</string>
     <string name="signer_first_seen">ആദ്യ ഇൻസ്റ്റാൾ: ഈ സർട്ടിഫിക്കറ്റ് ഓർമ്മിച്ചുവയ്ക്കും</string>
     <string name="signer_first_seen_claimed">ആദ്യ ഇൻസ്റ്റാൾ: ഫയൽ ഈ സർട്ടിഫിക്കറ്റ് അവകാശപ്പെടുന്നു, Android അത് സ്ഥിരീകരിച്ചുകഴിഞ്ഞാൽ ഓർമ്മിച്ചുവയ്ക്കും</string>
-    <string name="signer_matches_pin">ഈ ആപ്പിനായി Stamp കൈവശം വച്ചിരിക്കുന്ന സർട്ടിഫിക്കറ്റ് ഉപയോഗിച്ച് ഒപ്പിട്ടു</string>
-    <string name="signer_matches_pin_claimed">ഈ ആപ്പിനായി Stamp കൈവശം വച്ചിരിക്കുന്ന സർട്ടിഫിക്കറ്റാണ് ഫയൽ അവകാശപ്പെടുന്നത്. ഇൻസ്റ്റാൾ ചെയ്യുന്നതിന് മുമ്പ് Android അത് സ്ഥിരീകരിക്കുന്നു.</string>
+    <string name="signer_matches_pin">ഈ ആപ്പിനായി Tern കൈവശം വച്ചിരിക്കുന്ന സർട്ടിഫിക്കറ്റ് ഉപയോഗിച്ച് ഒപ്പിട്ടു</string>
+    <string name="signer_matches_pin_claimed">ഈ ആപ്പിനായി Tern കൈവശം വച്ചിരിക്കുന്ന സർട്ടിഫിക്കറ്റാണ് ഫയൽ അവകാശപ്പെടുന്നത്. ഇൻസ്റ്റാൾ ചെയ്യുന്നതിന് മുമ്പ് Android അത് സ്ഥിരീകരിക്കുന്നു.</string>
     <string name="signer_matches_installed">ഇൻസ്റ്റാൾ ചെയ്ത ആപ്പിൻ്റെ അതേ ഡെവലപ്പർ ഒപ്പിട്ടത്</string>
     <string name="signer_matches_installed_claimed">ഇൻസ്റ്റാൾ ചെയ്ത ആപ്പിൻ്റെ അതേ ഡെവലപ്പറുടേതാണെന്ന് ഫയൽ അവകാശപ്പെടുന്നു. ഇൻസ്റ്റാൾ ചെയ്യുന്നതിന് മുമ്പ് Android അത് സ്ഥിരീകരിക്കുന്നു.</string>
     <string name="signer_mismatch">ഇൻസ്റ്റാൾ ചെയ്ത ആപ്പിൻ്റെ ഡെവലപ്പർ അല്ലാത്ത മറ്റാരോ ഒപ്പിട്ടത്</string>
@@ -217,17 +217,17 @@
     <string name="fingerprint_copied">ഫിംഗർപ്രിൻ്റ് പകർത്തി</string>
     <string name="checks_virustotal">VirusTotal-ൽ ഈ ഫയൽ തിരയുക</string>
     <string name="checks_virustotal_note">നിങ്ങളുടെ ബ്രൗസർ ഫയലിൻ്റെ ഫിംഗർപ്രിൻ്റ് മാത്രമേ അയക്കൂ, കൂടാതെ ആരും VirusTotal-ലേക്ക് അപ്ലോഡ് ചെയ്യാത്ത ഒരു ഫയൽ അവിടെ കണ്ടെത്താനാകില്ല.</string>
-    <string name="advice_network">Stamp-ന് ഉറവിടത്തിൽ എത്താനായില്ല. നിങ്ങളുടെ കണക്ഷൻ അല്ലെങ്കിൽ പ്രോക്സി പരിശോധിക്കുക, തുടർന്ന് വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="advice_network">Tern-ന് ഉറവിടത്തിൽ എത്താനായില്ല. നിങ്ങളുടെ കണക്ഷൻ അല്ലെങ്കിൽ പ്രോക്സി പരിശോധിക്കുക, തുടർന്ന് വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="advice_rate_limited">ഉറവിടം എത്ര തവണ ചോദിക്കാൻ കഴിയും എന്നത് പരിമിതപ്പെടുത്തുന്നു. ഈ ഹോസ്റ്റിനായി സംരക്ഷിച്ച ഒരു ആക്സസ് ടോക്കൺ പരിധി ഉയർത്തുന്നു.</string>
     <string name="advice_not_found">പ്രോജക്റ്റ് മാറ്റിയിരിക്കാം അല്ലെങ്കിൽ സ്വകാര്യമാക്കിയിരിക്കാം. ഒരു ബ്രൗസറിൽ ലിങ്ക് ഇപ്പോഴും തുറക്കുന്നുണ്ടോയെന്ന് പരിശോധിക്കുക.</string>
     <string name="advice_auth">ഉറവിടം ആക്സസ് ടോക്കൺ നിരസിച്ചു. സെറ്റിംഗ്‌സിൽ, ആക്സസ് ടോക്കണുകൾക്ക് കീഴിൽ ഇത് മാറ്റുക.</string>
-    <string name="advice_parse">Stamp-ന് വായിക്കാൻ കഴിയാത്ത ഒന്നാണ് ഉറവിടം മറുപടി നൽകിയത്. അത് അവരുടെ ഭാഗത്തുള്ള ഒരു താൽക്കാലിക പിഴവായിരിക്കാം.</string>
-    <string name="advice_no_releases">Stamp-ന് ഉപയോഗിക്കാൻ കഴിയുന്ന ഒരു റിലീസും പ്രോജക്റ്റ് ഇതുവരെ പ്രസിദ്ധീകരിച്ചിട്ടില്ല. നിങ്ങൾ പ്രീ-റിലീസുകൾ ഓൺ ചെയ്യുകയാണെങ്കിൽ അവ പരിഗണിക്കും.</string>
+    <string name="advice_parse">Tern-ന് വായിക്കാൻ കഴിയാത്ത ഒന്നാണ് ഉറവിടം മറുപടി നൽകിയത്. അത് അവരുടെ ഭാഗത്തുള്ള ഒരു താൽക്കാലിക പിഴവായിരിക്കാം.</string>
+    <string name="advice_no_releases">Tern-ന് ഉപയോഗിക്കാൻ കഴിയുന്ന ഒരു റിലീസും പ്രോജക്റ്റ് ഇതുവരെ പ്രസിദ്ധീകരിച്ചിട്ടില്ല. നിങ്ങൾ പ്രീ-റിലീസുകൾ ഓൺ ചെയ്യുകയാണെങ്കിൽ അവ പരിഗണിക്കും.</string>
     <string name="advice_no_file">ഫയലുകളൊന്നും ഈ ഉപകരണത്തിന് അനുയോജ്യമല്ല. ഫയൽ തിരഞ്ഞെടുക്കുന്നതിന് താഴെ നിങ്ങൾ തന്നെ ഒരെണ്ണം തിരഞ്ഞെടുക്കുക, അല്ലെങ്കിൽ ഉൾപ്പെടുത്തേണ്ടതും ഒഴിവാക്കേണ്ടതുമായ പാറ്റേണുകൾ മാറ്റുക.</string>
     <string name="advice_checksum_mismatch">ഫയൽ പ്രസിദ്ധീകരിച്ച ശേഷം മാറുകയോ അല്ലെങ്കിൽ വഴിമധ്യേ തകരാറിലാകുകയോ ചെയ്തു. ഇത് ഇൻസ്റ്റാൾ ചെയ്യരുത്. പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
-    <string name="advice_signer_mismatch">ഈ ആപ്പിനായി പിൻ ചെയ്ത സർട്ടിഫിക്കറ്റിൽ നിന്ന് വ്യത്യസ്തമായ സർട്ടിഫിക്കറ്റ് ഉപയോഗിച്ചാണ് ഫയൽ ഒപ്പിട്ടിരിക്കുന്നത്, അതിനാൽ Stamp ഇത് നിരസിക്കുന്നു. ഡെവലപ്പർ പുതിയൊരു കീ പ്രഖ്യാപിച്ചിട്ടുണ്ടെങ്കിൽ, അഡ്വാൻസ്ഡ് എന്നതിന് താഴെയുള്ള പിൻ മാറ്റുക.</string>
+    <string name="advice_signer_mismatch">ഈ ആപ്പിനായി പിൻ ചെയ്ത സർട്ടിഫിക്കറ്റിൽ നിന്ന് വ്യത്യസ്തമായ സർട്ടിഫിക്കറ്റ് ഉപയോഗിച്ചാണ് ഫയൽ ഒപ്പിട്ടിരിക്കുന്നത്, അതിനാൽ Tern ഇത് നിരസിക്കുന്നു. ഡെവലപ്പർ പുതിയൊരു കീ പ്രഖ്യാപിച്ചിട്ടുണ്ടെങ്കിൽ, അഡ്വാൻസ്ഡ് എന്നതിന് താഴെയുള്ള പിൻ മാറ്റുക.</string>
     <string name="advice_signer_broken">ഈ ഫയലിലെ സിഗ്നേച്ചറുകൾ പരസ്പരം യോജിക്കുന്നില്ല. ഇത് ഇൻസ്റ്റാൾ ചെയ്യരുത്, ഒപ്പം ഡെവലപ്പറെ അറിയിക്കുകയും ചെയ്യുക.</string>
-    <string name="advice_signer_mismatch_installed">മറ്റാരെങ്കിലും ഒപ്പിട്ട ഒരു ആപ്പ് ഉപയോഗിച്ച് Android പകരം വയ്ക്കില്ല, Stamp അതിന് ശ്രമിക്കുകയുമില്ല. ഡെവലപ്പർ ഒരു പുതിയ കീ പ്രഖ്യാപിച്ചാൽ, ആപ്പ് നീക്കംചെയ്ത് വീണ്ടും ഇൻസ്റ്റാൾ ചെയ്യേണ്ടതുണ്ട്, അത് അതിൻ്റെ ഡാറ്റ മായ്ച്ചുകളയും.</string>
+    <string name="advice_signer_mismatch_installed">മറ്റാരെങ്കിലും ഒപ്പിട്ട ഒരു ആപ്പ് ഉപയോഗിച്ച് Android പകരം വയ്ക്കില്ല, Tern അതിന് ശ്രമിക്കുകയുമില്ല. ഡെവലപ്പർ ഒരു പുതിയ കീ പ്രഖ്യാപിച്ചാൽ, ആപ്പ് നീക്കംചെയ്ത് വീണ്ടും ഇൻസ്റ്റാൾ ചെയ്യേണ്ടതുണ്ട്, അത് അതിൻ്റെ ഡാറ്റ മായ്ച്ചുകളയും.</string>
     <string name="advice_package_mismatch">നിങ്ങൾ പിന്തുടരുന്ന ആപ്പിൽ നിന്ന് വ്യത്യസ്തമായ ഒരു ആപ്പാണ് ഈ ഫയൽ. ഫയൽ തിരഞ്ഞെടുക്കുന്നതിന് താഴെ ഉൾപ്പെടുത്തേണ്ടതും ഒഴിവാക്കേണ്ടതുമായ പാറ്റേണുകൾ പരിശോധിക്കുക.</string>
     <string name="advice_downgrade">വാഗ്ദാനം ചെയ്യുന്ന പതിപ്പ് ഇൻസ്റ്റാൾ ചെയ്തതിനേക്കാൾ പഴയതാണ്, ഒപ്പം പുതിയ പതിപ്പിന് മുകളിൽ പഴയത് Android ഇൻസ്റ്റാൾ ചെയ്യുകയുമില്ല. പിന്നോട്ട് പോകുക എന്നാൽ ആദ്യം ആപ്പ് നീക്കംചെയ്യുക എന്നാണ്, അത് അതിൻ്റെ ഡാറ്റ മായ്ച്ചുകളയും.</string>
     <string name="advice_install_failed">Android ഇൻസ്റ്റാൾ നിരസിച്ചു. അത് നൽകിയ കാരണം മുകളിൽ കാണിച്ചിരിക്കുന്നു.</string>
@@ -240,11 +240,11 @@
     </plurals>
     <string name="detail_gone">ഈ ആപ്പ് ഇപ്പോൾ നിങ്ങളുടെ ലിസ്റ്റിലില്ല.</string>
     <string name="moved_title">ഈ പ്രോജക്റ്റ് %1$s-ലേക്ക് മാറി</string>
-    <string name="moved_explain">പുതിയ വിലാസം ഒരേ ഡെവലപ്പർ ഒപ്പിട്ട അതേ ആപ്പ് വാഗ്ദാനം ചെയ്യുന്നുവെങ്കിൽ മാത്രമേ Stamp മാറുകയുള്ളൂ.</string>
+    <string name="moved_explain">പുതിയ വിലാസം ഒരേ ഡെവലപ്പർ ഒപ്പിട്ട അതേ ആപ്പ് വാഗ്ദാനം ചെയ്യുന്നുവെങ്കിൽ മാത്രമേ Tern മാറുകയുള്ളൂ.</string>
     <string name="moved_follow">അവിടെ അത് പിന്തുടരുക</string>
     <string name="moved_keep">പഴയ വിലാസം നിലനിർത്തുക</string>
     <string name="moved_working">പുതിയ വിലാസം പരിശോധിക്കുന്നു</string>
-    <string name="moved_done">Stamp ഇപ്പോൾ പുതിയ വിലാസം പിന്തുടരുന്നു.</string>
+    <string name="moved_done">Tern ഇപ്പോൾ പുതിയ വിലാസം പിന്തുടരുന്നു.</string>
     <string name="silent_yes">ഈ അപ്ഡേറ്റ് ഒരു പ്രോംപ്റ്റ് ഇല്ലാതെ ഇൻസ്റ്റാൾ ചെയ്യാം.</string>
     <string name="silent_no">ഈ അപ്ഡേറ്റ് സ്ഥിരീകരിക്കാൻ Android നിങ്ങളോട് ആവശ്യപ്പെടും.</string>
     <string name="phase_queued">മറ്റ് ഡൗൺലോഡുകൾ പൂർത്തിയാകാൻ കാത്തിരിക്കുന്നു</string>
@@ -352,7 +352,7 @@
     <string name="settings_keep_installers">ഡൗൺലോഡ് ചെയ്ത ഫയലുകൾ സൂക്ഷിക്കുക</string>
     <string name="settings_keep_installers_effect">ഇൻസ്റ്റാൾ ചെയ്ത ശേഷം ഫയലുകൾ സ്റ്റോറേജ് ഉപയോഗിച്ച് തുടരും. ഓഫ് ചെയ്യുന്നത് അവയെ ഇല്ലാതാക്കുന്നു.</string>
     <string name="settings_ownership">ഏക അപ്ഡേറ്ററാകുക</string>
-    <string name="settings_ownership_effect">Stamp ഇൻസ്റ്റാൾ ചെയ്യുന്ന ആപ്പുകൾ അപ്ഡേറ്റ് ചെയ്യാൻ അതിനെ മാത്രം അനുവദിക്കാൻ Android-നോട് ആവശ്യപ്പെടുക, അതിനാൽ മറ്റൊരു സ്റ്റോറിന് അവയെ മാറ്റാനാകില്ല.</string>
+    <string name="settings_ownership_effect">Tern ഇൻസ്റ്റാൾ ചെയ്യുന്ന ആപ്പുകൾ അപ്ഡേറ്റ് ചെയ്യാൻ അതിനെ മാത്രം അനുവദിക്കാൻ Android-നോട് ആവശ്യപ്പെടുക, അതിനാൽ മറ്റൊരു സ്റ്റോറിന് അവയെ മാറ്റാനാകില്ല.</string>
     <string name="settings_ownership_unsupported">Android 14 അല്ലെങ്കിൽ അതിന് ശേഷമുള്ളവ ആവശ്യമാണ്.</string>
     <string name="settings_tokens">ആക്സസ് ടോക്കണുകൾ</string>
     <string name="settings_tokens_effect">ഒരു ടോക്കൺ റേറ്റ് പരിധികൾ ഉയർത്തുകയും സ്വകാര്യ പ്രോജക്റ്റുകൾ തുറക്കുകയും ചെയ്യുന്നു. ഇത് സേവ് ചെയ്ത കൃത്യമായ ഹോസ്റ്റിന് മാത്രമേ ഇത് അയയ്‌ക്കൂ, മാത്രമല്ല ഇത് ഒരിക്കലും വീണ്ടും കാണിക്കില്ല.</string>
@@ -383,13 +383,13 @@
     <string name="theme_light">ലൈറ്റ്</string>
     <string name="theme_dark">ഡാർക്ക്</string>
     <string name="settings_dynamic_color">വാൾപേപ്പറിൽ നിന്നുള്ള നിറങ്ങൾ</string>
-    <string name="settings_dynamic_color_effect">ഓഫ് ചെയ്യുന്നത് Stamp-യുടെ സ്വന്തം സ്ലേറ്റ് ബ്ലൂ ഉപയോഗിക്കുന്നു.</string>
+    <string name="settings_dynamic_color_effect">ഓഫ് ചെയ്യുന്നത് Tern-യുടെ സ്വന്തം സ്ലേറ്റ് ബ്ലൂ ഉപയോഗിക്കുന്നു.</string>
     <string name="settings_dynamic_color_unsupported">Android 12 അല്ലെങ്കിൽ അതിന് ശേഷമുള്ളവ ആവശ്യമാണ്.</string>
     <string name="settings_pure_black">പൂർണ്ണമായ കറുപ്പ്</string>
     <string name="settings_pure_black_effect">ഡാർക്ക് തീമിലെ കറുത്ത പശ്ചാത്തലങ്ങൾ, OLED സ്ക്രീനുകളിൽ കാണാൻ എളുപ്പമാണ്.</string>
     <string name="settings_data">ഇംപോർട്ടും എക്സ്പോർട്ടും</string>
     <string name="settings_import">ആപ്പുകൾ ഇംപോർട്ട് ചെയ്യുക</string>
-    <string name="settings_import_effect">ഒരു Stamp അല്ലെങ്കിൽ Obtainium എക്സ്പോർട്ടിൽ നിന്ന്</string>
+    <string name="settings_import_effect">ഒരു Tern അല്ലെങ്കിൽ Obtainium എക്സ്പോർട്ടിൽ നിന്ന്</string>
     <string name="settings_export">ആപ്പുകൾ എക്സ്പോർട്ട് ചെയ്യുക</string>
     <string name="settings_exporting">എക്സ്പോർട്ട് ചെയ്യുന്നു</string>
     <string name="settings_export_effect">നിങ്ങളുടെ ലിസ്റ്റും സെറ്റിംഗ്‌സും ഒരു ഫയലിലേക്ക് സേവ് ചെയ്യുന്നു. ടോക്കണുകൾ ഒരിക്കലും ഉൾപ്പെടുത്തില്ല.</string>
@@ -399,14 +399,14 @@
     </plurals>
     <string name="export_failed">എക്സ്പോർട്ട് എഴുതാനായില്ല.</string>
     <string name="settings_obtainium_links">Obtainium ലിങ്കുകൾ തുറക്കുക</string>
-    <string name="settings_obtainium_links_effect">Obtainium-ന് വേണ്ടിയുള്ള ലിങ്കുകൾ പകരം Stamp-ൽ തുറക്കുന്നു. ഓരോ ആപ്പും നിങ്ങൾ ഇപ്പോഴും സ്ഥിരീകരിക്കും.</string>
+    <string name="settings_obtainium_links_effect">Obtainium-ന് വേണ്ടിയുള്ള ലിങ്കുകൾ പകരം Tern-ൽ തുറക്കുന്നു. ഓരോ ആപ്പും നിങ്ങൾ ഇപ്പോഴും സ്ഥിരീകരിക്കും.</string>
     <string name="settings_about">വിവരങ്ങൾ</string>
     <string name="about_version">പതിപ്പ്</string>
     <string name="about_licence">ലൈസൻസ്</string>
     <string name="about_licence_name">GNU ജനറൽ പബ്ലിക് ലൈസൻസ്, പതിപ്പ് 3 അല്ലെങ്കിൽ അതിന് ശേഷമുള്ളത്</string>
     <string name="about_source">സോഴ്സ് കോഡ്</string>
     <string name="import_title">ആപ്പുകൾ ഇംപോർട്ട് ചെയ്യുക</string>
-    <string name="import_explain">Stamp-ൽ നിന്നോ Obtainium-ൽ നിന്നോ ഒരു എക്സ്പോർട്ട് ഫയൽ തിരഞ്ഞെടുക്കുക. ഒന്നും ഇൻസ്റ്റാൾ ചെയ്യുന്നില്ല; ആപ്പുകൾ നിങ്ങളുടെ ലിസ്റ്റിലേക്ക് ചേർത്ത് പരിശോധിക്കുന്നു.</string>
+    <string name="import_explain">Tern-ൽ നിന്നോ Obtainium-ൽ നിന്നോ ഒരു എക്സ്പോർട്ട് ഫയൽ തിരഞ്ഞെടുക്കുക. ഒന്നും ഇൻസ്റ്റാൾ ചെയ്യുന്നില്ല; ആപ്പുകൾ നിങ്ങളുടെ ലിസ്റ്റിലേക്ക് ചേർത്ത് പരിശോധിക്കുന്നു.</string>
     <string name="import_pick">ഒരു ഫയൽ തിരഞ്ഞെടുക്കുക</string>
     <string name="import_pick_other">മറ്റൊരു ഫയൽ തിരഞ്ഞെടുക്കുക</string>
     <string name="import_working">ഫയൽ വായിക്കുന്നു</string>
@@ -459,19 +459,19 @@
     <string name="import_stars_stop">നിർത്തുക</string>
     <string name="import_skip_no_file">അതിൻ്റെ റിലീസുകളിലൊന്നും ഈ ഉപകരണത്തിൽ ഇൻസ്റ്റാൾ ചെയ്യാൻ കഴിയില്ല.</string>
     <string name="import_skip_no_releases">അത് റിലീസുകളൊന്നും പ്രസിദ്ധീകരിക്കുന്നില്ല.</string>
-    <string name="import_skip_not_found">Stamp-ന് അത് കണ്ടെത്താനായില്ല.</string>
-    <string name="import_skip_rate_limited">കാത്തിരിക്കാൻ GitHub Stamp-നോട് ആവശ്യപ്പെട്ടു. ഇവ പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="import_skip_not_found">Tern-ന് അത് കണ്ടെത്താനായില്ല.</string>
+    <string name="import_skip_rate_limited">കാത്തിരിക്കാൻ GitHub Tern-നോട് ആവശ്യപ്പെട്ടു. ഇവ പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="import_skip_network">കണക്ഷൻ പരാജയപ്പെട്ടു.</string>
-    <string name="import_skip_other">Stamp-ന് അതിൻ്റെ റിലീസുകൾ വായിക്കാനായില്ല.</string>
-    <string name="first_title">Stamp</string>
-    <string name="first_line_1">Stamp ആപ്പുകളുടെ ഡെവലപ്പർമാർ പ്രസിദ്ധീകരിക്കുന്നിടത്ത് നിന്ന് അവ നേരിട്ട് ഇൻസ്റ്റാൾ ചെയ്യുകയും അപ്ഡേറ്റ് ചെയ്യുകയും ചെയ്യുന്നു.</string>
-    <string name="first_line_2">Android ഒരു ഫയൽ കാണുന്നതിന് മുമ്പ്, ആരാണ് അത് ഒപ്പിട്ടതെന്നും അത് പ്രസാധകൻ്റെ ചെക്ക്സമുമായി പൊരുത്തപ്പെടുന്നുണ്ടോ എന്നും Stamp പരിശോധിക്കുന്നു.</string>
+    <string name="import_skip_other">Tern-ന് അതിൻ്റെ റിലീസുകൾ വായിക്കാനായില്ല.</string>
+    <string name="first_title">Tern</string>
+    <string name="first_line_1">Tern ആപ്പുകളുടെ ഡെവലപ്പർമാർ പ്രസിദ്ധീകരിക്കുന്നിടത്ത് നിന്ന് അവ നേരിട്ട് ഇൻസ്റ്റാൾ ചെയ്യുകയും അപ്ഡേറ്റ് ചെയ്യുകയും ചെയ്യുന്നു.</string>
+    <string name="first_line_2">Android ഒരു ഫയൽ കാണുന്നതിന് മുമ്പ്, ആരാണ് അത് ഒപ്പിട്ടതെന്നും അത് പ്രസാധകൻ്റെ ചെക്ക്സമുമായി പൊരുത്തപ്പെടുന്നുണ്ടോ എന്നും Tern പരിശോധിക്കുന്നു.</string>
     <string name="first_line_3">അത് കണ്ടെത്തുന്നതും ചെയ്യുന്നതുമായ എല്ലാം ലളിതമായ വാക്കുകളിൽ ആക്റ്റിവിറ്റി ലോഗിൽ എഴുതപ്പെടുന്നു.</string>
-    <string name="first_notify_explain">അപ്ഡേറ്റുകൾ തയ്യാറാകുമ്പോൾ Stamp-ന് നിങ്ങളോട് പറയാനാകും. നോട്ടിഫിക്കേഷനുകൾ അനുവദിക്കണോ എന്ന് Android ചോദിക്കും.</string>
+    <string name="first_notify_explain">അപ്ഡേറ്റുകൾ തയ്യാറാകുമ്പോൾ Tern-ന് നിങ്ങളോട് പറയാനാകും. നോട്ടിഫിക്കേഷനുകൾ അനുവദിക്കണോ എന്ന് Android ചോദിക്കും.</string>
     <string name="first_notify_denied">നോട്ടിഫിക്കേഷനുകൾ ഓഫാണ്. സെറ്റിംഗ്‌സിൽ നിങ്ങൾക്ക് അവ പിന്നീട് ഓൺ ചെയ്യാം.</string>
     <string name="first_notify_allow">നോട്ടിഫിക്കേഷനുകൾ അനുവദിക്കുക</string>
     <string name="first_skip">ഇപ്പോഴല്ല</string>
-    <string name="install_permission_title">ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യാൻ Stamp-നെ അനുവദിക്കുക</string>
-    <string name="install_permission_body">ഒരു ആപ്പ് മറ്റൊന്ന് ഇൻസ്റ്റാൾ ചെയ്യുന്നതിന് മുമ്പ് Android ഒരിക്കൽ ചോദിക്കും. അടുത്ത സ്ക്രീനിൽ, Stamp-നായുള്ള സ്വിച്ച് ഓൺ ചെയ്യുക, തുടർന്ന് തിരികെ വരിക. ഇൻസ്റ്റാൾ സ്വയം തുടരും.</string>
+    <string name="install_permission_title">ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യാൻ Tern-നെ അനുവദിക്കുക</string>
+    <string name="install_permission_body">ഒരു ആപ്പ് മറ്റൊന്ന് ഇൻസ്റ്റാൾ ചെയ്യുന്നതിന് മുമ്പ് Android ഒരിക്കൽ ചോദിക്കും. അടുത്ത സ്ക്രീനിൽ, Tern-നായുള്ള സ്വിച്ച് ഓൺ ചെയ്യുക, തുടർന്ന് തിരികെ വരിക. ഇൻസ്റ്റാൾ സ്വയം തുടരും.</string>
     <string name="install_permission_open">സെറ്റിംഗ്സ് തുറക്കുക</string>
 </resources>

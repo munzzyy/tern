@@ -18,7 +18,7 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 adb="${ANDROID_HOME:?set ANDROID_HOME}/platform-tools/adb"
 app="$root/app/build/outputs/apk/debug/app-debug.apk"
 tests="$root/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk"
-package="io.github.munzzyy.stamp.debug"
+package="io.github.munzzyy.tern.debug"
 
 if [ ! -f "$app" ] || [ ! -f "$tests" ]; then
     echo "FAIL build first: ./gradlew :app:assembleDebug :app:assembleDebugAndroidTest"

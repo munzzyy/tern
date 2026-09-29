@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Writes what qrencode makes of a dozen texts into the fixtures that QrEncoderTest compares with,
-# then draws the codes of Stamp's own encoder and reads them back with zbarimg.
+# then draws the codes of Tern's own encoder and reads them back with zbarimg.
 # Requires qrencode, zbarimg and python3 with Pillow on PATH.
 set -euo pipefail
 
@@ -20,7 +20,7 @@ import subprocess, sys
 from pathlib import Path
 
 out = Path(sys.argv[1])
-filler = "Stamp checks every file before the installer of this device sees it. "
+filler = "Tern checks every file before the installer of this device sees it. "
 
 
 def cut(length):
@@ -31,7 +31,7 @@ texts = [
     ("01-one-letter", "A"),
     ("02-version-1-full", cut(14)),
     ("03-version-2", cut(15)),
-    ("04-version-3", "https://example.org/stamp-apps.json"),
+    ("04-version-3", "https://example.org/tern-apps.json"),
     ("05-address-short", "http://10.0.0.2:1024/#" + "a" * 20),
     ("06-address-usual", "http://192.168.1.23:48211/#k4mzq7wdx2nph5tcr3vb"),
     ("07-address-longest", "http://192.168.100.200:65535/#abcdefghijklmnopqrst"),
@@ -64,7 +64,7 @@ fail=0
 for fixture in "$OUT"/*.txt; do
   name=$(basename "$fixture" .txt)
   head -1 "$fixture" > "$WORK/$name.text"
-  "$JAVA_HOME/bin/java" -cp "$CLASSES" io.github.munzzyy.stamp.core.qr.QrSquaresKt "$WORK/$name.text" > "$WORK/$name.squares"
+  "$JAVA_HOME/bin/java" -cp "$CLASSES" io.github.munzzyy.tern.core.qr.QrSquaresKt "$WORK/$name.text" > "$WORK/$name.squares"
   python3 - "$WORK/$name.squares" "$WORK/$name.png" <<'PY'
 import sys
 from PIL import Image

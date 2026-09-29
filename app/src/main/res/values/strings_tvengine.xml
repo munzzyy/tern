@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="engine_import_not_an_export">This file is not a list of apps exported from Stamp or Obtainium.</string>
+    <string name="engine_import_not_an_export">This file is not a list of apps exported from Tern or Obtainium.</string>
     <string name="engine_import_empty">This file holds no apps.</string>
     <string name="engine_import_local_address">Its address is on a local network. Add it by hand if it is yours.</string>
-    <string name="engine_warn_local_address">This address is on your own network. Stamp asks it every time it checks for updates.</string>
+    <string name="engine_warn_local_address">This address is on your own network. Tern asks it every time it checks for updates.</string>
     <!-- %1$s is a short technical reason in English, such as "Unsupported export schema 2". -->
-    <string name="engine_import_unreadable_export">This export from Stamp could not be read (%1$s). If it comes from a newer version of Stamp, update Stamp on this device and try again.</string>
-    <string name="engine_import_too_large">The file is larger than %1$d MiB, which is more than a list of apps takes, so Stamp did not read it.</string>
+    <string name="engine_import_unreadable_export">This export from Tern could not be read (%1$s). If it comes from a newer version of Tern, update Tern on this device and try again.</string>
+    <string name="engine_import_too_large">The file is larger than %1$d MiB, which is more than a list of apps takes, so Tern did not read it.</string>
     <string name="engine_import_file_gone">That file is not there any more. Open the list of files again.</string>
 
     <string name="engine_link_not_https">Only addresses that start with https:// are accepted.</string>
-    <string name="engine_link_not_an_address">That is not a web address Stamp can open. It should look like https://example.org/stamp-apps.json.</string>
-    <string name="engine_link_leaves_https">That address sends Stamp on to one that is not HTTPS, so nothing was fetched.</string>
+    <string name="engine_link_not_an_address">That is not a web address Tern can open. It should look like https://example.org/tern-apps.json.</string>
+    <string name="engine_link_leaves_https">That address sends Tern on to one that is not HTTPS, so nothing was fetched.</string>
     <string name="engine_link_not_found">There is no file at that address. Check it for typing mistakes.</string>
-    <string name="engine_link_refused">The server refused to hand out the file (it answered %1$d). Stamp sends no login with this request, so the file has to be readable by anyone who has the address.</string>
+    <string name="engine_link_refused">The server refused to hand out the file (it answered %1$d). Tern sends no login with this request, so the file has to be readable by anyone who has the address.</string>
     <string name="engine_link_unreachable">The address could not be reached: %1$s</string>
     <string name="engine_link_unreachable_plain">The address could not be reached. Check the connection and the address, then try again.</string>
-    <string name="engine_link_too_slow">The server took more than a minute to send the file, so Stamp stopped waiting. Try again later.</string>
-    <string name="engine_link_not_an_export">What is at that address is not a list of apps exported from Stamp or Obtainium. The address has to lead to the file itself, not to a page that shows it.</string>
+    <string name="engine_link_too_slow">The server took more than a minute to send the file, so Tern stopped waiting. Try again later.</string>
+    <string name="engine_link_not_an_export">What is at that address is not a list of apps exported from Tern or Obtainium. The address has to lead to the file itself, not to a page that shows it.</string>
 
-    <string name="engine_export_no_place">This device has no shared storage that Stamp can write to.</string>
+    <string name="engine_export_no_place">This device has no shared storage that Tern can write to.</string>
     <string name="engine_export_failed">The export could not be written: %1$s</string>
     <string name="engine_export_failed_plain">The export could not be written.</string>
 </resources>

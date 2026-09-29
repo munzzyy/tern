@@ -67,7 +67,7 @@
     <string name="action_failed">Tác vụ thất bại. Vui lòng thử lại sau.</string>
     <string name="save_failed">Chưa lưu thay đổi. Vui lòng thử lại.</string>
     <string name="open_no_launcher">Ứng dụng không có màn hình để mở</string>
-    <string name="offline_banner">Không có kết nối mạng. Stamp sẽ kiểm tra lại khi có mạng.</string>
+    <string name="offline_banner">Không có kết nối mạng. Tern sẽ kiểm tra lại khi có mạng.</string>
     <string name="offline_reason">Không khả dụng khi không có mạng</string>
     <string name="apps_search_hint">Tìm kiếm ứng dụng</string>
     <string name="filter_all">Tất cả</string>
@@ -101,7 +101,7 @@
     <plurals name="bulk_check_title">
         <item quantity="other">Kiểm tra %d ứng dụng ngay?</item>
     </plurals>
-    <string name="bulk_check_text">Stamp sẽ hỏi mỗi nguồn về bản phát hành mới nhất. Không có gì được cài đặt.</string>
+    <string name="bulk_check_text">Tern sẽ hỏi mỗi nguồn về bản phát hành mới nhất. Không có gì được cài đặt.</string>
     <plurals name="bulk_update_title">
         <item quantity="other">Cập nhật %d ứng dụng?</item>
     </plurals>
@@ -112,16 +112,16 @@
     <plurals name="bulk_remove_title">
         <item quantity="other">Ngừng theo dõi %d ứng dụng?</item>
     </plurals>
-    <string name="bulk_remove_text">Các ứng dụng vẫn được cài đặt. Stamp chỉ ngừng kiểm tra bản cập nhật cho chúng.</string>
+    <string name="bulk_remove_text">Các ứng dụng vẫn được cài đặt. Tern chỉ ngừng kiểm tra bản cập nhật cho chúng.</string>
     <string name="apps_empty_title">Chưa có ứng dụng</string>
-    <string name="apps_empty_text">Dán một liên kết tới trang dự án, bản phát hành hoặc kho lưu trữ F-Droid, Stamp sẽ giữ cho ứng dụng luôn được cập nhật.</string>
+    <string name="apps_empty_text">Dán một liên kết tới trang dự án, bản phát hành hoặc kho lưu trữ F-Droid, Tern sẽ giữ cho ứng dụng luôn được cập nhật.</string>
     <string name="sort_title">Sắp xếp</string>
     <string name="sort_name">Theo tên</string>
     <string name="sort_recently_checked">Đã kiểm tra gần đây</string>
     <string name="sort_source">Theo nguồn</string>
     <string name="remove_title">Xóa bỏ %s?</string>
-    <string name="remove_text_installed">Stamp sẽ ngừng theo dõi. Ứng dụng vẫn được cài đặt.</string>
-    <string name="remove_text">Stamp sẽ ngừng theo dõi.</string>
+    <string name="remove_text_installed">Tern sẽ ngừng theo dõi. Ứng dụng vẫn được cài đặt.</string>
+    <string name="remove_text">Tern sẽ ngừng theo dõi.</string>
     <string name="add_title">Thêm ứng dụng</string>
     <string name="add_field_label">Liên kết hoặc tìm kiếm</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -184,8 +184,8 @@
     <string name="signer_unknown">Chưa có thông tin về người ký. Sẽ được kiểm tra sau khi tải xuống.</string>
     <string name="signer_first_seen">Lần đầu cài đặt: chứng chỉ này sẽ được ghi nhớ</string>
     <string name="signer_first_seen_claimed">Lần đầu cài đặt: tệp khai báo chứng chỉ này và sẽ được ghi nhớ sau khi Android xác nhận</string>
-    <string name="signer_matches_pin">Đã ký bằng chứng chỉ Stamp đang giữ cho ứng dụng này</string>
-    <string name="signer_matches_pin_claimed">Tệp khai báo chứng chỉ Stamp giữ cho ứng dụng này. Android sẽ xác nhận trước khi cài đặt.</string>
+    <string name="signer_matches_pin">Đã ký bằng chứng chỉ Tern đang giữ cho ứng dụng này</string>
+    <string name="signer_matches_pin_claimed">Tệp khai báo chứng chỉ Tern giữ cho ứng dụng này. Android sẽ xác nhận trước khi cài đặt.</string>
     <string name="signer_matches_installed">Được ký bởi cùng nhà phát triển với ứng dụng đã cài đặt</string>
     <string name="signer_matches_installed_claimed">Tệp khai báo cùng nhà phát triển với ứng dụng đã cài đặt. Android sẽ xác nhận trước khi cài đặt.</string>
     <string name="signer_mismatch">Được ký bởi người khác, không phải nhà phát triển của ứng dụng đã cài</string>
@@ -202,17 +202,17 @@
     <string name="fingerprint_copied">Đã chép dấu vân tay</string>
     <string name="checks_virustotal">Tra cứu tệp này trên VirusTotal</string>
     <string name="checks_virustotal_note">Chỉ dấu vân tay của tệp được gửi, thông qua trình duyệt của bạn, và tệp mà chưa ai tải lên VirusTotal sẽ không được tìm thấy ở đó.</string>
-    <string name="advice_network">Stamp không thể kết nối tới nguồn. Kiểm tra mạng hoặc proxy, rồi thử lại.</string>
+    <string name="advice_network">Tern không thể kết nối tới nguồn. Kiểm tra mạng hoặc proxy, rồi thử lại.</string>
     <string name="advice_rate_limited">Nguồn đang giới hạn số lần yêu cầu. Việc lưu mã thông báo truy cập cho máy chủ này sẽ tăng giới hạn.</string>
     <string name="advice_not_found">Dự án có thể đã bị dời đi hoặc chuyển sang chế độ riêng tư. Hãy kiểm tra xem liên kết có còn mở được trên trình duyệt không.</string>
     <string name="advice_auth">Nguồn từ chối mã thông báo truy cập. Vui lòng thay thế mã trong Cài đặt, tại mục mã thông báo truy cập.</string>
-    <string name="advice_parse">Nguồn phản hồi nội dung mà Stamp không thể đọc. Đây có thể là lỗi tạm thời từ phía họ.</string>
-    <string name="advice_no_releases">Dự án chưa xuất bản bản phát hành nào Stamp có thể dùng. Sẽ tính cả bản tiền phát hành nếu bạn bật tùy chọn này.</string>
+    <string name="advice_parse">Nguồn phản hồi nội dung mà Tern không thể đọc. Đây có thể là lỗi tạm thời từ phía họ.</string>
+    <string name="advice_no_releases">Dự án chưa xuất bản bản phát hành nào Tern có thể dùng. Sẽ tính cả bản tiền phát hành nếu bạn bật tùy chọn này.</string>
     <string name="advice_no_file">Không có tệp nào phù hợp với thiết bị này. Hãy tự chọn tệp trong mục Chọn tệp, hoặc thay đổi mẫu bao gồm và loại trừ.</string>
     <string name="advice_checksum_mismatch">Tệp đã bị thay đổi sau khi xuất bản hoặc bị hỏng khi tải. Đừng cài đặt tệp này. Hãy thử lại sau.</string>
-    <string name="advice_signer_mismatch">Tệp được ký bằng chứng chỉ khác với chứng chỉ đã ghim, nên Stamp từ chối. Nếu nhà phát triển công bố khóa mới, hãy thay thế ghim trong Nâng cao.</string>
+    <string name="advice_signer_mismatch">Tệp được ký bằng chứng chỉ khác với chứng chỉ đã ghim, nên Tern từ chối. Nếu nhà phát triển công bố khóa mới, hãy thay thế ghim trong Nâng cao.</string>
     <string name="advice_signer_broken">Các chữ ký trong tệp không đồng nhất với nhau. Không cài đặt tệp và hãy báo cho nhà phát triển.</string>
-    <string name="advice_signer_mismatch_installed">Android không thay thế một ứng dụng bằng ứng dụng được ký bởi người khác, và Stamp sẽ không thử làm điều này. Nếu nhà phát triển công bố khóa mới, ứng dụng phải được xóa và cài đặt lại, điều này sẽ xóa dữ liệu.</string>
+    <string name="advice_signer_mismatch_installed">Android không thay thế một ứng dụng bằng ứng dụng được ký bởi người khác, và Tern sẽ không thử làm điều này. Nếu nhà phát triển công bố khóa mới, ứng dụng phải được xóa và cài đặt lại, điều này sẽ xóa dữ liệu.</string>
     <string name="advice_package_mismatch">Tệp là một ứng dụng khác với ứng dụng bạn đang theo dõi. Hãy kiểm tra các mẫu bao gồm và loại trừ trong Chọn tệp.</string>
     <string name="advice_downgrade">Phiên bản được cung cấp cũ hơn bản đã cài đặt, và Android không cho phép cài đè lên bản mới hơn. Nếu muốn quay lại bản cũ, bạn phải xóa ứng dụng, điều này sẽ xóa dữ liệu.</string>
     <string name="advice_install_failed">Android từ chối cài đặt. Lý do được hiển thị ở trên.</string>
@@ -224,11 +224,11 @@
     </plurals>
     <string name="detail_gone">Ứng dụng này không còn trong danh sách.</string>
     <string name="moved_title">Dự án này đã dời đến %1$s</string>
-    <string name="moved_explain">Stamp chỉ chuyển đổi nếu địa chỉ mới cung cấp cùng một ứng dụng, được ký bởi cùng một nhà phát triển.</string>
+    <string name="moved_explain">Tern chỉ chuyển đổi nếu địa chỉ mới cung cấp cùng một ứng dụng, được ký bởi cùng một nhà phát triển.</string>
     <string name="moved_follow">Theo dõi tại đó</string>
     <string name="moved_keep">Giữ địa chỉ cũ</string>
     <string name="moved_working">Đang kiểm tra địa chỉ mới</string>
-    <string name="moved_done">Stamp hiện đang theo dõi địa chỉ mới.</string>
+    <string name="moved_done">Tern hiện đang theo dõi địa chỉ mới.</string>
     <string name="silent_yes">Bản cập nhật này có thể cài đặt mà không cần hỏi.</string>
     <string name="silent_no">Android sẽ yêu cầu bạn xác nhận bản cập nhật này.</string>
     <string name="phase_queued">Đang chờ tải xuống khác hoàn tất</string>
@@ -334,7 +334,7 @@
     <string name="settings_keep_installers">Giữ tệp đã tải xuống</string>
     <string name="settings_keep_installers_effect">Giữ tệp sau khi cài đặt, tốn dung lượng. Tắt sẽ xóa tệp.</string>
     <string name="settings_ownership">Là trình cập nhật duy nhất</string>
-    <string name="settings_ownership_effect">Yêu cầu Android chỉ cho phép Stamp cập nhật các ứng dụng do nó cài đặt, để cửa hàng khác không thể tráo đổi chúng.</string>
+    <string name="settings_ownership_effect">Yêu cầu Android chỉ cho phép Tern cập nhật các ứng dụng do nó cài đặt, để cửa hàng khác không thể tráo đổi chúng.</string>
     <string name="settings_ownership_unsupported">Yêu cầu Android 14 trở lên.</string>
     <string name="settings_tokens">Mã thông báo truy cập</string>
     <string name="settings_tokens_effect">Tăng giới hạn tần suất và mở dự án riêng tư. Chỉ gửi đến đúng máy chủ và không hiển thị lại.</string>
@@ -365,13 +365,13 @@
     <string name="theme_light">Sáng</string>
     <string name="theme_dark">Tối</string>
     <string name="settings_dynamic_color">Màu từ hình nền</string>
-    <string name="settings_dynamic_color_effect">Tắt sẽ dùng màu xanh xám của Stamp.</string>
+    <string name="settings_dynamic_color_effect">Tắt sẽ dùng màu xanh xám của Tern.</string>
     <string name="settings_dynamic_color_unsupported">Yêu cầu Android 12 trở lên.</string>
     <string name="settings_pure_black">Đen tuyền</string>
     <string name="settings_pure_black_effect">Nền đen trong chủ đề tối, dịu mắt hơn trên màn hình OLED.</string>
     <string name="settings_data">Nhập và xuất</string>
     <string name="settings_import">Nhập ứng dụng</string>
-    <string name="settings_import_effect">Từ tệp xuất của Stamp hoặc Obtainium</string>
+    <string name="settings_import_effect">Từ tệp xuất của Tern hoặc Obtainium</string>
     <string name="settings_export">Xuất ứng dụng</string>
     <string name="settings_exporting">Đang xuất</string>
     <string name="settings_export_effect">Lưu danh sách và cài đặt vào tệp. Không bao gồm mã thông báo.</string>
@@ -380,14 +380,14 @@
     </plurals>
     <string name="export_failed">Không thể ghi tệp xuất.</string>
     <string name="settings_obtainium_links">Mở liên kết Obtainium</string>
-    <string name="settings_obtainium_links_effect">Mở liên kết của Obtainium bằng Stamp. Bạn vẫn phải xác nhận từng ứng dụng.</string>
+    <string name="settings_obtainium_links_effect">Mở liên kết của Obtainium bằng Tern. Bạn vẫn phải xác nhận từng ứng dụng.</string>
     <string name="settings_about">Giới thiệu</string>
     <string name="about_version">Phiên bản</string>
     <string name="about_licence">Giấy phép</string>
     <string name="about_licence_name">GNU General Public License, phiên bản 3 trở lên</string>
     <string name="about_source">Mã nguồn</string>
     <string name="import_title">Nhập ứng dụng</string>
-    <string name="import_explain">Chọn tệp xuất từ Stamp hoặc Obtainium. Các ứng dụng sẽ được thêm và kiểm tra, không cài đặt gì.</string>
+    <string name="import_explain">Chọn tệp xuất từ Tern hoặc Obtainium. Các ứng dụng sẽ được thêm và kiểm tra, không cài đặt gì.</string>
     <string name="import_pick">Chọn tệp</string>
     <string name="import_pick_other">Chọn tệp khác</string>
     <string name="import_working">Đang đọc tệp</string>
@@ -433,19 +433,19 @@
     <string name="import_stars_stop">Dừng</string>
     <string name="import_skip_no_file">Không có tệp nào trong các bản phát hành của nó có thể được cài đặt trên thiết bị này.</string>
     <string name="import_skip_no_releases">Nó không có bản phát hành nào.</string>
-    <string name="import_skip_not_found">Stamp không thể tìm thấy nó.</string>
-    <string name="import_skip_rate_limited">GitHub yêu cầu Stamp chờ. Hãy thử lại sau.</string>
+    <string name="import_skip_not_found">Tern không thể tìm thấy nó.</string>
+    <string name="import_skip_rate_limited">GitHub yêu cầu Tern chờ. Hãy thử lại sau.</string>
     <string name="import_skip_network">Kết nối thất bại.</string>
-    <string name="import_skip_other">Stamp không thể đọc các bản phát hành của nó.</string>
-    <string name="first_title">Stamp</string>
-    <string name="first_line_1">Stamp cài đặt và cập nhật ứng dụng trực tiếp từ nơi xuất bản.</string>
-    <string name="first_line_2">Trước khi Android thấy tệp, Stamp kiểm tra ai đã ký và đối chiếu tổng kiểm tra của nhà phát hành.</string>
+    <string name="import_skip_other">Tern không thể đọc các bản phát hành của nó.</string>
+    <string name="first_title">Tern</string>
+    <string name="first_line_1">Tern cài đặt và cập nhật ứng dụng trực tiếp từ nơi xuất bản.</string>
+    <string name="first_line_2">Trước khi Android thấy tệp, Tern kiểm tra ai đã ký và đối chiếu tổng kiểm tra của nhà phát hành.</string>
     <string name="first_line_3">Mọi điều nó tìm thấy và thực hiện đều được ghi trong nhật ký hoạt động, bằng ngôn ngữ dễ hiểu.</string>
-    <string name="first_notify_explain">Stamp có thể báo khi có bản cập nhật. Android sẽ hỏi xem có cho phép thông báo không.</string>
+    <string name="first_notify_explain">Tern có thể báo khi có bản cập nhật. Android sẽ hỏi xem có cho phép thông báo không.</string>
     <string name="first_notify_denied">Thông báo đang tắt. Bạn có thể bật lại sau trong Cài đặt.</string>
     <string name="first_notify_allow">Cho phép thông báo</string>
     <string name="first_skip">Lúc khác</string>
-    <string name="install_permission_title">Cho phép Stamp cài đặt ứng dụng</string>
-    <string name="install_permission_body">Android sẽ hỏi một lần trước khi một ứng dụng có thể cài đặt ứng dụng khác. Trên màn hình tiếp theo, hãy bật công tắc cho Stamp, rồi quay lại. Quá trình cài đặt sẽ tự động tiếp tục.</string>
+    <string name="install_permission_title">Cho phép Tern cài đặt ứng dụng</string>
+    <string name="install_permission_body">Android sẽ hỏi một lần trước khi một ứng dụng có thể cài đặt ứng dụng khác. Trên màn hình tiếp theo, hãy bật công tắc cho Tern, rồi quay lại. Quá trình cài đặt sẽ tự động tiếp tục.</string>
     <string name="install_permission_open">Mở cài đặt</string>
 </resources>

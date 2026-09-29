@@ -24,9 +24,9 @@
     <string name="suggest_organic_maps">Maps and navigation that work offline</string>
     <string name="suggest_osmand">Offline maps, routing and track recording</string>
 
-    <!-- The four below are by the author of Stamp, and each line has to say so. -->
-    <string name="suggest_magpie">An encrypted incident journal, by Stamp\'s author</string>
-    <string name="suggest_sepia">Strips hidden data from photos, by Stamp\'s author</string>
-    <string name="suggest_sweep">A stalkerware checkup, by Stamp\'s author</string>
-    <string name="suggest_starling">Private location sharing, by Stamp\'s author</string>
+    <!-- The four below are by the author of Tern, and each line has to say so. -->
+    <string name="suggest_magpie">An encrypted incident journal, by Tern\'s author</string>
+    <string name="suggest_sepia">Strips hidden data from photos, by Tern\'s author</string>
+    <string name="suggest_sweep">A stalkerware checkup, by Tern\'s author</string>
+    <string name="suggest_starling">Private location sharing, by Tern\'s author</string>
 </resources>

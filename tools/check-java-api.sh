@@ -10,6 +10,6 @@ CORE=core/build/classes/kotlin/main
 APP="$(dirname "$(find app/build/intermediates -path '*compileReleaseKotlin*' -name 'MainActivity.class' -o -path '*compileDebugKotlin*' -name 'MainActivity.class' | head -1)" 2>/dev/null || true)"
 [ -d "$CORE" ] || { echo "FAIL $CORE is missing: build first"; exit 1; }
 [ -n "$APP" ] || { echo "FAIL the app's classes are missing: build first"; exit 1; }
-APP="${APP%/io/github/munzzyy/stamp}"
+APP="${APP%/io/github/munzzyy/tern}"
 python3 tools/check-java-api.py "$API" "$D8" "$MIN_SDK" "$CORE"
 python3 tools/check-java-api.py "$API" "$D8" "$MIN_SDK" "$APP"

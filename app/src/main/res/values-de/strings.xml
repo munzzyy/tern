@@ -68,7 +68,7 @@
     <string name="action_failed">Das hat nicht funktioniert. Versuche es gleich noch einmal.</string>
     <string name="save_failed">Die Änderung wurde nicht gespeichert. Versuche es erneut.</string>
     <string name="open_no_launcher">Diese App hat keinen Startbildschirm</string>
-    <string name="offline_banner">Keine Internetverbindung. Stamp prüft erneut, wenn sie wieder da ist.</string>
+    <string name="offline_banner">Keine Internetverbindung. Tern prüft erneut, wenn sie wieder da ist.</string>
     <string name="offline_reason">Ohne Internetverbindung nicht verfügbar</string>
     <string name="apps_search_hint">Apps durchsuchen</string>
     <string name="filter_all">Alle</string>
@@ -107,7 +107,7 @@
         <item quantity="one">%d App jetzt prüfen?</item>
         <item quantity="other">%d Apps jetzt prüfen?</item>
     </plurals>
-    <string name="bulk_check_text">Stamp fragt jede Quelle nach ihrem neuesten Release. Nichts wird installiert.</string>
+    <string name="bulk_check_text">Tern fragt jede Quelle nach ihrem neuesten Release. Nichts wird installiert.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">%d App aktualisieren?</item>
         <item quantity="other">%d Apps aktualisieren?</item>
@@ -121,16 +121,16 @@
         <item quantity="one">%d App nicht mehr verfolgen?</item>
         <item quantity="other">%d Apps nicht mehr verfolgen?</item>
     </plurals>
-    <string name="bulk_remove_text">Die Apps bleiben installiert. Stamp prüft sie nur nicht mehr auf Updates.</string>
+    <string name="bulk_remove_text">Die Apps bleiben installiert. Tern prüft sie nur nicht mehr auf Updates.</string>
     <string name="apps_empty_title">Noch keine Apps</string>
-    <string name="apps_empty_text">Füge einen Link zu einer Projektseite, einem Release oder einem F-Droid-Repository ein, und Stamp hält die App von dort aus aktuell.</string>
+    <string name="apps_empty_text">Füge einen Link zu einer Projektseite, einem Release oder einem F-Droid-Repository ein, und Tern hält die App von dort aus aktuell.</string>
     <string name="sort_title">Sortieren</string>
     <string name="sort_name">Nach Name</string>
     <string name="sort_recently_checked">Zuletzt geprüft</string>
     <string name="sort_source">Nach Quelle</string>
     <string name="remove_title">%s entfernen?</string>
-    <string name="remove_text_installed">Stamp folgt der App nicht mehr. Sie bleibt installiert.</string>
-    <string name="remove_text">Stamp folgt der App nicht mehr.</string>
+    <string name="remove_text_installed">Tern folgt der App nicht mehr. Sie bleibt installiert.</string>
+    <string name="remove_text">Tern folgt der App nicht mehr.</string>
     <string name="add_title">App hinzufügen</string>
     <string name="add_field_label">Link oder Suche</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -198,8 +198,8 @@
     <string name="signer_unknown">Über den Signierer ist noch nichts bekannt. Dies wird nach dem Download geprüft.</string>
     <string name="signer_first_seen">Erste Installation: Dieses Zertifikat wird gemerkt</string>
     <string name="signer_first_seen_claimed">Erste Installation: Die Datei behauptet dieses Zertifikat, und es wird gemerkt, sobald Android es bestätigt</string>
-    <string name="signer_matches_pin">Signiert mit dem Zertifikat, das Stamp für diese App angeheftet hat</string>
-    <string name="signer_matches_pin_claimed">Die Datei behauptet das Zertifikat, das Stamp für diese App angeheftet hat. Android bestätigt es vor der Installation.</string>
+    <string name="signer_matches_pin">Signiert mit dem Zertifikat, das Tern für diese App angeheftet hat</string>
+    <string name="signer_matches_pin_claimed">Die Datei behauptet das Zertifikat, das Tern für diese App angeheftet hat. Android bestätigt es vor der Installation.</string>
     <string name="signer_matches_installed">Vom selben Entwickler signiert wie die installierte App</string>
     <string name="signer_matches_installed_claimed">Die Datei behauptet denselben Entwickler wie die installierte App. Android bestätigt es vor der Installation.</string>
     <string name="signer_mismatch">Von jemand anderem signiert als die installierte App</string>
@@ -217,17 +217,17 @@
     <string name="fingerprint_copied">Fingerabdruck kopiert</string>
     <string name="checks_virustotal">Diese Datei bei VirusTotal suchen</string>
     <string name="checks_virustotal_note">Nur der Fingerabdruck der Datei wird von deinem Browser gesendet, und eine Datei, die niemand bei VirusTotal hochgeladen hat, wird dort nicht gefunden.</string>
-    <string name="advice_network">Stamp konnte die Quelle nicht erreichen. Prüfe deine Verbindung oder den Proxy und versuche es erneut.</string>
+    <string name="advice_network">Tern konnte die Quelle nicht erreichen. Prüfe deine Verbindung oder den Proxy und versuche es erneut.</string>
     <string name="advice_rate_limited">Die Quelle beschränkt, wie oft sie abgefragt werden kann. Ein gespeichertes Zugriffstoken für diesen Host erhöht das Limit.</string>
     <string name="advice_not_found">Das Projekt wurde möglicherweise verschoben oder auf privat gesetzt. Prüfe, ob der Link in einem Browser noch funktioniert.</string>
     <string name="advice_auth">Die Quelle hat das Zugriffstoken abgelehnt. Ersetze es in den Einstellungen unter Zugriffstoken.</string>
-    <string name="advice_parse">Die Quelle antwortete mit etwas, das Stamp nicht lesen konnte. Es könnte ein vorübergehender Fehler dort sein.</string>
-    <string name="advice_no_releases">Das Projekt hat noch kein Release veröffentlicht, das Stamp nutzen kann. Pre-Releases zählen, wenn du sie aktivierst.</string>
+    <string name="advice_parse">Die Quelle antwortete mit etwas, das Tern nicht lesen konnte. Es könnte ein vorübergehender Fehler dort sein.</string>
+    <string name="advice_no_releases">Das Projekt hat noch kein Release veröffentlicht, das Tern nutzen kann. Pre-Releases zählen, wenn du sie aktivierst.</string>
     <string name="advice_no_file">Keine der Dateien passt zu diesem Gerät. Wähle selbst eine unter Dateiauswahl oder ändere die Ein- und Ausschlussmuster.</string>
     <string name="advice_checksum_mismatch">Die Datei wurde nach der Veröffentlichung geändert oder unterwegs beschädigt. Installiere sie nicht. Versuche es später erneut.</string>
-    <string name="advice_signer_mismatch">Die Datei ist mit einem anderen Zertifikat signiert als dem für diese App angehefteten, daher lehnt Stamp ab. Wenn der Entwickler einen neuen Schlüssel angekündigt hat, ersetze das angeheftete Zertifikat unter Erweitert.</string>
+    <string name="advice_signer_mismatch">Die Datei ist mit einem anderen Zertifikat signiert als dem für diese App angehefteten, daher lehnt Tern ab. Wenn der Entwickler einen neuen Schlüssel angekündigt hat, ersetze das angeheftete Zertifikat unter Erweitert.</string>
     <string name="advice_signer_broken">Die Signaturen in dieser Datei stimmen nicht überein. Installiere sie nicht und informiere den Entwickler.</string>
-    <string name="advice_signer_mismatch_installed">Android ersetzt eine App nicht durch eine, die von jemand anderem signiert wurde, und Stamp wird es nicht versuchen. Wenn der Entwickler einen neuen Schlüssel angekündigt hat, muss die App entfernt und neu installiert werden, was ihre Daten löscht.</string>
+    <string name="advice_signer_mismatch_installed">Android ersetzt eine App nicht durch eine, die von jemand anderem signiert wurde, und Tern wird es nicht versuchen. Wenn der Entwickler einen neuen Schlüssel angekündigt hat, muss die App entfernt und neu installiert werden, was ihre Daten löscht.</string>
     <string name="advice_package_mismatch">Die Datei ist eine andere App als die, der du folgst. Prüfe die Ein- und Ausschlussmuster unter Dateiauswahl.</string>
     <string name="advice_downgrade">Die angebotene Version ist älter als die installierte, und Android installiert nicht über eine neuere Version. Ein Downgrade erfordert, die App zuerst zu entfernen, was ihre Daten löscht.</string>
     <string name="advice_install_failed">Android hat die Installation abgelehnt. Der genannte Grund wird oben angezeigt.</string>
@@ -240,11 +240,11 @@
     </plurals>
     <string name="detail_gone">Diese App ist nicht mehr in deiner Liste.</string>
     <string name="moved_title">Dieses Projekt ist nach %1$s umgezogen</string>
-    <string name="moved_explain">Stamp wechselt nur, wenn die neue Adresse dieselbe App bietet, signiert vom selben Entwickler.</string>
+    <string name="moved_explain">Tern wechselt nur, wenn die neue Adresse dieselbe App bietet, signiert vom selben Entwickler.</string>
     <string name="moved_follow">Dorthin folgen</string>
     <string name="moved_keep">Alte Adresse behalten</string>
     <string name="moved_working">Neue Adresse wird geprüft</string>
-    <string name="moved_done">Stamp folgt nun der neuen Adresse.</string>
+    <string name="moved_done">Tern folgt nun der neuen Adresse.</string>
     <string name="silent_yes">Dieses Update kann ohne Nachfrage installiert werden.</string>
     <string name="silent_no">Android wird dich bitten, dieses Update zu bestätigen.</string>
     <string name="phase_queued">Warten auf den Abschluss anderer Downloads</string>
@@ -352,7 +352,7 @@
     <string name="settings_keep_installers">Heruntergeladene Dateien behalten</string>
     <string name="settings_keep_installers_effect">Dateien bleiben nach der Installation erhalten und belegen Speicherplatz. Wenn aus, werden sie gelöscht.</string>
     <string name="settings_ownership">Der einzige Updater sein</string>
-    <string name="settings_ownership_effect">Android bitten, nur Stamp die Aktualisierung der von ihm installierten Apps zu erlauben, damit kein anderer Store sie austauschen kann.</string>
+    <string name="settings_ownership_effect">Android bitten, nur Tern die Aktualisierung der von ihm installierten Apps zu erlauben, damit kein anderer Store sie austauschen kann.</string>
     <string name="settings_ownership_unsupported">Benötigt Android 14 oder neuer.</string>
     <string name="settings_tokens">Zugriffstoken</string>
     <string name="settings_tokens_effect">Ein Token erhöht Ratenlimits und öffnet private Projekte. Es wird nur an den genauen Host gesendet, für den es gespeichert ist, und wird nie wieder angezeigt.</string>
@@ -383,13 +383,13 @@
     <string name="theme_light">Hell</string>
     <string name="theme_dark">Dunkel</string>
     <string name="settings_dynamic_color">Farben aus deinem Hintergrund</string>
-    <string name="settings_dynamic_color_effect">Wenn aus, wird Stamps eigenes Schieferblau genutzt.</string>
+    <string name="settings_dynamic_color_effect">Wenn aus, wird Terns eigenes Schieferblau genutzt.</string>
     <string name="settings_dynamic_color_unsupported">Benötigt Android 12 oder neuer.</string>
     <string name="settings_pure_black">Reines Schwarz</string>
     <string name="settings_pure_black_effect">Schwarze Hintergründe im dunklen Design, schonender für OLED-Bildschirme.</string>
     <string name="settings_data">Im- und Export</string>
     <string name="settings_import">Apps importieren</string>
-    <string name="settings_import_effect">Aus einem Stamp- oder Obtainium-Export</string>
+    <string name="settings_import_effect">Aus einem Tern- oder Obtainium-Export</string>
     <string name="settings_export">Apps exportieren</string>
     <string name="settings_exporting">Wird exportiert</string>
     <string name="settings_export_effect">Speichert deine Liste und Einstellungen in einer Datei. Token sind nie enthalten.</string>
@@ -399,14 +399,14 @@
     </plurals>
     <string name="export_failed">Der Export konnte nicht geschrieben werden.</string>
     <string name="settings_obtainium_links">Obtainium-Links öffnen</string>
-    <string name="settings_obtainium_links_effect">Für Obtainium gedachte Links öffnen sich stattdessen in Stamp. Du bestätigst weiterhin jede App.</string>
+    <string name="settings_obtainium_links_effect">Für Obtainium gedachte Links öffnen sich stattdessen in Tern. Du bestätigst weiterhin jede App.</string>
     <string name="settings_about">Über</string>
     <string name="about_version">Version</string>
     <string name="about_licence">Lizenz</string>
     <string name="about_licence_name">GNU General Public License, Version 3 oder neuer</string>
     <string name="about_source">Quellcode</string>
     <string name="import_title">Apps importieren</string>
-    <string name="import_explain">Wähle eine Exportdatei von Stamp oder Obtainium. Es wird nichts installiert; die Apps werden deiner Liste hinzugefügt und geprüft.</string>
+    <string name="import_explain">Wähle eine Exportdatei von Tern oder Obtainium. Es wird nichts installiert; die Apps werden deiner Liste hinzugefügt und geprüft.</string>
     <string name="import_pick">Datei auswählen</string>
     <string name="import_pick_other">Andere Datei auswählen</string>
     <string name="import_working">Datei wird gelesen</string>
@@ -459,19 +459,19 @@
     <string name="import_stars_stop">Stopp</string>
     <string name="import_skip_no_file">Nichts in seinen Releases kann auf diesem Gerät installiert werden.</string>
     <string name="import_skip_no_releases">Es veröffentlicht keine Releases.</string>
-    <string name="import_skip_not_found">Stamp konnte es nicht finden.</string>
-    <string name="import_skip_rate_limited">GitHub hat Stamp gebeten zu warten. Versuche es bei diesen später erneut.</string>
+    <string name="import_skip_not_found">Tern konnte es nicht finden.</string>
+    <string name="import_skip_rate_limited">GitHub hat Tern gebeten zu warten. Versuche es bei diesen später erneut.</string>
     <string name="import_skip_network">Die Verbindung ist fehlgeschlagen.</string>
-    <string name="import_skip_other">Stamp konnte seine Releases nicht lesen.</string>
-    <string name="first_title">Stamp</string>
-    <string name="first_line_1">Stamp installiert und aktualisiert Apps direkt von dort, wo ihre Entwickler sie veröffentlichen.</string>
-    <string name="first_line_2">Bevor Android eine Datei sieht, prüft Stamp, wer sie signiert hat und ob sie der Prüfsumme des Herausgebers entspricht.</string>
+    <string name="import_skip_other">Tern konnte seine Releases nicht lesen.</string>
+    <string name="first_title">Tern</string>
+    <string name="first_line_1">Tern installiert und aktualisiert Apps direkt von dort, wo ihre Entwickler sie veröffentlichen.</string>
+    <string name="first_line_2">Bevor Android eine Datei sieht, prüft Tern, wer sie signiert hat und ob sie der Prüfsumme des Herausgebers entspricht.</string>
     <string name="first_line_3">Alles, was gefunden und getan wird, wird in einfachen Worten im Aktivitätsprotokoll festgehalten.</string>
-    <string name="first_notify_explain">Stamp kann dir sagen, wenn Updates bereit sind. Android wird fragen, ob Benachrichtigungen erlaubt werden sollen.</string>
+    <string name="first_notify_explain">Tern kann dir sagen, wenn Updates bereit sind. Android wird fragen, ob Benachrichtigungen erlaubt werden sollen.</string>
     <string name="first_notify_denied">Benachrichtigungen sind aus. Du kannst sie später in den Einstellungen einschalten.</string>
     <string name="first_notify_allow">Benachrichtigungen erlauben</string>
     <string name="first_skip">Jetzt nicht</string>
-    <string name="install_permission_title">Stamp erlauben, Apps zu installieren</string>
-    <string name="install_permission_body">Android fragt einmal, bevor eine App eine andere installieren darf. Schalte auf dem nächsten Bildschirm den Schalter für Stamp ein und kehre dann zurück. Die Installation läuft von selbst weiter.</string>
+    <string name="install_permission_title">Tern erlauben, Apps zu installieren</string>
+    <string name="install_permission_body">Android fragt einmal, bevor eine App eine andere installieren darf. Schalte auf dem nächsten Bildschirm den Schalter für Tern ein und kehre dann zurück. Die Installation läuft von selbst weiter.</string>
     <string name="install_permission_open">Einstellungen öffnen</string>
 </resources>

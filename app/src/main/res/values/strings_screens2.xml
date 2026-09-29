@@ -10,9 +10,9 @@
     <string name="starter_explain">Each one comes from its developer\'s own address. Nothing is added until you say so.</string>
     <string name="starter_for_television">For this television</string>
     <string name="starter_for_any_device">For any device</string>
-    <!-- A short label on an app whose signing certificate is built into Stamp. -->
+    <!-- A short label on an app whose signing certificate is built into Tern. -->
     <string name="starter_pinned">Certificate known</string>
-    <string name="preview_built_in_pin">Stamp carries the certificate of this app\'s developer. A file signed by anyone else is refused, also at the first install.</string>
+    <string name="preview_built_in_pin">Tern carries the certificate of this app\'s developer. A file signed by anyone else is refused, also at the first install.</string>
     <!-- %1$s is the repository's own name, or its host such as apps.example.org. -->
     <string name="repo_heading">Apps in %1$s</string>
     <string name="repo_more">This repository holds more apps than are shown here. Add one of the others by the address of its own page in the repository.</string>
@@ -33,7 +33,7 @@
     <string name="handoff_arrived">Arrived from the phone</string>
     <string name="handoff_open_again">Open again</string>
     <string name="handoff_end_expired">The ten minutes are over. Open it again when you need it.</string>
-    <string name="handoff_end_left_screen">It closed because Stamp left the screen.</string>
+    <string name="handoff_end_left_screen">It closed because Tern left the screen.</string>
     <string name="handoff_end_used_up">It closed because it was asked too many times. That does not happen by hand.</string>
     <string name="handoff_footer">Nothing that arrives is added until you have looked at it here.</string>
     <string name="handoff_opening">Opening the page for the phone</string>
@@ -53,25 +53,25 @@
     <string name="orbot_off">Orbot is installed and not connected.</string>
     <string name="orbot_open">Open Orbot</string>
     <string name="orbot_starting">Orbot is starting.</string>
-    <string name="orbot_on">Orbot is running. Everything Stamp sends goes through Tor.</string>
+    <string name="orbot_on">Orbot is running. Everything Tern sends goes through Tor.</string>
     <string name="orbot_unknown">Orbot has not answered yet.</string>
     <string name="orbot_ask_again">Ask again</string>
-    <string name="orbot_note">While Orbot is chosen and not running, Stamp reaches nothing. It never goes round the proxy.</string>
+    <string name="orbot_note">While Orbot is chosen and not running, Tern reaches nothing. It never goes round the proxy.</string>
 
     <!-- After an import. "Tell me about updates" is the name of an update mode in the app. -->
-    <string name="import_asked_auto">The file set these apps to install updates by themselves. Stamp stored them as \"Tell me about updates\", because that is for you to switch on here:</string>
+    <string name="import_asked_auto">The file set these apps to install updates by themselves. Tern stored them as \"Tell me about updates\", because that is for you to switch on here:</string>
     <string name="import_let_auto">Let it update by itself</string>
     <string name="import_auto_on">Updates by itself now</string>
 
     <!-- Import and export on a device without a file picker, which is the usual case on a television. -->
     <string name="door_export">Export to the Download folder</string>
-    <!-- %1$s is the name of the file, %2$s the folder such as Download/Stamp. -->
+    <!-- %1$s is the name of the file, %2$s the folder such as Download/Tern. -->
     <string name="door_export_done">Saved as %1$s in %2$s</string>
-    <string name="door_explain">Bring in an export from Stamp or Obtainium. Nothing is installed; the apps are added to your list and checked.</string>
+    <string name="door_explain">Bring in an export from Tern or Obtainium. Nothing is installed; the apps are added to your list and checked.</string>
     <string name="door_files">Import from this device</string>
-    <string name="door_files_effect">Exports Stamp saved itself, and files in its own import folder.</string>
+    <string name="door_files_effect">Exports Tern saved itself, and files in its own import folder.</string>
     <string name="door_files_loading">Looking for export files</string>
-    <string name="door_no_files">No export file was found. Stamp can read what it saved itself, and files placed in its own import folder.</string>
+    <string name="door_no_files">No export file was found. Tern can read what it saved itself, and files placed in its own import folder.</string>
     <!-- Under the name of a file: %1$s is the folder, %2$s a date, %3$s a size such as 18 KB. -->
     <string name="door_file_line">%1$s, %2$s, %3$s</string>
     <string name="door_link">Import from a link</string>
@@ -81,11 +81,11 @@
     <string name="door_link_working">Fetching the file</string>
 
     <!-- The permission to install apps -->
-    <string name="permit_manual_body">Android asks once before one app may install another, and this device has no page Stamp can open for you. Look in the settings of the device for a list called Unknown sources or Install unknown apps, and turn Stamp on there.</string>
+    <string name="permit_manual_body">Android asks once before one app may install another, and this device has no page Tern can open for you. Look in the settings of the device for a list called Unknown sources or Install unknown apps, and turn Tern on there.</string>
     <string name="permit_where_android_tv">Android TV and Google TV: Settings, Apps, Security and restrictions, Unknown sources</string>
     <string name="permit_where_fire_tv">Fire TV: Settings, My Fire TV, Developer options, Install unknown apps</string>
     <string name="permit_done">I have done it</string>
     <string name="permit_row">Permission to install apps</string>
-    <string name="permit_row_given">Given. Android lets Stamp install apps on this device.</string>
+    <string name="permit_row_given">Given. Android lets Tern install apps on this device.</string>
     <string name="permit_row_missing">Not given yet. Android asks once before one app may install another.</string>
 </resources>

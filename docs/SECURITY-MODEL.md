@@ -1,12 +1,12 @@
-# What Stamp protects against
+# What Tern protects against
 
-This page says what Stamp checks, in what order, and where its checks end.
+This page says what Tern checks, in what order, and where its checks end.
 It is written so that someone can disagree with it point by point.
 
 ## Who is trusted
 
 The developer of an app, as identified by the certificate their releases are
-signed with. Stamp's job is to make sure that what gets installed comes from
+signed with. Tern's job is to make sure that what gets installed comes from
 that certificate and is the file the developer published.
 
 Not trusted: the network, a mirror, a repository index that is not signed, a
@@ -15,7 +15,7 @@ link someone sent you, an import file, and any text a server sends.
 ## The first install
 
 Nothing on the device says who the developer is yet, so the first install is
-trust on first use. Stamp shows the certificate the file claims before you
+trust on first use. Tern shows the certificate the file claims before you
 install, as a fingerprint you can compare with one the developer publishes.
 After Android has installed the file, that certificate is pinned.
 
@@ -23,7 +23,7 @@ A pin can also arrive with an import or a link. Such a pin is a decision somebod
 else made, and the Add screen says so before anything is stored.
 
 For fifteen apps of the starter list the first install is not taken on trust.
-Stamp carries the certificate they are signed with, and a first file signed by
+Tern carries the certificate they are signed with, and a first file signed by
 anyone else is refused. A certificate is carried only when a second place names
 the same one as the developer's own file. `docs/SUGGESTIONS.md` has the list,
 the second place for each, and the ten entries for which none was found. A pin
@@ -45,17 +45,17 @@ covers that case.
 
 ### Two readers
 
-Stamp's parser and Android's package parser both read the file. If they
+Tern's parser and Android's package parser both read the file. If they
 disagree on the package name or version code, the file is refused.
 
 Both also verify the signature. Neither goes by the certificate a file names,
 because naming a certificate costs nothing.
 
-Android verifies a single file, and the base of a bundle, when Stamp asks it
+Android verifies a single file, and the base of a bundle, when Tern asks it
 to read the file. A file Android will not read is refused. Every later
 decision uses the certificates Android reported.
 
-Stamp verifies the same file with a verifier of its own, written from the
+Tern verifies the same file with a verifier of its own, written from the
 published specification of the APK signature schemes. It checks the signature
 over the signed data, the digest of everything in the file outside the signing
 block, that the public key is the key of the certificate shown, and every link
@@ -67,17 +67,17 @@ file is noticed, because the older signature says that it was there.
 
 What the two come to:
 
-- Stamp finds that the signature does not hold, or that it holds for other
+- Tern finds that the signature does not hold, or that it holds for other
   certificates than Android reported: the file is refused.
-- Stamp cannot verify the file, and Android verified it: Android's answer
+- Tern cannot verify the file, and Android verified it: Android's answer
   stands.
 - Android gave no reading of a part of a bundle. It gives none of a
   configuration part on Android 10, and none of a part with a broken signature
-  on Android 16. Stamp's verifier is then the only one: the part has to hold
+  on Android 16. Tern's verifier is then the only one: the part has to hold
   under it and has to be signed by the certificates of the base. A part that
-  does not hold, and a part Stamp cannot verify, both refuse the whole bundle.
+  does not hold, and a part Tern cannot verify, both refuse the whole bundle.
 
-Stamp cannot verify, and says so instead of guessing:
+Tern cannot verify, and says so instead of guessing:
 
 - a signer whose strongest signature is over a verity digest (algorithms
   0x0421, 0x0423 and 0x0425)
@@ -100,11 +100,11 @@ proves descent from the known one.
 
 In a bundle, every part must be signed by the signers of the base. A part
 Android read is held to what Android reported for it. A part Android did not
-read is held to what Stamp's own verifier found, as described above. No part
+read is held to what Tern's own verifier found, as described above. No part
 passes on what it claims.
 
 The log shows a file as verified after every file that goes to the installer
-has been verified by Android or by Stamp.
+has been verified by Android or by Tern.
 
 ### Package, version and kind
 
@@ -113,13 +113,13 @@ build, and a build for a newer Android than the device runs.
 
 ### Android
 
-The system installer runs its own checks after all of that. Stamp treats an
+The system installer runs its own checks after all of that. Tern treats an
 install as done when Android reports success and the package manager shows the
 expected version code.
 
 ## Reading a file before downloading it
 
-Stamp reads a file's manifest and signing block from the server with range
+Tern reads a file's manifest and signing block from the server with range
 requests, to show what an update is before fetching it and to decide by version
 code. What it reads there is what the file claims. No signature is verified at
 that point, and the screens say "claims" until Android has read the downloaded
@@ -160,11 +160,11 @@ all. One file opens connections, `net/UrlConnectionHttp.kt`, and
 anything outside the handoff makes a socket, or when a name is resolved on the
 device. Device tests for this exist and have not been run yet.
 
-With the setting on Orbot, Stamp asks Orbot how it is doing and uses the port
-Orbot reports. Any app on the device can send such an answer, so Stamp takes
+With the setting on Orbot, Tern asks Orbot how it is doing and uses the port
+Orbot reports. Any app on the device can send such an answer, so Tern takes
 nothing from one but the status and a port on `127.0.0.1`. An answer can point
-Stamp at another port of the device. It cannot point it at another host and
-cannot make a request go direct. Stamp does not check who signed the app that
+Tern at another port of the device. It cannot point it at another host and
+cannot make a request go direct. Tern does not check who signed the app that
 holds Orbot's package name.
 
 ## Links, shares and imports
@@ -198,11 +198,11 @@ deadline.
 ## The handoff from a phone
 
 A television has no file picker, and typing an address with a remote is slow.
-So Stamp can take links and one export file from a phone on the same network:
+So Tern can take links and one export file from a phone on the same network:
 the device shows a QR code and a code of 20 letters and digits, the phone opens
 a small page that the device itself serves, and what is sent there arrives on
-the device. This is the only time Stamp listens for connections. It does so
-only after the user has opened the handoff, and everything Stamp fetches stays
+the device. This is the only time Tern listens for connections. It does so
+only after the user has opened the handoff, and everything Tern fetches stays
 HTTPS only.
 
 ### What is open, and for how long
@@ -212,7 +212,7 @@ network cable, on a port the system picks. It never listens on all addresses.
 On a mobile network or behind a VPN the handoff does not open.
 
 It closes after ten minutes, when the user closes it, after 200 connections,
-and when Stamp leaves the screen. The device says which of these it was.
+and when Tern leaves the screen. The device says which of these it was.
 Closing frees the port at once. Opening again makes a new code and a new port.
 
 ### The code
@@ -241,7 +241,7 @@ There are two ways to give it to the page, and they end in the same place.
 ### How a thing is sealed
 
 The page makes three keys from the code, all with HMAC-SHA256. The master key
-is worked out with the code as the key over the text `stamp handoff v1`. The
+is worked out with the code as the key over the text `tern handoff v1`. The
 key that encrypts is worked out with the master key over `enc`, and the key
 that signs with the master key over `mac`.
 
@@ -299,7 +299,7 @@ as a plain form. No answer holds anything the phone sent.
 
 ### What arrives is a suggestion
 
-Links and files wait in a list. Stamp adds nothing by itself: what arrived is
+Links and files wait in a list. Tern adds nothing by itself: what arrived is
 shown on the device, and nothing is added until the user has said yes there.
 A link then goes the way of a link typed by hand, and a file the way of any
 import. A file is not even read as a list of apps before the user chooses to
@@ -339,32 +339,32 @@ import it.
 - It cannot add, install, update or remove an app, or change a setting.
 - It cannot read anything. No answer holds the list of apps, a token, a
   setting or a file of the device.
-- It cannot make Stamp fetch anything. A link is text until the user adds it.
+- It cannot make Tern fetch anything. A link is text until the user adds it.
 - It cannot stay open in the background, or past its ten minutes.
 - It cannot be reached from outside the local network, unless that network
   passes connections from outside on to the device.
 
 ## Where the checks end
 
-- A developer whose signing key is stolen can sign anything. Stamp cannot see
+- A developer whose signing key is stolen can sign anything. Tern cannot see
   that. A minimum age for updates, which lets a bad release be pulled before it
   reaches you, is the setting that helps.
 - A first install from a compromised release page installs what that page
-  offers, unless Stamp carries the app's certificate. Compare the fingerprint
+  offers, unless Tern carries the app's certificate. Compare the fingerprint
   with one the developer publishes elsewhere.
-- The certificates Stamp carries were confirmed by F-Droid's signed index or
+- The certificates Tern carries were confirmed by F-Droid's signed index or
   by AppVerifier's list. AppVerifier's list is kept by people who look at the
   same release pages, at another time. It is no second channel.
-- Stamp does not rebuild apps from source. It checks who signed a file, not
+- Tern does not rebuild apps from source. It checks who signed a file, not
   what is in it.
 - A JAR signature, which old apps carry alone, covers what the entries of a
-  file hold. It does not cover the zip structure around them, so Stamp holds
+  file hold. It does not cover the zip structure around them, so Tern holds
   each entry against its own reading of the directory. It does not cover the
   certificate that comes with it either: a certificate changed in a place
   that is not its key still verifies, under another fingerprint. The pin
   refuses such a file as an update. On a first install the fingerprint shown
   is the one to compare.
-- Stamp's verifier has been tested on a computer, against files signed by
+- Tern's verifier has been tested on a computer, against files signed by
   apksigner and against files changed after signing. On a device it uses the
   cryptography and the JAR reader of that device. The tests for that have not
   been run yet.
@@ -372,5 +372,5 @@ import it.
   differently.
 - The handoff has been tested with real connections on a computer, and its
   page in Chromium on a computer. No phone has loaded the page yet. How the
-  handoff finds the device's address and how it closes when Stamp leaves the
+  handoff finds the device's address and how it closes when Tern leaves the
   screen has tests for a device that have not been run yet.

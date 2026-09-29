@@ -48,5 +48,5 @@
 
     <string name="look_icons">Icons</string>
     <string name="look_source_icons">Icons from the source</string>
-    <string name="look_source_icons_effect">While an app is not installed, Stamp gets its icon from where the app is published: its repository or its store listing. Off draws a letter on a colour and asks nobody.</string>
+    <string name="look_source_icons_effect">While an app is not installed, Tern gets its icon from where the app is published: its repository or its store listing. Off draws a letter on a colour and asks nobody.</string>
 </resources>

@@ -69,7 +69,7 @@
     <string name="action_failed">Cela n\'a pas fonctionné. Réessayez dans un moment.</string>
     <string name="save_failed">La modification n\'a pas été enregistrée. Réessayez.</string>
     <string name="open_no_launcher">Cette appli n\'a pas d\'écran à ouvrir</string>
-    <string name="offline_banner">Pas de connexion internet. Stamp vérifiera à nouveau au retour du réseau.</string>
+    <string name="offline_banner">Pas de connexion internet. Tern vérifiera à nouveau au retour du réseau.</string>
     <string name="offline_reason">Indisponible sans connexion internet</string>
     <string name="apps_search_hint">Rechercher vos applis</string>
     <string name="filter_all">Tout</string>
@@ -113,7 +113,7 @@
         <item quantity="many">Vérifier %d applis maintenant ?</item>
         <item quantity="other">Vérifier %d applis maintenant ?</item>
     </plurals>
-    <string name="bulk_check_text">Stamp demande à chaque source sa version la plus récente. Rien n\'est installé.</string>
+    <string name="bulk_check_text">Tern demande à chaque source sa version la plus récente. Rien n\'est installé.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">Mettre à jour %d appli ?</item>
         <item quantity="many">Mettre à jour %d applis ?</item>
@@ -130,16 +130,16 @@
         <item quantity="many">Cesser de suivre %d applis ?</item>
         <item quantity="other">Cesser de suivre %d applis ?</item>
     </plurals>
-    <string name="bulk_remove_text">Les applis restent installées. Stamp arrête seulement de vérifier leurs mises à jour.</string>
+    <string name="bulk_remove_text">Les applis restent installées. Tern arrête seulement de vérifier leurs mises à jour.</string>
     <string name="apps_empty_title">Aucune appli pour l\'instant</string>
-    <string name="apps_empty_text">Collez un lien vers une page de projet, de version ou un dépôt F-Droid, et Stamp maintiendra l\'appli à jour à partir de là.</string>
+    <string name="apps_empty_text">Collez un lien vers une page de projet, de version ou un dépôt F-Droid, et Tern maintiendra l\'appli à jour à partir de là.</string>
     <string name="sort_title">Trier</string>
     <string name="sort_name">Par nom</string>
     <string name="sort_recently_checked">Vérifiées récemment</string>
     <string name="sort_source">Par source</string>
     <string name="remove_title">Supprimer %s ?</string>
-    <string name="remove_text_installed">Stamp cesse de la suivre. L\'appli reste installée.</string>
-    <string name="remove_text">Stamp cesse de la suivre.</string>
+    <string name="remove_text_installed">Tern cesse de la suivre. L\'appli reste installée.</string>
+    <string name="remove_text">Tern cesse de la suivre.</string>
     <string name="add_title">Ajouter une appli</string>
     <string name="add_field_label">Lien ou recherche</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -212,8 +212,8 @@
     <string name="signer_unknown">Rien n\'est encore connu sur le signataire. Il est vérifié après le téléchargement.</string>
     <string name="signer_first_seen">Première installation : ce certificat sera mémorisé</string>
     <string name="signer_first_seen_claimed">Première installation : le fichier revendique ce certificat, et il sera mémorisé une fois qu\'Android l\'aura confirmé</string>
-    <string name="signer_matches_pin">Signé avec le certificat que Stamp détient pour cette appli</string>
-    <string name="signer_matches_pin_claimed">Le fichier revendique le certificat que Stamp détient pour cette appli. Android le confirme avant l\'installation.</string>
+    <string name="signer_matches_pin">Signé avec le certificat que Tern détient pour cette appli</string>
+    <string name="signer_matches_pin_claimed">Le fichier revendique le certificat que Tern détient pour cette appli. Android le confirme avant l\'installation.</string>
     <string name="signer_matches_installed">Signé par le même développeur que l\'appli installée</string>
     <string name="signer_matches_installed_claimed">Le fichier revendique le même développeur que l\'appli installée. Android le confirme avant l\'installation.</string>
     <string name="signer_mismatch">Signé par quelqu\'un d\'autre que le développeur de l\'appli installée</string>
@@ -232,17 +232,17 @@
     <string name="fingerprint_copied">Empreinte copiée</string>
     <string name="checks_virustotal">Chercher ce fichier sur VirusTotal</string>
     <string name="checks_virustotal_note">Seule l\'empreinte du fichier est envoyée, par votre navigateur, et un fichier que personne n\'a envoyé à VirusTotal n\'y sera pas trouvé.</string>
-    <string name="advice_network">Stamp n\'a pas pu atteindre la source. Vérifiez votre connexion ou votre proxy, puis réessayez.</string>
+    <string name="advice_network">Tern n\'a pas pu atteindre la source. Vérifiez votre connexion ou votre proxy, puis réessayez.</string>
     <string name="advice_rate_limited">La source limite la fréquence des requêtes. Un jeton d\'accès enregistré pour cet hôte augmente la limite.</string>
     <string name="advice_not_found">Le projet a peut-être été déplacé ou rendu privé. Vérifiez que le lien s\'ouvre toujours dans un navigateur.</string>
     <string name="advice_auth">La source a refusé le jeton d\'accès. Remplacez-le dans les Paramètres, sous jetons d\'accès.</string>
-    <string name="advice_parse">La source a répondu quelque chose que Stamp n\'a pas pu lire. Il s\'agit peut-être d\'une panne temporaire de leur côté.</string>
-    <string name="advice_no_releases">Le projet n\'a pas encore publié de version que Stamp peut utiliser. Les préversions comptent si vous les activez.</string>
+    <string name="advice_parse">La source a répondu quelque chose que Tern n\'a pas pu lire. Il s\'agit peut-être d\'une panne temporaire de leur côté.</string>
+    <string name="advice_no_releases">Le projet n\'a pas encore publié de version que Tern peut utiliser. Les préversions comptent si vous les activez.</string>
     <string name="advice_no_file">Aucun des fichiers ne convient à cet appareil. Choisissez-en un vous-même sous Choix du fichier, ou modifiez les filtres d\'inclusion et d\'exclusion.</string>
     <string name="advice_checksum_mismatch">Le fichier a changé après sa publication ou a été endommagé en cours de route. Ne l\'installez pas. Réessayez plus tard.</string>
-    <string name="advice_signer_mismatch">Le fichier est signé avec un certificat différent de celui épinglé pour cette appli, Stamp le refuse donc. Si le développeur a annoncé une nouvelle clé, remplacez le certificat épinglé sous Avancé.</string>
+    <string name="advice_signer_mismatch">Le fichier est signé avec un certificat différent de celui épinglé pour cette appli, Tern le refuse donc. Si le développeur a annoncé une nouvelle clé, remplacez le certificat épinglé sous Avancé.</string>
     <string name="advice_signer_broken">Les signatures dans ce fichier ne correspondent pas entre elles. Ne l\'installez pas et prévenez le développeur.</string>
-    <string name="advice_signer_mismatch_installed">Android ne remplace pas une appli par une autre signée par quelqu\'un d\'autre, et Stamp n\'essaiera pas. Si le développeur a annoncé une nouvelle clé, l\'appli doit être supprimée puis réinstallée, ce qui efface ses données.</string>
+    <string name="advice_signer_mismatch_installed">Android ne remplace pas une appli par une autre signée par quelqu\'un d\'autre, et Tern n\'essaiera pas. Si le développeur a annoncé une nouvelle clé, l\'appli doit être supprimée puis réinstallée, ce qui efface ses données.</string>
     <string name="advice_package_mismatch">Le fichier correspond à une appli différente de celle que vous suivez. Vérifiez les modèles d\'inclusion et d\'exclusion sous Choix du fichier.</string>
     <string name="advice_downgrade">La version proposée est plus ancienne que celle installée, et Android n\'installe pas sur une version plus récente. Revenir en arrière implique de supprimer d\'abord l\'appli, ce qui efface ses données.</string>
     <string name="advice_install_failed">Android a refusé l\'installation. La raison donnée est affichée ci-dessus.</string>
@@ -256,11 +256,11 @@
     </plurals>
     <string name="detail_gone">Cette appli n\'est plus dans votre liste.</string>
     <string name="moved_title">Ce projet a déménagé vers %1$s</string>
-    <string name="moved_explain">Stamp bascule uniquement si la nouvelle adresse propose la même appli, signée par le même développeur.</string>
+    <string name="moved_explain">Tern bascule uniquement si la nouvelle adresse propose la même appli, signée par le même développeur.</string>
     <string name="moved_follow">Suivre la nouvelle adresse</string>
     <string name="moved_keep">Garder l\'ancienne adresse</string>
     <string name="moved_working">Vérification de la nouvelle adresse</string>
-    <string name="moved_done">Stamp suit désormais la nouvelle adresse.</string>
+    <string name="moved_done">Tern suit désormais la nouvelle adresse.</string>
     <string name="silent_yes">Cette mise à jour peut s\'installer sans confirmation.</string>
     <string name="silent_no">Android vous demandera de confirmer cette mise à jour.</string>
     <string name="phase_queued">En attente de la fin des autres téléchargements</string>
@@ -370,7 +370,7 @@
     <string name="settings_keep_installers">Conserver les fichiers téléchargés</string>
     <string name="settings_keep_installers_effect">Les fichiers restent après l\'installation, occupant de l\'espace de stockage. Désactivé les supprime.</string>
     <string name="settings_ownership">Être le seul outil de mise à jour</string>
-    <string name="settings_ownership_effect">Demander à Android de laisser uniquement Stamp mettre à jour les applis qu\'il installe, afin qu\'une autre boutique ne puisse pas les échanger.</string>
+    <string name="settings_ownership_effect">Demander à Android de laisser uniquement Tern mettre à jour les applis qu\'il installe, afin qu\'une autre boutique ne puisse pas les échanger.</string>
     <string name="settings_ownership_unsupported">Nécessite Android 14 ou supérieur.</string>
     <string name="settings_tokens">Jetons d\'accès</string>
     <string name="settings_tokens_effect">Un jeton augmente les limites de fréquence et ouvre les projets privés. Il est envoyé uniquement à l\'hôte exact pour lequel il est enregistré, et il n\'est plus jamais affiché.</string>
@@ -401,13 +401,13 @@
     <string name="theme_light">Clair</string>
     <string name="theme_dark">Sombre</string>
     <string name="settings_dynamic_color">Couleurs de votre fond d\'écran</string>
-    <string name="settings_dynamic_color_effect">Désactivé utilise le bleu ardoise propre à Stamp.</string>
+    <string name="settings_dynamic_color_effect">Désactivé utilise le bleu ardoise propre à Tern.</string>
     <string name="settings_dynamic_color_unsupported">Nécessite Android 12 ou supérieur.</string>
     <string name="settings_pure_black">Noir pur</string>
     <string name="settings_pure_black_effect">Arrière-plans noirs dans le thème sombre, plus reposants pour les écrans OLED.</string>
     <string name="settings_data">Importer et exporter</string>
     <string name="settings_import">Importer des applis</string>
-    <string name="settings_import_effect">Depuis une exportation de Stamp ou d\'Obtainium</string>
+    <string name="settings_import_effect">Depuis une exportation de Tern ou d\'Obtainium</string>
     <string name="settings_export">Exporter des applis</string>
     <string name="settings_exporting">Exportation</string>
     <string name="settings_export_effect">Enregistre votre liste et vos paramètres dans un fichier. Les jetons ne sont jamais inclus.</string>
@@ -418,14 +418,14 @@
     </plurals>
     <string name="export_failed">L\'exportation n\'a pas pu être écrite.</string>
     <string name="settings_obtainium_links">Ouvrir les liens Obtainium</string>
-    <string name="settings_obtainium_links_effect">Les liens destinés à Obtainium s\'ouvrent dans Stamp à la place. Vous confirmez toujours chaque appli.</string>
+    <string name="settings_obtainium_links_effect">Les liens destinés à Obtainium s\'ouvrent dans Tern à la place. Vous confirmez toujours chaque appli.</string>
     <string name="settings_about">À propos</string>
     <string name="about_version">Version</string>
     <string name="about_licence">Licence</string>
     <string name="about_licence_name">Licence Publique Générale GNU, version 3 ou ultérieure</string>
     <string name="about_source">Code source</string>
     <string name="import_title">Importer des applis</string>
-    <string name="import_explain">Choisissez un fichier d\'exportation de Stamp ou Obtainium. Rien n\'est installé ; les applis sont ajoutées à votre liste et vérifiées.</string>
+    <string name="import_explain">Choisissez un fichier d\'exportation de Tern ou Obtainium. Rien n\'est installé ; les applis sont ajoutées à votre liste et vérifiées.</string>
     <string name="import_pick">Choisir un fichier</string>
     <string name="import_pick_other">Choisir un autre fichier</string>
     <string name="import_working">Lecture du fichier</string>
@@ -485,19 +485,19 @@
     <string name="import_stars_stop">Arrêter</string>
     <string name="import_skip_no_file">Rien dans ses versions ne peut être installé sur cet appareil.</string>
     <string name="import_skip_no_releases">Il ne publie aucune version.</string>
-    <string name="import_skip_not_found">Stamp n\'a pas pu le trouver.</string>
-    <string name="import_skip_rate_limited">GitHub a demandé à Stamp de patienter. Réessayez plus tard.</string>
+    <string name="import_skip_not_found">Tern n\'a pas pu le trouver.</string>
+    <string name="import_skip_rate_limited">GitHub a demandé à Tern de patienter. Réessayez plus tard.</string>
     <string name="import_skip_network">La connexion a échoué.</string>
-    <string name="import_skip_other">Stamp n\'a pas pu lire ses versions.</string>
-    <string name="first_title">Stamp</string>
-    <string name="first_line_1">Stamp installe et met à jour les applis directement depuis l\'endroit où leurs développeurs les publient.</string>
-    <string name="first_line_2">Avant qu\'Android ne voie un fichier, Stamp vérifie qui l\'a signé et s\'il correspond à la somme de contrôle de l\'éditeur.</string>
+    <string name="import_skip_other">Tern n\'a pas pu lire ses versions.</string>
+    <string name="first_title">Tern</string>
+    <string name="first_line_1">Tern installe et met à jour les applis directement depuis l\'endroit où leurs développeurs les publient.</string>
+    <string name="first_line_2">Avant qu\'Android ne voie un fichier, Tern vérifie qui l\'a signé et s\'il correspond à la somme de contrôle de l\'éditeur.</string>
     <string name="first_line_3">Tout ce qu\'il trouve et fait est inscrit dans le journal d\'activité, en termes simples.</string>
-    <string name="first_notify_explain">Stamp peut vous dire quand des mises à jour sont prêtes. Android demandera s\'il faut autoriser les notifications.</string>
+    <string name="first_notify_explain">Tern peut vous dire quand des mises à jour sont prêtes. Android demandera s\'il faut autoriser les notifications.</string>
     <string name="first_notify_denied">Les notifications sont désactivées. Vous pourrez les activer plus tard dans les Paramètres.</string>
     <string name="first_notify_allow">Autoriser les notifications</string>
     <string name="first_skip">Pas maintenant</string>
-    <string name="install_permission_title">Autoriser Stamp à installer des applis</string>
-    <string name="install_permission_body">Android ne demande l\'autorisation qu\'une seule fois avant qu\'une appli puisse en installer une autre. Sur l\'écran suivant, activez le commutateur pour Stamp, puis revenez. L\'installation se poursuit d\'elle-même.</string>
+    <string name="install_permission_title">Autoriser Tern à installer des applis</string>
+    <string name="install_permission_body">Android ne demande l\'autorisation qu\'une seule fois avant qu\'une appli puisse en installer une autre. Sur l\'écran suivant, activez le commutateur pour Tern, puis revenez. L\'installation se poursuit d\'elle-même.</string>
     <string name="install_permission_open">Ouvrir les paramètres</string>
 </resources>

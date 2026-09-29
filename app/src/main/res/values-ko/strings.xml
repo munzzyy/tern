@@ -67,7 +67,7 @@
     <string name="action_failed">작업이 실패했습니다. 잠시 후 다시 시도해 주세요.</string>
     <string name="save_failed">변경사항이 저장되지 않았습니다. 다시 시도해 주세요.</string>
     <string name="open_no_launcher">이 앱에는 열 수 있는 화면이 없습니다</string>
-    <string name="offline_banner">인터넷 연결이 없습니다. 연결되면 Stamp가 다시 확인합니다.</string>
+    <string name="offline_banner">인터넷 연결이 없습니다. 연결되면 Tern가 다시 확인합니다.</string>
     <string name="offline_reason">인터넷 연결 없이 사용할 수 없음</string>
     <string name="apps_search_hint">앱 검색</string>
     <string name="filter_all">전체</string>
@@ -101,7 +101,7 @@
     <plurals name="bulk_check_title">
         <item quantity="other">지금 앱 %d개를 확인하시겠습니까?</item>
     </plurals>
-    <string name="bulk_check_text">Stamp가 각 소스에 최신 릴리스를 요청합니다. 아무것도 설치되지 않습니다.</string>
+    <string name="bulk_check_text">Tern가 각 소스에 최신 릴리스를 요청합니다. 아무것도 설치되지 않습니다.</string>
     <plurals name="bulk_update_title">
         <item quantity="other">앱 %d개를 업데이트하시겠습니까?</item>
     </plurals>
@@ -112,16 +112,16 @@
     <plurals name="bulk_remove_title">
         <item quantity="other">앱 %d개의 추적을 중지하시겠습니까?</item>
     </plurals>
-    <string name="bulk_remove_text">앱은 설치된 상태로 유지됩니다. Stamp는 업데이트 확인만 중지합니다.</string>
+    <string name="bulk_remove_text">앱은 설치된 상태로 유지됩니다. Tern는 업데이트 확인만 중지합니다.</string>
     <string name="apps_empty_title">아직 앱 없음</string>
-    <string name="apps_empty_text">프로젝트 페이지, 릴리스 페이지 또는 F-Droid 저장소의 링크를 붙여넣으면 Stamp가 앱을 최신 상태로 유지합니다.</string>
+    <string name="apps_empty_text">프로젝트 페이지, 릴리스 페이지 또는 F-Droid 저장소의 링크를 붙여넣으면 Tern가 앱을 최신 상태로 유지합니다.</string>
     <string name="sort_title">정렬</string>
     <string name="sort_name">이름순</string>
     <string name="sort_recently_checked">최근 확인순</string>
     <string name="sort_source">소스순</string>
     <string name="remove_title">%s 제거</string>
-    <string name="remove_text_installed">Stamp가 이 앱의 추적을 중지합니다. 앱은 설치된 상태로 유지됩니다.</string>
-    <string name="remove_text">Stamp가 이 앱의 추적을 중지합니다.</string>
+    <string name="remove_text_installed">Tern가 이 앱의 추적을 중지합니다. 앱은 설치된 상태로 유지됩니다.</string>
+    <string name="remove_text">Tern가 이 앱의 추적을 중지합니다.</string>
     <string name="add_title">앱 추가</string>
     <string name="add_field_label">링크 또는 검색</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -184,8 +184,8 @@
     <string name="signer_unknown">아직 서명자에 대해 알려진 내용이 없습니다. 다운로드 후에 확인됩니다.</string>
     <string name="signer_first_seen">첫 설치: 이 인증서가 저장됩니다</string>
     <string name="signer_first_seen_claimed">첫 설치: 파일이 이 인증서를 명시하며 Android가 확인한 후 저장됩니다</string>
-    <string name="signer_matches_pin">Stamp가 이 앱에 대해 보관하는 인증서로 서명됨</string>
-    <string name="signer_matches_pin_claimed">파일이 Stamp가 이 앱에 대해 보관하는 인증서를 명시합니다. Android가 설치 전에 이를 확인합니다.</string>
+    <string name="signer_matches_pin">Tern가 이 앱에 대해 보관하는 인증서로 서명됨</string>
+    <string name="signer_matches_pin_claimed">파일이 Tern가 이 앱에 대해 보관하는 인증서를 명시합니다. Android가 설치 전에 이를 확인합니다.</string>
     <string name="signer_matches_installed">설치된 앱과 같은 개발자가 서명함</string>
     <string name="signer_matches_installed_claimed">파일이 설치된 앱과 같은 개발자를 명시합니다. Android가 설치 전에 이를 확인합니다.</string>
     <string name="signer_mismatch">설치된 앱의 개발자가 아닌 다른 사람이 서명함</string>
@@ -202,17 +202,17 @@
     <string name="fingerprint_copied">지문이 복복사되었습니다</string>
     <string name="checks_virustotal">VirusTotal에서 이 파일 조회</string>
     <string name="checks_virustotal_note">브라우저를 통해 파일의 지문만 전송되며, 아무도 VirusTotal에 업로드하지 않은 파일은 찾을 수 없습니다.</string>
-    <string name="advice_network">Stamp가 소스에 연결할 수 없습니다. 연결 또는 프록시를 확인한 후 다시 시도해 주세요.</string>
+    <string name="advice_network">Tern가 소스에 연결할 수 없습니다. 연결 또는 프록시를 확인한 후 다시 시도해 주세요.</string>
     <string name="advice_rate_limited">소스에서 요청 제한을 두었습니다. 이 호스트에 액세스 토큰을 저장하면 제한이 늘어납니다.</string>
     <string name="advice_not_found">프로젝트가 이동되었거나 비공개로 전환되었을 수 있습니다. 브라우저에서 링크가 열리는지 확인해 주세요.</string>
     <string name="advice_auth">소스에서 액세스 토큰을 거부했습니다. 설정의 액세스 토큰 항목에서 교체해 주세요.</string>
-    <string name="advice_parse">소스에서 Stamp가 읽을 수 없는 데이터를 응답했습니다. 해당 서비스의 일시적인 문제일 수 있습니다.</string>
-    <string name="advice_no_releases">프로젝트에서 아직 Stamp가 사용할 수 있는 릴리스를 게시하지 않았습니다. 사전 릴리스를 포함하도록 설정하면 사용할 수 있습니다.</string>
+    <string name="advice_parse">소스에서 Tern가 읽을 수 없는 데이터를 응답했습니다. 해당 서비스의 일시적인 문제일 수 있습니다.</string>
+    <string name="advice_no_releases">프로젝트에서 아직 Tern가 사용할 수 있는 릴리스를 게시하지 않았습니다. 사전 릴리스를 포함하도록 설정하면 사용할 수 있습니다.</string>
     <string name="advice_no_file">이 기기에 맞는 파일이 없습니다. 파일 선택 메뉴에서 직접 선택하거나 포함 및 제외 패턴을 변경해 주세요.</string>
     <string name="advice_checksum_mismatch">파일이 게시된 후 변경되었거나 다운로드 중 손상되었습니다. 설치하지 마시고 나중에 다시 시도해 주세요.</string>
-    <string name="advice_signer_mismatch">이 파일은 앱에 고정된 인증서와 다른 인증서로 서명되어 Stamp가 거부했습니다. 개발자가 새 키를 발표했다면 고급 메뉴에서 고정된 인증서를 교체해 주세요.</string>
+    <string name="advice_signer_mismatch">이 파일은 앱에 고정된 인증서와 다른 인증서로 서명되어 Tern가 거부했습니다. 개발자가 새 키를 발표했다면 고급 메뉴에서 고정된 인증서를 교체해 주세요.</string>
     <string name="advice_signer_broken">이 파일 안의 서명들이 서로 일치하지 않습니다. 설치하지 마시고 개발자에게 알려 주세요.</string>
-    <string name="advice_signer_mismatch_installed">Android는 다른 사람이 서명한 앱으로 기존 앱을 덮어쓰지 않으며, Stamp도 시도하지 않습니다. 개발자가 새 키를 발표했다면 앱을 제거한 후 다시 설치해야 하며, 이 과정에서 앱 데이터가 삭제됩니다.</string>
+    <string name="advice_signer_mismatch_installed">Android는 다른 사람이 서명한 앱으로 기존 앱을 덮어쓰지 않으며, Tern도 시도하지 않습니다. 개발자가 새 키를 발표했다면 앱을 제거한 후 다시 설치해야 하며, 이 과정에서 앱 데이터가 삭제됩니다.</string>
     <string name="advice_package_mismatch">파일이 사용자가 추적하는 앱과 다릅니다. 파일 선택 항목에서 포함 및 제외 패턴을 확인해 주세요.</string>
     <string name="advice_downgrade">제공된 버전이 설치된 버전보다 낮으며, Android는 최신 버전에 이전 버전을 덮어써 설치하지 않습니다. 이전 버전으로 돌아가려면 앱을 먼저 제거해야 하며, 이 과정에서 앱 데이터가 삭제됩니다.</string>
     <string name="advice_install_failed">Android에서 설치를 거부했습니다. 거부된 이유는 위와 같습니다.</string>
@@ -224,11 +224,11 @@
     </plurals>
     <string name="detail_gone">이 앱은 더 이상 목록에 없습니다.</string>
     <string name="moved_title">이 프로젝트는 %1$s(으)로 이동되었습니다</string>
-    <string name="moved_explain">새 주소에서 같은 개발자가 서명한 동일한 앱을 제공하는 경우에만 Stamp가 전환합니다.</string>
+    <string name="moved_explain">새 주소에서 같은 개발자가 서명한 동일한 앱을 제공하는 경우에만 Tern가 전환합니다.</string>
     <string name="moved_follow">새 주소에서 추적</string>
     <string name="moved_keep">이전 주소 유지</string>
     <string name="moved_working">새 주소 확인 중</string>
-    <string name="moved_done">Stamp가 이제 새 주소를 추적합니다.</string>
+    <string name="moved_done">Tern가 이제 새 주소를 추적합니다.</string>
     <string name="silent_yes">이 업데이트는 묻지 않고 설치할 수 있습니다.</string>
     <string name="silent_no">Android가 사용자에게 이 업데이트 설치 여부를 확인합니다.</string>
     <string name="phase_queued">다른 다운로드가 끝나기를 기다리는 중</string>
@@ -334,7 +334,7 @@
     <string name="settings_keep_installers">다운로드한 파일 유지</string>
     <string name="settings_keep_installers_effect">설치 후에도 파일을 유지하며 저장공간을 차지합니다. 끄면 파일을 삭제합니다.</string>
     <string name="settings_ownership">독점 업데이트 권한 보유</string>
-    <string name="settings_ownership_effect">Stamp가 설치한 앱은 Stamp만 업데이트하도록 Android에 요청하여 다른 스토어가 덮어쓸 수 없게 합니다.</string>
+    <string name="settings_ownership_effect">Tern가 설치한 앱은 Tern만 업데이트하도록 Android에 요청하여 다른 스토어가 덮어쓸 수 없게 합니다.</string>
     <string name="settings_ownership_unsupported">Android 14 이상이 필요합니다.</string>
     <string name="settings_tokens">액세스 토큰</string>
     <string name="settings_tokens_effect">토큰은 요청 제한을 늘리고 비공개 프로젝트를 엽니다. 지정된 호스트로만 전송되며 다시 표시되지 않습니다.</string>
@@ -365,13 +365,13 @@
     <string name="theme_light">라이트</string>
     <string name="theme_dark">다크</string>
     <string name="settings_dynamic_color">배경화면에서 색상 추출</string>
-    <string name="settings_dynamic_color_effect">끄면 Stamp 고유의 슬레이트 블루 색상을 사용합니다.</string>
+    <string name="settings_dynamic_color_effect">끄면 Tern 고유의 슬레이트 블루 색상을 사용합니다.</string>
     <string name="settings_dynamic_color_unsupported">Android 12 이상이 필요합니다.</string>
     <string name="settings_pure_black">완전한 검정</string>
     <string name="settings_pure_black_effect">다크 테마에서 완전히 검은 배경을 사용하여 OLED 화면에 유리합니다.</string>
     <string name="settings_data">가져오기 및 내보내기</string>
     <string name="settings_import">앱 가져오기</string>
-    <string name="settings_import_effect">Stamp 또는 Obtainium의 내보내기 파일에서 가져옵니다.</string>
+    <string name="settings_import_effect">Tern 또는 Obtainium의 내보내기 파일에서 가져옵니다.</string>
     <string name="settings_export">앱 내보내기</string>
     <string name="settings_exporting">내보내는 중</string>
     <string name="settings_export_effect">목록과 설정을 파일로 저장합니다. 토큰은 포함되지 않습니다.</string>
@@ -380,14 +380,14 @@
     </plurals>
     <string name="export_failed">내보내기 파일을 쓸 수 없습니다.</string>
     <string name="settings_obtainium_links">Obtainium 링크 열기</string>
-    <string name="settings_obtainium_links_effect">Obtainium용 링크가 Stamp에서 열립니다. 여전히 각 앱을 수동으로 확인해야 합니다.</string>
+    <string name="settings_obtainium_links_effect">Obtainium용 링크가 Tern에서 열립니다. 여전히 각 앱을 수동으로 확인해야 합니다.</string>
     <string name="settings_about">정보</string>
     <string name="about_version">버전</string>
     <string name="about_licence">라이선스</string>
     <string name="about_licence_name">GNU General Public License, 버전 3 이상</string>
     <string name="about_source">소스 코드</string>
     <string name="import_title">앱 가져오기</string>
-    <string name="import_explain">Stamp 또는 Obtainium의 내보내기 파일을 선택하세요. 앱을 설치하지 않으며 앱을 목록에 추가하고 확인만 합니다.</string>
+    <string name="import_explain">Tern 또는 Obtainium의 내보내기 파일을 선택하세요. 앱을 설치하지 않으며 앱을 목록에 추가하고 확인만 합니다.</string>
     <string name="import_pick">파일 선택</string>
     <string name="import_pick_other">다른 파일 선택</string>
     <string name="import_working">파일 읽는 중</string>
@@ -433,19 +433,19 @@
     <string name="import_stars_stop">중지</string>
     <string name="import_skip_no_file">릴리스 중 이 기기에 설치할 수 있는 파일이 없습니다.</string>
     <string name="import_skip_no_releases">게시된 릴리스가 없습니다.</string>
-    <string name="import_skip_not_found">Stamp가 찾을 수 없습니다.</string>
-    <string name="import_skip_rate_limited">GitHub에서 Stamp에 대기를 요청했습니다. 나중에 다시 시도해 주세요.</string>
+    <string name="import_skip_not_found">Tern가 찾을 수 없습니다.</string>
+    <string name="import_skip_rate_limited">GitHub에서 Tern에 대기를 요청했습니다. 나중에 다시 시도해 주세요.</string>
     <string name="import_skip_network">연결에 실패했습니다.</string>
-    <string name="import_skip_other">Stamp가 릴리스를 읽을 수 없습니다.</string>
-    <string name="first_title">Stamp</string>
-    <string name="first_line_1">Stamp는 개발자가 게시한 소스에서 앱을 직접 설치하고 업데이트합니다.</string>
-    <string name="first_line_2">Android가 파일을 인식하기 전에 Stamp가 서명자와 게시자의 체크섬 일치 여부를 확인합니다.</string>
+    <string name="import_skip_other">Tern가 릴리스를 읽을 수 없습니다.</string>
+    <string name="first_title">Tern</string>
+    <string name="first_line_1">Tern는 개발자가 게시한 소스에서 앱을 직접 설치하고 업데이트합니다.</string>
+    <string name="first_line_2">Android가 파일을 인식하기 전에 Tern가 서명자와 게시자의 체크섬 일치 여부를 확인합니다.</string>
     <string name="first_line_3">발견하거나 실행한 모든 내용이 이해하기 쉬운 단어로 활동 기록에 기록됩니다.</string>
-    <string name="first_notify_explain">Stamp는 업데이트 준비가 완료되면 알림을 보냅니다. Android가 알림 허용 여부를 묻습니다.</string>
+    <string name="first_notify_explain">Tern는 업데이트 준비가 완료되면 알림을 보냅니다. Android가 알림 허용 여부를 묻습니다.</string>
     <string name="first_notify_denied">알림이 꺼져 있습니다. 나중에 설정에서 켤 수 있습니다.</string>
     <string name="first_notify_allow">알림 허용</string>
     <string name="first_skip">나중에</string>
-    <string name="install_permission_title">Stamp에 앱 설치 허용</string>
-    <string name="install_permission_body">앱이 다른 앱을 설치하기 전에 Android에서 한 번 묻습니다. 다음 화면에서 Stamp 스위치를 켠 다음 돌아오세요. 설치가 자동으로 진행됩니다.</string>
+    <string name="install_permission_title">Tern에 앱 설치 허용</string>
+    <string name="install_permission_body">앱이 다른 앱을 설치하기 전에 Android에서 한 번 묻습니다. 다음 화면에서 Tern 스위치를 켠 다음 돌아오세요. 설치가 자동으로 진행됩니다.</string>
     <string name="install_permission_open">설정 열기</string>
 </resources>

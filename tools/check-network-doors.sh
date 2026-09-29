@@ -10,9 +10,9 @@
 #   tools/check-network-doors.sh [root of the source tree]
 set -euo pipefail
 ROOT="${1:-$(cd "$(dirname "$0")/.." && pwd)}"
-DOOR="app/src/main/kotlin/io/github/munzzyy/stamp/net/UrlConnectionHttp.kt"
-HANDOFF="core/src/main/kotlin/io/github/munzzyy/stamp/core/handoff/"
-PROBE="app/src/main/kotlin/io/github/munzzyy/stamp/net/ProxyProbe.kt"
+DOOR="app/src/main/kotlin/io/github/munzzyy/tern/net/UrlConnectionHttp.kt"
+HANDOFF="core/src/main/kotlin/io/github/munzzyy/tern/core/handoff/"
+PROBE="app/src/main/kotlin/io/github/munzzyy/tern/net/ProxyProbe.kt"
 fail=0
 
 cd "$ROOT"

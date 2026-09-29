@@ -35,7 +35,7 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:banner="@drawable/banner"
-        android:theme="@style/Theme.Stamp">
+        android:theme="@style/Theme.Tern">
 
         <activity
             android:name=".MainActivity"
@@ -56,7 +56,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="stamp" />
+                <data android:scheme="tern" />
             </intent-filter>
         </activity>
 

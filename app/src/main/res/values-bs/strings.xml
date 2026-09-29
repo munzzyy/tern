@@ -69,7 +69,7 @@
     <string name="action_failed">To nije uspjelo. Pokušajte ponovo za trenutak.</string>
     <string name="save_failed">Promjena nije sačuvana. Pokušajte ponovo.</string>
     <string name="open_no_launcher">Ova aplikacija nema ekran za otvaranje</string>
-    <string name="offline_banner">Nema internetske veze. Stamp provjerava ponovo kad se vrati.</string>
+    <string name="offline_banner">Nema internetske veze. Tern provjerava ponovo kad se vrati.</string>
     <string name="offline_reason">Nedostupno bez internetske veze</string>
     <string name="apps_search_hint">Pretražite aplikacije</string>
     <string name="filter_all">Sve</string>
@@ -113,7 +113,7 @@
         <item quantity="few">Provjeriti %d aplikacije sada?</item>
         <item quantity="other">Provjeriti %d aplikacija sada?</item>
     </plurals>
-    <string name="bulk_check_text">Stamp traži od svakog izvora njegovo najnovije izdanje. Ništa se ne instalira.</string>
+    <string name="bulk_check_text">Tern traži od svakog izvora njegovo najnovije izdanje. Ništa se ne instalira.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">Ažurirati %d aplikaciju?</item>
         <item quantity="few">Ažurirati %d aplikacije?</item>
@@ -130,16 +130,16 @@
         <item quantity="few">Prestati pratiti %d aplikacije?</item>
         <item quantity="other">Prestati pratiti %d aplikacija?</item>
     </plurals>
-    <string name="bulk_remove_text">Aplikacije ostaju instalirane. Stamp samo prestaje provjeravati njihova ažuriranja.</string>
+    <string name="bulk_remove_text">Aplikacije ostaju instalirane. Tern samo prestaje provjeravati njihova ažuriranja.</string>
     <string name="apps_empty_title">Još nema aplikacija</string>
-    <string name="apps_empty_text">Zalijepite link na stranicu projekta, stranicu izdanja ili F-Droid repozitorij, i Stamp će odatle održavati aplikaciju ažurnom.</string>
+    <string name="apps_empty_text">Zalijepite link na stranicu projekta, stranicu izdanja ili F-Droid repozitorij, i Tern će odatle održavati aplikaciju ažurnom.</string>
     <string name="sort_title">Sortiraj</string>
     <string name="sort_name">Po imenu</string>
     <string name="sort_recently_checked">Nedavno provjereno</string>
     <string name="sort_source">Po izvoru</string>
     <string name="remove_title">Ukloniti %s?</string>
-    <string name="remove_text_installed">Stamp je prestaje pratiti. Aplikacija ostaje instalirana.</string>
-    <string name="remove_text">Stamp je prestaje pratiti.</string>
+    <string name="remove_text_installed">Tern je prestaje pratiti. Aplikacija ostaje instalirana.</string>
+    <string name="remove_text">Tern je prestaje pratiti.</string>
     <string name="add_title">Dodaj aplikaciju</string>
     <string name="add_field_label">Link ili pretraga</string>
     <string name="add_field_hint">https://github.com/vlasnik/aplikacija</string>
@@ -212,8 +212,8 @@
     <string name="signer_unknown">Još ništa nije poznato o potpisniku. Provjerava se nakon preuzimanja.</string>
     <string name="signer_first_seen">Prva instalacija: ovaj certifikat će ostati zapamćen</string>
     <string name="signer_first_seen_claimed">Prva instalacija: datoteka tvrdi ovaj certifikat, i ostat će zapamćen kada ga Android potvrdi</string>
-    <string name="signer_matches_pin">Potpisano certifikatom koji Stamp ima za ovu aplikaciju</string>
-    <string name="signer_matches_pin_claimed">Datoteka tvrdi certifikat koji Stamp ima za ovu aplikaciju. Android ga potvrđuje prije instalacije.</string>
+    <string name="signer_matches_pin">Potpisano certifikatom koji Tern ima za ovu aplikaciju</string>
+    <string name="signer_matches_pin_claimed">Datoteka tvrdi certifikat koji Tern ima za ovu aplikaciju. Android ga potvrđuje prije instalacije.</string>
     <string name="signer_matches_installed">Potpisano od istog programera kao instalirana aplikacija</string>
     <string name="signer_matches_installed_claimed">Datoteka tvrdi istog programera kao instalirana aplikacija. Android ga potvrđuje prije instalacije.</string>
     <string name="signer_mismatch">Potpisano od nekog drugog, a ne od programera instalirane aplikacije</string>
@@ -232,17 +232,17 @@
     <string name="fingerprint_copied">Otisak je kopiran</string>
     <string name="checks_virustotal">Potraži ovu datoteku na VirusTotal</string>
     <string name="checks_virustotal_note">Vaš preglednik šalje samo otisak datoteke, a datoteka koju niko nije prenio na VirusTotal neće tamo biti pronađena.</string>
-    <string name="advice_network">Stamp nije mogao doći do izvora. Provjerite svoju vezu ili proxy, pa pokušajte ponovo.</string>
+    <string name="advice_network">Tern nije mogao doći do izvora. Provjerite svoju vezu ili proxy, pa pokušajte ponovo.</string>
     <string name="advice_rate_limited">Izvor ograničava koliko često mu se mogu slati upiti. Sačuvani pristupni token za ovog domaćina podiže ograničenje.</string>
     <string name="advice_not_found">Projekt je možda premješten ili postao privatan. Provjerite da li se link i dalje otvara u pregledniku.</string>
     <string name="advice_auth">Izvor je odbio pristupni token. Zamijenite ga u Postavkama, pod pristupnim tokenima.</string>
-    <string name="advice_parse">Izvor je odgovorio nečim što Stamp nije mogao pročitati. Možda je to privremeni kvar na njihovoj strani.</string>
-    <string name="advice_no_releases">Projekt još nije objavio izdanje koje Stamp može koristiti. Predizdanja se računaju ako ih uključite.</string>
+    <string name="advice_parse">Izvor je odgovorio nečim što Tern nije mogao pročitati. Možda je to privremeni kvar na njihovoj strani.</string>
+    <string name="advice_no_releases">Projekt još nije objavio izdanje koje Tern može koristiti. Predizdanja se računaju ako ih uključite.</string>
     <string name="advice_no_file">Nijedna od datoteka ne odgovara ovom uređaju. Odaberite jednu sami pod Izbor datoteke, ili promijenite obrasce za uključivanje i isključivanje.</string>
     <string name="advice_checksum_mismatch">Datoteka se promijenila nakon što je objavljena ili je oštećena usput. Nemojte je instalirati. Pokušajte ponovo kasnije.</string>
-    <string name="advice_signer_mismatch">Datoteka je potpisana drugačijim certifikatom od onog prikvačenog za ovu aplikaciju, pa Stamp odbija. Ako je programer najavio novi ključ, zamijenite prikvačeni certifikat pod Napredno.</string>
+    <string name="advice_signer_mismatch">Datoteka je potpisana drugačijim certifikatom od onog prikvačenog za ovu aplikaciju, pa Tern odbija. Ako je programer najavio novi ključ, zamijenite prikvačeni certifikat pod Napredno.</string>
     <string name="advice_signer_broken">Potpisi u ovoj datoteci se ne slažu jedni s drugima. Nemojte je instalirati, i obavijestite programera.</string>
-    <string name="advice_signer_mismatch_installed">Android ne zamjenjuje aplikaciju onom koju je potpisao neko drugi, i Stamp neće ni pokušati. Ako je programer najavio novi ključ, aplikacija se mora ukloniti i ponovo instalirati, što briše njene podatke.</string>
+    <string name="advice_signer_mismatch_installed">Android ne zamjenjuje aplikaciju onom koju je potpisao neko drugi, i Tern neće ni pokušati. Ako je programer najavio novi ključ, aplikacija se mora ukloniti i ponovo instalirati, što briše njene podatke.</string>
     <string name="advice_package_mismatch">Datoteka je drugačija aplikacija od one koju pratite. Provjerite obrasce za uključivanje i isključivanje pod Izbor datoteke.</string>
     <string name="advice_downgrade">Ponuđena verzija je starija od instalirane, a Android ne instalira preko novije verzije. Povratak unazad znači da prvo uklonite aplikaciju, što briše njene podatke.</string>
     <string name="advice_install_failed">Android je odbio instalaciju. Razlog koji je naveo prikazan je iznad.</string>
@@ -256,11 +256,11 @@
     </plurals>
     <string name="detail_gone">Ova aplikacija više nije na vašem spisku.</string>
     <string name="moved_title">Ovaj projekt je premješten na %1$s</string>
-    <string name="moved_explain">Stamp prelazi samo ako nova adresa nudi istu aplikaciju, koju je potpisao isti programer.</string>
+    <string name="moved_explain">Tern prelazi samo ako nova adresa nudi istu aplikaciju, koju je potpisao isti programer.</string>
     <string name="moved_follow">Prati ga tamo</string>
     <string name="moved_keep">Zadrži staru adresu</string>
     <string name="moved_working">Provjera nove adrese</string>
-    <string name="moved_done">Stamp sada prati novu adresu.</string>
+    <string name="moved_done">Tern sada prati novu adresu.</string>
     <string name="silent_yes">Ovo ažuriranje se može instalirati bez upita.</string>
     <string name="silent_no">Android će tražiti da potvrdite ovo ažuriranje.</string>
     <string name="phase_queued">Čeka se završetak ostalih preuzimanja</string>
@@ -370,7 +370,7 @@
     <string name="settings_keep_installers">Zadrži preuzete datoteke</string>
     <string name="settings_keep_installers_effect">Datoteke ostaju nakon instalacije, trošeći prostor. Isključeno ih briše.</string>
     <string name="settings_ownership">Jedini alat za ažuriranje</string>
-    <string name="settings_ownership_effect">Traži od Androida da dozvoli samo Stampu da ažurira aplikacije koje instalira, kako ih druga trgovina ne bi mogla zamijeniti.</string>
+    <string name="settings_ownership_effect">Traži od Androida da dozvoli samo Ternu da ažurira aplikacije koje instalira, kako ih druga trgovina ne bi mogla zamijeniti.</string>
     <string name="settings_ownership_unsupported">Potreban je Android 14 ili noviji.</string>
     <string name="settings_tokens">Pristupni tokeni</string>
     <string name="settings_tokens_effect">Token podiže ograničenja broja upita i otvara privatne projekte. Šalje se samo tačnom domaćinu za kojeg je sačuvan, i nikada se više ne prikazuje.</string>
@@ -401,13 +401,13 @@
     <string name="theme_light">Svijetla</string>
     <string name="theme_dark">Tamna</string>
     <string name="settings_dynamic_color">Boje s vaše pozadine</string>
-    <string name="settings_dynamic_color_effect">Kada je isključeno koristi Stampovu sivo-plavu boju.</string>
+    <string name="settings_dynamic_color_effect">Kada je isključeno koristi Ternovu sivo-plavu boju.</string>
     <string name="settings_dynamic_color_unsupported">Potreban je Android 12 ili noviji.</string>
     <string name="settings_pure_black">Čisto crna</string>
     <string name="settings_pure_black_effect">Crne pozadine u tamnoj temi, ugodnije za OLED ekrane.</string>
     <string name="settings_data">Uvoz i izvoz</string>
     <string name="settings_import">Uvezi aplikacije</string>
-    <string name="settings_import_effect">Iz Stamp ili Obtainium izvoza</string>
+    <string name="settings_import_effect">Iz Tern ili Obtainium izvoza</string>
     <string name="settings_export">Izvezi aplikacije</string>
     <string name="settings_exporting">Izvozi se</string>
     <string name="settings_export_effect">Sprema vaš spisak i postavke u datoteku. Tokeni se nikada ne uključuju.</string>
@@ -418,14 +418,14 @@
     </plurals>
     <string name="export_failed">Izvoz se nije mogao zapisati.</string>
     <string name="settings_obtainium_links">Otvori Obtainium linkove</string>
-    <string name="settings_obtainium_links_effect">Linkovi namijenjeni za Obtainium umjesto toga se otvaraju u Stampu. I dalje potvrđujete svaku aplikaciju.</string>
+    <string name="settings_obtainium_links_effect">Linkovi namijenjeni za Obtainium umjesto toga se otvaraju u Ternu. I dalje potvrđujete svaku aplikaciju.</string>
     <string name="settings_about">O aplikaciji</string>
     <string name="about_version">Verzija</string>
     <string name="about_licence">Licenca</string>
     <string name="about_licence_name">GNU General Public License, verzija 3 ili novija</string>
     <string name="about_source">Izvorni kod</string>
     <string name="import_title">Uvezi aplikacije</string>
-    <string name="import_explain">Odaberite datoteku za izvoz iz Stampa ili Obtainiuma. Ništa se ne instalira; aplikacije se dodaju na vaš spisak i provjeravaju.</string>
+    <string name="import_explain">Odaberite datoteku za izvoz iz Terna ili Obtainiuma. Ništa se ne instalira; aplikacije se dodaju na vaš spisak i provjeravaju.</string>
     <string name="import_pick">Odaberite datoteku</string>
     <string name="import_pick_other">Odaberite drugu datoteku</string>
     <string name="import_working">Čitanje datoteke</string>
@@ -485,19 +485,19 @@
     <string name="import_stars_stop">Zaustavi</string>
     <string name="import_skip_no_file">Ništa u njegovim izdanjima se ne može instalirati na ovaj uređaj.</string>
     <string name="import_skip_no_releases">Ne objavljuje nikakva izdanja.</string>
-    <string name="import_skip_not_found">Stamp ga nije mogao pronaći.</string>
-    <string name="import_skip_rate_limited">GitHub je tražio od Stampa da sačeka. Pokušajte ponovo kasnije.</string>
+    <string name="import_skip_not_found">Tern ga nije mogao pronaći.</string>
+    <string name="import_skip_rate_limited">GitHub je tražio od Terna da sačeka. Pokušajte ponovo kasnije.</string>
     <string name="import_skip_network">Veza nije uspjela.</string>
-    <string name="import_skip_other">Stamp nije mogao pročitati njegova izdanja.</string>
-    <string name="first_title">Stamp</string>
-    <string name="first_line_1">Stamp instalira i ažurira aplikacije pravo s mjesta gdje ih programeri objavljuju.</string>
-    <string name="first_line_2">Prije nego što Android vidi datoteku, Stamp provjerava ko ju je potpisao i da li se podudara s kontrolnim zbirom izdavača.</string>
+    <string name="import_skip_other">Tern nije mogao pročitati njegova izdanja.</string>
+    <string name="first_title">Tern</string>
+    <string name="first_line_1">Tern instalira i ažurira aplikacije pravo s mjesta gdje ih programeri objavljuju.</string>
+    <string name="first_line_2">Prije nego što Android vidi datoteku, Tern provjerava ko ju je potpisao i da li se podudara s kontrolnim zbirom izdavača.</string>
     <string name="first_line_3">Sve što nađe i uradi zapisuje se u dnevnik aktivnosti, jednostavnim riječima.</string>
-    <string name="first_notify_explain">Stamp vas može obavijestiti kada su ažuriranja spremna. Android će pitati da li da dozvoli obavijesti.</string>
+    <string name="first_notify_explain">Tern vas može obavijestiti kada su ažuriranja spremna. Android će pitati da li da dozvoli obavijesti.</string>
     <string name="first_notify_denied">Obavijesti su isključene. Možete ih kasnije uključiti u Postavkama.</string>
     <string name="first_notify_allow">Dozvoli obavijesti</string>
     <string name="first_skip">Ne sada</string>
-    <string name="install_permission_title">Dozvolite da Stamp instalira aplikacije</string>
-    <string name="install_permission_body">Android pita jednom prije nego što jedna aplikacija može instalirati drugu. Na sljedećem ekranu, uključite prekidač za Stamp, a zatim se vratite. Instalacija se nastavlja sama.</string>
+    <string name="install_permission_title">Dozvolite da Tern instalira aplikacije</string>
+    <string name="install_permission_body">Android pita jednom prije nego što jedna aplikacija može instalirati drugu. Na sljedećem ekranu, uključite prekidač za Tern, a zatim se vratite. Instalacija se nastavlja sama.</string>
     <string name="install_permission_open">Otvorite postavke</string>
 </resources>

@@ -24,12 +24,12 @@ rm -rf "$WORK"
 mkdir -p "$WORK"
 KOTLIN=$(sed -n 's/.*org\.jetbrains\.kotlin\.jvm") version "\([^"]*\)".*/\1/p' build.gradle.kts)
 STDLIB=$(find "${GRADLE_USER_HOME:-$HOME/.gradle}/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/$KOTLIN" -name "kotlin-stdlib-$KOTLIN.jar" | head -1)
-export STAMP_CLASSES="$ROOT/core/build/classes/kotlin/main:$ROOT/core/build/classes/kotlin/test:$STDLIB"
-export STAMP_JAVA="$JAVA"
-export STAMP_WORK="$WORK"
-export STAMP_FIXTURE="$ROOT/core/src/test/resources/fixtures/handoff/sealed.txt"
+export TERN_CLASSES="$ROOT/core/build/classes/kotlin/main:$ROOT/core/build/classes/kotlin/test:$STDLIB"
+export TERN_JAVA="$JAVA"
+export TERN_WORK="$WORK"
+export TERN_FIXTURE="$ROOT/core/src/test/resources/fixtures/handoff/sealed.txt"
 
-"$JAVA" -cp "$STAMP_CLASSES" io.github.munzzyy.stamp.core.handoff.PageToolKt page > "$WORK/answer"
+"$JAVA" -cp "$TERN_CLASSES" io.github.munzzyy.tern.core.handoff.PageToolKt page > "$WORK/answer"
 
 node - <<'JS'
 'use strict';
@@ -47,7 +47,7 @@ const unhex = (text) => new Uint8Array(Buffer.from(text, 'hex'));
 const ascii = (text) => new Uint8Array(Buffer.from(text, 'latin1'));
 const same = (what, expected, got) => check(what, expected === got, 'expected ' + expected + ' and got ' + got);
 
-const answer = fs.readFileSync(process.env.STAMP_WORK + '/answer');
+const answer = fs.readFileSync(process.env.TERN_WORK + '/answer');
 const split = answer.indexOf('\r\n\r\n');
 const head = answer.subarray(0, split).toString('latin1').split('\r\n');
 const html = answer.subarray(split + 4).toString('utf8');
@@ -58,8 +58,8 @@ const inside = (open, close) => {
 };
 const script = inside('<script>', '</script>');
 const style = inside('<style>', '</style>');
-fs.writeFileSync(process.env.STAMP_WORK + '/page.html', html);
-fs.writeFileSync(process.env.STAMP_WORK + '/page.js', script);
+fs.writeFileSync(process.env.TERN_WORK + '/page.html', html);
+fs.writeFileSync(process.env.TERN_WORK + '/page.js', script);
 console.log('the page is ' + Buffer.byteLength(html) + ' bytes, ' + Buffer.byteLength(script) + ' of them its script');
 
 const policy = head.filter((line) => line.startsWith('Content-Security-Policy: ')).map((line) => line.substring(25));
@@ -126,10 +126,10 @@ for (const length of lengths) {
 same('SHA-256, HMAC and ChaCha20 are those of OpenSSL for random bytes of ' + lengths.length + ' lengths up to 2 MiB and a name', lengths.length, agree);
 
 const fixture = {};
-for (const line of fs.readFileSync(process.env.STAMP_FIXTURE, 'utf8').split('\n')) {
+for (const line of fs.readFileSync(process.env.TERN_FIXTURE, 'utf8').split('\n')) {
   if (line && !line.startsWith('#')) fixture[line.split(' ')[0]] = line.split(' ')[1] || '';
 }
-const master = page.hmac(page.utf8(fixture.code), page.utf8('stamp handoff v1'));
+const master = page.hmac(page.utf8(fixture.code), page.utf8('tern handoff v1'));
 same('the master key of the fixture', fixture.master, hex(master));
 same('the key that seals', fixture.enc, hex(page.hmac(master, page.utf8('enc'))));
 same('the key that signs', fixture.mac, hex(page.hmac(master, page.utf8('mac'))));
@@ -175,7 +175,7 @@ for name in chromium chromium-browser google-chrome google-chrome-stable; do
   if command -v "$name" > /dev/null; then CHROMIUM="$(command -v "$name")"; break; fi
 done
 [ -n "$CHROMIUM" ] || { echo "FAIL no Chromium was found, so the page did not run in a browser"; exit 1; }
-export STAMP_CHROMIUM="$CHROMIUM"
+export TERN_CHROMIUM="$CHROMIUM"
 
 node - <<'JS'
 'use strict';
@@ -191,11 +191,11 @@ function check(what, ok, detail) {
 }
 const same = (what, expected, got) => check(what, JSON.stringify(expected) === JSON.stringify(got), 'expected ' + JSON.stringify(expected) + ' and got ' + JSON.stringify(got));
 const sleep = (ms) => new Promise((done) => setTimeout(done, ms));
-const work = process.env.STAMP_WORK;
+const work = process.env.TERN_WORK;
 const children = [];
 
 async function handoff() {
-  const java = spawn(process.env.STAMP_JAVA, ['-Dstdout.encoding=UTF-8', '-cp', process.env.STAMP_CLASSES, 'io.github.munzzyy.stamp.core.handoff.PageToolKt', 'serve'], { stdio: ['pipe', 'pipe', 'inherit'] });
+  const java = spawn(process.env.TERN_JAVA, ['-Dstdout.encoding=UTF-8', '-cp', process.env.TERN_CLASSES, 'io.github.munzzyy.tern.core.handoff.PageToolKt', 'serve'], { stdio: ['pipe', 'pipe', 'inherit'] });
   children.push(java);
   const lines = readline.createInterface({ input: java.stdout })[Symbol.asyncIterator]();
   const said = {};
@@ -216,10 +216,10 @@ async function handoff() {
 }
 
 async function browser() {
-  const chromium = spawn(process.env.STAMP_CHROMIUM, [
+  const chromium = spawn(process.env.TERN_CHROMIUM, [
     '--headless=new', '--remote-debugging-port=0', '--user-data-dir=' + work + '/profile', '--no-first-run', '--no-default-browser-check',
     '--disable-extensions', '--disable-background-networking', '--disable-component-update', '--disable-sync', '--disable-gpu',
-    ...(process.env.STAMP_CHROMIUM_FLAGS || '').split(' ').filter((flag) => flag), 'about:blank',
+    ...(process.env.TERN_CHROMIUM_FLAGS || '').split(' ').filter((flag) => flag), 'about:blank',
   ], { stdio: ['ignore', 'ignore', 'pipe'] });
   children.push(chromium);
   const address = await new Promise((found, lost) => {
@@ -261,7 +261,7 @@ async function tab(chrome) {
   const call = (method, params) => chrome.call(method, params, sessionId);
   for (const domain of ['Page', 'Runtime', 'Network', 'Log', 'Audits', 'DOM']) await call(domain + '.enable');
   await call('Page.addScriptToEvaluateOnNewDocument', {
-    source: "window.stampViolations = []; document.addEventListener('securitypolicyviolation', function (e) { window.stampViolations.push(e.violatedDirective + ' ' + e.blockedURI); });",
+    source: "window.ternViolations = []; document.addEventListener('securitypolicyviolation', function (e) { window.ternViolations.push(e.violatedDirective + ' ' + e.blockedURI); });",
   });
   const mine = () => chrome.events.filter((event) => event.sessionId === sessionId);
   const run = async (expression) => {
@@ -287,7 +287,7 @@ async function tab(chrome) {
     await call('DOM.setFileInputFiles', { files: [path], nodeId });
   };
   const requests = () => mine().filter((event) => event.method === 'Network.requestWillBeSent').map((event) => event.params);
-  const violations = async () => (await run('window.stampViolations')).concat(
+  const violations = async () => (await run('window.ternViolations')).concat(
     mine().filter((event) => event.method === 'Audits.issueAdded' && event.params.issue.code === 'ContentSecurityPolicyIssue').map((event) => 'issue ' + JSON.stringify(event.params.issue.details)),
     mine().filter((event) => event.method === 'Log.entryAdded' && event.params.entry.source === 'security').map((event) => 'log ' + event.params.entry.text),
     mine().filter((event) => event.method === 'Runtime.exceptionThrown').map((event) => 'exception ' + JSON.stringify(event.params.exceptionDetails)),
@@ -342,7 +342,7 @@ async function main() {
   fs.writeFileSync(work + '/exactly-2-MiB.json', exact);
   fs.writeFileSync(work + '/one-byte-more.json', Buffer.concat([exact, Buffer.from([1])]));
   const name = 'l\u00e4nger-' + 'n'.repeat(90) + '.json';
-  fs.writeFileSync(work + '/' + name, '{"format":"stamp-export","schema":1,"apps":[]}\n');
+  fs.writeFileSync(work + '/' + name, '{"format":"tern-export","schema":1,"apps":[]}\n');
 
   await typed.pick(work + '/exactly-2-MiB.json');
   for (const [wrong, sentence] of [
@@ -380,7 +380,8 @@ async function main() {
   await typed.run(click('file-form'));
   await typed.until('the second file to arrive', "document.getElementById('file').value === ''");
   const arrived = await device.take();
-  same('a second file needs no code typed, and its name is cut to 80 bytes', ['file 47 ' + crypto.createHash('sha256').update('{"format":"stamp-export","schema":1,"apps":[]}\n').digest('hex') + ' l\u00e4nger-' + 'n'.repeat(72)], arrived);
+  const small = '{"format":"tern-export","schema":1,"apps":[]}\n';
+  same('a second file needs no code typed, and its name is cut to 80 bytes', ['file ' + Buffer.byteLength(small) + ' ' + crypto.createHash('sha256').update(small).digest('hex') + ' l\u00e4nger-' + 'n'.repeat(72)], arrived);
 
   await typed.pick(work + '/one-byte-more.json');
   const sent = typed.requests().length;
@@ -409,9 +410,9 @@ async function main() {
     same('the browser reported nothing against the policy on the ' + which + ' page', [], await page.violations());
   }
 
-  await typed.run("var s = document.createElement('script'); s.textContent = 'window.stampSlippedIn = true'; document.body.appendChild(s); var p = document.createElement('p'); p.setAttribute('style', 'color: red'); document.body.appendChild(p);");
+  await typed.run("var s = document.createElement('script'); s.textContent = 'window.ternSlippedIn = true'; document.body.appendChild(s); var p = document.createElement('p'); p.setAttribute('style', 'color: red'); document.body.appendChild(p);");
   await sleep(300);
-  same('a script that is not the one of the page does not run', undefined, await typed.run('window.stampSlippedIn'));
+  same('a script that is not the one of the page does not run', undefined, await typed.run('window.ternSlippedIn'));
   const stopped = await typed.violations();
   check('and the browser reports it, so the policy is at work: ' + JSON.stringify(stopped.filter((v) => !v.startsWith('issue'))), stopped.some((v) => v.startsWith('script-src')) && stopped.some((v) => v.startsWith('style-src')));
   const asked = await typed.run("new Promise(function (done) { var r = new XMLHttpRequest(); r.open('GET', 'http://127.0.0.1:9/'); r.onerror = function () { done('stopped'); }; r.onload = function () { done('sent'); }; r.send(); })");

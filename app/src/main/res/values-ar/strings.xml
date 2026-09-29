@@ -72,7 +72,7 @@
     <string name="action_failed">لم ينجح ذلك. حاول مرة أخرى بعد قليل.</string>
     <string name="save_failed">لم يتم حفظ التغيير. حاول مرة أخرى.</string>
     <string name="open_no_launcher">لا يحتوي هذا التطبيق على شاشة لفتحها</string>
-    <string name="offline_banner">لا يوجد اتصال بالإنترنت. سيفحص Stamp مرة أخرى عند عودة الاتصال.</string>
+    <string name="offline_banner">لا يوجد اتصال بالإنترنت. سيفحص Tern مرة أخرى عند عودة الاتصال.</string>
     <string name="offline_reason">غير متاح بدون اتصال بالإنترنت</string>
     <string name="apps_search_hint">ابحث في تطبيقاتك</string>
     <string name="filter_all">الكل</string>
@@ -131,7 +131,7 @@
         <item quantity="many">فحص %d تطبيقًا الآن؟</item>
         <item quantity="other">فحص %d تطبيق الآن؟</item>
     </plurals>
-    <string name="bulk_check_text">يطلب Stamp من كل مصدر أحدث إصداراته. لن يتم تثبيت أي شيء.</string>
+    <string name="bulk_check_text">يطلب Tern من كل مصدر أحدث إصداراته. لن يتم تثبيت أي شيء.</string>
     <plurals name="bulk_update_title">
         <item quantity="zero">تحديث %d تطبيق؟</item>
         <item quantity="one">تحديث %d تطبيق؟</item>
@@ -157,16 +157,16 @@
         <item quantity="many">إيقاف متابعة %d تطبيقًا؟</item>
         <item quantity="other">إيقاف متابعة %d تطبيق؟</item>
     </plurals>
-    <string name="bulk_remove_text">تبقى التطبيقات مثبتة. يتوقف Stamp فقط عن فحصها بحثًا عن تحديثات.</string>
+    <string name="bulk_remove_text">تبقى التطبيقات مثبتة. يتوقف Tern فقط عن فحصها بحثًا عن تحديثات.</string>
     <string name="apps_empty_title">لا توجد تطبيقات حتى الآن</string>
-    <string name="apps_empty_text">الصق رابطًا لصفحة مشروع أو صفحة إصدار أو مستودع F-Droid، وسيحافظ Stamp على تحديث التطبيق من هناك.</string>
+    <string name="apps_empty_text">الصق رابطًا لصفحة مشروع أو صفحة إصدار أو مستودع F-Droid، وسيحافظ Tern على تحديث التطبيق من هناك.</string>
     <string name="sort_title">فرز</string>
     <string name="sort_name">حسب الاسم</string>
     <string name="sort_recently_checked">تم فحصه مؤخرًا</string>
     <string name="sort_source">حسب المصدر</string>
     <string name="remove_title">إزالة %s؟</string>
-    <string name="remove_text_installed">سيتوقف Stamp عن متابعته. سيبقى التطبيق مثبتًا.</string>
-    <string name="remove_text">سيتوقف Stamp عن متابعته.</string>
+    <string name="remove_text_installed">سيتوقف Tern عن متابعته. سيبقى التطبيق مثبتًا.</string>
+    <string name="remove_text">سيتوقف Tern عن متابعته.</string>
     <string name="add_title">إضافة تطبيق</string>
     <string name="add_field_label">رابط أو بحث</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -254,8 +254,8 @@
     <string name="signer_unknown">لا يُعرف شيء عن المُوقِّع حتى الآن. يتم فحصه بعد التنزيل.</string>
     <string name="signer_first_seen">أول تثبيت: سيتم تذكر هذه الشهادة</string>
     <string name="signer_first_seen_claimed">أول تثبيت: يدعي الملف هذه الشهادة، وسيتم تذكرها بمجرد أن يؤكدها Android</string>
-    <string name="signer_matches_pin">موقع بشهادة التوقيع التي يحتفظ بها Stamp لهذا التطبيق</string>
-    <string name="signer_matches_pin_claimed">يدعي الملف شهادة التوقيع التي يحتفظ بها Stamp لهذا التطبيق. يؤكد Android ذلك قبل التثبيت.</string>
+    <string name="signer_matches_pin">موقع بشهادة التوقيع التي يحتفظ بها Tern لهذا التطبيق</string>
+    <string name="signer_matches_pin_claimed">يدعي الملف شهادة التوقيع التي يحتفظ بها Tern لهذا التطبيق. يؤكد Android ذلك قبل التثبيت.</string>
     <string name="signer_matches_installed">موقع من قِبل نفس مطور التطبيق المثبت</string>
     <string name="signer_matches_installed_claimed">يدعي الملف نفس المطور للتطبيق المثبت. يؤكد Android ذلك قبل التثبيت.</string>
     <string name="signer_mismatch">موقع من قِبل شخص آخر غير مطور التطبيق المثبت</string>
@@ -277,17 +277,17 @@
     <string name="fingerprint_copied">تم نسخ البصمة</string>
     <string name="checks_virustotal">البحث عن هذا الملف في VirusTotal</string>
     <string name="checks_virustotal_note">تُرسل بصمة الملف فقط، بواسطة متصفحك، ولن يتم العثور هناك على ملف لم يرفعه أحد إلى VirusTotal.</string>
-    <string name="advice_network">لم يتمكن Stamp من الوصول إلى المصدر. تحقق من اتصالك أو الوكيل، ثم حاول مرة أخرى.</string>
+    <string name="advice_network">لم يتمكن Tern من الوصول إلى المصدر. تحقق من اتصالك أو الوكيل، ثم حاول مرة أخرى.</string>
     <string name="advice_rate_limited">يقيّد المصدر عدد مرات الطلب. إضافة رمز وصول محفوظ لهذا المضيف يرفع الحد.</string>
     <string name="advice_not_found">ربما تم نقل المشروع أو أصبح خاصًا. تأكد من أن الرابط لا يزال يفتح في المتصفح.</string>
     <string name="advice_auth">رفض المصدر رمز الوصول. استبدله في الإعدادات، ضمن رموز الوصول.</string>
-    <string name="advice_parse">أجاب المصدر بشيء لم يتمكن Stamp من قراءته. ربما يكون عطلًا مؤقتًا من جانبهم.</string>
-    <string name="advice_no_releases">لم ينشر المشروع إصدارًا يمكن لـ Stamp استخدامه بعد. تُحسب الإصدارات المسبقة إذا قمت بتشغيلها.</string>
+    <string name="advice_parse">أجاب المصدر بشيء لم يتمكن Tern من قراءته. ربما يكون عطلًا مؤقتًا من جانبهم.</string>
+    <string name="advice_no_releases">لم ينشر المشروع إصدارًا يمكن لـ Tern استخدامه بعد. تُحسب الإصدارات المسبقة إذا قمت بتشغيلها.</string>
     <string name="advice_no_file">لا يناسب أي من الملفات هذا الجهاز. اختر واحدًا بنفسك ضمن اختيار الملف، أو قم بتغيير أنماط التضمين والاستبعاد.</string>
     <string name="advice_checksum_mismatch">تغير الملف بعد نشره أو تعرض للتلف أثناء التنزيل. لا تقم بتثبيته. حاول مرة أخرى لاحقًا.</string>
-    <string name="advice_signer_mismatch">الملف موقع بشهادة مختلفة عن تلك المثبتة لهذا التطبيق، لذا يرفض Stamp. إذا أعلن المطور عن مفتاح جديد، فاستبدل الشهادة المثبتة ضمن خيارات متقدمة.</string>
+    <string name="advice_signer_mismatch">الملف موقع بشهادة مختلفة عن تلك المثبتة لهذا التطبيق، لذا يرفض Tern. إذا أعلن المطور عن مفتاح جديد، فاستبدل الشهادة المثبتة ضمن خيارات متقدمة.</string>
     <string name="advice_signer_broken">التوقيعات في هذا الملف لا تتوافق مع بعضها. لا تقم بتثبيته، وأبلغ المطور.</string>
-    <string name="advice_signer_mismatch_installed">لا يستبدل Android تطبيقًا بآخر موقّع من قِبل شخص آخر، ولن يحاول Stamp القيام بذلك. إذا أعلن المطور عن مفتاح جديد، فيجب إزالة التطبيق وتثبيته مرة أخرى، مما سيؤدي إلى حذف بياناته.</string>
+    <string name="advice_signer_mismatch_installed">لا يستبدل Android تطبيقًا بآخر موقّع من قِبل شخص آخر، ولن يحاول Tern القيام بذلك. إذا أعلن المطور عن مفتاح جديد، فيجب إزالة التطبيق وتثبيته مرة أخرى، مما سيؤدي إلى حذف بياناته.</string>
     <string name="advice_package_mismatch">الملف عبارة عن تطبيق مختلف عن الذي تتابعه. تحقق من أنماط التضمين والاستبعاد ضمن اختيار الملف.</string>
     <string name="advice_downgrade">الإصدار المعروض أقدم من الإصدار المثبت، وAndroid لا يثبت إصدارًا أقدم فوق الأحدث. الرجوع يعني إزالة التطبيق أولاً، مما سيؤدي إلى حذف بياناته.</string>
     <string name="advice_install_failed">رفض Android التثبيت. السبب الذي قدمه موضح أعلاه.</string>
@@ -304,11 +304,11 @@
     </plurals>
     <string name="detail_gone">لم يعد هذا التطبيق في قائمتك.</string>
     <string name="moved_title">انتقل هذا المشروع إلى %1$s</string>
-    <string name="moved_explain">ينتقل Stamp فقط إذا كان العنوان الجديد يقدم نفس التطبيق موقعًا من نفس المطور.</string>
+    <string name="moved_explain">ينتقل Tern فقط إذا كان العنوان الجديد يقدم نفس التطبيق موقعًا من نفس المطور.</string>
     <string name="moved_follow">متابعته هناك</string>
     <string name="moved_keep">الاحتفاظ بالعنوان القديم</string>
     <string name="moved_working">جارٍ فحص العنوان الجديد</string>
-    <string name="moved_done">يتابع Stamp الآن العنوان الجديد.</string>
+    <string name="moved_done">يتابع Tern الآن العنوان الجديد.</string>
     <string name="silent_yes">يمكن تثبيت هذا التحديث بدون مطالبة.</string>
     <string name="silent_no">سيطلب منك Android تأكيد هذا التحديث.</string>
     <string name="phase_queued">في انتظار انتهاء التنزيلات الأخرى</string>
@@ -424,7 +424,7 @@
     <string name="settings_keep_installers">الاحتفاظ بالملفات المنزلة</string>
     <string name="settings_keep_installers_effect">تبقى الملفات بعد التثبيت، وتشغل مساحة التخزين. إيقاف التشغيل يحذفها.</string>
     <string name="settings_ownership">كن المُحَدِّث الوحيد</string>
-    <string name="settings_ownership_effect">اطلب من Android السماح لـ Stamp فقط بتحديث التطبيقات التي يثبتها، حتى لا يتمكن متجر آخر من تبديلها.</string>
+    <string name="settings_ownership_effect">اطلب من Android السماح لـ Tern فقط بتحديث التطبيقات التي يثبتها، حتى لا يتمكن متجر آخر من تبديلها.</string>
     <string name="settings_ownership_unsupported">يحتاج إلى Android 14 أو أحدث.</string>
     <string name="settings_tokens">رموز الوصول</string>
     <string name="settings_tokens_effect">يرفع الرمز الحد الأقصى للمعدل ويفتح المشاريع الخاصة. يتم إرساله فقط إلى المضيف الدقيق المحفوظ من أجله، ولا يتم عرضه مرة أخرى أبدًا.</string>
@@ -455,13 +455,13 @@
     <string name="theme_light">فاتح</string>
     <string name="theme_dark">داكن</string>
     <string name="settings_dynamic_color">ألوان من خلفيتك</string>
-    <string name="settings_dynamic_color_effect">إيقاف التشغيل يستخدم لون أزرق رمادي الخاص بـ Stamp.</string>
+    <string name="settings_dynamic_color_effect">إيقاف التشغيل يستخدم لون أزرق رمادي الخاص بـ Tern.</string>
     <string name="settings_dynamic_color_unsupported">يحتاج إلى Android 12 أو أحدث.</string>
     <string name="settings_pure_black">أسود نقي</string>
     <string name="settings_pure_black_effect">خلفيات سوداء في السمة الداكنة، أسهل على شاشات OLED.</string>
     <string name="settings_data">الاستيراد والتصدير</string>
     <string name="settings_import">استيراد التطبيقات</string>
-    <string name="settings_import_effect">من تصدير Stamp أو Obtainium</string>
+    <string name="settings_import_effect">من تصدير Tern أو Obtainium</string>
     <string name="settings_export">تصدير التطبيقات</string>
     <string name="settings_exporting">جارٍ التصدير</string>
     <string name="settings_export_effect">يحفظ قائمتك وإعداداتك في ملف. لا يتم تضمين الرموز أبدًا.</string>
@@ -475,14 +475,14 @@
     </plurals>
     <string name="export_failed">تعذر كتابة التصدير.</string>
     <string name="settings_obtainium_links">فتح روابط Obtainium</string>
-    <string name="settings_obtainium_links_effect">الروابط المخصصة لـ Obtainium تُفتح في Stamp بدلاً من ذلك. ما زلت بحاجة لتأكيد كل تطبيق.</string>
+    <string name="settings_obtainium_links_effect">الروابط المخصصة لـ Obtainium تُفتح في Tern بدلاً من ذلك. ما زلت بحاجة لتأكيد كل تطبيق.</string>
     <string name="settings_about">حول</string>
     <string name="about_version">الإصدار</string>
     <string name="about_licence">الترخيص</string>
     <string name="about_licence_name">رخصة جنو العمومية، الإصدار 3 أو أحدث</string>
     <string name="about_source">كود المصدر</string>
     <string name="import_title">استيراد التطبيقات</string>
-    <string name="import_explain">اختر ملف تصدير من Stamp أو Obtainium. لن يتم تثبيت أي شيء؛ تُضاف التطبيقات إلى قائمتك وتُفحص.</string>
+    <string name="import_explain">اختر ملف تصدير من Tern أو Obtainium. لن يتم تثبيت أي شيء؛ تُضاف التطبيقات إلى قائمتك وتُفحص.</string>
     <string name="import_pick">اختر ملفًا</string>
     <string name="import_pick_other">اختر ملفًا آخر</string>
     <string name="import_working">جارٍ قراءة الملف</string>
@@ -563,19 +563,19 @@
     <string name="import_stars_stop">إيقاف</string>
     <string name="import_skip_no_file">لا شيء في إصداراته يمكن تثبيته على هذا الجهاز.</string>
     <string name="import_skip_no_releases">إنه لا ينشر أي إصدارات.</string>
-    <string name="import_skip_not_found">لم يتمكن Stamp من العثور عليه.</string>
-    <string name="import_skip_rate_limited">طلب GitHub من Stamp الانتظار. حاول مرة أخرى لاحقًا.</string>
+    <string name="import_skip_not_found">لم يتمكن Tern من العثور عليه.</string>
+    <string name="import_skip_rate_limited">طلب GitHub من Tern الانتظار. حاول مرة أخرى لاحقًا.</string>
     <string name="import_skip_network">فشل الاتصال.</string>
-    <string name="import_skip_other">لم يتمكن Stamp من قراءة إصداراته.</string>
-    <string name="first_title">Stamp</string>
-    <string name="first_line_1">يقوم Stamp بتثبيت وتحديث التطبيقات مباشرة من حيث ينشرها مطوروها.</string>
-    <string name="first_line_2">قبل أن يرى Android أي ملف، يتحقق Stamp من هوية موقعه وما إذا كان يتطابق مع المجموع الاختباري للناشر.</string>
+    <string name="import_skip_other">لم يتمكن Tern من قراءة إصداراته.</string>
+    <string name="first_title">Tern</string>
+    <string name="first_line_1">يقوم Tern بتثبيت وتحديث التطبيقات مباشرة من حيث ينشرها مطوروها.</string>
+    <string name="first_line_2">قبل أن يرى Android أي ملف، يتحقق Tern من هوية موقعه وما إذا كان يتطابق مع المجموع الاختباري للناشر.</string>
     <string name="first_line_3">كل ما يجده ويفعله يُكتب في سجل النشاط، بكلمات واضحة.</string>
-    <string name="first_notify_explain">يمكن لـ Stamp إخبارك عندما تكون التحديثات جاهزة. سيطلب Android السماح بالإشعارات.</string>
+    <string name="first_notify_explain">يمكن لـ Tern إخبارك عندما تكون التحديثات جاهزة. سيطلب Android السماح بالإشعارات.</string>
     <string name="first_notify_denied">الإشعارات متوقفة. يمكنك تشغيلها لاحقًا في الإعدادات.</string>
     <string name="first_notify_allow">السماح بالإشعارات</string>
     <string name="first_skip">ليس الآن</string>
-    <string name="install_permission_title">السماح لـ Stamp بتثبيت التطبيقات</string>
-    <string name="install_permission_body">يسأل Android مرة واحدة قبل أن يتمكن تطبيق من تثبيت تطبيق آخر. في الشاشة التالية، قم بتشغيل المفتاح لـ Stamp، ثم عُد. سيستمر التثبيت تلقائيًا.</string>
+    <string name="install_permission_title">السماح لـ Tern بتثبيت التطبيقات</string>
+    <string name="install_permission_body">يسأل Android مرة واحدة قبل أن يتمكن تطبيق من تثبيت تطبيق آخر. في الشاشة التالية، قم بتشغيل المفتاح لـ Tern، ثم عُد. سيستمر التثبيت تلقائيًا.</string>
     <string name="install_permission_open">فتح الإعدادات</string>
 </resources>

@@ -68,7 +68,7 @@
     <string name="action_failed">Det fungerade inte. Försök igen om en stund.</string>
     <string name="save_failed">Ändringen sparades inte. Försök igen.</string>
     <string name="open_no_launcher">Denna app har ingen skärm att öppna</string>
-    <string name="offline_banner">Ingen internetanslutning. Stamp kontrollerar igen när den är tillbaka.</string>
+    <string name="offline_banner">Ingen internetanslutning. Tern kontrollerar igen när den är tillbaka.</string>
     <string name="offline_reason">Otillgänglig utan internetanslutning</string>
     <string name="apps_search_hint">Sök bland dina appar</string>
     <string name="filter_all">Alla</string>
@@ -107,7 +107,7 @@
         <item quantity="one">Kontrollera %d app nu?</item>
         <item quantity="other">Kontrollera %d appar nu?</item>
     </plurals>
-    <string name="bulk_check_text">Stamp frågar varje källa efter dess nyaste utgåva. Inget installeras.</string>
+    <string name="bulk_check_text">Tern frågar varje källa efter dess nyaste utgåva. Inget installeras.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">Uppdatera %d app?</item>
         <item quantity="other">Uppdatera %d appar?</item>
@@ -121,16 +121,16 @@
         <item quantity="one">Sluta följa %d app?</item>
         <item quantity="other">Sluta följa %d appar?</item>
     </plurals>
-    <string name="bulk_remove_text">Apparna förblir installerade. Stamp slutar bara kontrollera dem för uppdateringar.</string>
+    <string name="bulk_remove_text">Apparna förblir installerade. Tern slutar bara kontrollera dem för uppdateringar.</string>
     <string name="apps_empty_title">Inga appar än</string>
-    <string name="apps_empty_text">Klistra in en länk till en projektsida, en utgåvosida eller en lagringsplats för F-Droid, så håller Stamp appen uppdaterad därifrån.</string>
+    <string name="apps_empty_text">Klistra in en länk till en projektsida, en utgåvosida eller en lagringsplats för F-Droid, så håller Tern appen uppdaterad därifrån.</string>
     <string name="sort_title">Sortera</string>
     <string name="sort_name">Efter namn</string>
     <string name="sort_recently_checked">Senast kontrollerade</string>
     <string name="sort_source">Efter källa</string>
     <string name="remove_title">Ta bort %s?</string>
-    <string name="remove_text_installed">Stamp slutar följa den. Appen förblir installerad.</string>
-    <string name="remove_text">Stamp slutar följa den.</string>
+    <string name="remove_text_installed">Tern slutar följa den. Appen förblir installerad.</string>
+    <string name="remove_text">Tern slutar följa den.</string>
     <string name="add_title">Lägg till en app</string>
     <string name="add_field_label">Länk eller sökning</string>
     <string name="add_field_hint">https://github.com/owner/app</string>
@@ -198,8 +198,8 @@
     <string name="signer_unknown">Ingenting är känt om undertecknaren än. Det kontrolleras efter nedladdning.</string>
     <string name="signer_first_seen">Första installationen: detta certifikat kommer att sparas</string>
     <string name="signer_first_seen_claimed">Första installationen: filen påstår sig ha detta certifikat, och det kommer att sparas när Android bekräftar det</string>
-    <string name="signer_matches_pin">Signerad med det certifikat Stamp har för denna app</string>
-    <string name="signer_matches_pin_claimed">Filen påstår sig ha det certifikat Stamp har för denna app. Android bekräftar det innan installation.</string>
+    <string name="signer_matches_pin">Signerad med det certifikat Tern har för denna app</string>
+    <string name="signer_matches_pin_claimed">Filen påstår sig ha det certifikat Tern har för denna app. Android bekräftar det innan installation.</string>
     <string name="signer_matches_installed">Signerad av samma utvecklare som den installerade appen</string>
     <string name="signer_matches_installed_claimed">Filen påstår sig ha samma utvecklare som den installerade appen. Android bekräftar det innan installation.</string>
     <string name="signer_mismatch">Signerad av någon annan än den installerade appens utvecklare</string>
@@ -217,17 +217,17 @@
     <string name="fingerprint_copied">Fingeravtryck kopierat</string>
     <string name="checks_virustotal">Leta upp denna fil på VirusTotal</string>
     <string name="checks_virustotal_note">Endast filens fingeravtryck skickas, av din webbläsare, och en fil som ingen har laddat upp till VirusTotal kommer inte att hittas där.</string>
-    <string name="advice_network">Stamp kunde inte nå källan. Kontrollera din anslutning eller proxy, och försök sedan igen.</string>
+    <string name="advice_network">Tern kunde inte nå källan. Kontrollera din anslutning eller proxy, och försök sedan igen.</string>
     <string name="advice_rate_limited">Källan begränsar hur ofta den kan tillfrågas. En sparad åtkomsttoken för denna värd höjer gränsen.</string>
     <string name="advice_not_found">Projektet kan ha flyttats eller gjorts privat. Kontrollera att länken fortfarande öppnas i en webbläsare.</string>
     <string name="advice_auth">Källan nekade din åtkomsttoken. Byt ut den i Inställningar, under åtkomsttokens.</string>
-    <string name="advice_parse">Källan svarade med något Stamp inte kunde läsa. Det kan vara ett tillfälligt fel på deras sida.</string>
-    <string name="advice_no_releases">Projektet har inte publicerat någon utgåva som Stamp kan använda än. Förhandsutgåvor räknas om du slår på dem.</string>
+    <string name="advice_parse">Källan svarade med något Tern inte kunde läsa. Det kan vara ett tillfälligt fel på deras sida.</string>
+    <string name="advice_no_releases">Projektet har inte publicerat någon utgåva som Tern kan använda än. Förhandsutgåvor räknas om du slår på dem.</string>
     <string name="advice_no_file">Ingen av filerna passar denna enhet. Välj en själv under Filval, eller ändra inkluderings- och exkluderingsmönstren.</string>
     <string name="advice_checksum_mismatch">Filen ändrades efter att den publicerades eller skadades på vägen. Installera den inte. Försök igen senare.</string>
-    <string name="advice_signer_mismatch">Filen är signerad med ett annat certifikat än det som är fäst för denna app, så Stamp vägrar. Om utvecklaren meddelade en ny nyckel, byt ut det fästa certifikatet under Avancerat.</string>
+    <string name="advice_signer_mismatch">Filen är signerad med ett annat certifikat än det som är fäst för denna app, så Tern vägrar. Om utvecklaren meddelade en ny nyckel, byt ut det fästa certifikatet under Avancerat.</string>
     <string name="advice_signer_broken">Signaturerna i denna fil stämmer inte överens. Installera den inte, och meddela utvecklaren.</string>
-    <string name="advice_signer_mismatch_installed">Android ersätter inte en app med en som är signerad av någon annan, och Stamp kommer inte att försöka. Om utvecklaren meddelade en ny nyckel, måste appen tas bort och installeras igen, vilket raderar dess data.</string>
+    <string name="advice_signer_mismatch_installed">Android ersätter inte en app med en som är signerad av någon annan, och Tern kommer inte att försöka. Om utvecklaren meddelade en ny nyckel, måste appen tas bort och installeras igen, vilket raderar dess data.</string>
     <string name="advice_package_mismatch">Filen är en annan app än den du följer. Kontrollera inkluderings- och exkluderingsmönstren under Filval.</string>
     <string name="advice_downgrade">Den erbjudna versionen är äldre än den installerade, och Android installerar inte över en nyare version. Att gå tillbaka innebär att appen först måste tas bort, vilket raderar dess data.</string>
     <string name="advice_install_failed">Android nekade installationen. Anledningen den angav visas ovan.</string>
@@ -240,11 +240,11 @@
     </plurals>
     <string name="detail_gone">Denna app är inte längre i din lista.</string>
     <string name="moved_title">Detta projekt flyttade till %1$s</string>
-    <string name="moved_explain">Stamp byter bara om den nya adressen erbjuder samma app, signerad av samma utvecklare.</string>
+    <string name="moved_explain">Tern byter bara om den nya adressen erbjuder samma app, signerad av samma utvecklare.</string>
     <string name="moved_follow">Följ det dit</string>
     <string name="moved_keep">Behåll den gamla adressen</string>
     <string name="moved_working">Kontrollerar den nya adressen</string>
-    <string name="moved_done">Stamp följer nu den nya adressen.</string>
+    <string name="moved_done">Tern följer nu den nya adressen.</string>
     <string name="silent_yes">Denna uppdatering kan installeras utan bekräftelse.</string>
     <string name="silent_no">Android kommer be dig bekräfta denna uppdatering.</string>
     <string name="phase_queued">Väntar på att andra nedladdningar ska bli klara</string>
@@ -352,7 +352,7 @@
     <string name="settings_keep_installers">Behåll nedladdade filer</string>
     <string name="settings_keep_installers_effect">Filer blir kvar efter installation och använder lagringsutrymme. Av raderar dem.</string>
     <string name="settings_ownership">Var den enda uppdateraren</string>
-    <string name="settings_ownership_effect">Be Android att endast låta Stamp uppdatera apparna den installerar, så att en annan butik inte kan byta ut dem.</string>
+    <string name="settings_ownership_effect">Be Android att endast låta Tern uppdatera apparna den installerar, så att en annan butik inte kan byta ut dem.</string>
     <string name="settings_ownership_unsupported">Kräver Android 14 eller senare.</string>
     <string name="settings_tokens">Åtkomsttokens</string>
     <string name="settings_tokens_effect">En token höjer anropsgränserna och öppnar privata projekt. Den skickas bara till exakt den värd den sparats för, och den visas aldrig igen.</string>
@@ -383,13 +383,13 @@
     <string name="theme_light">Ljust</string>
     <string name="theme_dark">Mörkt</string>
     <string name="settings_dynamic_color">Färger från din bakgrundsbild</string>
-    <string name="settings_dynamic_color_effect">Av använder Stamps egen skifferblå färg.</string>
+    <string name="settings_dynamic_color_effect">Av använder Terns egen skifferblå färg.</string>
     <string name="settings_dynamic_color_unsupported">Kräver Android 12 eller senare.</string>
     <string name="settings_pure_black">Helt svart</string>
     <string name="settings_pure_black_effect">Svarta bakgrunder i det mörka temat, skonsammare för OLED-skärmar.</string>
     <string name="settings_data">Importera och exportera</string>
     <string name="settings_import">Importera appar</string>
-    <string name="settings_import_effect">Från en Stamp- eller Obtainium-export</string>
+    <string name="settings_import_effect">Från en Tern- eller Obtainium-export</string>
     <string name="settings_export">Exportera appar</string>
     <string name="settings_exporting">Exporterar</string>
     <string name="settings_export_effect">Sparar din lista och dina inställningar till en fil. Tokens inkluderas aldrig.</string>
@@ -399,14 +399,14 @@
     </plurals>
     <string name="export_failed">Exporten kunde inte skrivas.</string>
     <string name="settings_obtainium_links">Öppna Obtainium-länkar</string>
-    <string name="settings_obtainium_links_effect">Länkar avsedda för Obtainium öppnas i Stamp istället. Du bekräftar fortfarande varje app.</string>
+    <string name="settings_obtainium_links_effect">Länkar avsedda för Obtainium öppnas i Tern istället. Du bekräftar fortfarande varje app.</string>
     <string name="settings_about">Om</string>
     <string name="about_version">Version</string>
     <string name="about_licence">Licens</string>
     <string name="about_licence_name">GNU General Public License, version 3 eller senare</string>
     <string name="about_source">Källkod</string>
     <string name="import_title">Importera appar</string>
-    <string name="import_explain">Välj en exportfil från Stamp eller Obtainium. Ingenting installeras; apparna läggs till i din lista och kontrolleras.</string>
+    <string name="import_explain">Välj en exportfil från Tern eller Obtainium. Ingenting installeras; apparna läggs till i din lista och kontrolleras.</string>
     <string name="import_pick">Välj en fil</string>
     <string name="import_pick_other">Välj en annan fil</string>
     <string name="import_working">Läser filen</string>
@@ -459,19 +459,19 @@
     <string name="import_stars_stop">Stoppa</string>
     <string name="import_skip_no_file">Inget i dess utgåvor kan installeras på denna enhet.</string>
     <string name="import_skip_no_releases">Den publicerar inga utgåvor.</string>
-    <string name="import_skip_not_found">Stamp kunde inte hitta den.</string>
-    <string name="import_skip_rate_limited">GitHub bad Stamp att vänta. Försök igen med dessa senare.</string>
+    <string name="import_skip_not_found">Tern kunde inte hitta den.</string>
+    <string name="import_skip_rate_limited">GitHub bad Tern att vänta. Försök igen med dessa senare.</string>
     <string name="import_skip_network">Anslutningen misslyckades.</string>
-    <string name="import_skip_other">Stamp kunde inte läsa dess utgåvor.</string>
-    <string name="first_title">Stamp</string>
-    <string name="first_line_1">Stamp installerar och uppdaterar appar direkt från där deras utvecklare publicerar dem.</string>
-    <string name="first_line_2">Innan Android ser en fil, kontrollerar Stamp vem som signerat den och om den matchar utgivarens kontrollsumma.</string>
+    <string name="import_skip_other">Tern kunde inte läsa dess utgåvor.</string>
+    <string name="first_title">Tern</string>
+    <string name="first_line_1">Tern installerar och uppdaterar appar direkt från där deras utvecklare publicerar dem.</string>
+    <string name="first_line_2">Innan Android ser en fil, kontrollerar Tern vem som signerat den och om den matchar utgivarens kontrollsumma.</string>
     <string name="first_line_3">Allt den hittar och gör skrivs till aktivitetsloggen, med vanliga ord.</string>
-    <string name="first_notify_explain">Stamp kan berätta för dig när uppdateringar är klara. Android kommer fråga om du tillåter aviseringar.</string>
+    <string name="first_notify_explain">Tern kan berätta för dig när uppdateringar är klara. Android kommer fråga om du tillåter aviseringar.</string>
     <string name="first_notify_denied">Aviseringar är avstängda. Du kan slå på dem senare i Inställningar.</string>
     <string name="first_notify_allow">Tillåt aviseringar</string>
     <string name="first_skip">Inte nu</string>
-    <string name="install_permission_title">Tillåt Stamp att installera appar</string>
-    <string name="install_permission_body">Android frågar en gång innan en app får installera en annan. På nästa skärm, slå på reglaget för Stamp och kom sedan tillbaka. Installationen fortsätter av sig själv.</string>
+    <string name="install_permission_title">Tillåt Tern att installera appar</string>
+    <string name="install_permission_body">Android frågar en gång innan en app får installera en annan. På nästa skärm, slå på reglaget för Tern och kom sedan tillbaka. Installationen fortsätter av sig själv.</string>
     <string name="install_permission_open">Öppna inställningar</string>
 </resources>

@@ -10,9 +10,9 @@ Losing the key means nobody who installed Tern can ever be updated, so back
 it up before the first release.
 
 ```sh
-keytool -genkeypair -alias tern-release -keystore ~/keys/tern-release.jks \
+keytool -genkeypair -alias tern-upload -keystore ~/keys/tern-upload.jks \
   -keyalg RSA -keysize 4096 -validity 10950 -dname "CN=Munzzyy"
-secret-tool store --label "Tern release keystore" service tern-keystore key release
+secret-tool store --label "Tern upload keystore" service tern-keystore key upload
 ```
 
 ## Each release

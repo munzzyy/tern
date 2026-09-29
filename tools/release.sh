@@ -2,15 +2,15 @@
 # Builds and signs the release APK into dist/. Never run by CI.
 #
 # The keystore lives outside the repository and its password stays in the system keyring
-# (secret-tool lookup service tern-keystore key release); nothing here prints it.
+# (secret-tool lookup service tern-keystore key upload); nothing here prints it.
 #
 # apksigner comes from build-tools 34.0.0 on purpose: F-Droid's apksigcopier verifies and copies
 # signatures made by that version and rejects what newer build-tools emit.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-KEYSTORE="${TERN_KEYSTORE:-$HOME/keys/tern-release.jks}"
-ALIAS=tern-release
+KEYSTORE="${TERN_KEYSTORE:-$HOME/keys/tern-upload.jks}"
+ALIAS=tern-upload
 SDK="${ANDROID_HOME:-$HOME/Android/Sdk}"
 SIGN_TOOLS_VERSION=34.0.0
 APKSIGNER="$SDK/build-tools/$SIGN_TOOLS_VERSION/apksigner"
@@ -19,8 +19,8 @@ APKSIGNER="$SDK/build-tools/$SIGN_TOOLS_VERSION/apksigner"
 [ -x "$APKSIGNER" ] || { echo "build-tools $SIGN_TOOLS_VERSION is not installed"; exit 1; }
 [ -z "$(git status --porcelain)" ] || { echo "working tree is not clean"; exit 1; }
 
-KSPW=$(secret-tool lookup service tern-keystore key release) || {
-  echo "no keystore password in the keyring (service tern-keystore key release)"; exit 1;
+KSPW=$(secret-tool lookup service tern-keystore key upload) || {
+  echo "no keystore password in the keyring (service tern-keystore key upload)"; exit 1;
 }
 export KSPW
 

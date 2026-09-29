@@ -241,8 +241,7 @@ function start() {
 
   function say(where, text, good) {
     where.textContent = text;
-    where.className = good ? 'notice good' : 'notice bad';
-    where.hidden = !text;
+    where.className = !text ? '' : good ? 'notice good' : 'notice bad';
   }
 
   function busy(now) {
@@ -286,6 +285,8 @@ function start() {
       say(said, sender.getAttribute('data-no-answer'), false);
       busy(false);
     };
+    request.ontimeout = request.onerror;
+    request.timeout = 60000;
     busy(true);
     request.send('sealed=' + inBase64(seal(used, kind, nonce, plain)));
   }

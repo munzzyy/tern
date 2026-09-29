@@ -75,7 +75,8 @@ internal object Pages {
             "#code{font-family:monospace}" +
             "input[type=file]{display:block;max-width:100%;font:inherit}" +
             "button{font:inherit;margin-top:.75rem;padding:.6rem 1.2rem}" +
-            ".notice{padding:.75rem 1rem;border:2px solid;border-radius:.5rem}" +
+            "[role=status]{margin:0}" +
+            ".notice{margin:.75rem 0 0;padding:.75rem 1rem;border:2px solid;border-radius:.5rem}" +
             ".good{border-color:#2e7d32}" +
             ".bad{border-color:#c62828}" +
             ".small{font-size:.9rem}" +
@@ -117,7 +118,7 @@ internal object Pages {
                 " data-wrong-length=\"The code has ${Secrets.CODE_LENGTH} letters and digits. Type all of them.\">\n" +
                 "<label for=\"code\">Type the code that the other device shows.</label>\n" +
                 "<input type=\"text\" id=\"code\" autocomplete=\"off\" autocapitalize=\"none\" autocorrect=\"off\" spellcheck=\"false\">\n" +
-                "<p id=\"code-said\" role=\"status\" hidden></p>\n" +
+                "<p id=\"code-said\" role=\"status\"></p>\n" +
                 "</div>\n" +
                 "<form id=\"links-form\" data-most=\"${limits.links}\" data-longest=\"${limits.linkLength}\"" +
                 " data-none=\"${escape(Notice.NO_LINKS.text(limits))}\"" +
@@ -126,7 +127,7 @@ internal object Pages {
                 "<h2>Links</h2>\n" +
                 "<label for=\"links\">One link on each line, ${limits.links} at most.</label>\n" +
                 "<textarea id=\"links\" rows=\"6\" autocomplete=\"off\" autocapitalize=\"none\" autocorrect=\"off\" spellcheck=\"false\"></textarea>\n" +
-                "<p id=\"links-said\" role=\"status\" hidden></p>\n" +
+                "<p id=\"links-said\" role=\"status\"></p>\n" +
                 "<button type=\"submit\">Send the links</button>\n" +
                 "</form>\n" +
                 "<form id=\"file-form\" data-most=\"${limits.fileBytes}\" data-name=\"${Forms.MAX_NAME}\"" +
@@ -136,7 +137,7 @@ internal object Pages {
                 "<h2>A list of apps</h2>\n" +
                 "<label for=\"file\">A file exported from Stamp or Obtainium, ${size(limits.fileBytes)} at most.</label>\n" +
                 "<input type=\"file\" id=\"file\" accept=\".json,application/json\">\n" +
-                "<p id=\"file-said\" role=\"status\" hidden></p>\n" +
+                "<p id=\"file-said\" role=\"status\"></p>\n" +
                 "<button type=\"submit\">Send the file</button>\n" +
                 "</form>\n" +
                 "</div>\n" +

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- One line under the name of each app on the starter list. At most 50 characters, in any language. -->
+    <string name="suggest_jellyfin_tv">Watch what is on your Jellyfin server</string>
+    <string name="suggest_just_player">A video player for files and streams</string>
+    <string name="suggest_mpv">A video player built on mpv</string>
+    <string name="suggest_nova">Plays video from this device or the network</string>
+    <string name="suggest_material_files">Manage files on this device and on servers</string>
+    <string name="suggest_mullvad">The app for the Mullvad VPN service</string>
+    <string name="suggest_proton_vpn">The app for the Proton VPN service</string>
+    <string name="suggest_moonlight">Play games from your computer on this device</string>
+
+    <string name="suggest_fossify_gallery">A gallery for photos and videos</string>
+    <string name="suggest_breezy_weather">Weather forecasts from many sources</string>
+    <string name="suggest_fdroid">A catalogue of free and open source apps</string>
+    <string name="suggest_heliboard">A keyboard that has no network access</string>
+    <string name="suggest_obtainium">Gets app updates from their sources</string>
+    <string name="suggest_aegis">Keeps the codes for two-step sign-in</string>
+    <string name="suggest_keepassdx">A password manager for KeePass files</string>
+    <string name="suggest_koreader">Reads EPUB, PDF and other book formats</string>
+    <string name="suggest_element_x">Chat on the Matrix network</string>
+    <string name="suggest_fairemail">An email app for any provider</string>
+    <string name="suggest_tusky">A client for Mastodon</string>
+    <string name="suggest_organic_maps">Maps and navigation that work offline</string>
+    <string name="suggest_osmand">Offline maps, routing and track recording</string>
+
+    <!-- The four below are by the author of Stamp, and each line has to say so. -->
+    <string name="suggest_magpie">An encrypted incident journal, by Stamp\'s author</string>
+    <string name="suggest_sepia">Strips hidden data from photos, by Stamp\'s author</string>
+    <string name="suggest_sweep">A stalkerware checkup, by Stamp\'s author</string>
+    <string name="suggest_starling">Private location sharing, by Stamp\'s author</string>
+</resources>

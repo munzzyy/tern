@@ -1,5 +1,6 @@
 package io.github.munzzyy.jackdaw.ui.apps
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -85,9 +87,22 @@ fun AppsScreen(
     val actions = rememberActions()
     var text by rememberSaveable { mutableStateOf(query.text) }
     LaunchedEffect(text) { vm.setText(text) }
+    val selection by vm.selection.collectAsStateWithLifecycle()
+    val allRows by engine.apps.collectAsStateWithLifecycle()
+    val picked = remember(selection, allRows) { selection?.let { ids -> allRows.filter { it.id in ids } }.orEmpty() }
+    var pending by rememberSaveable { mutableStateOf<BulkAction?>(null) }
+    BackHandler(enabled = selection != null) { vm.stopSelecting() }
 
     Scaffold(
         topBar = {
+            if (selection != null) {
+                SelectionTopBar(
+                    count = picked.size,
+                    onClose = vm::stopSelecting,
+                    onSelectAll = { vm.selectAll(state.sections.updates.map { it.id } + state.sections.others.map { it.id }) },
+                )
+                return@Scaffold
+            }
             TopAppBar(
                 title = { Text(stringResource(R.string.tab_apps)) },
                 actions = {
@@ -99,9 +114,11 @@ fun AppsScreen(
                     ) {
                         Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.action_check_all))
                     }
+                    if (state.total > 0) ScreenMenu(onSelect = { vm.startSelecting() })
                 },
             )
         },
+        bottomBar = { if (selection != null) BulkBar(picked) { pending = it } },
         snackbarHost = { SnackbarHost(LocalSnackbar.current) },
     ) { padding ->
         Column(
@@ -130,10 +147,28 @@ fun AppsScreen(
                         onOpen = onOpen,
                         onUpdateAll = { engine.installAllUpdates() },
                         listState = listState,
+                        selection = selection,
+                        onSelect = { id -> if (selection == null) vm.startSelecting(id) else vm.toggle(id) },
                     )
                 }
                 if (checking) LinearProgressIndicator(Modifier.fillMaxWidth().align(Alignment.TopCenter))
             }
+        }
+    }
+    pending?.let { action ->
+        BulkDialog(action, picked, state.categories, engine, actions, onDismiss = { pending = null }, onDone = vm::stopSelecting)
+    }
+}
+
+@Composable
+private fun ScreenMenu(onSelect: () -> Unit) {
+    var open by remember { mutableStateOf(false) }
+    Box {
+        IconButton(onClick = { open = true }) {
+            Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.action_more))
+        }
+        DropdownMenu(expanded = open, onDismissRequest = { open = false }) {
+            DropdownMenuItem(text = { Text(stringResource(R.string.action_select)) }, onClick = { open = false; onSelect() })
         }
     }
 }
@@ -149,6 +184,8 @@ private fun AppList(
     onOpen: (String) -> Unit,
     onUpdateAll: () -> Unit,
     listState: LazyListState,
+    selection: Set<String>?,
+    onSelect: (String) -> Unit,
 ) {
     val sections = state.sections
     LazyColumn(state = listState, contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize().testTag(APP_LIST_TAG)) {
@@ -168,13 +205,13 @@ private fun AppList(
             item(key = "h-updates", contentType = "header") {
                 UpdatesHeader(sections.updates.size, state.updatable, onUpdateAll)
             }
-            rows(sections.updates, selectedId, onOpen)
+            rows(sections.updates, selectedId, onOpen, selection, onSelect)
         }
         if (sections.others.isNotEmpty()) {
             if (sections.updates.isNotEmpty()) {
                 item(key = "h-others", contentType = "header") { ListHeader(stringResource(R.string.apps_section_others)) }
             }
-            rows(sections.others, selectedId, onOpen)
+            rows(sections.others, selectedId, onOpen, selection, onSelect)
         }
     }
 }
@@ -183,9 +220,18 @@ private fun androidx.compose.foundation.lazy.LazyListScope.rows(
     rows: List<AppRow>,
     selectedId: String?,
     onOpen: (String) -> Unit,
+    selection: Set<String>?,
+    onSelect: (String) -> Unit,
 ) {
     items(rows, key = { it.id }, contentType = { "row" }) { row ->
-        AppRowItem(row, selected = row.id == selectedId, onOpen = { onOpen(row.id) })
+        AppRowItem(
+            row,
+            selected = row.id == selectedId,
+            onOpen = { onOpen(row.id) },
+            selecting = selection != null,
+            checked = selection?.contains(row.id) == true,
+            onSelect = { onSelect(row.id) },
+        )
     }
 }
 

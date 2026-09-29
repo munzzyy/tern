@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 
 data class AppsState(
     val loaded: Boolean = false,
@@ -48,5 +49,26 @@ class AppsViewModel(engine: Engine) : ViewModel() {
 
     fun setSort(sort: AppSort) {
         _query.value = _query.value.copy(sort = sort)
+    }
+
+    private val _selection = MutableStateFlow<Set<String>?>(null)
+
+    /** Ids picked for a bulk action; null while not selecting. */
+    val selection: StateFlow<Set<String>?> = _selection.asStateFlow()
+
+    fun startSelecting(first: String? = null) {
+        _selection.value = setOfNotNull(first)
+    }
+
+    fun toggle(id: String) {
+        _selection.update { s -> s?.let { if (id in it) it - id else it + id } }
+    }
+
+    fun selectAll(ids: Collection<String>) {
+        _selection.update { s -> s?.plus(ids) }
+    }
+
+    fun stopSelecting() {
+        _selection.value = null
     }
 }

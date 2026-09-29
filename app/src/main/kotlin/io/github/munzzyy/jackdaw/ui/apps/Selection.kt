@@ -1,0 +1,184 @@
+package io.github.munzzyy.jackdaw.ui.apps
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import io.github.munzzyy.jackdaw.R
+import io.github.munzzyy.jackdaw.engine.AppRow
+import io.github.munzzyy.jackdaw.engine.Engine
+import io.github.munzzyy.jackdaw.ui.LocalOnline
+import io.github.munzzyy.jackdaw.ui.common.Actions
+import io.github.munzzyy.jackdaw.ui.common.ConfirmDialog
+import io.github.munzzyy.jackdaw.ui.common.focusRing
+import io.github.munzzyy.jackdaw.ui.common.verticalKeysLeave
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+
+const val BULK_BAR_TAG = "bulk_bar"
+const val BULK_CATEGORY_FIELD_TAG = "bulk_category_field"
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SelectionTopBar(count: Int, onClose: () -> Unit, onSelectAll: () -> Unit) {
+    TopAppBar(
+        navigationIcon = {
+            IconButton(onClick = onClose) { Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.action_stop_selecting)) }
+        },
+        title = { Text(pluralStringResource(R.plurals.apps_selected, count, count), maxLines = 1, overflow = TextOverflow.Ellipsis) },
+        actions = { TextButton(onClick = onSelectAll) { Text(stringResource(R.string.action_select_all)) } },
+    )
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun BulkBar(picked: List<AppRow>, onAction: (BulkAction) -> Unit) {
+    val online = LocalOnline.current
+    val offline = stringResource(R.string.offline_reason)
+    Surface(tonalElevation = 3.dp, modifier = Modifier.fillMaxWidth().testTag(BULK_BAR_TAG)) {
+        if (picked.isEmpty()) {
+            Text(stringResource(R.string.apps_select_hint), style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(16.dp))
+            return@Surface
+        }
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp), modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)) {
+            TextButton(onClick = { onAction(BulkAction.CATEGORY) }) { Text(stringResource(R.string.action_add_to_category)) }
+            val netState = if (online) Modifier else Modifier.semantics { stateDescription = offline }
+            TextButton(onClick = { onAction(BulkAction.CHECK) }, enabled = online, modifier = netState) { Text(stringResource(R.string.action_check_now)) }
+            TextButton(
+                onClick = { onAction(BulkAction.UPDATE) },
+                enabled = online && touched(BulkAction.UPDATE, picked).isNotEmpty(),
+                modifier = netState,
+            ) { Text(stringResource(R.string.action_update)) }
+            TextButton(onClick = { onAction(BulkAction.REMOVE) }) {
+                Text(stringResource(R.string.action_remove), color = MaterialTheme.colorScheme.error)
+            }
+        }
+    }
+}
+
+/** The confirmation for [action], naming how many apps it touches; [onDone] runs once the user agrees. */
+@Composable
+fun BulkDialog(action: BulkAction, picked: List<AppRow>, categories: List<String>, engine: Engine, actions: Actions, onDismiss: () -> Unit, onDone: () -> Unit) {
+    val touched = touched(action, picked)
+    val n = touched.size
+    when (action) {
+        BulkAction.CATEGORY -> CategoryDialog(n, categories, onDismiss) { name ->
+            val chosen = canonicalCategory(name, categories)
+            actions.run { for (row in touched) engine.save(withCategory(row.config, chosen)) }
+            onDone()
+        }
+        BulkAction.CHECK -> ConfirmDialog(
+            title = pluralStringResource(R.plurals.bulk_check_title, n, n),
+            text = stringResource(R.string.bulk_check_text),
+            confirm = stringResource(R.string.action_check_now),
+            onConfirm = {
+                actions.run { coroutineScope { touched.map { async { engine.check(it.id) } }.awaitAll() } }
+                onDone()
+            },
+            onDismiss = onDismiss,
+        )
+        BulkAction.UPDATE -> {
+            val left = picked.size - n
+            val text = stringResource(R.string.bulk_update_text) +
+                if (left > 0) " " + pluralStringResource(R.plurals.bulk_update_left, left, left) else ""
+            ConfirmDialog(
+                title = pluralStringResource(R.plurals.bulk_update_title, n, n),
+                text = text,
+                confirm = stringResource(R.string.action_update),
+                onConfirm = {
+                    touched.forEach { engine.install(it.id) }
+                    onDone()
+                },
+                onDismiss = onDismiss,
+            )
+        }
+        BulkAction.REMOVE -> ConfirmDialog(
+            title = pluralStringResource(R.plurals.bulk_remove_title, n, n),
+            text = stringResource(R.string.bulk_remove_text),
+            confirm = stringResource(R.string.action_remove),
+            onConfirm = {
+                actions.run { for (row in touched) engine.remove(row.id) }
+                onDone()
+            },
+            onDismiss = onDismiss,
+        )
+    }
+}
+
+@Composable
+private fun CategoryDialog(count: Int, categories: List<String>, onDismiss: () -> Unit, onConfirm: (String) -> Unit) {
+    var text by rememberSaveable { mutableStateOf("") }
+    val clean = cleanCategory(text)
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(pluralStringResource(R.plurals.bulk_category_title, count, count)) },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedTextField(
+                    value = text,
+                    onValueChange = { text = it.take(MAX_CATEGORY) },
+                    singleLine = true,
+                    label = { Text(stringResource(R.string.bulk_category_field)) },
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    modifier = Modifier.fillMaxWidth().verticalKeysLeave().testTag(BULK_CATEGORY_FIELD_TAG),
+                )
+                if (categories.isNotEmpty()) {
+                    Text(stringResource(R.string.bulk_category_existing), style = MaterialTheme.typography.bodyMedium)
+                    for (category in categories) {
+                        Text(
+                            category,
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .heightIn(min = 48.dp)
+                                .focusRing()
+                                .selectable(selected = clean == category, role = Role.RadioButton, onClick = { text = category })
+                                .padding(vertical = 12.dp, horizontal = 4.dp),
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { clean?.let(onConfirm); onDismiss() }, enabled = clean != null) {
+                Text(stringResource(R.string.action_add_to_category))
+            }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) } },
+    )
+}

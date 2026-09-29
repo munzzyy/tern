@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalButton
@@ -39,6 +40,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import io.github.munzzyy.jackdaw.R
@@ -64,7 +66,15 @@ private const val STACK_FONT_SCALE = 1.5f
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AppRowItem(row: AppRow, selected: Boolean, onOpen: () -> Unit, modifier: Modifier = Modifier) {
+fun AppRowItem(
+    row: AppRow,
+    selected: Boolean,
+    onOpen: () -> Unit,
+    modifier: Modifier = Modifier,
+    selecting: Boolean = false,
+    checked: Boolean = false,
+    onSelect: () -> Unit = {},
+) {
     val engine = LocalEngine.current
     val actions = rememberActions()
     var menu by remember { mutableStateOf(false) }
@@ -92,10 +102,20 @@ fun AppRowItem(row: AppRow, selected: Boolean, onOpen: () -> Unit, modifier: Mod
     val labelCheck = stringResource(R.string.action_check_now)
     val labelSkip = stringResource(R.string.action_skip_version)
     val labelRemove = stringResource(R.string.action_remove)
+    val labelSelect = stringResource(R.string.action_select)
+    val labelToggle = stringResource(if (checked) R.string.action_deselect else R.string.action_select)
+    val pickedState = stringResource(if (checked) R.string.state_selected else R.string.state_not_selected)
     val labelAction = action?.let { stringResource(it.text) }
     val description = rowDescription(row)
 
-    val rowSemantics = Modifier.clearAndSetSemantics {
+    val rowSemantics = if (selecting) {
+        Modifier.clearAndSetSemantics {
+            contentDescription = description
+            this.selected = checked
+            stateDescription = pickedState
+            onClick(labelToggle) { onSelect(); true }
+        }
+    } else Modifier.clearAndSetSemantics {
         contentDescription = description
         this.selected = selected
         onClick(labelDetails) { onOpen(); true }
@@ -106,6 +126,7 @@ fun AppRowItem(row: AppRow, selected: Boolean, onOpen: () -> Unit, modifier: Mod
             add(CustomAccessibilityAction(labelDetails) { onOpen(); true })
             add(CustomAccessibilityAction(labelCheck) { checkNow(); true })
             if (canSkip(row)) add(CustomAccessibilityAction(labelSkip) { skip(); true })
+            add(CustomAccessibilityAction(labelSelect) { onSelect(); true })
             add(CustomAccessibilityAction(labelRemove) { confirmRemove = true; true })
         }
     }
@@ -128,6 +149,7 @@ fun AppRowItem(row: AppRow, selected: Boolean, onOpen: () -> Unit, modifier: Mod
                 if (canSkip(row)) {
                     DropdownMenuItem(text = { Text(labelSkip) }, onClick = { menu = false; skip() })
                 }
+                DropdownMenuItem(text = { Text(labelSelect) }, onClick = { menu = false; onSelect() })
                 DropdownMenuItem(
                     text = { Text(labelRemove, color = MaterialTheme.colorScheme.error) },
                     onClick = { menu = false; confirmRemove = true },
@@ -139,7 +161,7 @@ fun AppRowItem(row: AppRow, selected: Boolean, onOpen: () -> Unit, modifier: Mod
     Column(
         modifier
             .fillMaxWidth()
-            .background(if (selected) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent)
+            .background(if (selected || (selecting && checked)) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent)
             .then(rowSemantics)
             .padding(end = 4.dp),
     ) {
@@ -150,9 +172,14 @@ fun AppRowItem(row: AppRow, selected: Boolean, onOpen: () -> Unit, modifier: Mod
                     .weight(1f)
                     .heightIn(min = 72.dp)
                     .focusRing(RectangleShape)
-                    .combinedClickable(onClick = onOpen, onLongClick = { menu = true }, onLongClickLabel = stringResource(R.string.action_more))
+                    .combinedClickable(
+                        onClick = if (selecting) onSelect else onOpen,
+                        onLongClick = onSelect,
+                        onLongClickLabel = labelToggle,
+                    )
                     .padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
             ) {
+                if (selecting) Checkbox(checked = checked, onCheckedChange = null, modifier = Modifier.padding(end = 8.dp))
                 AppIcon(row)
                 RowText(
                     row,
@@ -161,10 +188,12 @@ fun AppRowItem(row: AppRow, selected: Boolean, onOpen: () -> Unit, modifier: Mod
                         .padding(start = 16.dp, end = 8.dp),
                 )
             }
-            if (!stacked) actionButton()
-            overflow()
+            if (!selecting) {
+                if (!stacked) actionButton()
+                overflow()
+            }
         }
-        if (stacked && action != null) {
+        if (stacked && action != null && !selecting) {
             Row(Modifier.padding(start = 72.dp, bottom = 8.dp)) { actionButton() }
         }
     }

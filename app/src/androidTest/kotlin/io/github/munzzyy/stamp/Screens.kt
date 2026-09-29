@@ -21,6 +21,8 @@ import androidx.test.core.app.ApplicationProvider
 import io.github.munzzyy.stamp.fake.FakeEngine
 import io.github.munzzyy.stamp.ui.EXTRA_SCENARIO
 import io.github.munzzyy.stamp.ui.apps.APP_LIST_TAG
+import io.github.munzzyy.stamp.ui.common.Kept
+import io.github.munzzyy.stamp.ui.common.PreferenceWishStore
 
 val appContext: Context get() = ApplicationProvider.getApplicationContext()
 
@@ -29,10 +31,15 @@ val fake: FakeEngine get() = appContext.engine as FakeEngine
 fun mainIntent(scenario: String): Intent =
     Intent(appContext, MainActivity::class.java).putExtra(EXTRA_SCENARIO, scenario)
 
-/** Loads a scenario with short delays so flows finish in seconds, then opens the app. */
-fun launch(scenario: String, intent: Intent = mainIntent(scenario)): ActivityScenario<MainActivity> {
+/**
+ * Loads a scenario with short delays so flows finish in seconds, then opens the app. [kept] is an
+ * install that was wanted before the app was closed; without it nothing is left from a test before.
+ */
+fun launch(scenario: String, intent: Intent = mainIntent(scenario), kept: Kept? = null): ActivityScenario<MainActivity> {
     fake.stepMs = 25
     fake.detectDelayMs = 150
+    val store = PreferenceWishStore(appContext)
+    if (kept == null) store.clear() else store.write(kept)
     return ActivityScenario.launch(intent)
 }
 
@@ -52,7 +59,7 @@ fun ComposeTestRule.shownRow(name: String): SemanticsNodeInteraction {
 
 fun ComposeTestRule.tagged(tag: String): SemanticsNodeInteraction = onNodeWithTag(tag)
 
-fun ComposeTestRule.textCount(text: String): Int = onAllNodesWithText(text).fetchSemanticsNodes().size
+fun ComposeTestRule.textCount(text: String, substring: Boolean = false): Int = onAllNodesWithText(text, substring = substring).fetchSemanticsNodes().size
 
 /** Like assertIsDisplayed, but a failure says where the node and the focus were, which is what a layout bug needs. */
 fun ComposeTestRule.assertShown(text: String) {

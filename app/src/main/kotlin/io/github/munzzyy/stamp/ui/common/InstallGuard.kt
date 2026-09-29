@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -192,6 +193,9 @@ class GuardedEngine(private val real: Engine, val guard: InstallGuard) : Engine 
     }
 }
 
+/** Android 11 closes an app when it is allowed to install others. Android 10 and 13 were measured and do not; 12 was not measured. */
+fun closesOnAllow(sdk: Int = Build.VERSION.SDK_INT): Boolean = sdk in Build.VERSION_CODES.R..Build.VERSION_CODES.S_V2
+
 /** Kept with the screens' own view models, which hold the guarded engine across a rotation. */
 class GuardHolder(engine: Engine, store: WishStore = WishStore.None) : ViewModel() {
     val guarded = GuardedEngine(engine, InstallGuard(engine::mayInstall, store))
@@ -208,7 +212,10 @@ fun InstallPermissionDialog(engine: GuardedEngine) {
         modifier = Modifier.focusHighlight(),
         onDismissRequest = guard::forget,
         title = { Text(stringResource(R.string.install_permission_title)) },
-        text = { Text(stringResource(R.string.install_permission_body)) },
+        text = {
+            val body = stringResource(R.string.install_permission_body)
+            Text(if (closesOnAllow()) body + "\n\n" + stringResource(R.string.install_permission_closes) else body)
+        },
         confirmButton = {
             TextButton(
                 modifier = Modifier.focusWhenShown(),

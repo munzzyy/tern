@@ -1,5 +1,6 @@
 package io.github.munzzyy.stamp
 
+import android.os.Build
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -10,6 +11,10 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
 import io.github.munzzyy.stamp.engine.AppStatus
+import io.github.munzzyy.stamp.ui.common.InstallGuard
+import io.github.munzzyy.stamp.ui.common.Kept
+import io.github.munzzyy.stamp.ui.common.PreferenceWishStore
+import io.github.munzzyy.stamp.ui.common.Wanted
 import io.github.munzzyy.stamp.ui.detail.DETAIL_PRIMARY_TAG
 import java.util.regex.Pattern
 import org.junit.After
@@ -90,6 +95,46 @@ class InstallPermissionTest {
             fake.installsAllowed = true
             compose.waitForIdle()
             assertNull(fake.apps.value.first { it.id == row.id }.progress)
+        }
+    }
+
+    @Test
+    fun whatWasWantedBeforeAndroidClosedTheAppStartsWhenItIsOpenedAgain() {
+        val id = launch("default").use { waiting().id }
+
+        launch("default", kept = Kept(listOf(Wanted.One(id)), System.currentTimeMillis() - 60_000)).use {
+            compose.waitUntil(10_000) { fake.apps.value.first { it.id == id }.let { it.progress != null || it.status == AppStatus.UP_TO_DATE } }
+            assertEquals(0, compose.textCount("Allow Stamp to install apps"))
+            assertNull("what was wanted is still written down", PreferenceWishStore(appContext).read())
+        }
+    }
+
+    @Test
+    fun whatWasWantedLongAgoStartsNothing() {
+        val id = launch("default").use { waiting().id }
+
+        launch("default", kept = Kept(listOf(Wanted.One(id)), System.currentTimeMillis() - InstallGuard.KEEP_MS - 60_000)).use {
+            compose.waitForText("Apps")
+            compose.waitForIdle()
+            Thread.sleep(1_000)
+            val row = fake.apps.value.first { it.id == id }
+            assertNull(row.progress)
+            assertEquals(AppStatus.UPDATE_AVAILABLE, row.status)
+        }
+    }
+
+    @Test
+    fun theQuestionSaysThatAndroidWillCloseTheAppOnlyWhereItDoes() {
+        launch("default").use {
+            val row = waiting()
+            fake.installsAllowed = false
+            compose.shownRow(row.config.name).performClick()
+            compose.tagged(DETAIL_PRIMARY_TAG).performClick()
+            compose.waitForText("Allow Stamp to install apps")
+
+            val said = compose.textCount("closes Stamp when you turn the switch on", substring = true)
+            assertEquals(if (Build.VERSION.SDK_INT in 30..32) 1 else 0, said)
+            compose.onNodeWithText("Not now").performClick()
         }
     }
 

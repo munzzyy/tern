@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -74,6 +75,7 @@ import io.github.munzzyy.stamp.ui.activity.ActivityScreen
 import io.github.munzzyy.stamp.ui.add.AddScreen
 import io.github.munzzyy.stamp.ui.common.GuardHolder
 import io.github.munzzyy.stamp.ui.common.InstallPermissionDialog
+import io.github.munzzyy.stamp.ui.common.PreferenceWishStore
 import io.github.munzzyy.stamp.ui.common.LocalNoTouch
 import io.github.munzzyy.stamp.ui.common.focusHighlight
 import io.github.munzzyy.stamp.ui.common.verticalFocusStaysInside
@@ -109,7 +111,8 @@ fun StampApp(
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val noTouch = remember(configuration) { context.lacksTouch() }
-    val guarded = viewModel(key = "install-guard") { GuardHolder(engine) }.guarded
+    val guarded = viewModel(key = "install-guard") { GuardHolder(engine, PreferenceWishStore(context)) }.guarded
+    LaunchedEffect(guarded) { guarded.start(guarded.guard.carriedOver()) }
     CompositionLocalProvider(
         LocalNoTouch provides noTouch,
         LocalEngine provides guarded,

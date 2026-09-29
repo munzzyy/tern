@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "name": {"de": "Beispiel", "en-US": "Example"},
+    "summary": {"en-US": "An example app"},
+    "icon": {
+      "de": {
+        "name": "/org.example.app/de/icon_ZGVfaWNvbl9maXh0dXJl-_8=.png",
+        "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+        "size": 2100
+      },
+      "en-US": {
+        "name": "/org.example.app/en-US/icon_ZW5faWNvbl9maXh0dXJl-_8=.png",
+        "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+        "size": 2000
+      }
+    }
+  },
+  "versions": {}
+}

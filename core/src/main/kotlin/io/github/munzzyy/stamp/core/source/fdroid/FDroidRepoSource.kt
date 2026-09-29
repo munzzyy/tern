@@ -66,10 +66,6 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         context.validators.put(key, Validator(timestamp.toString(), null))
     }
 
-    private fun insideRepository(name: String): Boolean =
-        name.startsWith("/") && !name.startsWith("//") && name.length <= 512 &&
-            name.split('/').none { it == ".." || it == "." } && name.none { it == '\\' || it == '?' || it == '#' || it.code < 0x20 }
-
     override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
 
     private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {
@@ -137,7 +133,7 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
                     name = localized(metadata?.obj("name")),
                     description = localized(metadata?.obj("summary")),
                     learnedOptions = learned,
-                ),
+                ).withIcons(spec.url, listOf(FDroidIcons.fromIndex(current, spec.url))),
             )
         }
 
@@ -161,7 +157,8 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
             throw SourceException(SourceErrorKind.PARSE, "index-v1.json is not valid JSON", cause = e)
         }
         refuseReplay(spec, context, root.obj("repo")?.long("timestamp"))
-        return CheckResult.Listing(SourceListing(releases = buildV1Releases(root, pkg, spec.url, context), packageName = pkg, learnedOptions = learned))
+        val listing = SourceListing(releases = buildV1Releases(root, pkg, spec.url, context), packageName = pkg, learnedOptions = learned)
+        return CheckResult.Listing(listing.withIcons(spec.url, listOf(FDroidIcons.fromFirstIndex(root, pkg, spec.url))))
     }
 
     private class SignedFile(val name: String, val sha256: String, val size: Long)
@@ -376,6 +373,11 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         private val SCHEME = Regex("^fdroidrepos?://", RegexOption.IGNORE_CASE)
     }
 }
+
+/** True for a file name that stays inside the repository it was read from. */
+internal fun insideRepository(name: String): Boolean =
+    name.startsWith("/") && !name.startsWith("//") && name.length <= 512 &&
+        name.split('/').none { it == ".." || it == "." } && name.none { it == '\\' || it == '?' || it == '#' || it.code < 0x20 }
 
 /** What one signed file said about the apps that were looked for in it. */
 private class Extract(val searched: Set<String>, val found: Map<String, JsonValue>)

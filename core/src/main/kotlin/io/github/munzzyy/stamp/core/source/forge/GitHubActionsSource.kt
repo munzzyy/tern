@@ -95,7 +95,8 @@ class GitHubActionsSource : Source {
             pageUrl = run.string("html_url"),
             assets = assets,
         )
-        return CheckResult.Listing(SourceListing(releases = listOf(release), name = repo, author = owner))
+        val listing = SourceListing(releases = listOf(release), name = repo, author = owner)
+        return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.gitHub(owner, repo)))
     }
 
     private fun mapArtifact(obj: JsonObject): Asset? {

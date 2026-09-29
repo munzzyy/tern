@@ -101,9 +101,8 @@ class GitLabSource : Source {
             if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $projectPath")
 
             context.validators.put(key, Validator.from(it.headers))
-            return CheckResult.Listing(
-                SourceListing(releases = releases, name = segments.last(), author = segments.dropLast(1).joinToString("/")),
-            )
+            val listing = SourceListing(releases = releases, name = segments.last(), author = segments.dropLast(1).joinToString("/"))
+            return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.gitLab(host, projectPath, context, token?.let { t -> "Bearer $t" })))
         }
     }
 

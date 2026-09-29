@@ -136,7 +136,8 @@ class GitHubSource : Source {
             remember(spec, context, pending)
 
             val movedTo = pending?.movedTo ?: movedTo(it.url, owner, repo, apiPath = true)
-            return CheckResult.Listing(SourceListing(releases = releases, name = repo, author = owner, movedTo = movedTo))
+            val listing = SourceListing(releases = releases, name = repo, author = owner, movedTo = movedTo)
+            return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.gitHub(owner, repo)))
         }
     }
 

@@ -1,0 +1,38 @@
+{
+  "repo": {
+    "timestamp": 1700000000000,
+    "version": 20000,
+    "name": "Example Repo",
+    "address": "https://example.com/fdroid/repo"
+  },
+  "apps": [
+    {
+      "packageName": "org.example.other",
+      "localized": {"en-US": {"icon": "icon_b3RoZXI=.png", "name": "Other"}}
+    },
+    {
+      "packageName": "org.example.app",
+      "localized": {
+        "de": {"name": "Beispiel"},
+        "en-US": {"icon": "icon_ZW5faWNvbl9maXh0dXJl-_8=.png", "name": "Example"}
+      }
+    },
+    {
+      "packageName": "org.example.plain",
+      "localized": {"en-US": {"name": "Plain"}}
+    },
+    {
+      "packageName": "org.example.german",
+      "localized": {"de": {"icon": "icon_ZGU=.png", "name": "Nur Deutsch"}}
+    },
+    {
+      "packageName": "org.example.escaping",
+      "localized": {"en-US": {"icon": "../../../other/icon.png", "name": "Escaping"}}
+    }
+  ],
+  "packages": {
+    "org.example.app": [
+      {"apkName": "org.example.app_12.apk", "packageName": "org.example.app", "versionCode": 12, "versionName": "1.2"}
+    ]
+  }
+}

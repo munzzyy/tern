@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "name": "app",
+  "path_with_namespace": "group/app",
+  "default_branch": "main",
+  "visibility": "public",
+  "web_url": "https://gitlab.com/group/app",
+  "avatar_url": "https://gitlab.com/uploads/-/system/project/avatar/1/launcher.png?v=1700000000",
+  "namespace": {
+    "kind": "group",
+    "path": "group",
+    "full_path": "group",
+    "avatar_url": "/uploads/-/system/group/avatar/2/group.png?v=1700000000",
+    "web_url": "https://gitlab.com/groups/group"
+  }
+}

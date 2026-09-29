@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "name": "app",
+  "full_name": "example/app",
+  "default_branch": "main",
+  "html_url": "https://codeberg.org/example/app",
+  "avatar_url": "",
+  "owner": {
+    "id": 2,
+    "login": "example",
+    "avatar_url": "https://codeberg.org/avatars/00112233445566778899aabbccddeeff"
+  }
+}

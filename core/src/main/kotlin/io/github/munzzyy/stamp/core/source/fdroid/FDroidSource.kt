@@ -67,7 +67,8 @@ class FDroidSource : Source {
                 )
             }.sortedByDescending { it.versionCode }.take(MAX_RELEASES)
             if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $pkg")
-            return CheckResult.Listing(SourceListing(releases = releases, packageName = packageName))
+            val listing = SourceListing(releases = releases, packageName = packageName)
+            return CheckResult.Listing(listing.withIcons(spec.url, listOf(FDroidIcons.byConvention(repoBase, packageName))))
         }
     }
 

@@ -105,7 +105,8 @@ class ForgejoSource : Source {
             if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $owner/$repo")
 
             context.validators.put(key, Validator.from(it.headers))
-            return CheckResult.Listing(SourceListing(releases = releases, name = repo, author = owner))
+            val listing = SourceListing(releases = releases, name = repo, author = owner)
+            return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.forgejo(host, owner, repo, context, token?.let { t -> "token $t" })))
         }
     }
 

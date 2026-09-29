@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "name": "app",
+  "path_with_namespace": "group/app",
+  "web_url": "https://gitlab.com/group/app",
+  "avatar_url": "https://pictures.example.net/launcher.png",
+  "namespace": {
+    "kind": "group",
+    "full_path": "group",
+    "avatar_url": "http://gitlab.com/uploads/-/system/group/avatar/2/group.png"
+  }
+}

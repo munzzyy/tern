@@ -1,5 +1,6 @@
 package io.github.munzzyy.stamp.core.source
 
+import io.github.munzzyy.stamp.core.icon.IconAddresses
 import io.github.munzzyy.stamp.core.model.DeviceProfile
 import io.github.munzzyy.stamp.core.model.Release
 import io.github.munzzyy.stamp.core.model.SourceSpec
@@ -36,7 +37,18 @@ data class SourceListing(
     val movedTo: String? = null,
     /** Options learned on first contact that the caller must store in the spec, such as a repository fingerprint. */
     val learnedOptions: Map<String, String> = emptyMap(),
-)
+    /** Addresses to try for the icon after [iconUrl], in order. */
+    val iconFallbacks: List<String> = emptyList(),
+) {
+    /** Every address the icon may be had at, the best first. */
+    val iconUrls: List<String> get() = listOfNotNull(iconUrl) + iconFallbacks
+
+    /** The same listing with the icon addresses of [candidates] that a source at [sourceUrl] may name. */
+    fun withIcons(sourceUrl: String, candidates: List<String?>): SourceListing {
+        val accepted = IconAddresses.accepted(sourceUrl, candidates)
+        return copy(iconUrl = accepted.firstOrNull(), iconFallbacks = accepted.drop(1))
+    }
+}
 
 sealed interface CheckResult {
     /** The source answered 304 or an identical feed: nothing changed since the stored validators. */

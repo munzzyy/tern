@@ -59,6 +59,9 @@ interface Engine {
     /** Releases from the last successful check, newest first. */
     suspend fun releases(appId: String): List<Release>
 
+    /** The release's notes, parsed for drawing. Empty when it has none. */
+    suspend fun notes(release: Release): List<NoteBlock>
+
     suspend fun saveSettings(settings: Settings)
 
     /** Stores a token for exactly [host]; null or blank removes it. */

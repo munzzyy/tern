@@ -60,41 +60,54 @@ fun FirstRunScreen(onAddFirst: () -> Unit, onSkip: () -> Unit) {
     }
     Surface(Modifier.fillMaxSize()) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(24.dp),
-            modifier = Modifier
+            Modifier
                 .safeDrawingPadding()
-                .verticalScroll(rememberScrollState())
-                .padding(24.dp)
+                .padding(horizontal = 24.dp)
                 .widthIn(max = 600.dp),
         ) {
-            Text(
-                stringResource(R.string.first_title),
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.semantics { heading() },
-            )
-            Line(Glyphs.Download, stringResource(R.string.first_line_1))
-            Line(Icons.Filled.CheckCircle, stringResource(R.string.first_line_2))
-            Line(Glyphs.Activity, stringResource(R.string.first_line_3))
-
-            if (!granted) {
-                Surface(color = MaterialTheme.colorScheme.surfaceContainerHigh, shape = MaterialTheme.shapes.large) {
-                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                        Line(Icons.Filled.Notifications, stringResource(if (asked) R.string.first_notify_denied else R.string.first_notify_explain))
-                        if (!asked) {
-                            OutlinedButton(onClick = { ask.launch(Manifest.permission.POST_NOTIFICATIONS) }) {
-                                Text(stringResource(R.string.first_notify_allow))
-                            }
-                        }
-                    }
+            Column(
+                verticalArrangement = Arrangement.spacedBy(24.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(vertical = 24.dp),
+            ) {
+                Text(
+                    stringResource(R.string.first_title),
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.semantics { heading() },
+                )
+                Line(Glyphs.Download, stringResource(R.string.first_line_1))
+                Line(Icons.Filled.CheckCircle, stringResource(R.string.first_line_2))
+                Line(Glyphs.Activity, stringResource(R.string.first_line_3))
+                if (!granted) {
+                    NotificationAsk(asked, onAsk = { ask.launch(Manifest.permission.POST_NOTIFICATIONS) })
                 }
             }
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+            ) {
                 Button(onClick = onAddFirst, modifier = Modifier.fillMaxWidth().testTag(FIRST_RUN_ADD_TAG)) {
                     Text(stringResource(R.string.action_add_first))
                 }
                 TextButton(onClick = onSkip, modifier = Modifier.align(Alignment.CenterHorizontally)) {
                     Text(stringResource(R.string.first_skip))
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun NotificationAsk(asked: Boolean, onAsk: () -> Unit) {
+    Surface(color = MaterialTheme.colorScheme.surfaceContainerHigh, shape = MaterialTheme.shapes.large) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Line(Icons.Filled.Notifications, stringResource(if (asked) R.string.first_notify_denied else R.string.first_notify_explain))
+            if (!asked) {
+                OutlinedButton(onClick = onAsk) { Text(stringResource(R.string.first_notify_allow)) }
             }
         }
     }

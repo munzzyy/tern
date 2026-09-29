@@ -46,6 +46,8 @@ class StatusTest {
         val row = testRow(status = AppStatus.BLOCKED, problem = Problem(ProblemKind.SIGNER_MISMATCH, "other signer"))
         assertEquals(RowAction.CHECK, primaryAction(row))
         assertNull(inlineAction(row))
+        assertFalse(canPickInstall(row))
+        assertTrue(canPickInstall(row.copy(status = AppStatus.UPDATE_AVAILABLE)))
     }
 
     @Test

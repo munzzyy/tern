@@ -90,6 +90,9 @@ fun primaryAction(row: AppRow): RowAction? = when {
 fun canSkip(row: AppRow): Boolean =
     row.latest != null && !isBusy(row) && (row.status == AppStatus.UPDATE_AVAILABLE || row.status == AppStatus.NEW_RELEASE)
 
+/** Installing a chosen version or file is offered only when nothing stops installs for this app. */
+fun canPickInstall(row: AppRow): Boolean = !row.config.trackOnly && !isBusy(row) && row.status != AppStatus.BLOCKED
+
 fun isUpdate(row: AppRow): Boolean = row.status == AppStatus.UPDATE_AVAILABLE || row.status == AppStatus.NEW_RELEASE
 
 fun canUpdateNow(row: AppRow): Boolean =

@@ -32,6 +32,7 @@ import io.github.munzzyy.jackdaw.engine.AppRow
 import io.github.munzzyy.jackdaw.engine.NoteBlock
 import io.github.munzzyy.jackdaw.ui.LocalEngine
 import io.github.munzzyy.jackdaw.ui.notes.NotesView
+import io.github.munzzyy.jackdaw.ui.text.canPickInstall
 import io.github.munzzyy.jackdaw.ui.text.formatDate
 import io.github.munzzyy.jackdaw.ui.text.isolate
 
@@ -110,7 +111,7 @@ private fun ReleaseEntry(vm: DetailViewModel, row: AppRow, release: Release) {
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), itemVerticalAlignment = Alignment.CenterVertically) {
             val isInstalled = row.installed?.versionName == release.version
-            val installable = !row.config.trackOnly && !isInstalled && release.installable.isNotEmpty() && row.progress == null
+            val installable = canPickInstall(row) && !isInstalled && release.installable.isNotEmpty()
             if (installable) {
                 val spoken = stringResource(R.string.action_install_version_spoken, release.version)
                 OutlinedButton(

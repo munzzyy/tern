@@ -47,6 +47,7 @@ import io.github.munzzyy.jackdaw.ui.common.SwitchRow
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
 import io.github.munzzyy.jackdaw.ui.common.verticalKeysLeave
 import io.github.munzzyy.jackdaw.ui.text.breakableFingerprint
+import io.github.munzzyy.jackdaw.ui.text.canPickInstall
 import io.github.munzzyy.jackdaw.ui.text.formatFingerprint
 
 private val MIN_AGE_CHOICES = listOf(0, 1, 3, 7, 14, 30)
@@ -145,7 +146,7 @@ private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
                         color = MaterialTheme.colorScheme.primary,
                     )
                     FileChoiceView(choice)
-                    if (index > 0 && !config.trackOnly && row.progress == null) {
+                    if (index > 0 && canPickInstall(row)) {
                         OutlinedButton(onClick = { engine.install(row.id, assetUrl = choice.asset.url) }) {
                             Text(stringResource(R.string.action_install_file))
                         }

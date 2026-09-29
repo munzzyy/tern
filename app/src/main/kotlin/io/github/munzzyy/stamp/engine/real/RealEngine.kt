@@ -482,7 +482,7 @@ class RealEngine(
 
     override suspend fun importReceived(file: Received.ExportFile): ImportSummary = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
 
-    override fun suggestions(): List<Suggestion> = emptyList()
+    override fun suggestions(): List<Suggestion> = Suggestions.list(device.profile.television, context::getString)
 
     override fun canOpenInstallSettings(): Boolean = device.canOpenInstallSettings()
 

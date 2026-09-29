@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">Dit apparaat bevindt zich niet in een lokaal netwerk, dus een telefoon kan het niet bereiken. Verbind dit apparaat met wifi of een netwerkkabel en probeer het opnieuw.</string>
+    <string name="engine_handoff_behind_vpn">Dit apparaat is verbonden via een VPN, dus een telefoon op het lokale netwerk kan het niet bereiken. Zet de VPN uit zolang je verzendt, en probeer het daarna opnieuw.</string>
+    <string name="engine_handoff_cannot_open">Dit apparaat kon geen pagina openen op het lokale netwerk: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">Dit apparaat kon geen pagina openen op het lokale netwerk.</string>
+    <string name="engine_handoff_not_on_screen">Tern moet op het scherm staan terwijl het links van een telefoon overneemt. Open Tern en probeer het opnieuw.</string>
+</resources>

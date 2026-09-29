@@ -88,7 +88,7 @@
     <plurals name="apps_selected">
         <item quantity="other">已选择 %d 个</item>
     </plurals>
-    <string name="apps_select_hint">点击应用以挑选。</string>
+    <string name="apps_select_hint">从列表中选择应用。</string>
     <string name="action_add_to_category">添加到分类</string>
     <plurals name="bulk_category_title">
         <item quantity="other">将 %d 个应用添加到分类</item>
@@ -113,13 +113,12 @@
         <item quantity="other">停止跟踪 %d 个应用？</item>
     </plurals>
     <string name="bulk_remove_text">这些应用仍会保留在设备上。Tern 只会停止检查它们的更新。</string>
-    <string name="apps_empty_title">暂无应用</string>
-    <string name="apps_empty_text">粘贴项目主页、发布页面或 F-Droid 存储库的链接，Tern 就会从那里保持应用的更新。</string>
+    <string name="apps_empty_title">暂无内容</string>
+    <string name="apps_empty_text">通过链接添加应用，或从多人使用的应用开始。</string>
     <string name="sort_title">排序</string>
     <string name="sort_name">按名称</string>
     <string name="sort_recently_checked">最近检查</string>
     <string name="sort_source">按来源</string>
-    <string name="remove_title">移除 %s？</string>
     <string name="remove_text_installed">Tern 将停止跟踪它。应用仍会保留在设备上。</string>
     <string name="remove_text">Tern 将停止跟踪它。</string>
     <string name="add_title">添加应用</string>
@@ -167,15 +166,14 @@
     <string name="carried_notes_none">跟踪所有发布，无论说明如何。</string>
     <string name="carried_version">使用 %1$s 从标签中读取版本。</string>
     <string name="carried_version_none">以常规方式读取版本。</string>
-    <string name="carried_match_device_on">提供多个文件时，首选为此手机构建的文件。</string>
-    <string name="carried_match_device_off">文件不限制为此手机的处理器。</string>
+    <string name="carried_match_device_on">提供多个文件时，优先选择为此设备构建的文件。</string>
+    <string name="carried_match_device_off">未将文件范围缩小至此设备的处理器。</string>
     <string name="carried_fallback_on">最新发布没有可用文件时，使用较旧的发布。</string>
     <string name="carried_fallback_off">从不使用较旧的发布，即使最新发布没有可用文件。</string>
     <string name="carried_track_on">仅跟踪发布；不下载也不安装。</string>
     <string name="carried_track_off">下载并安装发布，而不仅仅是跟踪。</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="other">此链接固定了这些证书，因此仅安装由它们签名的文件。它们是由他人选择的：只有在您信任链接来源时才添加。</item>
-    </plurals>
+    <string name="carried_pin_warning">此链接固定了这些证书，因此仅安装由它们签名的文件。它们是由他人选择的：只有在您信任链接来源时才添加。</string>
+    <string name="carried_pins_warning">此链接固定了这些证书，因此仅安装由它们签名的文件。它们是由他人选择的：只有在您信任链接来源时才添加。</string>
     <string name="checks_title">检查</string>
     <string name="checks_package">包名</string>
     <string name="checks_package_unknown">读取文件后才知晓</string>
@@ -274,7 +272,7 @@
     <string name="file_recommended">选项 %d，推荐</string>
     <string name="file_alternative">选项 %d</string>
     <string name="setting_match_device">匹配此设备</string>
-    <string name="setting_match_device_effect">提供多个文件时，首选为此手机处理器构建的文件。</string>
+    <string name="setting_match_device_effect">提供多个文件时，优先选择为此设备的处理器构建的文件。</string>
     <string name="setting_include">仅匹配文件</string>
     <string name="setting_include_help">文件名必须包含的模式，例如 universal</string>
     <string name="setting_exclude">跳过匹配文件</string>
@@ -335,7 +333,6 @@
     <string name="settings_keep_installers_effect">安装后保留文件，会占用存储空间。关闭则删除。</string>
     <string name="settings_ownership">成为唯一更新程序</string>
     <string name="settings_ownership_effect">请求 Android 仅允许 Tern 更新其安装的应用，防止其他商店替换。</string>
-    <string name="settings_ownership_unsupported">需要 Android 14 或更高版本。</string>
     <string name="settings_tokens">访问令牌</string>
     <string name="settings_tokens_effect">令牌可以提高速率限制并访问私人项目。它仅发送至其保存的具体主机，且不再显示。</string>
     <string name="token_saved">已保存</string>
@@ -364,9 +361,6 @@
     <string name="theme_system">跟随系统</string>
     <string name="theme_light">浅色</string>
     <string name="theme_dark">深色</string>
-    <string name="settings_dynamic_color">壁纸取色</string>
-    <string name="settings_dynamic_color_effect">关闭则使用 Tern 自带的石板蓝。</string>
-    <string name="settings_dynamic_color_unsupported">需要 Android 12 或更高版本。</string>
     <string name="settings_pure_black">纯黑</string>
     <string name="settings_pure_black_effect">深色主题使用黑色背景，在 OLED 屏幕上更护眼。</string>
     <string name="settings_data">导入与导出</string>
@@ -440,7 +434,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern 直接从开发者发布的地方安装和更新应用。</string>
     <string name="first_line_2">在 Android 处理文件之前，Tern 会检查签名者以及文件是否与发布者的校验和相符。</string>
-    <string name="first_line_3">它发现和处理的一切都会用清晰的语言记录在活动日志中。</string>
+    <string name="first_line_3">它发现和执行的所有内容均以通俗易懂的语言记录。</string>
     <string name="first_notify_explain">Tern 可以在更新准备就绪时通知您。Android 会询问是否允许通知。</string>
     <string name="first_notify_denied">通知已关闭。您稍后可在设置中开启。</string>
     <string name="first_notify_allow">允许通知</string>
@@ -448,4 +442,5 @@
     <string name="install_permission_title">允许 Tern 安装应用</string>
     <string name="install_permission_body">在允许一个应用安装另一个应用前，Android 会询问一次。在下个界面中，打开 Tern 的开关，然后返回。安装将自动继续。</string>
     <string name="install_permission_open">打开设置</string>
+    <string name="install_permission_closes">开启开关时，此版本的 Android 会关闭 Tern。之后再次打开 Tern，安装将继续进行。</string>
 </resources>

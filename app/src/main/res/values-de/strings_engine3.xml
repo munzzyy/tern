@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern bringt das Zertifikat mit, mit dem diese App signiert ist, und diese Datei ist mit einem anderen signiert. Sie könnte von jemand anderem stammen, daher wurde sie nicht installiert.</string>
+    <string name="engine_warn_built_in_pin">Tern bringt das Zertifikat mit, mit dem diese App signiert ist, und die angebotene Datei ist mit einem anderen signiert.</string>
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">ظاهر</string>
+    <string name="look_summary">پوسته، رنگ‌ها، تضاد، تراکم، گوشه‌ها و نمادها</string>
+    <string name="look_preview_spoken">پیش‌نمایش ظاهر همان‌طور که اکنون تنظیم شده است</string>
+    <string name="look_preview_app">برنامه نمونه</string>
+    <string name="look_colours">رنگ‌ها</string>
+    <string name="look_palette">رنگ</string>
+    <string name="look_wallpaper">تصویر زمینه</string>
+    <string name="palette_ink">جوهر</string>
+    <string name="palette_slate">اسلیت</string>
+    <string name="palette_tide">جزر و مد</string>
+    <string name="palette_moss">خزه</string>
+    <string name="palette_amber">کهربایی</string>
+    <string name="palette_clay">خاک رس</string>
+    <string name="palette_rose">رز</string>
+    <string name="palette_plum">آلویی</string>
+    <string name="look_hue">طیف رنگ دلخواه شما</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d درجه</item>
+        <item quantity="other">%1$d درجه</item>
+    </plurals>
+    <string name="look_contrast">تضاد</string>
+    <string name="contrast_standard">استاندارد</string>
+    <string name="contrast_medium">متوسط</string>
+    <string name="look_contrast_effect">تضاد بیشتر، متن و حاشیه‌ها را از پس‌زمینه آن‌ها متمایزتر می‌کند.</string>
+    <string name="look_shape_and_size">شکل و اندازه</string>
+    <string name="look_density">تراکم</string>
+    <string name="density_comfortable">راحت</string>
+    <string name="density_compact">فشرده</string>
+    <string name="look_density_effect">حالت فشرده موارد بیشتری را در صفحه جا می‌دهد. هیچ‌کدام از مواردی که لمس می‌کنید از نوک انگشت کوچکتر نمی‌شوند.</string>
+    <string name="look_corners">گوشه‌ها</string>
+    <string name="corners_round">گرد</string>
+    <string name="corners_soft">نرم</string>
+    <string name="corners_sharp">تیز</string>
+    <string name="look_icon_shape">شکل نماد</string>
+    <string name="icon_shape_circle">دایره</string>
+    <string name="icon_shape_squircle">مربع گرد</string>
+    <string name="icon_shape_square">مربع</string>
+    <string name="look_icons">نمادها</string>
+    <string name="look_source_icons">نمادها از منبع</string>
+    <string name="look_source_icons_effect">تا زمانی که برنامه‌ای نصب نشده است، Tern نماد آن را از محل انتشار برنامه دریافت می‌کند: مخزن یا لیست فروشگاه آن. در حالت خاموش، یک حرف روی یک رنگ کشیده می‌شود و از هیچ‌جا پرسیده نمی‌شود.</string>
+</resources>

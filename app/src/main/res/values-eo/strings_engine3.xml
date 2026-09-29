@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern tenas la atestilon per kiu ĉi tiu aplikaĵo estas subskribita, kaj ĉi tiu dosiero estas subskribita per alia. Ĝi povus veni de iu alia, do ĝi ne estis instalita.</string>
+    <string name="engine_warn_built_in_pin">Tern tenas la atestilon per kiu ĉi tiu aplikaĵo estas subskribita, kaj la ofertata dosiero estas subskribita per alia.</string>
+</resources>

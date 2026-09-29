@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">Ennek a csomagnak egy része nincs úgy aláírva, ahogy állítja, ezért semmi nem lett telepítve.</string>
+</resources>

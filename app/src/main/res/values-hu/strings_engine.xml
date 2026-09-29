@@ -26,6 +26,7 @@
     <string name="engine_downgrade">A telepített verzió (%1$s) újabb, mint ez a fájl (%2$s). Az Android csak akkor fogad el régebbi verziót, ha a telepített alkalmazást eltávolítják, és annak eltávolítása törli az adatokat.</string>
     <string name="engine_test_only">Ez a fájl egy teszt verzió, amelynek telepítését az Android elutasítja az alkalmazásboltokból.</string>
     <string name="engine_needs_newer_android">Ehhez a verzióhoz %1$d vagy újabb Android API szint szükséges.</string>
+    <string name="engine_proxy_silent">A proxy nem válaszolt, így semmi nem lett elküldve. A Tern soha nem kerüli meg.</string>
     <string name="engine_check_network">A forrás nem elérhető: %1$s</string>
     <string name="engine_check_not_found">A forrásnak már nincs semmije ezen a címen: %1$s</string>
     <string name="engine_check_auth">A forrás elutasította a kérést. Adja hozzá vagy ellenőrizze az oldalhoz tartozó tokent a beállításokban. (%1$s)</string>

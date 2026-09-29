@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">Ez az eszköz nincs helyi hálózaton, ezért egy telefon nem tudja elérni. Csatlakoztassa ezt az eszközt Wi-Fi-hez vagy hálózati kábelhez, majd próbálja újra.</string>
+    <string name="engine_handoff_behind_vpn">Ez az eszköz VPN-en keresztül csatlakozik, ezért a helyi hálózaton lévő telefon nem tudja elérni. Kapcsolja ki a VPN-t a küldés idejére, majd próbálja újra.</string>
+    <string name="engine_handoff_cannot_open">Ez az eszköz nem tudott megnyitni egy oldalt a helyi hálózaton: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">Ez az eszköz nem tudott megnyitni egy oldalt a helyi hálózaton.</string>
+    <string name="engine_handoff_not_on_screen">A Tern-nek a képernyőn kell lennie, miközben linkeket fogad egy telefontól. Nyissa meg a Tern-t, majd próbálja újra.</string>
+</resources>

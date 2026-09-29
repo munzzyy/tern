@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Uiterlijk</string>
+    <string name="look_summary">Thema, kleuren, contrast, dichtheid, hoeken en iconen</string>
+    <string name="look_preview_spoken">Voorbeeld van het uiterlijk zoals het nu is ingesteld</string>
+    <string name="look_preview_app">Voorbeeld-app</string>
+    <string name="look_colours">Kleuren</string>
+    <string name="look_palette">Kleur</string>
+    <string name="look_wallpaper">Achtergrond</string>
+    <string name="look_own">Eigen kleur</string>
+    <string name="palette_ink">Inkt</string>
+    <string name="palette_slate">Leisteen</string>
+    <string name="palette_tide">Getij</string>
+    <string name="palette_moss">Mos</string>
+    <string name="palette_amber">Amber</string>
+    <string name="palette_clay">Klei</string>
+    <string name="palette_rose">Roos</string>
+    <string name="palette_plum">Pruim</string>
+    <string name="look_hue">Tint van je eigen kleur</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d graad</item>
+        <item quantity="other">%1$d graden</item>
+    </plurals>
+    <string name="look_contrast">Contrast</string>
+    <string name="contrast_standard">Standaard</string>
+    <string name="contrast_medium">Medium</string>
+    <string name="contrast_high">Hoog</string>
+    <string name="look_contrast_effect">Meer contrast zet tekst en contouren verder af van wat erachter ligt.</string>
+    <string name="look_shape_and_size">Vorm en grootte</string>
+    <string name="look_density">Dichtheid</string>
+    <string name="density_comfortable">Comfortabel</string>
+    <string name="density_compact">Compact</string>
+    <string name="look_density_effect">Compact past meer op het scherm. Niets dat je indrukt, wordt kleiner dan een vingertop.</string>
+    <string name="look_corners">Hoeken</string>
+    <string name="corners_round">Rond</string>
+    <string name="corners_soft">Zacht</string>
+    <string name="corners_sharp">Scherp</string>
+    <string name="look_icon_shape">Vorm van iconen</string>
+    <string name="icon_shape_circle">Cirkel</string>
+    <string name="icon_shape_squircle">Squircle</string>
+    <string name="icon_shape_square">Vierkant</string>
+    <string name="look_icons">Iconen</string>
+    <string name="look_source_icons">Iconen van de bron</string>
+    <string name="look_source_icons_effect">Zolang een app niet is geïnstalleerd, haalt Tern het icoon van de plek waar de app is gepubliceerd: de repository of de winkelvermelding van de app. Uit tekent een letter op een kleur en vraagt het aan niemand.</string>
+</resources>

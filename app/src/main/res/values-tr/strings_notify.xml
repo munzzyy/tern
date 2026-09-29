@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Bir yüklemeyi bitirmek için dokunun</string>
+    <string name="notify_downloading_plain">İndiriliyor</string>
+    <string name="settings_notify_names">Bildirimlerde uygulamaları adlandır</string>
+    <string name="settings_notify_names_help">Bir bildirim kilit ekranında okunabilir. Kapalı olduğunda Tern, kaç uygulama olduğunu söyler, hangileri olduğunu asla söylemez.</string>
+</resources>

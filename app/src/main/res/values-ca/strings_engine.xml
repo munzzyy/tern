@@ -26,6 +26,7 @@
     <string name="engine_downgrade">La versió instal·lada (%1$s) és més nova que aquest fitxer (%2$s). Android només accepta una versió més antiga un cop suprimida l\'aplicació instal·lada, i suprimir-la n\'esborra les dades.</string>
     <string name="engine_test_only">Aquest fitxer és una versió de prova, que Android rebutja instal·lar des d\'una botiga d\'aplicacions.</string>
     <string name="engine_needs_newer_android">Aquesta versió necessita un nivell d\'API d\'Android %1$d o superior.</string>
+    <string name="engine_proxy_silent">El proxy no ha respost, així que no s\'ha enviat res. Tern mai l\'esquiva.</string>
     <string name="engine_check_network">No s\'ha pogut contactar amb l\'origen: %1$s</string>
     <string name="engine_check_not_found">L\'origen ja no té res en aquesta adreça: %1$s</string>
     <string name="engine_check_auth">L\'origen ha rebutjat la petició. Afegeix o comprova el token per a aquest lloc a la configuració. (%1$s)</string>
@@ -88,17 +89,20 @@
     <string name="engine_channel_transfers">Baixades</string>
     <plurals name="engine_notify_updates_count">
         <item quantity="one">%1$d actualització disponible</item>
+        <item quantity="many">%1$d actualitzacions disponibles</item>
         <item quantity="other">%1$d actualitzacions disponibles</item>
     </plurals>
     <string name="engine_notify_update_one">Actualització disponible per a %1$s</string>
     <plurals name="engine_notify_installed_count">
         <item quantity="one">%1$d aplicació actualitzada</item>
+        <item quantity="many">%1$d aplicacions actualitzades</item>
         <item quantity="other">%1$d aplicacions actualitzades</item>
     </plurals>
     <string name="engine_notify_installed_one">S\'ha actualitzat %1$s</string>
     <string name="engine_notify_confirm">Toca per acabar d\'instal·lar %1$s</string>
     <plurals name="engine_notify_failures_count">
         <item quantity="one">%1$d aplicació no s\'ha pogut comprovar ni actualitzar</item>
+        <item quantity="many">%1$d aplicacions no s\'han pogut comprovar ni actualitzar</item>
         <item quantity="other">%1$d aplicacions no s\'han pogut comprovar ni actualitzar</item>
     </plurals>
     <string name="engine_notify_downloading">S\'està baixant %1$s</string>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">발견된 모든 릴리스에서 이 앱의 파일이 아닌 다른 앱의 파일만 제공했습니다.</string>
+</resources>

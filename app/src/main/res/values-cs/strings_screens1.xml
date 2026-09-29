@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">Zavřít hledání</string>
+    <string name="waiting_banner_one">%1$s čeká na vaše schválení</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d instalace čeká na vaše schválení</item>
+        <item quantity="few">%1$d instalace čekají na vaše schválení</item>
+        <item quantity="many">%1$d instalací čeká na vaše schválení</item>
+        <item quantity="other">%1$d instalací čeká na vaše schválení</item>
+    </plurals>
+    <string name="empty_add">Přidat aplikaci</string>
+    <string name="empty_well_known">Známé aplikace</string>
+    <string name="empty_handoff">Odeslat z telefonu</string>
+    <string name="removed_notice">Sledování %1$s ukončeno</string>
+    <string name="removed_undo">Zpět</string>
+    <string name="waiting_play_protect">Android, nebo Play Protect, se může zeptat ještě jednou. Jde o jejich vlastní kontrolu a neznamená to problém se souborem.</string>
+    <string name="prompt_always_asks">Toto zařízení se před instalací aktualizace vždy ptá.</string>
+    <string name="checks_passed">Tento soubor prošel všemi kontrolami</string>
+    <string name="explain_button">Co to znamená: %1$s</string>
+    <string name="explain_action">poslechnout si, co to znamená</string>
+    <string name="explain_close">Zavřít</string>
+    <string name="explain_signer_title">Podpisový certifikát</string>
+    <string name="explain_checksum_title">Kontrolní součet</string>
+    <string name="explain_permissions_title">Oprávnění</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Aktualizace bez ptaní</string>
+    <string name="explain_always_asks_title">Toto zařízení se vždy ptá</string>
+    <string name="explain_package">Každá aplikace pro Android má jedno jméno, které se nikdy nemění. Soubor nesoucí jiné jméno by byl jinou aplikací, ať už by se jmenoval jakkoli.</string>
+    <string name="explain_signer_installed">Vývojář podepisuje každé vydání klíčem, který drží pouze on. Tern porovná podpis tohoto souboru s aplikací v tomto zařízení a s certifikátem, který si zapamatoval při první instalaci. Soubor podepsaný kýmkoli jiným je odmítnut, i když pochází ze správné adresy.</string>
+    <string name="explain_signer_first">Zatím není s čím porovnávat. Soubor deklaruje, kdo ho podepsal, Android to při instalaci potvrdí a od té doby Tern udržuje každou aktualizaci u stejného certifikátu.</string>
+    <string name="explain_checksum_matched">Kontrolní součet je otisk samotného souboru. Vydavatel jeden poskytl a soubor, který Tern stáhl, má stejný, takže dorazil tak, jak byl vydán.</string>
+    <string name="explain_checksum_pending">Kontrolní součet je otisk samotného souboru. Vydavatel jeden poskytl a Tern ho porovná se souborem, jakmile se soubor stáhne.</string>
+    <string name="explain_checksum_mismatch">Kontrolní součet je otisk samotného souboru. Vydavatel jeden poskytl a soubor, který Tern stáhl, má jiný, takže to není soubor, který byl vydán.</string>
+    <string name="explain_checksum_none">Tento vydavatel neposkytuje žádný kontrolní součet. Podpis se stále kontroluje a z těchto dvou je tím silnějším.</string>
+    <string name="explain_permissions">Co tato verze žádá o povolení dělat, ale nainstalovaná verze o to nežádala.</string>
+    <string name="explain_virustotal">Otevře stránku pro tento konkrétní soubor na VirusTotal ve vašem prohlížeči. Tern tam nic neposílá.</string>
+    <string name="explain_silent">Android umožňuje aplikaci aktualizovat jinou bez ptaní, pokud ji daná aplikace nainstalovala a zařízení běží na Androidu 12 nebo novějším. Android se rozhoduje pokaždé.</string>
+    <string name="explain_always_asks">Toto zařízení používá Android %1$s, který se před každou instalací ptá. Tern stáhne a zkontroluje aktualizaci na pozadí a řekne vám, až bude připravená.</string>
+    <string name="activity_installed">Nainstalováno %1$s</string>
+    <string name="activity_installed_plain">Nainstalováno</string>
+    <string name="activity_updated">Aktualizováno na %1$s</string>
+    <string name="activity_updated_plain">Aktualizováno</string>
+    <string name="activity_update_waits">Aktualizace na %1$s čeká</string>
+    <string name="activity_update_waits_plain">Aktualizace čeká</string>
+    <string name="activity_install_waits">Instalace %1$s čeká</string>
+    <string name="activity_install_waits_plain">Instalace čeká</string>
+    <string name="activity_not_installed">Nebylo možné nainstalovat %1$s</string>
+    <string name="activity_not_installed_plain">Nebylo možné nainstalovat</string>
+    <string name="activity_blocked">Zablokováno %1$s</string>
+    <string name="activity_blocked_plain">Zablokováno</string>
+    <string name="activity_added">Přidáno</string>
+    <string name="activity_removed">Sledování ukončeno</string>
+    <string name="activity_check_failed">Kontrola selhala</string>
+    <string name="activity_steps_show">Ukázat kroky</string>
+    <string name="activity_steps_hide">Skrýt kroky</string>
+    <string name="first_well_known">Známé aplikace</string>
+</resources>

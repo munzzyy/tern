@@ -88,7 +88,7 @@
     <plurals name="apps_selected">
         <item quantity="other">%d dipilih</item>
     </plurals>
-    <string name="apps_select_hint">Ketuk aplikasi untuk memilihnya.</string>
+    <string name="apps_select_hint">Pilih aplikasi dari daftar.</string>
     <string name="action_add_to_category">Tambah ke kategori</string>
     <plurals name="bulk_category_title">
         <item quantity="other">Tambah %d aplikasi ke kategori</item>
@@ -113,13 +113,12 @@
         <item quantity="other">Berhenti mengikuti %d aplikasi?</item>
     </plurals>
     <string name="bulk_remove_text">Aplikasi tetap terinstal. Tern hanya berhenti memeriksanya untuk pembaruan.</string>
-    <string name="apps_empty_title">Belum ada aplikasi</string>
-    <string name="apps_empty_text">Tempel tautan ke halaman proyek, halaman rilis, atau repositori F-Droid, dan Tern akan terus memperbarui aplikasi dari sana.</string>
+    <string name="apps_empty_title">Belum ada apa pun di sini</string>
+    <string name="apps_empty_text">Tambahkan aplikasi melalui tautannya, atau mulai dengan aplikasi yang banyak digunakan orang.</string>
     <string name="sort_title">Urutkan</string>
     <string name="sort_name">Berdasarkan nama</string>
     <string name="sort_recently_checked">Baru saja diperiksa</string>
     <string name="sort_source">Berdasarkan sumber</string>
-    <string name="remove_title">Hapus %s?</string>
     <string name="remove_text_installed">Tern berhenti mengikutinya. Aplikasi tetap terinstal.</string>
     <string name="remove_text">Tern berhenti mengikutinya.</string>
     <string name="add_title">Tambah aplikasi</string>
@@ -167,12 +166,14 @@
     <string name="carried_notes_none">Rilis diikuti apa pun catatannya.</string>
     <string name="carried_version">Versi dibaca dari tag dengan %1$s.</string>
     <string name="carried_version_none">Versi dibaca dengan cara biasa.</string>
-    <string name="carried_match_device_on">Bila beberapa file ditawarkan, file yang dibuat untuk ponsel ini lebih disukai.</string>
-    <string name="carried_match_device_off">File tidak dipersempit ke prosesor ponsel ini.</string>
+    <string name="carried_match_device_on">Bila beberapa file ditawarkan, yang dibuat untuk perangkat ini yang diutamakan.</string>
+    <string name="carried_match_device_off">File tidak dipersempit untuk prosesor perangkat ini.</string>
     <string name="carried_fallback_on">Rilis yang lebih lama digunakan jika yang terbaru tidak memiliki file yang dapat digunakan.</string>
     <string name="carried_fallback_off">Rilis lama tidak pernah digunakan, meskipun rilis terbaru tidak memiliki file yang dapat digunakan.</string>
     <string name="carried_track_on">Rilis hanya diikuti; tidak ada yang diunduh atau diinstal.</string>
     <string name="carried_track_off">Rilis diunduh dan diinstal, tidak hanya diikuti.</string>
+    <string name="carried_pin_warning">Tautan ini menyematkan sertifikat-sertifikat ini, sehingga hanya file yang ditandatangani oleh mereka yang akan diinstal. Orang selain Anda yang memilihnya: tambahkan hanya jika Anda memercayai asal tautan tersebut.</string>
+    <string name="carried_pins_warning">Tautan ini menyematkan sertifikat-sertifikat ini, sehingga hanya file yang ditandatangani oleh mereka yang akan diinstal. Orang selain Anda yang memilihnya: tambahkan hanya jika Anda memercayai asal tautan tersebut.</string>
     <string name="checks_title">Pemeriksaan</string>
     <string name="checks_package">Nama paket</string>
     <string name="checks_package_unknown">Tidak diketahui hingga file dibaca</string>
@@ -271,7 +272,7 @@
     <string name="file_recommended">Pilihan %d, disarankan</string>
     <string name="file_alternative">Pilihan %d</string>
     <string name="setting_match_device">Sesuaikan perangkat ini</string>
-    <string name="setting_match_device_effect">Bila beberapa file ditawarkan, utamakan file yang dibuat untuk prosesor ponsel ini.</string>
+    <string name="setting_match_device_effect">Bila beberapa file ditawarkan, utamakan yang dibuat untuk prosesor perangkat ini.</string>
     <string name="setting_include">Hanya file yang cocok dengan</string>
     <string name="setting_include_help">Pola yang harus ada di nama file, misalnya universal</string>
     <string name="setting_exclude">Lewati file yang cocok dengan</string>
@@ -332,7 +333,6 @@
     <string name="settings_keep_installers_effect">File tetap ada setelah menginstal, menggunakan penyimpanan. Mati akan menghapusnya.</string>
     <string name="settings_ownership">Jadi satu-satunya pembaru</string>
     <string name="settings_ownership_effect">Minta Android agar hanya Tern yang memperbarui aplikasi yang diinstalnya, jadi toko lain tidak dapat menukarnya.</string>
-    <string name="settings_ownership_unsupported">Membutuhkan Android 14 atau yang lebih baru.</string>
     <string name="settings_tokens">Token akses</string>
     <string name="settings_tokens_effect">Token menaikkan batas frekuensi dan membuka proyek privat. Token ini hanya dikirim ke host persis tempat penyimpanannya, dan tidak akan pernah ditampilkan lagi.</string>
     <string name="token_saved">Disimpan</string>
@@ -361,9 +361,6 @@
     <string name="theme_system">Ikuti sistem</string>
     <string name="theme_light">Terang</string>
     <string name="theme_dark">Gelap</string>
-    <string name="settings_dynamic_color">Warna dari wallpaper Anda</string>
-    <string name="settings_dynamic_color_effect">Mati menggunakan biru batu tulis milik Tern.</string>
-    <string name="settings_dynamic_color_unsupported">Membutuhkan Android 12 atau yang lebih baru.</string>
     <string name="settings_pure_black">Hitam pekat</string>
     <string name="settings_pure_black_effect">Latar belakang hitam di tema gelap, lebih nyaman di layar OLED.</string>
     <string name="settings_data">Impor dan ekspor</string>
@@ -437,7 +434,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern menginstal dan memperbarui aplikasi langsung dari tempat pengembangnya menerbitkan aplikasi tersebut.</string>
     <string name="first_line_2">Sebelum Android melihat file, Tern memeriksa siapa yang menandatanganinya dan apakah itu cocok dengan checksum penerbit.</string>
-    <string name="first_line_3">Semua yang ditemukan dan dilakukannya ditulis di log aktivitas, dalam kata-kata yang sederhana.</string>
+    <string name="first_line_3">Semua yang ditemukan dan dilakukannya ditulis dengan kata-kata sederhana.</string>
     <string name="first_notify_explain">Tern dapat memberi tahu Anda saat pembaruan siap. Android akan bertanya apakah akan mengizinkan notifikasi.</string>
     <string name="first_notify_denied">Notifikasi dimatikan. Anda dapat menyalakannya nanti di Setelan.</string>
     <string name="first_notify_allow">Izinkan notifikasi</string>
@@ -445,4 +442,5 @@
     <string name="install_permission_title">Izinkan Tern menginstal aplikasi</string>
     <string name="install_permission_body">Android bertanya sekali sebelum satu aplikasi dapat menginstal aplikasi lain. Di layar berikutnya, nyalakan sakelar untuk Tern, lalu kembali. Proses instal akan berlanjut dengan sendirinya.</string>
     <string name="install_permission_open">Buka setelan</string>
+    <string name="install_permission_closes">Versi Android ini menutup Tern saat Anda menyalakan tombol. Buka Tern lagi setelah itu dan instal akan dilanjutkan.</string>
 </resources>

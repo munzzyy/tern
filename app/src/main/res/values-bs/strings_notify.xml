@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Dodirnite za završetak instalacije</string>
+    <string name="notify_downloading_plain">Preuzimanje</string>
+    <string name="settings_notify_names">Imenuj aplikacije u obavijestima</string>
+    <string name="settings_notify_names_help">Obavijest se može pročitati na zaključanom ekranu. Isključeno, Tern kaže koliko aplikacija i nikada koje.</string>
+</resources>

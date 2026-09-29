@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">Tutup pencarian</string>
+    <string name="waiting_banner_one">%1$s menunggu persetujuan Anda</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="other">%1$d instal menunggu persetujuan Anda</item>
+    </plurals>
+    <string name="empty_add">Tambah aplikasi</string>
+    <string name="empty_well_known">Aplikasi terkenal</string>
+    <string name="empty_handoff">Kirim dari ponsel</string>
+    <string name="removed_notice">Berhenti mengikuti %1$s</string>
+    <string name="removed_undo">Batal</string>
+    <string name="waiting_play_protect">Android, atau Play Protect, mungkin bertanya sekali lagi. Itu adalah pemeriksaannya sendiri dan bukan masalah pada file.</string>
+    <string name="prompt_always_asks">Perangkat ini selalu bertanya sebelum pembaruan diinstal.</string>
+    <string name="checks_passed">File ini lulus semua pemeriksaan</string>
+    <string name="explain_button">Artinya: %1$s</string>
+    <string name="explain_action">dengar artinya</string>
+    <string name="explain_close">Tutup</string>
+    <string name="explain_signer_title">Sertifikat penandatanganan</string>
+    <string name="explain_checksum_title">Checksum</string>
+    <string name="explain_permissions_title">Izin</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Pembaruan tanpa konfirmasi</string>
+    <string name="explain_always_asks_title">Perangkat ini selalu bertanya</string>
+    <string name="explain_package">Setiap aplikasi Android memiliki satu nama yang tidak pernah berubah. File yang membawa nama lain akan menjadi aplikasi yang berbeda, apa pun sebutannya.</string>
+    <string name="explain_signer_installed">Seorang pengembang menandatangani setiap rilis dengan kunci yang hanya dipegangnya. Tern membandingkan tanda tangan file ini dengan aplikasi di perangkat ini dan dengan sertifikat yang diingatnya saat instal pertama. File yang ditandatangani oleh orang lain akan ditolak, meskipun berasal dari alamat yang benar.</string>
+    <string name="explain_signer_first">Belum ada yang bisa dibandingkan. File tersebut menyebutkan siapa yang menandatanganinya, Android mengonfirmasinya saat menginstal, dan sejak saat itu Tern memegang setiap pembaruan pada sertifikat yang sama.</string>
+    <string name="explain_checksum_matched">Checksum adalah sidik jari dari file itu sendiri. Penerbit memberikan satu, dan file yang diunduh Tern memiliki checksum yang sama, jadi file tersebut tiba seperti saat diterbitkan.</string>
+    <string name="explain_checksum_pending">Checksum adalah sidik jari dari file itu sendiri. Penerbit memberikan satu, dan Tern membandingkannya dengan file segera setelah file diunduh.</string>
+    <string name="explain_checksum_mismatch">Checksum adalah sidik jari dari file itu sendiri. Penerbit memberikan satu, dan file yang diunduh Tern memiliki checksum lain, jadi ini bukan file yang diterbitkan.</string>
+    <string name="explain_checksum_none">Penerbit ini tidak memberikan checksum. Tanda tangan tetap diperiksa, dan ini adalah yang lebih kuat di antara keduanya.</string>
+    <string name="explain_permissions">Apa yang versi ini minta untuk diizinkan, yang tidak diminta oleh versi yang terinstal.</string>
+    <string name="explain_virustotal">Membuka halaman persis untuk file ini di VirusTotal di browser Anda. Tern tidak mengirim apa pun ke sana.</string>
+    <string name="explain_silent">Android mengizinkan aplikasi memperbarui aplikasi lain tanpa bertanya saat aplikasi tersebut menginstalnya dan perangkat menjalankan Android 12 atau yang lebih baru. Android memutuskan setiap kalinya.</string>
+    <string name="explain_always_asks">Perangkat ini menjalankan Android %1$s, yang selalu bertanya sebelum setiap instal. Tern mengunduh dan memeriksa pembaruan di latar belakang dan memberi tahu Anda saat siap.</string>
+    <string name="activity_installed">Terinstal %1$s</string>
+    <string name="activity_installed_plain">Terinstal</string>
+    <string name="activity_updated">Diperbarui ke %1$s</string>
+    <string name="activity_updated_plain">Diperbarui</string>
+    <string name="activity_update_waits">Pembaruan ke %1$s menunggu</string>
+    <string name="activity_update_waits_plain">Pembaruan menunggu</string>
+    <string name="activity_install_waits">Instal %1$s menunggu</string>
+    <string name="activity_install_waits_plain">Instal menunggu</string>
+    <string name="activity_not_installed">Tidak dapat menginstal %1$s</string>
+    <string name="activity_not_installed_plain">Tidak dapat menginstal</string>
+    <string name="activity_blocked">Diblokir %1$s</string>
+    <string name="activity_blocked_plain">Diblokir</string>
+    <string name="activity_added">Ditambahkan</string>
+    <string name="activity_removed">Berhenti mengikuti</string>
+    <string name="activity_check_failed">Pemeriksaan gagal</string>
+    <string name="activity_steps_show">Tampilkan langkah</string>
+    <string name="activity_steps_hide">Sembunyikan langkah</string>
+    <string name="first_well_known">Aplikasi terkenal</string>
+</resources>

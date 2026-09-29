@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Mira o que hai no teu servidor de Jellyfin</string>
+    <string name="suggest_just_player">Un reprodutor de vídeo para ficheiros e emisións</string>
+    <string name="suggest_mpv">Un reprodutor de vídeo baseado en mpv</string>
+    <string name="suggest_nova">Reproduce vídeo deste dispositivo ou da rede</string>
+    <string name="suggest_material_files">Xestiona ficheiros neste dispositivo e en servidores</string>
+    <string name="suggest_mullvad">A aplicación para o servizo VPN de Mullvad</string>
+    <string name="suggest_proton_vpn">A aplicación para o servizo VPN de Proton</string>
+    <string name="suggest_moonlight">Xoga a xogos do teu ordenador neste dispositivo</string>
+    <string name="suggest_fossify_gallery">Unha galería para fotos e vídeos</string>
+    <string name="suggest_breezy_weather">Previsións meteorolóxicas de moitas orixes</string>
+    <string name="suggest_fdroid">Un catálogo de aplicacións gratuítas e de código aberto</string>
+    <string name="suggest_heliboard">Un teclado que non ten acceso á rede</string>
+    <string name="suggest_obtainium">Obtén actualizacións de aplicacións desde as súas orixes</string>
+    <string name="suggest_aegis">Garda os códigos para o inicio de sesión en dous pasos</string>
+    <string name="suggest_keepassdx">Un xestor de contrasinais para ficheiros de KeePass</string>
+    <string name="suggest_koreader">Le EPUB, PDF e outros formatos de libros</string>
+    <string name="suggest_element_x">Chatea na rede Matrix</string>
+    <string name="suggest_fairemail">Unha aplicación de correo electrónico para calquera provedor</string>
+    <string name="suggest_tusky">Un cliente para Mastodon</string>
+    <string name="suggest_organic_maps">Mapas e navegación que funcionan sen conexión</string>
+    <string name="suggest_osmand">Mapas sen conexión, rutas e gravación de traxectos</string>
+    <string name="suggest_magpie">Un diario de incidencias cifrado, do autor de Tern</string>
+    <string name="suggest_sepia">Elimina os datos ocultos das fotos, do autor de Tern</string>
+    <string name="suggest_sweep">Unha comprobación de software de acoso, do autor de Tern</string>
+    <string name="suggest_starling">Compartir localización de forma privada, do autor de Tern</string>
+</resources>

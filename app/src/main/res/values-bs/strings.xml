@@ -94,7 +94,7 @@
         <item quantity="few">%d odabrane</item>
         <item quantity="other">%d odabranih</item>
     </plurals>
-    <string name="apps_select_hint">Dodirnite aplikacije da ih odaberete.</string>
+    <string name="apps_select_hint">Odaberite aplikacije sa spiska.</string>
     <string name="action_add_to_category">Dodaj u kategoriju</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Dodaj %d aplikaciju u kategoriju</item>
@@ -131,13 +131,12 @@
         <item quantity="other">Prestati pratiti %d aplikacija?</item>
     </plurals>
     <string name="bulk_remove_text">Aplikacije ostaju instalirane. Tern samo prestaje provjeravati njihova ažuriranja.</string>
-    <string name="apps_empty_title">Još nema aplikacija</string>
-    <string name="apps_empty_text">Zalijepite link na stranicu projekta, stranicu izdanja ili F-Droid repozitorij, i Tern će odatle održavati aplikaciju ažurnom.</string>
+    <string name="apps_empty_title">Ovdje još nema ničega</string>
+    <string name="apps_empty_text">Dodajte aplikaciju pomoću linka ili počnite s onom koju mnogi koriste.</string>
     <string name="sort_title">Sortiraj</string>
     <string name="sort_name">Po imenu</string>
     <string name="sort_recently_checked">Nedavno provjereno</string>
     <string name="sort_source">Po izvoru</string>
-    <string name="remove_title">Ukloniti %s?</string>
     <string name="remove_text_installed">Tern je prestaje pratiti. Aplikacija ostaje instalirana.</string>
     <string name="remove_text">Tern je prestaje pratiti.</string>
     <string name="add_title">Dodaj aplikaciju</string>
@@ -193,17 +192,14 @@
     <string name="carried_notes_none">Izdanja se prate bez obzira šta piše u bilješkama.</string>
     <string name="carried_version">Verzija se čita iz oznake pomoću %1$s.</string>
     <string name="carried_version_none">Verzija se čita na uobičajen način.</string>
-    <string name="carried_match_device_on">Kada je ponuđeno više datoteka, daje se prednost onoj napravljenoj za ovaj telefon.</string>
-    <string name="carried_match_device_off">Datoteke se ne sužavaju na procesor ovog telefona.</string>
+    <string name="carried_match_device_on">Kada se nudi više datoteka, prednost se daje onoj za ovaj uređaj.</string>
+    <string name="carried_match_device_off">Datoteke se ne sužavaju na procesor ovog uređaja.</string>
     <string name="carried_fallback_on">Koristi se starije izdanje kada najnovije nema upotrebljivu datoteku.</string>
     <string name="carried_fallback_off">Starija izdanja se nikada ne koriste, čak i kada najnovije nema upotrebljivu datoteku.</string>
     <string name="carried_track_on">Izdanja se samo prate; ništa se ne preuzima niti instalira.</string>
     <string name="carried_track_off">Izdanja se preuzimaju i instaliraju, a ne samo prate.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">Link prikvačuje ovaj certifikat, tako da će se instalirati samo datoteke koje je on potpisao. Neko drugi ga je odabrao: dodajte ga samo ako vjerujete izvoru linka.</item>
-        <item quantity="few">Link prikvačuje ove certifikate, tako da će se instalirati samo datoteke koje su oni potpisali. Neko drugi ih je odabrao: dodajte ih samo ako vjerujete izvoru linka.</item>
-        <item quantity="other">Link prikvačuje ove certifikate, tako da će se instalirati samo datoteke koje su oni potpisali. Neko drugi ih je odabrao: dodajte ih samo ako vjerujete izvoru linka.</item>
-    </plurals>
+    <string name="carried_pin_warning">Link prikvačuje ovaj certifikat, tako da će se instalirati samo datoteke koje je on potpisao. Neko drugi ga je odabrao: dodajte ga samo ako vjerujete izvoru linka.</string>
+    <string name="carried_pins_warning">Link prikvačuje ove certifikate, tako da će se instalirati samo datoteke koje su oni potpisali. Neko drugi ih je odabrao: dodajte ih samo ako vjerujete izvoru linka.</string>
     <string name="checks_title">Provjere</string>
     <string name="checks_package">Naziv paketa</string>
     <string name="checks_package_unknown">Nepoznato dok se datoteka ne pročita</string>
@@ -308,7 +304,7 @@
     <string name="file_recommended">Izbor %d, preporučeno</string>
     <string name="file_alternative">Izbor %d</string>
     <string name="setting_match_device">Prilagodi ovom uređaju</string>
-    <string name="setting_match_device_effect">Kada je ponuđeno više datoteka, daje se prednost onoj napravljenoj za procesor ovog telefona.</string>
+    <string name="setting_match_device_effect">Kada se nudi više datoteka, prednost se daje onoj za procesor ovog uređaja.</string>
     <string name="setting_include">Samo datoteke koje se podudaraju</string>
     <string name="setting_include_help">Obrazac koji naziv datoteke mora sadržavati, na primjer universal</string>
     <string name="setting_exclude">Preskoči datoteke koje se podudaraju</string>
@@ -371,7 +367,6 @@
     <string name="settings_keep_installers_effect">Datoteke ostaju nakon instalacije, trošeći prostor. Isključeno ih briše.</string>
     <string name="settings_ownership">Jedini alat za ažuriranje</string>
     <string name="settings_ownership_effect">Traži od Androida da dozvoli samo Ternu da ažurira aplikacije koje instalira, kako ih druga trgovina ne bi mogla zamijeniti.</string>
-    <string name="settings_ownership_unsupported">Potreban je Android 14 ili noviji.</string>
     <string name="settings_tokens">Pristupni tokeni</string>
     <string name="settings_tokens_effect">Token podiže ograničenja broja upita i otvara privatne projekte. Šalje se samo tačnom domaćinu za kojeg je sačuvan, i nikada se više ne prikazuje.</string>
     <string name="token_saved">Sačuvano</string>
@@ -400,9 +395,6 @@
     <string name="theme_system">Prati sistem</string>
     <string name="theme_light">Svijetla</string>
     <string name="theme_dark">Tamna</string>
-    <string name="settings_dynamic_color">Boje s vaše pozadine</string>
-    <string name="settings_dynamic_color_effect">Kada je isključeno koristi Ternovu sivo-plavu boju.</string>
-    <string name="settings_dynamic_color_unsupported">Potreban je Android 12 ili noviji.</string>
     <string name="settings_pure_black">Čisto crna</string>
     <string name="settings_pure_black_effect">Crne pozadine u tamnoj temi, ugodnije za OLED ekrane.</string>
     <string name="settings_data">Uvoz i izvoz</string>
@@ -492,7 +484,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern instalira i ažurira aplikacije pravo s mjesta gdje ih programeri objavljuju.</string>
     <string name="first_line_2">Prije nego što Android vidi datoteku, Tern provjerava ko ju je potpisao i da li se podudara s kontrolnim zbirom izdavača.</string>
-    <string name="first_line_3">Sve što nađe i uradi zapisuje se u dnevnik aktivnosti, jednostavnim riječima.</string>
+    <string name="first_line_3">Sve što pronađe i uradi zapisano je jednostavnim riječima.</string>
     <string name="first_notify_explain">Tern vas može obavijestiti kada su ažuriranja spremna. Android će pitati da li da dozvoli obavijesti.</string>
     <string name="first_notify_denied">Obavijesti su isključene. Možete ih kasnije uključiti u Postavkama.</string>
     <string name="first_notify_allow">Dozvoli obavijesti</string>
@@ -500,4 +492,5 @@
     <string name="install_permission_title">Dozvolite da Tern instalira aplikacije</string>
     <string name="install_permission_body">Android pita jednom prije nego što jedna aplikacija može instalirati drugu. Na sljedećem ekranu, uključite prekidač za Tern, a zatim se vratite. Instalacija se nastavlja sama.</string>
     <string name="install_permission_open">Otvorite postavke</string>
+    <string name="install_permission_closes">Ova verzija Androida zatvara Tern kada uključite prekidač. Ponovo otvorite Tern nakon toga i instalacija se nastavlja.</string>
 </resources>

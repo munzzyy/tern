@@ -91,7 +91,7 @@
         <item quantity="one">%d seleccionada</item>
         <item quantity="other">%d seleccionadas</item>
     </plurals>
-    <string name="apps_select_hint">Toca as aplicacións para escollelas.</string>
+    <string name="apps_select_hint">Escolle aplicacións da lista.</string>
     <string name="action_add_to_category">Engadir á categoría</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Engadir %d aplicación a unha categoría</item>
@@ -122,13 +122,12 @@
         <item quantity="other">Deixar de seguir %d aplicacións?</item>
     </plurals>
     <string name="bulk_remove_text">As aplicacións seguen instaladas. Tern só deixa de comprobar as súas actualizacións.</string>
-    <string name="apps_empty_title">Aínda non hai aplicacións</string>
-    <string name="apps_empty_text">Pega unha ligazón a unha páxina de proxecto, a unha páxina de lanzamento ou a un repositorio de F-Droid, e Tern manterá a aplicación ao día desde aí.</string>
+    <string name="apps_empty_title">Aínda non hai nada aquí</string>
+    <string name="apps_empty_text">Engade unha aplicación pola súa ligazón ou comeza cunha que use moita xente.</string>
     <string name="sort_title">Ordenar</string>
     <string name="sort_name">Por nome</string>
     <string name="sort_recently_checked">Comprobado recentemente</string>
     <string name="sort_source">Por orixe</string>
-    <string name="remove_title">Eliminar %s?</string>
     <string name="remove_text_installed">Tern deixará de seguila. A aplicación seguirá instalada.</string>
     <string name="remove_text">Tern deixará de seguila.</string>
     <string name="add_title">Engadir unha aplicación</string>
@@ -180,16 +179,14 @@
     <string name="carried_notes_none">Ségunse os lanzamentos sen importar o que digan as notas.</string>
     <string name="carried_version">A versión lese da etiqueta con %1$s.</string>
     <string name="carried_version_none">A versión lese do xeito habitual.</string>
-    <string name="carried_match_device_on">Cando se ofrecen varios ficheiros, prefírese o construído para este teléfono.</string>
-    <string name="carried_match_device_off">Os ficheiros non se limitan ao procesador deste teléfono.</string>
+    <string name="carried_match_device_on">Cando se ofrecen varios ficheiros, prefírese o creado para este dispositivo.</string>
+    <string name="carried_match_device_off">Os ficheiros non se limitan ao procesador deste dispositivo.</string>
     <string name="carried_fallback_on">Úsase un lanzamento máis antigo cando o máis novo non ten un ficheiro utilizable.</string>
     <string name="carried_fallback_off">Nunca se usan lanzamentos máis antigos, aínda que o máis novo non teña un ficheiro utilizable.</string>
     <string name="carried_track_on">Só se seguen os lanzamentos; non se descarga nin se instala nada.</string>
     <string name="carried_track_off">Os lanzamentos descárganse e instálanse, non só se seguen.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">A ligazón fixa este certificado, polo que só se instalarán os ficheiros que asinou. Alguén distinto a ti escolleuno: engádeo só se confías na procedencia da ligazón.</item>
-        <item quantity="other">A ligazón fixa estes certificados, polo que só se instalarán os ficheiros que asinaron. Alguén distinto a ti escolleunos: engádeos só se confías na procedencia da ligazón.</item>
-    </plurals>
+    <string name="carried_pin_warning">A ligazón fixa este certificado, polo que só se instalarán os ficheiros que asinou. Alguén distinto a ti escolleuno: engádeo só se confías na procedencia da ligazón.</string>
+    <string name="carried_pins_warning">A ligazón fixa estes certificados, polo que só se instalarán os ficheiros que asinaron. Alguén distinto a ti escolleunos: engádeos só se confías na procedencia da ligazón.</string>
     <string name="checks_title">Comprobacións</string>
     <string name="checks_package">Nome do paquete</string>
     <string name="checks_package_unknown">Descoñecido ata que se lea o ficheiro</string>
@@ -291,7 +288,7 @@
     <string name="file_recommended">Escolla %d, recomendada</string>
     <string name="file_alternative">Escolla %d</string>
     <string name="setting_match_device">Coincidir con este dispositivo</string>
-    <string name="setting_match_device_effect">Cando se ofrecen varios ficheiros, preferir o construído para o procesador deste teléfono.</string>
+    <string name="setting_match_device_effect">Cando se ofrezan varios ficheiros, preferir o creado para o procesador deste dispositivo.</string>
     <string name="setting_include">Só ficheiros que coincidan con</string>
     <string name="setting_include_help">Un patrón que debe conter o nome do ficheiro, por exemplo universal</string>
     <string name="setting_exclude">Omitir ficheiros que coincidan con</string>
@@ -334,7 +331,7 @@
     <string name="settings_interval">Con que frecuencia</string>
     <string name="interval_off">Desactivadas</string>
     <plurals name="interval_hours">
-        <item quantity="one">Cada hora</item>
+        <item quantity="one">Cada %d hora</item>
         <item quantity="other">Cada %d horas</item>
     </plurals>
     <string name="settings_unmetered">Só en redes sen límite</string>
@@ -353,7 +350,6 @@
     <string name="settings_keep_installers_effect">Os ficheiros quedan despois de instalar, usando espazo. Desactivado elimínaos.</string>
     <string name="settings_ownership">Ser o único actualizador</string>
     <string name="settings_ownership_effect">Pedirlle a Android que deixe que só Tern actualice as aplicacións que instala, para que outra tenda non as poida cambiar.</string>
-    <string name="settings_ownership_unsupported">Precisa Android 14 ou posterior.</string>
     <string name="settings_tokens">Tokens de acceso</string>
     <string name="settings_tokens_effect">Un token aumenta os límites de frecuencia e abre proxectos privados. Envíaselle só ao servidor exacto para o que se garda, e nunca se amosa de novo.</string>
     <string name="token_saved">Gardado</string>
@@ -382,9 +378,6 @@
     <string name="theme_system">Seguir o sistema</string>
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Escuro</string>
-    <string name="settings_dynamic_color">Cores do teu fondo de pantalla</string>
-    <string name="settings_dynamic_color_effect">Desactivado usa o azul lousa propio de Tern.</string>
-    <string name="settings_dynamic_color_unsupported">Precisa Android 12 ou posterior.</string>
     <string name="settings_pure_black">Negro puro</string>
     <string name="settings_pure_black_effect">Fondos negros no tema escuro, máis suave para pantallas OLED.</string>
     <string name="settings_data">Importar e exportar</string>
@@ -466,7 +459,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern instala e actualiza as aplicacións directamente desde onde as publican os seus desenvolvedores.</string>
     <string name="first_line_2">Antes de que Android vexa un ficheiro, Tern comproba quen o asinou e se coincide coa suma de comprobación do editor.</string>
-    <string name="first_line_3">Todo o que atopa e fai gárdase no rexistro de actividade, con palabras sinxelas.</string>
+    <string name="first_line_3">Todo o que atopa e fai escríbese con palabras sinxelas.</string>
     <string name="first_notify_explain">Tern pódeche avisar cando haxa actualizacións listas. Android preguntarache se permites as notificacións.</string>
     <string name="first_notify_denied">As notificacións están desactivadas. Podes activalas máis tarde en Axustes.</string>
     <string name="first_notify_allow">Permitir notificacións</string>
@@ -474,4 +467,5 @@
     <string name="install_permission_title">Permitir a Tern instalar aplicacións</string>
     <string name="install_permission_body">Android pregunta unha vez antes de que unha aplicación poida instalar outra. Na seguinte pantalla, activa o interruptor para Tern e logo volve. A instalación continuará por si soa.</string>
     <string name="install_permission_open">Abrir axustes</string>
+    <string name="install_permission_closes">Esta versión de Android pecha Tern cando activas o interruptor. Abre Tern de novo despois e a instalación continuará.</string>
 </resources>

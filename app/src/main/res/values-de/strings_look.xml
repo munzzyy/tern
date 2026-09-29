@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Aussehen</string>
+    <string name="look_summary">Design, Farben, Kontrast, Dichte, Ecken und Icons</string>
+    <string name="look_preview_spoken">Vorschau des aktuell eingestellten Aussehens</string>
+    <string name="look_preview_app">Beispiel-App</string>
+    <string name="look_colours">Farben</string>
+    <string name="look_palette">Farbe</string>
+    <string name="look_wallpaper">Hintergrundbild</string>
+    <string name="look_own">Eigene Farbe</string>
+    <string name="palette_ink">Tinte</string>
+    <string name="palette_slate">Schiefer</string>
+    <string name="palette_tide">Gezeiten</string>
+    <string name="palette_moss">Moos</string>
+    <string name="palette_amber">Bernstein</string>
+    <string name="palette_clay">Ton</string>
+    <string name="palette_rose">Rose</string>
+    <string name="palette_plum">Pflaume</string>
+    <string name="look_hue">Farbton deiner eigenen Farbe</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d Grad</item>
+        <item quantity="other">%1$d Grad</item>
+    </plurals>
+    <string name="look_contrast">Kontrast</string>
+    <string name="contrast_standard">Standard</string>
+    <string name="contrast_medium">Mittel</string>
+    <string name="contrast_high">Hoch</string>
+    <string name="look_contrast_effect">Mehr Kontrast hebt Text und Umrisse stärker von ihrem Hintergrund ab.</string>
+    <string name="look_shape_and_size">Form und Größe</string>
+    <string name="look_density">Dichte</string>
+    <string name="density_comfortable">Bequem</string>
+    <string name="density_compact">Kompakt</string>
+    <string name="look_density_effect">Kompakt passt mehr auf den Bildschirm. Nichts, was du drückst, wird kleiner als eine Fingerspitze.</string>
+    <string name="look_corners">Ecken</string>
+    <string name="corners_round">Rund</string>
+    <string name="corners_soft">Weich</string>
+    <string name="corners_sharp">Scharf</string>
+    <string name="look_icon_shape">Icon-Form</string>
+    <string name="icon_shape_circle">Kreis</string>
+    <string name="icon_shape_squircle">Squircle</string>
+    <string name="icon_shape_square">Quadrat</string>
+    <string name="look_icons">Icons</string>
+    <string name="look_source_icons">Icons von der Quelle</string>
+    <string name="look_source_icons_effect">Solange eine App nicht installiert ist, holt Tern ihr Icon von dort, wo die App veröffentlicht wird: ihrem Repository oder ihrem Store-Eintrag. Wenn aus, wird ein Buchstabe auf farbigem Hintergrund gezeichnet und niemand angefragt.</string>
+</resources>

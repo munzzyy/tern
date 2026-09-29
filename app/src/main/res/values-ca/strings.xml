@@ -6,6 +6,7 @@
     <string name="tab_settings">Configuració</string>
     <plurals name="tab_updates_badge">
         <item quantity="one">%d actualització</item>
+        <item quantity="many">%d actualitzacions</item>
         <item quantity="other">%d actualitzacions</item>
     </plurals>
     <string name="pane_nothing_selected">Tria una aplicació per veure\'n els detalls</string>
@@ -77,6 +78,7 @@
     <string name="filter_not_installed">No instal·lades</string>
     <plurals name="apps_section_updates">
         <item quantity="one">%d actualització</item>
+        <item quantity="many">%d actualitzacions</item>
         <item quantity="other">%d actualitzacions</item>
     </plurals>
     <string name="apps_section_others">Tota la resta</string>
@@ -89,46 +91,52 @@
     <string name="state_not_selected">No seleccionat</string>
     <plurals name="apps_selected">
         <item quantity="one">%d seleccionada</item>
+        <item quantity="many">%d seleccionades</item>
         <item quantity="other">%d seleccionades</item>
     </plurals>
-    <string name="apps_select_hint">Toca les aplicacions per triar-les.</string>
+    <string name="apps_select_hint">Tria aplicacions de la llista.</string>
     <string name="action_add_to_category">Afegeix a una categoria</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Afegeix %d aplicació a una categoria</item>
+        <item quantity="many">Afegeix %d aplicacions a una categoria</item>
         <item quantity="other">Afegeix %d aplicacions a una categoria</item>
     </plurals>
     <string name="bulk_category_field">Categoria</string>
     <plurals name="bulk_category_done">
         <item quantity="one">S\'ha arxivat %1$d aplicació a %2$s.</item>
+        <item quantity="many">S\'han arxivat %1$d aplicacions a %2$s.</item>
         <item quantity="other">S\'han arxivat %1$d aplicacions a %2$s.</item>
     </plurals>
     <string name="bulk_category_existing">O tria\'n una que ja usis:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Vols comprovar %d aplicació ara?</item>
+        <item quantity="many">Vols comprovar %d aplicacions ara?</item>
         <item quantity="other">Vols comprovar %d aplicacions ara?</item>
     </plurals>
     <string name="bulk_check_text">Tern demana a cada origen el seu llançament més nou. No s\'instal·la res.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">Vols actualitzar %d aplicació?</item>
+        <item quantity="many">Vols actualitzar %d aplicacions?</item>
         <item quantity="other">Vols actualitzar %d aplicacions?</item>
     </plurals>
     <string name="bulk_update_text">Cada fitxer es baixa i es comprova abans de demanar a Android que l\'instal·li.</string>
     <plurals name="bulk_update_left">
         <item quantity="one">%d de les aplicacions triades no té cap actualització per instal·lar i es deixa com està.</item>
+        <item quantity="many">%d de les aplicacions triades no tenen cap actualització per instal·lar i es deixen com estan.</item>
         <item quantity="other">%d de les aplicacions triades no tenen cap actualització per instal·lar i es deixen com estan.</item>
     </plurals>
     <plurals name="bulk_remove_title">
         <item quantity="one">Vols deixar de seguir %d aplicació?</item>
+        <item quantity="many">Vols deixar de seguir %d aplicacions?</item>
         <item quantity="other">Vols deixar de seguir %d aplicacions?</item>
     </plurals>
     <string name="bulk_remove_text">Les aplicacions continuen instal·lades. Tern només deixa de comprovar-ne les actualitzacions.</string>
-    <string name="apps_empty_title">Encara no hi ha aplicacions</string>
-    <string name="apps_empty_text">Enganxa un enllaç a una pàgina de projecte, a una pàgina de llançament o a un repositori de F-Droid, i Tern mantindrà l\'aplicació actualitzada des d\'allà.</string>
+    <string name="apps_empty_title">Encara no hi ha res aquí</string>
+    <string name="apps_empty_text">Afegeix una aplicació pel seu enllaç, o comença amb una que usa molta gent.</string>
     <string name="sort_title">Ordena</string>
     <string name="sort_name">Per nom</string>
     <string name="sort_recently_checked">Comprovades recentment</string>
     <string name="sort_source">Per origen</string>
-    <string name="remove_title">Vols suprimir %s?</string>
     <string name="remove_text_installed">Tern deixarà de seguir-la. L\'aplicació continuarà instal·lada.</string>
     <string name="remove_text">Tern deixarà de seguir-la.</string>
     <string name="add_title">Afegeix una aplicació</string>
@@ -146,6 +154,7 @@
     <string name="preview_file">Fitxer a instal·lar</string>
     <plurals name="preview_other_files">
         <item quantity="one">S\'ofereix %d fitxer més. Pots triar-lo un cop afegit.</item>
+        <item quantity="many">S\'ofereixen %d fitxers més. Pots triar-ne un un cop afegit.</item>
         <item quantity="other">S\'ofereixen %d fitxers més. Pots triar-ne un un cop afegit.</item>
     </plurals>
     <string name="preview_already_tracked">Aquesta aplicació ja és a la teva llista.</string>
@@ -153,11 +162,13 @@
     <string name="prerelease">Prellançament</string>
     <plurals name="search_count">
         <item quantity="one">%1$d resultat per a “%2$s”</item>
+        <item quantity="many">%1$d resultats per a “%2$s”</item>
         <item quantity="other">%1$d resultats per a “%2$s”</item>
     </plurals>
     <string name="search_none">No s\'ha trobat res per a “%s”</string>
     <plurals name="search_stars">
         <item quantity="one">%d estrella</item>
+        <item quantity="many">%d estrelles</item>
         <item quantity="other">%d estrelles</item>
     </plurals>
     <string name="file_why">Per què aquest fitxer</string>
@@ -166,6 +177,7 @@
     <string name="carried_min_age_none">S\'usa un llançament tan bon punt surt.</string>
     <plurals name="carried_min_age">
         <item quantity="one">S\'ignora un llançament fins que té %d dia d\'antiguitat.</item>
+        <item quantity="many">S\'ignoren els llançaments fins que tenen %d dies d\'antiguitat.</item>
         <item quantity="other">S\'ignoren els llançaments fins que tenen %d dies d\'antiguitat.</item>
     </plurals>
     <string name="carried_include">Només s\'usen els fitxers que coincideixen amb %1$s.</string>
@@ -180,12 +192,14 @@
     <string name="carried_notes_none">Se segueixen els llançaments diguin el que diguin les seves notes.</string>
     <string name="carried_version">La versió es llegeix de l\'etiqueta amb %1$s.</string>
     <string name="carried_version_none">La versió es llegeix de la manera habitual.</string>
-    <string name="carried_match_device_on">Quan s\'ofereixen diversos fitxers, es prefereix el compilat per a aquest telèfon.</string>
-    <string name="carried_match_device_off">Els fitxers no es redueixen al processador d\'aquest telèfon.</string>
+    <string name="carried_match_device_on">Quan s\'ofereixen diversos fitxers, es prefereix el compilat per a aquest dispositiu.</string>
+    <string name="carried_match_device_off">Els fitxers no es restringeixen al processador d\'aquest dispositiu.</string>
     <string name="carried_fallback_on">S\'usa un llançament anterior quan el més nou no té cap fitxer útil.</string>
     <string name="carried_fallback_off">Mai s\'usen els llançaments anteriors, ni tan sols quan el més nou no té cap fitxer útil.</string>
     <string name="carried_track_on">Els llançaments només se segueixen; no es baixa ni s\'instal·la res.</string>
     <string name="carried_track_off">Els llançaments es baixen i s\'instal·len, no només se segueixen.</string>
+    <string name="carried_pin_warning">L\'enllaç fixa aquest certificat, així que només s\'instal·laran els fitxers que hagi signat. Algú que no ets tu l\'ha triat: afegeix-lo només si confies d\'on prové l\'enllaç.</string>
+    <string name="carried_pins_warning">L\'enllaç fixa aquests certificats, així que només s\'instal·laran els fitxers que hagin signat. Algú que no ets tu els ha triat: afegeix-los només si confies d\'on prové l\'enllaç.</string>
     <string name="checks_title">Comprovacions</string>
     <string name="checks_package">Nom del paquet</string>
     <string name="checks_package_unknown">No se sabrà fins que es llegeixi el fitxer</string>
@@ -208,6 +222,7 @@
     <string name="permissions_none_new">Cap permís nou</string>
     <plurals name="permissions_new">
         <item quantity="one">Demana %d permís nou</item>
+        <item quantity="many">Demana %d permisos nous</item>
         <item quantity="other">Demana %d permisos nous</item>
     </plurals>
     <string name="fingerprint_copied">S\'ha copiat l\'empremta digital</string>
@@ -232,6 +247,7 @@
     <string name="retry_now">Pots tornar-ho a provar ara.</string>
     <plurals name="retry_at">
         <item quantity="one">Es restableix a les %1$s, d\'aquí a %2$d minut.</item>
+        <item quantity="many">Es restableix a les %1$s, d\'aquí a %2$d minuts.</item>
         <item quantity="other">Es restableix a les %1$s, d\'aquí a %2$d minuts.</item>
     </plurals>
     <string name="detail_gone">Aquesta aplicació ja no és a la teva llista.</string>
@@ -281,13 +297,14 @@
     <string name="min_age_none">Sense espera</string>
     <plurals name="min_age_days">
         <item quantity="one">%d dia</item>
+        <item quantity="many">%d dies</item>
         <item quantity="other">%d dies</item>
     </plurals>
     <string name="files_none">No hi ha fitxers de l\'última comprovació.</string>
     <string name="file_recommended">Opció %d, recomanada</string>
     <string name="file_alternative">Opció %d</string>
     <string name="setting_match_device">Coincideix amb aquest dispositiu</string>
-    <string name="setting_match_device_effect">Quan s\'ofereixen diversos fitxers, prefereix el compilat per al processador d\'aquest telèfon.</string>
+    <string name="setting_match_device_effect">Quan s\'ofereixin diversos fitxers, prefereix el compilat per al processador d\'aquest dispositiu.</string>
     <string name="setting_include">Només fitxers que coincideixin amb</string>
     <string name="setting_include_help">Un patró que el nom del fitxer ha de contenir, per exemple universal</string>
     <string name="setting_exclude">Omet fitxers que coincideixin amb</string>
@@ -330,7 +347,8 @@
     <string name="settings_interval">Amb quina freqüència</string>
     <string name="interval_off">Desactivades</string>
     <plurals name="interval_hours">
-        <item quantity="one">Cada hora</item>
+        <item quantity="one">Cada %d hora</item>
+        <item quantity="many">Cada %d hores</item>
         <item quantity="other">Cada %d hores</item>
     </plurals>
     <string name="settings_unmetered">Només en xarxes no mesurades</string>
@@ -349,7 +367,6 @@
     <string name="settings_keep_installers_effect">Els fitxers es conserven després d\'instal·lar-se, ocupant espai. Si es desactiva, s\'esborren.</string>
     <string name="settings_ownership">Sigues l\'únic actualitzador</string>
     <string name="settings_ownership_effect">Demana a Android que només deixi a Tern actualitzar les aplicacions que instal·la, perquè una altra botiga no les canviï.</string>
-    <string name="settings_ownership_unsupported">Necessita Android 14 o superior.</string>
     <string name="settings_tokens">Tokens d\'accés</string>
     <string name="settings_tokens_effect">Un token augmenta els límits de freqüència i obre projectes privats. S\'envia només a l\'amfitrió exacte per al qual s\'ha desat, i no es torna a mostrar mai més.</string>
     <string name="token_saved">Desat</string>
@@ -378,9 +395,6 @@
     <string name="theme_system">Segueix el sistema</string>
     <string name="theme_light">Clar</string>
     <string name="theme_dark">Fosc</string>
-    <string name="settings_dynamic_color">Colors del teu fons de pantalla</string>
-    <string name="settings_dynamic_color_effect">Si es desactiva, s\'usa el blau pissarra de Tern.</string>
-    <string name="settings_dynamic_color_unsupported">Necessita Android 12 o superior.</string>
     <string name="settings_pure_black">Negre pur</string>
     <string name="settings_pure_black_effect">Fons negres en el tema fosc, millor per a pantalles OLED.</string>
     <string name="settings_data">Importació i exportació</string>
@@ -391,6 +405,7 @@
     <string name="settings_export_effect">Desa la teva llista i la configuració en un fitxer. Mai s\'inclouen els tokens.</string>
     <plurals name="exported">
         <item quantity="one">S\'ha exportat %d aplicació</item>
+        <item quantity="many">S\'han exportat %d aplicacions</item>
         <item quantity="other">S\'han exportat %d aplicacions</item>
     </plurals>
     <string name="export_failed">No s\'ha pogut escriure l\'exportació.</string>
@@ -411,18 +426,22 @@
     <string name="import_done">S\'ha acabat d\'importar</string>
     <plurals name="import_added">
         <item quantity="one">S\'ha afegit %d aplicació</item>
+        <item quantity="many">S\'han afegit %d aplicacions</item>
         <item quantity="other">S\'han afegit %d aplicacions</item>
     </plurals>
     <plurals name="import_present">
         <item quantity="one">%d ja era a la teva llista</item>
+        <item quantity="many">%d ja eren a la teva llista</item>
         <item quantity="other">%d ja eren a la teva llista</item>
     </plurals>
     <plurals name="import_skipped">
         <item quantity="one">%d no s\'ha pogut portar:</item>
+        <item quantity="many">%d no s\'han pogut portar:</item>
         <item quantity="other">%d no s\'han pogut portar:</item>
     </plurals>
     <plurals name="import_show_names">
         <item quantity="one">Mostra %d nom</item>
+        <item quantity="many">Mostra tots els %d noms</item>
         <item quantity="other">Mostra tots els %d noms</item>
     </plurals>
     <string name="import_hide_names">Amaga els noms</string>
@@ -439,17 +458,20 @@
     <string name="import_stars_failed_help">Comprova la connexió i torna-ho a provar.</string>
     <plurals name="import_stars_count">
         <item quantity="one">%2$s ha donat una estrella a %1$d repositori. Tria els que vulguis afegir.</item>
+        <item quantity="many">%2$s ha donat una estrella a %1$d repositoris. Tria els que vulguis afegir.</item>
         <item quantity="other">%2$s ha donat una estrella a %1$d repositoris. Tria els que vulguis afegir.</item>
     </plurals>
     <string name="import_stars_none">%1$s no ha donat cap estrella a cap repositori.</string>
     <plurals name="import_stars_add">
         <item quantity="one">Afegeix %d seleccionat</item>
+        <item quantity="many">Afegeix %d seleccionats</item>
         <item quantity="other">Afegeix %d seleccionats</item>
     </plurals>
     <string name="import_stars_pick_some">Marca els repositoris per afegir.</string>
     <string name="import_stars_other_user">Cerca algú altre</string>
     <plurals name="import_stars_adding">
         <item quantity="one">Comprovant %1$d de %2$d repositori</item>
+        <item quantity="many">Comprovant %1$d de %2$d repositoris</item>
         <item quantity="other">Comprovant %1$d de %2$d repositoris</item>
     </plurals>
     <string name="import_stars_stop">Atura</string>
@@ -462,7 +484,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern instal·la i actualitza aplicacions directament des d\'on les publiquen els seus desenvolupadors.</string>
     <string name="first_line_2">Abans que Android vegi un fitxer, Tern comprova qui l\'ha signat i si coincideix amb la suma de verificació de l\'editor.</string>
-    <string name="first_line_3">Tot el que troba i fa s\'escriu al registre d\'activitat, en paraules clares.</string>
+    <string name="first_line_3">Tot el que troba i fa està escrit amb paraules clares.</string>
     <string name="first_notify_explain">Tern et pot avisar quan hi ha actualitzacions a punt. Android et demanarà si permets les notificacions.</string>
     <string name="first_notify_denied">Les notificacions estan desactivades. Pots activar-les més tard a la Configuració.</string>
     <string name="first_notify_allow">Permet les notificacions</string>
@@ -470,4 +492,5 @@
     <string name="install_permission_title">Permet a Tern instal·lar aplicacions</string>
     <string name="install_permission_body">Android ho demana una vegada abans que una aplicació en pugui instal·lar una altra. A la pantalla següent, activa l\'interruptor per a Tern i després torna. La instal·lació continuarà sola.</string>
     <string name="install_permission_open">Obre la configuració</string>
+    <string name="install_permission_closes">Aquesta versió d\'Android tanca Tern quan actives l\'interruptor. Torna a obrir Tern després i la instal·lació continuarà.</string>
 </resources>

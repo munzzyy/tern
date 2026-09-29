@@ -26,6 +26,7 @@
     <string name="engine_downgrade">Zainstalowana wersja (%1$s) jest nowsza niż ten plik (%2$s). Android przyjmuje starszą wersję tylko po usunięciu zainstalowanej aplikacji, a jej usunięcie usuwa jej dane.</string>
     <string name="engine_test_only">Ten plik to wersja testowa, której Android odmawia instalacji ze sklepu z aplikacjami.</string>
     <string name="engine_needs_newer_android">Ta wersja wymaga Androida z poziomem API %1$d lub nowszym.</string>
+    <string name="engine_proxy_silent">Serwer proxy nie odpowiedział, więc nic nie wysłano. Tern nigdy go nie omija.</string>
     <string name="engine_check_network">Nie udało się połączyć ze źródłem: %1$s</string>
     <string name="engine_check_not_found">Źródło nie ma już nic pod tym adresem: %1$s</string>
     <string name="engine_check_auth">Źródło odrzuciło żądanie. Dodaj lub sprawdź token dostępu dla tej strony w ustawieniach. (%1$s)</string>

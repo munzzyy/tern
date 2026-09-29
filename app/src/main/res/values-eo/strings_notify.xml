@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Frapedu por fini instalon</string>
+    <string name="notify_downloading_plain">Elŝutas</string>
+    <string name="settings_notify_names">Nomumi la aplikaĵojn en sciigoj</string>
+    <string name="settings_notify_names_help">Sciigo povas esti legita sur la ŝlosekrano. Malŝaltita, Tern diras kiom da aplikaĵoj kaj neniam kiujn.</string>
+</resources>

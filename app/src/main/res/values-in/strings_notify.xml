@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Ketuk untuk menyelesaikan instal</string>
+    <string name="notify_downloading_plain">Mengunduh</string>
+    <string name="settings_notify_names">Sebutkan nama aplikasi di notifikasi</string>
+    <string name="settings_notify_names_help">Notifikasi dapat dibaca di layar kunci. Jika dimatikan, Tern akan menyebutkan jumlah aplikasi tanpa menyebutkan namanya.</string>
+</resources>

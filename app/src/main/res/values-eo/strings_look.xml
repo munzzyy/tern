@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Aspekto</string>
+    <string name="look_summary">Temo, koloroj, kontrasto, denseco, anguloj kaj ikonoj</string>
+    <string name="look_preview_spoken">Antaŭrigardo de la aspekto kiel nun agordita</string>
+    <string name="look_preview_app">Ekzempla aplikaĵo</string>
+    <string name="look_colours">Koloroj</string>
+    <string name="look_palette">Koloro</string>
+    <string name="look_wallpaper">Ekranfono</string>
+    <string name="look_own">Propra koloro</string>
+    <string name="palette_ink">Inko</string>
+    <string name="palette_slate">Ardezo</string>
+    <string name="palette_tide">Tajdo</string>
+    <string name="palette_moss">Musko</string>
+    <string name="palette_amber">Sukceno</string>
+    <string name="palette_clay">Argilo</string>
+    <string name="palette_rose">Rozo</string>
+    <string name="palette_plum">Pruno</string>
+    <string name="look_hue">Nuanco de via propra koloro</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d grado</item>
+        <item quantity="other">%1$d gradoj</item>
+    </plurals>
+    <string name="look_contrast">Kontrasto</string>
+    <string name="contrast_standard">Norma</string>
+    <string name="contrast_medium">Meza</string>
+    <string name="contrast_high">Alta</string>
+    <string name="look_contrast_effect">Pli da kontrasto igas tekston kaj konturojn pli distingeblaj de tio, kio estas malantaŭ ili.</string>
+    <string name="look_shape_and_size">Formo kaj grandeco</string>
+    <string name="look_density">Denseco</string>
+    <string name="density_comfortable">Komforta</string>
+    <string name="density_compact">Kompakta</string>
+    <string name="look_density_effect">Kompakta kongruigas pli sur la ekrano. Nenio kion vi premas fariĝas pli malgranda ol fingropinto.</string>
+    <string name="look_corners">Anguloj</string>
+    <string name="corners_round">Rondaj</string>
+    <string name="corners_soft">Molaj</string>
+    <string name="corners_sharp">Akraj</string>
+    <string name="look_icon_shape">Ikona formo</string>
+    <string name="icon_shape_circle">Cirklo</string>
+    <string name="icon_shape_squircle">Rondkvadrato</string>
+    <string name="icon_shape_square">Kvadrato</string>
+    <string name="look_icons">Ikonoj</string>
+    <string name="look_source_icons">Ikonoj de la fonto</string>
+    <string name="look_source_icons_effect">Dum aplikaĵo ne estas instalita, Tern ricevas ĝian ikonon de kie la aplikaĵo estas eldonita: ĝia deponejo aŭ vendeja listigo. Malŝaltita desegnas literon sur koloro kaj demandas neniun.</string>
+</resources>

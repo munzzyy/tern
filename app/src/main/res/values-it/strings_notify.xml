@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Tocca per finire un\'installazione</string>
+    <string name="notify_downloading_plain">Download in corso</string>
+    <string name="settings_notify_names">Nomina le app nelle notifiche</string>
+    <string name="settings_notify_names_help">Una notifica può essere letta sulla schermata di blocco. Disattivato, Tern dice quante app e mai quali.</string>
+</resources>

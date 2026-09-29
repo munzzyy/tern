@@ -34,6 +34,8 @@ jobs:
         run: ./gradlew --no-daemon :app:testDebugUnitTest
       - name: release build
         run: ./gradlew --no-daemon :app:assembleRelease
+      - name: lint finds no error in the release build
+        run: ./gradlew --no-daemon :app:lintRelease
       - name: no call to a Java method the oldest supported Android lacks
         run: bash tools/check-java-api.sh
       - name: shipped apk keeps its promises

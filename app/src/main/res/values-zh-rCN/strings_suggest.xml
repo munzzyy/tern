@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">观看您的 Jellyfin 服务器上的内容</string>
+    <string name="suggest_just_player">适用于文件和流媒体的视频播放器</string>
+    <string name="suggest_mpv">基于 mpv 构建的视频播放器</string>
+    <string name="suggest_nova">播放此设备或网络上的视频</string>
+    <string name="suggest_material_files">管理此设备和服务器上的文件</string>
+    <string name="suggest_mullvad">适用于 Mullvad VPN 服务的应用</string>
+    <string name="suggest_proton_vpn">适用于 Proton VPN 服务的应用</string>
+    <string name="suggest_moonlight">在此设备上游玩您电脑上的游戏</string>
+    <string name="suggest_fossify_gallery">用于查看照片和视频的图库</string>
+    <string name="suggest_breezy_weather">来自多个来源的天气预报</string>
+    <string name="suggest_fdroid">自由开源应用目录</string>
+    <string name="suggest_heliboard">没有网络访问权限的键盘</string>
+    <string name="suggest_obtainium">从应用的来源获取更新</string>
+    <string name="suggest_aegis">保存两步验证码</string>
+    <string name="suggest_keepassdx">适用于 KeePass 文件的密码管理器</string>
+    <string name="suggest_koreader">阅读 EPUB、PDF 及其他书籍格式</string>
+    <string name="suggest_element_x">在 Matrix 网络上聊天</string>
+    <string name="suggest_fairemail">适用于任何提供商的电子邮件应用</string>
+    <string name="suggest_tusky">Mastodon 客户端</string>
+    <string name="suggest_organic_maps">支持离线使用的地图和导航</string>
+    <string name="suggest_osmand">离线地图、路线规划和轨迹记录</string>
+    <string name="suggest_magpie">加密事件日记，由 Tern 的作者开发</string>
+    <string name="suggest_sepia">清除照片中的隐藏数据，由 Tern 的作者开发</string>
+    <string name="suggest_sweep">潜行软件检查工具，由 Tern 的作者开发</string>
+    <string name="suggest_starling">私密的位置共享，由 Tern 的作者开发</string>
+</resources>

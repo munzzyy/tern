@@ -26,6 +26,7 @@
     <string name="engine_downgrade">الإصدار المثبت (%1$s) أحدث من هذا الملف (%2$s). يقبل Android الإصدار الأقدم فقط بعد إزالة التطبيق المثبت، وإزالته تحذف بياناته.</string>
     <string name="engine_test_only">هذا الملف عبارة عن إصدار اختباري، والذي يرفض Android تثبيته من متجر تطبيقات.</string>
     <string name="engine_needs_newer_android">يحتاج هذا الإصدار إلى Android API مستوى %1$d أو أحدث.</string>
+    <string name="engine_proxy_silent">لم يُجب الوكيل، لذلك لم يتم إرسال أي شيء. لا يتجاوزه Tern أبدًا.</string>
     <string name="engine_check_network">تعذر الوصول إلى المصدر: %1$s</string>
     <string name="engine_check_not_found">لم يعد لدى المصدر أي شيء في هذا العنوان: %1$s</string>
     <string name="engine_check_auth">رفض المصدر الطلب. أضف أو تحقق من الرمز الخاص بهذا الموقع في الإعدادات. (%1$s)</string>

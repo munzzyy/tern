@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">Zoeken sluiten</string>
+    <string name="waiting_banner_one">%1$s wacht op je akkoord</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d installatie wacht op je akkoord</item>
+        <item quantity="other">%1$d installaties wachten op je akkoord</item>
+    </plurals>
+    <string name="empty_add">App toevoegen</string>
+    <string name="empty_well_known">Bekende apps</string>
+    <string name="empty_handoff">Verzenden vanaf een telefoon</string>
+    <string name="removed_notice">Gestopt met volgen van %1$s</string>
+    <string name="removed_undo">Ongedaan maken</string>
+    <string name="waiting_play_protect">Android, of Play Protect, kan het nog een keer vragen. Dat is hun eigen controle en geen probleem met het bestand.</string>
+    <string name="prompt_always_asks">Dit apparaat vraagt altijd voordat een update wordt geïnstalleerd.</string>
+    <string name="checks_passed">Dit bestand is door elke controle gekomen</string>
+    <string name="explain_button">Wat dit betekent: %1$s</string>
+    <string name="explain_action">hoor wat dit betekent</string>
+    <string name="explain_close">Sluiten</string>
+    <string name="explain_signer_title">Ondertekeningscertificaat</string>
+    <string name="explain_checksum_title">Checksum</string>
+    <string name="explain_permissions_title">Rechten</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Updates zonder bevestigingsvraag</string>
+    <string name="explain_always_asks_title">Dit apparaat vraagt altijd</string>
+    <string name="explain_package">Elke Android-app heeft één naam die nooit verandert. Een bestand met een andere naam zou een andere app zijn, hoe het zichzelf ook noemde.</string>
+    <string name="explain_signer_installed">Een ontwikkelaar ondertekent elke release met een sleutel die alleen zij bezitten. Tern vergelijkt de handtekening van dit bestand met de app op dit apparaat en met het certificaat dat het onthield bij de eerste installatie. Een bestand dat door iemand anders is ondertekend, wordt geweigerd, zelfs als het van het juiste adres komt.</string>
+    <string name="explain_signer_first">Er is nog niets om mee te vergelijken. Het bestand zegt wie het heeft ondertekend, Android bevestigt dat bij de installatie, en vanaf dat moment houdt Tern elke update aan hetzelfde certificaat.</string>
+    <string name="explain_checksum_matched">Een checksum is een vingerafdruk van het bestand zelf. De uitgever heeft er een gegeven, en het bestand dat Tern heeft gedownload heeft dezelfde, dus het is aangekomen zoals het is gepubliceerd.</string>
+    <string name="explain_checksum_pending">Een checksum is een vingerafdruk van het bestand zelf. De uitgever heeft er een gegeven, en Tern vergelijkt deze met het bestand zodra het bestand is gedownload.</string>
+    <string name="explain_checksum_mismatch">Een checksum is een vingerafdruk van het bestand zelf. De uitgever heeft er een gegeven, en het bestand dat Tern heeft gedownload heeft een andere, dus het is niet het bestand dat is gepubliceerd.</string>
+    <string name="explain_checksum_none">Deze uitgever geeft geen checksum. De handtekening wordt nog steeds gecontroleerd, en is de sterkere van de twee.</string>
+    <string name="explain_permissions">Wat deze versie vraagt om te mogen doen wat de geïnstalleerde versie niet deed.</string>
+    <string name="explain_virustotal">Opent de pagina voor exact dit bestand op VirusTotal in je browser. Tern stuurt daar niets heen.</string>
+    <string name="explain_silent">Android laat een app een andere updaten zonder te vragen wanneer die app het heeft geïnstalleerd en het apparaat op Android 12 of nieuwer draait. Android beslist elke keer.</string>
+    <string name="explain_always_asks">Dit apparaat draait op Android %1$s, dat voor elke installatie vraagt. Tern downloadt en controleert de update op de achtergrond en vertelt je wanneer deze klaar is.</string>
+    <string name="activity_installed">%1$s geïnstalleerd</string>
+    <string name="activity_installed_plain">Geïnstalleerd</string>
+    <string name="activity_updated">Geüpdatet naar %1$s</string>
+    <string name="activity_updated_plain">Bijgewerkt</string>
+    <string name="activity_update_waits_plain">Een update wacht</string>
+    <string name="activity_install_waits">Installatie van %1$s wacht</string>
+    <string name="activity_install_waits_plain">Een installatie wacht</string>
+    <string name="activity_not_installed">Kon %1$s niet installeren</string>
+    <string name="activity_not_installed_plain">Kon niet installeren</string>
+    <string name="activity_blocked">%1$s geblokkeerd</string>
+    <string name="activity_blocked_plain">Geblokkeerd</string>
+    <string name="activity_added">Toegevoegd</string>
+    <string name="activity_removed">Gestopt met volgen</string>
+    <string name="activity_check_failed">Controle mislukt</string>
+    <string name="activity_steps_show">Stappen tonen</string>
+    <string name="activity_steps_hide">Stappen verbergen</string>
+    <string name="first_well_known">Bekende apps</string>
+</resources>

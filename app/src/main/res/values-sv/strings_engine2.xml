@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">Varje utgåva som hittades erbjöd bara en annan apps fil, inte den här appens.</string>
+</resources>

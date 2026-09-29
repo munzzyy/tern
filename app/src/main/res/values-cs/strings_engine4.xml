@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">Část tohoto balíčku není podepsána tak, jak deklaruje, takže se nic nenainstalovalo.</string>
+</resources>

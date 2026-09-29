@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Нажмите для завершения установки</string>
+    <string name="notify_downloading_plain">Скачивание</string>
+    <string name="settings_notify_names">Названия приложений в уведомлениях</string>
+    <string name="settings_notify_names_help">Уведомления можно прочитать на экране блокировки. Если выключено, Tern сообщает количество приложений, но не их названия.</string>
+</resources>

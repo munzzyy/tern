@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Chạm để hoàn tất cài đặt</string>
+    <string name="notify_downloading_plain">Đang tải xuống</string>
+    <string name="settings_notify_names">Nêu tên ứng dụng trong thông báo</string>
+    <string name="settings_notify_names_help">Có thể đọc thông báo trên màn hình khóa. Nếu tắt, Tern chỉ báo số lượng ứng dụng mà không cho biết là ứng dụng nào.</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Xem những gì trên máy chủ Jellyfin của bạn</string>
+    <string name="suggest_just_player">Trình phát video cho tệp và luồng</string>
+    <string name="suggest_mpv">Trình phát video dựa trên mpv</string>
+    <string name="suggest_nova">Phát video từ thiết bị hoặc mạng</string>
+    <string name="suggest_material_files">Quản lý tệp trên thiết bị và máy chủ</string>
+    <string name="suggest_mullvad">Ứng dụng cho dịch vụ VPN Mullvad</string>
+    <string name="suggest_proton_vpn">Ứng dụng cho dịch vụ VPN Proton</string>
+    <string name="suggest_moonlight">Chơi game từ máy tính trên thiết bị này</string>
+    <string name="suggest_fossify_gallery">Thư viện cho ảnh và video</string>
+    <string name="suggest_breezy_weather">Dự báo thời tiết từ nhiều nguồn</string>
+    <string name="suggest_fdroid">Danh mục các ứng dụng mã nguồn mở và miễn phí</string>
+    <string name="suggest_heliboard">Bàn phím không truy cập mạng</string>
+    <string name="suggest_obtainium">Lấy bản cập nhật ứng dụng từ nguồn của chúng</string>
+    <string name="suggest_aegis">Giữ mã cho đăng nhập hai bước</string>
+    <string name="suggest_keepassdx">Trình quản lý mật khẩu cho tệp KeePass</string>
+    <string name="suggest_koreader">Đọc EPUB, PDF và các định dạng sách khác</string>
+    <string name="suggest_element_x">Trò chuyện trên mạng Matrix</string>
+    <string name="suggest_fairemail">Ứng dụng email cho mọi nhà cung cấp</string>
+    <string name="suggest_tusky">Ứng dụng cho Mastodon</string>
+    <string name="suggest_organic_maps">Bản đồ và điều hướng ngoại tuyến</string>
+    <string name="suggest_osmand">Bản đồ ngoại tuyến, chỉ đường và ghi lại hành trình</string>
+    <string name="suggest_magpie">Nhật ký sự cố được mã hóa, từ tác giả của Tern</string>
+    <string name="suggest_sepia">Xóa dữ liệu ẩn khỏi ảnh, từ tác giả của Tern</string>
+    <string name="suggest_sweep">Kiểm tra phần mềm theo dõi, từ tác giả của Tern</string>
+    <string name="suggest_starling">Chia sẻ vị trí riêng tư, từ tác giả của Tern</string>
+</resources>

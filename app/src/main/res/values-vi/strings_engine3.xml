@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern giữ chứng chỉ dùng để ký ứng dụng này, và tệp này được ký bằng chứng chỉ khác. Nó có thể từ người khác, nên không được cài đặt.</string>
+    <string name="engine_warn_built_in_pin">Tern giữ chứng chỉ dùng để ký ứng dụng này, và tệp được cung cấp được ký bằng chứng chỉ khác.</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Sledujte, co je na vašem serveru Jellyfin</string>
+    <string name="suggest_just_player">Přehrávač videa pro soubory a streamy</string>
+    <string name="suggest_mpv">Přehrávač videa postavený na mpv</string>
+    <string name="suggest_nova">Přehrává video z tohoto zařízení nebo ze sítě</string>
+    <string name="suggest_material_files">Spravujte soubory v tomto zařízení a na serverech</string>
+    <string name="suggest_mullvad">Aplikace pro VPN službu Mullvad</string>
+    <string name="suggest_proton_vpn">Aplikace pro VPN službu Proton</string>
+    <string name="suggest_moonlight">Hrajte hry z počítače na tomto zařízení</string>
+    <string name="suggest_fossify_gallery">Galerie pro fotky a videa</string>
+    <string name="suggest_breezy_weather">Předpovědi počasí z mnoha zdrojů</string>
+    <string name="suggest_fdroid">Katalog bezplatných open source aplikací</string>
+    <string name="suggest_heliboard">Klávesnice bez přístupu k síti</string>
+    <string name="suggest_obtainium">Získává aktualizace aplikací z jejich zdrojů</string>
+    <string name="suggest_aegis">Uchovává kódy pro dvoufázové přihlášení</string>
+    <string name="suggest_keepassdx">Správce hesel pro soubory KeePass</string>
+    <string name="suggest_koreader">Čte EPUB, PDF a další knižní formáty</string>
+    <string name="suggest_element_x">Chatujte v síti Matrix</string>
+    <string name="suggest_fairemail">E-mailová aplikace pro jakéhokoli poskytovatele</string>
+    <string name="suggest_tusky">Klient pro Mastodon</string>
+    <string name="suggest_organic_maps">Mapy a navigace, které fungují offline</string>
+    <string name="suggest_osmand">Offline mapy, plánování tras a záznam stop</string>
+    <string name="suggest_magpie">Šifrovaný deník událostí, od autora aplikace Tern</string>
+    <string name="suggest_sepia">Odstraňuje skrytá data z fotek, od autora aplikace Tern</string>
+    <string name="suggest_sweep">Kontrola proti stalkerwaru, od autora aplikace Tern</string>
+    <string name="suggest_starling">Soukromé sdílení polohy, od autora aplikace Tern</string>
+</resources>

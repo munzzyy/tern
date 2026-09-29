@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">Tanca la cerca</string>
+    <string name="waiting_banner_one">%1$s espera el teu vistiplau</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d instal·lació espera el teu vistiplau</item>
+        <item quantity="many">%1$d instal·lacions esperen el teu vistiplau</item>
+        <item quantity="other">%1$d instal·lacions esperen el teu vistiplau</item>
+    </plurals>
+    <string name="empty_add">Afegeix una aplicació</string>
+    <string name="empty_well_known">Aplicacions conegudes</string>
+    <string name="empty_handoff">Envia des d\'un telèfon</string>
+    <string name="removed_notice">S\'ha deixat de seguir %1$s</string>
+    <string name="removed_undo">Desfés</string>
+    <string name="waiting_play_protect">Pot ser que Android o Play Protect preguntin un cop més. És la seva pròpia comprovació i no un problema amb el fitxer.</string>
+    <string name="prompt_always_asks">Aquest dispositiu sempre pregunta abans que s\'instal·li una actualització.</string>
+    <string name="checks_passed">Aquest fitxer ha passat totes les comprovacions</string>
+    <string name="explain_button">Què vol dir això: %1$s</string>
+    <string name="explain_action">escolta què vol dir això</string>
+    <string name="explain_close">Tanca</string>
+    <string name="explain_signer_title">Certificat de signatura</string>
+    <string name="explain_checksum_title">Suma de verificació</string>
+    <string name="explain_permissions_title">Permisos</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Actualitzacions sense cap avís</string>
+    <string name="explain_always_asks_title">Aquest dispositiu sempre pregunta</string>
+    <string name="explain_package">Cada aplicació d\'Android té un nom que mai canvia. Un fitxer que portés un altre nom seria una aplicació diferent, s\'anomenés com s\'anomenés.</string>
+    <string name="explain_signer_installed">Un desenvolupador signa cada llançament amb una clau que només ell té. Tern compara la signatura d\'aquest fitxer amb la de l\'aplicació d\'aquest dispositiu i amb el certificat que va recordar a la primera instal·lació. Es rebutja qualsevol fitxer signat per algú altre, encara que vingui de l\'adreça correcta.</string>
+    <string name="explain_signer_first">Encara no hi ha res amb què comparar-ho. El fitxer diu qui l\'ha signat, Android ho confirma quan l\'instal·la, i a partir de llavors Tern exigeix que cada actualització tingui el mateix certificat.</string>
+    <string name="explain_checksum_matched">Una suma de verificació és una empremta digital del fitxer mateix. L\'editor en va donar una, i el fitxer que Tern ha baixat té la mateixa, així que ha arribat tal com es va publicar.</string>
+    <string name="explain_checksum_pending">Una suma de verificació és una empremta digital del fitxer mateix. L\'editor en va donar una, i Tern la compara amb el fitxer tan bon punt es baixa.</string>
+    <string name="explain_checksum_mismatch">Una suma de verificació és una empremta digital del fitxer mateix. L\'editor en va donar una, i el fitxer que Tern ha baixat en té una altra, així que no és el fitxer que es va publicar.</string>
+    <string name="explain_checksum_none">Aquest editor no dona cap suma de verificació. Es continua comprovant la signatura, i és la més forta de les dues.</string>
+    <string name="explain_permissions">Què demana poder fer aquesta versió que la instal·lada no demanava.</string>
+    <string name="explain_virustotal">Obre la pàgina per a aquest fitxer exacte a VirusTotal al teu navegador. Tern no hi envia res.</string>
+    <string name="explain_silent">Android permet que una aplicació n\'actualitzi una altra sense preguntar quan aquesta aplicació l\'ha instal·lada i el dispositiu executa Android 12 o posterior. Android ho decideix cada vegada.</string>
+    <string name="explain_always_asks">Aquest dispositiu executa Android %1$s, que pregunta abans de cada instal·lació. Tern baixa i comprova l\'actualització en segon pla i t\'avisa quan està a punt.</string>
+    <string name="activity_installed">S\'ha instal·lat %1$s</string>
+    <string name="activity_installed_plain">Instal·lada</string>
+    <string name="activity_updated">S\'ha actualitzat a %1$s</string>
+    <string name="activity_updated_plain">Actualitzada</string>
+    <string name="activity_update_waits">L\'actualització a %1$s espera</string>
+    <string name="activity_update_waits_plain">Una actualització espera</string>
+    <string name="activity_install_waits">La instal·lació de %1$s espera</string>
+    <string name="activity_install_waits_plain">Una instal·lació espera</string>
+    <string name="activity_not_installed">No s\'ha pogut instal·lar %1$s</string>
+    <string name="activity_not_installed_plain">No s\'ha pogut instal·lar</string>
+    <string name="activity_blocked">S\'ha bloquejat %1$s</string>
+    <string name="activity_blocked_plain">Bloquejada</string>
+    <string name="activity_added">Afegida</string>
+    <string name="activity_removed">S\'ha deixat de seguir</string>
+    <string name="activity_check_failed">Ha fallat la comprovació</string>
+    <string name="activity_steps_show">Mostra els passos</string>
+    <string name="activity_steps_hide">Amaga els passos</string>
+    <string name="first_well_known">Aplicacions conegudes</string>
+</resources>

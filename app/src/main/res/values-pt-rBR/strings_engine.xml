@@ -26,6 +26,7 @@
     <string name="engine_downgrade">A versão instalada (%1$s) é mais nova que este arquivo (%2$s). O Android só aceita uma versão mais velha se o app instalado for removido antes, e removê-lo apaga seus dados.</string>
     <string name="engine_test_only">Este arquivo é uma compilação de teste, que o Android recusa instalar de uma loja de apps.</string>
     <string name="engine_needs_newer_android">Esta versão precisa do Android API nível %1$d ou mais recente.</string>
+    <string name="engine_proxy_silent">O proxy não respondeu, então nada foi enviado. O Tern nunca o contorna.</string>
     <string name="engine_check_network">A fonte não pôde ser acessada: %1$s</string>
     <string name="engine_check_not_found">A fonte não tem mais nada neste endereço: %1$s</string>
     <string name="engine_check_auth">A fonte recusou o pedido. Adicione ou verifique o token para este site nas Configurações. (%1$s)</string>
@@ -88,17 +89,20 @@
     <string name="engine_channel_transfers">Downloads</string>
     <plurals name="engine_notify_updates_count">
         <item quantity="one">%1$d atualização disponível</item>
+        <item quantity="many">%1$d atualizações disponíveis</item>
         <item quantity="other">%1$d atualizações disponíveis</item>
     </plurals>
     <string name="engine_notify_update_one">Atualização disponível para %1$s</string>
     <plurals name="engine_notify_installed_count">
         <item quantity="one">%1$d app atualizado</item>
+        <item quantity="many">%1$d apps atualizados</item>
         <item quantity="other">%1$d apps atualizados</item>
     </plurals>
     <string name="engine_notify_installed_one">%1$s foi atualizado</string>
     <string name="engine_notify_confirm">Toque para terminar de instalar %1$s</string>
     <plurals name="engine_notify_failures_count">
         <item quantity="one">%1$d app não pôde ser verificado ou atualizado</item>
+        <item quantity="many">%1$d apps não puderam ser verificados ou atualizados</item>
         <item quantity="other">%1$d apps não puderam ser verificados ou atualizados</item>
     </plurals>
     <string name="engine_notify_downloading">Baixando %1$s</string>

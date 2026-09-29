@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Jellyfin sunucunuzdakileri izleyin</string>
+    <string name="suggest_just_player">Dosyalar ve yayınlar için bir video oynatıcı</string>
+    <string name="suggest_mpv">mpv üzerine kurulu bir video oynatıcı</string>
+    <string name="suggest_nova">Bu cihazdan veya ağdan video oynatır</string>
+    <string name="suggest_material_files">Bu cihazdaki ve sunuculardaki dosyaları yönetin</string>
+    <string name="suggest_mullvad">Mullvad VPN hizmeti için uygulama</string>
+    <string name="suggest_proton_vpn">Proton VPN hizmeti için uygulama</string>
+    <string name="suggest_moonlight">Bilgisayarınızdaki oyunları bu cihazda oynayın</string>
+    <string name="suggest_fossify_gallery">Fotoğraf ve videolar için bir galeri</string>
+    <string name="suggest_breezy_weather">Birçok kaynaktan hava durumu tahminleri</string>
+    <string name="suggest_fdroid">Özgür ve açık kaynaklı uygulama kataloğu</string>
+    <string name="suggest_heliboard">Ağ erişimi olmayan bir klavye</string>
+    <string name="suggest_obtainium">Uygulama güncellemelerini kaynaklarından alır</string>
+    <string name="suggest_aegis">İki adımlı oturum açma kodlarını tutar</string>
+    <string name="suggest_keepassdx">KeePass dosyaları için parola yöneticisi</string>
+    <string name="suggest_koreader">EPUB, PDF ve diğer kitap biçimlerini okur</string>
+    <string name="suggest_element_x">Matrix ağında sohbet edin</string>
+    <string name="suggest_fairemail">Tüm sağlayıcılar için bir e-posta uygulaması</string>
+    <string name="suggest_tusky">Mastodon için bir istemci</string>
+    <string name="suggest_organic_maps">Çevrimdışı çalışan haritalar ve navigasyon</string>
+    <string name="suggest_osmand">Çevrimdışı haritalar, rota oluşturma ve iz kaydetme</string>
+    <string name="suggest_magpie">Şifreli bir olay günlüğü, Tern\'ın yazarından</string>
+    <string name="suggest_sepia">Fotoğraflardan gizli verileri sıyırır, Tern\'ın yazarından</string>
+    <string name="suggest_sweep">Bir takip yazılımı denetleyicisi, Tern\'ın yazarından</string>
+    <string name="suggest_starling">Özel konum paylaşımı, Tern\'ın yazarından</string>
+</resources>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">തിരയൽ അടയ്ക്കുക</string>
+    <string name="waiting_banner_one">നിങ്ങളുടെ അനുമതിക്കായി %1$s കാത്തിരിക്കുന്നു</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d ഇൻസ്റ്റാൾ നിങ്ങളുടെ അനുമതിക്കായി കാത്തിരിക്കുന്നു</item>
+        <item quantity="other">%1$d ഇൻസ്റ്റാളുകൾ നിങ്ങളുടെ അനുമതിക്കായി കാത്തിരിക്കുന്നു</item>
+    </plurals>
+    <string name="empty_add">ഒരു ആപ്പ് ചേർക്കുക</string>
+    <string name="empty_well_known">ഏവർക്കും അറിയാവുന്ന ആപ്പുകൾ</string>
+    <string name="empty_handoff">ഒരു ഫോണിൽ നിന്ന് അയയ്ക്കുക</string>
+    <string name="removed_notice">%1$s പിന്തുടരുന്നത് നിർത്തി</string>
+    <string name="removed_undo">പഴയപടിയാക്കുക</string>
+    <string name="waiting_play_protect">Android, അല്ലെങ്കിൽ Play Protect, ഒരിക്കൽ കൂടി ചോദിച്ചേക്കാം. അത് അവരുടേതായ പരിശോധനയാണ്, ഫയലിൻ്റെ പ്രശ്നമല്ല.</string>
+    <string name="prompt_always_asks">ഒരു അപ്ഡേറ്റ് ഇൻസ്റ്റാൾ ചെയ്യുന്നതിന് മുമ്പ് ഈ ഉപകരണം എപ്പോഴും ചോദിക്കുന്നു.</string>
+    <string name="checks_passed">ഈ ഫയൽ എല്ലാ പരിശോധനകളും പാസായി</string>
+    <string name="explain_button">ഇതിനർത്ഥം: %1$s</string>
+    <string name="explain_action">ഇതിനർത്ഥം എന്താണെന്ന് കേൾക്കുക</string>
+    <string name="explain_close">അടയ്ക്കുക</string>
+    <string name="explain_signer_title">സൈനിംഗ് സർട്ടിഫിക്കറ്റ്</string>
+    <string name="explain_checksum_title">ചെക്ക്സം</string>
+    <string name="explain_permissions_title">അനുമതികൾ</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">പ്രോംപ്റ്റ് ഇല്ലാത്ത അപ്ഡേറ്റുകൾ</string>
+    <string name="explain_always_asks_title">ഈ ഉപകരണം എപ്പോഴും ചോദിക്കുന്നു</string>
+    <string name="explain_package">ഓരോ Android ആപ്പിനും ഒരിക്കലും മാറാത്ത ഒരു പേരുണ്ട്. മറ്റൊരു പേരുള്ള ഒരു ഫയൽ സ്വയം എന്തെന്ന് വിളിച്ചാലും അത് മറ്റൊരു ആപ്പായിരിക്കും.</string>
+    <string name="explain_signer_installed">ഒരു ഡെവലപ്പർ ഓരോ റിലീസും അവരുടെ കൈവശം മാത്രമുള്ള ഒരു കീ ഉപയോഗിച്ച് ഒപ്പിടുന്നു. ഈ ഉപകരണത്തിലെ ആപ്പുമായും ആദ്യ ഇൻസ്റ്റാളിൽ ഓർമ്മിച്ചുവച്ച സർട്ടിഫിക്കറ്റുമായും ഈ ഫയലിൻ്റെ സിഗ്നേച്ചർ Tern താരതമ്യം ചെയ്യുന്നു. മറ്റാരെങ്കിലും ഒപ്പിട്ട ഒരു ഫയൽ, അത് ശരിയായ വിലാസത്തിൽ നിന്ന് വന്നതാണെങ്കിൽപ്പോലും നിരസിക്കപ്പെടും.</string>
+    <string name="explain_signer_first">താരതമ്യം ചെയ്യാൻ ഇതുവരെ ഒന്നുമില്ല. ആരാണ് ഒപ്പിട്ടതെന്ന് ഫയൽ പറയുന്നു, ഇൻസ്റ്റാൾ ചെയ്യുമ്പോൾ Android അത് സ്ഥിരീകരിക്കുന്നു, അതിനുശേഷം Tern ഓരോ അപ്ഡേറ്റും അതേ സർട്ടിഫിക്കറ്റ് തന്നെയാണെന്ന് ഉറപ്പാക്കുന്നു.</string>
+    <string name="explain_checksum_matched">ഒരു ചെക്ക്സം എന്നത് ഫയലിൻ്റെ തന്നെ ഒരു ഫിംഗർപ്രിൻ്റാണ്. പ്രസാധകൻ ഒരെണ്ണം നൽകി, Tern ഡൗൺലോഡ് ചെയ്ത ഫയലിനും അതുതന്നെയുണ്ട്, അതിനാൽ അത് പ്രസിദ്ധീകരിച്ചതുപോലെ തന്നെ എത്തിയിരിക്കുന്നു.</string>
+    <string name="explain_checksum_pending">ഒരു ചെക്ക്സം എന്നത് ഫയലിൻ്റെ തന്നെ ഒരു ഫിംഗർപ്രിൻ്റാണ്. പ്രസാധകൻ ഒരെണ്ണം നൽകി, ഫയൽ ഡൗൺലോഡ് ചെയ്തയുടനെ Tern അതിനെ ഫയലുമായി താരതമ്യം ചെയ്യുന്നു.</string>
+    <string name="explain_checksum_mismatch">ഒരു ചെക്ക്സം എന്നത് ഫയലിൻ്റെ തന്നെ ഒരു ഫിംഗർപ്രിൻ്റാണ്. പ്രസാധകൻ ഒരെണ്ണം നൽകി, എന്നാൽ Tern ഡൗൺലോഡ് ചെയ്ത ഫയലിന് മറ്റൊന്നാണുളളത്, അതിനാൽ ഇത് പ്രസിദ്ധീകരിച്ച ഫയലല്ല.</string>
+    <string name="explain_checksum_none">ഈ പ്രസാധകൻ ചെക്ക്സം നൽകുന്നില്ല. എങ്കിലും സിഗ്നേച്ചർ പരിശോധിക്കുന്നു, ഇവ രണ്ടിലും വച്ച് അതാണ് കൂടുതൽ സുരക്ഷിതം.</string>
+    <string name="explain_permissions">ഇൻസ്റ്റാൾ ചെയ്ത പതിപ്പ് ചെയ്യാതിരുന്ന എന്തൊക്കെ കാര്യങ്ങൾ ചെയ്യാനാണ് ഈ പതിപ്പ് അനുമതി ചോദിക്കുന്നത് എന്നത്.</string>
+    <string name="explain_virustotal">നിങ്ങളുടെ ബ്രൗസറിൽ VirusTotal-ൽ ഈ ഫയലിനായുള്ള പേജ് തുറക്കുന്നു. Tern അങ്ങോട്ട് ഒന്നും അയയ്ക്കുന്നില്ല.</string>
+    <string name="explain_silent">ഒരു ആപ്പ് മറ്റൊന്നിനെ ഇൻസ്റ്റാൾ ചെയ്യുകയും ഉപകരണം Android 12-ലോ അതിനുശേഷമുള്ളതിലോ പ്രവർത്തിക്കുകയും ചെയ്യുമ്പോൾ, ചോദിക്കാതെ തന്നെ മറ്റൊന്നിനെ അപ്ഡേറ്റ് ചെയ്യാൻ Android ആ ആപ്പിനെ അനുവദിക്കുന്നു. ഓരോ തവണയും Android തീരുമാനിക്കുന്നു.</string>
+    <string name="explain_always_asks">ഈ ഉപകരണം പ്രവർത്തിക്കുന്നത് Android %1$s-ലാണ്, ഇത് ഓരോ ഇൻസ്റ്റാളിന് മുമ്പും ചോദിക്കുന്നു. Tern പശ്ചാത്തലത്തിൽ അപ്ഡേറ്റ് ഡൗൺലോഡ് ചെയ്ത് പരിശോധിക്കുകയും തയ്യാറാകുമ്പോൾ നിങ്ങളെ അറിയിിക്കുകയും ചെയ്യുന്നു.</string>
+    <string name="activity_installed">%1$s ഇൻസ്റ്റാൾ ചെയ്തു</string>
+    <string name="activity_installed_plain">ഇൻസ്റ്റാൾ ചെയ്തു</string>
+    <string name="activity_updated">%1$s-ലേക്ക് അപ്ഡേറ്റ് ചെയ്തു</string>
+    <string name="activity_updated_plain">അപ്ഡേറ്റ് ചെയ്തു</string>
+    <string name="activity_update_waits">%1$s-ലേക്കുള്ള അപ്ഡേറ്റ് കാത്തിരിക്കുന്നു</string>
+    <string name="activity_update_waits_plain">ഒരു അപ്ഡേറ്റ് കാത്തിരിക്കുന്നു</string>
+    <string name="activity_install_waits">%1$s-ൻ്റെ ഇൻസ്റ്റാൾ കാത്തിരിക്കുന്നു</string>
+    <string name="activity_install_waits_plain">ഒരു ഇൻസ്റ്റാൾ കാത്തിരിക്കുന്നു</string>
+    <string name="activity_not_installed">%1$s ഇൻസ്റ്റാൾ ചെയ്യാനായില്ല</string>
+    <string name="activity_not_installed_plain">ഇൻസ്റ്റാൾ ചെയ്യാനായില്ല</string>
+    <string name="activity_blocked">%1$s ബ്ലോക്ക് ചെയ്തു</string>
+    <string name="activity_blocked_plain">ബ്ലോക്ക് ചെയ്തു</string>
+    <string name="activity_added">ചേർത്തു</string>
+    <string name="activity_removed">പിന്തുടരുന്നത് നിർത്തി</string>
+    <string name="activity_check_failed">പരിശോധന പരാജയപ്പെട്ടു</string>
+    <string name="activity_steps_show">ഘട്ടങ്ങൾ കാണിക്കുക</string>
+    <string name="activity_steps_hide">ഘട്ടങ്ങൾ മറയ്ക്കുക</string>
+    <string name="first_well_known">ഏവർക്കും അറിയാവുന്ന ആപ്പുകൾ</string>
+</resources>

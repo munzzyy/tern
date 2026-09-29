@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">Todos os lançamentos encontrados ofereciam apenas o arquivo de outro app, não deste.</string>
+</resources>

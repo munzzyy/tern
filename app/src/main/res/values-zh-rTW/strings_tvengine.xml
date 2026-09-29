@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">此檔案不是從 Tern 或 Obtainium 匯出的應用程式清單。</string>
+    <string name="engine_import_empty">此檔案未包含任何應用程式。</string>
+    <string name="engine_import_local_address">它的網址在區域網路上。如果是您的，請手動新增它。</string>
+    <string name="engine_warn_local_address">這個網址在您自己的網路上。Tern 每次檢查更新時都會詢問它。</string>
+    <string name="engine_import_unreadable_export">無法讀取此來自 Tern 的匯出 (%1$s)。如果它來自較新版本的 Tern，請更新此裝置上的 Tern 並再試一次。</string>
+    <string name="engine_import_too_large">檔案大於 %1$d MiB，超出了應用程式清單所佔用的空間，因此 Tern 沒有讀取它。</string>
+    <string name="engine_import_file_gone">該檔案已經不在那裡了。請再次開啟檔案清單。</string>
+    <string name="engine_link_not_https">只接受以 https:// 開頭的網址。</string>
+    <string name="engine_link_not_an_address">那不是 Tern 可以開啟的網址。它應該看起來像 https://example.org/tern-apps.json。</string>
+    <string name="engine_link_leaves_https">該網址將 Tern 導向非 HTTPS 的網址，因此沒有擷取任何東西。</string>
+    <string name="engine_link_not_found">該網址沒有檔案。請檢查是否有打字錯誤。</string>
+    <string name="engine_link_refused">伺服器拒絕提供該檔案 (它回應了 %1$d)。Tern 傳送此請求時不會帶有登入資訊，因此該檔案必須讓任何知道該網址的人都可以讀取。</string>
+    <string name="engine_link_unreachable">無法連上該網址：%1$s</string>
+    <string name="engine_link_unreachable_plain">無法連上該網址。請檢查連線與網址，然後再試一次。</string>
+    <string name="engine_link_too_slow">伺服器花費超過一分鐘來傳送檔案，因此 Tern 停止等待。請稍後再試。</string>
+    <string name="engine_link_not_an_export">該網址上的內容不是從 Tern 或 Obtainium 匯出的應用程式清單。該網址必須導向檔案本身，而不是顯示它的頁面。</string>
+    <string name="engine_export_no_place">此裝置沒有 Tern 可以寫入的共用儲存空間。</string>
+    <string name="engine_export_failed">無法寫入匯出：%1$s</string>
+    <string name="engine_export_failed_plain">無法寫入匯出。</string>
+</resources>

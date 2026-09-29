@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Se, hvad der er på din Jellyfin-server</string>
+    <string name="suggest_just_player">En videoafspiller til filer og streams</string>
+    <string name="suggest_mpv">En videoafspiller bygget på mpv</string>
+    <string name="suggest_nova">Afspiller video fra denne enhed eller netværket</string>
+    <string name="suggest_material_files">Håndter filer på denne enhed og på servere</string>
+    <string name="suggest_mullvad">Appen til VPN-tjenesten Mullvad</string>
+    <string name="suggest_proton_vpn">Appen til VPN-tjenesten Proton</string>
+    <string name="suggest_moonlight">Spil spil fra din computer på denne enhed</string>
+    <string name="suggest_fossify_gallery">Et galleri til fotos og videoer</string>
+    <string name="suggest_breezy_weather">Vejrudsigter fra mange kilder</string>
+    <string name="suggest_fdroid">Et katalog med gratis og open source-apps</string>
+    <string name="suggest_heliboard">Et tastatur uden netværksadgang</string>
+    <string name="suggest_obtainium">Henter app-opdateringer fra deres kilder</string>
+    <string name="suggest_aegis">Gemmer koderne til totrinslogin</string>
+    <string name="suggest_keepassdx">En adgangskodeadministrator til KeePass-filer</string>
+    <string name="suggest_koreader">Læser EPUB, PDF og andre bogformater</string>
+    <string name="suggest_element_x">Chat på Matrix-netværket</string>
+    <string name="suggest_fairemail">En e-mail-app til enhver udbyder</string>
+    <string name="suggest_tusky">En klient til Mastodon</string>
+    <string name="suggest_organic_maps">Kort og navigation, der virker offline</string>
+    <string name="suggest_osmand">Offlinekort, ruteplanlægning og sporregistrering</string>
+    <string name="suggest_magpie">En krypteret hændelsesjournal af Terns skaber</string>
+    <string name="suggest_sepia">Fjerner skjulte data fra fotos, af Terns skaber</string>
+    <string name="suggest_sweep">Et stalkerware-tjek, af Terns skaber</string>
+    <string name="suggest_starling">Privat lokationsdeling, af Terns skaber</string>
+</resources>

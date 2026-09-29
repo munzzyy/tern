@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">രൂപം</string>
+    <string name="look_summary">തീം, നിറങ്ങൾ, കോൺട്രാസ്റ്റ്, ഡെൻസിറ്റി, കോർണറുകൾ, ഐക്കണുകൾ</string>
+    <string name="look_preview_spoken">ഇപ്പോൾ സജ്ജീകരിച്ചിരിക്കുന്ന രൂപത്തിൻ്റെ പ്രിവ്യൂ</string>
+    <string name="look_preview_app">ഉദാഹരണ ആപ്പ്</string>
+    <string name="look_colours">നിറങ്ങൾ</string>
+    <string name="look_palette">നിറം</string>
+    <string name="look_wallpaper">വാൾപേപ്പർ</string>
+    <string name="look_own">സ്വന്തം നിറം</string>
+    <string name="palette_ink">ഇങ്ക്</string>
+    <string name="palette_slate">സ്ലേറ്റ്</string>
+    <string name="palette_tide">ടൈഡ്</string>
+    <string name="palette_moss">മോസ്</string>
+    <string name="palette_amber">ആംബർ</string>
+    <string name="palette_clay">ക്ലേ</string>
+    <string name="palette_rose">റോസ്</string>
+    <string name="palette_plum">പ്ലം</string>
+    <string name="look_hue">നിങ്ങളുടെ സ്വന്തം നിറത്തിൻ്റെ ഹ്യൂ</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d ഡിഗ്രി</item>
+        <item quantity="other">%1$d ഡിഗ്രികൾ</item>
+    </plurals>
+    <string name="look_contrast">കോൺട്രാസ്റ്റ്</string>
+    <string name="contrast_standard">സ്റ്റാൻഡേർഡ്</string>
+    <string name="contrast_medium">മീഡിയം</string>
+    <string name="contrast_high">ഹൈ</string>
+    <string name="look_contrast_effect">കൂടുതൽ കോൺട്രാസ്റ്റ് ടെക്സ്റ്റിനെയും ഔട്ട്‌ലൈനുകളെയും അവയുടെ പശ്ചാത്തലത്തിൽ നിന്ന് കൂടുതൽ വ്യക്തമാക്കുന്നു.</string>
+    <string name="look_shape_and_size">രൂപവും വലുപ്പവും</string>
+    <string name="look_density">ഡെൻസിറ്റി</string>
+    <string name="density_comfortable">കംഫർട്ടബിൾ</string>
+    <string name="density_compact">കോംപാക്റ്റ്</string>
+    <string name="look_density_effect">കോംപാക്റ്റ് സ്ക്രീനിൽ കൂടുതൽ കാര്യങ്ങൾ ഉൾക്കൊള്ളുന്നു. നിങ്ങൾ അമർത്തുന്നതൊന്നും വിരൽത്തുമ്പിനേക്കാൾ ചെറുതാകില്ല.</string>
+    <string name="look_corners">കോർണറുകൾ</string>
+    <string name="corners_round">റൗണ്ട്</string>
+    <string name="corners_soft">സോഫ്റ്റ്</string>
+    <string name="corners_sharp">ഷാർപ്പ്</string>
+    <string name="look_icon_shape">ഐക്കണിൻ്റെ രൂപം</string>
+    <string name="icon_shape_circle">വൃത്തം</string>
+    <string name="icon_shape_squircle">സ്ക്വിർക്കിൾ</string>
+    <string name="icon_shape_square">ചതുരം</string>
+    <string name="look_icons">ഐക്കണുകൾ</string>
+    <string name="look_source_icons">ഉറവിടത്തിൽ നിന്നുള്ള ഐക്കണുകൾ</string>
+    <string name="look_source_icons_effect">ഒരു ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ലാത്തപ്പോൾ, ആപ്പ് പ്രസിദ്ധീകരിച്ചിരിക്കുന്ന സ്ഥലത്ത് നിന്ന് Tern അതിൻ്റെ ഐക്കൺ എടുക്കുന്നു: അതിൻ്റെ റെപ്പോസിറ്ററി അല്ലെങ്കിൽ സ്റ്റോർ ലിസ്റ്റിംഗ്. ഓഫ് ചെയ്യുന്നത് ഒരു നിറത്തിൽ ഒരു അക്ഷരം വരയ്ക്കുകയും ആരോടും ചോദിക്കാതിരിക്കുകയും ചെയ്യുന്നു.</string>
+</resources>

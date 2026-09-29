@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">Fermer la recherche</string>
+    <string name="waiting_banner_one">%1$s attend votre feu vert</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d installation attend votre feu vert</item>
+        <item quantity="many">%1$d installations attendent votre feu vert</item>
+        <item quantity="other">%1$d installations attendent votre feu vert</item>
+    </plurals>
+    <string name="empty_add">Ajouter une appli</string>
+    <string name="empty_well_known">Applis très connues</string>
+    <string name="empty_handoff">Envoyer depuis un téléphone</string>
+    <string name="removed_notice">Suivi de %1$s arrêté</string>
+    <string name="removed_undo">Annuler</string>
+    <string name="waiting_play_protect">Android, ou Play Protect, peut demander une fois de plus. C\'est leur propre vérification et non un problème avec le fichier.</string>
+    <string name="prompt_always_asks">Cet appareil demande toujours avant d\'installer une mise à jour.</string>
+    <string name="checks_passed">Ce fichier a passé toutes les vérifications</string>
+    <string name="explain_button">Ce que cela signifie : %1$s</string>
+    <string name="explain_action">écouter ce que cela signifie</string>
+    <string name="explain_close">Fermer</string>
+    <string name="explain_signer_title">Certificat de signature</string>
+    <string name="explain_checksum_title">Somme de contrôle</string>
+    <string name="explain_permissions_title">Permissions</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Mises à jour sans confirmation</string>
+    <string name="explain_always_asks_title">Cet appareil demande toujours</string>
+    <string name="explain_package">Chaque appli Android a un seul nom qui ne change jamais. Un fichier qui porterait un autre nom serait une appli différente, quel que soit le nom qu\'elle se donne.</string>
+    <string name="explain_signer_installed">Un développeur signe chaque version avec une clé que lui seul détient. Tern compare la signature de ce fichier avec l\'appli sur cet appareil et avec le certificat qu\'il a mémorisé lors de la première installation. Un fichier signé par quelqu\'un d\'autre est refusé, même s\'il provient de la bonne adresse.</string>
+    <string name="explain_signer_first">Il n\'y a encore rien à comparer. Le fichier indique qui l\'a signé, Android le confirme lors de l\'installation, et à partir de là, Tern exige le même certificat pour chaque mise à jour.</string>
+    <string name="explain_checksum_matched">Une somme de contrôle est une empreinte du fichier lui-même. L\'éditeur en a fourni une, et le fichier téléchargé par Tern a la même, il est donc arrivé tel qu\'il a été publié.</string>
+    <string name="explain_checksum_pending">Une somme de contrôle est une empreinte du fichier lui-même. L\'éditeur en a fourni une, et Tern la compare avec le fichier dès que ce dernier est téléchargé.</string>
+    <string name="explain_checksum_mismatch">Une somme de contrôle est une empreinte du fichier lui-même. L\'éditeur en a fourni une, et le fichier téléchargé par Tern en a une autre, ce n\'est donc pas le fichier qui a été publié.</string>
+    <string name="explain_checksum_none">Cet éditeur ne fournit aucune somme de contrôle. La signature est toujours vérifiée, et c\'est la plus forte des deux.</string>
+    <string name="explain_permissions">Ce que cette version demande à être autorisée à faire que celle installée ne faisait pas.</string>
+    <string name="explain_virustotal">Ouvre la page pour ce fichier exact sur VirusTotal dans votre navigateur. Tern n\'y envoie rien.</string>
+    <string name="explain_silent">Android laisse une appli en mettre une autre à jour sans demander quand cette appli l\'a installée et que l\'appareil utilise Android 12 ou ultérieur. Android décide à chaque fois.</string>
+    <string name="explain_always_asks">Cet appareil utilise Android %1$s, qui demande avant chaque installation. Tern télécharge et vérifie la mise à jour en arrière-plan et vous prévient quand elle est prête.</string>
+    <string name="activity_installed">%1$s installée</string>
+    <string name="activity_installed_plain">Installée</string>
+    <string name="activity_updated">Mise à jour vers %1$s</string>
+    <string name="activity_updated_plain">Mise à jour</string>
+    <string name="activity_update_waits">Mise à jour vers %1$s en attente</string>
+    <string name="activity_update_waits_plain">Une mise à jour attend</string>
+    <string name="activity_install_waits">Installation de %1$s en attente</string>
+    <string name="activity_install_waits_plain">Une installation attend</string>
+    <string name="activity_not_installed">Impossible d\'installer %1$s</string>
+    <string name="activity_not_installed_plain">Impossible d\'installer</string>
+    <string name="activity_blocked">%1$s bloquée</string>
+    <string name="activity_blocked_plain">Bloquée</string>
+    <string name="activity_added">Ajoutée</string>
+    <string name="activity_removed">Suivi arrêté</string>
+    <string name="activity_check_failed">Échec de la vérification</string>
+    <string name="activity_steps_show">Afficher les étapes</string>
+    <string name="activity_steps_hide">Masquer les étapes</string>
+    <string name="first_well_known">Applis très connues</string>
+</resources>

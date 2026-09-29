@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">此包的某部分签名与其声明的不符，因此未安装任何内容。</string>
+</resources>

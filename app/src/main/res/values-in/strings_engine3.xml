@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern menyimpan sertifikat penandatanganan aplikasi ini, dan file ini ditandatangani dengan sertifikat lain. File ini mungkin berasal dari orang lain, jadi tidak diinstal.</string>
+    <string name="engine_warn_built_in_pin">Tern menyimpan sertifikat penandatanganan aplikasi ini, dan file yang ditawarkan ditandatangani dengan sertifikat lain.</string>
+</resources>

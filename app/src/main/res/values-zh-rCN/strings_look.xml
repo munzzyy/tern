@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">外观</string>
+    <string name="look_summary">主题、颜色、对比度、显示密度、圆角和图标</string>
+    <string name="look_preview_spoken">当前设置的外观预览</string>
+    <string name="look_preview_app">示例应用</string>
+    <string name="look_colours">颜色</string>
+    <string name="look_palette">颜色</string>
+    <string name="look_wallpaper">壁纸</string>
+    <string name="look_own">专属颜色</string>
+    <string name="palette_ink">墨黑</string>
+    <string name="palette_slate">板岩灰</string>
+    <string name="palette_tide">潮汐蓝</string>
+    <string name="palette_moss">苔藓绿</string>
+    <string name="palette_amber">琥珀黄</string>
+    <string name="palette_clay">陶土红</string>
+    <string name="palette_rose">玫瑰红</string>
+    <string name="palette_plum">梅子紫</string>
+    <string name="look_hue">专属颜色的色相</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="other">%1$d 度</item>
+    </plurals>
+    <string name="look_contrast">对比度</string>
+    <string name="contrast_standard">标准</string>
+    <string name="contrast_medium">中</string>
+    <string name="contrast_high">高</string>
+    <string name="look_contrast_effect">更高的对比度会让文本和轮廓与其背景更加分明。</string>
+    <string name="look_shape_and_size">形状与大小</string>
+    <string name="look_density">显示密度</string>
+    <string name="density_comfortable">舒适</string>
+    <string name="density_compact">紧凑</string>
+    <string name="look_density_effect">紧凑模式能在屏幕上显示更多内容。按钮的大小都不会小于指尖。</string>
+    <string name="look_corners">圆角</string>
+    <string name="corners_round">圆润</string>
+    <string name="corners_soft">柔和</string>
+    <string name="corners_sharp">锐利</string>
+    <string name="look_icon_shape">图标形状</string>
+    <string name="icon_shape_circle">圆形</string>
+    <string name="icon_shape_squircle">方圆形</string>
+    <string name="icon_shape_square">方形</string>
+    <string name="look_icons">图标</string>
+    <string name="look_source_icons">来自来源的图标</string>
+    <string name="look_source_icons_effect">在应用未安装时，Tern 会从应用的发布地获取图标：它的存储库或应用商店详情页。关闭此选项则会在彩色背景上绘制一个字母，不发出任何请求。</string>
+</resources>

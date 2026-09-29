@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Toque para terminar a instalação</string>
+    <string name="notify_downloading_plain">Baixando</string>
+    <string name="settings_notify_names">Nomear os apps nas notificações</string>
+    <string name="settings_notify_names_help">Uma notificação pode ser lida na tela de bloqueio. Desligado, o Tern diz quantos apps e nunca quais.</string>
+</resources>

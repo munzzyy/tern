@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">قدم كل إصدار تم العثور عليه ملفًا لتطبيق آخر فقط، وليس لهذا التطبيق.</string>
+</resources>

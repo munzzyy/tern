@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Mira el que hi ha al teu servidor Jellyfin</string>
+    <string name="suggest_just_player">Un reproductor de vídeo per a fitxers i fluxos</string>
+    <string name="suggest_mpv">Un reproductor de vídeo basat en mpv</string>
+    <string name="suggest_nova">Reprodueix vídeo d\'aquest dispositiu o de la xarxa</string>
+    <string name="suggest_material_files">Gestiona fitxers en aquest dispositiu i en servidors</string>
+    <string name="suggest_mullvad">L\'aplicació per al servei Mullvad VPN</string>
+    <string name="suggest_proton_vpn">L\'aplicació per al servei Proton VPN</string>
+    <string name="suggest_moonlight">Juga a jocs del teu ordinador en aquest dispositiu</string>
+    <string name="suggest_fossify_gallery">Una galeria per a fotos i vídeos</string>
+    <string name="suggest_breezy_weather">Previsions meteorològiques de molts orígens</string>
+    <string name="suggest_fdroid">Un catàleg d\'aplicacions lliures i de codi obert</string>
+    <string name="suggest_heliboard">Un teclat que no té accés a la xarxa</string>
+    <string name="suggest_obtainium">Obté actualitzacions d\'aplicacions dels seus orígens</string>
+    <string name="suggest_aegis">Guarda els codis per a l\'inici de sessió en dos passos</string>
+    <string name="suggest_keepassdx">Un gestor de contrasenyes per a fitxers KeePass</string>
+    <string name="suggest_koreader">Llegeix EPUB, PDF i altres formats de llibre</string>
+    <string name="suggest_element_x">Xateja a la xarxa Matrix</string>
+    <string name="suggest_fairemail">Una aplicació de correu per a qualsevol proveïdor</string>
+    <string name="suggest_tusky">Un client per a Mastodon</string>
+    <string name="suggest_organic_maps">Mapes i navegació que funcionen sense connexió</string>
+    <string name="suggest_osmand">Mapes sense connexió, rutes i enregistrament de camins</string>
+    <string name="suggest_magpie">Un diari d\'incidències xifrat, de l\'autor de Tern</string>
+    <string name="suggest_sepia">Elimina les dades ocultes de les fotos, de l\'autor de Tern</string>
+    <string name="suggest_sweep">Una revisió de stalkerware, de l\'autor de Tern</string>
+    <string name="suggest_starling">Compartició de la ubicació privada, de l\'autor de Tern</string>
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">모양</string>
+    <string name="look_summary">테마, 색상, 대비, 밀도, 모서리 및 아이콘</string>
+    <string name="look_preview_spoken">현재 설정된 모양 미리보기</string>
+    <string name="look_preview_app">예시 앱</string>
+    <string name="look_colours">색상</string>
+    <string name="look_palette">색상</string>
+    <string name="look_wallpaper">배경화면</string>
+    <string name="look_own">사용자 지정 색상</string>
+    <string name="palette_ink">잉크</string>
+    <string name="palette_slate">슬레이트</string>
+    <string name="palette_tide">타이드</string>
+    <string name="palette_moss">모스</string>
+    <string name="palette_amber">앰버</string>
+    <string name="palette_clay">클레이</string>
+    <string name="palette_rose">로즈</string>
+    <string name="palette_plum">플럼</string>
+    <string name="look_hue">사용자 지정 색상의 색조</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="other">%1$d도</item>
+    </plurals>
+    <string name="look_contrast">대비</string>
+    <string name="contrast_standard">표준</string>
+    <string name="contrast_medium">중간</string>
+    <string name="contrast_high">높음</string>
+    <string name="look_contrast_effect">대비가 높을수록 텍스트와 윤곽선이 배경과 더 뚜렷하게 구분됩니다.</string>
+    <string name="look_shape_and_size">모양 및 크기</string>
+    <string name="look_density">밀도</string>
+    <string name="density_comfortable">편안하게</string>
+    <string name="density_compact">촘촘하게</string>
+    <string name="look_density_effect">촘촘하게를 선택하면 화면에 더 많은 내용을 표시합니다. 누를 수 있는 항목은 손가락 끝보다 작아지지 않습니다.</string>
+    <string name="look_corners">모서리</string>
+    <string name="corners_round">둥근</string>
+    <string name="corners_soft">부드러운</string>
+    <string name="corners_sharp">각진</string>
+    <string name="look_icon_shape">아이콘 모양</string>
+    <string name="icon_shape_circle">원형</string>
+    <string name="icon_shape_squircle">둥근 사각형</string>
+    <string name="icon_shape_square">사각형</string>
+    <string name="look_icons">아이콘</string>
+    <string name="look_source_icons">소스의 아이콘</string>
+    <string name="look_source_icons_effect">앱이 설치되지 않은 경우, Tern은 앱이 게시된 저장소나 스토어 등록정보에서 아이콘을 가져옵니다. 끄면 요청 없이 단색 배경에 글자를 표시합니다.</string>
+</resources>

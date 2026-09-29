@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">Todos os lançamentos encontrados apenas ofereceram o ficheiro de outra aplicação, não o desta.</string>
+</resources>

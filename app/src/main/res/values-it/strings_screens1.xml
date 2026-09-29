@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">Chiudi ricerca</string>
+    <string name="waiting_banner_one">%1$s attende il tuo via libera</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d installazione attende il tuo via libera</item>
+        <item quantity="many">%1$d installazioni attendono il tuo via libera</item>
+        <item quantity="other">%1$d installazioni attendono il tuo via libera</item>
+    </plurals>
+    <string name="empty_add">Aggiungi un\'app</string>
+    <string name="empty_well_known">App conosciute</string>
+    <string name="empty_handoff">Invia da un telefono</string>
+    <string name="removed_notice">Smesso di seguire %1$s</string>
+    <string name="removed_undo">Annulla</string>
+    <string name="waiting_play_protect">Android, o Play Protect, potrebbe chiedere ancora una volta. È un loro controllo e non un problema con il file.</string>
+    <string name="prompt_always_asks">Questo dispositivo chiede sempre prima di installare un aggiornamento.</string>
+    <string name="checks_passed">Questo file ha superato ogni controllo</string>
+    <string name="explain_button">Cosa significa: %1$s</string>
+    <string name="explain_action">ascolta cosa significa</string>
+    <string name="explain_close">Chiudi</string>
+    <string name="explain_signer_title">Certificato di firma</string>
+    <string name="explain_checksum_title">Checksum</string>
+    <string name="explain_permissions_title">Permessi</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Aggiornamenti senza richieste</string>
+    <string name="explain_always_asks_title">Questo dispositivo chiede sempre</string>
+    <string name="explain_package">Ogni app Android ha un nome che non cambia mai. Un file che portasse un altro nome sarebbe un\'app diversa, indipendentemente da come si chiamasse.</string>
+    <string name="explain_signer_installed">Uno sviluppatore firma ogni release con una chiave che solo lui possiede. Tern confronta la firma di questo file con l\'app su questo dispositivo e con il certificato che ha ricordato alla prima installazione. Un file firmato da chiunque altro viene rifiutato, anche se proviene dall\'indirizzo giusto.</string>
+    <string name="explain_signer_first">Non c\'è ancora nulla con cui confrontare. Il file dice chi lo ha firmato, Android lo conferma quando lo installa e da quel momento in poi Tern vincola ogni aggiornamento allo stesso certificato.</string>
+    <string name="explain_checksum_matched">Un checksum è un\'impronta digitale del file stesso. L\'editore ne ha offerto uno e il file scaricato da Tern ha lo stesso, quindi è arrivato così come è stato pubblicato.</string>
+    <string name="explain_checksum_pending">Un checksum è un\'impronta digitale del file stesso. L\'editore ne ha offerto uno e Tern lo confronta con il file non appena il file viene scaricato.</string>
+    <string name="explain_checksum_mismatch">Un checksum è un\'impronta digitale del file stesso. L\'editore ne ha offerto uno e il file scaricato da Tern ne ha un altro, quindi non è il file che è stato pubblicato.</string>
+    <string name="explain_checksum_none">Questo editore non offre alcun checksum. La firma viene comunque controllata ed è la più forte delle due.</string>
+    <string name="explain_permissions">Cosa chiede di poter fare questa versione che quella installata non faceva.</string>
+    <string name="explain_virustotal">Apre la pagina per questo esatto file su VirusTotal nel tuo browser. Tern non invia nulla lì.</string>
+    <string name="explain_silent">Android permette a un\'app di aggiornarne un\'altra senza chiedere quando quell\'app l\'ha installata e il dispositivo esegue Android 12 o successivo. Android decide ogni volta.</string>
+    <string name="explain_always_asks">Questo dispositivo esegue Android %1$s, che chiede prima di ogni installazione. Tern scarica e controlla l\'aggiornamento in background e ti avvisa quando è pronto.</string>
+    <string name="activity_installed">Installata %1$s</string>
+    <string name="activity_installed_plain">Installata</string>
+    <string name="activity_updated">Aggiornata a %1$s</string>
+    <string name="activity_updated_plain">Aggiornata</string>
+    <string name="activity_update_waits">Aggiornamento a %1$s in attesa</string>
+    <string name="activity_install_waits">Installazione di %1$s in attesa</string>
+    <string name="activity_not_installed">Impossibile installare %1$s</string>
+    <string name="activity_not_installed_plain">Impossibile installare</string>
+    <string name="activity_blocked">Bloccata %1$s</string>
+    <string name="activity_blocked_plain">Bloccata</string>
+    <string name="activity_added">Aggiunta</string>
+    <string name="activity_removed">Smesso di seguire</string>
+    <string name="activity_check_failed">Controllo fallito</string>
+    <string name="activity_steps_show">Mostra passaggi</string>
+    <string name="activity_steps_hide">Nascondi passaggi</string>
+    <string name="first_well_known">App conosciute</string>
+</resources>

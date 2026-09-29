@@ -26,6 +26,7 @@
     <string name="engine_downgrade">Установленная версия (%1$s) новее, чем этот файл (%2$s). Android принимает более старую версию только после удаления установленного приложения, а это удаляет его данные.</string>
     <string name="engine_test_only">Этот файл - тестовая сборка, которую Android отказывается устанавливать из магазина приложений.</string>
     <string name="engine_needs_newer_android">Этой версии нужен Android API уровня %1$d или выше.</string>
+    <string name="engine_proxy_silent">Прокси не ответил, поэтому ничего не было отправлено. Tern никогда не обходит его.</string>
     <string name="engine_check_network">Не удалось подключиться к источнику: %1$s</string>
     <string name="engine_check_not_found">У источника больше ничего нет по этому адресу: %1$s</string>
     <string name="engine_check_auth">Источник отклонил запрос. Добавьте или проверьте токен для этого сайта в настройках. (%1$s)</string>

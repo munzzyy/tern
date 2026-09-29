@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">بستن جستجو</string>
+    <string name="waiting_banner_one">%1$s منتظر تأیید شماست</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d نصب منتظر تأیید شماست</item>
+        <item quantity="other">%1$d نصب منتظر تأیید شماست</item>
+    </plurals>
+    <string name="empty_well_known">برنامه‌های شناخته‌شده</string>
+    <string name="empty_handoff">ارسال از تلفن</string>
+    <string name="removed_notice">دنبال کردن %1$s متوقف شد</string>
+    <string name="removed_undo">لغو</string>
+    <string name="waiting_play_protect">Android، یا Play Protect، ممکن است یک بار دیگر بپرسد. این بررسی خودشان است و مشکلی در فایل نیست.</string>
+    <string name="prompt_always_asks">این دستگاه همیشه پیش از نصب به‌روزرسانی سؤال می‌کند.</string>
+    <string name="checks_passed">این فایل تمام بررسی‌ها را گذراند</string>
+    <string name="explain_button">معنی این چیست: %1$s</string>
+    <string name="explain_action">شنیدن معنی این</string>
+    <string name="explain_close">بستن</string>
+    <string name="explain_signer_title">گواهی امضا</string>
+    <string name="explain_checksum_title">چکسام</string>
+    <string name="explain_permissions_title">مجوزها</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">به‌روزرسانی‌ها بدون پرسش</string>
+    <string name="explain_always_asks_title">این دستگاه همیشه می‌پرسد</string>
+    <string name="explain_package">هر برنامه Android یک نام دارد که هرگز تغییر نمی‌کند. فایلی که نام دیگری داشته باشد برنامه متفاوتی خواهد بود، فارغ از اینکه چه نامی برای خود گذاشته است.</string>
+    <string name="explain_signer_installed">یک توسعه‌دهنده هر انتشار را با کلیدی امضا می‌کند که فقط خودش دارد. Tern امضای این فایل را با برنامه روی این دستگاه و با گواهی‌ای که در نصب اول به خاطر سپرده مقایسه می‌کند. فایلی که توسط شخص دیگری امضا شده باشد رد می‌شود، حتی اگر از آدرس درستی آمده باشد.</string>
+    <string name="explain_signer_first">هنوز چیزی برای مقایسه وجود ندارد. فایل می‌گوید چه کسی آن را امضا کرده است، Android هنگام نصب آن را تأیید می‌کند، و از آن پس Tern هر به‌روزرسانی را ملزم به داشتن همان گواهی می‌کند.</string>
+    <string name="explain_checksum_matched">یک چکسام، اثر انگشت خود فایل است. ناشر یکی ارائه کرده است، و فایلی که Tern دانلود کرده همان را دارد، بنابراین فایل دقیقاً همان‌طور که منتشر شده رسیده است.</string>
+    <string name="explain_checksum_pending">یک چکسام، اثر انگشت خود فایل است. ناشر یکی ارائه کرده است، و Tern به‌محض دانلود فایل آن را مقایسه می‌کند.</string>
+    <string name="explain_checksum_mismatch">یک چکسام، اثر انگشت خود فایل است. ناشر یکی ارائه کرده است، و فایلی که Tern دانلود کرده چکسام دیگری دارد، بنابراین این آن فایلی نیست که منتشر شده بود.</string>
+    <string name="explain_checksum_none">این ناشر هیچ چکسامی ارائه نمی‌دهد. امضا همچنان بررسی می‌شود، و از بین این دو مورد قوی‌تر است.</string>
+    <string name="explain_permissions">کارهایی که این نسخه برای انجام آن‌ها اجازه می‌خواهد اما نسخه نصب‌شده نمی‌خواست.</string>
+    <string name="explain_virustotal">صفحه مربوط به دقیقاً همین فایل را در VirusTotal در مرورگر شما باز می‌کند. Tern هیچ‌چیزی به آنجا ارسال نمی‌کند.</string>
+    <string name="explain_silent">زمانی که دستگاه از Android 12 یا بالاتر استفاده کند و برنامه‌ای، برنامه دیگر را نصب کرده باشد، Android اجازه می‌دهد بدون پرسش آن را به‌روزرسانی کند. Android هر بار در این باره تصمیم می‌گیرد.</string>
+    <string name="explain_always_asks">این دستگاه از Android %1$s استفاده می‌کند که پیش از هر نصب سؤال می‌کند. Tern به‌روزرسانی را در پس‌زمینه دانلود و بررسی می‌کند و وقتی آماده شد به شما اطلاع می‌دهد.</string>
+    <string name="activity_installed">%1$s نصب شد</string>
+    <string name="activity_installed_plain">نصب شد</string>
+    <string name="activity_updated">به %1$s به‌روز شد</string>
+    <string name="activity_updated_plain">به‌روز شد</string>
+    <string name="activity_update_waits">به‌روزرسانی به %1$s منتظر است</string>
+    <string name="activity_update_waits_plain">یک به‌روزرسانی منتظر است</string>
+    <string name="activity_install_waits">نصب %1$s منتظر است</string>
+    <string name="activity_install_waits_plain">یک نصب منتظر است</string>
+    <string name="activity_not_installed">نصب %1$s امکان‌پذیر نشد</string>
+    <string name="activity_not_installed_plain">نصب امکان‌پذیر نشد</string>
+    <string name="activity_blocked">%1$s مسدود شد</string>
+    <string name="activity_blocked_plain">مسدود شد</string>
+    <string name="activity_added">اضافه شد</string>
+    <string name="activity_removed">دنبال کردن متوقف شد</string>
+    <string name="activity_check_failed">بررسی ناموفق بود</string>
+    <string name="activity_steps_show">نمایش مراحل</string>
+    <string name="activity_steps_hide">پنهان کردن مراحل</string>
+    <string name="first_well_known">برنامه‌های شناخته‌شده</string>
+</resources>

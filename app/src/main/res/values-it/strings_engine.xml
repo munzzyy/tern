@@ -26,6 +26,7 @@
     <string name="engine_downgrade">La versione installata (%1$s) è più recente di questo file (%2$s). Android accetta una versione più vecchia solo dopo che l\'app installata viene rimossa, eliminandone i dati.</string>
     <string name="engine_test_only">Questo file è una build di test, che Android rifiuta di installare da un app store.</string>
     <string name="engine_needs_newer_android">Questa versione richiede Android API %1$d o successiva.</string>
+    <string name="engine_proxy_silent">Il proxy non ha risposto, quindi non è stato inviato nulla. Tern non lo aggira mai.</string>
     <string name="engine_check_network">L\'origine non è raggiungibile: %1$s</string>
     <string name="engine_check_not_found">L\'origine non ha più nulla a questo indirizzo: %1$s</string>
     <string name="engine_check_auth">L\'origine ha rifiutato la richiesta. Aggiungi o controlla il token per questo sito in Impostazioni. (%1$s)</string>
@@ -88,15 +89,22 @@
     <string name="engine_channel_transfers">Download</string>
     <plurals name="engine_notify_updates_count">
         <item quantity="one">%1$d aggiornamento disponibile</item>
+        <item quantity="many">%1$d aggiornamenti disponibili</item>
         <item quantity="other">%1$d aggiornamenti disponibili</item>
     </plurals>
     <string name="engine_notify_update_one">Aggiornamento disponibile per %1$s</string>
     <plurals name="engine_notify_installed_count">
         <item quantity="one">%1$d app aggiornata</item>
+        <item quantity="many">%1$d app aggiornate</item>
         <item quantity="other">%1$d app aggiornate</item>
     </plurals>
     <string name="engine_notify_installed_one">%1$s è stata aggiornata</string>
     <string name="engine_notify_confirm">Tocca per finire di installare %1$s</string>
+    <plurals name="engine_notify_failures_count">
+        <item quantity="one">Non è stato possibile controllare o aggiornare %1$d app</item>
+        <item quantity="many">Non è stato possibile controllare o aggiornare %1$d app</item>
+        <item quantity="other">Non è stato possibile controllare o aggiornare %1$d app</item>
+    </plurals>
     <string name="engine_notify_downloading">Download di %1$s in corso</string>
     <string name="engine_pick_abi_match">Creato per il processore di questo dispositivo (%1$s)</string>
     <string name="engine_pick_abi_mismatch">Creato per un processore che questo dispositivo non ha (%1$s)</string>

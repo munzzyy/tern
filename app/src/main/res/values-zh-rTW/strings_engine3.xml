@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern 帶有簽署此應用程式的憑證，而這個檔案是使用其他憑證簽署。它可能來自其他人，因此沒有安裝。</string>
+    <string name="engine_warn_built_in_pin">Tern 帶有簽署此應用程式的憑證，而提供的檔案是使用其他憑證簽署。</string>
+</resources>

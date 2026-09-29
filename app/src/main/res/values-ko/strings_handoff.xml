@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">이 기기는 로컬 네트워크에 없으므로 휴대전화가 연결할 수 없습니다. 이 기기를 Wi-Fi나 네트워크 케이블에 연결하고 다시 시도해 주세요.</string>
+    <string name="engine_handoff_behind_vpn">이 기기는 VPN을 통해 연결되어 있으므로 로컬 네트워크의 휴대전화가 연결할 수 없습니다. 전송하는 동안 VPN을 끄고 다시 시도해 주세요.</string>
+    <string name="engine_handoff_cannot_open">이 기기가 로컬 네트워크의 페이지를 열 수 없습니다: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">이 기기가 로컬 네트워크의 페이지를 열 수 없습니다.</string>
+    <string name="engine_handoff_not_on_screen">휴대전화에서 링크를 가져오는 동안 화면에 Tern이 열려 있어야 합니다. Tern을 열고 다시 시도해 주세요.</string>
+</resources>

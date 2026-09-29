@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern گواهی امضای این برنامه را دارد، و این فایل با گواهی دیگری امضا شده است. ممکن است از طرف شخص دیگری باشد، بنابراین نصب نشد.</string>
+    <string name="engine_warn_built_in_pin">Tern گواهی امضای این برنامه را دارد، و فایل ارائه‌شده با گواهی دیگری امضا شده است.</string>
+</resources>

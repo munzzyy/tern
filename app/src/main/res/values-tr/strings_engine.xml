@@ -26,6 +26,7 @@
     <string name="engine_downgrade">Yüklü sürüm (%1$s) bu dosyadan (%2$s) daha yeni. Android daha eski bir sürümü ancak yüklü uygulama kaldırıldıktan sonra kabul eder ve uygulamayı kaldırmak verilerini siler.</string>
     <string name="engine_test_only">Bu dosya bir test yapısı ve Android bunu bir uygulama mağazasından yüklemeyi reddediyor.</string>
     <string name="engine_needs_newer_android">Bu sürüm, Android API düzeyi %1$d veya daha yenisini gerektiriyor.</string>
+    <string name="engine_proxy_silent">Proxy yanıt vermedi, bu yüzden hiçbir şey gönderilmedi. Tern asla onun etrafından dolaşmaz.</string>
     <string name="engine_check_network">Kaynağa ulaşılamadı: %1$s</string>
     <string name="engine_check_not_found">Kaynağın artık bu adreste hiçbir şeyi yok: %1$s</string>
     <string name="engine_check_auth">Kaynak isteği reddetti. Ayarlardan bu site için belirteci ekleyin veya kontrol edin. (%1$s)</string>

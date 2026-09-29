@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Érintse meg a telepítés befejezéséhez</string>
+    <string name="notify_downloading_plain">Letöltés</string>
+    <string name="settings_notify_names">Alkalmazások megnevezése az értesítésekben</string>
+    <string name="settings_notify_names_help">Egy értesítés elolvasható a lezárási képernyőn. Ha ki van kapcsolva, a Tern csak azt mondja meg, hány alkalmazás, de azt soha, hogy melyik.</string>
+</resources>

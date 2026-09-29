@@ -91,7 +91,7 @@
         <item quantity="one">%d kiválasztva</item>
         <item quantity="other">%d kiválasztva</item>
     </plurals>
-    <string name="apps_select_hint">Érintse meg az alkalmazásokat a kiválasztáshoz.</string>
+    <string name="apps_select_hint">Válasszon alkalmazásokat a listából.</string>
     <string name="action_add_to_category">Hozzáadás kategóriához</string>
     <plurals name="bulk_category_title">
         <item quantity="one">%d app hozzáadása kategóriához</item>
@@ -122,13 +122,12 @@
         <item quantity="other">%d app követésének leállítása?</item>
     </plurals>
     <string name="bulk_remove_text">Az alkalmazások telepítve maradnak. A Tern csupán a frissítéseik ellenőrzését állítja le.</string>
-    <string name="apps_empty_title">Még nincsenek alkalmazások</string>
-    <string name="apps_empty_text">Illesszen be egy linket egy projektoldalhoz, egy kiadás oldalhoz vagy egy F-Droid tárolóhoz, és a Tern onnantól kezdve naprakészen tartja az alkalmazást.</string>
+    <string name="apps_empty_title">Még nincs itt semmi</string>
+    <string name="apps_empty_text">Adjon hozzá egy alkalmazást a linkjével, vagy kezdje egy olyannal, amit sokan használnak.</string>
     <string name="sort_title">Rendezés</string>
     <string name="sort_name">Név szerint</string>
     <string name="sort_recently_checked">Legutóbb ellenőrzött</string>
     <string name="sort_source">Forrás szerint</string>
-    <string name="remove_title">Eltávolítja ezt: %s?</string>
     <string name="remove_text_installed">A Tern nem követi többé. Az alkalmazás telepítve marad.</string>
     <string name="remove_text">A Tern nem követi többé.</string>
     <string name="add_title">Alkalmazás hozzáadása</string>
@@ -180,16 +179,14 @@
     <string name="carried_notes_none">A kiadásokat megjegyzéseiktől függetlenül követjük.</string>
     <string name="carried_version">A verziót a címkéből olvassuk ki a(z) %1$s használatával.</string>
     <string name="carried_version_none">A verziót a szokásos módon olvassuk ki.</string>
-    <string name="carried_match_device_on">Ha több fájlt kínálnak fel, az erre a telefonra készítettet részesítjük előnyben.</string>
-    <string name="carried_match_device_off">A fájlokat nem szűkítjük le a telefon processzorára.</string>
+    <string name="carried_match_device_on">Ha több fájl érhető el, az ehhez az eszközhöz készült a preferált.</string>
+    <string name="carried_match_device_off">A fájlok nincsenek az eszköz processzorára szűkítve.</string>
     <string name="carried_fallback_on">Régebbi kiadást használunk, ha a legújabbnak nincs használható fájlja.</string>
     <string name="carried_fallback_off">Régebbi kiadásokat soha nem használunk, még akkor sem, ha a legújabbnak nincs használható fájlja.</string>
     <string name="carried_track_on">A kiadásokat csak követjük; semmit nem töltünk le vagy telepítünk.</string>
     <string name="carried_track_off">A kiadásokat letöltjük és telepítjük, nem csak követjük.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">A link rögzíti ezt a tanúsítványt, így csak az általa aláírt fájlok települnek. Valaki más választotta: csak akkor adja hozzá, ha bízik abban, ahonnan a link származik.</item>
-        <item quantity="other">A link rögzíti ezeket a tanúsítványokat, így csak az általuk aláírt fájlok települnek. Valaki más választotta őket: csak akkor adja hozzá, ha bízik abban, ahonnan a link származik.</item>
-    </plurals>
+    <string name="carried_pin_warning">A link rögzíti ezt a tanúsítványt, így csak az általa aláírt fájlok települnek. Valaki más választotta: csak akkor adja hozzá, ha bízik abban, ahonnan a link származik.</string>
+    <string name="carried_pins_warning">A link rögzíti ezeket a tanúsítványokat, így csak az általuk aláírt fájlok települnek. Valaki más választotta őket: csak akkor adja hozzá, ha bízik abban, ahonnan a link származik.</string>
     <string name="checks_title">Ellenőrzések</string>
     <string name="checks_package">Csomagnév</string>
     <string name="checks_package_unknown">Ismeretlen a fájl beolvasásáig</string>
@@ -291,7 +288,7 @@
     <string name="file_recommended">%d. választás, ajánlott</string>
     <string name="file_alternative">%d. választás</string>
     <string name="setting_match_device">Egyezés ezzel az eszközzel</string>
-    <string name="setting_match_device_effect">Ha több fájlt kínálnak fel, az erre a telefonra készítettet részesíti előnyben.</string>
+    <string name="setting_match_device_effect">Ha több fájl érhető el, részesítse előnyben az eszköz processzorához készültet.</string>
     <string name="setting_include">Csak egyező fájlok</string>
     <string name="setting_include_help">Egy minta, amelyet a fájlnévnek tartalmaznia kell, például: universal</string>
     <string name="setting_exclude">Egyező fájlok kihagyása</string>
@@ -353,7 +350,6 @@
     <string name="settings_keep_installers_effect">A fájlok a telepítés után is megmaradnak, tárhelyet használva. Kikapcsolva törli őket.</string>
     <string name="settings_ownership">Legyen az egyetlen frissítő</string>
     <string name="settings_ownership_effect">Megkéri az Androidot, hogy csak a Tern frissíthesse az általa telepített alkalmazásokat, így más áruház nem cserélheti le őket.</string>
-    <string name="settings_ownership_unsupported">Android 14 vagy újabb szükséges.</string>
     <string name="settings_tokens">Hozzáférési tokenek</string>
     <string name="settings_tokens_effect">A token megemeli a korlátokat és megnyitja a privát projekteket. Csak annak a gazdagépnek küldjük el, amelyhez mentve lett, és soha többé nem jelenik meg.</string>
     <string name="token_saved">Mentve</string>
@@ -382,9 +378,6 @@
     <string name="theme_system">A rendszer követése</string>
     <string name="theme_light">Világos</string>
     <string name="theme_dark">Sötét</string>
-    <string name="settings_dynamic_color">Színek a háttérképből</string>
-    <string name="settings_dynamic_color_effect">Kikapcsolva a Tern saját palakék színét használja.</string>
-    <string name="settings_dynamic_color_unsupported">Android 12 vagy újabb szükséges.</string>
     <string name="settings_pure_black">Tiszta fekete</string>
     <string name="settings_pure_black_effect">Fekete hátterek a sötét témában, jobban kíméli az OLED képernyőket.</string>
     <string name="settings_data">Importálás és exportálás</string>
@@ -466,7 +459,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">A Tern egyenesen onnan telepíti és frissíti az alkalmazásokat, ahol a fejlesztőik közzéteszik őket.</string>
     <string name="first_line_2">Mielőtt az Android látna egy fájlt, a Tern ellenőrzi, hogy ki írta alá, és hogy egyezik-e a kiadó ellenőrző összegével.</string>
-    <string name="first_line_3">Minden, amit talál és tesz, bekerül a tevékenységnaplóba, egyszerű szavakkal.</string>
+    <string name="first_line_3">Mindent, amit talál és tesz, egyszerű szavakkal ír le.</string>
     <string name="first_notify_explain">A Tern értesítheti Önt, ha a frissítések készen állnak. Az Android meg fogja kérdezni, hogy engedélyezi-e az értesítéseket.</string>
     <string name="first_notify_denied">Az értesítések ki vannak kapcsolva. Később bekapcsolhatja őket a Beállításokban.</string>
     <string name="first_notify_allow">Értesítések engedélyezése</string>
@@ -474,4 +467,5 @@
     <string name="install_permission_title">Alkalmazások telepítésének engedélyezése a Tern számára</string>
     <string name="install_permission_body">Az Android egyszer rákérdez, mielőtt egy alkalmazás telepíthetne egy másikat. A következő képernyőn kapcsolja be a Tern kapcsolóját, majd térjen vissza. A telepítés magától folytatódik.</string>
     <string name="install_permission_open">Beállítások megnyitása</string>
+    <string name="install_permission_closes">Az Android ezen verziója bezárja a Tern-t, amikor bekapcsolja a kapcsolót. Utána nyissa meg újra a Tern-t, és a telepítés folytatódik.</string>
 </resources>

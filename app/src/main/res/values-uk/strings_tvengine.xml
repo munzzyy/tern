@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">Цей файл не є списком програм, експортованим з Tern або Obtainium.</string>
+    <string name="engine_import_empty">Цей файл не містить програм.</string>
+    <string name="engine_import_local_address">Її адреса знаходиться в локальній мережі. Додайте її власноруч, якщо вона ваша.</string>
+    <string name="engine_warn_local_address">Ця адреса знаходиться у вашій власній мережі. Tern запитуватиме її кожного разу під час перевірки оновлень.</string>
+    <string name="engine_import_unreadable_export">Не вдалося прочитати цей експорт з Tern (%1$s). Якщо він походить з новішої версії Tern, оновіть Tern на цьому пристрої та спробуйте знову.</string>
+    <string name="engine_import_too_large">Файл більший за %1$d МіБ, а це більше, ніж займає список програм, тому Tern його не прочитав.</string>
+    <string name="engine_import_file_gone">Цього файлу там більше немає. Відкрийте список файлів знову.</string>
+    <string name="engine_link_not_https">Приймаються лише адреси, що починаються з https://.</string>
+    <string name="engine_link_not_an_address">Це не веб-адреса, яку може відкрити Tern. Вона має виглядати як https://example.org/tern-apps.json.</string>
+    <string name="engine_link_leaves_https">Ця адреса перенаправляє Tern на іншу, яка не є HTTPS, тому нічого не було отримано.</string>
+    <string name="engine_link_not_found">За цією адресою немає файлу. Перевірте її на наявність помилок вводу.</string>
+    <string name="engine_link_refused">Сервер відмовився надати файл (він відповів %1$d). Tern не надсилає логін із цим запитом, тому файл має бути доступним для читання будь-кому, хто має адресу.</string>
+    <string name="engine_link_unreachable">Не вдалося зв\'язатися за адресою: %1$s</string>
+    <string name="engine_link_unreachable_plain">Не вдалося зв\'язатися за адресою. Перевірте з\'єднання та адресу, а потім спробуйте знову.</string>
+    <string name="engine_link_too_slow">Серверу знадобилося більше хвилини для надсилання файлу, тому Tern припинив очікування. Спробуйте пізніше.</string>
+    <string name="engine_link_not_an_export">Те, що знаходиться за цією адресою, не є списком програм, експортованим з Tern або Obtainium. Адреса має вести до самого файлу, а не до сторінки, яка його відображає.</string>
+    <string name="engine_export_no_place">На цьому пристрої немає спільного сховища, до якого Tern міг би записувати.</string>
+    <string name="engine_export_failed">Не вдалося записати експорт: %1$s</string>
+    <string name="engine_export_failed_plain">Не вдалося записати експорт.</string>
+</resources>

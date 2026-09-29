@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">Ĉi tiu aparato ne estas en loka reto, do telefono ne povas atingi ĝin. Konektu ĉi tiun aparaton al Wi-Fi aŭ al retkablo kaj provu denove.</string>
+    <string name="engine_handoff_behind_vpn">Ĉi tiu aparato estas konektita per VPN, do telefono en la loka reto ne povas atingi ĝin. Malŝaltu la VPN dum vi sendas, poste provu denove.</string>
+    <string name="engine_handoff_cannot_open">Ĉi tiu aparato ne povis malfermi paĝon en la loka reto: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">Ĉi tiu aparato ne povis malfermi paĝon en la loka reto.</string>
+    <string name="engine_handoff_not_on_screen">Tern devas esti sur la ekrano dum ĝi akceptas ligilojn de telefono. Malfermu Tern kaj provu denove.</string>
+</resources>

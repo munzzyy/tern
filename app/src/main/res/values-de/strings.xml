@@ -91,7 +91,7 @@
         <item quantity="one">%d ausgewählt</item>
         <item quantity="other">%d ausgewählt</item>
     </plurals>
-    <string name="apps_select_hint">Tippe Apps an, um sie auszuwählen.</string>
+    <string name="apps_select_hint">Wähle Apps aus der Liste.</string>
     <string name="action_add_to_category">Zu Kategorie hinzufügen</string>
     <plurals name="bulk_category_title">
         <item quantity="one">%d App zu Kategorie hinzufügen</item>
@@ -122,13 +122,12 @@
         <item quantity="other">%d Apps nicht mehr verfolgen?</item>
     </plurals>
     <string name="bulk_remove_text">Die Apps bleiben installiert. Tern prüft sie nur nicht mehr auf Updates.</string>
-    <string name="apps_empty_title">Noch keine Apps</string>
-    <string name="apps_empty_text">Füge einen Link zu einer Projektseite, einem Release oder einem F-Droid-Repository ein, und Tern hält die App von dort aus aktuell.</string>
+    <string name="apps_empty_title">Noch nichts hier</string>
+    <string name="apps_empty_text">Füge eine App über ihren Link hinzu, oder beginne mit einer, die viele Leute nutzen.</string>
     <string name="sort_title">Sortieren</string>
     <string name="sort_name">Nach Name</string>
     <string name="sort_recently_checked">Zuletzt geprüft</string>
     <string name="sort_source">Nach Quelle</string>
-    <string name="remove_title">%s entfernen?</string>
     <string name="remove_text_installed">Tern folgt der App nicht mehr. Sie bleibt installiert.</string>
     <string name="remove_text">Tern folgt der App nicht mehr.</string>
     <string name="add_title">App hinzufügen</string>
@@ -145,7 +144,7 @@
     <string name="preview_installed">Jetzt installiert: %s</string>
     <string name="preview_file">Zu installierende Datei</string>
     <plurals name="preview_other_files">
-        <item quantity="one">Eine andere Datei wird angeboten. Du kannst sie nach dem Hinzufügen auswählen.</item>
+        <item quantity="one">%d andere Datei wird angeboten. Du kannst sie nach dem Hinzufügen auswählen.</item>
         <item quantity="other">%d andere Dateien werden angeboten. Du kannst eine nach dem Hinzufügen auswählen.</item>
     </plurals>
     <string name="preview_already_tracked">Diese App ist bereits in deiner Liste.</string>
@@ -180,16 +179,14 @@
     <string name="carried_notes_none">Releases werden unabhängig von ihren Notizen verfolgt.</string>
     <string name="carried_version">Die Version wird mit %1$s aus dem Tag gelesen.</string>
     <string name="carried_version_none">Die Version wird wie üblich gelesen.</string>
-    <string name="carried_match_device_on">Wenn mehrere Dateien angeboten werden, wird die für dieses Smartphone bevorzugt.</string>
-    <string name="carried_match_device_off">Dateien werden nicht auf den Prozessor dieses Smartphones eingegrenzt.</string>
+    <string name="carried_match_device_on">Wenn mehrere Dateien angeboten werden, wird die für dieses Gerät erstellte bevorzugt.</string>
+    <string name="carried_match_device_off">Dateien werden nicht auf den Prozessor dieses Geräts eingegrenzt.</string>
     <string name="carried_fallback_on">Ein älteres Release wird genutzt, wenn das neueste keine nutzbare Datei hat.</string>
     <string name="carried_fallback_off">Ältere Releases werden nie genutzt, selbst wenn das neueste keine nutzbare Datei hat.</string>
     <string name="carried_track_on">Releases werden nur verfolgt; nichts wird heruntergeladen oder installiert.</string>
     <string name="carried_track_off">Releases werden heruntergeladen und installiert, nicht nur verfolgt.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">Der Link heftet dieses Zertifikat an, sodass nur von ihm signierte Dateien installiert werden. Jemand anderes hat es ausgewählt: Füge es nur hinzu, wenn du der Quelle des Links vertraust.</item>
-        <item quantity="other">Der Link heftet diese Zertifikate an, sodass nur von ihnen signierte Dateien installiert werden. Jemand anderes hat sie ausgewählt: Füge sie nur hinzu, wenn du der Quelle des Links vertraust.</item>
-    </plurals>
+    <string name="carried_pin_warning">Der Link heftet dieses Zertifikat an, sodass nur von ihm signierte Dateien installiert werden. Jemand anderes hat es ausgewählt: Füge es nur hinzu, wenn du der Quelle des Links vertraust.</string>
+    <string name="carried_pins_warning">Der Link heftet diese Zertifikate an, sodass nur von ihnen signierte Dateien installiert werden. Jemand anderes hat sie ausgewählt: Füge sie nur hinzu, wenn du der Quelle des Links vertraust.</string>
     <string name="checks_title">Prüfungen</string>
     <string name="checks_package">Paketname</string>
     <string name="checks_package_unknown">Erst nach Lesen der Datei bekannt</string>
@@ -291,7 +288,7 @@
     <string name="file_recommended">Auswahl %d, empfohlen</string>
     <string name="file_alternative">Auswahl %d</string>
     <string name="setting_match_device">An dieses Gerät anpassen</string>
-    <string name="setting_match_device_effect">Wenn mehrere Dateien angeboten werden, wird die für den Prozessor dieses Smartphones bevorzugt.</string>
+    <string name="setting_match_device_effect">Wenn mehrere Dateien angeboten werden, die für den Prozessor dieses Geräts erstellte bevorzugen.</string>
     <string name="setting_include">Nur Dateien, die entsprechen</string>
     <string name="setting_include_help">Ein Muster, das der Dateiname enthalten muss, zum Beispiel universal</string>
     <string name="setting_exclude">Dateien überspringen, die entsprechen</string>
@@ -334,7 +331,7 @@
     <string name="settings_interval">Wie oft</string>
     <string name="interval_off">Aus</string>
     <plurals name="interval_hours">
-        <item quantity="one">Jede Stunde</item>
+        <item quantity="one">Alle %d Stunde</item>
         <item quantity="other">Alle %d Stunden</item>
     </plurals>
     <string name="settings_unmetered">Nur in ungetakteten Netzwerken</string>
@@ -353,7 +350,6 @@
     <string name="settings_keep_installers_effect">Dateien bleiben nach der Installation erhalten und belegen Speicherplatz. Wenn aus, werden sie gelöscht.</string>
     <string name="settings_ownership">Der einzige Updater sein</string>
     <string name="settings_ownership_effect">Android bitten, nur Tern die Aktualisierung der von ihm installierten Apps zu erlauben, damit kein anderer Store sie austauschen kann.</string>
-    <string name="settings_ownership_unsupported">Benötigt Android 14 oder neuer.</string>
     <string name="settings_tokens">Zugriffstoken</string>
     <string name="settings_tokens_effect">Ein Token erhöht Ratenlimits und öffnet private Projekte. Es wird nur an den genauen Host gesendet, für den es gespeichert ist, und wird nie wieder angezeigt.</string>
     <string name="token_saved">Gespeichert</string>
@@ -382,9 +378,6 @@
     <string name="theme_system">Systemstandard</string>
     <string name="theme_light">Hell</string>
     <string name="theme_dark">Dunkel</string>
-    <string name="settings_dynamic_color">Farben aus deinem Hintergrund</string>
-    <string name="settings_dynamic_color_effect">Wenn aus, wird Terns eigenes Schieferblau genutzt.</string>
-    <string name="settings_dynamic_color_unsupported">Benötigt Android 12 oder neuer.</string>
     <string name="settings_pure_black">Reines Schwarz</string>
     <string name="settings_pure_black_effect">Schwarze Hintergründe im dunklen Design, schonender für OLED-Bildschirme.</string>
     <string name="settings_data">Im- und Export</string>
@@ -418,11 +411,11 @@
         <item quantity="other">%d Apps hinzugefügt</item>
     </plurals>
     <plurals name="import_present">
-        <item quantity="one">Eine war bereits in deiner Liste</item>
+        <item quantity="one">%d war bereits in deiner Liste</item>
         <item quantity="other">%d waren bereits in deiner Liste</item>
     </plurals>
     <plurals name="import_skipped">
-        <item quantity="one">Eine konnte nicht übernommen werden:</item>
+        <item quantity="one">%d konnte nicht übernommen werden:</item>
         <item quantity="other">%d konnten nicht übernommen werden:</item>
     </plurals>
     <plurals name="import_show_names">
@@ -466,7 +459,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern installiert und aktualisiert Apps direkt von dort, wo ihre Entwickler sie veröffentlichen.</string>
     <string name="first_line_2">Bevor Android eine Datei sieht, prüft Tern, wer sie signiert hat und ob sie der Prüfsumme des Herausgebers entspricht.</string>
-    <string name="first_line_3">Alles, was gefunden und getan wird, wird in einfachen Worten im Aktivitätsprotokoll festgehalten.</string>
+    <string name="first_line_3">Alles, was sie findet und tut, wird in einfachen Worten aufgeschrieben.</string>
     <string name="first_notify_explain">Tern kann dir sagen, wenn Updates bereit sind. Android wird fragen, ob Benachrichtigungen erlaubt werden sollen.</string>
     <string name="first_notify_denied">Benachrichtigungen sind aus. Du kannst sie später in den Einstellungen einschalten.</string>
     <string name="first_notify_allow">Benachrichtigungen erlauben</string>
@@ -474,4 +467,5 @@
     <string name="install_permission_title">Tern erlauben, Apps zu installieren</string>
     <string name="install_permission_body">Android fragt einmal, bevor eine App eine andere installieren darf. Schalte auf dem nächsten Bildschirm den Schalter für Tern ein und kehre dann zurück. Die Installation läuft von selbst weiter.</string>
     <string name="install_permission_open">Einstellungen öffnen</string>
+    <string name="install_permission_closes">Diese Android-Version schließt Tern, wenn du den Schalter umlegst. Öffne Tern danach wieder und die Installation geht weiter.</string>
 </resources>

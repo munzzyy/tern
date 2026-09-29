@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Giao diện</string>
+    <string name="look_summary">Chủ đề, màu sắc, độ tương phản, mật độ, góc và biểu tượng</string>
+    <string name="look_preview_spoken">Bản xem trước giao diện hiện tại</string>
+    <string name="look_preview_app">Ứng dụng ví dụ</string>
+    <string name="look_colours">Màu sắc</string>
+    <string name="look_palette">Màu sắc</string>
+    <string name="look_wallpaper">Hình nền</string>
+    <string name="look_own">Màu tùy chỉnh</string>
+    <string name="palette_ink">Mực</string>
+    <string name="palette_slate">Xám</string>
+    <string name="palette_tide">Sóng</string>
+    <string name="palette_moss">Rêu</string>
+    <string name="palette_amber">Hổ phách</string>
+    <string name="palette_clay">Đất sét</string>
+    <string name="palette_rose">Hồng</string>
+    <string name="palette_plum">Mận</string>
+    <string name="look_hue">Sắc thái màu tùy chỉnh</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="other">%1$d độ</item>
+    </plurals>
+    <string name="look_contrast">Độ tương phản</string>
+    <string name="contrast_standard">Tiêu chuẩn</string>
+    <string name="contrast_medium">Trung bình</string>
+    <string name="contrast_high">Cao</string>
+    <string name="look_contrast_effect">Tương phản cao giúp văn bản và đường viền tách biệt hơn với nền.</string>
+    <string name="look_shape_and_size">Hình dáng và kích thước</string>
+    <string name="look_density">Mật độ</string>
+    <string name="density_comfortable">Thoải mái</string>
+    <string name="density_compact">Gọn gàng</string>
+    <string name="look_density_effect">Gọn gàng giúp hiển thị nhiều hơn trên màn hình. Các nút bấm vẫn không nhỏ hơn một đầu ngón tay.</string>
+    <string name="look_corners">Bo góc</string>
+    <string name="corners_round">Tròn</string>
+    <string name="corners_soft">Mềm mại</string>
+    <string name="corners_sharp">Sắc nét</string>
+    <string name="look_icon_shape">Hình biểu tượng</string>
+    <string name="icon_shape_circle">Tròn</string>
+    <string name="icon_shape_squircle">Vuông bo tròn</string>
+    <string name="icon_shape_square">Vuông</string>
+    <string name="look_icons">Biểu tượng</string>
+    <string name="look_source_icons">Biểu tượng từ nguồn</string>
+    <string name="look_source_icons_effect">Khi ứng dụng chưa được cài đặt, Tern lấy biểu tượng của nó từ nơi ứng dụng được xuất bản: kho lưu trữ hoặc trang cửa hàng. Nếu tắt, sẽ hiển thị một chữ cái trên nền màu và không hỏi bất kỳ ai.</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Jellyfin 서버의 콘텐츠 시청</string>
+    <string name="suggest_just_player">파일 및 스트림용 동영상 플레이어</string>
+    <string name="suggest_mpv">mpv 기반 동영상 플레이어</string>
+    <string name="suggest_nova">이 기기나 네트워크의 동영상 재생</string>
+    <string name="suggest_material_files">이 기기 및 서버의 파일 관리</string>
+    <string name="suggest_mullvad">Mullvad VPN 서비스용 앱</string>
+    <string name="suggest_proton_vpn">Proton VPN 서비스용 앱</string>
+    <string name="suggest_moonlight">이 기기에서 컴퓨터 게임 플레이</string>
+    <string name="suggest_fossify_gallery">사진 및 동영상 갤러리</string>
+    <string name="suggest_breezy_weather">다양한 소스의 일기예보</string>
+    <string name="suggest_fdroid">무료 오픈소스 앱 카탈로그</string>
+    <string name="suggest_heliboard">네트워크 액세스가 없는 키보드</string>
+    <string name="suggest_obtainium">소스에서 앱 업데이트 가져오기</string>
+    <string name="suggest_aegis">2단계 로그인 코드 보관</string>
+    <string name="suggest_keepassdx">KeePass 파일용 비밀번호 관리자</string>
+    <string name="suggest_koreader">EPUB, PDF 및 기타 책 형식 읽기</string>
+    <string name="suggest_element_x">Matrix 네트워크에서 채팅</string>
+    <string name="suggest_fairemail">모든 제공업체를 위한 이메일 앱</string>
+    <string name="suggest_tusky">Mastodon 클라이언트</string>
+    <string name="suggest_organic_maps">오프라인으로 작동하는 지도 및 내비게이션</string>
+    <string name="suggest_osmand">오프라인 지도, 경로 탐색 및 트랙 녹화</string>
+    <string name="suggest_magpie">Tern 제작자가 만든 암호화된 사건 일지</string>
+    <string name="suggest_sepia">Tern 제작자가 만든 사진 내 숨겨진 데이터 제거 도구</string>
+    <string name="suggest_sweep">Tern 제작자가 만든 스토커웨어 검사 도구</string>
+    <string name="suggest_starling">Tern 제작자가 만든 비공개 위치 공유</string>
+</resources>

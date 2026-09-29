@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">Jedes gefundene Release bot nur die Datei einer anderen App an, nicht die dieser App.</string>
+</resources>

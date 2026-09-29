@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">Setiap rilis yang ditemukan hanya menawarkan file aplikasi lain, bukan file aplikasi ini.</string>
+</resources>

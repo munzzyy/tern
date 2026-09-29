@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern은 이 앱이 서명된 인증서를 보관하지만, 이 파일은 다른 인증서로 서명되었습니다. 다른 사람에게서 온 것일 수 있으므로 설치되지 않았습니다.</string>
+    <string name="engine_warn_built_in_pin">Tern은 이 앱이 서명된 인증서를 보관하지만, 제공된 파일은 다른 인증서로 서명되었습니다.</string>
+</resources>

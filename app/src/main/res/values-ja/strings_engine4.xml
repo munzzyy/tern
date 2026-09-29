@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">このバンドルの一部は主張されている通りに署名されていないため、何もインストールされませんでした。</string>
+</resources>

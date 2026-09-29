@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Aparencia</string>
+    <string name="look_summary">Tema, cores, contraste, densidade, esquinas e iconas</string>
+    <string name="look_preview_spoken">Vista previa da aparencia tal como está configurada agora</string>
+    <string name="look_preview_app">Aplicación de exemplo</string>
+    <string name="look_colours">Cores</string>
+    <string name="look_palette">Cor</string>
+    <string name="look_wallpaper">Fondo de pantalla</string>
+    <string name="look_own">Cor propia</string>
+    <string name="palette_ink">Tinta</string>
+    <string name="palette_slate">Lousa</string>
+    <string name="palette_tide">Marea</string>
+    <string name="palette_moss">Musgo</string>
+    <string name="palette_amber">Ámbar</string>
+    <string name="palette_clay">Arxila</string>
+    <string name="palette_rose">Rosa</string>
+    <string name="palette_plum">Ameixa</string>
+    <string name="look_hue">Ton da túa propia cor</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d grao</item>
+        <item quantity="other">%1$d graos</item>
+    </plurals>
+    <string name="look_contrast">Contraste</string>
+    <string name="contrast_standard">Estándar</string>
+    <string name="contrast_medium">Medio</string>
+    <string name="contrast_high">Alto</string>
+    <string name="look_contrast_effect">Máis contraste separa máis o texto e os contornos do que hai detrás deles.</string>
+    <string name="look_shape_and_size">Forma e tamaño</string>
+    <string name="look_density">Densidade</string>
+    <string name="density_comfortable">Cómoda</string>
+    <string name="density_compact">Compacta</string>
+    <string name="look_density_effect">A opción compacta fai caber máis na pantalla. Nada do que premas se fai máis pequeno que a punta dun dedo.</string>
+    <string name="look_corners">Esquinas</string>
+    <string name="corners_round">Redondas</string>
+    <string name="corners_soft">Suaves</string>
+    <string name="corners_sharp">Afiadas</string>
+    <string name="look_icon_shape">Forma da icona</string>
+    <string name="icon_shape_circle">Círculo</string>
+    <string name="icon_shape_squircle">Squircle</string>
+    <string name="icon_shape_square">Cadrado</string>
+    <string name="look_icons">Iconas</string>
+    <string name="look_source_icons">Iconas da orixe</string>
+    <string name="look_source_icons_effect">Mentres unha aplicación non está instalada, Tern obtén a súa icona de onde se publica a aplicación: o seu repositorio ou a súa ficha na tenda. Se está desactivado, debuxa unha letra sobre unha cor e non lle pregunta a ninguén.</string>
+</resources>

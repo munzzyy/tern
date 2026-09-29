@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">Dio ovog paketa nije potpisan onako kako kaže da jeste, tako da ništa nije instalirano.</string>
+</resources>

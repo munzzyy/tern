@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Tik om een installatie af te ronden</string>
+    <string name="notify_downloading_plain">Downloaden</string>
+    <string name="settings_notify_names">Noem de apps in meldingen</string>
+    <string name="settings_notify_names_help">Een melding is te lezen op het vergrendelscherm. Uit zegt Tern hoeveel apps en nooit welke.</string>
+</resources>

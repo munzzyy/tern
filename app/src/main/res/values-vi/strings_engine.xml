@@ -26,6 +26,7 @@
     <string name="engine_downgrade">Phiên bản đã cài (%1$s) mới hơn tệp này (%2$s). Android chỉ nhận bản cũ hơn sau khi gỡ ứng dụng đã cài, và gỡ ứng dụng sẽ xóa dữ liệu.</string>
     <string name="engine_test_only">Tệp này là một bản thử nghiệm, Android từ chối cài đặt từ cửa hàng ứng dụng.</string>
     <string name="engine_needs_newer_android">Phiên bản này cần Android API cấp %1$d trở lên.</string>
+    <string name="engine_proxy_silent">Proxy không phản hồi, nên không có gì được gửi. Tern không bao giờ bỏ qua nó.</string>
     <string name="engine_check_network">Không thể kết nối đến nguồn: %1$s</string>
     <string name="engine_check_not_found">Nguồn không còn nội dung nào ở địa chỉ này: %1$s</string>
     <string name="engine_check_auth">Nguồn từ chối yêu cầu. Hãy thêm hoặc kiểm tra mã thông báo cho trang web này trong Cài đặt. (%1$s)</string>

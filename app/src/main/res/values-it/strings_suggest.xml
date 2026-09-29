@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Guarda cosa c\'è sul tuo server Jellyfin</string>
+    <string name="suggest_just_player">Un lettore video per file e streaming</string>
+    <string name="suggest_mpv">Un lettore video basato su mpv</string>
+    <string name="suggest_nova">Riproduce video da questo dispositivo o dalla rete</string>
+    <string name="suggest_material_files">Gestisci file su questo dispositivo e sui server</string>
+    <string name="suggest_mullvad">L\'app per il servizio Mullvad VPN</string>
+    <string name="suggest_proton_vpn">L\'app per il servizio Proton VPN</string>
+    <string name="suggest_moonlight">Gioca ai giochi del tuo computer su questo dispositivo</string>
+    <string name="suggest_fossify_gallery">Una galleria per foto e video</string>
+    <string name="suggest_breezy_weather">Previsioni meteo da molte fonti</string>
+    <string name="suggest_fdroid">Un catalogo di app libere e open source</string>
+    <string name="suggest_heliboard">Una tastiera senza accesso alla rete</string>
+    <string name="suggest_obtainium">Ottiene aggiornamenti delle app dalle loro origini</string>
+    <string name="suggest_aegis">Conserva i codici per l\'accesso in due passaggi</string>
+    <string name="suggest_keepassdx">Un gestore di password per file KeePass</string>
+    <string name="suggest_koreader">Legge EPUB, PDF e altri formati di libri</string>
+    <string name="suggest_element_x">Chatta sulla rete Matrix</string>
+    <string name="suggest_fairemail">Un\'app email per qualsiasi provider</string>
+    <string name="suggest_tusky">Un client per Mastodon</string>
+    <string name="suggest_organic_maps">Mappe e navigazione che funzionano offline</string>
+    <string name="suggest_osmand">Mappe offline, percorsi e registrazione tracce</string>
+    <string name="suggest_magpie">Un diario degli incidenti crittografato, dall\'autore di Tern</string>
+    <string name="suggest_sepia">Rimuove dati nascosti dalle foto, dall\'autore di Tern</string>
+    <string name="suggest_sweep">Un controllo stalkerware, dall\'autore di Tern</string>
+    <string name="suggest_starling">Condivisione privata della posizione, dall\'autore di Tern</string>
+</resources>

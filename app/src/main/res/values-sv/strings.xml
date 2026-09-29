@@ -91,7 +91,7 @@
         <item quantity="one">%d vald</item>
         <item quantity="other">%d valda</item>
     </plurals>
-    <string name="apps_select_hint">Tryck på appar för att välja dem.</string>
+    <string name="apps_select_hint">Välj appar från listan.</string>
     <string name="action_add_to_category">Lägg i kategori</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Lägg till %d app i en kategori</item>
@@ -122,13 +122,12 @@
         <item quantity="other">Sluta följa %d appar?</item>
     </plurals>
     <string name="bulk_remove_text">Apparna förblir installerade. Tern slutar bara kontrollera dem för uppdateringar.</string>
-    <string name="apps_empty_title">Inga appar än</string>
-    <string name="apps_empty_text">Klistra in en länk till en projektsida, en utgåvosida eller en lagringsplats för F-Droid, så håller Tern appen uppdaterad därifrån.</string>
+    <string name="apps_empty_title">Inget här än</string>
+    <string name="apps_empty_text">Lägg till en app via dess länk, eller börja med en som många använder.</string>
     <string name="sort_title">Sortera</string>
     <string name="sort_name">Efter namn</string>
     <string name="sort_recently_checked">Senast kontrollerade</string>
     <string name="sort_source">Efter källa</string>
-    <string name="remove_title">Ta bort %s?</string>
     <string name="remove_text_installed">Tern slutar följa den. Appen förblir installerad.</string>
     <string name="remove_text">Tern slutar följa den.</string>
     <string name="add_title">Lägg till en app</string>
@@ -180,16 +179,14 @@
     <string name="carried_notes_none">Utgåvor följs oavsett vad deras anteckningar säger.</string>
     <string name="carried_version">Versionen läses från taggen med %1$s.</string>
     <string name="carried_version_none">Versionen läses på vanligt sätt.</string>
-    <string name="carried_match_device_on">När flera filer erbjuds föredras den som byggts för denna telefon.</string>
-    <string name="carried_match_device_off">Filer begränsas inte till den här telefonens processor.</string>
+    <string name="carried_match_device_on">När flera filer erbjuds föredras den som byggts för denna enhet.</string>
+    <string name="carried_match_device_off">Filer begränsas inte till denna enhets processor.</string>
     <string name="carried_fallback_on">En äldre utgåva används när den nyaste inte har någon användbar fil.</string>
     <string name="carried_fallback_off">Äldre utgåvor används aldrig, inte ens när den nyaste saknar en användbar fil.</string>
     <string name="carried_track_on">Utgåvor följs endast; inget laddas ned eller installeras.</string>
     <string name="carried_track_off">Utgåvor laddas ned och installeras, de följs inte bara.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">Länken fäster detta certifikat, så endast filer signerade av det kommer att installeras. Någon annan än du valde det: lägg bara till det om du litar på var länken kom ifrån.</item>
-        <item quantity="other">Länken fäster dessa certifikat, så endast filer signerade av dem kommer att installeras. Någon annan än du valde dem: lägg bara till dem om du litar på var länken kom ifrån.</item>
-    </plurals>
+    <string name="carried_pin_warning">Länken fäster detta certifikat, så endast filer signerade av det kommer att installeras. Någon annan än du valde det: lägg bara till det om du litar på var länken kom ifrån.</string>
+    <string name="carried_pins_warning">Länken fäster dessa certifikat, så endast filer signerade av dem kommer att installeras. Någon annan än du valde dem: lägg bara till dem om du litar på var länken kom ifrån.</string>
     <string name="checks_title">Kontroller</string>
     <string name="checks_package">Paketnamn</string>
     <string name="checks_package_unknown">Inte känt förrän filen är läst</string>
@@ -291,7 +288,7 @@
     <string name="file_recommended">Val %d, rekommenderat</string>
     <string name="file_alternative">Val %d</string>
     <string name="setting_match_device">Matcha denna enhet</string>
-    <string name="setting_match_device_effect">När flera filer erbjuds, föredra den som är byggd för den här telefonens processor.</string>
+    <string name="setting_match_device_effect">När flera filer erbjuds, föredra den som byggts för denna enhets processor.</string>
     <string name="setting_include">Endast filer som matchar</string>
     <string name="setting_include_help">Ett mönster som filnamnet måste innehålla, till exempel universal</string>
     <string name="setting_exclude">Hoppa över filer som matchar</string>
@@ -334,7 +331,7 @@
     <string name="settings_interval">Hur ofta</string>
     <string name="interval_off">Av</string>
     <plurals name="interval_hours">
-        <item quantity="one">Varje timme</item>
+        <item quantity="one">Var %d timme</item>
         <item quantity="other">Var %d:e timme</item>
     </plurals>
     <string name="settings_unmetered">Endast på obegränsade nätverk</string>
@@ -353,7 +350,6 @@
     <string name="settings_keep_installers_effect">Filer blir kvar efter installation och använder lagringsutrymme. Av raderar dem.</string>
     <string name="settings_ownership">Var den enda uppdateraren</string>
     <string name="settings_ownership_effect">Be Android att endast låta Tern uppdatera apparna den installerar, så att en annan butik inte kan byta ut dem.</string>
-    <string name="settings_ownership_unsupported">Kräver Android 14 eller senare.</string>
     <string name="settings_tokens">Åtkomsttokens</string>
     <string name="settings_tokens_effect">En token höjer anropsgränserna och öppnar privata projekt. Den skickas bara till exakt den värd den sparats för, och den visas aldrig igen.</string>
     <string name="token_saved">Sparad</string>
@@ -382,9 +378,6 @@
     <string name="theme_system">Följ systemet</string>
     <string name="theme_light">Ljust</string>
     <string name="theme_dark">Mörkt</string>
-    <string name="settings_dynamic_color">Färger från din bakgrundsbild</string>
-    <string name="settings_dynamic_color_effect">Av använder Terns egen skifferblå färg.</string>
-    <string name="settings_dynamic_color_unsupported">Kräver Android 12 eller senare.</string>
     <string name="settings_pure_black">Helt svart</string>
     <string name="settings_pure_black_effect">Svarta bakgrunder i det mörka temat, skonsammare för OLED-skärmar.</string>
     <string name="settings_data">Importera och exportera</string>
@@ -466,7 +459,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern installerar och uppdaterar appar direkt från där deras utvecklare publicerar dem.</string>
     <string name="first_line_2">Innan Android ser en fil, kontrollerar Tern vem som signerat den och om den matchar utgivarens kontrollsumma.</string>
-    <string name="first_line_3">Allt den hittar och gör skrivs till aktivitetsloggen, med vanliga ord.</string>
+    <string name="first_line_3">Allt den hittar och gör skrivs ner i klartext.</string>
     <string name="first_notify_explain">Tern kan berätta för dig när uppdateringar är klara. Android kommer fråga om du tillåter aviseringar.</string>
     <string name="first_notify_denied">Aviseringar är avstängda. Du kan slå på dem senare i Inställningar.</string>
     <string name="first_notify_allow">Tillåt aviseringar</string>
@@ -474,4 +467,5 @@
     <string name="install_permission_title">Tillåt Tern att installera appar</string>
     <string name="install_permission_body">Android frågar en gång innan en app får installera en annan. På nästa skärm, slå på reglaget för Tern och kom sedan tillbaka. Installationen fortsätter av sig själv.</string>
     <string name="install_permission_open">Öppna inställningar</string>
+    <string name="install_permission_closes">Denna version av Android stänger Tern när du slår på reglaget. Öppna Tern igen efteråt så fortsätter installationen.</string>
 </resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">നിങ്ങളുടെ Jellyfin സെർവറിലുള്ളത് കാണുക</string>
+    <string name="suggest_just_player">ഫയലുകൾക്കും സ്ട്രീമുകൾക്കുമുള്ള ഒരു വീഡിയോ പ്ലെയർ</string>
+    <string name="suggest_mpv">mpv അടിസ്ഥാനമാക്കി നിർമ്മിച്ച ഒരു വീഡിയോ പ്ലെയർ</string>
+    <string name="suggest_nova">ഈ ഉപകരണത്തിൽ നിന്നോ നെറ്റ്‌വർക്കിൽ നിന്നോ വീഡിയോ പ്ലേ ചെയ്യുന്നു</string>
+    <string name="suggest_material_files">ഈ ഉപകരണത്തിലും സെർവറുകളിലുമുള്ള ഫയലുകൾ മാനേജ് ചെയ്യുക</string>
+    <string name="suggest_mullvad">Mullvad VPN സേവനത്തിനായുള്ള ആപ്പ്</string>
+    <string name="suggest_proton_vpn">Proton VPN സേവനത്തിനായുള്ള ആപ്പ്</string>
+    <string name="suggest_moonlight">നിങ്ങളുടെ കമ്പ്യൂട്ടറിൽ നിന്നുള്ള ഗെയിമുകൾ ഈ ഉപകരണത്തിൽ കളിക്കുക</string>
+    <string name="suggest_fossify_gallery">ഫോട്ടോകൾക്കും വീഡിയോകൾക്കുമുള്ള ഒരു ഗാലറി</string>
+    <string name="suggest_breezy_weather">നിരവധി ഉറവിടങ്ങളിൽ നിന്നുള്ള കാലാവസ്ഥാ പ്രവചനങ്ങൾ</string>
+    <string name="suggest_fdroid">സൗജന്യവും ഓപ്പൺ സോഴ്സുമായ ആപ്പുകളുടെ കാറ്റലോഗ്</string>
+    <string name="suggest_heliboard">നെറ്റ്‌വർക്ക് ആക്സസ് ഇല്ലാത്ത ഒരു കീബോർഡ്</string>
+    <string name="suggest_obtainium">ആപ്പ് അപ്ഡേറ്റുകൾ അവയുടെ ഉറവിടങ്ങളിൽ നിന്ന് നേടുന്നു</string>
+    <string name="suggest_aegis">ടു-സ്റ്റെപ്പ് സൈൻ-ഇൻ കോഡുകൾ സൂക്ഷിക്കുന്നു</string>
+    <string name="suggest_keepassdx">KeePass ഫയലുകൾക്കായുള്ള ഒരു പാസ്‌വേഡ് മാനേജർ</string>
+    <string name="suggest_koreader">EPUB, PDF, മറ്റ് ബുക്ക് ഫോർമാറ്റുകൾ എന്നിവ വായിക്കുന്നു</string>
+    <string name="suggest_element_x">Matrix നെറ്റ്‌വർക്കിൽ ചാറ്റ് ചെയ്യുക</string>
+    <string name="suggest_fairemail">ഏത് പ്രൊവൈഡർക്കുമുള്ള ഒരു ഇമെയിൽ ആപ്പ്</string>
+    <string name="suggest_tusky">Mastodon-നുള്ള ഒരു ക്ലയൻ്റ്</string>
+    <string name="suggest_organic_maps">ഓഫ്‌ലൈനിൽ പ്രവർത്തിക്കുന്ന മാപ്പുകളും നാവിഗേഷനും</string>
+    <string name="suggest_osmand">ഓഫ്‌ലൈൻ മാപ്പുകൾ, റൂട്ടിംഗ്, ട്രാക്ക് റെക്കോർഡിംഗ്</string>
+    <string name="suggest_magpie">Tern രചയിതാവിൻ്റെ, എൻക്രിപ്റ്റ് ചെയ്ത ഇൻസിഡൻ്റ് ജേണൽ</string>
+    <string name="suggest_sepia">Tern രചയിതാവിൻ്റെ, ഫോട്ടോകളിൽ നിന്ന് മറഞ്ഞിരിക്കുന്ന ഡാറ്റ നീക്കംചെയ്യുന്ന ആപ്പ്</string>
+    <string name="suggest_sweep">Tern രചയിതാവിൻ്റെ, സ്റ്റോക്കർവെയർ പരിശോധന ആപ്പ്</string>
+    <string name="suggest_starling">Tern രചയിതാവിൻ്റെ, സ്വകാര്യ ലൊക്കേഷൻ ഷെയറിംഗ് ആപ്പ്</string>
+</resources>

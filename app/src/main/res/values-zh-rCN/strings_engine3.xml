@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern 保存了此应用的签名证书，而此文件由其他证书签名。它可能来自其他人，因此未安装。</string>
+    <string name="engine_warn_built_in_pin">Tern 保存了此应用的签名证书，而提供的文件由其他证书签名。</string>
+</resources>

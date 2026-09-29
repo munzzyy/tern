@@ -156,7 +156,6 @@
     <string name="sort_recently_checked">Recently checked</string>
     <string name="sort_source">By source</string>
     <!-- %s is the app name. -->
-    <string name="remove_title">Remove %s?</string>
     <string name="remove_text_installed">Tern stops following it. The app stays installed.</string>
     <string name="remove_text">Tern stops following it.</string>
 
@@ -224,10 +223,8 @@
     <string name="carried_track_on">Releases are only followed; nothing is downloaded or installed.</string>
     <string name="carried_track_off">Releases are downloaded and installed, not just followed.</string>
     <!-- Pinned certificates decide who may sign updates; here someone other than the user picked them. -->
-    <plurals name="carried_pins_warning">
-        <item quantity="one">The link pins this certificate, so only files it signed will install. Someone other than you chose it: add it only if you trust where the link came from.</item>
-        <item quantity="other">The link pins these certificates, so only files they signed will install. Someone other than you chose them: add them only if you trust where the link came from.</item>
-    </plurals>
+    <string name="carried_pin_warning">The link pins this certificate, so only files it signed will install. Someone other than you chose it: add it only if you trust where the link came from.</string>
+    <string name="carried_pins_warning">The link pins these certificates, so only files they signed will install. Someone other than you chose them: add them only if you trust where the link came from.</string>
 
     <!-- Verification panel -->
     <string name="checks_title">Checks</string>
@@ -414,7 +411,6 @@
     <!-- Android 14 lets an installer claim that only it may update an app. -->
     <string name="settings_ownership">Be the only updater</string>
     <string name="settings_ownership_effect">Ask Android to let only Tern update the apps it installs, so another store cannot swap them.</string>
-    <string name="settings_ownership_unsupported">Needs Android 14 or later.</string>
     <string name="settings_tokens">Access tokens</string>
     <string name="settings_tokens_effect">A token raises rate limits and opens private projects. It is sent only to the exact host it is saved for, and it is never shown again.</string>
     <string name="token_saved">Saved</string>
@@ -445,9 +441,6 @@
     <string name="theme_system">Follow the system</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
-    <string name="settings_dynamic_color">Colours from your wallpaper</string>
-    <string name="settings_dynamic_color_effect">Off uses Tern\'s own slate blue.</string>
-    <string name="settings_dynamic_color_unsupported">Needs Android 12 or later.</string>
     <string name="settings_pure_black">Pure black</string>
     <string name="settings_pure_black_effect">Black backgrounds in the dark theme, easier on OLED screens.</string>
     <string name="settings_data">Import and export</string>

@@ -88,7 +88,7 @@
     <plurals name="apps_selected">
         <item quantity="other">%d 件選択</item>
     </plurals>
-    <string name="apps_select_hint">アプリをタップして選択します。</string>
+    <string name="apps_select_hint">リストからアプリを選択してください。</string>
     <string name="action_add_to_category">カテゴリに追加</string>
     <plurals name="bulk_category_title">
         <item quantity="other">%d 個のアプリをカテゴリに追加</item>
@@ -113,13 +113,12 @@
         <item quantity="other">%d 個のアプリの追跡を停止しますか？</item>
     </plurals>
     <string name="bulk_remove_text">アプリはインストールされたままです。Ternでの更新の確認のみを停止します。</string>
-    <string name="apps_empty_title">アプリはまだありません</string>
-    <string name="apps_empty_text">プロジェクトページ、リリースページ、またはF-Droidリポジトリのリンクを貼り付けると、Ternがそのアプリを最新に保ちます。</string>
+    <string name="apps_empty_title">まだ何もありません</string>
+    <string name="apps_empty_text">リンクからアプリを追加するか、よく使われているアプリから始めてください。</string>
     <string name="sort_title">並べ替え</string>
     <string name="sort_name">名前順</string>
     <string name="sort_recently_checked">最近確認したもの</string>
     <string name="sort_source">提供元順</string>
-    <string name="remove_title">%s を削除しますか？</string>
     <string name="remove_text_installed">Ternでの追跡を停止します。アプリはインストールされたままです。</string>
     <string name="remove_text">Ternでの追跡を停止します。</string>
     <string name="add_title">アプリを追加</string>
@@ -167,15 +166,14 @@
     <string name="carried_notes_none">ノートの内容に関係なくリリースが追跡されます。</string>
     <string name="carried_version">バージョンは %1$s でタグから読み取られます。</string>
     <string name="carried_version_none">バージョンは通常の方法で読み取られます。</string>
-    <string name="carried_match_device_on">複数のファイルがある場合、この端末用にビルドされたものが優先されます。</string>
+    <string name="carried_match_device_on">複数のファイルが提供されている場合、この端末用にビルドされたものが優先されます。</string>
     <string name="carried_match_device_off">ファイルはこの端末のプロセッサに絞り込まれません。</string>
     <string name="carried_fallback_on">最新のリリースに使えるファイルがない場合、古いリリースが使用されます。</string>
     <string name="carried_fallback_off">最新のリリースに使えるファイルがない場合でも、古いリリースは使用されません。</string>
     <string name="carried_track_on">リリースは追跡されるのみで、ダウンロードやインストールはされません。</string>
     <string name="carried_track_off">リリースは追跡されるだけでなく、ダウンロードしてインストールされます。</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="other">このリンクはこれらの証明書をピン留めするため、それらが署名したファイルのみインストールされます。あなた以外の人が選択したものです。リンクの提供元を信頼できる場合のみ追加してください。</item>
-    </plurals>
+    <string name="carried_pin_warning">このリンクはこれらの証明書をピン留めするため、それらが署名したファイルのみインストールされます。あなた以外の人が選択したものです。リンクの提供元を信頼できる場合のみ追加してください。</string>
+    <string name="carried_pins_warning">このリンクはこれらの証明書をピン留めするため、それらが署名したファイルのみインストールされます。あなた以外の人が選択したものです。リンクの提供元を信頼できる場合のみ追加してください。</string>
     <string name="checks_title">確認</string>
     <string name="checks_package">パッケージ名</string>
     <string name="checks_package_unknown">ファイルが読み取られるまで不明です</string>
@@ -274,7 +272,7 @@
     <string name="file_recommended">選択 %d（推奨）</string>
     <string name="file_alternative">選択 %d</string>
     <string name="setting_match_device">この端末に合わせる</string>
-    <string name="setting_match_device_effect">複数のファイルがある場合、このスマートフォンのプロセッサ用にビルドされたものを優先します。</string>
+    <string name="setting_match_device_effect">複数のファイルが提供されている場合、この端末のプロセッサ用にビルドされたものを優先します。</string>
     <string name="setting_include">一致するファイルのみ</string>
     <string name="setting_include_help">ファイル名に含まれるパターン（例: universal）</string>
     <string name="setting_exclude">一致するファイルをスキップ</string>
@@ -335,7 +333,6 @@
     <string name="settings_keep_installers_effect">インストール後もファイルが残り、ストレージを消費します。オフにすると削除されます。</string>
     <string name="settings_ownership">唯一のアップデーターになる</string>
     <string name="settings_ownership_effect">Ternがインストールしたアプリの更新をTernのみに許可するようAndroidに要求し、他のストアによる差し替えを防ぎます。</string>
-    <string name="settings_ownership_unsupported">Android 14以降が必要です。</string>
     <string name="settings_tokens">アクセストークン</string>
     <string name="settings_tokens_effect">トークンを使うと制限が緩和され、非公開プロジェクトにアクセスできます。保存したホストにのみ送信され、二度と表示されません。</string>
     <string name="token_saved">保存しました</string>
@@ -364,9 +361,6 @@
     <string name="theme_system">システムに従う</string>
     <string name="theme_light">ライト</string>
     <string name="theme_dark">ダーク</string>
-    <string name="settings_dynamic_color">壁紙からの色</string>
-    <string name="settings_dynamic_color_effect">オフにするとTern独自のブルーグレーを使用します。</string>
-    <string name="settings_dynamic_color_unsupported">Android 12以降が必要です。</string>
     <string name="settings_pure_black">ピュアブラック</string>
     <string name="settings_pure_black_effect">ダークテーマで背景を黒にし、OLED画面での見やすさを向上させます。</string>
     <string name="settings_data">インポートとエクスポート</string>
@@ -440,7 +434,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Ternは、開発者が公開している場所から直接アプリをインストール・更新します。</string>
     <string name="first_line_2">Androidにファイルが渡る前に、Ternは誰が署名したか、提供元のチェックサムと一致するかを確認します。</string>
-    <string name="first_line_3">検出した内容や実行した操作はすべて、わかりやすい言葉でアクティビティログに記録されます。</string>
+    <string name="first_line_3">見つけたものと実行したことはすべて、わかりやすい言葉で記録されます。</string>
     <string name="first_notify_explain">Ternは更新の準備ができたときに通知できます。Androidから通知を許可するかどうかを尋ねられます。</string>
     <string name="first_notify_denied">通知はオフになっています。後で設定からオンにできます。</string>
     <string name="first_notify_allow">通知を許可する</string>
@@ -448,4 +442,5 @@
     <string name="install_permission_title">Ternにアプリのインストールを許可</string>
     <string name="install_permission_body">Androidは、アプリが別のアプリをインストールする前に一度だけ確認します。次の画面でTernのスイッチをオンにして、戻ってきてください。インストールは自動的に続行されます。</string>
     <string name="install_permission_open">設定を開く</string>
+    <string name="install_permission_closes">このバージョンのAndroidは、スイッチをオンにするとTernを閉じます。その後Ternをもう一度開くと、インストールが続行されます。</string>
 </resources>

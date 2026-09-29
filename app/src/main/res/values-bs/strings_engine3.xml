@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern nosi certifikat kojim je ova aplikacija potpisana, a ova datoteka je potpisana drugim. Moguće je da dolazi od nekog drugog, pa nije instalirana.</string>
+    <string name="engine_warn_built_in_pin">Tern nosi certifikat kojim je ova aplikacija potpisana, a ponuđena datoteka je potpisana drugim.</string>
+</resources>

@@ -26,6 +26,7 @@
     <string name="engine_downgrade">已安装的版本 (%1$s) 比此文件 (%2$s) 新。Android 只有在移除已安装应用后才接受较旧的版本，而移除操作会删除其数据。</string>
     <string name="engine_test_only">此文件是测试构建版，Android 拒绝从应用商店安装该版本。</string>
     <string name="engine_needs_newer_android">此版本需要 Android API 级别 %1$d 或更高版本。</string>
+    <string name="engine_proxy_silent">代理未响应，因此未发送任何内容。Tern 绝不会绕过代理。</string>
     <string name="engine_check_network">无法连接到来源：%1$s</string>
     <string name="engine_check_not_found">来源在此地址不再提供任何内容：%1$s</string>
     <string name="engine_check_auth">来源拒绝了请求。请在设置中添加或检查此站点的令牌。(%1$s)</string>

@@ -91,7 +91,7 @@
         <item quantity="one">%d valgt</item>
         <item quantity="other">%d valgt</item>
     </plurals>
-    <string name="apps_select_hint">Tryk på apps for at vælge dem.</string>
+    <string name="apps_select_hint">Vælg apps fra listen.</string>
     <string name="action_add_to_category">Tilføj til kategori</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Tilføj %d app til en kategori</item>
@@ -122,13 +122,12 @@
         <item quantity="other">Stop med at følge %d apps?</item>
     </plurals>
     <string name="bulk_remove_text">Appene forbliver installeret. Tern stopper kun med at tjekke dem for opdateringer.</string>
-    <string name="apps_empty_title">Ingen apps endnu</string>
-    <string name="apps_empty_text">Sæt et link ind til en projektside, en udgivelsesside eller et F-Droid-arkiv, og Tern holder appen opdateret derfra.</string>
+    <string name="apps_empty_title">Intet her endnu</string>
+    <string name="apps_empty_text">Tilføj en app via dens link, eller start med en, mange mennesker bruger.</string>
     <string name="sort_title">Sorter</string>
     <string name="sort_name">Efter navn</string>
     <string name="sort_recently_checked">Nyligt tjekket</string>
     <string name="sort_source">Efter kilde</string>
-    <string name="remove_title">Fjern %s?</string>
     <string name="remove_text_installed">Tern stopper med at følge den. Appen forbliver installeret.</string>
     <string name="remove_text">Tern stopper med at følge den.</string>
     <string name="add_title">Tilføj en app</string>
@@ -180,16 +179,14 @@
     <string name="carried_notes_none">Udgivelser følges uanset hvad deres noter siger.</string>
     <string name="carried_version">Versionen læses fra taget med %1$s.</string>
     <string name="carried_version_none">Versionen læses på normal vis.</string>
-    <string name="carried_match_device_on">Når flere filer tilbydes, foretrækkes den, der er bygget til denne telefon.</string>
-    <string name="carried_match_device_off">Filer begrænses ikke til denne telefons processor.</string>
+    <string name="carried_match_device_on">Når flere filer tilbydes, foretrækkes den, der er bygget til denne enhed.</string>
+    <string name="carried_match_device_off">Filer indsnævres ikke til denne enheds processor.</string>
     <string name="carried_fallback_on">En ældre udgivelse bruges, når den nyeste ikke har en brugbar fil.</string>
     <string name="carried_fallback_off">Ældre udgivelser bruges aldrig, heller ikke selvom den nyeste ikke har en brugbar fil.</string>
     <string name="carried_track_on">Udgivelser følges kun; intet hentes eller installeres.</string>
     <string name="carried_track_off">Udgivelser hentes og installeres, de følges ikke kun.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">Linket fastgør dette certifikat, så kun filer signeret af det vil blive installeret. En anden end dig har valgt det: tilføj det kun, hvis du stoler på, hvor linket kom fra.</item>
-        <item quantity="other">Linket fastgør disse certifikater, så kun filer signeret af dem vil blive installeret. En anden end dig har valgt dem: tilføj dem kun, hvis du stoler på, hvor linket kom fra.</item>
-    </plurals>
+    <string name="carried_pin_warning">Linket fastgør dette certifikat, så kun filer signeret af det vil blive installeret. En anden end dig har valgt det: tilføj det kun, hvis du stoler på, hvor linket kom fra.</string>
+    <string name="carried_pins_warning">Linket fastgør disse certifikater, så kun filer signeret af dem vil blive installeret. En anden end dig har valgt dem: tilføj dem kun, hvis du stoler på, hvor linket kom fra.</string>
     <string name="checks_title">Tjek</string>
     <string name="checks_package">Pakkenavn</string>
     <string name="checks_package_unknown">Kendes ikke, før filen er læst</string>
@@ -291,7 +288,7 @@
     <string name="file_recommended">Valg %d, anbefalet</string>
     <string name="file_alternative">Valg %d</string>
     <string name="setting_match_device">Match denne enhed</string>
-    <string name="setting_match_device_effect">Når der tilbydes flere filer, foretrækkes den, der er bygget til denne telefons processor.</string>
+    <string name="setting_match_device_effect">Når flere filer tilbydes, så foretræk den, der er bygget til denne enheds processor.</string>
     <string name="setting_include">Kun filer der matcher</string>
     <string name="setting_include_help">Et mønster filnavnet skal indeholde, f.eks. universal</string>
     <string name="setting_exclude">Spring filer over der matcher</string>
@@ -334,7 +331,7 @@
     <string name="settings_interval">Hvor ofte</string>
     <string name="interval_off">Fra</string>
     <plurals name="interval_hours">
-        <item quantity="one">Hver time</item>
+        <item quantity="one">Hver %d time</item>
         <item quantity="other">Hver %d. time</item>
     </plurals>
     <string name="settings_unmetered">Kun på ubegrænsede netværk</string>
@@ -353,7 +350,6 @@
     <string name="settings_keep_installers_effect">Filer forbliver efter installation og bruger plads. Fra sletter dem.</string>
     <string name="settings_ownership">Vær den eneste, der opdaterer</string>
     <string name="settings_ownership_effect">Bed Android om kun at lade Tern opdatere de apps, den installerer, så en anden butik ikke kan bytte dem ud.</string>
-    <string name="settings_ownership_unsupported">Kræver Android 14 eller nyere.</string>
     <string name="settings_tokens">Adgangstokens</string>
     <string name="settings_tokens_effect">Et token hæver hastighedsgrænser og åbner private projekter. Det sendes kun til præcis den vært, det er gemt for, og det vises aldrig igen.</string>
     <string name="token_saved">Gemt</string>
@@ -382,9 +378,6 @@
     <string name="theme_system">Følg systemet</string>
     <string name="theme_light">Lyst</string>
     <string name="theme_dark">Mørkt</string>
-    <string name="settings_dynamic_color">Farver fra din baggrund</string>
-    <string name="settings_dynamic_color_effect">Fra bruger Terns egen skiferblå.</string>
-    <string name="settings_dynamic_color_unsupported">Kræver Android 12 eller nyere.</string>
     <string name="settings_pure_black">Helt sort</string>
     <string name="settings_pure_black_effect">Sorte baggrunde i det mørke tema, mere behageligt for OLED-skærme.</string>
     <string name="settings_data">Import og eksport</string>
@@ -466,7 +459,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern installerer og opdaterer apps direkte fra hvor deres udviklere udgiver dem.</string>
     <string name="first_line_2">Før Android ser en fil, tjekker Tern, hvem der har signeret den, og om den matcher udgiverens kontrolsum.</string>
-    <string name="first_line_3">Alt hvad den finder og gør, skrives i aktivitetsloggen, med almindelige ord.</string>
+    <string name="first_line_3">Alt, hvad den finder og gør, er skrevet ned med almindelige ord.</string>
     <string name="first_notify_explain">Tern kan fortælle dig, når opdateringer er klar. Android vil spørge, om notifikationer skal tillades.</string>
     <string name="first_notify_denied">Notifikationer er slået fra. Du kan slå dem til senere i Indstillinger.</string>
     <string name="first_notify_allow">Tillad notifikationer</string>
@@ -474,4 +467,5 @@
     <string name="install_permission_title">Tillad Tern at installere apps</string>
     <string name="install_permission_body">Android spørger én gang, før en app må installere en anden. På næste skærm skal du slå kontakten til for Tern og derefter vende tilbage. Installationen fortsætter af sig selv.</string>
     <string name="install_permission_open">Åbn indstillinger</string>
+    <string name="install_permission_closes">Denne version af Android lukker Tern, når du slår kontakten til. Åbn Tern igen bagefter, og installationen fortsætter.</string>
 </resources>

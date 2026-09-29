@@ -7,6 +7,7 @@
     <plurals name="tab_updates_badge">
         <item quantity="one">%d aktualizace</item>
         <item quantity="few">%d aktualizace</item>
+        <item quantity="many">%d aktualizací</item>
         <item quantity="other">%d aktualizací</item>
     </plurals>
     <string name="pane_nothing_selected">Vyberte aplikaci pro zobrazení podrobností</string>
@@ -79,6 +80,7 @@
     <plurals name="apps_section_updates">
         <item quantity="one">%d aktualizace</item>
         <item quantity="few">%d aktualizace</item>
+        <item quantity="many">%d aktualizací</item>
         <item quantity="other">%d aktualizací</item>
     </plurals>
     <string name="apps_section_others">Všechno ostatní</string>
@@ -92,52 +94,58 @@
     <plurals name="apps_selected">
         <item quantity="one">%d vybrána</item>
         <item quantity="few">%d vybrané</item>
+        <item quantity="many">%d vybraných</item>
         <item quantity="other">%d vybraných</item>
     </plurals>
-    <string name="apps_select_hint">Klepnutím na aplikace je vyberete.</string>
+    <string name="apps_select_hint">Vyberte aplikace ze seznamu.</string>
     <string name="action_add_to_category">Přidat do kategorie</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Přidat %d aplikaci do kategorie</item>
         <item quantity="few">Přidat %d aplikace do kategorie</item>
+        <item quantity="many">Přidat %d aplikací do kategorie</item>
         <item quantity="other">Přidat %d aplikací do kategorie</item>
     </plurals>
     <string name="bulk_category_field">Kategorie</string>
     <plurals name="bulk_category_done">
         <item quantity="one">Zařazena %1$d aplikace do %2$s.</item>
         <item quantity="few">Zařazeny %1$d aplikace do %2$s.</item>
+        <item quantity="many">Zařazeno %1$d aplikací do %2$s.</item>
         <item quantity="other">Zařazeno %1$d aplikací do %2$s.</item>
     </plurals>
     <string name="bulk_category_existing">Nebo vyberte tu, kterou už používáte:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Zkontrolovat %d aplikaci?</item>
         <item quantity="few">Zkontrolovat %d aplikace?</item>
+        <item quantity="many">Zkontrolovat %d aplikací?</item>
         <item quantity="other">Zkontrolovat %d aplikací?</item>
     </plurals>
     <string name="bulk_check_text">Tern požádá každý zdroj o nejnovější vydání. Nic se nenainstaluje.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">Aktualizovat %d aplikaci?</item>
         <item quantity="few">Aktualizovat %d aplikace?</item>
+        <item quantity="many">Aktualizovat %d aplikací?</item>
         <item quantity="other">Aktualizovat %d aplikací?</item>
     </plurals>
     <string name="bulk_update_text">Každý soubor se předtím, než je Android požádán o jeho instalaci, stáhne a zkontroluje.</string>
     <plurals name="bulk_update_left">
         <item quantity="one">%d z vybraných aplikací nemá aktualizaci k instalaci a zůstane beze změny.</item>
         <item quantity="few">%d z vybraných aplikací nemají aktualizaci k instalaci a zůstanou beze změny.</item>
+        <item quantity="many">%d z vybraných aplikací nemá aktualizaci k instalaci a zůstane beze změny.</item>
         <item quantity="other">%d z vybraných aplikací nemá aktualizaci k instalaci a zůstane beze změny.</item>
     </plurals>
     <plurals name="bulk_remove_title">
         <item quantity="one">Přestat sledovat %d aplikaci?</item>
         <item quantity="few">Přestat sledovat %d aplikace?</item>
+        <item quantity="many">Přestat sledovat %d aplikací?</item>
         <item quantity="other">Přestat sledovat %d aplikací?</item>
     </plurals>
     <string name="bulk_remove_text">Aplikace zůstanou nainstalované. Tern je jen přestane kontrolovat na aktualizace.</string>
-    <string name="apps_empty_title">Zatím žádné aplikace</string>
-    <string name="apps_empty_text">Vložte odkaz na stránku projektu, vydání nebo repozitář F-Droid a Tern odtud bude aplikaci udržovat aktuální.</string>
+    <string name="apps_empty_title">Zatím tu nic není</string>
+    <string name="apps_empty_text">Přidejte aplikaci pomocí odkazu, nebo začněte s nějakou, kterou používá hodně lidí.</string>
     <string name="sort_title">Řadit</string>
     <string name="sort_name">Podle jména</string>
     <string name="sort_recently_checked">Nedávno kontrolované</string>
     <string name="sort_source">Podle zdroje</string>
-    <string name="remove_title">Odebrat %s?</string>
     <string name="remove_text_installed">Tern ji přestane sledovat. Aplikace zůstane nainstalovaná.</string>
     <string name="remove_text">Tern ji přestane sledovat.</string>
     <string name="add_title">Přidat aplikaci</string>
@@ -156,6 +164,7 @@
     <plurals name="preview_other_files">
         <item quantity="one">V nabídce je %d další soubor. Můžete si ho vybrat po přidání.</item>
         <item quantity="few">V nabídce jsou %d další soubory. Můžete si jeden vybrat po přidání.</item>
+        <item quantity="many">V nabídce je %d dalších souborů. Můžete si jeden vybrat po přidání.</item>
         <item quantity="other">V nabídce je %d dalších souborů. Můžete si jeden vybrat po přidání.</item>
     </plurals>
     <string name="preview_already_tracked">Tato aplikace už je ve vašem seznamu.</string>
@@ -164,12 +173,14 @@
     <plurals name="search_count">
         <item quantity="one">%1$d výsledek pro „%2$s“</item>
         <item quantity="few">%1$d výsledky pro „%2$s“</item>
+        <item quantity="many">%1$d výsledků pro „%2$s“</item>
         <item quantity="other">%1$d výsledků pro „%2$s“</item>
     </plurals>
     <string name="search_none">Pro „%s“ nebylo nic nalezeno</string>
     <plurals name="search_stars">
         <item quantity="one">%d hvězdička</item>
         <item quantity="few">%d hvězdičky</item>
+        <item quantity="many">%d hvězdiček</item>
         <item quantity="other">%d hvězdiček</item>
     </plurals>
     <string name="file_why">Proč tento soubor</string>
@@ -179,6 +190,7 @@
     <plurals name="carried_min_age">
         <item quantity="one">Vydání se ignoruje, dokud není %d den staré.</item>
         <item quantity="few">Vydání se ignoruje, dokud není %d dny staré.</item>
+        <item quantity="many">Vydání se ignoruje, dokud není %d dní staré.</item>
         <item quantity="other">Vydání se ignoruje, dokud není %d dní staré.</item>
     </plurals>
     <string name="carried_include">Použijí se jen soubory odpovídající %1$s.</string>
@@ -193,17 +205,14 @@
     <string name="carried_notes_none">Sledují se vydání bez ohledu na to, co říkají poznámky.</string>
     <string name="carried_version">Verze se čte ze štítku pomocí %1$s.</string>
     <string name="carried_version_none">Verze se čte obvyklým způsobem.</string>
-    <string name="carried_match_device_on">Když je v nabídce více souborů, dává se přednost tomu, který je vytvořen pro tento telefon.</string>
-    <string name="carried_match_device_off">Soubory se neomezují podle procesoru tohoto telefonu.</string>
+    <string name="carried_match_device_on">Když je nabídnuto více souborů, přednost má ten sestavený pro toto zařízení.</string>
+    <string name="carried_match_device_off">Soubory se neomezují na procesor tohoto zařízení.</string>
     <string name="carried_fallback_on">Když nejnovější vydání nemá použitelný soubor, použije se starší vydání.</string>
     <string name="carried_fallback_off">Starší vydání se nikdy nepoužijí, ani když nejnovější nemá použitelný soubor.</string>
     <string name="carried_track_on">Vydání se jen sledují; nic se nestahuje ani neinstaluje.</string>
     <string name="carried_track_off">Vydání se stahují a instalují, nejen sledují.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">Odkaz připíná tento certifikát, takže se nainstalují jen jím podepsané soubory. Vybral ho někdo jiný: přidejte ho, jen pokud důvěřujete původu odkazu.</item>
-        <item quantity="few">Odkaz připíná tyto certifikáty, takže se nainstalují jen jimi podepsané soubory. Vybral je někdo jiný: přidejte je, jen pokud důvěřujete původu odkazu.</item>
-        <item quantity="other">Odkaz připíná tyto certifikáty, takže se nainstalují jen jimi podepsané soubory. Vybral je někdo jiný: přidejte je, jen pokud důvěřujete původu odkazu.</item>
-    </plurals>
+    <string name="carried_pin_warning">Odkaz připíná tento certifikát, takže se nainstalují jen jím podepsané soubory. Vybral ho někdo jiný: přidejte ho, jen pokud důvěřujete původu odkazu.</string>
+    <string name="carried_pins_warning">Odkaz připíná tyto certifikáty, takže se nainstalují jen jimi podepsané soubory. Vybral je někdo jiný: přidejte je, jen pokud důvěřujete původu odkazu.</string>
     <string name="checks_title">Kontroly</string>
     <string name="checks_package">Název balíčku</string>
     <string name="checks_package_unknown">Není znám do přečtení souboru</string>
@@ -227,6 +236,7 @@
     <plurals name="permissions_new">
         <item quantity="one">Žádá o %d nové oprávnění</item>
         <item quantity="few">Žádá o %d nová oprávnění</item>
+        <item quantity="many">Žádá o %d nových oprávnění</item>
         <item quantity="other">Žádá o %d nových oprávnění</item>
     </plurals>
     <string name="fingerprint_copied">Otisk zkopírován</string>
@@ -252,6 +262,7 @@
     <plurals name="retry_at">
         <item quantity="one">Resetuje se v %1$s, za %2$d minutu.</item>
         <item quantity="few">Resetuje se v %1$s, za %2$d minuty.</item>
+        <item quantity="many">Resetuje se v %1$s, za %2$d minut.</item>
         <item quantity="other">Resetuje se v %1$s, za %2$d minut.</item>
     </plurals>
     <string name="detail_gone">Tato aplikace už není ve vašem seznamu.</string>
@@ -302,13 +313,14 @@
     <plurals name="min_age_days">
         <item quantity="one">%d den</item>
         <item quantity="few">%d dny</item>
+        <item quantity="many">%d dní</item>
         <item quantity="other">%d dní</item>
     </plurals>
     <string name="files_none">Od poslední kontroly žádné soubory.</string>
     <string name="file_recommended">Volba %d, doporučeno</string>
     <string name="file_alternative">Volba %d</string>
     <string name="setting_match_device">Přiřadit k tomuto zařízení</string>
-    <string name="setting_match_device_effect">Když je v nabídce více souborů, upřednostní se ten, který je vytvořen pro procesor tohoto telefonu.</string>
+    <string name="setting_match_device_effect">Když je nabídnuto více souborů, upřednostnit ten sestavený pro procesor tohoto zařízení.</string>
     <string name="setting_include">Jen soubory odpovídající</string>
     <string name="setting_include_help">Vzor, který musí název souboru obsahovat, například universal</string>
     <string name="setting_exclude">Přeskočit soubory odpovídající</string>
@@ -353,6 +365,7 @@
     <plurals name="interval_hours">
         <item quantity="one">Každou %d hodinu</item>
         <item quantity="few">Každé %d hodiny</item>
+        <item quantity="many">Každých %d hodin</item>
         <item quantity="other">Každých %d hodin</item>
     </plurals>
     <string name="settings_unmetered">Jen na neomezených sítích</string>
@@ -371,7 +384,6 @@
     <string name="settings_keep_installers_effect">Soubory po instalaci zůstanou a zabírají místo. Vypnutím se smažou.</string>
     <string name="settings_ownership">Být jediným aktualizátorem</string>
     <string name="settings_ownership_effect">Požádá Android, aby aplikace nainstalované pomocí Tern mohl aktualizovat pouze Tern, aby je jiný obchod nemohl vyměnit.</string>
-    <string name="settings_ownership_unsupported">Potřebuje Android 14 nebo novější.</string>
     <string name="settings_tokens">Přístupové tokeny</string>
     <string name="settings_tokens_effect">Token zvyšuje limity pro frekvenci dotazů a otevírá soukromé projekty. Odesílá se jen na přesný hostitel, pro který je uložen, a už se nikdy nezobrazí.</string>
     <string name="token_saved">Uloženo</string>
@@ -400,9 +412,6 @@
     <string name="theme_system">Podle systému</string>
     <string name="theme_light">Světlý</string>
     <string name="theme_dark">Tmavý</string>
-    <string name="settings_dynamic_color">Barvy podle tapety</string>
-    <string name="settings_dynamic_color_effect">Vypnutím se použije vlastní břidlicově modrá barva Terna.</string>
-    <string name="settings_dynamic_color_unsupported">Potřebuje Android 12 nebo novější.</string>
     <string name="settings_pure_black">Čistě černá</string>
     <string name="settings_pure_black_effect">Černé pozadí v tmavém motivu, šetrnější k OLED obrazovkám.</string>
     <string name="settings_data">Import a export</string>
@@ -414,6 +423,7 @@
     <plurals name="exported">
         <item quantity="one">Exportována %d aplikace</item>
         <item quantity="few">Exportovány %d aplikace</item>
+        <item quantity="many">Exportováno %d aplikací</item>
         <item quantity="other">Exportováno %d aplikací</item>
     </plurals>
     <string name="export_failed">Export se nepodařilo zapsat.</string>
@@ -435,21 +445,25 @@
     <plurals name="import_added">
         <item quantity="one">Přidána %d aplikace</item>
         <item quantity="few">Přidány %d aplikace</item>
+        <item quantity="many">Přidáno %d aplikací</item>
         <item quantity="other">Přidáno %d aplikací</item>
     </plurals>
     <plurals name="import_present">
         <item quantity="one">%d už byla ve vašem seznamu</item>
         <item quantity="few">%d už byly ve vašem seznamu</item>
+        <item quantity="many">%d už jich bylo ve vašem seznamu</item>
         <item quantity="other">%d už jich bylo ve vašem seznamu</item>
     </plurals>
     <plurals name="import_skipped">
         <item quantity="one">%d nebylo možné přenést:</item>
         <item quantity="few">%d nebylo možné přenést:</item>
+        <item quantity="many">%d nebylo možné přenést:</item>
         <item quantity="other">%d nebylo možné přenést:</item>
     </plurals>
     <plurals name="import_show_names">
         <item quantity="one">Zobrazit %d název</item>
         <item quantity="few">Zobrazit všechny %d názvy</item>
+        <item quantity="many">Zobrazit všech %d názvů</item>
         <item quantity="other">Zobrazit všech %d názvů</item>
     </plurals>
     <string name="import_hide_names">Skrýt názvy</string>
@@ -467,12 +481,14 @@
     <plurals name="import_stars_count">
         <item quantity="one">%2$s dal hvězdičku %1$d repozitáři. Vyberte, které chcete přidat.</item>
         <item quantity="few">%2$s dal hvězdičku %1$d repozitářům. Vyberte, které chcete přidat.</item>
+        <item quantity="many">%2$s dal hvězdičku %1$d repozitářům. Vyberte, které chcete přidat.</item>
         <item quantity="other">%2$s dal hvězdičku %1$d repozitářům. Vyberte, které chcete přidat.</item>
     </plurals>
     <string name="import_stars_none">%1$s nedal hvězdičku žádnému repozitáři.</string>
     <plurals name="import_stars_add">
         <item quantity="one">Přidat %d vybraný</item>
         <item quantity="few">Přidat %d vybrané</item>
+        <item quantity="many">Přidat %d vybraných</item>
         <item quantity="other">Přidat %d vybraných</item>
     </plurals>
     <string name="import_stars_pick_some">Zaškrtněte repozitáře, které chcete přidat.</string>
@@ -480,6 +496,7 @@
     <plurals name="import_stars_adding">
         <item quantity="one">Kontroluje se %1$d z %2$d repozitáře</item>
         <item quantity="few">Kontroluje se %1$d z %2$d repozitářů</item>
+        <item quantity="many">Kontroluje se %1$d z %2$d repozitářů</item>
         <item quantity="other">Kontroluje se %1$d z %2$d repozitářů</item>
     </plurals>
     <string name="import_stars_stop">Zastavit</string>
@@ -492,7 +509,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern instaluje a aktualizuje aplikace přímo odtud, kde je jejich vývojáři vydávají.</string>
     <string name="first_line_2">Než Android uvidí soubor, Tern zkontroluje, kdo ho podepsal a zda odpovídá kontrolnímu součtu vydavatele.</string>
-    <string name="first_line_3">Vše, co najde a udělá, je srozumitelnými slovy zapsáno do protokolu aktivity.</string>
+    <string name="first_line_3">Vše, co najde a udělá, je zapsáno srozumitelnými slovy.</string>
     <string name="first_notify_explain">Tern vás může upozornit, když jsou aktualizace připraveny. Android se zeptá, zda povolit oznámení.</string>
     <string name="first_notify_denied">Oznámení jsou vypnutá. Můžete je zapnout později v Nastavení.</string>
     <string name="first_notify_allow">Povolit oznámení</string>
@@ -500,4 +517,5 @@
     <string name="install_permission_title">Povolit Tern instalaci aplikací</string>
     <string name="install_permission_body">Android se ptá jen jednou, než může jedna aplikace instalovat jinou. Na další obrazovce zapněte přepínač pro Tern a pak se vraťte. Instalace pak pokračuje sama.</string>
     <string name="install_permission_open">Otevřít nastavení</string>
+    <string name="install_permission_closes">Tato verze Androidu po zapnutí přepínače zavře Tern. Poté Tern znovu otevřete a instalace bude pokračovat.</string>
 </resources>

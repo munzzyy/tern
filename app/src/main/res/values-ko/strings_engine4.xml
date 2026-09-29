@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">이 번들의 일부가 명시된 방식대로 서명되지 않아 아무것도 설치되지 않았습니다.</string>
+</resources>

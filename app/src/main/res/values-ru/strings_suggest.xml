@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Смотрите то, что на вашем сервере Jellyfin</string>
+    <string name="suggest_just_player">Видеоплеер для файлов и потоков</string>
+    <string name="suggest_mpv">Видеоплеер на базе mpv</string>
+    <string name="suggest_nova">Воспроизводит видео с этого устройства или из сети</string>
+    <string name="suggest_material_files">Управление файлами на этом устройстве и серверах</string>
+    <string name="suggest_mullvad">Приложение для VPN-сервиса Mullvad</string>
+    <string name="suggest_proton_vpn">Приложение для VPN-сервиса Proton</string>
+    <string name="suggest_moonlight">Играйте в игры с компьютера на этом устройстве</string>
+    <string name="suggest_fossify_gallery">Галерея для фото и видео</string>
+    <string name="suggest_breezy_weather">Прогнозы погоды из множества источников</string>
+    <string name="suggest_fdroid">Каталог свободных приложений с открытым исходным кодом</string>
+    <string name="suggest_heliboard">Клавиатура без доступа к сети</string>
+    <string name="suggest_obtainium">Получает обновления приложений из их источников</string>
+    <string name="suggest_aegis">Хранит коды для двухэтапного входа</string>
+    <string name="suggest_keepassdx">Менеджер паролей для файлов KeePass</string>
+    <string name="suggest_koreader">Читает EPUB, PDF и другие форматы книг</string>
+    <string name="suggest_element_x">Общение в сети Matrix</string>
+    <string name="suggest_fairemail">Почтовое приложение для любого провайдера</string>
+    <string name="suggest_tusky">Клиент для Mastodon</string>
+    <string name="suggest_organic_maps">Карты и навигация, работающие офлайн</string>
+    <string name="suggest_osmand">Офлайн-карты, маршрутизация и запись треков</string>
+    <string name="suggest_magpie">Зашифрованный журнал инцидентов от автора Tern</string>
+    <string name="suggest_sepia">Удаляет скрытые данные из фото, от автора Tern</string>
+    <string name="suggest_sweep">Проверка на шпионские программы от автора Tern</string>
+    <string name="suggest_starling">Приватный обмен геопозицией от автора Tern</string>
+</resources>

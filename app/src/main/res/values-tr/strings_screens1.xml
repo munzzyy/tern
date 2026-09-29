@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">Aramayı kapat</string>
+    <string name="waiting_banner_one">%1$s onayınızı bekliyor</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d yükleme onayınızı bekliyor</item>
+        <item quantity="other">%1$d yükleme onayınızı bekliyor</item>
+    </plurals>
+    <string name="empty_add">Uygulama ekle</string>
+    <string name="empty_well_known">Bilinen uygulamalar</string>
+    <string name="empty_handoff">Telefondan gönder</string>
+    <string name="removed_notice">%1$s takipten çıkarıldı</string>
+    <string name="removed_undo">Geri al</string>
+    <string name="waiting_play_protect">Android veya Play Protect bir kez daha sorabilir. Bu onların kendi denetimidir ve dosyayla ilgili bir sorun değildir.</string>
+    <string name="prompt_always_asks">Bu cihaz bir güncelleme yüklenmeden önce her zaman sorar.</string>
+    <string name="checks_passed">Bu dosya her denetimi geçti</string>
+    <string name="explain_button">Bunun anlamı: %1$s</string>
+    <string name="explain_action">bunun anlamını dinle</string>
+    <string name="explain_close">Kapat</string>
+    <string name="explain_signer_title">İmza sertifikası</string>
+    <string name="explain_checksum_title">Sağlama toplamı</string>
+    <string name="explain_permissions_title">İzinler</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Sormadan güncellemeler</string>
+    <string name="explain_always_asks_title">Bu cihaz her zaman sorar</string>
+    <string name="explain_package">Her Android uygulamasının asla değişmeyen bir adı vardır. Başka bir isim taşıyan bir dosya, kendisine ne ad verirse versin farklı bir uygulama olurdu.</string>
+    <string name="explain_signer_installed">Bir geliştirici her sürümü yalnızca kendi elinde tuttuğu bir anahtarla imzalar. Tern, bu dosyanın imzasını bu cihazdaki uygulamayla ve ilk yüklemede hatırladığı sertifikayla karşılaştırır. Doğru adresten gelse bile, başka biri tarafından imzalanmış bir dosya reddedilir.</string>
+    <string name="explain_signer_first">Henüz karşılaştırılacak bir şey yok. Dosya kendisini kimin imzaladığını söylüyor, Android yüklerken bunu onaylıyor ve bundan sonra Tern her güncellemeyi aynı sertifikaya tabi tutuyor.</string>
+    <string name="explain_checksum_matched">Sağlama toplamı, dosyanın kendisinin bir parmak izidir. Yayıncı bir tane verdi ve Tern\'ın indirdiği dosya aynı parmak izine sahip, yani yayınlandığı gibi ulaştı.</string>
+    <string name="explain_checksum_pending">Sağlama toplamı, dosyanın kendisinin bir parmak izidir. Yayıncı bir tane verdi ve Tern, dosya indirilir indirilmez onu dosyayla karşılaştırır.</string>
+    <string name="explain_checksum_mismatch">Sağlama toplamı, dosyanın kendisinin bir parmak izidir. Yayıncı bir tane verdi ve Tern\'ın indirdiği dosya başka bir tanesine sahip, yani yayınlanan dosya değil.</string>
+    <string name="explain_checksum_none">Bu yayıncı hiçbir sağlama toplamı sunmuyor. İmza hala denetlenir ve ikisi arasında daha güçlü olanıdır.</string>
+    <string name="explain_permissions">Bu sürümün, yüklü olanın yapmadığı neyi yapmasına izin verilmesini istediği.</string>
+    <string name="explain_virustotal">Tarayıcınızda bu tam dosyanın VirusTotal\'daki sayfasını açar. Tern oraya hiçbir şey göndermez.</string>
+    <string name="explain_silent">Bu cihaz Android 12 veya daha yeni bir sürüm çalıştırdığında, Android bir uygulamanın diğerini kendi yüklediği durumlarda sormadan güncellemesine izin verir. Her seferinde Android karar verir.</string>
+    <string name="explain_always_asks">Bu cihaz, her yüklemeden önce soran Android %1$s sürümünü çalıştırıyor. Tern, güncellemeyi arka planda indirip denetler ve hazır olduğunda size bildirir.</string>
+    <string name="activity_installed">%1$s yüklendi</string>
+    <string name="activity_installed_plain">Yüklendi</string>
+    <string name="activity_updated">%1$s sürümüne güncellendi</string>
+    <string name="activity_updated_plain">Güncellendi</string>
+    <string name="activity_update_waits">%1$s sürümüne güncelleme bekliyor</string>
+    <string name="activity_update_waits_plain">Bir güncelleme bekliyor</string>
+    <string name="activity_install_waits">%1$s yüklemesi bekliyor</string>
+    <string name="activity_install_waits_plain">Bir yükleme bekliyor</string>
+    <string name="activity_not_installed">%1$s yüklenemedi</string>
+    <string name="activity_not_installed_plain">Yüklenemedi</string>
+    <string name="activity_blocked">%1$s engellendi</string>
+    <string name="activity_blocked_plain">Engellendi</string>
+    <string name="activity_added">Eklendi</string>
+    <string name="activity_removed">İzleme bırakıldı</string>
+    <string name="activity_check_failed">Denetim başarısız</string>
+    <string name="activity_steps_show">Adımları göster</string>
+    <string name="activity_steps_hide">Adımları gizle</string>
+    <string name="first_well_known">Bilinen uygulamalar</string>
+</resources>

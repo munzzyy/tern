@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">يحتفظ Tern بالشهادة التي تم توقيع هذا التطبيق بها، وهذا الملف موقع بشهادة أخرى. قد يكون من شخص آخر، لذلك لم يتم تثبيته.</string>
+    <string name="engine_warn_built_in_pin">يحتفظ Tern بالشهادة التي تم توقيع هذا التطبيق بها، والملف المعروض موقع بشهادة أخرى.</string>
+</resources>

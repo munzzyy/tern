@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Utseende</string>
+    <string name="look_summary">Tema, färger, kontrast, täthet, hörn och ikoner</string>
+    <string name="look_preview_spoken">Förhandsgranskning av utseendet som det är inställt nu</string>
+    <string name="look_preview_app">Exempelapp</string>
+    <string name="look_colours">Färger</string>
+    <string name="look_palette">Färg</string>
+    <string name="look_wallpaper">Bakgrundsbild</string>
+    <string name="look_own">Egen färg</string>
+    <string name="palette_ink">Bläck</string>
+    <string name="palette_slate">Skiffer</string>
+    <string name="palette_tide">Tidvatten</string>
+    <string name="palette_moss">Mossa</string>
+    <string name="palette_amber">Bärnsten</string>
+    <string name="palette_clay">Lera</string>
+    <string name="palette_rose">Ros</string>
+    <string name="palette_plum">Plommon</string>
+    <string name="look_hue">Nyans på din egen färg</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d grad</item>
+        <item quantity="other">%1$d grader</item>
+    </plurals>
+    <string name="look_contrast">Kontrast</string>
+    <string name="contrast_standard">Standard</string>
+    <string name="contrast_medium">Medium</string>
+    <string name="contrast_high">Hög</string>
+    <string name="look_contrast_effect">Mer kontrast skiljer text och konturer tydligare från det som är bakom dem.</string>
+    <string name="look_shape_and_size">Form och storlek</string>
+    <string name="look_density">Täthet</string>
+    <string name="density_comfortable">Bekväm</string>
+    <string name="density_compact">Kompakt</string>
+    <string name="look_density_effect">Kompakt rymmer mer på skärmen. Inget du trycker på blir mindre än en fingertopp.</string>
+    <string name="look_corners">Hörn</string>
+    <string name="corners_round">Runda</string>
+    <string name="corners_soft">Mjuka</string>
+    <string name="corners_sharp">Skarpa</string>
+    <string name="look_icon_shape">Ikonform</string>
+    <string name="icon_shape_circle">Cirkel</string>
+    <string name="icon_shape_squircle">Squircle</string>
+    <string name="icon_shape_square">Kvadrat</string>
+    <string name="look_icons">Ikoner</string>
+    <string name="look_source_icons">Ikoner från källan</string>
+    <string name="look_source_icons_effect">När en app inte är installerad hämtar Tern dess ikon från platsen där appen publiceras: dess lagringsplats eller dess butikssida. I läget Av ritar den en bokstav på en färg och frågar ingen.</string>
+</resources>

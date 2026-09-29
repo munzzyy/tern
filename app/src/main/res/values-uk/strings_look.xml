@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Вигляд</string>
+    <string name="look_summary">Тема, кольори, контраст, щільність, кути та значки</string>
+    <string name="look_preview_spoken">Попередній перегляд поточного вигляду</string>
+    <string name="look_preview_app">Приклад програми</string>
+    <string name="look_colours">Кольори</string>
+    <string name="look_palette">Колір</string>
+    <string name="look_wallpaper">Шпалери</string>
+    <string name="look_own">Власний колір</string>
+    <string name="palette_ink">Чорнило</string>
+    <string name="palette_slate">Сланець</string>
+    <string name="palette_tide">Приплив</string>
+    <string name="palette_moss">Мох</string>
+    <string name="palette_amber">Бурштин</string>
+    <string name="palette_clay">Глина</string>
+    <string name="palette_rose">Троянда</string>
+    <string name="palette_plum">Слива</string>
+    <string name="look_hue">Відтінок вашого власного кольору</string>
+    <string name="look_contrast">Контраст</string>
+    <string name="contrast_standard">Стандартний</string>
+    <string name="contrast_medium">Середній</string>
+    <string name="contrast_high">Високий</string>
+    <string name="look_contrast_effect">Більший контраст сильніше відокремлює текст і контури від фону.</string>
+    <string name="look_shape_and_size">Форма та розмір</string>
+    <string name="look_density">Щільність</string>
+    <string name="density_comfortable">Комфортна</string>
+    <string name="density_compact">Компактна</string>
+    <string name="look_density_effect">Компактна вміщує більше на екрані. Усе, на що ви натискаєте, залишається не меншим за кінчик пальця.</string>
+    <string name="look_corners">Кути</string>
+    <string name="corners_round">Круглі</string>
+    <string name="corners_soft">М\'які</string>
+    <string name="corners_sharp">Гострі</string>
+    <string name="look_icon_shape">Форма значка</string>
+    <string name="icon_shape_circle">Коло</string>
+    <string name="icon_shape_squircle">Супереліпс</string>
+    <string name="icon_shape_square">Квадрат</string>
+    <string name="look_icons">Значки</string>
+    <string name="look_source_icons">Значки з джерела</string>
+    <string name="look_source_icons_effect">Поки програма не встановлена, Tern отримує її значок з місця публікації: з репозиторію або сторінки в магазині. Якщо вимкнено, малюється літера на кольоровому тлі і не надсилається жодних запитів.</string>
+</resources>

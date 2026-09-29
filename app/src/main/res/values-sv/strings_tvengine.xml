@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">Denna fil är inte en lista över appar exporterad från Tern eller Obtainium.</string>
+    <string name="engine_import_empty">Denna fil innehåller inga appar.</string>
+    <string name="engine_import_local_address">Dess adress är på ett lokalt nätverk. Lägg till den manuellt om den är din.</string>
+    <string name="engine_warn_local_address">Denna adress är på ditt eget nätverk. Tern frågar den varje gång den letar efter uppdateringar.</string>
+    <string name="engine_import_unreadable_export">Denna export från Tern kunde inte läsas (%1$s). Om den kommer från en nyare version av Tern, uppdatera Tern på denna enhet och försök igen.</string>
+    <string name="engine_import_too_large">Filen är större än %1$d MiB, vilket är mer än vad en applista tar, så Tern läste den inte.</string>
+    <string name="engine_import_file_gone">Den filen finns inte kvar. Öppna listan över filer igen.</string>
+    <string name="engine_link_not_https">Endast adresser som börjar med https:// accepteras.</string>
+    <string name="engine_link_not_an_address">Det där är inte en webbadress som Tern kan öppna. Den bör se ut som https://example.org/tern-apps.json.</string>
+    <string name="engine_link_leaves_https">Den adressen skickar Tern vidare till en som inte är HTTPS, så inget hämtades.</string>
+    <string name="engine_link_not_found">Det finns ingen fil på den adressen. Kontrollera den för felskrivningar.</string>
+    <string name="engine_link_refused">Servern vägrade att lämna ut filen (den svarade %1$d). Tern skickar ingen inloggning med denna förfrågan, så filen måste vara läsbar för alla som har adressen.</string>
+    <string name="engine_link_unreachable">Adressen kunde inte nås: %1$s</string>
+    <string name="engine_link_unreachable_plain">Adressen kunde inte nås. Kontrollera anslutningen och adressen, och försök sedan igen.</string>
+    <string name="engine_link_too_slow">Servern tog mer än en minut på sig att skicka filen, så Tern slutade vänta. Försök igen senare.</string>
+    <string name="engine_link_not_an_export">Det som finns på den adressen är inte en lista över appar exporterad från Tern eller Obtainium. Adressen måste leda till själva filen, inte till en sida som visar den.</string>
+    <string name="engine_export_no_place">Denna enhet har ingen delad lagring som Tern kan skriva till.</string>
+    <string name="engine_export_failed">Exporten kunde inte skrivas: %1$s</string>
+    <string name="engine_export_failed_plain">Exporten kunde inte skrivas.</string>
+</resources>

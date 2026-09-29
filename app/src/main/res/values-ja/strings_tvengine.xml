@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">このファイルは、TernまたはObtainiumからエクスポートされたアプリのリストではありません。</string>
+    <string name="engine_import_empty">このファイルにはアプリが含まれていません。</string>
+    <string name="engine_import_local_address">そのアドレスはローカルネットワーク上にあります。自分のものの場合は手動で追加してください。</string>
+    <string name="engine_warn_local_address">このアドレスはあなた自身のネットワーク上にあります。Ternは更新を確認するたびにこれに問い合わせます。</string>
+    <string name="engine_import_unreadable_export">このTernからのエクスポートは読み取れませんでした (%1$s)。より新しいバージョンのTernから作成されたものである場合は、この端末のTernを更新して再試行してください。</string>
+    <string name="engine_import_too_large">ファイルが %1$d MiB を超えており、アプリのリストとしては大きすぎるため、Ternは読み取りませんでした。</string>
+    <string name="engine_import_file_gone">そのファイルはもうありません。ファイルのリストをもう一度開いてください。</string>
+    <string name="engine_link_not_https">https:// から始まるアドレスのみが受け入れられます。</string>
+    <string name="engine_link_not_an_address">これはTernが開けるウェブアドレスではありません。https://example.org/tern-apps.json のような形式である必要があります。</string>
+    <string name="engine_link_leaves_https">そのアドレスはTernをHTTPSではないアドレスに転送するため、何も取得されませんでした。</string>
+    <string name="engine_link_not_found">そのアドレスにはファイルがありません。入力ミスがないか確認してください。</string>
+    <string name="engine_link_refused">サーバーはファイルの提供を拒否しました（応答: %1$d）。Ternはこのリクエストでログイン情報を送信しないため、ファイルはアドレスを知っている人なら誰でも読み取れる状態である必要があります。</string>
+    <string name="engine_link_unreachable">アドレスにアクセスできませんでした: %1$s</string>
+    <string name="engine_link_unreachable_plain">アドレスにアクセスできませんでした。接続とアドレスを確認し、再試行してください。</string>
+    <string name="engine_link_too_slow">サーバーがファイルを送信するのに1分以上かかったため、Ternは待機を停止しました。後で再試行してください。</string>
+    <string name="engine_link_not_an_export">そのアドレスにあるものは、TernまたはObtainiumからエクスポートされたアプリのリストではありません。アドレスは、ファイルを表示するページではなく、ファイル自体に直接リンクしている必要があります。</string>
+    <string name="engine_export_no_place">この端末には、Ternが書き込みできる共有ストレージがありません。</string>
+    <string name="engine_export_failed">エクスポートを書き込めませんでした: %1$s</string>
+    <string name="engine_export_failed_plain">エクスポートを書き込めませんでした。</string>
+</resources>

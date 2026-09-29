@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Gledajte šta je na vašem Jellyfin serveru</string>
+    <string name="suggest_just_player">Video plejer za datoteke i strimove</string>
+    <string name="suggest_mpv">Video plejer zasnovan na mpv</string>
+    <string name="suggest_nova">Reprodukuje video s ovog uređaja ili mreže</string>
+    <string name="suggest_material_files">Upravljajte datotekama na ovom uređaju i serverima</string>
+    <string name="suggest_mullvad">Aplikacija za uslugu Mullvad VPN</string>
+    <string name="suggest_proton_vpn">Aplikacija za uslugu Proton VPN</string>
+    <string name="suggest_moonlight">Igrajte igre s računara na ovom uređaju</string>
+    <string name="suggest_fossify_gallery">Galerija za fotografije i videozapise</string>
+    <string name="suggest_breezy_weather">Vremenske prognoze iz mnogih izvora</string>
+    <string name="suggest_fdroid">Katalog besplatnih aplikacija otvorenog koda</string>
+    <string name="suggest_heliboard">Tastatura koja nema pristup mreži</string>
+    <string name="suggest_obtainium">Dobija ažuriranja aplikacija s njihovih izvora</string>
+    <string name="suggest_aegis">Čuva kodove za prijavu u dva koraka</string>
+    <string name="suggest_keepassdx">Upravitelj lozinki za KeePass datoteke</string>
+    <string name="suggest_koreader">Čita EPUB, PDF i druge formate knjiga</string>
+    <string name="suggest_element_x">Razgovarajte na Matrix mreži</string>
+    <string name="suggest_fairemail">Aplikacija za e-poštu za bilo kojeg provajdera</string>
+    <string name="suggest_tusky">Klijent za Mastodon</string>
+    <string name="suggest_organic_maps">Mape i navigacija koji rade van mreže</string>
+    <string name="suggest_osmand">Mape van mreže, rutiranje i snimanje traga</string>
+    <string name="suggest_magpie">Šifrirani dnevnik incidenata, od autora Terna</string>
+    <string name="suggest_sepia">Uklanja skrivene podatke iz fotografija, od autora Terna</string>
+    <string name="suggest_sweep">Provjera stalkerwarea, od autora Terna</string>
+    <string name="suggest_starling">Privatno dijeljenje lokacije, od autora Terna</string>
+</resources>

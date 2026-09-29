@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">Sebagian dari bundel ini tidak ditandatangani sesuai klaimnya, jadi tidak ada yang diinstal.</string>
+</resources>

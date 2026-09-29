@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">Ova datoteka nije spisak aplikacija izvezen iz Terna ili Obtainiuma.</string>
+    <string name="engine_import_empty">Ova datoteka ne sadrži aplikacije.</string>
+    <string name="engine_import_local_address">Njena adresa je na lokalnoj mreži. Dodajte je ručno ako je vaša.</string>
+    <string name="engine_warn_local_address">Ova adresa je na vašoj vlastitoj mreži. Tern je pita svaki put kada provjerava ažuriranja.</string>
+    <string name="engine_import_unreadable_export">Ovaj izvoz iz Terna se nije mogao pročitati (%1$s). Ako dolazi iz novije verzije Terna, ažurirajte Tern na ovom uređaju i pokušajte ponovo.</string>
+    <string name="engine_import_too_large">Datoteka je veća od %1$d MiB, što je više nego što spisak aplikacija zauzima, tako da je Tern nije pročitao.</string>
+    <string name="engine_import_file_gone">Ta datoteka više nije tamo. Ponovo otvorite spisak datoteka.</string>
+    <string name="engine_link_not_https">Prihvataju se samo adrese koje počinju sa https://.</string>
+    <string name="engine_link_not_an_address">To nije web adresa koju Tern može otvoriti. Trebala bi izgledati kao https://example.org/tern-apps.json.</string>
+    <string name="engine_link_leaves_https">Ta adresa šalje Tern na onu koja nije HTTPS, tako da ništa nije dohvaćeno.</string>
+    <string name="engine_link_not_found">Nema datoteke na toj adresi. Provjerite da li ima grešaka u kucanju.</string>
+    <string name="engine_link_refused">Server je odbio predati datoteku (odgovorio je %1$d). Tern ne šalje prijavu s ovim zahtjevom, tako da datoteku mora moći pročitati svako ko ima adresu.</string>
+    <string name="engine_link_unreachable">Adresa se nije mogla dosegnuti: %1$s</string>
+    <string name="engine_link_unreachable_plain">Adresa se nije mogla dosegnuti. Provjerite vezu i adresu, pa pokušajte ponovo.</string>
+    <string name="engine_link_too_slow">Serveru je trebalo više od minute da pošalje datoteku, tako da je Tern prestao čekati. Pokušajte ponovo kasnije.</string>
+    <string name="engine_link_not_an_export">Ono što je na toj adresi nije spisak aplikacija izvezen iz Terna ili Obtainiuma. Adresa mora voditi do same datoteke, a ne do stranice koja je prikazuje.</string>
+    <string name="engine_export_no_place">Ovaj uređaj nema zajednički prostor za pohranu na koji Tern može pisati.</string>
+    <string name="engine_export_failed">Izvoz se nije mogao zapisati: %1$s</string>
+    <string name="engine_export_failed_plain">Izvoz se nije mogao zapisati.</string>
+</resources>

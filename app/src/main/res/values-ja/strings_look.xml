@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">外観</string>
+    <string name="look_summary">テーマ、色、コントラスト、密度、角、アイコン</string>
+    <string name="look_preview_spoken">現在設定されている外観のプレビュー</string>
+    <string name="look_preview_app">アプリの例</string>
+    <string name="look_colours">色</string>
+    <string name="look_palette">色</string>
+    <string name="look_wallpaper">壁紙</string>
+    <string name="look_own">独自の色</string>
+    <string name="palette_ink">インク</string>
+    <string name="palette_slate">スレート</string>
+    <string name="palette_tide">タイド</string>
+    <string name="palette_moss">モス</string>
+    <string name="palette_amber">アンバー</string>
+    <string name="palette_clay">クレイ</string>
+    <string name="palette_rose">ローズ</string>
+    <string name="palette_plum">プラム</string>
+    <string name="look_hue">独自の色の色相</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="other">%1$d度</item>
+    </plurals>
+    <string name="look_contrast">コントラスト</string>
+    <string name="contrast_standard">標準</string>
+    <string name="contrast_medium">中</string>
+    <string name="contrast_high">高</string>
+    <string name="look_contrast_effect">コントラストを高くすると、テキストや輪郭が背景からさらに際立ちます。</string>
+    <string name="look_shape_and_size">形とサイズ</string>
+    <string name="look_density">密度</string>
+    <string name="density_comfortable">快適</string>
+    <string name="density_compact">コンパクト</string>
+    <string name="look_density_effect">コンパクトにすると画面により多く表示されます。タップする部分は指先より小さくなりません。</string>
+    <string name="look_corners">角</string>
+    <string name="corners_round">丸</string>
+    <string name="corners_soft">ソフト</string>
+    <string name="corners_sharp">シャープ</string>
+    <string name="look_icon_shape">アイコンの形</string>
+    <string name="icon_shape_circle">円</string>
+    <string name="icon_shape_squircle">スクワークル</string>
+    <string name="icon_shape_square">四角形</string>
+    <string name="look_icons">アイコン</string>
+    <string name="look_source_icons">提供元のアイコン</string>
+    <string name="look_source_icons_effect">アプリがインストールされていない間、Ternはリポジトリやストアの掲載情報など、アプリが公開されている場所からアイコンを取得します。オフにすると、色付きの背景に文字を描画し、どこにも問い合わせません。</string>
+</resources>

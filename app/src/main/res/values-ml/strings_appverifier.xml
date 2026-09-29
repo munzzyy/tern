@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appverifier_title">രണ്ടാമതൊരു പരിശോധന</string>
+    <string name="appverifier_effect">AppVerifier ഒരു പ്രത്യേക ആപ്പാണ്. ഇത് ഈ ആപ്പിനെ Tern കൈവശം വച്ചിരിക്കുന്ന സർട്ടിഫിക്കറ്റുമായും, അതിനറിയാവുന്ന ആപ്പുകളുടെ സ്വന്തം ലിസ്റ്റുമായും താരതമ്യം ചെയ്യുന്നു.</string>
+    <string name="appverifier_action">AppVerifier ഉപയോഗിച്ച് പരിശോധിക്കുക</string>
+</resources>

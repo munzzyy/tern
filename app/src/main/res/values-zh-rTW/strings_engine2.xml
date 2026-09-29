@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">找到的每個發行版本只提供其他應用程式的檔案，而不是這個的。</string>
+</resources>

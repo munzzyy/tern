@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">此设备未连接本地网络，因此手机无法连接到它。请将此设备连接到 Wi-Fi 或网线后重试。</string>
+    <string name="engine_handoff_behind_vpn">此设备通过 VPN 连接，因此本地网络上的手机无法连接到它。请在发送期间关闭 VPN，然后重试。</string>
+    <string name="engine_handoff_cannot_open">此设备无法打开本地网络上的页面：%1$s</string>
+    <string name="engine_handoff_cannot_open_plain">此设备无法打开本地网络上的页面。</string>
+    <string name="engine_handoff_not_on_screen">从手机接收链接时，Tern 必须保持在前台显示。请打开 Tern 然后重试。</string>
+</resources>

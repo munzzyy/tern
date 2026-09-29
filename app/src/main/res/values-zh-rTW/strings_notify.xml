@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">輕觸以完成安裝</string>
+    <string name="notify_downloading_plain">下載中</string>
+    <string name="settings_notify_names">在通知中顯示應用程式名稱</string>
+    <string name="settings_notify_names_help">通知可以在鎖定畫面上讀取。關閉時，Tern 只會說有多少應用程式，而不會說出是哪些。</string>
+</resources>

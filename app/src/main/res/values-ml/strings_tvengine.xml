@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">ഈ ഫയൽ Tern-ൽ നിന്നോ Obtainium-ൽ നിന്നോ എക്സ്പോർട്ട് ചെയ്ത ആപ്പുകളുടെ ലിസ്റ്റല്ല.</string>
+    <string name="engine_import_empty">ഈ ഫയലിൽ ആപ്പുകളൊന്നുമില്ല.</string>
+    <string name="engine_import_local_address">ഇതിൻ്റെ വിലാസം ഒരു ലോക്കൽ നെറ്റ്‌വർക്കിലാണ്. ഇത് നിങ്ങളുടേതാണെങ്കിൽ സ്വയം ചേർക്കുക.</string>
+    <string name="engine_warn_local_address">ഈ വിലാസം നിങ്ങളുടെ സ്വന്തം നെറ്റ്‌വർക്കിലാണ്. ഓരോ തവണ അപ്ഡേറ്റുകൾക്കായി പരിശോധിക്കുമ്പോഴും Tern ഇതിനോട് ചോദിക്കുന്നു.</string>
+    <string name="engine_import_unreadable_export">Tern-ൽ നിന്നുള്ള ഈ എക്സ്പോർട്ട് വായിക്കാനായില്ല (%1$s). ഇത് Tern-ൻ്റെ പുതിയ പതിപ്പിൽ നിന്നാണ് വരുന്നതെങ്കിൽ, ഈ ഉപകരണത്തിൽ Tern അപ്ഡേറ്റ് ചെയ്ത് വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="engine_import_too_large">ഫയൽ %1$d MiB-നേക്കാൾ വലുതാണ്, ഇത് ഒരു ആപ്പ് ലിസ്റ്റ് എടുക്കുന്നതിനേക്കാൾ കൂടുതലാണ്, അതിനാൽ Tern അത് വായിച്ചില്ല.</string>
+    <string name="engine_import_file_gone">ആ ഫയൽ ഇപ്പോൾ അവിടെയില്ല. ഫയലുകളുടെ ലിസ്റ്റ് വീണ്ടും തുറക്കുക.</string>
+    <string name="engine_link_not_https">https:// എന്ന് തുടങ്ങുന്ന വിലാസങ്ങൾ മാത്രമേ സ്വീകരിക്കുകയുള്ളൂ.</string>
+    <string name="engine_link_not_an_address">അത് Tern-ന് തുറക്കാൻ കഴിയുന്ന ഒരു വെബ് വിലാസമല്ല. അത് https://example.org/tern-apps.json പോലെയായിരിക്കണം.</string>
+    <string name="engine_link_leaves_https">ആ വിലാസം HTTPS അല്ലാത്ത ഒന്നിലേക്ക് Tern-നെ അയയ്ക്കുന്നു, അതിനാൽ ഒന്നും എടുത്തില്ല.</string>
+    <string name="engine_link_not_found">ആ വിലാസത്തിൽ ഒരു ഫയലുമില്ല. ടൈപ്പിംഗ് തെറ്റുകൾ ഉണ്ടോയെന്ന് പരിശോധിക്കുക.</string>
+    <string name="engine_link_refused">ഫയൽ നൽകാൻ സെർവർ വിസമ്മതിച്ചു (അത് %1$d എന്ന് മറുപടി നൽകി). ഈ അഭ്യർത്ഥനയോടൊപ്പം Tern ലോഗിൻ വിവരങ്ങളൊന്നും അയയ്ക്കുന്നില്ല, അതിനാൽ വിലാസമുള്ള ആർക്കും ഫയൽ വായിക്കാൻ കഴിയണം.</string>
+    <string name="engine_link_unreachable">വിലാസത്തിൽ എത്താനായില്ല: %1$s</string>
+    <string name="engine_link_unreachable_plain">വിലാസത്തിൽ എത്താനായില്ല. കണക്ഷനും വിലാസവും പരിശോധിക്കുക, തുടർന്ന് വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="engine_link_too_slow">ഫയൽ അയയ്ക്കാൻ സെർവർ ഒരു മിനിറ്റിലധികം എടുത്തു, അതിനാൽ Tern കാത്തിരിക്കുന്നത് നിർത്തി. പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="engine_link_not_an_export">ആ വിലാസത്തിലുള്ളത് Tern-ൽ നിന്നോ Obtainium-ൽ നിന്നോ എക്സ്പോർട്ട് ചെയ്ത ആപ്പുകളുടെ ലിസ്റ്റല്ല. ആ വിലാസം ഫയലിലേക്കാണ് പോകേണ്ടത്, അല്ലാതെ അത് കാണിക്കുന്ന ഒരു പേജിലേക്കല്ല.</string>
+    <string name="engine_export_no_place">Tern-ന് റൈറ്റ് ചെയ്യാൻ കഴിയുന്ന ഷെയേർഡ് സ്റ്റോറേജുകളൊന്നും ഈ ഉപകരണത്തിലില്ല.</string>
+    <string name="engine_export_failed">എക്സ്പോർട്ട് റൈറ്റ് ചെയ്യാനായില്ല: %1$s</string>
+    <string name="engine_export_failed_plain">എക്സ്പോർട്ട് റൈറ്റ് ചെയ്യാനായില്ല.</string>
+</resources>

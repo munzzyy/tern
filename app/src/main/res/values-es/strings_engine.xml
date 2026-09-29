@@ -26,6 +26,7 @@
     <string name="engine_downgrade">La versión instalada (%1$s) es más nueva que este archivo (%2$s). Android solo acepta una versión anterior si primero se elimina la aplicación instalada, y eliminarla borra sus datos.</string>
     <string name="engine_test_only">Este archivo es una versión de prueba, la cual Android rechaza instalar desde una tienda de aplicaciones.</string>
     <string name="engine_needs_newer_android">Esta versión necesita el nivel de API %1$d de Android o posterior.</string>
+    <string name="engine_proxy_silent">El proxy no respondió, así que no se envió nada. Tern nunca lo esquiva.</string>
     <string name="engine_check_network">No se pudo conectar con el origen: %1$s</string>
     <string name="engine_check_not_found">El origen ya no tiene nada en esta dirección: %1$s</string>
     <string name="engine_check_auth">El origen rechazó la petición. Añade o revisa el token para este sitio en los ajustes. (%1$s)</string>
@@ -88,17 +89,20 @@
     <string name="engine_channel_transfers">Descargas</string>
     <plurals name="engine_notify_updates_count">
         <item quantity="one">%1$d actualización disponible</item>
+        <item quantity="many">%1$d actualizaciones disponibles</item>
         <item quantity="other">%1$d actualizaciones disponibles</item>
     </plurals>
     <string name="engine_notify_update_one">Actualización disponible para %1$s</string>
     <plurals name="engine_notify_installed_count">
         <item quantity="one">%1$d aplicación actualizada</item>
+        <item quantity="many">%1$d aplicaciones actualizadas</item>
         <item quantity="other">%1$d aplicaciones actualizadas</item>
     </plurals>
     <string name="engine_notify_installed_one">%1$s se actualizó</string>
     <string name="engine_notify_confirm">Toca para terminar de instalar %1$s</string>
     <plurals name="engine_notify_failures_count">
         <item quantity="one">%1$d aplicación no pudo comprobarse o actualizarse</item>
+        <item quantity="many">%1$d aplicaciones no pudieron comprobarse o actualizarse</item>
         <item quantity="other">%1$d aplicaciones no pudieron comprobarse o actualizarse</item>
     </plurals>
     <string name="engine_notify_downloading">Descargando %1$s</string>

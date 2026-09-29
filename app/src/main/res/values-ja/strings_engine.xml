@@ -26,6 +26,7 @@
     <string name="engine_downgrade">インストール済みのバージョン (%1$s) はこのファイル (%2$s) よりも新しいです。Androidが古いバージョンを許可するのはインストール済みのアプリを削除した後のみであり、削除するとデータは消去されます。</string>
     <string name="engine_test_only">このファイルはテストビルドであり、Androidはアプリストアからのインストールを拒否します。</string>
     <string name="engine_needs_newer_android">このバージョンにはAndroid APIレベル %1$d 以降が必要です。</string>
+    <string name="engine_proxy_silent">プロキシが応答しなかったため、何も送信されませんでした。Ternがプロキシを迂回することはありません。</string>
     <string name="engine_check_network">提供元にアクセスできませんでした: %1$s</string>
     <string name="engine_check_not_found">提供元のアドレスにはもう何もありません: %1$s</string>
     <string name="engine_check_auth">提供元はリクエストを拒否しました。設定でこのサイトのトークンを追加または確認してください。(%1$s)</string>

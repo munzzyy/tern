@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Tryck för att slutföra en installation</string>
+    <string name="notify_downloading_plain">Laddar ned</string>
+    <string name="settings_notify_names">Namnge apparna i aviseringar</string>
+    <string name="settings_notify_names_help">En avisering kan läsas på låsskärmen. I läget Av säger Tern hur många appar det gäller och aldrig vilka.</string>
+</resources>

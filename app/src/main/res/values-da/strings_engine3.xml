@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern bærer det certifikat, denne app er signeret med, og denne fil er signeret med et andet. Den kan komme fra en anden, så den blev ikke installeret.</string>
+    <string name="engine_warn_built_in_pin">Tern bærer det certifikat, denne app er signeret med, og den tilbudte fil er signeret med et andet.</string>
+</resources>

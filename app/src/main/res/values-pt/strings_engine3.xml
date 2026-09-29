@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">O Tern traz o certificado com que esta aplicação está assinada, e este ficheiro está assinado com outro. Poderia vir de outra pessoa, logo não foi instalado.</string>
+    <string name="engine_warn_built_in_pin">O Tern traz o certificado com que esta aplicação está assinada, e o ficheiro oferecido está assinado com outro.</string>
+</resources>

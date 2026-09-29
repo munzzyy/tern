@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">Este dispositivo não está em nenhuma rede local, então um telefone não pode alcançá-lo. Conecte este dispositivo a uma rede Wi-Fi ou a um cabo de rede e tente novamente.</string>
+    <string name="engine_handoff_behind_vpn">Este dispositivo está conectado por uma VPN, então um telefone na rede local não pode alcançá-lo. Desligue a VPN pelo tempo que for enviar e tente novamente.</string>
+    <string name="engine_handoff_cannot_open">Este dispositivo não conseguiu abrir uma página na rede local: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">Este dispositivo não conseguiu abrir uma página na rede local.</string>
+    <string name="engine_handoff_not_on_screen">O Tern precisa estar na tela enquanto recebe links de um telefone. Abra o Tern e tente novamente.</string>
+</resources>

@@ -26,6 +26,7 @@
     <string name="engine_downgrade">Den installerade versionen (%1$s) är nyare än denna fil (%2$s). Android accepterar bara en äldre version efter att den installerade appen tagits bort, och om den tas bort raderas dess data.</string>
     <string name="engine_test_only">Denna fil är ett testbygge, som Android vägrar installera från en appbutik.</string>
     <string name="engine_needs_newer_android">Denna version kräver Android API-nivå %1$d eller senare.</string>
+    <string name="engine_proxy_silent">Proxyn svarade inte, så inget skickades. Tern kringgår den aldrig.</string>
     <string name="engine_check_network">Källan kunde inte nås: %1$s</string>
     <string name="engine_check_not_found">Källan har inte längre något på denna adress: %1$s</string>
     <string name="engine_check_auth">Källan nekade begäran. Lägg till eller kontrollera token för denna webbplats i inställningar. (%1$s)</string>

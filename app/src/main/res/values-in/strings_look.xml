@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Tampilan</string>
+    <string name="look_summary">Tema, warna, kontras, kepadatan, sudut, dan ikon</string>
+    <string name="look_preview_spoken">Pratinjau tampilan seperti yang diatur saat ini</string>
+    <string name="look_preview_app">Aplikasi contoh</string>
+    <string name="look_colours">Warna</string>
+    <string name="look_palette">Warna</string>
+    <string name="look_wallpaper">Wallpaper</string>
+    <string name="look_own">Warna sendiri</string>
+    <string name="palette_ink">Tinta</string>
+    <string name="palette_slate">Batu tulis</string>
+    <string name="palette_tide">Pasang</string>
+    <string name="palette_moss">Lumut</string>
+    <string name="palette_amber">Ambar</string>
+    <string name="palette_clay">Tanah liat</string>
+    <string name="palette_rose">Mawar</string>
+    <string name="palette_plum">Plum</string>
+    <string name="look_hue">Rona warna Anda sendiri</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="other">%1$d derajat</item>
+    </plurals>
+    <string name="look_contrast">Kontras</string>
+    <string name="contrast_standard">Standar</string>
+    <string name="contrast_medium">Sedang</string>
+    <string name="contrast_high">Tinggi</string>
+    <string name="look_contrast_effect">Kontras yang lebih besar membuat teks dan garis batas lebih terpisah dari latar belakangnya.</string>
+    <string name="look_shape_and_size">Bentuk dan ukuran</string>
+    <string name="look_density">Kepadatan</string>
+    <string name="density_comfortable">Nyaman</string>
+    <string name="density_compact">Rapat</string>
+    <string name="look_density_effect">Rapat memuat lebih banyak di layar. Tidak ada yang Anda tekan menjadi lebih kecil dari ujung jari.</string>
+    <string name="look_corners">Sudut</string>
+    <string name="corners_round">Bulat</string>
+    <string name="corners_soft">Lembut</string>
+    <string name="corners_sharp">Tajam</string>
+    <string name="look_icon_shape">Bentuk ikon</string>
+    <string name="icon_shape_circle">Lingkaran</string>
+    <string name="icon_shape_squircle">Persegi membulat</string>
+    <string name="icon_shape_square">Persegi</string>
+    <string name="look_icons">Ikon</string>
+    <string name="look_source_icons">Ikon dari sumber</string>
+    <string name="look_source_icons_effect">Saat aplikasi tidak terinstal, Tern mengambil ikonnya dari tempat aplikasi diterbitkan: repositori atau daftar tokonya. Jika dimatikan, Tern menggambar huruf di atas warna dan tidak bertanya pada siapa pun.</string>
+</resources>

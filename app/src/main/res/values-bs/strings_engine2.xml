@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">Svako pronađeno izdanje nudilo je samo datoteku druge aplikacije, a ne ove.</string>
+</resources>

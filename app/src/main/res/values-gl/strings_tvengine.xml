@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">Este ficheiro non é unha lista de aplicacións exportada desde Tern ou Obtainium.</string>
+    <string name="engine_import_empty">Este ficheiro non contén aplicacións.</string>
+    <string name="engine_import_local_address">O seu enderezo está nunha rede local. Engádeo a man se é teu.</string>
+    <string name="engine_warn_local_address">Este enderezo está na túa propia rede. Tern pregúntalle cada vez que comproba se hai actualizacións.</string>
+    <string name="engine_import_unreadable_export">Non se puido ler esta exportación de Tern (%1$s). Se vén dunha versión máis nova de Tern, actualiza Tern neste dispositivo e téntao de novo.</string>
+    <string name="engine_import_too_large">O ficheiro ten máis de %1$d MiB, que é máis do que ocupa unha lista de aplicacións, polo que Tern non o leu.</string>
+    <string name="engine_import_file_gone">Ese ficheiro xa non está aí. Abre a lista de ficheiros de novo.</string>
+    <string name="engine_link_not_https">Só se aceptan enderezos que comecen por https://.</string>
+    <string name="engine_link_not_an_address">Ese non é un enderezo web que Tern poida abrir. Debería parecerse a https://example.org/tern-apps.json.</string>
+    <string name="engine_link_leaves_https">Ese enderezo envía a Tern a outro que non é HTTPS, polo que non se obtivo nada.</string>
+    <string name="engine_link_not_found">Non hai ningún ficheiro nese enderezo. Comproba se hai erros ao teclear.</string>
+    <string name="engine_link_refused">O servidor rexeitou entregar o ficheiro (respondeu %1$d). Tern non envía ningún inicio de sesión con esta solicitude, polo que o ficheiro ten que ser lexible por calquera que teña o enderezo.</string>
+    <string name="engine_link_unreachable">Non se puido chegar ao enderezo: %1$s</string>
+    <string name="engine_link_unreachable_plain">Non se puido chegar ao enderezo. Comproba a conexión e o enderezo e téntao de novo.</string>
+    <string name="engine_link_too_slow">O servidor tardou máis dun minuto en enviar o ficheiro, polo que Tern deixou de agardar. Téntao de novo máis tarde.</string>
+    <string name="engine_link_not_an_export">O que hai nese enderezo non é unha lista de aplicacións exportada desde Tern ou Obtainium. O enderezo ten que levar ao propio ficheiro, non a unha páxina que o amose.</string>
+    <string name="engine_export_no_place">Este dispositivo non ten un almacenamento compartido no que Tern poida escribir.</string>
+    <string name="engine_export_failed">Non se puido escribir a exportación: %1$s</string>
+    <string name="engine_export_failed_plain">Non se puido escribir a exportación.</string>
+</resources>

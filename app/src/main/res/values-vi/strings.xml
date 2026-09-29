@@ -88,7 +88,7 @@
     <plurals name="apps_selected">
         <item quantity="other">Đã chọn %d</item>
     </plurals>
-    <string name="apps_select_hint">Chạm vào ứng dụng để chọn.</string>
+    <string name="apps_select_hint">Chọn ứng dụng từ danh sách.</string>
     <string name="action_add_to_category">Thêm vào danh mục</string>
     <plurals name="bulk_category_title">
         <item quantity="other">Thêm %d ứng dụng vào danh mục</item>
@@ -113,13 +113,12 @@
         <item quantity="other">Ngừng theo dõi %d ứng dụng?</item>
     </plurals>
     <string name="bulk_remove_text">Các ứng dụng vẫn được cài đặt. Tern chỉ ngừng kiểm tra bản cập nhật cho chúng.</string>
-    <string name="apps_empty_title">Chưa có ứng dụng</string>
-    <string name="apps_empty_text">Dán một liên kết tới trang dự án, bản phát hành hoặc kho lưu trữ F-Droid, Tern sẽ giữ cho ứng dụng luôn được cập nhật.</string>
+    <string name="apps_empty_title">Chưa có gì ở đây</string>
+    <string name="apps_empty_text">Thêm ứng dụng bằng liên kết, hoặc bắt đầu với ứng dụng nhiều người dùng.</string>
     <string name="sort_title">Sắp xếp</string>
     <string name="sort_name">Theo tên</string>
     <string name="sort_recently_checked">Đã kiểm tra gần đây</string>
     <string name="sort_source">Theo nguồn</string>
-    <string name="remove_title">Xóa bỏ %s?</string>
     <string name="remove_text_installed">Tern sẽ ngừng theo dõi. Ứng dụng vẫn được cài đặt.</string>
     <string name="remove_text">Tern sẽ ngừng theo dõi.</string>
     <string name="add_title">Thêm ứng dụng</string>
@@ -167,15 +166,14 @@
     <string name="carried_notes_none">Theo dõi mọi bản phát hành bất kể ghi chú.</string>
     <string name="carried_version">Đọc phiên bản từ thẻ với %1$s.</string>
     <string name="carried_version_none">Đọc phiên bản theo cách thông thường.</string>
-    <string name="carried_match_device_on">Khi có nhiều tệp, ưu tiên tệp được tạo cho điện thoại này.</string>
-    <string name="carried_match_device_off">Không giới hạn tệp theo bộ xử lý của điện thoại này.</string>
+    <string name="carried_match_device_on">Khi có nhiều tệp, ưu tiên tệp được xây dựng cho thiết bị này.</string>
+    <string name="carried_match_device_off">Không giới hạn tệp theo bộ xử lý của thiết bị này.</string>
     <string name="carried_fallback_on">Sử dụng bản phát hành cũ hơn khi bản mới nhất không có tệp phù hợp.</string>
     <string name="carried_fallback_off">Không bao giờ dùng bản cũ hơn, kể cả khi bản mới nhất không có tệp phù hợp.</string>
     <string name="carried_track_on">Chỉ theo dõi bản phát hành; không tải xuống hay cài đặt gì.</string>
     <string name="carried_track_off">Tải xuống và cài đặt bản phát hành, không chỉ theo dõi.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="other">Liên kết ghim các chứng chỉ này, do đó chỉ các tệp được ký bởi chúng mới được cài đặt. Một người không phải bạn đã chọn chúng: chỉ thêm khi bạn tin tưởng nguồn của liên kết.</item>
-    </plurals>
+    <string name="carried_pin_warning">Liên kết ghim các chứng chỉ này, do đó chỉ các tệp được ký bởi chúng mới được cài đặt. Một người không phải bạn đã chọn chúng: chỉ thêm khi bạn tin tưởng nguồn của liên kết.</string>
+    <string name="carried_pins_warning">Liên kết ghim các chứng chỉ này, do đó chỉ các tệp được ký bởi chúng mới được cài đặt. Một người không phải bạn đã chọn chúng: chỉ thêm khi bạn tin tưởng nguồn của liên kết.</string>
     <string name="checks_title">Kiểm tra</string>
     <string name="checks_package">Tên gói</string>
     <string name="checks_package_unknown">Chưa rõ cho đến khi đọc tệp</string>
@@ -274,7 +272,7 @@
     <string name="file_recommended">Tùy chọn %d, khuyên dùng</string>
     <string name="file_alternative">Tùy chọn %d</string>
     <string name="setting_match_device">Khớp với thiết bị này</string>
-    <string name="setting_match_device_effect">Khi có nhiều tệp, ưu tiên tệp được tạo cho bộ xử lý của điện thoại này.</string>
+    <string name="setting_match_device_effect">Khi có nhiều tệp, ưu tiên tệp được xây dựng cho bộ xử lý của thiết bị này.</string>
     <string name="setting_include">Chỉ bao gồm các tệp</string>
     <string name="setting_include_help">Mẫu mà tên tệp phải chứa, ví dụ: universal</string>
     <string name="setting_exclude">Bỏ qua các tệp</string>
@@ -335,7 +333,6 @@
     <string name="settings_keep_installers_effect">Giữ tệp sau khi cài đặt, tốn dung lượng. Tắt sẽ xóa tệp.</string>
     <string name="settings_ownership">Là trình cập nhật duy nhất</string>
     <string name="settings_ownership_effect">Yêu cầu Android chỉ cho phép Tern cập nhật các ứng dụng do nó cài đặt, để cửa hàng khác không thể tráo đổi chúng.</string>
-    <string name="settings_ownership_unsupported">Yêu cầu Android 14 trở lên.</string>
     <string name="settings_tokens">Mã thông báo truy cập</string>
     <string name="settings_tokens_effect">Tăng giới hạn tần suất và mở dự án riêng tư. Chỉ gửi đến đúng máy chủ và không hiển thị lại.</string>
     <string name="token_saved">Đã lưu</string>
@@ -364,9 +361,6 @@
     <string name="theme_system">Theo hệ thống</string>
     <string name="theme_light">Sáng</string>
     <string name="theme_dark">Tối</string>
-    <string name="settings_dynamic_color">Màu từ hình nền</string>
-    <string name="settings_dynamic_color_effect">Tắt sẽ dùng màu xanh xám của Tern.</string>
-    <string name="settings_dynamic_color_unsupported">Yêu cầu Android 12 trở lên.</string>
     <string name="settings_pure_black">Đen tuyền</string>
     <string name="settings_pure_black_effect">Nền đen trong chủ đề tối, dịu mắt hơn trên màn hình OLED.</string>
     <string name="settings_data">Nhập và xuất</string>
@@ -440,7 +434,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern cài đặt và cập nhật ứng dụng trực tiếp từ nơi xuất bản.</string>
     <string name="first_line_2">Trước khi Android thấy tệp, Tern kiểm tra ai đã ký và đối chiếu tổng kiểm tra của nhà phát hành.</string>
-    <string name="first_line_3">Mọi điều nó tìm thấy và thực hiện đều được ghi trong nhật ký hoạt động, bằng ngôn ngữ dễ hiểu.</string>
+    <string name="first_line_3">Mọi thứ được tìm thấy và thực hiện đều được ghi chép rõ ràng.</string>
     <string name="first_notify_explain">Tern có thể báo khi có bản cập nhật. Android sẽ hỏi xem có cho phép thông báo không.</string>
     <string name="first_notify_denied">Thông báo đang tắt. Bạn có thể bật lại sau trong Cài đặt.</string>
     <string name="first_notify_allow">Cho phép thông báo</string>
@@ -448,4 +442,5 @@
     <string name="install_permission_title">Cho phép Tern cài đặt ứng dụng</string>
     <string name="install_permission_body">Android sẽ hỏi một lần trước khi một ứng dụng có thể cài đặt ứng dụng khác. Trên màn hình tiếp theo, hãy bật công tắc cho Tern, rồi quay lại. Quá trình cài đặt sẽ tự động tiếp tục.</string>
     <string name="install_permission_open">Mở cài đặt</string>
+    <string name="install_permission_closes">Phiên bản Android này sẽ đóng Tern khi bạn bật tùy chọn. Mở lại Tern sau đó và quá trình cài đặt sẽ tiếp tục.</string>
 </resources>

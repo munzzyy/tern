@@ -26,6 +26,7 @@
     <string name="engine_downgrade">Instalirana verzija (%1$s) je novija od ove datoteke (%2$s). Android prihvata stariju verziju samo nakon što se instalirana aplikacija ukloni, a njeno uklanjanje briše njene podatke.</string>
     <string name="engine_test_only">Ova datoteka je testna verzija, koju Android odbija instalirati iz trgovine aplikacija.</string>
     <string name="engine_needs_newer_android">Ova verzija zahtijeva Android API nivo %1$d ili noviji.</string>
+    <string name="engine_proxy_silent">Proxy nije odgovorio, tako da ništa nije poslano. Tern ga nikada ne zaobilazi.</string>
     <string name="engine_check_network">Izvor se nije mogao dosegnuti: %1$s</string>
     <string name="engine_check_not_found">Izvor više nema ništa na ovoj adresi: %1$s</string>
     <string name="engine_check_auth">Izvor je odbio zahtjev. Dodajte ili provjerite token za ovu stranicu u postavkama. (%1$s)</string>

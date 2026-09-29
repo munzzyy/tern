@@ -6,6 +6,7 @@
     <string name="tab_settings">Configurações</string>
     <plurals name="tab_updates_badge">
         <item quantity="one">%d atualização</item>
+        <item quantity="many">%d atualizações</item>
         <item quantity="other">%d atualizações</item>
     </plurals>
     <string name="pane_nothing_selected">Escolha um app para ver os detalhes</string>
@@ -77,6 +78,7 @@
     <string name="filter_not_installed">Não instalados</string>
     <plurals name="apps_section_updates">
         <item quantity="one">%d atualização</item>
+        <item quantity="many">%d atualizações</item>
         <item quantity="other">%d atualizações</item>
     </plurals>
     <string name="apps_section_others">Todo o resto</string>
@@ -89,42 +91,52 @@
     <string name="state_not_selected">Não selecionado</string>
     <plurals name="apps_selected">
         <item quantity="one">%d selecionado</item>
+        <item quantity="many">%d selecionados</item>
         <item quantity="other">%d selecionados</item>
     </plurals>
-    <string name="apps_select_hint">Toque nos apps para escolhê-los.</string>
+    <string name="apps_select_hint">Escolha apps da lista.</string>
     <string name="action_add_to_category">Adicionar à categoria</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Adicionar %d app a uma categoria</item>
+        <item quantity="many">Adicionar %d apps a uma categoria</item>
         <item quantity="other">Adicionar %d apps a uma categoria</item>
     </plurals>
     <string name="bulk_category_field">Categoria</string>
+    <plurals name="bulk_category_done">
+        <item quantity="one">%1$d app arquivado em %2$s.</item>
+        <item quantity="many">%1$d apps arquivados em %2$s.</item>
+        <item quantity="other">%1$d apps arquivados em %2$s.</item>
+    </plurals>
     <string name="bulk_category_existing">Ou escolha uma que já usa:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Verificar %d app agora?</item>
+        <item quantity="many">Verificar %d apps agora?</item>
         <item quantity="other">Verificar %d apps agora?</item>
     </plurals>
     <string name="bulk_check_text">O Tern pede a cada fonte seu lançamento mais recente. Nada é instalado.</string>
     <plurals name="bulk_update_title">
         <item quantity="one">Atualizar %d app?</item>
+        <item quantity="many">Atualizar %d apps?</item>
         <item quantity="other">Atualizar %d apps?</item>
     </plurals>
     <string name="bulk_update_text">Cada arquivo é baixado e verificado antes de pedir ao Android para instalá-lo.</string>
     <plurals name="bulk_update_left">
         <item quantity="one">%d dos apps escolhidos não tem atualização para instalar e fica como está.</item>
+        <item quantity="many">%d dos apps escolhidos não têm atualização para instalar e ficam como estão.</item>
         <item quantity="other">%d dos apps escolhidos não têm atualização para instalar e ficam como estão.</item>
     </plurals>
     <plurals name="bulk_remove_title">
         <item quantity="one">Parar de acompanhar %d app?</item>
+        <item quantity="many">Parar de acompanhar %d apps?</item>
         <item quantity="other">Parar de acompanhar %d apps?</item>
     </plurals>
     <string name="bulk_remove_text">Os apps continuam instalados. O Tern apenas para de verificar se há atualizações.</string>
-    <string name="apps_empty_title">Nenhum app ainda</string>
-    <string name="apps_empty_text">Cole um link para uma página de projeto, lançamento ou repositório F-Droid, e o Tern manterá o app atualizado a partir de lá.</string>
+    <string name="apps_empty_title">Nada aqui ainda</string>
+    <string name="apps_empty_text">Adicione um app pelo seu link ou comece com um que muitas pessoas usam.</string>
     <string name="sort_title">Classificar</string>
     <string name="sort_name">Por nome</string>
     <string name="sort_recently_checked">Verificados recentemente</string>
     <string name="sort_source">Por fonte</string>
-    <string name="remove_title">Remover %s?</string>
     <string name="remove_text_installed">O Tern para de acompanhá-lo. O app continua instalado.</string>
     <string name="remove_text">O Tern para de acompanhá-lo.</string>
     <string name="add_title">Adicionar app</string>
@@ -142,6 +154,7 @@
     <string name="preview_file">Arquivo para instalar</string>
     <plurals name="preview_other_files">
         <item quantity="one">%d outro arquivo é oferecido. Você pode escolhê-lo após adicionar.</item>
+        <item quantity="many">%d outros arquivos são oferecidos. Você pode escolher um após adicionar.</item>
         <item quantity="other">%d outros arquivos são oferecidos. Você pode escolher um após adicionar.</item>
     </plurals>
     <string name="preview_already_tracked">Este app já está na sua lista.</string>
@@ -149,11 +162,13 @@
     <string name="prerelease">Pré-lançamento</string>
     <plurals name="search_count">
         <item quantity="one">%1$d resultado para \"%2$s\"</item>
+        <item quantity="many">%1$d resultados para \"%2$s\"</item>
         <item quantity="other">%1$d resultados para \"%2$s\"</item>
     </plurals>
     <string name="search_none">Nada encontrado para \"%s\"</string>
     <plurals name="search_stars">
         <item quantity="one">%d estrela</item>
+        <item quantity="many">%d estrelas</item>
         <item quantity="other">%d estrelas</item>
     </plurals>
     <string name="file_why">Por que este arquivo</string>
@@ -162,6 +177,7 @@
     <string name="carried_min_age_none">Um lançamento é usado assim que sai.</string>
     <plurals name="carried_min_age">
         <item quantity="one">Um lançamento é ignorado até ter %d dia.</item>
+        <item quantity="many">Um lançamento é ignorado até ter %d dias.</item>
         <item quantity="other">Um lançamento é ignorado até ter %d dias.</item>
     </plurals>
     <string name="carried_include">Apenas arquivos que correspondam a %1$s são usados.</string>
@@ -176,16 +192,14 @@
     <string name="carried_notes_none">Lançamentos são acompanhados independentemente das suas notas.</string>
     <string name="carried_version">A versão é extraída da tag com %1$s.</string>
     <string name="carried_version_none">A versão é lida da maneira usual.</string>
-    <string name="carried_match_device_on">Quando vários arquivos são oferecidos, o compilado para este celular é preferido.</string>
-    <string name="carried_match_device_off">Os arquivos não são restritos ao processador deste celular.</string>
+    <string name="carried_match_device_on">Quando vários arquivos são oferecidos, o compilado para este dispositivo é o preferido.</string>
+    <string name="carried_match_device_off">Os arquivos não são limitados ao processador deste dispositivo.</string>
     <string name="carried_fallback_on">Um lançamento mais antigo é usado quando o mais novo não tem arquivo utilizável.</string>
     <string name="carried_fallback_off">Lançamentos mais antigos nunca são usados, mesmo quando o mais novo não tem arquivo utilizável.</string>
     <string name="carried_track_on">Lançamentos são apenas acompanhados; nada é baixado ou instalado.</string>
     <string name="carried_track_off">Lançamentos são baixados e instalados, não apenas acompanhados.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">O link fixa este certificado, então apenas arquivos assinados por ele serão instalados. Alguém além de você o escolheu: adicione-o apenas se você confia na origem do link.</item>
-        <item quantity="other">O link fixa estes certificados, então apenas arquivos assinados por eles serão instalados. Alguém além de você os escolheu: adicione-os apenas se você confia na origem do link.</item>
-    </plurals>
+    <string name="carried_pin_warning">O link fixa este certificado, então apenas arquivos assinados por ele serão instalados. Alguém além de você o escolheu: adicione-o apenas se você confia na origem do link.</string>
+    <string name="carried_pins_warning">O link fixa estes certificados, então apenas arquivos assinados por eles serão instalados. Alguém além de você os escolheu: adicione-os apenas se você confia na origem do link.</string>
     <string name="checks_title">Verificações</string>
     <string name="checks_package">Nome do pacote</string>
     <string name="checks_package_unknown">Desconhecido até a leitura do arquivo</string>
@@ -208,6 +222,7 @@
     <string name="permissions_none_new">Nenhuma permissão nova</string>
     <plurals name="permissions_new">
         <item quantity="one">Pede %d permissão nova</item>
+        <item quantity="many">Pede %d permissões novas</item>
         <item quantity="other">Pede %d permissões novas</item>
     </plurals>
     <string name="fingerprint_copied">Impressão digital copiada</string>
@@ -232,6 +247,7 @@
     <string name="retry_now">Você pode tentar novamente agora.</string>
     <plurals name="retry_at">
         <item quantity="one">O limite zera às %1$s, em %2$d minuto.</item>
+        <item quantity="many">O limite zera às %1$s, em %2$d minutos.</item>
         <item quantity="other">O limite zera às %1$s, em %2$d minutos.</item>
     </plurals>
     <string name="detail_gone">Este app não está mais na sua lista.</string>
@@ -281,13 +297,14 @@
     <string name="min_age_none">Sem espera</string>
     <plurals name="min_age_days">
         <item quantity="one">%d dia</item>
+        <item quantity="many">%d dias</item>
         <item quantity="other">%d dias</item>
     </plurals>
     <string name="files_none">Nenhum arquivo desde a última verificação.</string>
     <string name="file_recommended">Escolha %d, recomendada</string>
     <string name="file_alternative">Escolha %d</string>
     <string name="setting_match_device">Compatível com este dispositivo</string>
-    <string name="setting_match_device_effect">Quando vários arquivos são oferecidos, prefere o compilado para o processador deste celular.</string>
+    <string name="setting_match_device_effect">Quando vários arquivos são oferecidos, prefira o compilado para o processador deste dispositivo.</string>
     <string name="setting_include">Apenas arquivos que correspondam a</string>
     <string name="setting_include_help">Um padrão que o nome do arquivo deve conter, por exemplo universal</string>
     <string name="setting_exclude">Ignorar arquivos que correspondam a</string>
@@ -330,7 +347,8 @@
     <string name="settings_interval">Com que frequência</string>
     <string name="interval_off">Desligado</string>
     <plurals name="interval_hours">
-        <item quantity="one">A cada hora</item>
+        <item quantity="one">A cada %d hora</item>
+        <item quantity="many">A cada %d horas</item>
         <item quantity="other">A cada %d horas</item>
     </plurals>
     <string name="settings_unmetered">Apenas em redes não limitadas</string>
@@ -349,7 +367,6 @@
     <string name="settings_keep_installers_effect">Os arquivos continuam após a instalação, ocupando espaço. Desligado os apaga.</string>
     <string name="settings_ownership">Ser o único atualizador</string>
     <string name="settings_ownership_effect">Pede ao Android para deixar apenas o Tern atualizar os apps que ele instala, para que outra loja não os troque.</string>
-    <string name="settings_ownership_unsupported">Precisa do Android 14 ou mais recente.</string>
     <string name="settings_tokens">Tokens de acesso</string>
     <string name="settings_tokens_effect">Um token aumenta os limites de taxa e abre projetos privados. Ele é enviado apenas para o host exato para o qual foi salvo, e nunca é mostrado de novo.</string>
     <string name="token_saved">Salvo</string>
@@ -378,9 +395,6 @@
     <string name="theme_system">Seguir o sistema</string>
     <string name="theme_light">Claro</string>
     <string name="theme_dark">Escuro</string>
-    <string name="settings_dynamic_color">Cores do seu papel de parede</string>
-    <string name="settings_dynamic_color_effect">Desligado usa o azul do próprio Tern.</string>
-    <string name="settings_dynamic_color_unsupported">Precisa do Android 12 ou mais recente.</string>
     <string name="settings_pure_black">Preto puro</string>
     <string name="settings_pure_black_effect">Fundos pretos no tema escuro, mais confortáveis para telas OLED.</string>
     <string name="settings_data">Importar e exportar</string>
@@ -391,6 +405,7 @@
     <string name="settings_export_effect">Salva sua lista e configurações em um arquivo. Os tokens nunca são incluídos.</string>
     <plurals name="exported">
         <item quantity="one">Exportou %d app</item>
+        <item quantity="many">Exportou %d apps</item>
         <item quantity="other">Exportou %d apps</item>
     </plurals>
     <string name="export_failed">A exportação não pôde ser gravada.</string>
@@ -411,18 +426,22 @@
     <string name="import_done">Importação concluída</string>
     <plurals name="import_added">
         <item quantity="one">%d app adicionado</item>
+        <item quantity="many">%d apps adicionados</item>
         <item quantity="other">%d apps adicionados</item>
     </plurals>
     <plurals name="import_present">
         <item quantity="one">%d já estava na sua lista</item>
+        <item quantity="many">%d já estavam na sua lista</item>
         <item quantity="other">%d já estavam na sua lista</item>
     </plurals>
     <plurals name="import_skipped">
         <item quantity="one">%d não pôde ser trazido:</item>
+        <item quantity="many">%d não puderam ser trazidos:</item>
         <item quantity="other">%d não puderam ser trazidos:</item>
     </plurals>
     <plurals name="import_show_names">
         <item quantity="one">Mostrar %d nome</item>
+        <item quantity="many">Mostrar todos os %d nomes</item>
         <item quantity="other">Mostrar todos os %d nomes</item>
     </plurals>
     <string name="import_hide_names">Ocultar os nomes</string>
@@ -439,17 +458,20 @@
     <string name="import_stars_failed_help">Verifique a conexão e tente novamente.</string>
     <plurals name="import_stars_count">
         <item quantity="one">%2$s marcou %1$d repositório com estrela. Escolha quais adicionar.</item>
+        <item quantity="many">%2$s marcou %1$d repositórios com estrela. Escolha quais adicionar.</item>
         <item quantity="other">%2$s marcou %1$d repositórios com estrela. Escolha quais adicionar.</item>
     </plurals>
     <string name="import_stars_none">%1$s não marcou nenhum repositório com estrela.</string>
     <plurals name="import_stars_add">
         <item quantity="one">Adicionar %d selecionado</item>
+        <item quantity="many">Adicionar %d selecionados</item>
         <item quantity="other">Adicionar %d selecionados</item>
     </plurals>
     <string name="import_stars_pick_some">Marque os repositórios para adicionar.</string>
     <string name="import_stars_other_user">Procurar outra pessoa</string>
     <plurals name="import_stars_adding">
         <item quantity="one">Verificando %1$d de %2$d repositório</item>
+        <item quantity="many">Verificando %1$d de %2$d repositórios</item>
         <item quantity="other">Verificando %1$d de %2$d repositórios</item>
     </plurals>
     <string name="import_stars_stop">Parar</string>
@@ -462,7 +484,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">O Tern instala e atualiza apps direto de onde seus desenvolvedores os publicam.</string>
     <string name="first_line_2">Antes que o Android veja um arquivo, o Tern verifica quem o assinou e se ele corresponde à soma de verificação do publicador.</string>
-    <string name="first_line_3">Tudo que ele acha e faz fica no registro de atividade, em palavras simples.</string>
+    <string name="first_line_3">Tudo o que ele encontra e faz é anotado em palavras simples.</string>
     <string name="first_notify_explain">O Tern pode avisar quando há atualizações. O Android vai perguntar se você permite notificações.</string>
     <string name="first_notify_denied">As notificações estão desligadas. Você pode ligá-las mais tarde nas Configurações.</string>
     <string name="first_notify_allow">Permitir notificações</string>
@@ -470,4 +492,5 @@
     <string name="install_permission_title">Permitir que o Tern instale apps</string>
     <string name="install_permission_body">O Android pergunta uma vez antes que um app possa instalar outro. Na próxima tela, ative a chave para o Tern e depois volte. A instalação continua sozinha.</string>
     <string name="install_permission_open">Abrir configurações</string>
+    <string name="install_permission_closes">Esta versão do Android fecha o Tern quando você ativa a chave. Abra o Tern novamente depois e a instalação continua.</string>
 </resources>

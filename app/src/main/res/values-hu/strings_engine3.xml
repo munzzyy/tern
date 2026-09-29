@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">A Tern tartalmazza azt a tanúsítványt, amellyel ez az alkalmazás alá van írva, ez a fájl pedig egy másikkal van aláírva. Származhat valaki mástól is, ezért nem lett telepítve.</string>
+    <string name="engine_warn_built_in_pin">A Tern tartalmazza azt a tanúsítványt, amellyel ez az alkalmazás alá van írva, a kínált fájl pedig egy másikkal van aláírva.</string>
+</resources>

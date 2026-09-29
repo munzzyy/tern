@@ -43,7 +43,7 @@ fun CarriedSection(settings: List<CarriedSetting>) {
         }
         val pins = settings.filterIsInstance<CarriedSetting.Pin>()
         if (pins.isNotEmpty()) {
-            TrustLine(Trust.BAD, pluralStringResource(R.plurals.carried_pins_warning, pins.size))
+            TrustLine(Trust.BAD, stringResource(if (pins.size == 1) R.string.carried_pin_warning else R.string.carried_pins_warning))
             for (pin in pins) {
                 Text(breakableFingerprint(formatFingerprint(pin.sha256)), style = MaterialTheme.typography.bodyMedium.fingerprint())
             }

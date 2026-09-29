@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Regarder ce qui est sur votre serveur Jellyfin</string>
+    <string name="suggest_just_player">Un lecteur vidéo pour fichiers et flux</string>
+    <string name="suggest_mpv">Un lecteur vidéo basé sur mpv</string>
+    <string name="suggest_nova">Lit des vidéos depuis cet appareil ou le réseau</string>
+    <string name="suggest_material_files">Gérer les fichiers sur cet appareil et sur les serveurs</string>
+    <string name="suggest_mullvad">L\'appli pour le service VPN Mullvad</string>
+    <string name="suggest_proton_vpn">L\'appli pour le service VPN Proton</string>
+    <string name="suggest_moonlight">Jouer aux jeux de votre ordinateur sur cet appareil</string>
+    <string name="suggest_fossify_gallery">Une galerie pour les photos et vidéos</string>
+    <string name="suggest_breezy_weather">Prévisions météo de nombreuses sources</string>
+    <string name="suggest_fdroid">Un catalogue d\'applis libres et open source</string>
+    <string name="suggest_heliboard">Un clavier sans accès au réseau</string>
+    <string name="suggest_obtainium">Obtient les mises à jour d\'applis depuis leurs sources</string>
+    <string name="suggest_aegis">Garde les codes de connexion en deux étapes</string>
+    <string name="suggest_keepassdx">Un gestionnaire de mots de passe pour fichiers KeePass</string>
+    <string name="suggest_koreader">Lit les formats EPUB, PDF et autres livres</string>
+    <string name="suggest_element_x">Discuter sur le réseau Matrix</string>
+    <string name="suggest_fairemail">Une appli e-mail pour tout fournisseur</string>
+    <string name="suggest_tusky">Un client pour Mastodon</string>
+    <string name="suggest_organic_maps">Cartes et navigation fonctionnant hors ligne</string>
+    <string name="suggest_osmand">Cartes hors ligne, itinéraires et tracés</string>
+    <string name="suggest_magpie">Un journal d\'incidents chiffré, par l\'auteur de Tern</string>
+    <string name="suggest_sepia">Supprime les données cachées des photos, par l\'auteur de Tern</string>
+    <string name="suggest_sweep">Un contrôle contre les logiciels espions, par l\'auteur de Tern</string>
+    <string name="suggest_starling">Partage de position privé, par l\'auteur de Tern</string>
+</resources>

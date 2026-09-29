@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">المظهر</string>
+    <string name="look_summary">السمة، والألوان، والتباين، والكثافة، والزوايا، والأيقونات</string>
+    <string name="look_preview_spoken">معاينة المظهر كما هو معين الآن</string>
+    <string name="look_preview_app">تطبيق مثال</string>
+    <string name="look_colours">الألوان</string>
+    <string name="look_palette">اللون</string>
+    <string name="look_wallpaper">الخلفية</string>
+    <string name="look_own">لون خاص</string>
+    <string name="palette_ink">حبر</string>
+    <string name="palette_slate">أردواز</string>
+    <string name="palette_tide">مد</string>
+    <string name="palette_moss">حزاز</string>
+    <string name="palette_amber">كهرمان</string>
+    <string name="palette_clay">طين</string>
+    <string name="palette_rose">ورد</string>
+    <string name="palette_plum">برقوق</string>
+    <string name="look_hue">درجة لونك الخاص</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="zero">%1$d درجة</item>
+        <item quantity="one">%1$d درجة</item>
+        <item quantity="two">%1$d درجة</item>
+        <item quantity="few">%1$d درجات</item>
+        <item quantity="many">%1$d درجة</item>
+        <item quantity="other">%1$d درجة</item>
+    </plurals>
+    <string name="look_contrast">التباين</string>
+    <string name="contrast_standard">قياسي</string>
+    <string name="contrast_medium">متوسط</string>
+    <string name="contrast_high">عالٍ</string>
+    <string name="look_contrast_effect">التباين الأكبر يجعل النص والحدود أكثر تمايزًا عما خلفها.</string>
+    <string name="look_shape_and_size">الشكل والحجم</string>
+    <string name="look_density">الكثافة</string>
+    <string name="density_comfortable">مريحة</string>
+    <string name="density_compact">مضغوطة</string>
+    <string name="look_density_effect">المضغوطة تعرض المزيد على الشاشة. لا شيء تضغط عليه يصبح أصغر من طرف الإصبع.</string>
+    <string name="look_corners">الزوايا</string>
+    <string name="corners_round">مستديرة</string>
+    <string name="corners_soft">ناعمة</string>
+    <string name="corners_sharp">حادة</string>
+    <string name="look_icon_shape">شكل الأيقونة</string>
+    <string name="icon_shape_circle">دائرة</string>
+    <string name="icon_shape_squircle">مربع مستدير</string>
+    <string name="icon_shape_square">مربع</string>
+    <string name="look_icons">الأيقونات</string>
+    <string name="look_source_icons">أيقونات من المصدر</string>
+    <string name="look_source_icons_effect">بينما يكون التطبيق غير مثبت، يحصل Tern على أيقونته من مكان نشر التطبيق: مستودعه أو قائمة متجره. إيقاف يرسم حرفًا على لون ولا يسأل أحدًا.</string>
+</resources>

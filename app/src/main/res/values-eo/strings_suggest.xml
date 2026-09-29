@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Spekti kio estas en via Jellyfin-servilo</string>
+    <string name="suggest_just_player">Videoludilo por dosieroj kaj fluoj</string>
+    <string name="suggest_mpv">Videoludilo konstruita sur mpv</string>
+    <string name="suggest_nova">Ludas filmetojn de ĉi tiu aparato aŭ de la reto</string>
+    <string name="suggest_material_files">Administri dosierojn en ĉi tiu aparato kaj en serviloj</string>
+    <string name="suggest_mullvad">La aplikaĵo por la servo Mullvad VPN</string>
+    <string name="suggest_proton_vpn">La aplikaĵo por la servo Proton VPN</string>
+    <string name="suggest_moonlight">Ludi ludojn de via komputilo sur ĉi tiu aparato</string>
+    <string name="suggest_fossify_gallery">Galerio por fotoj kaj videoj</string>
+    <string name="suggest_breezy_weather">Veterprognozoj de multaj fontoj</string>
+    <string name="suggest_fdroid">Katalogo de liberaj kaj malfermfontaj aplikaĵoj</string>
+    <string name="suggest_heliboard">Klavaro kiu ne havas retan aliron</string>
+    <string name="suggest_obtainium">Ricevas aplikaĵajn ĝisdatigojn de iliaj fontoj</string>
+    <string name="suggest_aegis">Tenas la kodojn por dupasa ensaluto</string>
+    <string name="suggest_keepassdx">Pasvortadministrilo por KeePass-dosieroj</string>
+    <string name="suggest_koreader">Legas EPUB, PDF kaj aliajn libroformatojn</string>
+    <string name="suggest_element_x">Babili en la reto Matrix</string>
+    <string name="suggest_fairemail">Retpoŝta aplikaĵo por iu ajn provizanto</string>
+    <string name="suggest_tusky">Kliento por Mastodon</string>
+    <string name="suggest_organic_maps">Mapoj kaj navigado kiuj funkcias senrete</string>
+    <string name="suggest_osmand">Senretaj mapoj, vojhuntado kaj spurregistrado</string>
+    <string name="suggest_magpie">Ĉifrita incidenta taglibro, de la aŭtoro de Tern</string>
+    <string name="suggest_sepia">Forigas kaŝitajn datumojn de fotoj, de la aŭtoro de Tern</string>
+    <string name="suggest_sweep">Kontrolo kontraŭ gvatprogramoj, de la aŭtoro de Tern</string>
+    <string name="suggest_starling">Privata kundivido de loko, de la aŭtoro de Tern</string>
+</resources>

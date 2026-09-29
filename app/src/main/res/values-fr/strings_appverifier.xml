@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appverifier_title">Une deuxième vérification</string>
+    <string name="appverifier_effect">AppVerifier est une appli distincte. Elle compare cette appli avec le certificat que Tern lui associe, et avec sa propre liste d\'applis connues.</string>
+    <string name="appverifier_action">Vérifier avec AppVerifier</string>
+</resources>

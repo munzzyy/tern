@@ -97,7 +97,7 @@
         <item quantity="many">%d вибрано</item>
         <item quantity="other">%d вибрано</item>
     </plurals>
-    <string name="apps_select_hint">Торкніться програм, щоб вибрати їх.</string>
+    <string name="apps_select_hint">Виберіть програми зі списку.</string>
     <string name="action_add_to_category">Додати до категорії</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Додати %d програму до категорії</item>
@@ -140,13 +140,12 @@
         <item quantity="other">Перестати стежити за %d програмами?</item>
     </plurals>
     <string name="bulk_remove_text">Програми залишаться встановленими. Tern лише перестане перевіряти їх на наявність оновлень.</string>
-    <string name="apps_empty_title">Ще немає програм</string>
-    <string name="apps_empty_text">Вставте посилання на сторінку проєкту, випуск або репозиторій F-Droid, і Tern буде оновлювати програму звідти.</string>
+    <string name="apps_empty_title">Тут ще нічого немає</string>
+    <string name="apps_empty_text">Додайте програму за посиланням або почніть з тієї, яку використовує багато людей.</string>
     <string name="sort_title">Сортування</string>
     <string name="sort_name">За назвою</string>
     <string name="sort_recently_checked">Нещодавно перевірені</string>
     <string name="sort_source">За джерелом</string>
-    <string name="remove_title">Вилучити %s?</string>
     <string name="remove_text_installed">Tern перестане стежити за нею. Програма залишиться встановленою.</string>
     <string name="remove_text">Tern перестане стежити за нею.</string>
     <string name="add_title">Додати програму</string>
@@ -206,18 +205,14 @@
     <string name="carried_notes_none">Випуски відстежуються незалежно від їхніх приміток.</string>
     <string name="carried_version">Версія зчитується з тегу за допомогою %1$s.</string>
     <string name="carried_version_none">Версія зчитується звичайним способом.</string>
-    <string name="carried_match_device_on">Коли пропонується кілька файлів, перевага віддається створеному для цього телефона.</string>
-    <string name="carried_match_device_off">Файли не обмежуються процесором цього телефона.</string>
+    <string name="carried_match_device_on">Коли пропонується кілька файлів, перевага віддається тому, який створено для цього пристрою.</string>
+    <string name="carried_match_device_off">Файли не обмежуються процесором цього пристрою.</string>
     <string name="carried_fallback_on">Старіший випуск використовується, коли найновіший не має придатного файлу.</string>
     <string name="carried_fallback_off">Старіші випуски ніколи не використовуються, навіть коли найновіший не має придатного файлу.</string>
     <string name="carried_track_on">Випуски лише відстежуються; нічого не завантажується і не встановлюється.</string>
     <string name="carried_track_off">Випуски завантажуються та встановлюються, а не лише відстежуються.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">Посилання закріплює цей сертифікат, тому встановлюватимуться лише файли, підписані ним. Його вибрав хтось інший: додавайте його, лише якщо довіряєте джерелу посилання.</item>
-        <item quantity="few">Посилання закріплює ці сертифікати, тому встановлюватимуться лише файли, підписані ними. Їх вибрав хтось інший: додавайте їх, лише якщо довіряєте джерелу посилання.</item>
-        <item quantity="many">Посилання закріплює ці сертифікати, тому встановлюватимуться лише файли, підписані ними. Їх вибрав хтось інший: додавайте їх, лише якщо довіряєте джерелу посилання.</item>
-        <item quantity="other">Посилання закріплює ці сертифікати, тому встановлюватимуться лише файли, підписані ними. Їх вибрав хтось інший: додавайте їх, лише якщо довіряєте джерелу посилання.</item>
-    </plurals>
+    <string name="carried_pin_warning">Посилання закріплює цей сертифікат, тому встановлюватимуться лише файли, підписані ним. Його вибрав хтось інший: додавайте його, лише якщо довіряєте джерелу посилання.</string>
+    <string name="carried_pins_warning">Посилання закріплює ці сертифікати, тому встановлюватимуться лише файли, підписані ними. Їх вибрав хтось інший: додавайте їх, лише якщо довіряєте джерелу посилання.</string>
     <string name="checks_title">Перевірки</string>
     <string name="checks_package">Назва пакета</string>
     <string name="checks_package_unknown">Невідома, поки файл не прочитано</string>
@@ -325,7 +320,7 @@
     <string name="file_recommended">Вибір %d, рекомендовано</string>
     <string name="file_alternative">Вибір %d</string>
     <string name="setting_match_device">Для цього пристрою</string>
-    <string name="setting_match_device_effect">Коли пропонується кілька файлів, віддавати перевагу створеному для процесора цього телефона.</string>
+    <string name="setting_match_device_effect">Коли пропонується кілька файлів, віддавати перевагу тому, який створено для процесора цього пристрою.</string>
     <string name="setting_include">Лише файли, що відповідають</string>
     <string name="setting_include_help">Шаблон, який має містити назва файлу, наприклад universal</string>
     <string name="setting_exclude">Пропускати файли, що відповідають</string>
@@ -368,7 +363,7 @@
     <string name="settings_interval">Як часто</string>
     <string name="interval_off">Вимкнено</string>
     <plurals name="interval_hours">
-        <item quantity="one">Щогодини</item>
+        <item quantity="one">Кожну %d годину</item>
         <item quantity="few">Кожні %d години</item>
         <item quantity="many">Кожні %d годин</item>
         <item quantity="other">Кожні %d години</item>
@@ -389,7 +384,6 @@
     <string name="settings_keep_installers_effect">Файли залишаються після встановлення, використовуючи пам\'ять. Якщо вимкнути, їх буде видалено.</string>
     <string name="settings_ownership">Бути єдиним засобом оновлення</string>
     <string name="settings_ownership_effect">Просити Android дозволяти лише Tern оновлювати встановлені ним програми, щоб інший магазин не міг їх замінити.</string>
-    <string name="settings_ownership_unsupported">Потребує Android 14 або новішої версії.</string>
     <string name="settings_tokens">Маркери доступу</string>
     <string name="settings_tokens_effect">Маркер збільшує ліміти запитів і відкриває приватні проєкти. Він надсилається лише на той хост, для якого збережений, і більше ніколи не показується.</string>
     <string name="token_saved">Збережено</string>
@@ -418,9 +412,6 @@
     <string name="theme_system">Як у системі</string>
     <string name="theme_light">Світла</string>
     <string name="theme_dark">Темна</string>
-    <string name="settings_dynamic_color">Кольори з ваших шпалер</string>
-    <string name="settings_dynamic_color_effect">Якщо вимкнено, використовується власний синьо-сірий колір Tern.</string>
-    <string name="settings_dynamic_color_unsupported">Потребує Android 12 або новішої версії.</string>
     <string name="settings_pure_black">Суцільний чорний</string>
     <string name="settings_pure_black_effect">Чорний фон у темній темі, легше для OLED-екранів.</string>
     <string name="settings_data">Імпорт та експорт</string>
@@ -512,7 +503,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern встановлює та оновлює програми прямо звідти, де розробники їх публікують.</string>
     <string name="first_line_2">Перш ніж Android побачить файл, Tern перевіряє, хто його підписав, і чи збігається він з контрольною сумою видавця.</string>
-    <string name="first_line_3">Усе, що він знаходить і робить, записується в журнал активності зрозумілими словами.</string>
+    <string name="first_line_3">Усе, що вона знаходить і робить, записується простими словами.</string>
     <string name="first_notify_explain">Tern може сповіщати, коли оновлення готові. Android запитає, чи дозволити сповіщення.</string>
     <string name="first_notify_denied">Сповіщення вимкнено. Ви можете ввімкнути їх пізніше в Налаштуваннях.</string>
     <string name="first_notify_allow">Дозволити сповіщення</string>
@@ -520,4 +511,5 @@
     <string name="install_permission_title">Дозволити Tern встановлювати програми</string>
     <string name="install_permission_body">Android запитує один раз, перш ніж одна програма зможе встановлювати інші. На наступному екрані увімкніть перемикач для Tern, а потім поверніться. Встановлення продовжиться самостійно.</string>
     <string name="install_permission_open">Відкрити налаштування</string>
+    <string name="install_permission_closes">Ця версія Android закриває Tern, коли ви вмикаєте цей перемикач. Після цього відкрийте Tern знову, і встановлення продовжиться.</string>
 </resources>

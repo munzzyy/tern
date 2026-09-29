@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">Keresés bezárása</string>
+    <string name="waiting_banner_one">A(z) %1$s az Ön jóváhagyására vár</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d telepítés vár az Ön jóváhagyására</item>
+        <item quantity="other">%1$d telepítés vár az Ön jóváhagyására</item>
+    </plurals>
+    <string name="empty_add">Alkalmazás hozzáadása</string>
+    <string name="empty_well_known">Jól ismert alkalmazások</string>
+    <string name="empty_handoff">Küldés telefonról</string>
+    <string name="removed_notice">A(z) %1$s követése befejezve</string>
+    <string name="removed_undo">Visszavonás</string>
+    <string name="waiting_play_protect">Az Android vagy a Play Protect kérhet még egy megerősítést. Ez az ő saját ellenőrzésük, nem jelent problémát a fájllal.</string>
+    <string name="prompt_always_asks">Ez az eszköz mindig rákérdez egy frissítés telepítése előtt.</string>
+    <string name="checks_passed">Ez a fájl átment minden ellenőrzésen</string>
+    <string name="explain_button">Mit jelent ez: %1$s</string>
+    <string name="explain_action">hallgassa meg, mit jelent ez</string>
+    <string name="explain_close">Bezárás</string>
+    <string name="explain_signer_title">Aláíró tanúsítvány</string>
+    <string name="explain_checksum_title">Ellenőrző összeg</string>
+    <string name="explain_permissions_title">Engedélyek</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Frissítések kérdés nélkül</string>
+    <string name="explain_always_asks_title">Ez az eszköz mindig rákérdez</string>
+    <string name="explain_package">Minden Android alkalmazásnak egy neve van, amely soha nem változik. Egy fájl, amely más nevet hordozna, egy másik alkalmazás lenne, bárhogy is hívja magát.</string>
+    <string name="explain_signer_installed">Egy fejlesztő minden kiadást egy olyan kulccsal ír alá, amellyel csak ő rendelkezik. A Tern összehasonlítja ennek a fájlnak az aláírását az ezen az eszközön lévő alkalmazással, és azzal a tanúsítvánnyal, amelyet az első telepítéskor megjegyzett. Bárki más által aláírt fájlt visszautasít, még akkor is, ha a megfelelő címről származik.</string>
+    <string name="explain_signer_first">Még nincs mivel összehasonlítani. A fájl megmondja, ki írta alá, az Android ezt megerősíti telepítéskor, és innentől kezdve a Tern minden frissítést ehhez a tanúsítványhoz köt.</string>
+    <string name="explain_checksum_matched">Az ellenőrző összeg magának a fájlnak az ujjlenyomata. A kiadó megadott egyet, és a Tern által letöltött fájl is ugyanazzal rendelkezik, így úgy érkezett meg, ahogy közzétették.</string>
+    <string name="explain_checksum_pending">Az ellenőrző összeg magának a fájlnak az ujjlenyomata. A kiadó megadott egyet, és a Tern összehasonlítja a fájllal, amint a fájl letöltődött.</string>
+    <string name="explain_checksum_mismatch">Az ellenőrző összeg magának a fájlnak az ujjlenyomata. A kiadó megadott egyet, és a Tern által letöltött fájl egy másikkal rendelkezik, tehát nem az a fájl, amit közzétettek.</string>
+    <string name="explain_checksum_none">Ez a kiadó nem ad meg ellenőrző összeget. Az aláírás továbbra is ellenőrzésre kerül, és a kettő közül az az erősebb.</string>
+    <string name="explain_permissions">Amit ez a verzió kér engedélyként, amit a telepített verzió nem kért.</string>
+    <string name="explain_virustotal">Megnyitja a böngészőjében pontosan ennek a fájlnak az oldalát a VirusTotalon. A Tern semmit sem küld oda.</string>
+    <string name="explain_silent">Az Android engedélyezi, hogy egy alkalmazás kérdés nélkül frissítsen egy másikat, ha az az alkalmazás telepítette azt, és az eszköz Android 12 vagy újabb rendszert futtat. Az Android minden alkalommal dönt.</string>
+    <string name="explain_always_asks">Ez az eszköz Android %1$s rendszert futtat, amely minden telepítés előtt rákérdez. A Tern letölti és ellenőrzi a frissítést a háttérben, és szól, amikor kész.</string>
+    <string name="activity_installed">Telepítve: %1$s</string>
+    <string name="activity_installed_plain">Telepítve</string>
+    <string name="activity_updated">Frissítve erre: %1$s</string>
+    <string name="activity_updated_plain">Frissítve</string>
+    <string name="activity_update_waits">A %1$s frissítése várakozik</string>
+    <string name="activity_update_waits_plain">Egy frissítés várakozik</string>
+    <string name="activity_install_waits">A(z) %1$s telepítése várakozik</string>
+    <string name="activity_install_waits_plain">Egy telepítés várakozik</string>
+    <string name="activity_not_installed">Nem sikerült a(z) %1$s telepítése</string>
+    <string name="activity_not_installed_plain">Nem sikerült a telepítés</string>
+    <string name="activity_blocked">Blokkolva: %1$s</string>
+    <string name="activity_blocked_plain">Blokkolva</string>
+    <string name="activity_added">Hozzáadva</string>
+    <string name="activity_removed">Követés befejezve</string>
+    <string name="activity_check_failed">Ellenőrzés sikertelen</string>
+    <string name="activity_steps_show">Lépések megjelenítése</string>
+    <string name="activity_steps_hide">Lépések elrejtése</string>
+    <string name="first_well_known">Jól ismert alkalmazások</string>
+</resources>

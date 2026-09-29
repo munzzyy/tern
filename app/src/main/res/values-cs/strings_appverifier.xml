@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appverifier_title">Druhá kontrola</string>
+    <string name="appverifier_effect">AppVerifier je samostatná aplikace. Porovnává tuto aplikaci s certifikátem, který pro ni Tern drží, a se svým vlastním seznamem známých aplikací.</string>
+    <string name="appverifier_action">Zkontrolovat pomocí AppVerifier</string>
+</resources>

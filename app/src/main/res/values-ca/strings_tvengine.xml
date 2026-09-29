@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">Aquest fitxer no és una llista d\'aplicacions exportada de Tern o Obtainium.</string>
+    <string name="engine_import_empty">Aquest fitxer no conté cap aplicació.</string>
+    <string name="engine_import_local_address">La seva adreça és a una xarxa local. Afegeix-la a mà si és teva.</string>
+    <string name="engine_warn_local_address">Aquesta adreça és a la teva pròpia xarxa. Tern li pregunta cada vegada que comprova les actualitzacions.</string>
+    <string name="engine_import_unreadable_export">Aquesta exportació de Tern no s\'ha pogut llegir (%1$s). Si prové d\'una versió més nova de Tern, actualitza Tern en aquest dispositiu i torna-ho a provar.</string>
+    <string name="engine_import_too_large">El fitxer fa més de %1$d MiB, que és més del que ocupa una llista d\'aplicacions, així que Tern no l\'ha llegit.</string>
+    <string name="engine_import_file_gone">Aquest fitxer ja no hi és. Obre la llista de fitxers de nou.</string>
+    <string name="engine_link_not_https">Només s\'accepten adreces que comencen per https://.</string>
+    <string name="engine_link_not_an_address">Aquesta no és una adreça web que Tern pugui obrir. Hauria de ser com https://example.org/tern-apps.json.</string>
+    <string name="engine_link_leaves_https">Aquesta adreça envia Tern a una que no és HTTPS, així que no s\'ha obtingut res.</string>
+    <string name="engine_link_not_found">No hi ha cap fitxer en aquesta adreça. Comprova si hi ha errors d\'escriptura.</string>
+    <string name="engine_link_refused">El servidor ha rebutjat lliurar el fitxer (ha respost %1$d). Tern no envia cap inici de sessió amb aquesta petició, així que el fitxer l\'ha de poder llegir qualsevol persona que tingui l\'adreça.</string>
+    <string name="engine_link_unreachable">No s\'ha pogut contactar amb l\'adreça: %1$s</string>
+    <string name="engine_link_unreachable_plain">No s\'ha pogut contactar amb l\'adreça. Comprova la connexió i l\'adreça, i torna-ho a provar.</string>
+    <string name="engine_link_too_slow">El servidor ha trigat més d\'un minut a enviar el fitxer, així que Tern ha deixat d\'esperar. Torna-ho a provar més tard.</string>
+    <string name="engine_link_not_an_export">El que hi ha en aquesta adreça no és una llista d\'aplicacions exportada de Tern o Obtainium. L\'adreça ha de portar al fitxer mateix, no a una pàgina que el mostri.</string>
+    <string name="engine_export_no_place">Aquest dispositiu no té cap emmagatzematge compartit on Tern pugui escriure.</string>
+    <string name="engine_export_failed">No s\'ha pogut escriure l\'exportació: %1$s</string>
+    <string name="engine_export_failed_plain">No s\'ha pogut escriure l\'exportació.</string>
+</resources>

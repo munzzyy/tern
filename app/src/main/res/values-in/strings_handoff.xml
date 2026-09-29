@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">Perangkat ini tidak terhubung ke jaringan lokal mana pun, jadi ponsel tidak dapat menjangkaunya. Hubungkan perangkat ini ke Wi-Fi atau ke kabel jaringan lalu coba lagi.</string>
+    <string name="engine_handoff_behind_vpn">Perangkat ini terhubung melalui VPN, jadi ponsel di jaringan lokal tidak dapat menjangkaunya. Matikan VPN selama Anda mengirim, lalu coba lagi.</string>
+    <string name="engine_handoff_cannot_open">Perangkat ini tidak dapat membuka halaman di jaringan lokal: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">Perangkat ini tidak dapat membuka halaman di jaringan lokal.</string>
+    <string name="engine_handoff_not_on_screen">Tern harus berada di layar saat mengambil tautan dari ponsel. Buka Tern dan coba lagi.</string>
+</resources>

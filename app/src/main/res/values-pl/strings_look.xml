@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Wygląd</string>
+    <string name="look_summary">Motyw, kolory, kontrast, gęstość, rogi i ikony</string>
+    <string name="look_preview_spoken">Podgląd wyglądu w obecnym ustawieniu</string>
+    <string name="look_preview_app">Przykładowa aplikacja</string>
+    <string name="look_colours">Kolory</string>
+    <string name="look_palette">Kolor</string>
+    <string name="look_wallpaper">Tapeta</string>
+    <string name="look_own">Własny kolor</string>
+    <string name="palette_slate">Łupkowy</string>
+    <string name="palette_tide">Pływowy</string>
+    <string name="palette_moss">Mszysty</string>
+    <string name="palette_amber">Bursztynowy</string>
+    <string name="palette_clay">Gliniany</string>
+    <string name="palette_rose">Różany</string>
+    <string name="palette_plum">Śliwkowy</string>
+    <string name="look_hue">Odcień własnego koloru</string>
+    <string name="look_contrast">Kontrast</string>
+    <string name="contrast_standard">Standardowy</string>
+    <string name="contrast_medium">Średni</string>
+    <string name="contrast_high">Wysoki</string>
+    <string name="look_contrast_effect">Większy kontrast bardziej oddziela tekst i kontury od tego, co jest za nimi.</string>
+    <string name="look_shape_and_size">Kształt i rozmiar</string>
+    <string name="look_density">Gęstość</string>
+    <string name="density_compact">Kompaktowa</string>
+    <string name="look_density_effect">Kompaktowa mieści więcej na ekranie. Żaden naciskany element nie staje się mniejszy niż opuszka palca.</string>
+    <string name="look_corners">Rogi</string>
+    <string name="corners_round">Okrągłe</string>
+    <string name="corners_soft">Miękkie</string>
+    <string name="corners_sharp">Ostre</string>
+    <string name="look_icon_shape">Kształt ikon</string>
+    <string name="icon_shape_circle">Koło</string>
+    <string name="icon_shape_squircle">Zaokrąglony kwadrat</string>
+    <string name="icon_shape_square">Kwadrat</string>
+    <string name="look_icons">Ikony</string>
+    <string name="look_source_icons">Ikony ze źródła</string>
+    <string name="look_source_icons_effect">Gdy aplikacja nie jest zainstalowana, Tern pobiera jej ikonę z miejsca, w którym została opublikowana: z repozytorium lub strony sklepu. Wyłączenie tej opcji rysuje literę na kolorowym tle i nie pyta nikogo.</string>
+</resources>

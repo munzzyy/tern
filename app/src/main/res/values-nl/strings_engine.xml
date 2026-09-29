@@ -26,6 +26,7 @@
     <string name="engine_downgrade">De geïnstalleerde versie (%1$s) is nieuwer dan dit bestand (%2$s). Android accepteert alleen een oudere versie nadat de geïnstalleerde app is verwijderd, en met het verwijderen worden de gegevens gewist.</string>
     <string name="engine_test_only">Dit bestand is een testversie, die Android weigert te installeren vanuit een app store.</string>
     <string name="engine_needs_newer_android">Deze versie heeft Android API-niveau %1$d of nieuwer nodig.</string>
+    <string name="engine_proxy_silent">De proxy antwoordde niet, dus er is niets verzonden. Tern gaat er nooit omheen.</string>
     <string name="engine_check_network">De bron kon niet worden bereikt: %1$s</string>
     <string name="engine_check_not_found">De bron heeft niets meer op dit adres: %1$s</string>
     <string name="engine_check_auth">De bron weigerde het verzoek. Voeg het token voor deze site toe in Instellingen, of controleer het. (%1$s)</string>

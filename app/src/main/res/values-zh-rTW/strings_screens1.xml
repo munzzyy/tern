@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">關閉搜尋</string>
+    <string name="waiting_banner_one">%1$s 等待您同意</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="other">%1$d 個安裝等待您同意</item>
+    </plurals>
+    <string name="empty_add">新增應用程式</string>
+    <string name="empty_well_known">知名應用程式</string>
+    <string name="empty_handoff">從手機傳送</string>
+    <string name="removed_notice">已停止追蹤 %1$s</string>
+    <string name="removed_undo">復原</string>
+    <string name="waiting_play_protect">Android 或 Play 安全防護可能會再詢問一次。那是它們自己的檢查，而不是檔案有問題。</string>
+    <string name="prompt_always_asks">此裝置在安裝更新前總是會詢問。</string>
+    <string name="checks_passed">此檔案通過了所有檢查</string>
+    <string name="explain_button">這代表什麼：%1$s</string>
+    <string name="explain_action">聽聽這代表什麼</string>
+    <string name="explain_close">關閉</string>
+    <string name="explain_signer_title">簽署憑證</string>
+    <string name="explain_checksum_title">檢查碼</string>
+    <string name="explain_permissions_title">權限</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">無提示更新</string>
+    <string name="explain_always_asks_title">此裝置總是詢問</string>
+    <string name="explain_package">每個 Android 應用程式都有一個永不改變的名稱。無論檔案稱呼自己什麼，如果名稱不同就是另一個應用程式。</string>
+    <string name="explain_signer_installed">開發者使用只有他們才有的金鑰來簽署每個發行版本。Tern 會將此檔案的簽名與此裝置上的應用程式，以及在首次安裝時記住的憑證進行比對。由其他人簽署的檔案都會被拒絕，即使它來自正確的網址。</string>
+    <string name="explain_signer_first">目前還沒有可以比對的東西。檔案聲稱是誰簽署的，Android 會在安裝時確認，從那時起 Tern 就會要求每個更新都要有相同的憑證。</string>
+    <string name="explain_checksum_matched">檢查碼是檔案本身的指紋。發佈者提供了一個，而 Tern 下載的檔案與其相同，因此它和發佈時一樣。</string>
+    <string name="explain_checksum_pending">檢查碼是檔案本身的指紋。發佈者提供了一個，Tern 會在檔案下載後立刻進行比對。</string>
+    <string name="explain_checksum_mismatch">檢查碼是檔案本身的指紋。發佈者提供了一個，而 Tern 下載的檔案檢查碼與其不同，因此它不是發佈的檔案。</string>
+    <string name="explain_checksum_none">發佈者沒有提供檢查碼。簽名仍然會被檢查，而且它是兩者中較強的一個。</string>
+    <string name="explain_permissions">此版本要求允許執行而已安裝版本未要求的事項。</string>
+    <string name="explain_virustotal">在您的瀏覽器中開啟 VirusTotal 上這個確切檔案的頁面。Tern 不會傳送任何東西到那裡。</string>
+    <string name="explain_silent">當裝置執行 Android 12 或更新版本時，Android 允許應用程式在不詢問的情況下更新另一個由它安裝的應用程式。Android 每次都會自行決定。</string>
+    <string name="explain_always_asks">此裝置執行 Android %1$s，它會在每次安裝前詢問。Tern 會在背景下載並檢查更新，並在準備好時告訴您。</string>
+    <string name="activity_installed">已安裝 %1$s</string>
+    <string name="activity_installed_plain">已安裝</string>
+    <string name="activity_updated">已更新至 %1$s</string>
+    <string name="activity_updated_plain">已更新</string>
+    <string name="activity_update_waits">等待更新至 %1$s</string>
+    <string name="activity_update_waits_plain">有更新等待中</string>
+    <string name="activity_install_waits">等待安裝 %1$s</string>
+    <string name="activity_install_waits_plain">有安裝等待中</string>
+    <string name="activity_not_installed">無法安裝 %1$s</string>
+    <string name="activity_not_installed_plain">無法安裝</string>
+    <string name="activity_blocked">已阻擋 %1$s</string>
+    <string name="activity_blocked_plain">已阻擋</string>
+    <string name="activity_added">已新增</string>
+    <string name="activity_removed">已停止追蹤</string>
+    <string name="activity_check_failed">檢查失敗</string>
+    <string name="activity_steps_show">顯示步驟</string>
+    <string name="activity_steps_hide">隱藏步驟</string>
+    <string name="first_well_known">知名應用程式</string>
+</resources>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">Elke gevonden release bood alleen het bestand van een andere app aan, niet van deze.</string>
+</resources>

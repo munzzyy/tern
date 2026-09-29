@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Дивіться те, що є на вашому сервері Jellyfin</string>
+    <string name="suggest_just_player">Відеоплеєр для файлів і трансляцій</string>
+    <string name="suggest_mpv">Відеоплеєр, створений на базі mpv</string>
+    <string name="suggest_nova">Відтворює відео з цього пристрою або з мережі</string>
+    <string name="suggest_material_files">Керуйте файлами на цьому пристрої та на серверах</string>
+    <string name="suggest_mullvad">Програма для VPN-сервісу Mullvad</string>
+    <string name="suggest_proton_vpn">Програма для VPN-сервісу Proton</string>
+    <string name="suggest_moonlight">Грайте в ігри зі свого комп\'ютера на цьому пристрої</string>
+    <string name="suggest_fossify_gallery">Галерея для фотографій та відео</string>
+    <string name="suggest_breezy_weather">Прогнози погоди з багатьох джерел</string>
+    <string name="suggest_fdroid">Каталог безкоштовних програм з відкритим кодом</string>
+    <string name="suggest_heliboard">Клавіатура, яка не має доступу до мережі</string>
+    <string name="suggest_obtainium">Отримує оновлення програм з їхніх джерел</string>
+    <string name="suggest_aegis">Зберігає коди для двоетапної авторизації</string>
+    <string name="suggest_keepassdx">Менеджер паролів для файлів KeePass</string>
+    <string name="suggest_koreader">Читає EPUB, PDF та інші формати книг</string>
+    <string name="suggest_element_x">Спілкуйтеся в мережі Matrix</string>
+    <string name="suggest_fairemail">Поштова програма для будь-якого провайдера</string>
+    <string name="suggest_tusky">Клієнт для Mastodon</string>
+    <string name="suggest_organic_maps">Карти та навігація, що працюють офлайн</string>
+    <string name="suggest_osmand">Офлайн-карти, маршрутизація та запис треків</string>
+    <string name="suggest_magpie">Зашифрований журнал інцидентів від автора Tern</string>
+    <string name="suggest_sepia">Видаляє приховані дані з фотографій, від автора Tern</string>
+    <string name="suggest_sweep">Перевірка на наявність сталкерських програм, від автора Tern</string>
+    <string name="suggest_starling">Приватне поширення місцезнаходження, від автора Tern</string>
+</resources>

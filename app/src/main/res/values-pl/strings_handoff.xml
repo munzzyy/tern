@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">To urządzenie nie jest podłączone do sieci lokalnej, więc telefon nie może się z nim połączyć. Podłącz to urządzenie do Wi-Fi lub do kabla sieciowego i spróbuj ponownie.</string>
+    <string name="engine_handoff_behind_vpn">To urządzenie jest połączone przez VPN, więc telefon w sieci lokalnej nie może się z nim połączyć. Wyłącz VPN na czas wysyłania i spróbuj ponownie.</string>
+    <string name="engine_handoff_cannot_open">To urządzenie nie mogło otworzyć strony w sieci lokalnej: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">To urządzenie nie mogło otworzyć strony w sieci lokalnej.</string>
+    <string name="engine_handoff_not_on_screen">Tern musi być widoczny na ekranie, gdy pobiera linki z telefonu. Otwórz Tern i spróbuj ponownie.</string>
+</resources>

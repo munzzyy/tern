@@ -97,7 +97,7 @@
         <item quantity="many">Wybrano %d</item>
         <item quantity="other">Wybrano %d</item>
     </plurals>
-    <string name="apps_select_hint">Dotknij aplikacji, aby je wybrać.</string>
+    <string name="apps_select_hint">Wybierz aplikacje z listy.</string>
     <string name="action_add_to_category">Dodaj do kategorii</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Dodaj %d aplikację do kategorii</item>
@@ -140,13 +140,12 @@
         <item quantity="other">Przestać śledzić %d aplikacji?</item>
     </plurals>
     <string name="bulk_remove_text">Aplikacje pozostają zainstalowane. Tern tylko przestaje sprawdzać je pod kątem aktualizacji.</string>
-    <string name="apps_empty_title">Brak aplikacji</string>
-    <string name="apps_empty_text">Wklej link do strony projektu, strony wydania lub repozytorium F-Droid, a Tern będzie stamtąd aktualizować aplikację.</string>
+    <string name="apps_empty_title">Jeszcze nic tu nie ma</string>
+    <string name="apps_empty_text">Dodaj aplikację z linku lub zacznij od takiej, której używa wiele osób.</string>
     <string name="sort_title">Sortuj</string>
     <string name="sort_name">Według nazwy</string>
     <string name="sort_recently_checked">Ostatnio sprawdzone</string>
     <string name="sort_source">Według źródła</string>
-    <string name="remove_title">Usunąć %s?</string>
     <string name="remove_text_installed">Tern przestanie ją śledzić. Aplikacja pozostanie zainstalowana.</string>
     <string name="remove_text">Tern przestanie ją śledzić.</string>
     <string name="add_title">Dodaj aplikację</string>
@@ -206,18 +205,14 @@
     <string name="carried_notes_none">Wydania są śledzone niezależnie od treści notatek.</string>
     <string name="carried_version">Wersja jest odczytywana z tagu za pomocą %1$s.</string>
     <string name="carried_version_none">Wersja jest odczytywana w zwykły sposób.</string>
-    <string name="carried_match_device_on">Gdy oferowanych jest kilka plików, preferowany jest ten zbudowany dla tego telefonu.</string>
-    <string name="carried_match_device_off">Pliki nie są ograniczane do procesora tego telefonu.</string>
+    <string name="carried_match_device_on">Gdy oferowanych jest kilka plików, preferowany jest ten zbudowany dla tego urządzenia.</string>
+    <string name="carried_match_device_off">Pliki nie są zawężane do procesora tego urządzenia.</string>
     <string name="carried_fallback_on">Starsze wydanie jest używane, gdy najnowsze nie ma użytecznego pliku.</string>
     <string name="carried_fallback_off">Starsze wydania nigdy nie są używane, nawet gdy najnowsze nie ma użytecznego pliku.</string>
     <string name="carried_track_on">Wydania są tylko śledzone; nic nie jest pobierane ani instalowane.</string>
     <string name="carried_track_off">Wydania są pobierane i instalowane, a nie tylko śledzone.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">Link przypina ten certyfikat, więc zainstalują się tylko pliki nim podpisane. Wybrał go ktoś inny: dodaj go tylko wtedy, gdy ufasz pochodzeniu linku.</item>
-        <item quantity="few">Link przypina te certyfikaty, więc zainstalują się tylko pliki nimi podpisane. Wybrał je ktoś inny: dodaj je tylko wtedy, gdy ufasz pochodzeniu linku.</item>
-        <item quantity="many">Link przypina te certyfikaty, więc zainstalują się tylko pliki nimi podpisane. Wybrał je ktoś inny: dodaj je tylko wtedy, gdy ufasz pochodzeniu linku.</item>
-        <item quantity="other">Link przypina te certyfikaty, więc zainstalują się tylko pliki nimi podpisane. Wybrał je ktoś inny: dodaj je tylko wtedy, gdy ufasz pochodzeniu linku.</item>
-    </plurals>
+    <string name="carried_pin_warning">Link przypina ten certyfikat, więc zainstalują się tylko pliki nim podpisane. Wybrał go ktoś inny: dodaj go tylko wtedy, gdy ufasz pochodzeniu linku.</string>
+    <string name="carried_pins_warning">Link przypina te certyfikaty, więc zainstalują się tylko pliki nimi podpisane. Wybrał je ktoś inny: dodaj je tylko wtedy, gdy ufasz pochodzeniu linku.</string>
     <string name="checks_title">Sprawdzanie</string>
     <string name="checks_package">Nazwa pakietu</string>
     <string name="checks_package_unknown">Nieznana do momentu odczytania pliku</string>
@@ -325,7 +320,7 @@
     <string name="file_recommended">Wybór %d, polecany</string>
     <string name="file_alternative">Wybór %d</string>
     <string name="setting_match_device">Dopasuj do tego urządzenia</string>
-    <string name="setting_match_device_effect">Gdy oferowanych jest kilka plików, preferuj zbudowany dla procesora tego telefonu.</string>
+    <string name="setting_match_device_effect">Gdy oferowanych jest kilka plików, preferuj ten zbudowany dla procesora tego urządzenia.</string>
     <string name="setting_include">Tylko pliki pasujące do</string>
     <string name="setting_include_help">Wzorzec, który nazwa pliku musi zawierać, na przykład universal</string>
     <string name="setting_exclude">Pomiń pliki pasujące do</string>
@@ -389,7 +384,6 @@
     <string name="settings_keep_installers_effect">Pliki pozostają po instalacji, zajmując pamięć. Wyłączenie je usunie.</string>
     <string name="settings_ownership">Bądź jedynym aktualizatorem</string>
     <string name="settings_ownership_effect">Poproś Androida, aby tylko Tern mógł aktualizować instalowane przez siebie aplikacje, by inny sklep ich nie podmienił.</string>
-    <string name="settings_ownership_unsupported">Wymaga Android 14 lub nowszego.</string>
     <string name="settings_tokens">Tokeny dostępu</string>
     <string name="settings_tokens_effect">Token dostępu zwiększa limit zapytań i otwiera prywatne projekty. Jest wysyłany tylko do hosta, dla którego został zapisany i nie jest ponownie wyświetlany.</string>
     <string name="token_saved">Zapisano</string>
@@ -418,9 +412,6 @@
     <string name="theme_system">Zgodnie z systemem</string>
     <string name="theme_light">Jasny</string>
     <string name="theme_dark">Ciemny</string>
-    <string name="settings_dynamic_color">Kolory z Twojej tapety</string>
-    <string name="settings_dynamic_color_effect">Wyłączenie używa własnego odcienia niebieskiego Tern.</string>
-    <string name="settings_dynamic_color_unsupported">Wymaga Android 12 lub nowszego.</string>
     <string name="settings_pure_black">Czysta czerń</string>
     <string name="settings_pure_black_effect">Czarne tło w ciemnym motywie, przyjemniejsze dla ekranów OLED.</string>
     <string name="settings_data">Import i eksport</string>
@@ -518,7 +509,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern instaluje i aktualizuje aplikacje bezpośrednio z miejsc, w których publikują je twórcy.</string>
     <string name="first_line_2">Zanim Android zobaczy plik, Tern sprawdza, kto go podpisał i czy jego suma kontrolna zgadza się z sumą wydawcy.</string>
-    <string name="first_line_3">Wszystko, co znajdzie i zrobi, zapisywane jest w logu aktywności prostymi słowami.</string>
+    <string name="first_line_3">Wszystko, co znajduje i robi, jest zapisane prostymi słowami.</string>
     <string name="first_notify_explain">Tern może informować, gdy aktualizacje są gotowe. Android zapyta, czy zezwolić na powiadomienia.</string>
     <string name="first_notify_denied">Powiadomienia są wyłączone. Możesz je włączyć później w Ustawieniach.</string>
     <string name="first_notify_allow">Zezwól na powiadomienia</string>
@@ -526,4 +517,5 @@
     <string name="install_permission_title">Zezwól Tern na instalację aplikacji</string>
     <string name="install_permission_body">Android pyta raz, zanim jedna aplikacja będzie mogła zainstalować inną. Na następnym ekranie włącz przełącznik dla Tern, a następnie wróć. Instalacja będzie kontynuowana samodzielnie.</string>
     <string name="install_permission_open">Otwórz ustawienia</string>
+    <string name="install_permission_closes">Ta wersja Androida zamyka Tern po włączeniu przełącznika. Otwórz Tern ponownie później, a instalacja będzie kontynuowana.</string>
 </resources>

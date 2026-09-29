@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Nézze meg, mi van a Jellyfin szerverén</string>
+    <string name="suggest_just_player">Videólejátszó fájlokhoz és streamekhez</string>
+    <string name="suggest_mpv">Az mpv-re épülő videólejátszó</string>
+    <string name="suggest_nova">Videót játszik le erről az eszközről vagy a hálózatról</string>
+    <string name="suggest_material_files">Fájlok kezelése ezen az eszközön és szervereken</string>
+    <string name="suggest_mullvad">A Mullvad VPN szolgáltatás alkalmazása</string>
+    <string name="suggest_proton_vpn">A Proton VPN szolgáltatás alkalmazása</string>
+    <string name="suggest_moonlight">Játsszon a számítógépéről ezen az eszközön</string>
+    <string name="suggest_fossify_gallery">Galéria fotókhoz és videókhoz</string>
+    <string name="suggest_breezy_weather">Időjárás-előrejelzések sok forrásból</string>
+    <string name="suggest_fdroid">Szabad és nyílt forráskódú alkalmazások katalógusa</string>
+    <string name="suggest_heliboard">Billentyűzet, amelynek nincs hálózati hozzáférése</string>
+    <string name="suggest_obtainium">Alkalmazásfrissítések beszerzése a forrásaikból</string>
+    <string name="suggest_aegis">Tárolja a kétlépcsős bejelentkezés kódjait</string>
+    <string name="suggest_keepassdx">Jelszókezelő KeePass fájlokhoz</string>
+    <string name="suggest_koreader">EPUB, PDF és más könyvformátumokat olvas</string>
+    <string name="suggest_element_x">Csevegés a Matrix hálózaton</string>
+    <string name="suggest_fairemail">E-mail alkalmazás bármilyen szolgáltatóhoz</string>
+    <string name="suggest_tusky">Mastodon kliens</string>
+    <string name="suggest_organic_maps">Offline működő térképek és navigáció</string>
+    <string name="suggest_osmand">Offline térképek, útvonaltervezés és rögzítés</string>
+    <string name="suggest_magpie">Titkosított eseménynapló, a Tern készítőjétől</string>
+    <string name="suggest_sepia">Eltávolítja a rejtett adatokat a fotókból, a Tern készítőjétől</string>
+    <string name="suggest_sweep">Stalkerware ellenőrző, a Tern készítőjétől</string>
+    <string name="suggest_starling">Privát helymegosztás, a Tern készítőjétől</string>
+</resources>

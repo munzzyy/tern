@@ -26,6 +26,7 @@
     <string name="engine_downgrade">Die installierte Version (%1$s) ist neuer als diese Datei (%2$s). Android akzeptiert eine ältere Version nur, nachdem die installierte App entfernt wurde, und das Entfernen löscht ihre Daten.</string>
     <string name="engine_test_only">Diese Datei ist ein Test-Build, dessen Installation aus einem App-Store Android ablehnt.</string>
     <string name="engine_needs_newer_android">Diese Version benötigt Android API-Level %1$d oder neuer.</string>
+    <string name="engine_proxy_silent">Der Proxy hat nicht geantwortet, also wurde nichts gesendet. Tern umgeht ihn niemals.</string>
     <string name="engine_check_network">Die Quelle konnte nicht erreicht werden: %1$s</string>
     <string name="engine_check_not_found">Die Quelle hat unter dieser Adresse nichts mehr: %1$s</string>
     <string name="engine_check_auth">Die Quelle hat die Anfrage abgelehnt. Füge das Token für diese Seite in den Einstellungen hinzu oder prüfe es. (%1$s)</string>

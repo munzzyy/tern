@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">En del af denne pakke er ikke signeret på den måde, den påstår at være, så intet blev installeret.</string>
+</resources>

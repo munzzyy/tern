@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">Một phần của gói này không được ký đúng như khai báo, nên không có gì được cài đặt.</string>
+</resources>

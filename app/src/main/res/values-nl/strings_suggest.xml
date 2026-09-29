@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Kijk wat er op je Jellyfin-server staat</string>
+    <string name="suggest_just_player">Een videospeler voor bestanden en streams</string>
+    <string name="suggest_mpv">Een videospeler gebouwd op mpv</string>
+    <string name="suggest_nova">Speelt video af van dit apparaat of het netwerk</string>
+    <string name="suggest_material_files">Beheer bestanden op dit apparaat en op servers</string>
+    <string name="suggest_mullvad">De app voor de Mullvad VPN-dienst</string>
+    <string name="suggest_proton_vpn">De app voor de Proton VPN-dienst</string>
+    <string name="suggest_moonlight">Speel games van je computer op dit apparaat</string>
+    <string name="suggest_fossify_gallery">Een galerij voor foto\'s en video\'s</string>
+    <string name="suggest_breezy_weather">Weersverwachtingen uit veel bronnen</string>
+    <string name="suggest_fdroid">Een catalogus van gratis en open source apps</string>
+    <string name="suggest_heliboard">Een toetsenbord zonder netwerktoegang</string>
+    <string name="suggest_obtainium">Haalt app-updates van hun bronnen</string>
+    <string name="suggest_aegis">Bewaart de codes voor inloggen in twee stappen</string>
+    <string name="suggest_keepassdx">Een wachtwoordbeheerder voor KeePass-bestanden</string>
+    <string name="suggest_koreader">Leest EPUB, PDF en andere boekformaten</string>
+    <string name="suggest_element_x">Chat op het Matrix-netwerk</string>
+    <string name="suggest_fairemail">Een e-mailapp voor elke provider</string>
+    <string name="suggest_tusky">Een client voor Mastodon</string>
+    <string name="suggest_organic_maps">Kaarten en navigatie die offline werken</string>
+    <string name="suggest_osmand">Offline kaarten, routes en trackregistratie</string>
+    <string name="suggest_magpie">Een versleuteld incidentenlogboek, door de maker van Tern</string>
+    <string name="suggest_sepia">Verwijdert verborgen gegevens uit foto\'s, door de maker van Tern</string>
+    <string name="suggest_sweep">Een controle op stalkerware, door de maker van Tern</string>
+    <string name="suggest_starling">Locatie privé delen, door de maker van Tern</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">هذا الجهاز غير متصل بشبكة محلية، لذلك لا يمكن لهاتف الوصول إليه. قم بتوصيل هذا الجهاز بشبكة Wi-Fi أو بكابل شبكة وحاول مرة أخرى.</string>
+    <string name="engine_handoff_behind_vpn">هذا الجهاز متصل من خلال شبكة VPN، لذلك لا يمكن لهاتف على الشبكة المحلية الوصول إليه. قم بإيقاف تشغيل VPN طوال فترة إرسالك، ثم حاول مرة أخرى.</string>
+    <string name="engine_handoff_cannot_open">لم يتمكن هذا الجهاز من فتح صفحة على الشبكة المحلية: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">لم يتمكن هذا الجهاز من فتح صفحة على الشبكة المحلية.</string>
+    <string name="engine_handoff_not_on_screen">يجب أن يكون Tern على الشاشة أثناء تلقيه الروابط من الهاتف. افتح Tern وحاول مرة أخرى.</string>
+</resources>

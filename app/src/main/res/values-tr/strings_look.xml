@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Görünüm</string>
+    <string name="look_summary">Tema, renkler, kontrast, yoğunluk, köşeler ve simgeler</string>
+    <string name="look_preview_spoken">Şu an ayarlandığı haliyle görünümün önizlemesi</string>
+    <string name="look_preview_app">Örnek uygulama</string>
+    <string name="look_colours">Renkler</string>
+    <string name="look_palette">Renk</string>
+    <string name="look_wallpaper">Duvar kağıdı</string>
+    <string name="look_own">Kendi renginiz</string>
+    <string name="palette_ink">Mürekkep</string>
+    <string name="palette_slate">Arduvaz</string>
+    <string name="palette_tide">Gelgit</string>
+    <string name="palette_moss">Yosun</string>
+    <string name="palette_amber">Kehribar</string>
+    <string name="palette_clay">Kil</string>
+    <string name="palette_rose">Gül</string>
+    <string name="palette_plum">Erik</string>
+    <string name="look_hue">Kendi renginizin tonu</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d derece</item>
+        <item quantity="other">%1$d derece</item>
+    </plurals>
+    <string name="look_contrast">Kontrast</string>
+    <string name="contrast_standard">Standart</string>
+    <string name="contrast_medium">Orta</string>
+    <string name="contrast_high">Yüksek</string>
+    <string name="look_contrast_effect">Daha fazla kontrast, metni ve dış hatları arkalarındakilerden daha net ayırır.</string>
+    <string name="look_shape_and_size">Şekil ve boyut</string>
+    <string name="look_density">Yoğunluk</string>
+    <string name="density_comfortable">Rahat</string>
+    <string name="density_compact">Kompakt</string>
+    <string name="look_density_effect">Kompakt, ekrana daha fazlasını sığdırır. Bastığınız hiçbir şey parmak ucundan daha küçük olmaz.</string>
+    <string name="look_corners">Köşeler</string>
+    <string name="corners_round">Yuvarlak</string>
+    <string name="corners_soft">Yumuşak</string>
+    <string name="corners_sharp">Keskin</string>
+    <string name="look_icon_shape">Simge şekli</string>
+    <string name="icon_shape_circle">Daire</string>
+    <string name="icon_shape_squircle">Yuvarlak kare</string>
+    <string name="icon_shape_square">Kare</string>
+    <string name="look_icons">Simgeler</string>
+    <string name="look_source_icons">Kaynaktan simgeler</string>
+    <string name="look_source_icons_effect">Bir uygulama yüklü değilken Tern, simgesini uygulamanın yayınlandığı yerden alır: deposu veya mağaza listesi. Kapalı olduğunda, bir renk üzerine bir harf çizer ve kimseye sormaz.</string>
+</resources>

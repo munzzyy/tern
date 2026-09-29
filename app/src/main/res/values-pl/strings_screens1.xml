@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">Zamknij wyszukiwanie</string>
+    <string name="waiting_banner_one">%1$s czeka na Twoją zgodę</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d instalacja czeka na Twoją zgodę</item>
+        <item quantity="few">%1$d instalacje czekają na Twoją zgodę</item>
+        <item quantity="many">%1$d instalacji czeka na Twoją zgodę</item>
+        <item quantity="other">%1$d instalacji czeka na Twoją zgodę</item>
+    </plurals>
+    <string name="empty_add">Dodaj aplikację</string>
+    <string name="empty_well_known">Dobrze znane aplikacje</string>
+    <string name="empty_handoff">Wyślij z telefonu</string>
+    <string name="removed_notice">Przestano śledzić %1$s</string>
+    <string name="removed_undo">Cofnij</string>
+    <string name="waiting_play_protect">Android lub Play Protect mogą zapytać ponownie. To ich własne sprawdzenie, a nie problem z plikiem.</string>
+    <string name="prompt_always_asks">To urządzenie zawsze pyta przed zainstalowaniem aktualizacji.</string>
+    <string name="checks_passed">Ten plik przeszedł wszystkie sprawdzenia</string>
+    <string name="explain_button">Co to oznacza: %1$s</string>
+    <string name="explain_action">posłuchaj, co to oznacza</string>
+    <string name="explain_close">Zamknij</string>
+    <string name="explain_signer_title">Certyfikat podpisywania</string>
+    <string name="explain_checksum_title">Suma kontrolna</string>
+    <string name="explain_permissions_title">Uprawnienia</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Aktualizacje bez pytania</string>
+    <string name="explain_always_asks_title">To urządzenie zawsze pyta</string>
+    <string name="explain_package">Każda aplikacja na Androida ma jedną nazwę, która nigdy się nie zmienia. Plik, który nosiłby inną nazwę, byłby inną aplikacją, niezależnie od tego, jak by się nazywał.</string>
+    <string name="explain_signer_installed">Twórca podpisuje każde wydanie kluczem, który tylko on posiada. Tern porównuje podpis tego pliku z aplikacją na tym urządzeniu i z certyfikatem zapamiętanym przy pierwszej instalacji. Plik podpisany przez kogokolwiek innego jest odrzucany, nawet jeśli pochodzi z właściwego adresu.</string>
+    <string name="explain_signer_first">Nie ma jeszcze z czym porównać. Plik deklaruje, kto go podpisał, Android potwierdza to podczas instalacji, a od tego momentu Tern wymaga, aby każda aktualizacja była podpisana tym samym certyfikatem.</string>
+    <string name="explain_checksum_matched">Suma kontrolna to odcisk samego pliku. Wydawca ją udostępnił, a plik pobrany przez Tern ma taką samą, więc dotarł w takiej formie, w jakiej został opublikowany.</string>
+    <string name="explain_checksum_pending">Suma kontrolna to odcisk samego pliku. Wydawca ją udostępnił, a Tern porówna ją z plikiem, gdy tylko plik zostanie pobrany.</string>
+    <string name="explain_checksum_mismatch">Suma kontrolna to odcisk samego pliku. Wydawca ją udostępnił, a plik pobrany przez Tern ma inną, więc nie jest to plik, który został opublikowany.</string>
+    <string name="explain_checksum_none">Ten wydawca nie udostępnia sumy kontrolnej. Podpis nadal jest sprawdzany, a jest to silniejsze z tych dwóch sprawdzeń.</string>
+    <string name="explain_permissions">O co ta wersja prosi, a o co nie prosiła wersja zainstalowana.</string>
+    <string name="explain_virustotal">Otwiera stronę dla dokładnie tego pliku na VirusTotal w Twojej przeglądarce. Tern nic tam nie wysyła.</string>
+    <string name="explain_silent">Android pozwala jednej aplikacji na aktualizację innej bez pytania, jeśli ta aplikacja ją zainstalowała, a urządzenie działa pod kontrolą Androida 12 lub nowszego. Android decyduje za każdym razem.</string>
+    <string name="explain_always_asks">To urządzenie działa pod kontrolą Androida %1$s, który pyta przed każdą instalacją. Tern pobiera i sprawdza aktualizację w tle i powiadamia Cię, gdy jest gotowa.</string>
+    <string name="activity_installed">Zainstalowano %1$s</string>
+    <string name="activity_installed_plain">Zainstalowano</string>
+    <string name="activity_updated">Zaktualizowano do %1$s</string>
+    <string name="activity_updated_plain">Zaktualizowano</string>
+    <string name="activity_update_waits">Aktualizacja do %1$s czeka</string>
+    <string name="activity_update_waits_plain">Aktualizacja czeka</string>
+    <string name="activity_install_waits">Instalacja %1$s czeka</string>
+    <string name="activity_install_waits_plain">Instalacja czeka</string>
+    <string name="activity_not_installed">Nie udało się zainstalować %1$s</string>
+    <string name="activity_not_installed_plain">Nie udało się zainstalować</string>
+    <string name="activity_blocked">Zablokowano %1$s</string>
+    <string name="activity_blocked_plain">Zablokowano</string>
+    <string name="activity_added">Dodano</string>
+    <string name="activity_removed">Przestano śledzić</string>
+    <string name="activity_check_failed">Sprawdzenie nie powiodło się</string>
+    <string name="activity_steps_show">Pokaż kroki</string>
+    <string name="activity_steps_hide">Ukryj kroki</string>
+    <string name="first_well_known">Dobrze znane aplikacje</string>
+</resources>

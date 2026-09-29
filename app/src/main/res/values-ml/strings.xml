@@ -91,7 +91,7 @@
         <item quantity="one">%d തിരഞ്ഞെടുത്തു</item>
         <item quantity="other">%d തിരഞ്ഞെടുത്തു</item>
     </plurals>
-    <string name="apps_select_hint">ആപ്പുകൾ തിരഞ്ഞെടുക്കാൻ അവയിൽ ടാപ്പ് ചെയ്യുക.</string>
+    <string name="apps_select_hint">ലിസ്റ്റിൽ നിന്ന് ആപ്പുകൾ തിരഞ്ഞെടുക്കുക.</string>
     <string name="action_add_to_category">കാറ്റഗറിയിലേക്ക് ചേർക്കുക</string>
     <plurals name="bulk_category_title">
         <item quantity="one">%d ആപ്പ് ഒരു കാറ്റഗറിയിലേക്ക് ചേർക്കുക</item>
@@ -122,13 +122,12 @@
         <item quantity="other">%d ആപ്പുകൾ പിന്തുടരുന്നത് നിർത്തണോ?</item>
     </plurals>
     <string name="bulk_remove_text">ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്ത നിലയിൽ തുടരും. അവയുടെ അപ്ഡേറ്റുകൾക്കായി പരിശോധിക്കുന്നത് Tern നിർത്തുക മാത്രമേ ചെയ്യുന്നുള്ളൂ.</string>
-    <string name="apps_empty_title">ആപ്പുകളൊന്നുമില്ല</string>
-    <string name="apps_empty_text">ഒരു പ്രോജക്റ്റ് പേജ്, റിലീസ് പേജ് അല്ലെങ്കിൽ F-Droid റെപ്പോസിറ്ററി എന്നിവയുടെ ലിങ്ക് ഒട്ടിക്കുക, അവിടെ നിന്ന് Tern ആപ്പ് അപ്ഡേറ്റ് ചെയ്തു നിലനിർത്തും.</string>
+    <string name="apps_empty_title">ഇവിടെ ഇതുവരെ ഒന്നുമില്ല</string>
+    <string name="apps_empty_text">ഒരു ആപ്പ് അതിൻ്റെ ലിങ്ക് ഉപയോഗിച്ച് ചേർക്കുക, അല്ലെങ്കിൽ പലരും ഉപയോഗിക്കുന്ന ഒരെണ്ണം ഉപയോഗിച്ച് തുടങ്ങുക.</string>
     <string name="sort_title">ക്രമീകരിക്കുക</string>
     <string name="sort_name">പേര് പ്രകാരം</string>
     <string name="sort_recently_checked">അടുത്തിടെ പരിശോധിച്ചത്</string>
     <string name="sort_source">ഉറവിടം പ്രകാരം</string>
-    <string name="remove_title">%s നീക്കംചെയ്യണോ?</string>
     <string name="remove_text_installed">Tern അത് പിന്തുടരുന്നത് നിർത്തുന്നു. ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്ത നിലയിൽ തുടരും.</string>
     <string name="remove_text">Tern അത് പിന്തുടരുന്നത് നിർത്തുന്നു.</string>
     <string name="add_title">ഒരു ആപ്പ് ചേർക്കുക</string>
@@ -180,16 +179,14 @@
     <string name="carried_notes_none">റിലീസുകളുടെ കുറിപ്പുകൾ എന്തുതന്നെയായാലും അവയെ പിന്തുടരും.</string>
     <string name="carried_version">%1$s ഉപയോഗിച്ച് ടാഗിൽ നിന്ന് പതിപ്പ് വായിക്കുന്നു.</string>
     <string name="carried_version_none">സാധാരണ രീതിയിൽ പതിപ്പ് വായിക്കുന്നു.</string>
-    <string name="carried_match_device_on">നിരവധി ഫയലുകൾ വാഗ്ദാനം ചെയ്യുമ്പോൾ, ഈ ഫോണിനായി നിർമ്മിച്ചതിന് മുൻഗണന നൽകുന്നു.</string>
-    <string name="carried_match_device_off">ഫയലുകൾ ഈ ഫോണിൻ്റെ പ്രോസസറിലേക്ക് മാത്രമായി ചുരുക്കിയിട്ടില്ല.</string>
+    <string name="carried_match_device_on">നിരവധി ഫയലുകൾ ലഭ്യമാകുമ്പോൾ, ഈ ഉപകരണത്തിനായി നിർമ്മിച്ചതിനാണ് മുൻഗണന.</string>
+    <string name="carried_match_device_off">ഫയലുകൾ ഈ ഉപകരണത്തിൻ്റെ പ്രോസസറിനായി പരിമിതപ്പെടുത്തിയിട്ടില്ല.</string>
     <string name="carried_fallback_on">ഏറ്റവും പുതിയതിൽ ഉപയോഗിക്കാനാകുന്ന ഫയലില്ലാത്തപ്പോൾ പഴയൊരു റിലീസ് ഉപയോഗിക്കുന്നു.</string>
     <string name="carried_fallback_off">ഏറ്റവും പുതിയതിൽ ഉപയോഗിക്കാനാകുന്ന ഫയലില്ലെങ്കിൽ പോലും പഴയ റിലീസുകൾ ഉപയോഗിക്കില്ല.</string>
     <string name="carried_track_on">റിലീസുകൾ പിന്തുടരുക മാത്രം ചെയ്യുന്നു; ഒന്നും ഡൗൺലോഡ് ചെയ്യുകയോ ഇൻസ്റ്റാൾ ചെയ്യുകയോ ഇല്ല.</string>
     <string name="carried_track_off">റിലീസുകൾ ഡൗൺലോഡ് ചെയ്ത് ഇൻസ്റ്റാൾ ചെയ്യുന്നു, പിന്തുടരുക മാത്രമല്ല.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">ലിങ്ക് ഈ സർട്ടിഫിക്കറ്റ് പിൻ ചെയ്യുന്നു, അതിനാൽ ഇത് ഒപ്പിട്ട ഫയലുകൾ മാത്രമേ ഇൻസ്റ്റാൾ ആകൂ. നിങ്ങളല്ലാത്ത മറ്റാരോ ആണ് ഇത് തിരഞ്ഞെടുത്തത്: ലിങ്ക് എവിടെ നിന്ന് വന്നുവെന്ന് നിങ്ങൾക്ക് വിശ്വാസമുണ്ടെങ്കിൽ മാത്രം ഇത് ചേർക്കുക.</item>
-        <item quantity="other">ലിങ്ക് ഈ സർട്ടിഫിക്കറ്റുകൾ പിൻ ചെയ്യുന്നു, അതിനാൽ ഇവ ഒപ്പിട്ട ഫയലുകൾ മാത്രമേ ഇൻസ്റ്റാൾ ആകൂ. നിങ്ങളല്ലാത്ത മറ്റാരോ ആണ് ഇത് തിരഞ്ഞെടുത്തത്: ലിങ്ക് എവിടെ നിന്ന് വന്നുവെന്ന് നിങ്ങൾക്ക് വിശ്വാസമുണ്ടെങ്കിൽ മാത്രം ഇവ ചേർക്കുക.</item>
-    </plurals>
+    <string name="carried_pin_warning">ലിങ്ക് ഈ സർട്ടിഫിക്കറ്റ് പിൻ ചെയ്യുന്നു, അതിനാൽ ഇത് ഒപ്പിട്ട ഫയലുകൾ മാത്രമേ ഇൻസ്റ്റാൾ ആകൂ. നിങ്ങളല്ലാത്ത മറ്റാരോ ആണ് ഇത് തിരഞ്ഞെടുത്തത്: ലിങ്ക് എവിടെ നിന്ന് വന്നുവെന്ന് നിങ്ങൾക്ക് വിശ്വാസമുണ്ടെങ്കിൽ മാത്രം ഇത് ചേർക്കുക.</string>
+    <string name="carried_pins_warning">ലിങ്ക് ഈ സർട്ടിഫിക്കറ്റുകൾ പിൻ ചെയ്യുന്നു, അതിനാൽ ഇവ ഒപ്പിട്ട ഫയലുകൾ മാത്രമേ ഇൻസ്റ്റാൾ ആകൂ. നിങ്ങളല്ലാത്ത മറ്റാരോ ആണ് ഇത് തിരഞ്ഞെടുത്തത്: ലിങ്ക് എവിടെ നിന്ന് വന്നുവെന്ന് നിങ്ങൾക്ക് വിശ്വാസമുണ്ടെങ്കിൽ മാത്രം ഇവ ചേർക്കുക.</string>
     <string name="checks_title">പരിശോധനകൾ</string>
     <string name="checks_package">പാക്കേജിൻ്റെ പേര്</string>
     <string name="checks_package_unknown">ഫയൽ വായിക്കുന്നതുവരെ അറിയില്ല</string>
@@ -291,7 +288,7 @@
     <string name="file_recommended">തിരഞ്ഞെടുപ്പ് %d, ശുപാർശ ചെയ്യുന്നത്</string>
     <string name="file_alternative">തിരഞ്ഞെടുപ്പ് %d</string>
     <string name="setting_match_device">ഈ ഉപകരണവുമായി പൊരുത്തപ്പെടുക</string>
-    <string name="setting_match_device_effect">നിരവധി ഫയലുകൾ വാഗ്ദാനം ചെയ്യുമ്പോൾ, ഈ ഫോണിൻ്റെ പ്രോസസറിനായി നിർമ്മിച്ചതിന് മുൻഗണന നൽകുക.</string>
+    <string name="setting_match_device_effect">നിരവധി ഫയലുകൾ ലഭ്യമാകുമ്പോൾ, ഈ ഉപകരണത്തിൻ്റെ പ്രോസസറിനായി നിർമ്മിച്ച ഫയലിന് മുൻഗണന നൽകുക.</string>
     <string name="setting_include">ഇവയുമായി പൊരുത്തപ്പെടുന്ന ഫയലുകൾ മാത്രം</string>
     <string name="setting_include_help">ഫയലിൻ്റെ പേരിൽ അടങ്ങിയിരിക്കേണ്ട ഒരു പാറ്റേൺ, ഉദാഹരണത്തിന് universal</string>
     <string name="setting_exclude">ഇവയുമായി പൊരുത്തപ്പെടുന്ന ഫയലുകൾ ഒഴിവാക്കുക</string>
@@ -334,7 +331,7 @@
     <string name="settings_interval">എത്ര ഇടവേളകളിൽ</string>
     <string name="interval_off">ഓഫ്</string>
     <plurals name="interval_hours">
-        <item quantity="one">ഓരോ മണിക്കൂറിലും</item>
+        <item quantity="one">ഓരോ %d മണിക്കൂറിലും</item>
         <item quantity="other">ഓരോ %d മണിക്കൂറിലും</item>
     </plurals>
     <string name="settings_unmetered">അൺമീറ്റേർഡ് നെറ്റ്‌വർക്കുകളിൽ മാത്രം</string>
@@ -353,7 +350,6 @@
     <string name="settings_keep_installers_effect">ഇൻസ്റ്റാൾ ചെയ്ത ശേഷം ഫയലുകൾ സ്റ്റോറേജ് ഉപയോഗിച്ച് തുടരും. ഓഫ് ചെയ്യുന്നത് അവയെ ഇല്ലാതാക്കുന്നു.</string>
     <string name="settings_ownership">ഏക അപ്ഡേറ്ററാകുക</string>
     <string name="settings_ownership_effect">Tern ഇൻസ്റ്റാൾ ചെയ്യുന്ന ആപ്പുകൾ അപ്ഡേറ്റ് ചെയ്യാൻ അതിനെ മാത്രം അനുവദിക്കാൻ Android-നോട് ആവശ്യപ്പെടുക, അതിനാൽ മറ്റൊരു സ്റ്റോറിന് അവയെ മാറ്റാനാകില്ല.</string>
-    <string name="settings_ownership_unsupported">Android 14 അല്ലെങ്കിൽ അതിന് ശേഷമുള്ളവ ആവശ്യമാണ്.</string>
     <string name="settings_tokens">ആക്സസ് ടോക്കണുകൾ</string>
     <string name="settings_tokens_effect">ഒരു ടോക്കൺ റേറ്റ് പരിധികൾ ഉയർത്തുകയും സ്വകാര്യ പ്രോജക്റ്റുകൾ തുറക്കുകയും ചെയ്യുന്നു. ഇത് സേവ് ചെയ്ത കൃത്യമായ ഹോസ്റ്റിന് മാത്രമേ ഇത് അയയ്‌ക്കൂ, മാത്രമല്ല ഇത് ഒരിക്കലും വീണ്ടും കാണിക്കില്ല.</string>
     <string name="token_saved">സേവ് ചെയ്തു</string>
@@ -382,9 +378,6 @@
     <string name="theme_system">സിസ്റ്റം പിന്തുടരുക</string>
     <string name="theme_light">ലൈറ്റ്</string>
     <string name="theme_dark">ഡാർക്ക്</string>
-    <string name="settings_dynamic_color">വാൾപേപ്പറിൽ നിന്നുള്ള നിറങ്ങൾ</string>
-    <string name="settings_dynamic_color_effect">ഓഫ് ചെയ്യുന്നത് Tern-യുടെ സ്വന്തം സ്ലേറ്റ് ബ്ലൂ ഉപയോഗിക്കുന്നു.</string>
-    <string name="settings_dynamic_color_unsupported">Android 12 അല്ലെങ്കിൽ അതിന് ശേഷമുള്ളവ ആവശ്യമാണ്.</string>
     <string name="settings_pure_black">പൂർണ്ണമായ കറുപ്പ്</string>
     <string name="settings_pure_black_effect">ഡാർക്ക് തീമിലെ കറുത്ത പശ്ചാത്തലങ്ങൾ, OLED സ്ക്രീനുകളിൽ കാണാൻ എളുപ്പമാണ്.</string>
     <string name="settings_data">ഇംപോർട്ടും എക്സ്പോർട്ടും</string>
@@ -466,7 +459,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern ആപ്പുകളുടെ ഡെവലപ്പർമാർ പ്രസിദ്ധീകരിക്കുന്നിടത്ത് നിന്ന് അവ നേരിട്ട് ഇൻസ്റ്റാൾ ചെയ്യുകയും അപ്ഡേറ്റ് ചെയ്യുകയും ചെയ്യുന്നു.</string>
     <string name="first_line_2">Android ഒരു ഫയൽ കാണുന്നതിന് മുമ്പ്, ആരാണ് അത് ഒപ്പിട്ടതെന്നും അത് പ്രസാധകൻ്റെ ചെക്ക്സമുമായി പൊരുത്തപ്പെടുന്നുണ്ടോ എന്നും Tern പരിശോധിക്കുന്നു.</string>
-    <string name="first_line_3">അത് കണ്ടെത്തുന്നതും ചെയ്യുന്നതുമായ എല്ലാം ലളിതമായ വാക്കുകളിൽ ആക്റ്റിവിറ്റി ലോഗിൽ എഴുതപ്പെടുന്നു.</string>
+    <string name="first_line_3">അത് കണ്ടെത്തുന്നതും ചെയ്യുന്നതുമായ എല്ലാം ലളിതമായ വാക്കുകളിൽ എഴുതിയിട്ടുണ്ട്.</string>
     <string name="first_notify_explain">അപ്ഡേറ്റുകൾ തയ്യാറാകുമ്പോൾ Tern-ന് നിങ്ങളോട് പറയാനാകും. നോട്ടിഫിക്കേഷനുകൾ അനുവദിക്കണോ എന്ന് Android ചോദിക്കും.</string>
     <string name="first_notify_denied">നോട്ടിഫിക്കേഷനുകൾ ഓഫാണ്. സെറ്റിംഗ്‌സിൽ നിങ്ങൾക്ക് അവ പിന്നീട് ഓൺ ചെയ്യാം.</string>
     <string name="first_notify_allow">നോട്ടിഫിക്കേഷനുകൾ അനുവദിക്കുക</string>
@@ -474,4 +467,5 @@
     <string name="install_permission_title">ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യാൻ Tern-നെ അനുവദിക്കുക</string>
     <string name="install_permission_body">ഒരു ആപ്പ് മറ്റൊന്ന് ഇൻസ്റ്റാൾ ചെയ്യുന്നതിന് മുമ്പ് Android ഒരിക്കൽ ചോദിക്കും. അടുത്ത സ്ക്രീനിൽ, Tern-നായുള്ള സ്വിച്ച് ഓൺ ചെയ്യുക, തുടർന്ന് തിരികെ വരിക. ഇൻസ്റ്റാൾ സ്വയം തുടരും.</string>
     <string name="install_permission_open">സെറ്റിംഗ്സ് തുറക്കുക</string>
+    <string name="install_permission_closes">നിങ്ങൾ സ്വിച്ച് ഓൺ ചെയ്യുമ്പോൾ Android-ൻ്റെ ഈ പതിപ്പ് Tern-നെ അടയ്ക്കുന്നു. അതിനുശേഷം Tern വീണ്ടും തുറക്കുക, ഇൻസ്റ്റാൾ തുടരുന്നതാണ്.</string>
 </resources>

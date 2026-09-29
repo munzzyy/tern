@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Assista ao que está no seu servidor Jellyfin</string>
+    <string name="suggest_just_player">Um reprodutor de vídeo para arquivos e streams</string>
+    <string name="suggest_mpv">Um reprodutor de vídeo baseado no mpv</string>
+    <string name="suggest_nova">Reproduz vídeos deste dispositivo ou da rede</string>
+    <string name="suggest_material_files">Gerencie arquivos neste dispositivo e em servidores</string>
+    <string name="suggest_mullvad">O app para o serviço VPN Mullvad</string>
+    <string name="suggest_proton_vpn">O app para o serviço VPN Proton</string>
+    <string name="suggest_moonlight">Jogue jogos do seu computador neste dispositivo</string>
+    <string name="suggest_fossify_gallery">Uma galeria para fotos e vídeos</string>
+    <string name="suggest_breezy_weather">Previsões do tempo de várias fontes</string>
+    <string name="suggest_fdroid">Um catálogo de apps de código aberto e gratuitos</string>
+    <string name="suggest_heliboard">Um teclado que não tem acesso à rede</string>
+    <string name="suggest_obtainium">Obtém atualizações de apps de suas fontes</string>
+    <string name="suggest_aegis">Guarda os códigos para login em duas etapas</string>
+    <string name="suggest_keepassdx">Um gerenciador de senhas para arquivos KeePass</string>
+    <string name="suggest_koreader">Lê EPUB, PDF e outros formatos de livros</string>
+    <string name="suggest_element_x">Converse na rede Matrix</string>
+    <string name="suggest_fairemail">Um app de e-mail para qualquer provedor</string>
+    <string name="suggest_tusky">Um cliente para Mastodon</string>
+    <string name="suggest_organic_maps">Mapas e navegação que funcionam offline</string>
+    <string name="suggest_osmand">Mapas offline, rotas e gravação de trilhas</string>
+    <string name="suggest_magpie">Um diário de incidentes criptografado, pelo autor do Tern</string>
+    <string name="suggest_sepia">Remove dados ocultos de fotos, pelo autor do Tern</string>
+    <string name="suggest_sweep">Uma verificação de stalkerware, pelo autor do Tern</string>
+    <string name="suggest_starling">Compartilhamento de local privado, pelo autor do Tern</string>
+</resources>

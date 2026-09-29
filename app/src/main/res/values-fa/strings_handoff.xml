@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">این دستگاه در هیچ شبکه محلی نیست، بنابراین تلفن نمی‌تواند به آن متصل شود. این دستگاه را به Wi-Fi یا کابل شبکه متصل کرده و دوباره تلاش کنید.</string>
+    <string name="engine_handoff_behind_vpn">این دستگاه از طریق VPN متصل است، بنابراین تلفنی در شبکه محلی نمی‌تواند به آن متصل شود. تا زمانی که ارسال می‌کنید VPN را خاموش کرده، سپس دوباره تلاش کنید.</string>
+    <string name="engine_handoff_cannot_open">این دستگاه نتوانست صفحه‌ای را در شبکه محلی باز کند: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">این دستگاه نتوانست صفحه‌ای را در شبکه محلی باز کند.</string>
+    <string name="engine_handoff_not_on_screen">Tern هنگام دریافت پیوندها از تلفن باید روی صفحه باز باشد. Tern را باز کرده و دوباره تلاش کنید.</string>
+</resources>

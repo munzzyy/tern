@@ -26,6 +26,7 @@
     <string name="engine_downgrade">ഇൻസ്റ്റാൾ ചെയ്ത പതിപ്പ് (%1$s) ഈ ഫയലിനേക്കാൾ (%2$s) പുതിയതാണ്. ഇൻസ്റ്റാൾ ചെയ്ത ആപ്പ് നീക്കംചെയ്തതിന് ശേഷം മാത്രമേ Android പഴയ പതിപ്പ് സ്വീകരിക്കൂ, ഇത് നീക്കംചെയ്യുന്നത് അതിൻ്റെ ഡാറ്റ മായ്ച്ചുകളയും.</string>
     <string name="engine_test_only">ഈ ഫയൽ ഒരു ടെസ്റ്റ് ബിൽഡാണ്, അത് ഒരു ആപ്പ് സ്റ്റോറിൽ നിന്ന് ഇൻസ്റ്റാൾ ചെയ്യാൻ Android നിരസിക്കുന്നു.</string>
     <string name="engine_needs_newer_android">ഈ പതിപ്പിന് Android API ലെവൽ %1$d അല്ലെങ്കിൽ അതിന് ശേഷമുള്ളത് ആവശ്യമാണ്.</string>
+    <string name="engine_proxy_silent">പ്രോക്സി മറുപടി നൽകിയില്ല, അതിനാൽ ഒന്നും അയച്ചില്ല. Tern ഒരിക്കലും ഇതിനെ മറികടന്ന് പോകില്ല.</string>
     <string name="engine_check_network">ഉറവിടത്തിൽ എത്താനായില്ല: %1$s</string>
     <string name="engine_check_not_found">ഈ വിലാസത്തിൽ ഉറവിടത്തിൽ ഇപ്പോൾ ഒന്നുമില്ല: %1$s</string>
     <string name="engine_check_auth">ഉറവിടം അഭ്യർത്ഥന നിരസിച്ചു. സെറ്റിംഗ്‌സിൽ ഈ സൈറ്റിനായുള്ള ടോക്കൺ ചേർക്കുക അല്ലെങ്കിൽ പരിശോധിക്കുക. (%1$s)</string>

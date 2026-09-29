@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">هذا الملف ليس قائمة تطبيقات مُصدَّرة من Tern أو Obtainium.</string>
+    <string name="engine_import_empty">لا يحتوي هذا الملف على أي تطبيقات.</string>
+    <string name="engine_import_local_address">عنوانه على شبكة محلية. أضفه يدويًا إذا كان خاصًا بك.</string>
+    <string name="engine_warn_local_address">هذا العنوان على شبكتك الخاصة. يسأله Tern في كل مرة يفحص فيها بحثًا عن تحديثات.</string>
+    <string name="engine_import_unreadable_export">تعذر قراءة هذا التصدير من Tern (%1$s). إذا كان من إصدار أحدث من Tern، فقم بتحديث Tern على هذا الجهاز وحاول مرة أخرى.</string>
+    <string name="engine_import_too_large">حجم الملف أكبر من %1$d MiB، وهو أكثر مما تتطلبه قائمة تطبيقات، لذلك لم يقرأه Tern.</string>
+    <string name="engine_import_file_gone">هذا الملف لم يعد موجودًا. افتح قائمة الملفات مرة أخرى.</string>
+    <string name="engine_link_not_https">تُقبل فقط العناوين التي تبدأ بـ https://.</string>
+    <string name="engine_link_not_an_address">هذا ليس عنوان ويب يمكن لـ Tern فتحه. يجب أن يبدو مثل https://example.org/tern-apps.json.</string>
+    <string name="engine_link_leaves_https">هذا العنوان يرسل Tern إلى عنوان ليس HTTPS، لذلك لم يتم جلب أي شيء.</string>
+    <string name="engine_link_not_found">لا يوجد ملف في هذا العنوان. تحقق منه بحثًا عن أخطاء إملائية.</string>
+    <string name="engine_link_refused">رفض الخادم تسليم الملف (أجاب %1$d). لا يرسل Tern أي تسجيل دخول مع هذا الطلب، لذلك يجب أن يكون الملف قابلاً للقراءة من قبل أي شخص يملك العنوان.</string>
+    <string name="engine_link_unreachable">تعذر الوصول إلى العنوان: %1$s</string>
+    <string name="engine_link_unreachable_plain">تعذر الوصول إلى العنوان. تحقق من الاتصال والعنوان، ثم حاول مرة أخرى.</string>
+    <string name="engine_link_too_slow">استغرق الخادم أكثر من دقيقة لإرسال الملف، لذلك توقف Tern عن الانتظار. حاول مرة أخرى لاحقًا.</string>
+    <string name="engine_link_not_an_export">ما يوجد في هذا العنوان ليس قائمة تطبيقات مُصدَّرة من Tern أو Obtainium. يجب أن يؤدي العنوان إلى الملف نفسه، وليس إلى صفحة تعرضه.</string>
+    <string name="engine_export_no_place">لا يحتوي هذا الجهاز على مساحة تخزين مشتركة يمكن لـ Tern الكتابة إليها.</string>
+    <string name="engine_export_failed">تعذر كتابة التصدير: %1$s</string>
+    <string name="engine_export_failed_plain">تعذر كتابة التصدير.</string>
+</resources>

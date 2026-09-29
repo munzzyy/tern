@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Vzhled</string>
+    <string name="look_summary">Motiv, barvy, kontrast, hustota, rohy a ikony</string>
+    <string name="look_preview_spoken">Náhled aktuálně nastaveného vzhledu</string>
+    <string name="look_preview_app">Ukázková aplikace</string>
+    <string name="look_colours">Barvy</string>
+    <string name="look_palette">Barva</string>
+    <string name="look_wallpaper">Tapeta</string>
+    <string name="look_own">Vlastní barva</string>
+    <string name="palette_ink">Inkoust</string>
+    <string name="palette_slate">Břidlice</string>
+    <string name="palette_tide">Odliv a příliv</string>
+    <string name="palette_moss">Mech</string>
+    <string name="palette_amber">Jantar</string>
+    <string name="palette_clay">Jíl</string>
+    <string name="palette_rose">Růže</string>
+    <string name="palette_plum">Švestka</string>
+    <string name="look_hue">Odstín vlastní barvy</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d stupeň</item>
+        <item quantity="few">%1$d stupně</item>
+        <item quantity="many">%1$d stupňů</item>
+        <item quantity="other">%1$d stupňů</item>
+    </plurals>
+    <string name="look_contrast">Kontrast</string>
+    <string name="contrast_standard">Standardní</string>
+    <string name="contrast_medium">Střední</string>
+    <string name="contrast_high">Vysoký</string>
+    <string name="look_contrast_effect">Větší kontrast více odlišuje text a obrysy od jejich pozadí.</string>
+    <string name="look_shape_and_size">Tvar a velikost</string>
+    <string name="look_density">Hustota</string>
+    <string name="density_comfortable">Pohodlná</string>
+    <string name="density_compact">Kompaktní</string>
+    <string name="look_density_effect">Kompaktní se na obrazovku vejde více. Nic, co mačkáte, se nezmenší pod velikost špičky prstu.</string>
+    <string name="look_corners">Rohy</string>
+    <string name="corners_round">Kulaté</string>
+    <string name="corners_soft">Měkké</string>
+    <string name="corners_sharp">Ostré</string>
+    <string name="look_icon_shape">Tvar ikon</string>
+    <string name="icon_shape_circle">Kruh</string>
+    <string name="icon_shape_squircle">Squircle</string>
+    <string name="icon_shape_square">Čtverec</string>
+    <string name="look_icons">Ikony</string>
+    <string name="look_source_icons">Ikony ze zdroje</string>
+    <string name="look_source_icons_effect">Zatímco aplikace není nainstalovaná, Tern získává její ikonu z místa jejího vydání: z jejího repozitáře nebo záznamu v obchodě. Pokud je to vypnuto, nakreslí písmeno na barvě a nikoho se neptá.</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">انقر لإنهاء التثبيت</string>
+    <string name="notify_downloading_plain">جارٍ التنزيل</string>
+    <string name="settings_notify_names">تسمية التطبيقات في الإشعارات</string>
+    <string name="settings_notify_names_help">يمكن قراءة الإشعار على شاشة القفل. عند إيقاف التشغيل، يذكر Tern عدد التطبيقات ولا يحدد أيها أبدًا.</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">Цей пристрій не підключено до локальної мережі, тому телефон не може з ним зв\'язатися. Підключіть цей пристрій до Wi-Fi або мережевого кабелю та спробуйте знову.</string>
+    <string name="engine_handoff_behind_vpn">Цей пристрій підключено через VPN, тому телефон у локальній мережі не може з ним зв\'язатися. Вимкніть VPN на час надсилання, а потім спробуйте знову.</string>
+    <string name="engine_handoff_cannot_open">Цей пристрій не зміг відкрити сторінку в локальній мережі: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">Цей пристрій не зміг відкрити сторінку в локальній мережі.</string>
+    <string name="engine_handoff_not_on_screen">Tern має бути на екрані під час отримання посилань з телефону. Відкрийте Tern та спробуйте знову.</string>
+</resources>

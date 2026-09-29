@@ -91,7 +91,7 @@
         <item quantity="one">%d seçildi</item>
         <item quantity="other">%d seçildi</item>
     </plurals>
-    <string name="apps_select_hint">Seçmek için uygulamalara dokunun.</string>
+    <string name="apps_select_hint">Listeden uygulama seçin.</string>
     <string name="action_add_to_category">Kategoriye ekle</string>
     <plurals name="bulk_category_title">
         <item quantity="one">%d uygulamayı kategoriye ekle</item>
@@ -118,13 +118,12 @@
         <item quantity="other">Seçilen uygulamalardan %d tanesinin yüklenecek güncellemesi yok ve olduğu gibi bırakıldı.</item>
     </plurals>
     <string name="bulk_remove_text">Uygulamalar yüklü kalır. Tern yalnızca güncellemeleri için denetlemeyi bırakır.</string>
-    <string name="apps_empty_title">Henüz uygulama yok</string>
-    <string name="apps_empty_text">Bir proje sayfasına, sürüm sayfasına veya F-Droid deposuna bir bağlantı yapıştırın, Tern uygulamayı oradan güncel tutsun.</string>
+    <string name="apps_empty_title">Henüz burada hiçbir şey yok</string>
+    <string name="apps_empty_text">Bağlantısıyla bir uygulama ekleyin veya birçok kişinin kullandığı uygulamalardan biriyle başlayın.</string>
     <string name="sort_title">Sırala</string>
     <string name="sort_name">Ada göre</string>
     <string name="sort_recently_checked">Son denetlenenler</string>
     <string name="sort_source">Kaynağa göre</string>
-    <string name="remove_title">%s kaldırılsın mı?</string>
     <string name="remove_text_installed">Tern bunu izlemeyi bırakır. Uygulama yüklü kalır.</string>
     <string name="remove_text">Tern bunu izlemeyi bırakır.</string>
     <string name="add_title">Uygulama ekle</string>
@@ -176,16 +175,14 @@
     <string name="carried_notes_none">Sürümler notları ne olursa olsun izlenir.</string>
     <string name="carried_version">Sürüm, %1$s kullanılarak etiketten okunur.</string>
     <string name="carried_version_none">Sürüm normal şekilde okunur.</string>
-    <string name="carried_match_device_on">Birkaç dosya sunulduğunda, bu telefon için derlenen tercih edilir.</string>
-    <string name="carried_match_device_off">Dosyalar bu telefonun işlemcisine göre daraltılmaz.</string>
+    <string name="carried_match_device_on">Birden fazla dosya sunulduğunda, bu cihaz için derlenmiş olan tercih edilir.</string>
+    <string name="carried_match_device_off">Dosyalar bu cihazın işlemcisine göre daraltılmaz.</string>
     <string name="carried_fallback_on">En yenisinde kullanılabilecek dosya yoksa daha eski bir sürüm kullanılır.</string>
     <string name="carried_fallback_off">En yenisinde kullanılabilecek dosya olmasa bile eski sürümler asla kullanılmaz.</string>
     <string name="carried_track_on">Sürümler yalnızca izlenir; hiçbir şey indirilmez veya yüklenmez.</string>
     <string name="carried_track_off">Sürümler yalnızca izlenmekle kalmaz, indirilir ve yüklenir.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">Bağlantı bu sertifikayı sabitler, bu nedenle yalnızca imzaladığı dosyalar yüklenir. Bunu sizin dışınızda biri seçti: yalnızca bağlantının geldiği yere güveniyorsanız ekleyin.</item>
-        <item quantity="other">Bağlantı bu sertifikaları sabitler, bu nedenle yalnızca imzaladıkları dosyalar yüklenir. Bunları sizin dışınızda biri seçti: yalnızca bağlantının geldiği yere güveniyorsanız ekleyin.</item>
-    </plurals>
+    <string name="carried_pin_warning">Bağlantı bu sertifikayı sabitler, bu nedenle yalnızca imzaladığı dosyalar yüklenir. Bunu sizin dışınızda biri seçti: yalnızca bağlantının geldiği yere güveniyorsanız ekleyin.</string>
+    <string name="carried_pins_warning">Bağlantı bu sertifikaları sabitler, bu nedenle yalnızca imzaladıkları dosyalar yüklenir. Bunları sizin dışınızda biri seçti: yalnızca bağlantının geldiği yere güveniyorsanız ekleyin.</string>
     <string name="checks_title">Denetimler</string>
     <string name="checks_package">Paket adı</string>
     <string name="checks_package_unknown">Dosya okunana kadar bilinmiyor</string>
@@ -287,7 +284,7 @@
     <string name="file_recommended">Seçenek %d, önerilen</string>
     <string name="file_alternative">Seçenek %d</string>
     <string name="setting_match_device">Bu cihazla eşleş</string>
-    <string name="setting_match_device_effect">Birkaç dosya sunulduğunda, bu telefonun işlemcisi için derlenmiş olanı tercih et.</string>
+    <string name="setting_match_device_effect">Birden fazla dosya sunulduğunda, bu cihazın işlemcisi için derlenmiş olanı tercih edin.</string>
     <string name="setting_include">Yalnızca eşleşen dosyalar</string>
     <string name="setting_include_help">Dosya adının içermesi gereken bir kalıp, örneğin universal</string>
     <string name="setting_exclude">Eşleşen dosyaları atla</string>
@@ -349,7 +346,6 @@
     <string name="settings_keep_installers_effect">Dosyalar yüklendikten sonra kalarak depolama alanı kullanır. Kapalıysa silinir.</string>
     <string name="settings_ownership">Tek güncelleyici ol</string>
     <string name="settings_ownership_effect">Başka bir mağazanın değiştirememesi için Android\'den yalnızca Tern\'ın kendi yüklediği uygulamaları güncellemesine izin vermesini iste.</string>
-    <string name="settings_ownership_unsupported">Android 14 veya daha yenisi gerekir.</string>
     <string name="settings_tokens">Erişim belirteçleri</string>
     <string name="settings_tokens_effect">Bir belirteç, hız sınırlarını yükseltir ve gizli projeleri açar. Yalnızca tam olarak kaydedildiği sunucuya gönderilir ve bir daha asla gösterilmez.</string>
     <string name="token_saved">Kaydedildi</string>
@@ -378,9 +374,6 @@
     <string name="theme_system">Sisteme uy</string>
     <string name="theme_light">Açık</string>
     <string name="theme_dark">Koyu</string>
-    <string name="settings_dynamic_color">Duvar kağıdınızdaki renkler</string>
-    <string name="settings_dynamic_color_effect">Kapalıyken Tern\'ın kendi arduvaz mavisi kullanılır.</string>
-    <string name="settings_dynamic_color_unsupported">Android 12 veya daha yenisi gerekir.</string>
     <string name="settings_pure_black">Saf siyah</string>
     <string name="settings_pure_black_effect">OLED ekranları daha az yoran, koyu temada siyah arka planlar.</string>
     <string name="settings_data">İçe ve dışa aktar</string>
@@ -462,7 +455,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern, uygulamaları doğrudan geliştiricilerinin yayınladığı yerden yükler ve günceller.</string>
     <string name="first_line_2">Tern, Android bir dosyayı görmeden önce onu kimin imzaladığını ve yayıncının sağlama toplamıyla eşleşip eşleşmediğini denetler.</string>
-    <string name="first_line_3">Bulduğu ve yaptığı her şey sade bir dille etkinlik günlüğüne yazılır.</string>
+    <string name="first_line_3">Bulduğu ve yaptığı her şey sade kelimelerle yazılır.</string>
     <string name="first_notify_explain">Tern, güncellemeler hazır olduğunda size haber verebilir. Android bildirimlere izin verilip verilmeyeceğini soracaktır.</string>
     <string name="first_notify_denied">Bildirimler kapalı. Bunları daha sonra Ayarlar\'dan açabilirsiniz.</string>
     <string name="first_notify_allow">Bildirimlere izin ver</string>
@@ -470,4 +463,5 @@
     <string name="install_permission_title">Tern\'a uygulama yükleme izni verin</string>
     <string name="install_permission_body">Android, bir uygulamanın başka bir uygulama yüklemesine izin vermeden önce bir kez sorar. Sonraki ekranda Tern için anahtarı açın ve geri dönün. Yükleme kendiliğinden devam eder.</string>
     <string name="install_permission_open">Ayarları aç</string>
+    <string name="install_permission_closes">Anahtarı açtığınızda Android\'in bu sürümü Tern\'ı kapatır. Ardından Tern\'ı tekrar açtığınızda yükleme devam eder.</string>
 </resources>

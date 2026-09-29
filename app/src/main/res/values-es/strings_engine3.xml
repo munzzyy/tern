@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern guarda el certificado con el que está firmada esta aplicación, y este archivo está firmado con otro. Podría venir de otra persona, así que no se instaló.</string>
+    <string name="engine_warn_built_in_pin">Tern guarda el certificado con el que está firmada esta aplicación, y el archivo ofrecido está firmado con otro.</string>
+</resources>

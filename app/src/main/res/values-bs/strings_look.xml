@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Izgled</string>
+    <string name="look_summary">Tema, boje, kontrast, gustoća, uglovi i ikone</string>
+    <string name="look_preview_spoken">Pregled izgleda kako je sada postavljen</string>
+    <string name="look_preview_app">Primjer aplikacije</string>
+    <string name="look_colours">Boje</string>
+    <string name="look_palette">Boja</string>
+    <string name="look_wallpaper">Pozadina</string>
+    <string name="look_own">Vlastita boja</string>
+    <string name="palette_ink">Tinta</string>
+    <string name="palette_slate">Škriljevac</string>
+    <string name="palette_tide">Plima</string>
+    <string name="palette_moss">Mahovina</string>
+    <string name="palette_amber">Ćilibar</string>
+    <string name="palette_clay">Glina</string>
+    <string name="palette_rose">Ruža</string>
+    <string name="palette_plum">Šljiva</string>
+    <string name="look_hue">Nijansa vaše vlastite boje</string>
+    <string name="look_contrast">Kontrast</string>
+    <string name="contrast_standard">Standardni</string>
+    <string name="contrast_medium">Srednji</string>
+    <string name="contrast_high">Visoki</string>
+    <string name="look_contrast_effect">Više kontrasta dodatno odvaja tekst i obrise od onoga što je iza njih.</string>
+    <string name="look_shape_and_size">Oblik i veličina</string>
+    <string name="look_density">Gustoća</string>
+    <string name="density_comfortable">Udobno</string>
+    <string name="density_compact">Kompaktno</string>
+    <string name="look_density_effect">Kompaktno stane više na ekran. Ništa što pritisnete ne postaje manje od vrha prsta.</string>
+    <string name="look_corners">Uglovi</string>
+    <string name="corners_round">Okrugli</string>
+    <string name="corners_soft">Meki</string>
+    <string name="corners_sharp">Oštri</string>
+    <string name="look_icon_shape">Oblik ikone</string>
+    <string name="icon_shape_circle">Krug</string>
+    <string name="icon_shape_squircle">Zaobljeni kvadrat</string>
+    <string name="icon_shape_square">Kvadrat</string>
+    <string name="look_icons">Ikone</string>
+    <string name="look_source_icons">Ikone iz izvora</string>
+    <string name="look_source_icons_effect">Dok aplikacija nije instalirana, Tern dobija njenu ikonu odakle je aplikacija objavljena: iz njenog repozitorija ili prodavnice. Isključeno crta slovo na boji i nikoga ne pita.</string>
+</resources>

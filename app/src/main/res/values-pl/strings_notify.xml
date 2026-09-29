@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Dotknij, aby zakończyć instalację</string>
+    <string name="notify_downloading_plain">Pobieranie</string>
+    <string name="settings_notify_names">Nazwij aplikacje w powiadomieniach</string>
+    <string name="settings_notify_names_help">Powiadomienia można czytać na ekranie blokady. Gdy opcja jest wyłączona, Tern informuje ile aplikacji, ale nigdy które.</string>
+</resources>

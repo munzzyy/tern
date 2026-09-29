@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">هر انتشار یافت‌شده فقط فایل برنامه دیگری را ارائه داد، نه فایل این برنامه را.</string>
+</resources>

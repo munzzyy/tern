@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appverifier_title">2回目の確認</string>
+    <string name="appverifier_effect">AppVerifierは別のアプリです。このアプリをTernが保持する証明書と、AppVerifier自身が認識しているアプリのリストと比較します。</string>
+    <string name="appverifier_action">AppVerifierで確認</string>
+</resources>

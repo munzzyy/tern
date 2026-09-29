@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Jellyfinサーバー上のコンテンツを視聴</string>
+    <string name="suggest_just_player">ファイルとストリーム用の動画プレーヤー</string>
+    <string name="suggest_mpv">mpvベースの動画プレーヤー</string>
+    <string name="suggest_nova">この端末またはネットワークから動画を再生</string>
+    <string name="suggest_material_files">この端末とサーバー上のファイルを管理</string>
+    <string name="suggest_mullvad">Mullvad VPNサービスのアプリ</string>
+    <string name="suggest_proton_vpn">Proton VPNサービスのアプリ</string>
+    <string name="suggest_moonlight">コンピューターのゲームをこの端末でプレイ</string>
+    <string name="suggest_fossify_gallery">写真と動画用のギャラリー</string>
+    <string name="suggest_breezy_weather">多くの情報源からの天気予報</string>
+    <string name="suggest_fdroid">無料でオープンソースのアプリのカタログ</string>
+    <string name="suggest_heliboard">ネットワークアクセスがないキーボード</string>
+    <string name="suggest_obtainium">提供元からアプリの更新を取得</string>
+    <string name="suggest_aegis">2段階認証のコードを保持</string>
+    <string name="suggest_keepassdx">KeePassファイル用のパスワードマネージャー</string>
+    <string name="suggest_koreader">EPUB、PDFなどの書籍形式を読む</string>
+    <string name="suggest_element_x">Matrixネットワークでのチャット</string>
+    <string name="suggest_fairemail">任意のプロバイダー用のメールアプリ</string>
+    <string name="suggest_tusky">Mastodon用クライアント</string>
+    <string name="suggest_organic_maps">オフラインで動作するマップとナビゲーション</string>
+    <string name="suggest_osmand">オフラインマップ、経路検索、トラック記録</string>
+    <string name="suggest_magpie">暗号化されたインシデント記録（Ternの作者による）</string>
+    <string name="suggest_sepia">写真から隠しデータを削除（Ternの作者による）</string>
+    <string name="suggest_sweep">ストーカーウェアの確認（Ternの作者による）</string>
+    <string name="suggest_starling">プライベートな位置情報の共有（Ternの作者による）</string>
+</resources>

@@ -26,6 +26,7 @@
     <string name="engine_downgrade">A versión instalada (%1$s) é máis nova ca este ficheiro (%2$s). Android só acepta unha versión máis antiga despois de eliminar a aplicación instalada, e ao eliminala bórranse os seus datos.</string>
     <string name="engine_test_only">Este ficheiro é unha versión de proba, que Android rexeita instalar desde unha tenda de aplicacións.</string>
     <string name="engine_needs_newer_android">Esta versión precisa o nivel da API de Android %1$d ou posterior.</string>
+    <string name="engine_proxy_silent">O proxy non respondeu, polo que non se enviou nada. Tern nunca o esquiva.</string>
     <string name="engine_check_network">Non se puido chegar á orixe: %1$s</string>
     <string name="engine_check_not_found">A orixe xa non ten nada neste enderezo: %1$s</string>
     <string name="engine_check_auth">A orixe rexeitou a solicitude. Engade ou comproba o token para este sitio nos axustes. (%1$s)</string>

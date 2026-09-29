@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern porta el certificat amb què està signada aquesta aplicació, i aquest fitxer està signat amb un altre. Podria provenir d\'algú altre, així que no s\'ha instal·lat.</string>
+    <string name="engine_warn_built_in_pin">Tern porta el certificat amb què està signada aquesta aplicació, i el fitxer ofert està signat amb un altre.</string>
+</resources>

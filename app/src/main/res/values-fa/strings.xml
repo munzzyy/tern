@@ -91,7 +91,7 @@
         <item quantity="one">%d مورد انتخاب شد</item>
         <item quantity="other">%d مورد انتخاب شد</item>
     </plurals>
-    <string name="apps_select_hint">برای انتخاب برنامه‌ها، روی آن‌ها ضربه بزنید.</string>
+    <string name="apps_select_hint">برنامه‌ها را از لیست انتخاب کنید.</string>
     <string name="action_add_to_category">افزودن به دسته</string>
     <plurals name="bulk_category_title">
         <item quantity="one">افزودن %d برنامه به یک دسته</item>
@@ -122,13 +122,12 @@
         <item quantity="other">دنبال کردن %d برنامه متوقف شود؟</item>
     </plurals>
     <string name="bulk_remove_text">برنامه‌ها نصب‌شده باقی می‌مانند. Tern فقط بررسی آن‌ها برای به‌روزرسانی را متوقف می‌کند.</string>
-    <string name="apps_empty_title">هنوز برنامه‌ای نیست</string>
-    <string name="apps_empty_text">پیوند یک صفحه پروژه، یک صفحه انتشار یا یک مخزن F-Droid را جای‌گذاری کنید، و Tern برنامه را از آنجا به‌روز نگه می‌دارد.</string>
+    <string name="apps_empty_title">هنوز چیزی اینجا نیست</string>
+    <string name="apps_empty_text">برنامه‌ای را با پیوندش اضافه کنید، یا با برنامه‌ای که بسیاری از افراد استفاده می‌کنند شروع کنید.</string>
     <string name="sort_title">مرتب‌سازی</string>
     <string name="sort_name">بر اساس نام</string>
     <string name="sort_recently_checked">اخیراً بررسی‌شده</string>
     <string name="sort_source">بر اساس منبع</string>
-    <string name="remove_title">%s حذف شود؟</string>
     <string name="remove_text_installed">Tern دیگر آن را دنبال نمی‌کند. برنامه نصب‌شده باقی می‌ماند.</string>
     <string name="remove_text">Tern دیگر آن را دنبال نمی‌کند.</string>
     <string name="add_title">افزودن برنامه</string>
@@ -180,16 +179,14 @@
     <string name="carried_notes_none">انتشارها فارغ از یادداشت‌هایشان دنبال می‌شوند.</string>
     <string name="carried_version">نسخه از برچسب با %1$s خوانده می‌شود.</string>
     <string name="carried_version_none">نسخه به روش معمول خوانده می‌شود.</string>
-    <string name="carried_match_device_on">وقتی چند فایل ارائه شود، فایلی که برای این گوشی ساخته شده ترجیح داده می‌شود.</string>
-    <string name="carried_match_device_off">فایل‌ها محدود به پردازنده این گوشی نمی‌شوند.</string>
+    <string name="carried_match_device_on">وقتی چند فایل ارائه می‌شود، فایل ساخته‌شده برای این دستگاه ترجیح داده می‌شود.</string>
+    <string name="carried_match_device_off">فایل‌ها به پردازنده این دستگاه محدود نمی‌شوند.</string>
     <string name="carried_fallback_on">اگر جدیدترین انتشار فایل قابل استفاده‌ای نداشته باشد، از انتشار قدیمی‌تر استفاده می‌شود.</string>
     <string name="carried_fallback_off">انتشارهای قدیمی‌تر هرگز استفاده نمی‌شوند، حتی اگر جدیدترین انتشار فایل قابل استفاده‌ای نداشته باشد.</string>
     <string name="carried_track_on">انتشارها فقط دنبال می‌شوند؛ چیزی دانلود یا نصب نمی‌شود.</string>
     <string name="carried_track_off">انتشارها فقط دنبال نمی‌شوند، بلکه دانلود و نصب می‌شوند.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">این پیوند این گواهی را پین می‌کند، بنابراین فقط فایل‌هایی که با آن امضا شده‌اند نصب می‌شوند. شخصی غیر از شما آن را انتخاب کرده است: فقط در صورتی آن را اضافه کنید که به منبع پیوند اعتماد دارید.</item>
-        <item quantity="other">این پیوند این گواهی‌ها را پین می‌کند، بنابراین فقط فایل‌هایی که با آن‌ها امضا شده‌اند نصب می‌شوند. شخصی غیر از شما آن‌ها را انتخاب کرده است: فقط در صورتی آن‌ها را اضافه کنید که به منبع پیوند اعتماد دارید.</item>
-    </plurals>
+    <string name="carried_pin_warning">این پیوند این گواهی را پین می‌کند، بنابراین فقط فایل‌هایی که با آن امضا شده‌اند نصب می‌شوند. شخصی غیر از شما آن را انتخاب کرده است: فقط در صورتی آن را اضافه کنید که به منبع پیوند اعتماد دارید.</string>
+    <string name="carried_pins_warning">این پیوند این گواهی‌ها را پین می‌کند، بنابراین فقط فایل‌هایی که با آن‌ها امضا شده‌اند نصب می‌شوند. شخصی غیر از شما آن‌ها را انتخاب کرده است: فقط در صورتی آن‌ها را اضافه کنید که به منبع پیوند اعتماد دارید.</string>
     <string name="checks_title">بررسی‌ها</string>
     <string name="checks_package">نام بسته</string>
     <string name="checks_package_unknown">تا زمان خواندن فایل نامشخص است</string>
@@ -291,7 +288,7 @@
     <string name="file_recommended">انتخاب %d، توصیه می‌شود</string>
     <string name="file_alternative">انتخاب %d</string>
     <string name="setting_match_device">مطابق با این دستگاه</string>
-    <string name="setting_match_device_effect">وقتی چند فایل ارائه می‌شود، فایلی که برای پردازنده این گوشی ساخته شده ترجیح داده می‌شود.</string>
+    <string name="setting_match_device_effect">وقتی چند فایل ارائه می‌شود، فایلی که برای پردازنده این دستگاه ساخته شده است را ترجیح دهید.</string>
     <string name="setting_include">فقط فایل‌های مطابق</string>
     <string name="setting_include_help">الگویی که نام فایل باید شامل آن باشد، مثلاً universal</string>
     <string name="setting_exclude">پرش از فایل‌های مطابق</string>
@@ -334,7 +331,7 @@
     <string name="settings_interval">هر چند وقت</string>
     <string name="interval_off">خاموش</string>
     <plurals name="interval_hours">
-        <item quantity="one">هر ساعت</item>
+        <item quantity="one">هر %d ساعت</item>
         <item quantity="other">هر %d ساعت</item>
     </plurals>
     <string name="settings_unmetered">فقط در شبکه‌های نامحدود</string>
@@ -353,7 +350,6 @@
     <string name="settings_keep_installers_effect">فایل‌ها پس از نصب باقی می‌مانند و فضا اشغال می‌کنند. در حالت خاموش حذف می‌شوند.</string>
     <string name="settings_ownership">تنها بهروزرسان بودن</string>
     <string name="settings_ownership_effect">از Android بخواهید فقط به Tern اجازه به‌روزرسانی برنامه‌هایی را بدهد که نصب می‌کند، تا فروشگاه دیگری نتواند آن‌ها را تغییر دهد.</string>
-    <string name="settings_ownership_unsupported">به Android 14 یا بالاتر نیاز دارد.</string>
     <string name="settings_tokens">توکن‌های دسترسی</string>
     <string name="settings_tokens_effect">توکن محدودیت درخواست‌ها را بالا می‌برد و پروژه‌های خصوصی را باز می‌کند. فقط به میزبان دقیقی که برای آن ذخیره شده ارسال می‌شود و دیگر هرگز نمایش داده نمی‌شود.</string>
     <string name="token_saved">ذخیره شد</string>
@@ -382,9 +378,6 @@
     <string name="theme_system">مطابق با سیستم</string>
     <string name="theme_light">روشن</string>
     <string name="theme_dark">تیره</string>
-    <string name="settings_dynamic_color">رنگ‌ها از کاغذدیواری شما</string>
-    <string name="settings_dynamic_color_effect">در حالت خاموش از رنگ آبی خاکستری خود Tern استفاده می‌شود.</string>
-    <string name="settings_dynamic_color_unsupported">به Android 12 یا بالاتر نیاز دارد.</string>
     <string name="settings_pure_black">مشکی خالص</string>
     <string name="settings_pure_black_effect">پس‌زمینه مشکی در طرح زمینه تیره، مناسب برای صفحه‌نمایش‌های OLED.</string>
     <string name="settings_data">درون‌ریزی و برون‌ریزی</string>
@@ -466,7 +459,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern برنامه‌ها را مستقیماً از جایی که توسعه‌دهندگانشان منتشر می‌کنند نصب و به‌روز می‌کند.</string>
     <string name="first_line_2">پیش از آنکه Android یک فایل را ببیند، Tern بررسی می‌کند چه کسی آن را امضا کرده و آیا با چک‌سام ناشر مطابقت دارد یا خیر.</string>
-    <string name="first_line_3">هرچه پیدا کند و انجام دهد، با کلمات ساده در گزارش فعالیت نوشته می‌شود.</string>
+    <string name="first_line_3">هر چیزی که پیدا می‌کند و انجام می‌دهد با کلمات ساده نوشته می‌شود.</string>
     <string name="first_notify_explain">Tern می‌تواند آماده بودن به‌روزرسانی‌ها را به شما اطلاع دهد. Android درباره اجازه دادن به اعلان‌ها از شما سؤال خواهد کرد.</string>
     <string name="first_notify_denied">اعلان‌ها خاموش هستند. می‌توانید بعداً آن‌ها را در تنظیمات روشن کنید.</string>
     <string name="first_notify_allow">اجازه دادن به اعلان‌ها</string>
@@ -474,4 +467,5 @@
     <string name="install_permission_title">اجازه به Tern برای نصب برنامهها</string>
     <string name="install_permission_body">Android پیش از اینکه یک برنامه بتواند برنامه دیگری را نصب کند، یک بار سؤال میکند. در صفحه بعد، کلید Tern را روشن کنید و سپس برگردید. نصب بهطور خودکار ادامه مییابد.</string>
     <string name="install_permission_open">باز کردن تنظیمات</string>
+    <string name="install_permission_closes">این نسخه از Android وقتی سوئیچ را روشن می‌کنید Tern را می‌بندد. پس از آن دوباره Tern را باز کنید تا نصب ادامه یابد.</string>
 </resources>

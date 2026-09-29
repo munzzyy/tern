@@ -103,7 +103,7 @@
         <item quantity="many">%d محددًا</item>
         <item quantity="other">%d محدد</item>
     </plurals>
-    <string name="apps_select_hint">اضغط على التطبيقات لاختيارها.</string>
+    <string name="apps_select_hint">اختر تطبيقات من القائمة.</string>
     <string name="action_add_to_category">إضافة إلى فئة</string>
     <plurals name="bulk_category_title">
         <item quantity="zero">إضافة %d تطبيق إلى فئة</item>
@@ -158,13 +158,12 @@
         <item quantity="other">إيقاف متابعة %d تطبيق؟</item>
     </plurals>
     <string name="bulk_remove_text">تبقى التطبيقات مثبتة. يتوقف Tern فقط عن فحصها بحثًا عن تحديثات.</string>
-    <string name="apps_empty_title">لا توجد تطبيقات حتى الآن</string>
-    <string name="apps_empty_text">الصق رابطًا لصفحة مشروع أو صفحة إصدار أو مستودع F-Droid، وسيحافظ Tern على تحديث التطبيق من هناك.</string>
+    <string name="apps_empty_title">لا يوجد شيء هنا بعد</string>
+    <string name="apps_empty_text">أضف تطبيقًا برابطه، أو ابدأ بواحد يستخدمه الكثير من الأشخاص.</string>
     <string name="sort_title">فرز</string>
     <string name="sort_name">حسب الاسم</string>
     <string name="sort_recently_checked">تم فحصه مؤخرًا</string>
     <string name="sort_source">حسب المصدر</string>
-    <string name="remove_title">إزالة %s؟</string>
     <string name="remove_text_installed">سيتوقف Tern عن متابعته. سيبقى التطبيق مثبتًا.</string>
     <string name="remove_text">سيتوقف Tern عن متابعته.</string>
     <string name="add_title">إضافة تطبيق</string>
@@ -232,20 +231,14 @@
     <string name="carried_notes_none">تتم متابعة الإصدارات مهما كان ما تقوله ملاحظاتها.</string>
     <string name="carried_version">يتم قراءة الإصدار من العلامة باستخدام %1$s.</string>
     <string name="carried_version_none">تتم قراءة الإصدار بالطريقة المعتادة.</string>
-    <string name="carried_match_device_on">عند عرض عدة ملفات، يُفضل الملف المصمم لهذا الهاتف.</string>
-    <string name="carried_match_device_off">لا يتم تضييق الملفات لتناسب معالج هذا الهاتف.</string>
+    <string name="carried_match_device_on">عندما تُعرض عدة ملفات، يُفضل الملف المصمم لهذا الجهاز.</string>
+    <string name="carried_match_device_off">لا تقتصر الملفات على معالج هذا الجهاز.</string>
     <string name="carried_fallback_on">يُستخدم إصدار أقدم عندما لا يحتوي الأحدث على ملف قابل للاستخدام.</string>
     <string name="carried_fallback_off">لا تُستخدم الإصدارات الأقدم أبدًا، حتى عندما لا يحتوي الأحدث على ملف قابل للاستخدام.</string>
     <string name="carried_track_on">تتم متابعة الإصدارات فقط؛ لا يتم تنزيل أو تثبيت أي شيء.</string>
     <string name="carried_track_off">يتم تنزيل الإصدارات وتثبيتها، وليس متابعتها فقط.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="zero">يثبت الرابط هذه الشهادات، لذلك سيتم تثبيت الملفات التي وقعتها فقط. اختارها شخص آخر غيرك: أضفها فقط إذا كنت تثق بمصدر الرابط.</item>
-        <item quantity="one">يثبت الرابط هذه الشهادة، لذلك سيتم تثبيت الملفات التي وقعتها فقط. اختارها شخص آخر غيرك: أضفها فقط إذا كنت تثق بمصدر الرابط.</item>
-        <item quantity="two">يثبت الرابط هاتين الشهادتين، لذلك سيتم تثبيت الملفات التي وقعت عليها فقط. اختارها شخص آخر غيرك: أضفها فقط إذا كنت تثق بمصدر الرابط.</item>
-        <item quantity="few">يثبت الرابط هذه الشهادات، لذلك سيتم تثبيت الملفات التي وقعتها فقط. اختارها شخص آخر غيرك: أضفها فقط إذا كنت تثق بمصدر الرابط.</item>
-        <item quantity="many">يثبت الرابط هذه الشهادات، لذلك سيتم تثبيت الملفات التي وقعتها فقط. اختارها شخص آخر غيرك: أضفها فقط إذا كنت تثق بمصدر الرابط.</item>
-        <item quantity="other">يثبت الرابط هذه الشهادات، لذلك سيتم تثبيت الملفات التي وقعتها فقط. اختارها شخص آخر غيرك: أضفها فقط إذا كنت تثق بمصدر الرابط.</item>
-    </plurals>
+    <string name="carried_pin_warning">يثبت الرابط هذه الشهادة، لذلك سيتم تثبيت الملفات التي وقعتها فقط. اختارها شخص آخر غيرك: أضفها فقط إذا كنت تثق بمصدر الرابط.</string>
+    <string name="carried_pins_warning">يثبت الرابط هذه الشهادات، لذلك سيتم تثبيت الملفات التي وقعتها فقط. اختارها شخص آخر غيرك: أضفها فقط إذا كنت تثق بمصدر الرابط.</string>
     <string name="checks_title">الفحوصات</string>
     <string name="checks_package">اسم الحزمة</string>
     <string name="checks_package_unknown">غير معروف حتى تتم قراءة الملف</string>
@@ -359,7 +352,7 @@
     <string name="file_recommended">الخيار %d، موصى به</string>
     <string name="file_alternative">الخيار %d</string>
     <string name="setting_match_device">مطابقة هذا الجهاز</string>
-    <string name="setting_match_device_effect">عند عرض عدة ملفات، فضّل الملف المصمم لمعالج هذا الهاتف.</string>
+    <string name="setting_match_device_effect">عندما تُعرض عدة ملفات، يُفضل الملف المصمم لمعالج هذا الجهاز.</string>
     <string name="setting_include">فقط الملفات المطابقة</string>
     <string name="setting_include_help">نمط يجب أن يحتويه اسم الملف، على سبيل المثال universal</string>
     <string name="setting_exclude">تخطي الملفات المطابقة</string>
@@ -425,7 +418,6 @@
     <string name="settings_keep_installers_effect">تبقى الملفات بعد التثبيت، وتشغل مساحة التخزين. إيقاف التشغيل يحذفها.</string>
     <string name="settings_ownership">كن المُحَدِّث الوحيد</string>
     <string name="settings_ownership_effect">اطلب من Android السماح لـ Tern فقط بتحديث التطبيقات التي يثبتها، حتى لا يتمكن متجر آخر من تبديلها.</string>
-    <string name="settings_ownership_unsupported">يحتاج إلى Android 14 أو أحدث.</string>
     <string name="settings_tokens">رموز الوصول</string>
     <string name="settings_tokens_effect">يرفع الرمز الحد الأقصى للمعدل ويفتح المشاريع الخاصة. يتم إرساله فقط إلى المضيف الدقيق المحفوظ من أجله، ولا يتم عرضه مرة أخرى أبدًا.</string>
     <string name="token_saved">تم الحفظ</string>
@@ -454,9 +446,6 @@
     <string name="theme_system">اتباع النظام</string>
     <string name="theme_light">فاتح</string>
     <string name="theme_dark">داكن</string>
-    <string name="settings_dynamic_color">ألوان من خلفيتك</string>
-    <string name="settings_dynamic_color_effect">إيقاف التشغيل يستخدم لون أزرق رمادي الخاص بـ Tern.</string>
-    <string name="settings_dynamic_color_unsupported">يحتاج إلى Android 12 أو أحدث.</string>
     <string name="settings_pure_black">أسود نقي</string>
     <string name="settings_pure_black_effect">خلفيات سوداء في السمة الداكنة، أسهل على شاشات OLED.</string>
     <string name="settings_data">الاستيراد والتصدير</string>
@@ -570,7 +559,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">يقوم Tern بتثبيت وتحديث التطبيقات مباشرة من حيث ينشرها مطوروها.</string>
     <string name="first_line_2">قبل أن يرى Android أي ملف، يتحقق Tern من هوية موقعه وما إذا كان يتطابق مع المجموع الاختباري للناشر.</string>
-    <string name="first_line_3">كل ما يجده ويفعله يُكتب في سجل النشاط، بكلمات واضحة.</string>
+    <string name="first_line_3">كل ما يجده ويفعله يُكتب بكلمات واضحة.</string>
     <string name="first_notify_explain">يمكن لـ Tern إخبارك عندما تكون التحديثات جاهزة. سيطلب Android السماح بالإشعارات.</string>
     <string name="first_notify_denied">الإشعارات متوقفة. يمكنك تشغيلها لاحقًا في الإعدادات.</string>
     <string name="first_notify_allow">السماح بالإشعارات</string>
@@ -578,4 +567,5 @@
     <string name="install_permission_title">السماح لـ Tern بتثبيت التطبيقات</string>
     <string name="install_permission_body">يسأل Android مرة واحدة قبل أن يتمكن تطبيق من تثبيت تطبيق آخر. في الشاشة التالية، قم بتشغيل المفتاح لـ Tern، ثم عُد. سيستمر التثبيت تلقائيًا.</string>
     <string name="install_permission_open">فتح الإعدادات</string>
+    <string name="install_permission_closes">يغلق هذا الإصدار من Android تطبيق Tern عندما تقوم بتشغيل المفتاح. افتح Tern مرة أخرى بعد ذلك وسيستمر التثبيت.</string>
 </resources>

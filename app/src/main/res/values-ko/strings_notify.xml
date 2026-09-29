@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">설치를 완료하려면 탭하세요</string>
+    <string name="notify_downloading_plain">다운로드 중</string>
+    <string name="settings_notify_names">알림에 앱 이름 표시</string>
+    <string name="settings_notify_names_help">잠금 화면에서도 알림을 읽을 수 있습니다. 끄면 Tern은 앱의 개수만 표시하고 어떤 앱인지는 표시하지 않습니다.</string>
+</resources>

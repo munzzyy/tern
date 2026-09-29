@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern хранит сертификат, которым подписано это приложение, а этот файл подписан другим. Он мог прийти от кого-то другого, поэтому не был установлен.</string>
+    <string name="engine_warn_built_in_pin">Tern хранит сертификат, которым подписано это приложение, а предложенный файл подписан другим.</string>
+</resources>

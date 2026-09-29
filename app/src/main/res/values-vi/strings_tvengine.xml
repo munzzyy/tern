@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">Tệp này không phải là danh sách ứng dụng xuất từ Tern hoặc Obtainium.</string>
+    <string name="engine_import_empty">Tệp này không chứa ứng dụng nào.</string>
+    <string name="engine_import_local_address">Địa chỉ của nó ở trên mạng cục bộ. Hãy thêm thủ công nếu đó là của bạn.</string>
+    <string name="engine_warn_local_address">Địa chỉ này nằm trên mạng của riêng bạn. Tern sẽ hỏi nó mỗi khi kiểm tra các bản cập nhật.</string>
+    <string name="engine_import_unreadable_export">Không thể đọc bản xuất này từ Tern (%1$s). Nếu nó từ phiên bản Tern mới hơn, hãy cập nhật Tern trên thiết bị này và thử lại.</string>
+    <string name="engine_import_too_large">Tệp lớn hơn %1$d MiB, nhiều hơn kích thước của một danh sách ứng dụng, nên Tern không đọc nó.</string>
+    <string name="engine_import_file_gone">Tệp đó không còn ở đó nữa. Hãy mở lại danh sách tệp.</string>
+    <string name="engine_link_not_https">Chỉ chấp nhận các địa chỉ bắt đầu bằng https://.</string>
+    <string name="engine_link_not_an_address">Đó không phải là địa chỉ web mà Tern có thể mở. Nó phải giống như https://example.org/tern-apps.json.</string>
+    <string name="engine_link_leaves_https">Địa chỉ đó chuyển hướng Tern tới một địa chỉ không phải HTTPS, nên không có gì được lấy.</string>
+    <string name="engine_link_not_found">Không có tệp tại địa chỉ đó. Hãy kiểm tra xem có lỗi đánh máy không.</string>
+    <string name="engine_link_refused">Máy chủ từ chối cung cấp tệp (nó phản hồi %1$d). Tern không gửi thông tin đăng nhập cùng với yêu cầu này, nên tệp phải có thể đọc được bởi bất kỳ ai có địa chỉ.</string>
+    <string name="engine_link_unreachable">Không thể kết nối đến địa chỉ: %1$s</string>
+    <string name="engine_link_unreachable_plain">Không thể kết nối đến địa chỉ. Kiểm tra kết nối và địa chỉ, rồi thử lại.</string>
+    <string name="engine_link_too_slow">Máy chủ mất hơn một phút để gửi tệp, nên Tern đã ngừng chờ. Hãy thử lại sau.</string>
+    <string name="engine_link_not_an_export">Những gì ở địa chỉ đó không phải là danh sách ứng dụng xuất từ Tern hoặc Obtainium. Địa chỉ phải dẫn đến chính tệp đó, không phải trang hiển thị tệp.</string>
+    <string name="engine_export_no_place">Thiết bị này không có bộ nhớ chung nào mà Tern có thể ghi vào.</string>
+    <string name="engine_export_failed">Không thể ghi bản xuất: %1$s</string>
+    <string name="engine_export_failed_plain">Không thể ghi bản xuất.</string>
+</resources>

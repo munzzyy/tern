@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Tonton apa yang ada di server Jellyfin Anda</string>
+    <string name="suggest_just_player">Pemutar video untuk file dan streaming</string>
+    <string name="suggest_mpv">Pemutar video berbasis mpv</string>
+    <string name="suggest_nova">Memutar video dari perangkat ini atau jaringan</string>
+    <string name="suggest_material_files">Kelola file di perangkat ini dan di server</string>
+    <string name="suggest_mullvad">Aplikasi untuk layanan VPN Mullvad</string>
+    <string name="suggest_proton_vpn">Aplikasi untuk layanan VPN Proton</string>
+    <string name="suggest_moonlight">Mainkan game dari komputer Anda di perangkat ini</string>
+    <string name="suggest_fossify_gallery">Galeri untuk foto dan video</string>
+    <string name="suggest_breezy_weather">Prakiraan cuaca dari berbagai sumber</string>
+    <string name="suggest_fdroid">Katalog aplikasi bebas dan sumber terbuka</string>
+    <string name="suggest_heliboard">Keyboard yang tidak memiliki akses jaringan</string>
+    <string name="suggest_obtainium">Mendapatkan pembaruan aplikasi dari sumbernya</string>
+    <string name="suggest_aegis">Menyimpan kode untuk masuk dua langkah</string>
+    <string name="suggest_keepassdx">Pengelola kata sandi untuk file KeePass</string>
+    <string name="suggest_koreader">Membaca EPUB, PDF, dan format buku lainnya</string>
+    <string name="suggest_element_x">Obrolan di jaringan Matrix</string>
+    <string name="suggest_fairemail">Aplikasi email untuk penyedia mana pun</string>
+    <string name="suggest_tusky">Klien untuk Mastodon</string>
+    <string name="suggest_organic_maps">Peta dan navigasi yang berfungsi offline</string>
+    <string name="suggest_osmand">Peta offline, rute, dan perekaman trek</string>
+    <string name="suggest_magpie">Jurnal insiden terenkripsi, oleh pembuat Tern</string>
+    <string name="suggest_sepia">Menghapus data tersembunyi dari foto, oleh pembuat Tern</string>
+    <string name="suggest_sweep">Pemeriksaan stalkerware, oleh pembuat Tern</string>
+    <string name="suggest_starling">Berbagi lokasi pribadi, oleh pembuat Tern</string>
+</resources>

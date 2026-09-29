@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Aspecte</string>
+    <string name="look_summary">Tema, colors, contrast, densitat, cantonades i icones</string>
+    <string name="look_preview_spoken">Previsualització de l\'aspecte tal com està configurat ara</string>
+    <string name="look_preview_app">Aplicació d\'exemple</string>
+    <string name="look_colours">Colors</string>
+    <string name="look_palette">Color</string>
+    <string name="look_wallpaper">Fons de pantalla</string>
+    <string name="look_own">Color propi</string>
+    <string name="palette_ink">Tinta</string>
+    <string name="palette_slate">Pissarra</string>
+    <string name="palette_tide">Marea</string>
+    <string name="palette_moss">Molsa</string>
+    <string name="palette_amber">Ambre</string>
+    <string name="palette_clay">Argila</string>
+    <string name="palette_rose">Rosa</string>
+    <string name="palette_plum">Pruna</string>
+    <string name="look_hue">To del teu color propi</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d grau</item>
+        <item quantity="many">%1$d graus</item>
+        <item quantity="other">%1$d graus</item>
+    </plurals>
+    <string name="look_contrast">Contrast</string>
+    <string name="contrast_standard">Estàndard</string>
+    <string name="contrast_medium">Mitjà</string>
+    <string name="contrast_high">Alt</string>
+    <string name="look_contrast_effect">Més contrast fa que el text i els contorns destaquin més del que hi ha al darrere.</string>
+    <string name="look_shape_and_size">Forma i mida</string>
+    <string name="look_density">Densitat</string>
+    <string name="density_comfortable">Còmoda</string>
+    <string name="density_compact">Compacta</string>
+    <string name="look_density_effect">Compacta fa cabre més coses a la pantalla. Res del que prems es fa més petit que la punta del dit.</string>
+    <string name="look_corners">Cantonades</string>
+    <string name="corners_round">Rodones</string>
+    <string name="corners_soft">Suaus</string>
+    <string name="corners_sharp">Agudes</string>
+    <string name="look_icon_shape">Forma de les icones</string>
+    <string name="icon_shape_circle">Cercle</string>
+    <string name="icon_shape_squircle">Squircle</string>
+    <string name="icon_shape_square">Quadrat</string>
+    <string name="look_icons">Icones</string>
+    <string name="look_source_icons">Icones de l\'origen</string>
+    <string name="look_source_icons_effect">Mentre una aplicació no està instal·lada, Tern n\'obté la icona d\'on està publicada: el seu repositori o la seva fitxa de botiga. Desactivat dibuixa una lletra sobre un color i no pregunta a ningú.</string>
+</resources>

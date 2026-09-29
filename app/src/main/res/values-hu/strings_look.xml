@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Megjelenés</string>
+    <string name="look_summary">Téma, színek, kontraszt, sűrűség, sarkok és ikonok</string>
+    <string name="look_preview_spoken">A jelenleg beállított megjelenés előnézete</string>
+    <string name="look_preview_app">Példa alkalmazás</string>
+    <string name="look_colours">Színek</string>
+    <string name="look_palette">Szín</string>
+    <string name="look_wallpaper">Háttérkép</string>
+    <string name="look_own">Saját szín</string>
+    <string name="palette_ink">Tinta</string>
+    <string name="palette_slate">Pala</string>
+    <string name="palette_tide">Dagály</string>
+    <string name="palette_moss">Moha</string>
+    <string name="palette_amber">Borostyán</string>
+    <string name="palette_clay">Agyag</string>
+    <string name="palette_rose">Rózsa</string>
+    <string name="palette_plum">Szilva</string>
+    <string name="look_hue">A saját színének árnyalata</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d fok</item>
+        <item quantity="other">%1$d fok</item>
+    </plurals>
+    <string name="look_contrast">Kontraszt</string>
+    <string name="contrast_standard">Normál</string>
+    <string name="contrast_medium">Közepes</string>
+    <string name="contrast_high">Magas</string>
+    <string name="look_contrast_effect">A nagyobb kontraszt jobban elkülöníti a szöveget és a körvonalakat attól, ami mögöttük van.</string>
+    <string name="look_shape_and_size">Alak és méret</string>
+    <string name="look_density">Sűrűség</string>
+    <string name="density_comfortable">Kényelmes</string>
+    <string name="density_compact">Kompakt</string>
+    <string name="look_density_effect">A kompakt beállítással több minden fér a képernyőre. Semmi, amit megnyom, nem lesz kisebb egy ujjhegynél.</string>
+    <string name="look_corners">Sarkok</string>
+    <string name="corners_round">Kerek</string>
+    <string name="corners_soft">Lágy</string>
+    <string name="corners_sharp">Éles</string>
+    <string name="look_icon_shape">Ikon alakja</string>
+    <string name="icon_shape_circle">Kör</string>
+    <string name="icon_shape_squircle">Lekerekített négyzet</string>
+    <string name="icon_shape_square">Négyzet</string>
+    <string name="look_icons">Ikonok</string>
+    <string name="look_source_icons">Ikonok a forrásból</string>
+    <string name="look_source_icons_effect">Amíg egy alkalmazás nincs telepítve, a Tern onnan szerzi be az ikonját, ahol az alkalmazás közzé van téve: a tárolójából vagy az áruházi adatlapjáról. Ha ki van kapcsolva, egy betűt rajzol egy színre, és nem kérdez senkit.</string>
+</resources>

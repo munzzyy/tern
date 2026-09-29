@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Appuyez pour terminer l\'installation</string>
+    <string name="notify_downloading_plain">Téléchargement</string>
+    <string name="settings_notify_names">Nommer les applis dans les notifications</string>
+    <string name="settings_notify_names_help">Une notification peut être lue sur l\'écran de verrouillage. Désactivé, Tern indique combien d\'applis mais jamais lesquelles.</string>
+</resources>

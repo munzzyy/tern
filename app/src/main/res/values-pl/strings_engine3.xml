@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern przechowuje certyfikat, którym podpisana jest ta aplikacja, a ten plik jest podpisany innym. Mógłby pochodzić od kogoś innego, więc nie został zainstalowany.</string>
+    <string name="engine_warn_built_in_pin">Tern przechowuje certyfikat, którym podpisana jest ta aplikacja, a oferowany plik jest podpisany innym.</string>
+</resources>

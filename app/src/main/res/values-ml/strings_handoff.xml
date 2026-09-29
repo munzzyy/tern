@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">ഈ ഉപകരണം ലോക്കൽ നെറ്റ്‌വർക്കിലില്ല, അതിനാൽ ഒരു ഫോണിന് ഇതിലേക്ക് എത്താനാകില്ല. ഈ ഉപകരണം Wi-Fi-യിലോ അല്ലെങ്കിൽ ഒരു നെറ്റ്‌വർക്ക് കേബിളിലോ കണക്റ്റ് ചെയ്ത് വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="engine_handoff_behind_vpn">ഈ ഉപകരണത്തിന് ഒരു VPN വഴി കണക്റ്റ് ചെയ്തിരിക്കുന്നു, അതിനാൽ ലോക്കൽ നെറ്റ്വർക്കിലുള്ള ഒരു ഫോണിന് ഇതിലേക്ക് എത്താനാകില്ല. നിങ്ങൾ അയയ്ക്കുന്ന അത്രയും സമയം VPN ഓഫ് ചെയ്യുക, തുടർന്ന് വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="engine_handoff_cannot_open">ഈ ഉപകരണത്തിന് ലോക്കൽ നെറ്റ്‌വർക്കിൽ ഒരു പേജ് തുറക്കാനായില്ല: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">ഈ ഉപകരണത്തിന് ലോക്കൽ നെറ്റ്‌വർക്കിൽ ഒരു പേജ് തുറക്കാനായില്ല.</string>
+    <string name="engine_handoff_not_on_screen">ഒരു ഫോണിൽ നിന്ന് ലിങ്കുകൾ എടുക്കുമ്പോൾ Tern സ്ക്രീനിൽ ഉണ്ടായിരിക്കണം. Tern തുറന്ന് വീണ്ടും ശ്രമിക്കുക.</string>
+</resources>

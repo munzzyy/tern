@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Klepnutím dokončete instalaci</string>
+    <string name="notify_downloading_plain">Stahování</string>
+    <string name="settings_notify_names">Pojmenovat aplikace v oznámeních</string>
+    <string name="settings_notify_names_help">Oznámení lze číst na zamykací obrazovce. Pokud je vypnuto, Tern říká, kolik aplikací, ale nikdy které.</string>
+</resources>

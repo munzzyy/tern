@@ -97,7 +97,7 @@
         <item quantity="many">Выбрано %d</item>
         <item quantity="other">Выбрано %d</item>
     </plurals>
-    <string name="apps_select_hint">Коснитесь приложений, чтобы выбрать.</string>
+    <string name="apps_select_hint">Выберите приложения из списка.</string>
     <string name="action_add_to_category">Добавить в категорию</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Добавить %d приложение в категорию</item>
@@ -140,13 +140,12 @@
         <item quantity="other">Перестать следить за %d приложениями?</item>
     </plurals>
     <string name="bulk_remove_text">Приложения останутся установленными. Tern только перестанет проверять их обновления.</string>
-    <string name="apps_empty_title">Пока нет приложений</string>
-    <string name="apps_empty_text">Вставьте ссылку на страницу проекта, страницу релиза или репозиторий F-Droid, и Tern будет обновлять приложение оттуда.</string>
+    <string name="apps_empty_title">Здесь пока ничего нет</string>
+    <string name="apps_empty_text">Добавьте приложение по ссылке или начните с тех, которые используют многие.</string>
     <string name="sort_title">Сортировка</string>
     <string name="sort_name">По имени</string>
     <string name="sort_recently_checked">Недавно проверенные</string>
     <string name="sort_source">По источнику</string>
-    <string name="remove_title">Удалить %s?</string>
     <string name="remove_text_installed">Tern перестанет следить за ним. Приложение останется установленным.</string>
     <string name="remove_text">Tern перестанет следить за ним.</string>
     <string name="add_title">Добавить приложение</string>
@@ -206,18 +205,14 @@
     <string name="carried_notes_none">Релизы отслеживаются независимо от их описания.</string>
     <string name="carried_version">Версия читается из тега с помощью %1$s.</string>
     <string name="carried_version_none">Версия читается обычным способом.</string>
-    <string name="carried_match_device_on">Когда предложено несколько файлов, предпочтение отдается файлу для этого телефона.</string>
-    <string name="carried_match_device_off">Файлы не ограничиваются процессором этого телефона.</string>
+    <string name="carried_match_device_on">Когда предлагается несколько файлов, предпочтение отдается созданному для этого устройства.</string>
+    <string name="carried_match_device_off">Файлы не ограничиваются процессором этого устройства.</string>
     <string name="carried_fallback_on">Старый релиз используется, когда в самом новом нет подходящего файла.</string>
     <string name="carried_fallback_off">Старые релизы не используются никогда, даже если в новом нет подходящего файла.</string>
     <string name="carried_track_on">Релизы только отслеживаются; ничего не скачивается и не устанавливается.</string>
     <string name="carried_track_off">Релизы скачиваются и устанавливаются, а не только отслеживаются.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">Ссылка закрепляет этот сертификат, поэтому будут установлены только подписанные им файлы. Его выбрали не вы: добавляйте его, только если доверяете источнику ссылки.</item>
-        <item quantity="few">Ссылка закрепляет эти сертификаты, поэтому будут установлены только подписанные ими файлы. Их выбрали не вы: добавляйте их, только если доверяете источнику ссылки.</item>
-        <item quantity="many">Ссылка закрепляет эти сертификаты, поэтому будут установлены только подписанные ими файлы. Их выбрали не вы: добавляйте их, только если доверяете источнику ссылки.</item>
-        <item quantity="other">Ссылка закрепляет эти сертификаты, поэтому будут установлены только подписанные ими файлы. Их выбрали не вы: добавляйте их, только если доверяете источнику ссылки.</item>
-    </plurals>
+    <string name="carried_pin_warning">Ссылка закрепляет этот сертификат, поэтому будут установлены только подписанные им файлы. Его выбрали не вы: добавляйте его, только если доверяете источнику ссылки.</string>
+    <string name="carried_pins_warning">Ссылка закрепляет эти сертификаты, поэтому будут установлены только подписанные ими файлы. Их выбрали не вы: добавляйте их, только если доверяете источнику ссылки.</string>
     <string name="checks_title">Проверки</string>
     <string name="checks_package">Имя пакета</string>
     <string name="checks_package_unknown">Неизвестно до прочтения файла</string>
@@ -325,7 +320,7 @@
     <string name="file_recommended">Вариант %d, рекомендуется</string>
     <string name="file_alternative">Вариант %d</string>
     <string name="setting_match_device">Подбирать для этого устройства</string>
-    <string name="setting_match_device_effect">Когда предложено несколько файлов, предпочитать собранный для процессора этого телефона.</string>
+    <string name="setting_match_device_effect">Когда предлагается несколько файлов, предпочитать созданный для процессора этого устройства.</string>
     <string name="setting_include">Только файлов, содержащих</string>
     <string name="setting_include_help">Шаблон, который должно содержать имя файла, например universal</string>
     <string name="setting_exclude">Пропускать файлы, содержащие</string>
@@ -389,7 +384,6 @@
     <string name="settings_keep_installers_effect">Файлы остаются после установки, занимая память. Отключение удаляет их.</string>
     <string name="settings_ownership">Быть единственным источником обновлений</string>
     <string name="settings_ownership_effect">Просить Android разрешать обновлять только через Tern установленные им приложения, чтобы другой магазин не мог их заменить.</string>
-    <string name="settings_ownership_unsupported">Требуется Android 14 или новее.</string>
     <string name="settings_tokens">Токены доступа</string>
     <string name="settings_tokens_effect">Токен доступа увеличивает лимиты и открывает приватные проекты. Он отправляется только на тот хост, для которого сохранен, и больше никогда не отображается.</string>
     <string name="token_saved">Сохранено</string>
@@ -418,9 +412,6 @@
     <string name="theme_system">Как в системе</string>
     <string name="theme_light">Светлая</string>
     <string name="theme_dark">Темная</string>
-    <string name="settings_dynamic_color">Цвета из обоев</string>
-    <string name="settings_dynamic_color_effect">При отключении используется собственный серо-синий цвет Tern.</string>
-    <string name="settings_dynamic_color_unsupported">Требуется Android 12 или новее.</string>
     <string name="settings_pure_black">Чистый черный</string>
     <string name="settings_pure_black_effect">Черный фон в темной теме, легче для экранов OLED.</string>
     <string name="settings_data">Импорт и экспорт</string>
@@ -518,7 +509,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern устанавливает и обновляет приложения прямо оттуда, где их публикуют разработчики.</string>
     <string name="first_line_2">Прежде чем Android увидит файл, Tern проверяет, кто его подписал, и совпадает ли он с контрольной суммой издателя.</string>
-    <string name="first_line_3">Все, что он находит и делает, записывается в журнал активности простыми словами.</string>
+    <string name="first_line_3">Все, что оно находит и делает, описывается простыми словами.</string>
     <string name="first_notify_explain">Tern может сообщать вам, когда обновления готовы. Android спросит, разрешить ли уведомления.</string>
     <string name="first_notify_denied">Уведомления отключены. Вы сможете включить их позже в Настройках.</string>
     <string name="first_notify_allow">Разрешить уведомления</string>
@@ -526,4 +517,5 @@
     <string name="install_permission_title">Разрешить Tern устанавливать приложения</string>
     <string name="install_permission_body">Android спрашивает один раз, прежде чем одно приложение сможет установить другое. На следующем экране включите переключатель для Tern, затем вернитесь. Установка продолжится сама.</string>
     <string name="install_permission_open">Открыть настройки</string>
+    <string name="install_permission_closes">Эта версия Android закрывает Tern при включении переключателя. Откройте Tern снова после этого, и установка продолжится.</string>
 </resources>

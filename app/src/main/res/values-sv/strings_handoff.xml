@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">Denna enhet är inte på något lokalt nätverk, så en telefon kan inte nå den. Anslut denna enhet till Wi-Fi eller en nätverkskabel och försök igen.</string>
+    <string name="engine_handoff_behind_vpn">Denna enhet är ansluten via ett VPN, så en telefon på det lokala nätverket kan inte nå den. Stäng av VPN:et så länge du skickar, och försök sedan igen.</string>
+    <string name="engine_handoff_cannot_open">Denna enhet kunde inte öppna en sida på det lokala nätverket: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">Denna enhet kunde inte öppna en sida på det lokala nätverket.</string>
+    <string name="engine_handoff_not_on_screen">Tern måste vara på skärmen medan den tar emot länkar från en telefon. Öppna Tern och försök igen.</string>
+</resources>

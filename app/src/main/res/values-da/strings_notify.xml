@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Tryk for at færdiggøre en installation</string>
+    <string name="notify_downloading_plain">Henter</string>
+    <string name="settings_notify_names">Navngiv appene i notifikationer</string>
+    <string name="settings_notify_names_help">En notifikation kan læses på låseskærmen. Fra siger Tern, hvor mange apps, og aldrig hvilke.</string>
+</resources>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_only_other_package">Każde znalezione wydanie oferowało tylko plik innej aplikacji, a nie tej.</string>
+</resources>

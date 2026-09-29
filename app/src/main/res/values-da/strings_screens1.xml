@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">Luk søgning</string>
+    <string name="waiting_banner_one">%1$s venter på din godkendelse</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d installation venter på din godkendelse</item>
+        <item quantity="other">%1$d installationer venter på din godkendelse</item>
+    </plurals>
+    <string name="empty_add">Tilføj en app</string>
+    <string name="empty_well_known">Velkendte apps</string>
+    <string name="empty_handoff">Send fra en telefon</string>
+    <string name="removed_notice">Stoppede med at følge %1$s</string>
+    <string name="removed_undo">Fortryd</string>
+    <string name="waiting_play_protect">Android eller Play Protect spørger muligvis en gang til. Det er deres eget tjek og ikke et problem med filen.</string>
+    <string name="prompt_always_asks">Denne enhed spørger altid, før en opdatering installeres.</string>
+    <string name="checks_passed">Denne fil bestod hvert tjek</string>
+    <string name="explain_button">Hvad dette betyder: %1$s</string>
+    <string name="explain_action">hør hvad dette betyder</string>
+    <string name="explain_close">Luk</string>
+    <string name="explain_signer_title">Signeringscertifikat</string>
+    <string name="explain_checksum_title">Kontrolsum</string>
+    <string name="explain_permissions_title">Tilladelser</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Opdateringer uden at spørge</string>
+    <string name="explain_always_asks_title">Denne enhed spørger altid</string>
+    <string name="explain_package">Hver Android-app har et navn, der aldrig ændres. En fil, der bar et andet navn, ville være en anden app, uanset hvad den kaldte sig selv.</string>
+    <string name="explain_signer_installed">En udvikler signerer hver udgivelse med en nøgle, kun de har. Tern sammenligner signaturen på denne fil med appen på denne enhed og med det certifikat, den huskede ved første installation. En fil signeret af en anden afvises, selvom den kommer fra den rigtige adresse.</string>
+    <string name="explain_signer_first">Der er intet at sammenligne med endnu. Filen siger, hvem der har signeret den, Android bekræfter det, når den installerer, og fra da af holder Tern hver opdatering op imod det samme certifikat.</string>
+    <string name="explain_checksum_matched">En kontrolsum er et fingeraftryk af selve filen. Udgiveren gav en, og den fil, Tern hentede, har den samme, så den ankom, som den blev udgivet.</string>
+    <string name="explain_checksum_pending">En kontrolsum er et fingeraftryk af selve filen. Udgiveren gav en, og Tern sammenligner den med filen, så snart filen er hentet.</string>
+    <string name="explain_checksum_mismatch">En kontrolsum er et fingeraftryk af selve filen. Udgiveren gav en, og den fil, Tern hentede, har en anden, så det er ikke den fil, der blev udgivet.</string>
+    <string name="explain_checksum_none">Denne udgiver giver ingen kontrolsum. Signaturen tjekkes stadig, og den er den stærkeste af de to.</string>
+    <string name="explain_permissions">Hvad denne version beder om at få lov til, som den installerede ikke gjorde.</string>
+    <string name="explain_virustotal">Åbner siden for præcis denne fil på VirusTotal i din browser. Tern sender intet dertil.</string>
+    <string name="explain_silent">Android lader en app opdatere en anden uden at spørge, når den app installerede den, og enheden kører Android 12 eller nyere. Android bestemmer hver gang.</string>
+    <string name="explain_always_asks">Denne enhed kører Android %1$s, som spørger før hver installation. Tern henter og tjekker opdateringen i baggrunden og fortæller dig, når den er klar.</string>
+    <string name="activity_installed">Installerede %1$s</string>
+    <string name="activity_installed_plain">Installeret</string>
+    <string name="activity_updated">Opdateret til %1$s</string>
+    <string name="activity_updated_plain">Opdateret</string>
+    <string name="activity_update_waits">Opdatering til %1$s venter</string>
+    <string name="activity_update_waits_plain">En opdatering venter</string>
+    <string name="activity_install_waits">Installation af %1$s venter</string>
+    <string name="activity_install_waits_plain">En installation venter</string>
+    <string name="activity_not_installed">Kunne ikke installere %1$s</string>
+    <string name="activity_not_installed_plain">Kunne ikke installere</string>
+    <string name="activity_blocked">Blokerede %1$s</string>
+    <string name="activity_blocked_plain">Blokeret</string>
+    <string name="activity_added">Tilføjet</string>
+    <string name="activity_removed">Stoppede med at følge</string>
+    <string name="activity_check_failed">Tjek mislykkedes</string>
+    <string name="activity_steps_show">Vis trin</string>
+    <string name="activity_steps_hide">Skjul trin</string>
+    <string name="first_well_known">Velkendte apps</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">Aquest dispositiu no és a cap xarxa local, així que un telèfon no el pot contactar. Connecta aquest dispositiu al Wi-Fi o a un cable de xarxa i torna-ho a provar.</string>
+    <string name="engine_handoff_cannot_open">Aquest dispositiu no ha pogut obrir una pàgina a la xarxa local: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">Aquest dispositiu no ha pogut obrir una pàgina a la xarxa local.</string>
+    <string name="engine_handoff_not_on_screen">Tern ha d\'estar a la pantalla mentre rep enllaços d\'un telèfon. Obre Tern i torna-ho a provar.</string>
+</resources>

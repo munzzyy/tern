@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">この端末はローカルネットワーク上にないため、電話からアクセスできません。この端末をWi-Fiまたはネットワークケーブルに接続して、再試行してください。</string>
+    <string name="engine_handoff_behind_vpn">この端末はVPN経由で接続されているため、ローカルネットワーク上の電話からアクセスできません。送信している間はVPNをオフにしてから、再試行してください。</string>
+    <string name="engine_handoff_cannot_open">この端末はローカルネットワーク上のページを開けませんでした: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">この端末はローカルネットワーク上のページを開けませんでした。</string>
+    <string name="engine_handoff_not_on_screen">電話からリンクを受け取る間、Ternは画面に表示されている必要があります。Ternを開いて再試行してください。</string>
+</resources>

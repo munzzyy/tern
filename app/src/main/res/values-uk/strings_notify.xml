@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Натисніть, щоб завершити встановлення</string>
+    <string name="notify_downloading_plain">Завантаження</string>
+    <string name="settings_notify_names">Назви програм у сповіщеннях</string>
+    <string name="settings_notify_names_help">Сповіщення можна прочитати на екрані блокування. Якщо вимкнено, Tern повідомляє скільки програм, і ніколи які саме.</string>
+</resources>

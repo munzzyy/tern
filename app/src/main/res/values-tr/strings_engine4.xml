@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">Bu paketin bir kısmı iddia ettiği gibi imzalanmamış, bu yüzden hiçbir şey yüklenmedi.</string>
+</resources>

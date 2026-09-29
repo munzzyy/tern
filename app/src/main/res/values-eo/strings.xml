@@ -91,7 +91,7 @@
         <item quantity="one">%d elektita</item>
         <item quantity="other">%d elektitaj</item>
     </plurals>
-    <string name="apps_select_hint">Frapetu aplikaĵojn por elekti ilin.</string>
+    <string name="apps_select_hint">Elektu aplikaĵojn el la listo.</string>
     <string name="action_add_to_category">Aldoni al kategorio</string>
     <plurals name="bulk_category_title">
         <item quantity="one">Aldoni %d aplikaĵon al kategorio</item>
@@ -122,13 +122,12 @@
         <item quantity="other">Ĉesi sekvi %d aplikaĵojn?</item>
     </plurals>
     <string name="bulk_remove_text">La aplikaĵoj restas instalitaj. Tern nur ĉesas kontroli ilin por ĝisdatigoj.</string>
-    <string name="apps_empty_title">Ankoraŭ neniuj aplikaĵoj</string>
-    <string name="apps_empty_text">Algluu ligilon al projekta paĝo, eldona paĝo aŭ F-Droid-deponejo, kaj Tern tenos la aplikaĵon ĝisdata de tie.</string>
+    <string name="apps_empty_title">Nenio ĉi tie ankoraŭ</string>
+    <string name="apps_empty_text">Aldonu aplikaĵon per ĝia ligilo, aŭ komencu per unu kiun multaj homoj uzas.</string>
     <string name="sort_title">Ordigi</string>
     <string name="sort_name">Laŭ nomo</string>
     <string name="sort_recently_checked">Lastatempe kontrolita</string>
     <string name="sort_source">Laŭ fonto</string>
-    <string name="remove_title">Ĉu forigi %s?</string>
     <string name="remove_text_installed">Tern ĉesos sekvi ĝin. La aplikaĵo restos instalita.</string>
     <string name="remove_text">Tern ĉesos sekvi ĝin.</string>
     <string name="add_title">Aldoni aplikaĵon</string>
@@ -180,16 +179,14 @@
     <string name="carried_notes_none">Eldonoj estas sekvataj sendepende de tio, kion diras iliaj notoj.</string>
     <string name="carried_version">La versio estas legata el la etikedo per %1$s.</string>
     <string name="carried_version_none">La versio estas legata en la kutima maniero.</string>
-    <string name="carried_match_device_on">Kiam pluraj dosieroj estas ofertataj, tiu konstruita por ĉi tiu telefono estas preferata.</string>
-    <string name="carried_match_device_off">Dosieroj ne estas limigitaj al la procesoro de ĉi tiu telefono.</string>
+    <string name="carried_match_device_on">Kiam pluraj dosieroj estas ofertataj, tiu konstruita por ĉi tiu aparato estas preferata.</string>
+    <string name="carried_match_device_off">Dosieroj ne estas limigitaj al la procesoro de ĉi tiu aparato.</string>
     <string name="carried_fallback_on">Pli malnova eldono estas uzata kiam la plej nova havas neniun uzeblan dosieron.</string>
     <string name="carried_fallback_off">Pli malnovaj eldonoj neniam estas uzataj, eĉ kiam la plej nova havas neniun uzeblan dosieron.</string>
     <string name="carried_track_on">Eldonoj estas nur sekvataj; nenio estas elŝutata nek instalata.</string>
     <string name="carried_track_off">Eldonoj estas elŝutataj kaj instalataj, ne nur sekvataj.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">La ligilo alpinglas ĉi tiun atestilon, do nur dosieroj subskribitaj per ĝi instaliĝos. Iu alia ol vi elektis ĝin: aldonu ĝin nur se vi fidas, de kie venis la ligilo.</item>
-        <item quantity="other">La ligilo alpinglas ĉi tiujn atestilojn, do nur dosieroj subskribitaj per ili instaliĝos. Iu alia ol vi elektis ilin: aldonu ilin nur se vi fidas, de kie venis la ligilo.</item>
-    </plurals>
+    <string name="carried_pin_warning">La ligilo alpinglas ĉi tiun atestilon, do nur dosieroj subskribitaj per ĝi instaliĝos. Iu alia ol vi elektis ĝin: aldonu ĝin nur se vi fidas, de kie venis la ligilo.</string>
+    <string name="carried_pins_warning">La ligilo alpinglas ĉi tiujn atestilojn, do nur dosieroj subskribitaj per ili instaliĝos. Iu alia ol vi elektis ilin: aldonu ilin nur se vi fidas, de kie venis la ligilo.</string>
     <string name="checks_title">Kontroloj</string>
     <string name="checks_package">Pakaĵnomo</string>
     <string name="checks_package_unknown">Nekonata ĝis la dosiero estos legita</string>
@@ -291,7 +288,7 @@
     <string name="file_recommended">Elekto %d, rekomendita</string>
     <string name="file_alternative">Elekto %d</string>
     <string name="setting_match_device">Kongrui al ĉi tiu aparato</string>
-    <string name="setting_match_device_effect">Kiam pluraj dosieroj estas ofertataj, preferu tiun konstruitan por la procesoro de ĉi tiu telefono.</string>
+    <string name="setting_match_device_effect">Kiam pluraj dosieroj estas ofertataj, preferu tiun konstruitan por la procesoro de ĉi tiu aparato.</string>
     <string name="setting_include">Nur dosieroj kongruantaj kun</string>
     <string name="setting_include_help">Ŝablono kiun la dosiernomo devas enhavi, ekzemple universal</string>
     <string name="setting_exclude">Pretersalti dosierojn kongruantajn kun</string>
@@ -353,7 +350,6 @@
     <string name="settings_keep_installers_effect">Dosieroj restas post instalo, okupante spacon. Malŝaltite forigas ilin.</string>
     <string name="settings_ownership">Esti la sola ĝisdatiganto</string>
     <string name="settings_ownership_effect">Peti al Android permesi nur al Tern ĝisdatigi la aplikaĵojn, kiujn ĝi instalas, do alia vendejo ne povas anstataŭigi ilin.</string>
-    <string name="settings_ownership_unsupported">Bezonas Android 14 aŭ pli novan.</string>
     <string name="settings_tokens">Alirĵetonoj</string>
     <string name="settings_tokens_effect">Ĵetono altigas ofto-limojn kaj malfermas privatajn projektojn. Ĝi estas sendata nur al la preciza gastiganto por kiu ĝi estas konservita, kaj ĝi neniam denove estas montrata.</string>
     <string name="token_saved">Konservita</string>
@@ -382,9 +378,6 @@
     <string name="theme_system">Sekvi la sistemon</string>
     <string name="theme_light">Hela</string>
     <string name="theme_dark">Malhela</string>
-    <string name="settings_dynamic_color">Koloroj el via tapeto</string>
-    <string name="settings_dynamic_color_effect">Malŝaltite uzas la propran ardezbluon de Tern.</string>
-    <string name="settings_dynamic_color_unsupported">Bezonas Android 12 aŭ pli novan.</string>
     <string name="settings_pure_black">Pura nigro</string>
     <string name="settings_pure_black_effect">Nigraj fonoj en la malhela etoso, pli komfortaj por OLED-ekranoj.</string>
     <string name="settings_data">Importi kaj eksporti</string>
@@ -466,7 +459,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern instalas kaj ĝisdatigas aplikaĵojn rekte de tie, kie iliaj programistoj eldonas ilin.</string>
     <string name="first_line_2">Antaŭ ol Android vidas dosieron, Tern kontrolas kiu subskribis ĝin kaj ĉu ĝi kongruas kun la kontrolsumo de la eldonisto.</string>
-    <string name="first_line_3">Ĉio, kion ĝi trovas kaj faras, estas skribita al la agada protokolo, per simplaj vortoj.</string>
+    <string name="first_line_3">Ĉio kion ĝi trovas kaj faras estas skribita en simplaj vortoj.</string>
     <string name="first_notify_explain">Tern povas sciigi vin kiam ĝisdatigoj estas pretaj. Android demandos ĉu permesi sciigojn.</string>
     <string name="first_notify_denied">Sciigoj estas malŝaltitaj. Vi povas ŝalti ilin poste en Agordoj.</string>
     <string name="first_notify_allow">Permesi sciigojn</string>
@@ -474,4 +467,5 @@
     <string name="install_permission_title">Permesi al Tern instali aplikaĵojn</string>
     <string name="install_permission_body">Android demandas unufoje antaŭ ol unu aplikaĵo rajtas instali alian. Sur la sekva ekrano, ŝaltu la ŝaltilon por Tern, poste revenu. La instalo daŭros memstare.</string>
     <string name="install_permission_open">Malfermi agordojn</string>
+    <string name="install_permission_closes">Ĉi tiu versio de Android fermas Tern kiam vi ŝaltas la ŝaltilon. Malfermu Tern denove poste kaj la instalo daŭros.</string>
 </resources>

@@ -26,6 +26,7 @@
     <string name="engine_downgrade">Den installerede version (%1$s) er nyere end denne fil (%2$s). Android accepterer kun en ældre version, efter at den installerede app er fjernet, og fjernelse sletter dens data.</string>
     <string name="engine_test_only">Denne fil er en testversion, som Android nægter at installere fra en appbutik.</string>
     <string name="engine_needs_newer_android">Denne version kræver Android API-niveau %1$d eller nyere.</string>
+    <string name="engine_proxy_silent">Proxyen svarede ikke, så intet blev sendt. Tern går aldrig udenom den.</string>
     <string name="engine_check_network">Kilden kunne ikke nås: %1$s</string>
     <string name="engine_check_not_found">Kilden har intet på denne adresse længere: %1$s</string>
     <string name="engine_check_auth">Kilden afviste anmodningen. Tilføj eller tjek tokenet for dette websted i indstillinger. (%1$s)</string>

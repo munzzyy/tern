@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appverifier_title">Egy második ellenőrzés</string>
+    <string name="appverifier_effect">Az AppVerifier egy különálló alkalmazás. Összehasonlítja ezt az alkalmazást azzal a tanúsítvánnyal, amelyhez a Tern rögzítette, és a saját ismert alkalmazásainak listájával.</string>
+    <string name="appverifier_action">Ellenőrzés az AppVerifierrel</string>
+</resources>

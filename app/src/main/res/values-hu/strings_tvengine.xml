@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">Ez a fájl nem a Tern vagy az Obtainium által exportált alkalmazások listája.</string>
+    <string name="engine_import_empty">Ez a fájl nem tartalmaz alkalmazásokat.</string>
+    <string name="engine_import_local_address">A címe egy helyi hálózaton van. Adja hozzá kézzel, ha az Öné.</string>
+    <string name="engine_warn_local_address">Ez a cím a saját hálózatán van. A Tern minden frissítés ellenőrzésekor lekérdezi.</string>
+    <string name="engine_import_unreadable_export">Ezt a Tern-exportálást nem sikerült elolvasni (%1$s). Ha egy újabb Tern verzióból származik, frissítse a Tern-t ezen az eszközön, és próbálja újra.</string>
+    <string name="engine_import_too_large">A fájl nagyobb, mint %1$d MiB, ami több, mint amennyit egy alkalmazáslista elfoglal, ezért a Tern nem olvasta el.</string>
+    <string name="engine_import_file_gone">Az a fájl már nincs ott. Nyissa meg újra a fájlok listáját.</string>
+    <string name="engine_link_not_https">Csak a https:// kezdetű címek elfogadottak.</string>
+    <string name="engine_link_not_an_address">Ez nem egy olyan webcím, amelyet a Tern meg tud nyitni. Így kellene kinéznie: https://example.org/tern-apps.json.</string>
+    <string name="engine_link_leaves_https">Ez a cím egy nem HTTPS-re irányítja a Tern-t, így semmit nem töltött le.</string>
+    <string name="engine_link_not_found">Nincs fájl ezen a címen. Ellenőrizze, hogy nincsenek-e gépelési hibák.</string>
+    <string name="engine_link_refused">A szerver megtagadta a fájl kiadását (a válasz: %1$d). A Tern semmilyen bejelentkezést nem küld ezzel a kéréssel, így a fájlnak bárki számára olvashatónak kell lennie, aki rendelkezik a címmel.</string>
+    <string name="engine_link_unreachable">A cím nem volt elérhető: %1$s</string>
+    <string name="engine_link_unreachable_plain">A cím nem volt elérhető. Ellenőrizze a kapcsolatot és a címet, majd próbálja újra.</string>
+    <string name="engine_link_too_slow">A szervernek több mint egy percbe telt elküldeni a fájlt, így a Tern abbahagyta a várakozást. Próbálja újra később.</string>
+    <string name="engine_link_not_an_export">Ami ezen a címen található, az nem a Tern vagy az Obtainium által exportált alkalmazások listája. A címnek magához a fájlhoz kell vezetnie, nem pedig egy olyan oldalhoz, amely azt mutatja.</string>
+    <string name="engine_export_no_place">Ennek az eszköznek nincs olyan megosztott tárhelye, amelyre a Tern írni tudna.</string>
+    <string name="engine_export_failed">Az exportálást nem sikerült kiírni: %1$s</string>
+    <string name="engine_export_failed_plain">Az exportálást nem sikerült kiírni.</string>
+</resources>

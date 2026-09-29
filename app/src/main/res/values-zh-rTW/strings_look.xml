@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">外觀</string>
+    <string name="look_summary">主題、顏色、對比、密度、圓角與圖示</string>
+    <string name="look_preview_spoken">目前設定的外觀預覽</string>
+    <string name="look_preview_app">範例應用程式</string>
+    <string name="look_colours">顏色</string>
+    <string name="look_palette">顏色</string>
+    <string name="look_wallpaper">桌布</string>
+    <string name="look_own">自訂顏色</string>
+    <string name="palette_ink">墨水</string>
+    <string name="palette_slate">石板</string>
+    <string name="palette_tide">潮汐</string>
+    <string name="palette_moss">苔蘚</string>
+    <string name="palette_amber">琥珀</string>
+    <string name="palette_clay">黏土</string>
+    <string name="palette_rose">玫瑰</string>
+    <string name="palette_plum">李子</string>
+    <string name="look_hue">自訂顏色的色調</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="other">%1$d 度</item>
+    </plurals>
+    <string name="look_contrast">對比</string>
+    <string name="contrast_standard">標準</string>
+    <string name="contrast_medium">中等</string>
+    <string name="contrast_high">高</string>
+    <string name="look_contrast_effect">較高的對比會讓文字與外框更凸顯於背景。</string>
+    <string name="look_shape_and_size">形狀與大小</string>
+    <string name="look_density">密度</string>
+    <string name="density_comfortable">舒適</string>
+    <string name="density_compact">緊湊</string>
+    <string name="look_density_effect">緊湊可以在畫面上容納更多內容。您按下的任何東西都不會小於指尖。</string>
+    <string name="look_corners">圓角</string>
+    <string name="corners_round">圓潤</string>
+    <string name="corners_soft">柔和</string>
+    <string name="corners_sharp">銳利</string>
+    <string name="look_icon_shape">圖示形狀</string>
+    <string name="icon_shape_circle">圓形</string>
+    <string name="icon_shape_squircle">方圓形</string>
+    <string name="icon_shape_square">方形</string>
+    <string name="look_icons">圖示</string>
+    <string name="look_source_icons">來源的圖示</string>
+    <string name="look_source_icons_effect">當尚未安裝應用程式時，Tern 會從發佈應用程式的地方（軟體庫或商店清單）取得圖示。關閉時，會在色塊上繪製一個字母，不向任何來源請求。</string>
+</resources>

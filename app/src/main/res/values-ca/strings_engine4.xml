@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">Una part d\'aquest paquet no està signada de la manera que al·lega, així que no s\'ha instal·lat res.</string>
+</resources>

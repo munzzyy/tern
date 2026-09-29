@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Udseende</string>
+    <string name="look_summary">Tema, farver, kontrast, tæthed, hjørner og ikoner</string>
+    <string name="look_preview_spoken">Forhåndsvisning af udseendet, som det er angivet nu</string>
+    <string name="look_preview_app">Eksempel-app</string>
+    <string name="look_colours">Farver</string>
+    <string name="look_palette">Farve</string>
+    <string name="look_wallpaper">Baggrund</string>
+    <string name="look_own">Egen farve</string>
+    <string name="palette_ink">Blæk</string>
+    <string name="palette_slate">Skifer</string>
+    <string name="palette_tide">Tidevand</string>
+    <string name="palette_moss">Mos</string>
+    <string name="palette_amber">Rav</string>
+    <string name="palette_clay">Ler</string>
+    <string name="palette_rose">Rose</string>
+    <string name="palette_plum">Blomme</string>
+    <string name="look_hue">Din egen farves nuance</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d grad</item>
+        <item quantity="other">%1$d grader</item>
+    </plurals>
+    <string name="look_contrast">Kontrast</string>
+    <string name="contrast_standard">Standard</string>
+    <string name="contrast_medium">Medium</string>
+    <string name="contrast_high">Høj</string>
+    <string name="look_contrast_effect">Mere kontrast adskiller tekst og omrids tydeligere fra det, der er bagved.</string>
+    <string name="look_shape_and_size">Form og størrelse</string>
+    <string name="look_density">Tæthed</string>
+    <string name="density_comfortable">Komfortabel</string>
+    <string name="density_compact">Kompakt</string>
+    <string name="look_density_effect">Kompakt viser mere på skærmen. Intet, du trykker på, bliver mindre end en fingerspids.</string>
+    <string name="look_corners">Hjørner</string>
+    <string name="corners_round">Runde</string>
+    <string name="corners_soft">Bløde</string>
+    <string name="corners_sharp">Skarpe</string>
+    <string name="look_icon_shape">Ikonform</string>
+    <string name="icon_shape_circle">Cirkel</string>
+    <string name="icon_shape_squircle">Squircle</string>
+    <string name="icon_shape_square">Firkant</string>
+    <string name="look_icons">Ikoner</string>
+    <string name="look_source_icons">Ikoner fra kilden</string>
+    <string name="look_source_icons_effect">Mens en app ikke er installeret, henter Tern dens ikon fra der, hvor appen er udgivet: dens arkiv eller dens butiksopslag. Fra tegner et bogstav på en farve og spørger ingen.</string>
+</resources>

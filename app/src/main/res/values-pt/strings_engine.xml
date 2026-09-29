@@ -26,6 +26,7 @@
     <string name="engine_downgrade">A versão instalada (%1$s) é mais recente do que este ficheiro (%2$s). O Android apenas aceita uma versão mais antiga depois de remover a aplicação instalada, e ao removê-la os seus dados são apagados.</string>
     <string name="engine_test_only">Este ficheiro é uma versão de teste, que o Android recusa instalar de uma loja de aplicações.</string>
     <string name="engine_needs_newer_android">Esta versão precisa da API do Android nível %1$d ou posterior.</string>
+    <string name="engine_proxy_silent">O proxy não respondeu, logo nada foi enviado. O Tern nunca o contorna.</string>
     <string name="engine_check_network">A origem não pôde ser alcançada: %1$s</string>
     <string name="engine_check_not_found">A origem já não tem nada neste endereço: %1$s</string>
     <string name="engine_check_auth">A origem recusou o pedido. Adicione ou verifique o token de acesso para este site nas definições. (%1$s)</string>
@@ -88,17 +89,20 @@
     <string name="engine_channel_transfers">Transferências</string>
     <plurals name="engine_notify_updates_count">
         <item quantity="one">%1$d atualização disponível</item>
+        <item quantity="many">%1$d atualizações disponíveis</item>
         <item quantity="other">%1$d atualizações disponíveis</item>
     </plurals>
     <string name="engine_notify_update_one">Atualização disponível para %1$s</string>
     <plurals name="engine_notify_installed_count">
         <item quantity="one">%1$d aplicação atualizada</item>
+        <item quantity="many">%1$d aplicações atualizadas</item>
         <item quantity="other">%1$d aplicações atualizadas</item>
     </plurals>
     <string name="engine_notify_installed_one">%1$s foi atualizada</string>
     <string name="engine_notify_confirm">Toque para acabar de instalar %1$s</string>
     <plurals name="engine_notify_failures_count">
         <item quantity="one">%1$d aplicação não pôde ser verificada ou atualizada</item>
+        <item quantity="many">%1$d aplicações não puderam ser verificadas ou atualizadas</item>
         <item quantity="other">%1$d aplicações não puderam ser verificadas ou atualizadas</item>
     </plurals>
     <string name="engine_notify_downloading">A transferir %1$s</string>

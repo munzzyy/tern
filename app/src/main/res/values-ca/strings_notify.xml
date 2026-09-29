@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Toca per acabar una instal·lació</string>
+    <string name="notify_downloading_plain">Baixant</string>
+    <string name="settings_notify_names">Anomena les aplicacions a les notificacions</string>
+    <string name="settings_notify_names_help">Una notificació es pot llegir a la pantalla de bloqueig. Desactivat, Tern diu quantes aplicacions i mai quines.</string>
+</resources>

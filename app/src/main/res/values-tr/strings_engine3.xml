@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern, bu uygulamanın imzalandığı sertifikayı taşır ve bu dosya başka bir sertifikayla imzalanmıştır. Başka birinden gelmiş olabileceği için yüklenmedi.</string>
+    <string name="engine_warn_built_in_pin">Tern, bu uygulamanın imzalandığı sertifikayı taşır ve sunulan dosya başka bir sertifikayla imzalanmıştır.</string>
+</resources>

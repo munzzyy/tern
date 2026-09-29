@@ -26,6 +26,7 @@
     <string name="engine_downgrade">نسخه نصب‌شده (%1$s) جدیدتر از این فایل (%2$s) است. Android تنها زمانی نسخه قدیمی‌تر را می‌پذیرد که برنامه نصب‌شده حذف شود، و با حذف آن داده‌هایش پاک می‌شود.</string>
     <string name="engine_test_only">این فایل یک نسخه آزمایشی است، که Android از نصب آن از طریق فروشگاه برنامه خودداری می‌کند.</string>
     <string name="engine_needs_newer_android">این نسخه به Android API سطح %1$d یا بالاتر نیاز دارد.</string>
+    <string name="engine_proxy_silent">پروکسی پاسخی نداد، بنابراین چیزی ارسال نشد. Tern هرگز آن را دور نمی‌زند.</string>
     <string name="engine_check_network">امکان دسترسی به منبع وجود نداشت: %1$s</string>
     <string name="engine_check_not_found">منبع دیگر چیزی در این آدرس ندارد: %1$s</string>
     <string name="engine_check_auth">منبع، درخواست را رد کرد. توکن را برای این سایت در تنظیمات اضافه یا بررسی کنید. (%1$s)</string>
@@ -97,6 +98,10 @@
     </plurals>
     <string name="engine_notify_installed_one">%1$s به‌روز شد</string>
     <string name="engine_notify_confirm">برای پایان نصب %1$s ضربه بزنید</string>
+    <plurals name="engine_notify_failures_count">
+        <item quantity="one">بررسی یا به‌روزرسانی %1$d برنامه امکان‌پذیر نشد</item>
+        <item quantity="other">بررسی یا به‌روزرسانی %1$d برنامه امکان‌پذیر نشد</item>
+    </plurals>
     <string name="engine_notify_downloading">در حال دانلود %1$s</string>
     <string name="engine_pick_abi_match">ساختهشده برای پردازنده این دستگاه (%1$s)</string>
     <string name="engine_pick_abi_mismatch">ساختهشده برای پردازندهای که این دستگاه ندارد (%1$s)</string>

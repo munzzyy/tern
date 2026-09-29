@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appverifier_title">Een tweede controle</string>
+    <string name="appverifier_effect">AppVerifier is een aparte app. Het vergelijkt deze app met het certificaat waaraan Tern het houdt, en met zijn eigen lijst van bekende apps.</string>
+    <string name="appverifier_action">Controleren met AppVerifier</string>
+</resources>

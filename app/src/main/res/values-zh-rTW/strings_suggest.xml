@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">觀看您 Jellyfin 伺服器上的內容</string>
+    <string name="suggest_just_player">適用於檔案與串流的影片播放器</string>
+    <string name="suggest_mpv">以 mpv 建置的影片播放器</string>
+    <string name="suggest_nova">播放來自此裝置或網路的影片</string>
+    <string name="suggest_material_files">管理此裝置與伺服器上的檔案</string>
+    <string name="suggest_mullvad">Mullvad VPN 服務的應用程式</string>
+    <string name="suggest_proton_vpn">Proton VPN 服務的應用程式</string>
+    <string name="suggest_moonlight">在此裝置上遊玩您電腦的遊戲</string>
+    <string name="suggest_fossify_gallery">適用於相片與影片的圖庫</string>
+    <string name="suggest_breezy_weather">來自許多來源的天氣預報</string>
+    <string name="suggest_fdroid">自由與開源應用程式的目錄</string>
+    <string name="suggest_heliboard">沒有網路存取權限的鍵盤</string>
+    <string name="suggest_obtainium">從應用程式來源取得更新</string>
+    <string name="suggest_aegis">保存兩步驟登入的代碼</string>
+    <string name="suggest_keepassdx">適用於 KeePass 檔案的密碼管理員</string>
+    <string name="suggest_koreader">閱讀 EPUB、PDF 與其他書籍格式</string>
+    <string name="suggest_element_x">在 Matrix 網路上聊天</string>
+    <string name="suggest_fairemail">適用於任何提供者的電子郵件應用程式</string>
+    <string name="suggest_tusky">Mastodon 用戶端</string>
+    <string name="suggest_organic_maps">可離線使用的地圖與導航</string>
+    <string name="suggest_osmand">離線地圖、路線規劃與軌跡記錄</string>
+    <string name="suggest_magpie">加密的事件日誌，由 Tern 作者開發</string>
+    <string name="suggest_sepia">清除相片中的隱藏資料，由 Tern 作者開發</string>
+    <string name="suggest_sweep">檢查追蹤軟體，由 Tern 作者開發</string>
+    <string name="suggest_starling">私密的位置分享，由 Tern 作者開發</string>
+</resources>

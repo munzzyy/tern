@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">مشاهدة ما يوجد على خادم Jellyfin الخاص بك</string>
+    <string name="suggest_just_player">مشغل فيديو للملفات وعمليات البث</string>
+    <string name="suggest_mpv">مشغل فيديو مبني على mpv</string>
+    <string name="suggest_nova">يشغل الفيديو من هذا الجهاز أو الشبكة</string>
+    <string name="suggest_material_files">إدارة الملفات على هذا الجهاز وعلى الخوادم</string>
+    <string name="suggest_mullvad">التطبيق الخاص بخدمة Mullvad VPN</string>
+    <string name="suggest_proton_vpn">التطبيق الخاص بخدمة Proton VPN</string>
+    <string name="suggest_moonlight">تشغيل ألعاب حاسوبك على هذا الجهاز</string>
+    <string name="suggest_fossify_gallery">معرض للصور ومقاطع الفيديو</string>
+    <string name="suggest_breezy_weather">توقعات الطقس من مصادر متعددة</string>
+    <string name="suggest_fdroid">كتالوج للتطبيقات الحرة ومفتوحة المصدر</string>
+    <string name="suggest_heliboard">لوحة مفاتيح ليس لديها اتصال بالشبكة</string>
+    <string name="suggest_obtainium">يحصل على تحديثات التطبيقات من مصادرها</string>
+    <string name="suggest_aegis">يحتفظ برموز تسجيل الدخول بخطوتين</string>
+    <string name="suggest_keepassdx">مدير كلمات مرور لملفات KeePass</string>
+    <string name="suggest_koreader">يقرأ تنسيقات EPUB، و PDF، وتنسيقات الكتب الأخرى</string>
+    <string name="suggest_element_x">الدردشة على شبكة Matrix</string>
+    <string name="suggest_fairemail">تطبيق بريد إلكتروني لأي مزود</string>
+    <string name="suggest_tusky">عميل لـ Mastodon</string>
+    <string name="suggest_organic_maps">خرائط وملاحة تعمل بدون إنترنت</string>
+    <string name="suggest_osmand">خرائط بدون إنترنت، وتوجيه، وتسجيل للمسارات</string>
+    <string name="suggest_magpie">دفتر يوميات حوادث مشفر، من مبرمج Tern</string>
+    <string name="suggest_sepia">يزيل البيانات المخفية من الصور، من مبرمج Tern</string>
+    <string name="suggest_sweep">فحص لبرامج الملاحقة، من مبرمج Tern</string>
+    <string name="suggest_starling">مشاركة خاصة للموقع، من مبرمج Tern</string>
+</resources>

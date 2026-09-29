@@ -26,6 +26,7 @@
     <string name="engine_downgrade">Versi yang terinstal (%1$s) lebih baru dari file ini (%2$s). Android hanya menerima versi lama setelah aplikasi yang terinstal dihapus, dan menghapusnya akan menghapus datanya.</string>
     <string name="engine_test_only">File ini adalah versi pengujian, yang ditolak Android untuk diinstal dari toko aplikasi.</string>
     <string name="engine_needs_newer_android">Versi ini membutuhkan Android API level %1$d atau yang lebih baru.</string>
+    <string name="engine_proxy_silent">Proksi tidak menjawab, jadi tidak ada yang dikirim. Tern tidak pernah melewati proksi.</string>
     <string name="engine_check_network">Sumber tidak dapat dijangkau: %1$s</string>
     <string name="engine_check_not_found">Sumber tidak memiliki apa pun di alamat ini lagi: %1$s</string>
     <string name="engine_check_auth">Sumber menolak permintaan tersebut. Tambahkan atau periksa token untuk situs ini di setelan. (%1$s)</string>

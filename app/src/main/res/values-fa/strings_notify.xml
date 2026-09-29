@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">برای پایان نصب ضربه بزنید</string>
+    <string name="notify_downloading_plain">در حال دانلود</string>
+    <string name="settings_notify_names">نام بردن برنامه‌ها در اعلان‌ها</string>
+    <string name="settings_notify_names_help">اعلان را می‌توان در صفحه قفل خواند. در حالت خاموش، Tern می‌گوید چند برنامه و هرگز نمی‌گوید کدام.</string>
+</resources>

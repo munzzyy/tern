@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Oglądaj to, co masz na swoim serwerze Jellyfin</string>
+    <string name="suggest_just_player">Odtwarzacz wideo dla plików i strumieni</string>
+    <string name="suggest_mpv">Odtwarzacz wideo oparty na mpv</string>
+    <string name="suggest_nova">Odtwarza wideo z tego urządzenia lub z sieci</string>
+    <string name="suggest_material_files">Zarządzaj plikami na tym urządzeniu i na serwerach</string>
+    <string name="suggest_mullvad">Aplikacja dla usługi Mullvad VPN</string>
+    <string name="suggest_proton_vpn">Aplikacja dla usługi Proton VPN</string>
+    <string name="suggest_moonlight">Graj w gry ze swojego komputera na tym urządzeniu</string>
+    <string name="suggest_fossify_gallery">Galeria dla zdjęć i wideo</string>
+    <string name="suggest_breezy_weather">Prognozy pogody z wielu źródeł</string>
+    <string name="suggest_fdroid">Katalog darmowych i otwartoźródłowych aplikacji</string>
+    <string name="suggest_heliboard">Klawiatura bez dostępu do sieci</string>
+    <string name="suggest_obtainium">Pobiera aktualizacje aplikacji z ich źródeł</string>
+    <string name="suggest_aegis">Przechowuje kody do logowania dwuetapowego</string>
+    <string name="suggest_keepassdx">Menedżer haseł dla plików KeePass</string>
+    <string name="suggest_koreader">Czyta EPUB, PDF i inne formaty książek</string>
+    <string name="suggest_element_x">Czatuj w sieci Matrix</string>
+    <string name="suggest_fairemail">Aplikacja e-mail dla każdego dostawcy</string>
+    <string name="suggest_tusky">Klient dla Mastodon</string>
+    <string name="suggest_organic_maps">Mapy i nawigacja działające w trybie offline</string>
+    <string name="suggest_osmand">Mapy offline, wyznaczanie tras i nagrywanie śladów</string>
+    <string name="suggest_magpie">Szyfrowany dziennik incydentów, od autora Tern</string>
+    <string name="suggest_sepia">Usuwa ukryte dane ze zdjęć, od autora Tern</string>
+    <string name="suggest_sweep">Sprawdzanie obecności stalkerware, od autora Tern</string>
+    <string name="suggest_starling">Prywatne udostępnianie lokalizacji, od autora Tern</string>
+</resources>

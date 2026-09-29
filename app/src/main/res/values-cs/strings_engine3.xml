@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_built_in_pin_mismatch">Tern drží certifikát, kterým je tato aplikace podepsána, a tento soubor je podepsán jiným. Mohl by pocházet od někoho jiného, proto nebyl nainstalován.</string>
+    <string name="engine_warn_built_in_pin">Tern drží certifikát, kterým je tato aplikace podepsána, a nabídnutý soubor je podepsán jiným.</string>
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apps_search_close">Закрити пошук</string>
+    <string name="waiting_banner_one">%1$s очікує на ваш дозвіл</string>
+    <plurals name="waiting_banner_several">
+        <item quantity="one">%1$d встановлення очікує на ваш дозвіл</item>
+        <item quantity="few">%1$d встановлення очікують на ваш дозвіл</item>
+        <item quantity="many">%1$d встановлень очікують на ваш дозвіл</item>
+        <item quantity="other">%1$d встановлення очікують на ваш дозвіл</item>
+    </plurals>
+    <string name="empty_add">Додати програму</string>
+    <string name="empty_well_known">Відомі програми</string>
+    <string name="empty_handoff">Надіслати з телефону</string>
+    <string name="removed_notice">Припинено стеження за %1$s</string>
+    <string name="removed_undo">Скасувати</string>
+    <string name="waiting_play_protect">Android або Play Protect може запитати ще раз. Це їхня власна перевірка, а не проблема з файлом.</string>
+    <string name="prompt_always_asks">Цей пристрій завжди запитує перед встановленням оновлення.</string>
+    <string name="checks_passed">Цей файл пройшов усі перевірки</string>
+    <string name="explain_button">Що це означає: %1$s</string>
+    <string name="explain_action">послухати, що це означає</string>
+    <string name="explain_close">Закрити</string>
+    <string name="explain_signer_title">Сертифікат підпису</string>
+    <string name="explain_checksum_title">Контрольна сума</string>
+    <string name="explain_permissions_title">Дозволи</string>
+    <string name="explain_virustotal_title">VirusTotal</string>
+    <string name="explain_silent_title">Оновлення без запиту</string>
+    <string name="explain_always_asks_title">Цей пристрій завжди запитує</string>
+    <string name="explain_package">Кожна програма Android має одну назву, яка ніколи не змінюється. Файл з іншою назвою вважатиметься іншою програмою, хоч би як він називався.</string>
+    <string name="explain_signer_installed">Розробник підписує кожен випуск ключем, який є лише в нього. Tern порівнює підпис цього файлу з програмою на цьому пристрої та із сертифікатом, який він запам\'ятав під час першого встановлення. Файл, підписаний будь-ким іншим, відхиляється, навіть якщо він надходить із правильної адреси.</string>
+    <string name="explain_signer_first">Поки що немає з чим порівнювати. Файл заявляє, хто його підписав, Android підтверджує це під час встановлення, і відтоді Tern вимагатиме цей самий сертифікат для кожного оновлення.</string>
+    <string name="explain_checksum_matched">Контрольна сума є відбитком самого файлу. Видавець надав її, і завантажений Tern файл має таку саму, тому він прибув таким, яким був опублікований.</string>
+    <string name="explain_checksum_pending">Контрольна сума є відбитком самого файлу. Видавець надав її, і Tern порівняє її з файлом відразу після завантаження.</string>
+    <string name="explain_checksum_mismatch">Контрольна сума є відбитком самого файлу. Видавець надав її, а завантажений Tern файл має іншу, тому це не той файл, що був опублікований.</string>
+    <string name="explain_checksum_none">Цей видавець не надає контрольної суми. Підпис усе ще перевіряється, і це сильніша з двох перевірок.</string>
+    <string name="explain_permissions">Що ця версія просить дозволити робити, чого не просила встановлена.</string>
+    <string name="explain_virustotal">Відкриває сторінку саме цього файлу на VirusTotal у вашому браузері. Tern туди нічого не надсилає.</string>
+    <string name="explain_silent">Android дозволяє програмі оновлювати іншу без запиту, якщо ця програма її встановила і пристрій працює на Android 12 або новішої версії. Android вирішує щоразу.</string>
+    <string name="explain_always_asks">Цей пристрій працює на Android %1$s, який запитує перед кожним встановленням. Tern завантажує і перевіряє оновлення у фоновому режимі і повідомляє вам, коли воно готове.</string>
+    <string name="activity_installed">Встановлено %1$s</string>
+    <string name="activity_installed_plain">Встановлено</string>
+    <string name="activity_updated">Оновлено до %1$s</string>
+    <string name="activity_updated_plain">Оновлено</string>
+    <string name="activity_update_waits">Оновлення до %1$s очікує</string>
+    <string name="activity_update_waits_plain">Оновлення очікує</string>
+    <string name="activity_install_waits">Встановлення %1$s очікує</string>
+    <string name="activity_install_waits_plain">Встановлення очікує</string>
+    <string name="activity_not_installed">Не вдалося встановити %1$s</string>
+    <string name="activity_not_installed_plain">Не вдалося встановити</string>
+    <string name="activity_blocked">Заблоковано %1$s</string>
+    <string name="activity_blocked_plain">Заблоковано</string>
+    <string name="activity_added">Додано</string>
+    <string name="activity_removed">Припинено стеження</string>
+    <string name="activity_check_failed">Помилка перевірки</string>
+    <string name="activity_steps_show">Показати кроки</string>
+    <string name="activity_steps_hide">Сховати кроки</string>
+    <string name="first_well_known">Відомі програми</string>
+</resources>

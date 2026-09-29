@@ -26,6 +26,7 @@
     <string name="engine_downgrade">La instalita versio (%1$s) estas pli nova ol ĉi tiu dosiero (%2$s). Android nur akceptas pli malnovan version post kiam la instalita aplikaĵo estas forigita, kaj forigado de ĝi forigas ĝiajn datumojn.</string>
     <string name="engine_test_only">Ĉi tiu dosiero estas testa konstruo, kion Android rifuzas instali de aplikaĵvendejo.</string>
     <string name="engine_needs_newer_android">Ĉi tiu versio bezonas Android-API-nivelon %1$d aŭ pli novan.</string>
+    <string name="engine_proxy_silent">La prokurilo ne respondis, do nenio estis sendita. Tern neniam preteriras ĝin.</string>
     <string name="engine_check_network">La fonto ne povis esti atingita: %1$s</string>
     <string name="engine_check_not_found">La fonto havas nenion plu je ĉi tiu adreso: %1$s</string>
     <string name="engine_check_auth">La fonto rifuzis la peton. Aldonu aŭ kontrolu la alirĵetonon por ĉi tiu retejo en agordoj. (%1$s)</string>

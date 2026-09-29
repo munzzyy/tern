@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">Titta på det som finns på din Jellyfin-server</string>
+    <string name="suggest_just_player">En videospelare för filer och strömmar</string>
+    <string name="suggest_mpv">En videospelare byggd på mpv</string>
+    <string name="suggest_nova">Spelar upp video från denna enhet eller nätverket</string>
+    <string name="suggest_material_files">Hantera filer på denna enhet och på servrar</string>
+    <string name="suggest_mullvad">Appen för tjänsten Mullvad VPN</string>
+    <string name="suggest_proton_vpn">Appen för tjänsten Proton VPN</string>
+    <string name="suggest_moonlight">Spela spel från din dator på denna enhet</string>
+    <string name="suggest_fossify_gallery">Ett galleri för foton och videor</string>
+    <string name="suggest_breezy_weather">Väderprognoser från många källor</string>
+    <string name="suggest_fdroid">En katalog med gratis appar med öppen källkod</string>
+    <string name="suggest_heliboard">Ett tangentbord som saknar nätverksåtkomst</string>
+    <string name="suggest_obtainium">Hämtar appuppdateringar från deras källor</string>
+    <string name="suggest_aegis">Sparar koderna för tvåstegsinloggning</string>
+    <string name="suggest_keepassdx">En lösenordshanterare för KeePass-filer</string>
+    <string name="suggest_koreader">Läser EPUB, PDF och andra bokformat</string>
+    <string name="suggest_element_x">Chatta på Matrix-nätverket</string>
+    <string name="suggest_fairemail">En e-postapp för alla leverantörer</string>
+    <string name="suggest_tusky">En klient för Mastodon</string>
+    <string name="suggest_organic_maps">Kartor och navigering som fungerar offline</string>
+    <string name="suggest_osmand">Offlinekartor, rutter och spårregistrering</string>
+    <string name="suggest_magpie">En krypterad händelsejournal, av Terns skapare</string>
+    <string name="suggest_sepia">Rensar dold data från foton, av Terns skapare</string>
+    <string name="suggest_sweep">En stalkerware-kontroll, av Terns skapare</string>
+    <string name="suggest_starling">Privat platsdelning, av Terns skapare</string>
+</resources>

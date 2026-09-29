@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_confirm_plain">Toca para rematar unha instalación</string>
+    <string name="notify_downloading_plain">Descargando</string>
+    <string name="settings_notify_names">Nomear as aplicacións nas notificacións</string>
+    <string name="settings_notify_names_help">Pódese ler unha notificación na pantalla de bloqueo. Se está desactivado, Tern di cantas aplicacións son e nunca cales.</string>
+</resources>

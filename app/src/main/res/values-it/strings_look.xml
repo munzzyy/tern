@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Aspetto</string>
+    <string name="look_summary">Tema, colori, contrasto, densità, angoli e icone</string>
+    <string name="look_preview_spoken">Anteprima dell\'aspetto come impostato ora</string>
+    <string name="look_preview_app">App di esempio</string>
+    <string name="look_colours">Colori</string>
+    <string name="look_palette">Colore</string>
+    <string name="look_wallpaper">Sfondo</string>
+    <string name="palette_ink">Inchiostro</string>
+    <string name="palette_slate">Ardesia</string>
+    <string name="palette_tide">Marea</string>
+    <string name="palette_moss">Muschio</string>
+    <string name="palette_amber">Ambra</string>
+    <string name="palette_clay">Argilla</string>
+    <string name="palette_rose">Rosa</string>
+    <string name="palette_plum">Prugna</string>
+    <string name="look_hue">Tonalità del tuo colore personalizzato</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d grado</item>
+        <item quantity="many">%1$d gradi</item>
+        <item quantity="other">%1$d gradi</item>
+    </plurals>
+    <string name="look_contrast">Contrasto</string>
+    <string name="contrast_standard">Standard</string>
+    <string name="contrast_medium">Medio</string>
+    <string name="contrast_high">Alto</string>
+    <string name="look_contrast_effect">Più contrasto distanzia ulteriormente il testo e i contorni da ciò che si trova dietro.</string>
+    <string name="look_shape_and_size">Forma e dimensione</string>
+    <string name="look_density">Densità</string>
+    <string name="density_comfortable">Comoda</string>
+    <string name="density_compact">Compatta</string>
+    <string name="look_density_effect">Compatta mostra di più sullo schermo. Niente di ciò che premi diventa più piccolo di un polpastrello.</string>
+    <string name="look_corners">Angoli</string>
+    <string name="corners_round">Arrotondati</string>
+    <string name="corners_soft">Morbidi</string>
+    <string name="corners_sharp">Spigolosi</string>
+    <string name="look_icon_shape">Forma icone</string>
+    <string name="icon_shape_circle">Cerchio</string>
+    <string name="icon_shape_squircle">Squircle</string>
+    <string name="icon_shape_square">Quadrato</string>
+    <string name="look_icons">Icone</string>
+    <string name="look_source_icons">Icone dall\'origine</string>
+    <string name="look_source_icons_effect">Finché un\'app non è installata, Tern ottiene la sua icona da dove l\'app è pubblicata: il suo repository o la sua pagina dello store. Disattivato disegna una lettera su un colore e non chiede a nessuno.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appverifier_title">Druga provjera</string>
+    <string name="appverifier_effect">AppVerifier je zasebna aplikacija. Upoređuje ovu aplikaciju s certifikatom koji Tern drži za nju, i s vlastitim spiskom aplikacija koje poznaje.</string>
+    <string name="appverifier_action">Provjeri pomoću AppVerifier</string>
+</resources>

@@ -26,6 +26,7 @@
     <string name="engine_downgrade">Nainstalovaná verze (%1$s) je novější než tento soubor (%2$s). Android přijme starší verzi, jen pokud se nejprve odstraní nainstalovaná aplikace, což smaže její data.</string>
     <string name="engine_test_only">Tento soubor je testovací sestavení, které Android odmítá nainstalovat z obchodu s aplikacemi.</string>
     <string name="engine_needs_newer_android">Tato verze potřebuje Android API úrovně %1$d nebo novější.</string>
+    <string name="engine_proxy_silent">Proxy neodpověděla, takže se nic neodeslalo. Tern ji nikdy neobchází.</string>
     <string name="engine_check_network">Zdroj nebyl k zastižení: %1$s</string>
     <string name="engine_check_not_found">Zdroj už na této adrese nic nemá: %1$s</string>
     <string name="engine_check_auth">Zdroj požadavek odmítl. Přidejte nebo zkontrolujte token pro tento web v nastavení. (%1$s)</string>
@@ -89,12 +90,14 @@
     <plurals name="engine_notify_updates_count">
         <item quantity="one">%1$d aktualizace k dispozici</item>
         <item quantity="few">%1$d aktualizace k dispozici</item>
+        <item quantity="many">%1$d aktualizací k dispozici</item>
         <item quantity="other">%1$d aktualizací k dispozici</item>
     </plurals>
     <string name="engine_notify_update_one">Aktualizace k dispozici pro %1$s</string>
     <plurals name="engine_notify_installed_count">
         <item quantity="one">%1$d aplikace aktualizována</item>
         <item quantity="few">%1$d aplikace aktualizovány</item>
+        <item quantity="many">%1$d aplikací aktualizováno</item>
         <item quantity="other">%1$d aplikací aktualizováno</item>
     </plurals>
     <string name="engine_notify_installed_one">Aplikace %1$s byla aktualizována</string>
@@ -102,6 +105,7 @@
     <plurals name="engine_notify_failures_count">
         <item quantity="one">%1$d aplikaci nešlo zkontrolovat nebo aktualizovat</item>
         <item quantity="few">%1$d aplikace nešlo zkontrolovat nebo aktualizovat</item>
+        <item quantity="many">%1$d aplikací nešlo zkontrolovat nebo aktualizovat</item>
         <item quantity="other">%1$d aplikací nešlo zkontrolovat nebo aktualizovat</item>
     </plurals>
     <string name="engine_notify_downloading">Stahuje se %1$s</string>

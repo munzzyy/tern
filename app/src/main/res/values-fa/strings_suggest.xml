@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="suggest_jellyfin_tv">محتوای سرور Jellyfin خود را تماشا کنید</string>
+    <string name="suggest_just_player">یک پخش‌کننده ویدیو برای فایل‌ها و پخش‌های جریانی</string>
+    <string name="suggest_mpv">یک پخش‌کننده ویدیو مبتنی بر mpv</string>
+    <string name="suggest_nova">پخش ویدیو از این دستگاه یا شبکه</string>
+    <string name="suggest_material_files">مدیریت فایل‌ها روی این دستگاه و سرورها</string>
+    <string name="suggest_mullvad">برنامه سرویس VPN Mullvad</string>
+    <string name="suggest_proton_vpn">برنامه سرویس VPN Proton</string>
+    <string name="suggest_moonlight">بازی‌های رایانه خود را روی این دستگاه بازی کنید</string>
+    <string name="suggest_fossify_gallery">گالری برای عکس‌ها و ویدیوها</string>
+    <string name="suggest_breezy_weather">پیش‌بینی آب و هوا از چندین منبع</string>
+    <string name="suggest_fdroid">کاتالوگی از برنامه‌های رایگان و متن‌باز</string>
+    <string name="suggest_heliboard">صفحه‌کلیدی که دسترسی به شبکه ندارد</string>
+    <string name="suggest_obtainium">دریافت به‌روزرسانی برنامه‌ها از منابعشان</string>
+    <string name="suggest_aegis">کدهای ورود دومرحله‌ای را نگه می‌دارد</string>
+    <string name="suggest_keepassdx">مدیریت رمز عبور برای فایل‌های KeePass</string>
+    <string name="suggest_koreader">خواندن قالب‌های EPUB، PDF و سایر کتاب‌ها</string>
+    <string name="suggest_element_x">گفتگو در شبکه Matrix</string>
+    <string name="suggest_fairemail">یک برنامه ایمیل برای هر ارائه‌دهنده‌ای</string>
+    <string name="suggest_tusky">کلاینتی برای Mastodon</string>
+    <string name="suggest_organic_maps">نقشه‌ها و مسیریابی با قابلیت کار آفلاین</string>
+    <string name="suggest_osmand">نقشه‌های آفلاین، مسیریابی و ثبت مسیر</string>
+    <string name="suggest_magpie">یک دفترچه وقایع رمزگذاری‌شده، از سازنده Tern</string>
+    <string name="suggest_sepia">داده‌های پنهان را از عکس‌ها حذف می‌کند، از سازنده Tern</string>
+    <string name="suggest_sweep">بررسی بدافزارهای جاسوسی، از سازنده Tern</string>
+    <string name="suggest_starling">اشتراک‌گذاری خصوصی موقعیت مکانی، از سازنده Tern</string>
+</resources>

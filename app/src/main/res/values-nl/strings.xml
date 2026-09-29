@@ -91,7 +91,7 @@
         <item quantity="one">%d geselecteerd</item>
         <item quantity="other">%d geselecteerd</item>
     </plurals>
-    <string name="apps_select_hint">Tik op apps om ze te kiezen.</string>
+    <string name="apps_select_hint">Kies apps uit de lijst.</string>
     <string name="action_add_to_category">Toevoegen aan categorie</string>
     <plurals name="bulk_category_title">
         <item quantity="one">%d app toevoegen aan een categorie</item>
@@ -122,13 +122,12 @@
         <item quantity="other">%d apps niet meer volgen?</item>
     </plurals>
     <string name="bulk_remove_text">De apps blijven geïnstalleerd. Tern controleert ze alleen niet meer op updates.</string>
-    <string name="apps_empty_title">Nog geen apps</string>
-    <string name="apps_empty_text">Plak een link naar een projectpagina, een releasepagina of een F-Droid-repository, en Tern houdt de app vanaf daar up-to-date.</string>
+    <string name="apps_empty_title">Nog niets hier</string>
+    <string name="apps_empty_text">Voeg een app toe via zijn link, of begin met een die veel mensen gebruiken.</string>
     <string name="sort_title">Sorteren</string>
     <string name="sort_name">Op naam</string>
     <string name="sort_recently_checked">Recent gecontroleerd</string>
     <string name="sort_source">Op bron</string>
-    <string name="remove_title">%s verwijderen?</string>
     <string name="remove_text_installed">Tern volgt de app niet meer. De app blijft geïnstalleerd.</string>
     <string name="remove_text">Tern volgt het niet meer.</string>
     <string name="add_title">App toevoegen</string>
@@ -180,16 +179,14 @@
     <string name="carried_notes_none">Releases worden gevolgd, ongeacht wat hun notities zeggen.</string>
     <string name="carried_version">De versie wordt uit de tag gelezen met %1$s.</string>
     <string name="carried_version_none">De versie wordt op de gebruikelijke manier gelezen.</string>
-    <string name="carried_match_device_on">Wanneer meerdere bestanden worden aangeboden, krijgt het bestand voor deze telefoon voorrang.</string>
-    <string name="carried_match_device_off">Bestanden worden niet beperkt tot de processor van deze telefoon.</string>
+    <string name="carried_match_device_on">Wanneer er meerdere bestanden worden aangeboden, krijgt degene gebouwd voor dit apparaat de voorkeur.</string>
+    <string name="carried_match_device_off">Bestanden worden niet beperkt tot de processor van dit apparaat.</string>
     <string name="carried_fallback_on">Een oudere release wordt gebruikt als de nieuwste geen bruikbaar bestand heeft.</string>
     <string name="carried_fallback_off">Oudere releases worden nooit gebruikt, zelfs als de nieuwste geen bruikbaar bestand heeft.</string>
     <string name="carried_track_on">Releases worden alleen gevolgd; er wordt niets gedownload of geïnstalleerd.</string>
     <string name="carried_track_off">Releases worden gedownload en geïnstalleerd, niet alleen gevolgd.</string>
-    <plurals name="carried_pins_warning">
-        <item quantity="one">De link zet dit certificaat vast, dus alleen bestanden die ermee zijn ondertekend worden geïnstalleerd. Iemand anders dan jij heeft het gekozen: voeg het alleen toe als je de bron van de link vertrouwt.</item>
-        <item quantity="other">De link zet deze certificaten vast, dus alleen bestanden die ermee zijn ondertekend worden geïnstalleerd. Iemand anders dan jij heeft ze gekozen: voeg ze alleen toe als je de bron van de link vertrouwt.</item>
-    </plurals>
+    <string name="carried_pin_warning">De link zet dit certificaat vast, dus alleen bestanden die ermee zijn ondertekend worden geïnstalleerd. Iemand anders dan jij heeft het gekozen: voeg het alleen toe als je de bron van de link vertrouwt.</string>
+    <string name="carried_pins_warning">De link zet deze certificaten vast, dus alleen bestanden die ermee zijn ondertekend worden geïnstalleerd. Iemand anders dan jij heeft ze gekozen: voeg ze alleen toe als je de bron van de link vertrouwt.</string>
     <string name="checks_title">Controles</string>
     <string name="checks_package">Pakketnaam</string>
     <string name="checks_package_unknown">Pas bekend als het bestand is gelezen</string>
@@ -291,7 +288,7 @@
     <string name="file_recommended">Keuze %d, aanbevolen</string>
     <string name="file_alternative">Keuze %d</string>
     <string name="setting_match_device">Afstemmen op dit apparaat</string>
-    <string name="setting_match_device_effect">Wanneer meerdere bestanden worden aangeboden, krijgt het bestand gebouwd voor de processor van deze telefoon de voorkeur.</string>
+    <string name="setting_match_device_effect">Wanneer er meerdere bestanden worden aangeboden, geef dan de voorkeur aan degene gebouwd voor de processor van dit apparaat.</string>
     <string name="setting_include">Alleen bestanden met</string>
     <string name="setting_include_help">Een patroon dat de bestandsnaam moet bevatten, bijvoorbeeld universal</string>
     <string name="setting_exclude">Bestanden overslaan met</string>
@@ -334,7 +331,7 @@
     <string name="settings_interval">Hoe vaak</string>
     <string name="interval_off">Uit</string>
     <plurals name="interval_hours">
-        <item quantity="one">Elk uur</item>
+        <item quantity="one">Elk %d uur</item>
         <item quantity="other">Elke %d uur</item>
     </plurals>
     <string name="settings_unmetered">Alleen op onbeperkte netwerken</string>
@@ -353,7 +350,6 @@
     <string name="settings_keep_installers_effect">Bestanden blijven na installatie en gebruiken opslag. Uit verwijdert ze.</string>
     <string name="settings_ownership">De enige updater zijn</string>
     <string name="settings_ownership_effect">Vraag Android om alleen Tern de apps te laten updaten die het installeert, zodat een andere store ze niet kan verwisselen.</string>
-    <string name="settings_ownership_unsupported">Heeft Android 14 of nieuwer nodig.</string>
     <string name="settings_tokens">Toegangstokens</string>
     <string name="settings_tokens_effect">Een token verhoogt limieten en opent privéprojecten. Het wordt alleen verzonden naar de exacte host waarvoor het is opgeslagen, en het wordt nooit meer getoond.</string>
     <string name="token_saved">Opgeslagen</string>
@@ -382,9 +378,6 @@
     <string name="theme_system">Systeem volgen</string>
     <string name="theme_light">Licht</string>
     <string name="theme_dark">Donker</string>
-    <string name="settings_dynamic_color">Kleuren van je achtergrond</string>
-    <string name="settings_dynamic_color_effect">Uit gebruikt Tern\'s eigen leisteenblauw.</string>
-    <string name="settings_dynamic_color_unsupported">Heeft Android 12 of nieuwer nodig.</string>
     <string name="settings_pure_black">Puur zwart</string>
     <string name="settings_pure_black_effect">Zwarte achtergronden in het donkere thema, rustiger voor OLED-schermen.</string>
     <string name="settings_data">Importeren en exporteren</string>
@@ -466,7 +459,7 @@
     <string name="first_title">Tern</string>
     <string name="first_line_1">Tern installeert en updatet apps rechtstreeks vanaf de plek waar hun ontwikkelaars ze publiceren.</string>
     <string name="first_line_2">Voordat Android een bestand ziet, controleert Tern wie het heeft ondertekend en of het overeenkomt met de checksum van de uitgever.</string>
-    <string name="first_line_3">Alles wat het vindt en doet, wordt in duidelijke taal in het activiteitenlogboek geschreven.</string>
+    <string name="first_line_3">Alles wat het vindt en doet, wordt in duidelijke taal opgeschreven.</string>
     <string name="first_notify_explain">Tern kan je vertellen wanneer updates klaar zijn. Android zal vragen of je meldingen wilt toestaan.</string>
     <string name="first_notify_denied">Meldingen staan uit. Je kunt ze later aanzetten in Instellingen.</string>
     <string name="first_notify_allow">Meldingen toestaan</string>
@@ -474,4 +467,5 @@
     <string name="install_permission_title">Tern toestaan apps te installeren</string>
     <string name="install_permission_body">Android vraagt eenmalig voordat een app een andere mag installeren. Zet op het volgende scherm de schakelaar voor Tern aan en kom dan terug. De installatie gaat vanzelf verder.</string>
     <string name="install_permission_open">Instellingen openen</string>
+    <string name="install_permission_closes">Deze versie van Android sluit Tern wanneer je de schakelaar aanzet. Open Tern daarna opnieuw en de installatie gaat verder.</string>
 </resources>

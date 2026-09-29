@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine4_part_not_signed">Una parte di questo bundle non è firmata come dichiara, quindi non è stato installato nulla.</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">Dieses Gerät ist in keinem lokalen Netzwerk, daher kann ein Telefon es nicht erreichen. Verbinde dieses Gerät mit WLAN oder einem Netzwerkkabel und versuche es erneut.</string>
+    <string name="engine_handoff_behind_vpn">Dieses Gerät ist über ein VPN verbunden, daher kann ein Telefon im lokalen Netzwerk es nicht erreichen. Schalte das VPN aus, solange du sendest, und versuche es erneut.</string>
+    <string name="engine_handoff_cannot_open">Dieses Gerät konnte keine Seite im lokalen Netzwerk öffnen: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">Dieses Gerät konnte keine Seite im lokalen Netzwerk öffnen.</string>
+    <string name="engine_handoff_not_on_screen">Tern muss auf dem Bildschirm sein, während es Links von einem Telefon entgegennimmt. Öffne Tern und versuche es erneut.</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_import_not_an_export">Tento soubor není seznam aplikací exportovaný z aplikací Tern nebo Obtainium.</string>
+    <string name="engine_import_empty">Tento soubor neobsahuje žádné aplikace.</string>
+    <string name="engine_import_local_address">Jeho adresa je v místní síti. Přidejte ji ručně, pokud je vaše.</string>
+    <string name="engine_warn_local_address">Tato adresa je ve vaší vlastní síti. Tern se jí zeptá při každé kontrole aktualizací.</string>
+    <string name="engine_import_unreadable_export">Tento export z aplikace Tern se nepodařilo přečíst (%1$s). Pokud pochází z novější verze aplikace Tern, aktualizujte Tern na tomto zařízení a zkuste to znovu.</string>
+    <string name="engine_import_too_large">Soubor je větší než %1$d MiB, což je více, než zabírá seznam aplikací, takže ho Tern nepřečetl.</string>
+    <string name="engine_import_file_gone">Tento soubor už tam není. Otevřete seznam souborů znovu.</string>
+    <string name="engine_link_not_https">Přijímají se pouze adresy, které začínají na https://.</string>
+    <string name="engine_link_not_an_address">Toto není webová adresa, kterou by Tern mohl otevřít. Měla by vypadat jako https://example.org/tern-apps.json.</string>
+    <string name="engine_link_leaves_https">Tato adresa přesměrovává Tern na adresu, která není HTTPS, takže se nic nenačetlo.</string>
+    <string name="engine_link_not_found">Na této adrese není žádný soubor. Zkontrolujte, zda jste se nepřepsali.</string>
+    <string name="engine_link_refused">Server odmítl soubor poskytnout (odpověděl %1$d). Tern s tímto požadavkem neodesílá žádné přihlašovací údaje, takže soubor musí být čitelný pro každého, kdo zná adresu.</string>
+    <string name="engine_link_unreachable">Adresu se nepodařilo dosáhnout: %1$s</string>
+    <string name="engine_link_unreachable_plain">Adresu se nepodařilo dosáhnout. Zkontrolujte připojení a adresu, a pak to zkuste znovu.</string>
+    <string name="engine_link_too_slow">Serveru trvalo odeslání souboru déle než minutu, takže Tern přestal čekat. Zkuste to znovu později.</string>
+    <string name="engine_link_not_an_export">To, co je na této adrese, není seznam aplikací exportovaný z aplikací Tern nebo Obtainium. Adresa musí vést k samotnému souboru, ne na stránku, která ho zobrazuje.</string>
+    <string name="engine_export_no_place">Toto zařízení nemá sdílené úložiště, do kterého by Tern mohl zapisovat.</string>
+    <string name="engine_export_failed">Export se nepodařilo zapsat: %1$s</string>
+    <string name="engine_export_failed_plain">Export se nepodařilo zapsat.</string>
+</resources>

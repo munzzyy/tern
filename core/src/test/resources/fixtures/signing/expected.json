@@ -1,0 +1,767 @@
+{
+  "big-one-chunk-exactly.apk": {
+    "bySdk": {
+      "24": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "27": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "28": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "29": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "30": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "32": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "33": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "36": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ]
+    },
+    "certificates": [
+      "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      2,
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "big-two-chunks.apk": {
+    "bySdk": {
+      "24": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "27": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "28": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "29": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "30": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "32": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "33": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "36": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ]
+    },
+    "certificates": [
+      "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      2,
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v1-rsa-target29.apk": {
+    "bySdk": {
+      "24": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "27": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "28": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "29": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "30": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "32": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "33": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "36": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ]
+    },
+    "certificates": [
+      "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+    ],
+    "lineage": [],
+    "minSdk": 21,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      1
+    ],
+    "split": null,
+    "targetSdk": 29,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v1-rsa-target30.apk": {
+    "bySdk": {
+      "24": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "27": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "28": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "29": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "30": null,
+      "32": null,
+      "33": null,
+      "36": null
+    },
+    "certificates": [],
+    "lineage": [],
+    "minSdk": 21,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [],
+    "split": null,
+    "targetSdk": 30,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v1-signers-differ.apk": {
+    "bySdk": {
+      "24": null,
+      "27": null,
+      "28": null,
+      "29": null,
+      "30": null,
+      "32": null,
+      "33": null,
+      "36": null
+    },
+    "certificates": [],
+    "lineage": [],
+    "minSdk": 21,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [],
+    "split": null,
+    "targetSdk": 29,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v1-two-signers.apk": {
+    "bySdk": {
+      "24": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "27": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "28": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "29": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "30": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "32": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "33": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "36": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ]
+    },
+    "certificates": [
+      "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+      "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+    ],
+    "lineage": [],
+    "minSdk": 21,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      1
+    ],
+    "split": null,
+    "targetSdk": 29,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v1v2v3-rsa-sha256.apk": {
+    "bySdk": {
+      "24": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "27": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "28": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "29": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "30": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "32": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "33": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "36": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ]
+    },
+    "certificates": [
+      "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+    ],
+    "lineage": [],
+    "minSdk": 21,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v2-dsa-sha256.apk": {
+    "bySdk": {
+      "24": [
+        "4cbb985cb0e511168b063e1b7a20f3d32d9a81bac8f3d84542f66e1408f96450"
+      ],
+      "27": [
+        "4cbb985cb0e511168b063e1b7a20f3d32d9a81bac8f3d84542f66e1408f96450"
+      ],
+      "28": [
+        "4cbb985cb0e511168b063e1b7a20f3d32d9a81bac8f3d84542f66e1408f96450"
+      ],
+      "29": [
+        "4cbb985cb0e511168b063e1b7a20f3d32d9a81bac8f3d84542f66e1408f96450"
+      ],
+      "30": [
+        "4cbb985cb0e511168b063e1b7a20f3d32d9a81bac8f3d84542f66e1408f96450"
+      ],
+      "32": [
+        "4cbb985cb0e511168b063e1b7a20f3d32d9a81bac8f3d84542f66e1408f96450"
+      ],
+      "33": [
+        "4cbb985cb0e511168b063e1b7a20f3d32d9a81bac8f3d84542f66e1408f96450"
+      ],
+      "36": [
+        "4cbb985cb0e511168b063e1b7a20f3d32d9a81bac8f3d84542f66e1408f96450"
+      ]
+    },
+    "certificates": [
+      "4cbb985cb0e511168b063e1b7a20f3d32d9a81bac8f3d84542f66e1408f96450"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      2
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v2-rsa-sha256.apk": {
+    "bySdk": {
+      "24": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "27": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "28": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "29": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "30": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "32": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "33": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "36": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ]
+    },
+    "certificates": [
+      "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      2
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v2-two-signers.apk": {
+    "bySdk": {
+      "24": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "27": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "28": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "29": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "30": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "32": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "33": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "36": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ]
+    },
+    "certificates": [
+      "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+      "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      2
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v2v3-ec-sha256.apk": {
+    "bySdk": {
+      "24": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "27": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "28": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "29": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "30": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "32": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "33": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ],
+      "36": [
+        "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+      ]
+    },
+    "certificates": [
+      "f1cfa6f7662cf71d2036587aabbdb151af9595a7cbca6eedeaf55fe7b69b4372"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      2,
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v2v3-ec-sha512.apk": {
+    "bySdk": {
+      "24": [
+        "1ed21a97c69ddae74da699b86d6a368509528336eb55ecc82f4101126dba72bb"
+      ],
+      "27": [
+        "1ed21a97c69ddae74da699b86d6a368509528336eb55ecc82f4101126dba72bb"
+      ],
+      "28": [
+        "1ed21a97c69ddae74da699b86d6a368509528336eb55ecc82f4101126dba72bb"
+      ],
+      "29": [
+        "1ed21a97c69ddae74da699b86d6a368509528336eb55ecc82f4101126dba72bb"
+      ],
+      "30": [
+        "1ed21a97c69ddae74da699b86d6a368509528336eb55ecc82f4101126dba72bb"
+      ],
+      "32": [
+        "1ed21a97c69ddae74da699b86d6a368509528336eb55ecc82f4101126dba72bb"
+      ],
+      "33": [
+        "1ed21a97c69ddae74da699b86d6a368509528336eb55ecc82f4101126dba72bb"
+      ],
+      "36": [
+        "1ed21a97c69ddae74da699b86d6a368509528336eb55ecc82f4101126dba72bb"
+      ]
+    },
+    "certificates": [
+      "1ed21a97c69ddae74da699b86d6a368509528336eb55ecc82f4101126dba72bb"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      2,
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v2v3-rotated.apk": {
+    "bySdk": {
+      "24": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "27": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "28": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ],
+      "29": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ],
+      "30": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ],
+      "32": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ],
+      "33": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ],
+      "36": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ]
+    },
+    "certificates": [
+      "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+    ],
+    "lineage": [
+      "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+      "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+    ],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      2,
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v2v3-rsa-sha512.apk": {
+    "bySdk": {
+      "24": [
+        "562c84623af120f15a3a57e19b238a3b670f353c6a81104a498c7914a7bac66a"
+      ],
+      "27": [
+        "562c84623af120f15a3a57e19b238a3b670f353c6a81104a498c7914a7bac66a"
+      ],
+      "28": [
+        "562c84623af120f15a3a57e19b238a3b670f353c6a81104a498c7914a7bac66a"
+      ],
+      "29": [
+        "562c84623af120f15a3a57e19b238a3b670f353c6a81104a498c7914a7bac66a"
+      ],
+      "30": [
+        "562c84623af120f15a3a57e19b238a3b670f353c6a81104a498c7914a7bac66a"
+      ],
+      "32": [
+        "562c84623af120f15a3a57e19b238a3b670f353c6a81104a498c7914a7bac66a"
+      ],
+      "33": [
+        "562c84623af120f15a3a57e19b238a3b670f353c6a81104a498c7914a7bac66a"
+      ],
+      "36": [
+        "562c84623af120f15a3a57e19b238a3b670f353c6a81104a498c7914a7bac66a"
+      ]
+    },
+    "certificates": [
+      "562c84623af120f15a3a57e19b238a3b670f353c6a81104a498c7914a7bac66a"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      2,
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v3-rotated.apk": {
+    "bySdk": {
+      "24": null,
+      "27": null,
+      "28": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ],
+      "29": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ],
+      "30": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ],
+      "32": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ],
+      "33": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ],
+      "36": [
+        "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+      ]
+    },
+    "certificates": [
+      "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+    ],
+    "lineage": [
+      "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+      "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b"
+    ],
+    "minSdk": 28,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v3-rsa-sha256.apk": {
+    "bySdk": {
+      "24": null,
+      "27": null,
+      "28": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "29": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "30": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "32": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "33": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "36": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ]
+    },
+    "certificates": [
+      "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+    ],
+    "lineage": [],
+    "minSdk": 28,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  },
+  "v31-rotated-twice.apk": {
+    "bySdk": {
+      "24": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "27": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "28": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "29": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "30": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "32": [
+        "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98"
+      ],
+      "33": [
+        "055b103b75ccabff728aa989fc7400bd7227db7ced507e1f32f727ba6c962bf2"
+      ],
+      "36": [
+        "055b103b75ccabff728aa989fc7400bd7227db7ced507e1f32f727ba6c962bf2"
+      ]
+    },
+    "certificates": [
+      "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+      "055b103b75ccabff728aa989fc7400bd7227db7ced507e1f32f727ba6c962bf2"
+    ],
+    "lineage": [
+      "0157cc62cc1e10ea53a148bd0c6480439d31c22c56652716ac4f021eaf2d3b98",
+      "af6c4cf55f05eb6459d227dbb63b9d04096d4a8062f58e5860cc91c5c9dc2d8b",
+      "055b103b75ccabff728aa989fc7400bd7227db7ced507e1f32f727ba6c962bf2"
+    ],
+    "minSdk": 21,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      1,
+      2,
+      3,
+      31
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 7,
+    "versionName": "7.0"
+  }
+}

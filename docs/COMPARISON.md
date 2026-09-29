@@ -13,11 +13,13 @@ Android 16 emulator on 2026-09-29.
 
 | | Obtainium | Jackdaw |
 |---|---|---|
-| Release APK, arm64 | 26,088,490 bytes (v1.6.17, `app-arm64-v8a-fdroid-release.apk`) | 2,983,137 bytes, all architectures |
+| Release APK, arm64 | 26,088,490 bytes (v1.6.17, `app-arm64-v8a-fdroid-release.apk`) | 4,205,357 bytes, all architectures, 29 languages |
 | Toolkit | Flutter | Kotlin and Jetpack Compose |
-| Cold start to first frame | not measured | 677 ms (`am start -W`, release build) |
+| Cold start to first frame | not measured | 687 ms, the middle of three cold starts (`am start -W`, release build) |
 
-Jackdaw's APK carries no native libraries, so one file serves every device.
+Jackdaw's APK carries one native library, a 10 KB path helper that comes with
+Compose, built for all four architectures. One file serves every device. The
+translations are 1.1 MB of the total.
 
 ## Whether an update exists
 
@@ -77,13 +79,24 @@ whether a check is due. Issues 25, 608 and 2199 are about checks that do not run
 Jackdaw registers one persisted periodic job with Android's job scheduler at the
 interval the user chose, with the constraints the user chose, and puts it back on
 boot, after its own update and at every start. Device test: `JobTest`.
+
+Measured on the release build: with Jackdaw's process dead, a forced run of the
+job took an app from 0.4.0 to 0.4.4 in 5 seconds with the launcher in front
+and no prompt, and posted "Magpie was updated". After a force stop Android
+drops the job, as it does for every app; opening Jackdaw registered it again
+and the job ran at once.
+
+A check and an install that finishes can evaluate the same app at the same
+moment. They take turns, so the row cannot be left on the older of the two
+states. `EvaluationOrderTest` runs them against each other 2000 times.
+
 Not yet observed: behaviour in Doze over many hours, and after a reboot.
 
 ## Asked for in Obtainium's tracker, present in Jackdaw
 
 | Request | Issue | In Jackdaw |
 |---|---|---|
-| Android TV | 281, 46 upvotes | Launcher entry for television, every screen operable by D-pad. Not yet run on a television image |
+| Android TV | 281, 46 upvotes | Run on an Android TV 14 emulator with remote keys only, release build: add an app, allow installs, install, settings, the activity log. Device tests: `RemoteAddTest`, `RemoteWalkTest` |
 | GitHub Actions builds | 102 | Yes, with a token |
 | Share a link into the app | 109 | Yes |
 | Work out the source from the link | 1108 | Yes |
@@ -101,7 +114,9 @@ Not yet observed: behaviour in Doze over many hours, and after a reboot.
   others. Jackdaw reads the developer's own channels and leaves mirrors out.
 - Shizuku and root installers, which make first installs silent and bring silent
   updates to Android 10 and 11.
-- 29 languages. Jackdaw has one.
+- Translations made by people. Obtainium has 29 languages from its users.
+  Jackdaw has 28 made by a machine and checked by a second one, which no native
+  speaker has reviewed.
 - Years of use on real phones, a wiki, a video guide, and a directory of
   crowdsourced app configurations.
 - A web view of the app's page inside the app.

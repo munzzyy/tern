@@ -19,3 +19,7 @@ The first version.
 - A project that moved can be followed to its new address when the package and
   the signer are the same there.
 - Phone, tablet and keyboard or D-pad layouts, light, dark and black themes.
+- Android TV: every screen works with the remote alone.
+- Asks for Android's permission to install apps before the first install, and
+  carries on with the install afterwards.
+- English and 28 machine translations, right-to-left languages included.

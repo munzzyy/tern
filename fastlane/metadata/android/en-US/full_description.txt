@@ -14,6 +14,8 @@ On Android 12 and newer, updates go in without asking once Jackdaw has installed
 
 No account. Nothing is reported to anyone. HTTPS only.
 
+Works on phones, tablets and Android TV, where the remote is all you need. English and 28 other languages; the translations are machine-made and corrections are welcome.
+
 Obtainium user? Import your export file and your apps come along.
 
 Reads: GitHub releases and Actions builds, GitLab, Forgejo, Gitea, Codeberg, F-Droid, IzzyOnDroid, any F-Droid format repository (signature checked), web pages, direct links, Jenkins, SourceHut, SourceForge.

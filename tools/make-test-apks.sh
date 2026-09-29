@@ -6,7 +6,7 @@
 # Keys are generated in a temp dir and deleted on exit; no private key ever lands in the repo.
 set -euo pipefail
 
-sdk=${ANDROID_HOME:-/home/cole/Android/Sdk}
+sdk=${ANDROID_HOME:-$HOME/Android/Sdk}
 bt=${BUILD_TOOLS:-$sdk/build-tools/37.0.0}
 platform=${PLATFORM_JAR:-$sdk/platforms/android-37.0/android.jar}
 aapt2=$bt/aapt2

@@ -7,6 +7,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
@@ -82,8 +83,10 @@ import io.github.munzzyy.stamp.ui.detail.DetailScreen
 import io.github.munzzyy.stamp.ui.firstrun.FirstRunScreen
 import io.github.munzzyy.stamp.ui.icons.Glyphs
 import io.github.munzzyy.stamp.ui.importing.ImportScreen
+import io.github.munzzyy.stamp.ui.look.LookScreen
 import io.github.munzzyy.stamp.ui.settings.SettingsScreen
 import io.github.munzzyy.stamp.ui.text.isUpdate
+import io.github.munzzyy.stamp.ui.theme.LocalLook
 import kotlinx.coroutines.CancellationException
 
 const val TAB_LABEL_TAG = "tab_label"
@@ -91,6 +94,7 @@ const val TAB_LABEL_TAG = "tab_label"
 private val RAIL_WIDTH = 600.dp
 private val TWO_PANE_WIDTH = 840.dp
 private val LIST_PANE_WIDTH = 400.dp
+private const val LIST_PANE_SHARE = 0.45f
 
 @Composable
 fun StampApp(
@@ -113,7 +117,14 @@ fun StampApp(
         LocalActionScope provides scope,
         LocalReducedMotion provides reducedMotion,
     ) {
-        Box(Modifier.fillMaxSize().focusHighlight()) {
+        val look = LocalLook.current
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.surface)
+                .focusHighlight()
+                .padding(horizontal = look.edgeHorizontal, vertical = look.edgeVertical),
+        ) {
             if (!firstRunDone) {
                 FirstRunScreen(
                     onAddFirst = {
@@ -239,23 +250,26 @@ private fun Pane(stack: BackStack, holder: SaveableStateHolder, current: Route, 
     var reopened by remember { mutableIntStateOf(0) }
     val showList = twoPane && (current == Route.Apps || current is Route.Detail)
     if (showList) {
-        Row(Modifier.fillMaxSize()) {
-            Box(Modifier.width(LIST_PANE_WIDTH).fillMaxHeight().verticalFocusStaysInside()) {
-                holder.SaveableStateProvider("apps") {
-                    AppsScreen(
-                        selectedId = (current as? Route.Detail)?.appId,
-                        onOpen = { if ((current as? Route.Detail)?.appId == it) reopened++ else stack.showDetail(it) },
-                        onAdd = { stack.select(Tab.ADD) },
-                        listState = listState,
-                    )
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val listWidth = minOf(LIST_PANE_WIDTH, maxWidth * LIST_PANE_SHARE)
+            Row(Modifier.fillMaxSize()) {
+                Box(Modifier.width(listWidth).fillMaxHeight().verticalFocusStaysInside()) {
+                    holder.SaveableStateProvider("apps") {
+                        AppsScreen(
+                            selectedId = (current as? Route.Detail)?.appId,
+                            onOpen = { if ((current as? Route.Detail)?.appId == it) reopened++ else stack.showDetail(it) },
+                            onAdd = { stack.select(Tab.ADD) },
+                            listState = listState,
+                        )
+                    }
                 }
-            }
-            VerticalDivider()
-            Box(Modifier.weight(1f).fillMaxHeight().verticalFocusStaysInside()) {
-                if (current is Route.Detail) {
-                    Screens(stack, holder, current, listState, twoPane = true, reopened = reopened)
-                } else {
-                    NothingSelected()
+                VerticalDivider()
+                Box(Modifier.weight(1f).fillMaxHeight().verticalFocusStaysInside()) {
+                    if (current is Route.Detail) {
+                        Screens(stack, holder, current, listState, twoPane = true, reopened = reopened)
+                    } else {
+                        NothingSelected()
+                    }
                 }
             }
         }
@@ -320,8 +334,9 @@ private fun Screen(stack: BackStack, route: Route, listState: LazyListState, two
             onRemoved = { stack.pop() },
         )
         Route.Activity -> ActivityScreen(onOpenApp = { stack.showDetail(it) })
-        Route.Settings -> SettingsScreen(onImport = { stack.push(Route.Import) })
+        Route.Settings -> SettingsScreen(onImport = { stack.push(Route.Import) }, onLook = { stack.push(Route.Look) })
         Route.Import -> ImportScreen(onBack = { stack.pop() }, onOpenApp = { stack.showDetail(it) })
+        Route.Look -> LookScreen(onBack = { stack.pop() })
     }
 }
 

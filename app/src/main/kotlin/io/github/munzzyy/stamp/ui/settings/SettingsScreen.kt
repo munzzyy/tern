@@ -48,10 +48,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.stamp.BuildConfig
 import io.github.munzzyy.stamp.R
 import io.github.munzzyy.stamp.core.model.UpdateMode
-import io.github.munzzyy.stamp.engine.ColorSource
 import io.github.munzzyy.stamp.engine.ProxyMode
 import io.github.munzzyy.stamp.engine.Settings
-import io.github.munzzyy.stamp.engine.ThemeMode
 import io.github.munzzyy.stamp.ui.LocalEngine
 import io.github.munzzyy.stamp.ui.LocalSnackbar
 import io.github.munzzyy.stamp.ui.common.ActionRow
@@ -71,14 +69,13 @@ import io.github.munzzyy.stamp.ui.detail.updateModeEffect
 import io.github.munzzyy.stamp.ui.detail.updateModeLabel
 import io.github.munzzyy.stamp.ui.icons.Glyphs
 import io.github.munzzyy.stamp.ui.text.intervalChoices
-import io.github.munzzyy.stamp.ui.theme.dynamicColorSupported
 
 const val SOURCE_URL = "https://github.com/munzzyy/stamp"
 private val MIN_AGE_CHOICES = listOf(0, 1, 3, 7, 14, 30)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(onImport: () -> Unit) {
+fun SettingsScreen(onImport: () -> Unit, onLook: () -> Unit) {
     val engine = LocalEngine.current
     val vm = viewModel(key = "settings") { SettingsViewModel(engine) }
     val s by vm.settings.collectAsStateWithLifecycle()
@@ -105,7 +102,7 @@ fun SettingsScreen(onImport: () -> Unit) {
                 InstallingSection(s, update)
                 TokensSection(vm)
                 NetworkSection(s, update)
-                AppearanceSection(s, update)
+                AppearanceSection(onLook, Modifier.returnFocus(screen, "look"))
                 DataSection(s, vm, update, onImport, Modifier.returnFocus(screen, "import"))
                 AboutSection()
             }
@@ -340,37 +337,16 @@ private fun CustomProxy(s: Settings, update: Update) {
 }
 
 @Composable
-private fun AppearanceSection(s: Settings, update: Update) {
+private fun AppearanceSection(onLook: () -> Unit, lookFocus: Modifier) {
     SectionHeader(stringResource(R.string.settings_appearance))
+    ActionRow(
+        title = stringResource(R.string.look_title),
+        summary = stringResource(R.string.look_summary),
+        icon = Glyphs.Drop,
+        onClick = onLook,
+        modifier = lookFocus,
+    )
     LanguageRow()
-    ChoiceRow(
-        title = stringResource(R.string.settings_theme),
-        options = ThemeMode.entries,
-        selected = s.theme,
-        label = {
-            stringResource(
-                when (it) {
-                    ThemeMode.SYSTEM -> R.string.theme_system
-                    ThemeMode.LIGHT -> R.string.theme_light
-                    ThemeMode.DARK -> R.string.theme_dark
-                },
-            )
-        },
-        onSelect = { t -> update { it.copy(theme = t) } },
-    )
-    SwitchRow(
-        title = stringResource(R.string.settings_dynamic_color),
-        summary = stringResource(if (dynamicColorSupported) R.string.settings_dynamic_color_effect else R.string.settings_dynamic_color_unsupported),
-        checked = s.colorSource == ColorSource.WALLPAPER && dynamicColorSupported,
-        enabled = dynamicColorSupported,
-        onChange = { v -> update { it.copy(colorSource = if (v) ColorSource.WALLPAPER else ColorSource.PALETTE) } },
-    )
-    SwitchRow(
-        title = stringResource(R.string.settings_pure_black),
-        summary = stringResource(R.string.settings_pure_black_effect),
-        checked = s.pureBlack,
-        onChange = { v -> update { it.copy(pureBlack = v) } },
-    )
 }
 
 /** Android keeps the language of each app itself from version 13 on; before that the app follows the phone. */

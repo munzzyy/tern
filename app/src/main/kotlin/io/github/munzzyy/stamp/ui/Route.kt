@@ -15,6 +15,8 @@ sealed interface Route {
     data object Settings : Route
 
     data object Import : Route
+
+    data object Look : Route
 }
 
 enum class Tab { APPS, ADD, ACTIVITY, SETTINGS }
@@ -23,7 +25,7 @@ fun Route.tab(): Tab = when (this) {
     Route.Apps, is Route.Detail -> Tab.APPS
     is Route.Add -> Tab.ADD
     Route.Activity -> Tab.ACTIVITY
-    Route.Settings, Route.Import -> Tab.SETTINGS
+    Route.Settings, Route.Import, Route.Look -> Tab.SETTINGS
 }
 
 private const val SEP = '\u0001'
@@ -35,6 +37,7 @@ fun encodeRoute(route: Route): String = when (route) {
     Route.Activity -> "activity"
     Route.Settings -> "settings"
     Route.Import -> "import"
+    Route.Look -> "look"
 }
 
 fun decodeRoute(s: String): Route? {
@@ -46,6 +49,7 @@ fun decodeRoute(s: String): Route? {
         "activity" -> Route.Activity
         "settings" -> Route.Settings
         "import" -> Route.Import
+        "look" -> Route.Look
         else -> null
     }
 }

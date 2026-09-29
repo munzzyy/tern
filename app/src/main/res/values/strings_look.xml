@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="look_title">Look</string>
+    <string name="look_summary">Theme, colours, contrast, density, corners and icons</string>
+
+    <!-- Read by TalkBack for the sample at the top of the Look page. -->
+    <string name="look_preview_spoken">Preview of the look as it is set now</string>
+    <!-- The name of the invented app in the preview. -->
+    <string name="look_preview_app">Example app</string>
+
+    <string name="look_colours">Colours</string>
+    <string name="look_palette">Colour</string>
+    <string name="look_wallpaper">Wallpaper</string>
+    <string name="look_own">Own colour</string>
+    <string name="palette_ink">Ink</string>
+    <string name="palette_slate">Slate</string>
+    <string name="palette_tide">Tide</string>
+    <string name="palette_moss">Moss</string>
+    <string name="palette_amber">Amber</string>
+    <string name="palette_clay">Clay</string>
+    <string name="palette_rose">Rose</string>
+    <string name="palette_plum">Plum</string>
+    <string name="look_hue">Hue of your own colour</string>
+    <plurals name="look_hue_degrees">
+        <item quantity="one">%1$d degree</item>
+        <item quantity="other">%1$d degrees</item>
+    </plurals>
+
+    <string name="look_contrast">Contrast</string>
+    <string name="contrast_standard">Standard</string>
+    <string name="contrast_medium">Medium</string>
+    <string name="contrast_high">High</string>
+    <string name="look_contrast_effect">More contrast sets text and outlines further apart from what is behind them.</string>
+
+    <string name="look_shape_and_size">Shape and size</string>
+    <string name="look_density">Density</string>
+    <string name="density_comfortable">Comfortable</string>
+    <string name="density_compact">Compact</string>
+    <string name="look_density_effect">Compact fits more on the screen. Nothing you press gets smaller than a fingertip.</string>
+    <string name="look_corners">Corners</string>
+    <string name="corners_round">Round</string>
+    <string name="corners_soft">Soft</string>
+    <string name="corners_sharp">Sharp</string>
+    <string name="look_icon_shape">Icon shape</string>
+    <string name="icon_shape_circle">Circle</string>
+    <string name="icon_shape_squircle">Squircle</string>
+    <string name="icon_shape_square">Square</string>
+
+    <string name="look_icons">Icons</string>
+    <string name="look_source_icons">Icons from the source</string>
+    <string name="look_source_icons_effect">While an app is not installed, Stamp gets its icon from where the app is published: its repository or its store listing. Off draws a letter on a colour and asks nobody.</string>
+</resources>

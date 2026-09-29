@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="engine_handoff_no_local_network">This device is on no local network, so a phone cannot reach it. Connect this device to Wi-Fi or to a network cable and try again.</string>
+    <string name="engine_handoff_behind_vpn">This device is connected through a VPN, so a phone on the local network cannot reach it. Turn the VPN off for as long as you send, then try again.</string>
+    <!-- %1$s is a short technical reason in English, such as "Permission denied". -->
+    <string name="engine_handoff_cannot_open">This device could not open a page on the local network: %1$s</string>
+    <string name="engine_handoff_cannot_open_plain">This device could not open a page on the local network.</string>
+    <string name="engine_handoff_not_on_screen">Stamp has to be on the screen while it takes links from a phone. Open Stamp and try again.</string>
+</resources>

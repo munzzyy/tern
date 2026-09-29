@@ -159,6 +159,7 @@ class RealEngine(
     internal val installs = Installs(this)
     private val detector = Detector(this)
     private val interop = Interop(this)
+    private val handoffs = Handoffs.on(this)
     private val stars = Stars(this)
     private val moves = Moves(this)
     private val sourceIcons = SourceIcons(this)
@@ -480,20 +481,22 @@ class RealEngine(
         return interop.importFromLink(url)
     }
 
-    override suspend fun importReceived(file: Received.ExportFile): ImportSummary = throw ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet()))
+    override suspend fun importReceived(file: Received.ExportFile): ImportSummary {
+        ready()
+        return interop.importBytes(file.bytes)
+    }
 
     override fun suggestions(): List<Suggestion> = Suggestions.list(device.profile.television, context::getString)
 
     override fun canOpenInstallSettings(): Boolean = device.canOpenInstallSettings()
 
-    private val _handoff = MutableStateFlow<Handoff?>(null)
-    override val handoff: StateFlow<Handoff?> = _handoff.asStateFlow()
+    override val handoff: StateFlow<Handoff?> get() = handoffs.handoff
 
-    override suspend fun openHandoff(): Problem? = Problem(ProblemKind.UNSUPPORTED, texts.notBuiltYet())
+    override suspend fun openHandoff(): Problem? = handoffs.open()
 
-    override fun closeHandoff() = Unit
+    override fun closeHandoff() = handoffs.close()
 
-    override fun takeReceived(): List<Received> = emptyList()
+    override fun takeReceived(): List<Received> = handoffs.take()
 
     override suspend fun starredBy(user: String): List<SearchHit> {
         ready()
@@ -600,6 +603,7 @@ class RealEngine(
 
     override fun close() {
         scope.cancel()
+        handoffs.shutDown()
         try {
             connectivity.unregisterNetworkCallback(networkCallback)
         } catch (e: IllegalArgumentException) {

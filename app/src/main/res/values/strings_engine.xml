@@ -63,6 +63,17 @@
     <string name="engine_warn_moved">The project seems to have moved to %1$s.</string>
     <string name="engine_several_apps">This link holds several apps. Import it from settings instead.</string>
     <string name="engine_not_a_source">Jackdaw found no releases at this address.</string>
+    <string name="engine_move_gone">This app is no longer in the list.</string>
+    <string name="engine_move_nothing">There is no new address to follow.</string>
+    <string name="engine_move_not_a_source">Jackdaw found no releases at the new address, so it kept the old one.</string>
+    <string name="engine_move_already_tracked">The new address is already in your list as another app, so the old one was kept.</string>
+    <string name="engine_move_unknown_app">Jackdaw does not know yet which app this is, so it cannot tell whether the new address offers the same one. Check the app first.</string>
+    <string name="engine_move_unreadable">Jackdaw could not read which app the new address offers, so it kept the old one.</string>
+    <!-- %1$s is the package name of the tracked app, %2$s the one the new address offers. -->
+    <string name="engine_move_other_app">The new address offers %2$s, not %1$s, so the old address was kept.</string>
+    <string name="engine_move_other_signer">The new address offers the app signed by someone else, so the old address was kept.</string>
+    <!-- %1$s is the old web address, %2$s the new one. -->
+    <string name="engine_event_moved">Followed the project from %1$s to %2$s</string>
     <string name="engine_stars_bad_name">That is not a GitHub user name. It can hold letters, digits and hyphens.</string>
     <!-- %1$s is the GitHub user name the person typed. -->
     <string name="engine_stars_no_user">GitHub has no user named %1$s.</string>

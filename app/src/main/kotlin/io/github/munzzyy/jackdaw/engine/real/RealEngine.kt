@@ -154,6 +154,7 @@ class RealEngine(
     private val detector = Detector(this)
     private val interop = Interop(this)
     private val stars = Stars(this)
+    private val moves = Moves(this)
 
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -223,7 +224,7 @@ class RealEngine(
     private fun row(entry: StoredApp): AppRow {
         val id = entry.config.id
         val eval = evaluations[id] ?: Evaluation(AppStatus.UNKNOWN)
-        val installed = deviceApps[packageOf(entry.config, eval)]?.app
+        val installed = packageOf(entry.config, eval)?.let { deviceApps[it] }?.app
         return AppRow(
             config = entry.config,
             installed = installed?.app,
@@ -238,7 +239,7 @@ class RealEngine(
             lastCheckedMs = entry.state.lastCheckedMs,
             silentUpdate = if (installed == null) null else device.silentUpdateLikely(installed, eval.facts?.targetSdk),
             checking = id in checking,
-            movedTo = entry.state.movedTo,
+            movedTo = Moves.suggestion(entry.state),
         )
     }
 
@@ -387,6 +388,16 @@ class RealEngine(
             checks.reevaluate(checked.id, network = false)
             publish()
         }
+    }
+
+    override suspend fun followMove(appId: String): Problem? {
+        ready()
+        return moves.follow(appId)
+    }
+
+    override suspend fun keepAddress(appId: String) {
+        ready()
+        moves.keep(appId)
     }
 
     override suspend fun dismissRelease(appId: String) {

@@ -27,6 +27,7 @@ object StateJson {
             "installProblem" to state.installProblem?.let(::problem),
             "seenReleaseId" to state.seenReleaseId,
             "movedTo" to state.movedTo,
+            "keptAddress" to state.keptAddress,
             "patternProblem" to state.patternProblem?.let { Json.obj("filters" to it.filters, "message" to it.message) },
             "description" to state.description,
             "announcedReleaseId" to state.announcedReleaseId,
@@ -51,6 +52,7 @@ object StateJson {
             installProblem = obj.obj("installProblem")?.let(::problem),
             seenReleaseId = obj.string("seenReleaseId"),
             movedTo = obj.string("movedTo"),
+            keptAddress = obj.string("keptAddress"),
             patternProblem = obj.obj("patternProblem")?.let { p ->
                 PatternProblem(p.string("filters") ?: return@let null, p.string("message") ?: return@let null)
             },

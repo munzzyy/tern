@@ -10,6 +10,7 @@ import io.github.munzzyy.jackdaw.core.model.Release
 import io.github.munzzyy.jackdaw.engine.AppRow
 import io.github.munzzyy.jackdaw.engine.Engine
 import io.github.munzzyy.jackdaw.engine.NoteBlock
+import io.github.munzzyy.jackdaw.engine.Problem
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,6 +21,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
+sealed interface MoveState {
+    data object Idle : MoveState
+    data object Working : MoveState
+    data class Refused(val problem: Problem) : MoveState
+    data object Followed : MoveState
+}
 
 sealed interface Loadable<out T> {
     data object Loading : Loadable<Nothing>
@@ -67,6 +75,37 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
                 Loadable.Failed
             }
             _notes.update { it + (release.id to result) }
+        }
+    }
+
+    private val _move = MutableStateFlow<MoveState>(MoveState.Idle)
+    val move: StateFlow<MoveState> = _move.asStateFlow()
+
+    fun followMove(onFailed: () -> Unit) {
+        if (_move.value == MoveState.Working) return
+        _move.value = MoveState.Working
+        viewModelScope.launch {
+            _move.value = try {
+                engine.followMove(appId)?.let { MoveState.Refused(it) } ?: MoveState.Followed
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                onFailed()
+                MoveState.Idle
+            }
+        }
+    }
+
+    fun keepAddress(onFailed: () -> Unit) {
+        _move.value = MoveState.Idle
+        viewModelScope.launch {
+            try {
+                engine.keepAddress(appId)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                onFailed()
+            }
         }
     }
 

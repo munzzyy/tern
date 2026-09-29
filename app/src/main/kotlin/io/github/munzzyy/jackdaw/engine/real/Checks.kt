@@ -75,13 +75,13 @@ internal class Checks(private val e: RealEngine) {
                 e.event(id, EventKind.CHECK_FAILED, problem.message)
                 return true
             }
-            is CheckResult.Listing -> store(id, outcome.listing, now)
+            is CheckResult.Listing -> storeListing(id, outcome.listing, now)
             else -> e.saveState(id) { it.copy(lastCheckedMs = now, checkProblem = null) }
         }
         return false
     }
 
-    private fun store(id: String, listing: SourceListing, now: Long) {
+    fun storeListing(id: String, listing: SourceListing, now: Long) {
         e.saveApp(id) { s ->
             var config = s.config
             if (listing.learnedOptions.isNotEmpty()) {
@@ -96,7 +96,7 @@ internal class Checks(private val e: RealEngine) {
                     releases = releases,
                     lastCheckedMs = now,
                     checkProblem = null,
-                    movedTo = listing.movedTo,
+                    movedTo = listing.movedTo?.takeIf { Urls.isHttps(it) && it.length <= MAX_ADDRESS },
                     description = listing.description?.take(1000) ?: s.state.description,
                 ),
             )
@@ -155,5 +155,6 @@ internal class Checks(private val e: RealEngine) {
     private companion object {
         const val MAX_PARALLEL = 4
         const val PER_HOST = 2
+        const val MAX_ADDRESS = 2048
     }
 }

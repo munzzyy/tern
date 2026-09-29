@@ -86,6 +86,7 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit) {
     val engine = LocalEngine.current
     val vm = viewModel(key = "detail:$appId") { DetailViewModel(engine, appId) }
     val row by vm.row.collectAsStateWithLifecycle()
+    val move by vm.move.collectAsStateWithLifecycle()
     val current = row
     val listState = rememberLazyListState()
     val headerGone by remember { derivedStateOf { listState.firstVisibleItemIndex > 0 } }
@@ -123,6 +124,10 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit) {
         ) {
             item(key = "header") { Header(current) }
             item(key = "action") { ActionArea(current) }
+            val moveState = move
+            if (current.movedTo != null || moveState is MoveState.Refused || moveState == MoveState.Followed) {
+                item(key = "moved") { MovedBox(current.movedTo, moveState, vm) }
+            }
             current.verification?.let { v ->
                 item(key = "checks") {
                     Section { VerificationPanel(v) }

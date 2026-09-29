@@ -25,6 +25,12 @@ object FakeLinks {
 
     /** A repository with releases but nothing an Android device can install, like most starred ones. */
     const val NO_FILE_PREFIX = "https://github.com/example/tool-"
+
+    /** Where Harbor Terminal moved: the same app and signer, so following it works. */
+    const val MOVED_HOME = "https://github.com/example-org/harborterm"
+
+    /** Where Pocket Notes claims to have moved: a different signer, so following it is refused. */
+    const val MOVED_ELSEWHERE = "https://github.com/someone-else/pocketnotes"
 }
 
 fun fakeDetect(input: String, invent: Invent): Detection {

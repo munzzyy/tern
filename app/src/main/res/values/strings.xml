@@ -245,6 +245,13 @@
 
     <!-- App detail -->
     <string name="detail_gone">This app is no longer in your list.</string>
+    <!-- %1$s is the web address the project's source says it lives at now. -->
+    <string name="moved_title">This project moved to %1$s</string>
+    <string name="moved_explain">Jackdaw switches only if the new address offers the same app, signed by the same developer.</string>
+    <string name="moved_follow">Follow it there</string>
+    <string name="moved_keep">Keep the old address</string>
+    <string name="moved_working">Checking the new address</string>
+    <string name="moved_done">Jackdaw now follows the new address.</string>
     <string name="silent_yes">This update can install without a prompt.</string>
     <string name="silent_no">Android will ask you to confirm this update.</string>
     <string name="phase_queued">Waiting for other downloads to finish</string>

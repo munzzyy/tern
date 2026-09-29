@@ -127,7 +127,7 @@ data class AppRow(
     val id: String get() = config.id
 }
 
-enum class EventKind { ADDED, REMOVED, IMPORTED, UPDATE_FOUND, DOWNLOADED, VERIFIED, INSTALLED, BLOCKED, FAILED, CHECK_FAILED }
+enum class EventKind { ADDED, REMOVED, IMPORTED, UPDATE_FOUND, DOWNLOADED, VERIFIED, INSTALLED, BLOCKED, FAILED, CHECK_FAILED, MOVED }
 
 data class Event(
     val id: Long,

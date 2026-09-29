@@ -71,6 +71,16 @@ interface Engine {
 
     suspend fun save(config: AppConfig)
 
+    /**
+     * Replaces the app's source with the address in [AppRow.movedTo], after detecting it afresh.
+     * Only a source offering the same package and, where known on both sides, the same signer is
+     * accepted. Returns why not otherwise, and null once the source is replaced.
+     */
+    suspend fun followMove(appId: String): Problem?
+
+    /** Keeps the current source and stops suggesting the address in [AppRow.movedTo]. */
+    suspend fun keepAddress(appId: String)
+
     /** Marks the offered release as seen (track-only) or skipped (installable). */
     suspend fun dismissRelease(appId: String)
 

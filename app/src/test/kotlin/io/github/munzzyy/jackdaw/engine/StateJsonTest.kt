@@ -37,6 +37,7 @@ class StateJsonTest {
             installProblem = Problem(ProblemKind.DOWNGRADE, "older"),
             seenReleaseId = "v2",
             movedTo = "https://example.org/moved",
+            keptAddress = "https://example.org/moved",
             patternProblem = PatternProblem("a\u0000b", "slow"),
             description = "d",
             announcedReleaseId = "v2",

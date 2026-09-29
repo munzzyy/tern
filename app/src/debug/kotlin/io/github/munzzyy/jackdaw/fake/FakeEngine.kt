@@ -291,6 +291,22 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         edit(config.id) { it.copy(config = config) }
     }
 
+    override suspend fun followMove(appId: String): Problem? {
+        delay(stepMs * 4)
+        val r = row(appId) ?: return Problem(ProblemKind.NOT_FOUND, "This app is no longer in the list.")
+        val target = r.movedTo ?: return Problem(ProblemKind.NOT_FOUND, "There is no new address to follow.")
+        if (target != FakeLinks.MOVED_HOME) {
+            return Problem(ProblemKind.SIGNER_MISMATCH, "The new address offers the app signed by someone else, so the old address was kept.")
+        }
+        edit(appId) { it.copy(config = it.config.copy(source = it.config.source.copy(url = target)), movedTo = null) }
+        log(row(appId), EventKind.MOVED, "Followed the project to $target")
+        return null
+    }
+
+    override suspend fun keepAddress(appId: String) {
+        edit(appId) { it.copy(movedTo = null) }
+    }
+
     override suspend fun dismissRelease(appId: String) {
         edit(appId) { r ->
             val skipped = r.config.copy(releases = r.config.releases.copy(skippedReleaseId = r.latest?.id))

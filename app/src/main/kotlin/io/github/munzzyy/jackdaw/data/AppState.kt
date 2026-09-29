@@ -35,6 +35,8 @@ data class AppState(
     val installProblem: Problem? = null,
     val seenReleaseId: String? = null,
     val movedTo: String? = null,
+    /** The new home the user chose not to follow; a different one is suggested again. */
+    val keptAddress: String? = null,
     val patternProblem: PatternProblem? = null,
     val description: String? = null,
     val announcedReleaseId: String? = null,

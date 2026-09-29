@@ -170,7 +170,7 @@
     <!-- What the user can do about each problem. -->
     <string name="advice_network">Jackdaw could not reach the source. Check your connection or proxy, then try again.</string>
     <string name="advice_rate_limited">The source is limiting how often it can be asked. A saved access token for this host raises the limit.</string>
-    <string name="advice_not_found">The project may have moved or been made private. Check the link, or remove the app and add it again.</string>
+    <string name="advice_not_found">The project may have moved or been made private. Check that the link still opens in a browser.</string>
     <string name="advice_auth">The source refused the access token. Replace it in Settings, under access tokens.</string>
     <string name="advice_parse">The source answered with something Jackdaw could not read. It may be a temporary fault on their side.</string>
     <string name="advice_no_releases">The project has not published a release Jackdaw can use yet. Pre-releases count if you turn them on.</string>

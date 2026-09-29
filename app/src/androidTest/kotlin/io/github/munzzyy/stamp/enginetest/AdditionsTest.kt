@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.stamp.core.json.Json
+import io.github.munzzyy.stamp.engine.AppStatus
 import io.github.munzzyy.stamp.engine.Detection
 import io.github.munzzyy.stamp.engine.EventKind
 import io.github.munzzyy.stamp.engine.Phase
@@ -46,6 +47,24 @@ class AdditionsTest {
             assertEquals(PackageManager.COMPONENT_ENABLED_STATE_ENABLED, pm.getComponentEnabledSetting(alias))
             h.engine.saveSettings(h.engine.settings.value.copy(openObtainiumLinks = false))
             assertEquals(PackageManager.COMPONENT_ENABLED_STATE_DISABLED, pm.getComponentEnabledSetting(alias))
+        }
+    }
+
+    /** Orbot publishes release candidates only, and the forge does not mark them: only the version says what they are. */
+    @Test
+    fun anAppThatOnlyPublishesPreReleasesIsAddedTheWayItWasShown() = runBlocking {
+        Harness("only-candidates").use { h ->
+            h.forge.releases = listOf(FakeForge.Release("2.0-RC-1", listOf(FakeForge.File("app-v2.apk", asset("apk/app-v2.apk")))))
+            val found = h.engine.detect(FakeForge.PROJECT) as Detection.Found
+            assertEquals("2.0-RC-1", found.release?.id)
+            assertTrue("the preview has to say that this is a pre-release: ${found.warnings}", found.warnings.isNotEmpty())
+            assertTrue(h.engine.proposedConfig(found).releases.includePrereleases)
+
+            val id = h.engine.add(found, install = false)
+            assertTrue(h.row(id).config.releases.includePrereleases)
+            assertEquals(h.describe(id), AppStatus.NOT_INSTALLED, h.row(id).status)
+            assertEquals(h.describe(id), "2.0-RC-1", h.row(id).latest?.id)
+            assertEquals(h.describe(id), null, h.row(id).problem)
         }
     }
 

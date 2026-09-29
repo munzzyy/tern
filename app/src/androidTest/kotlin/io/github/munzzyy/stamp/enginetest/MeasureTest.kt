@@ -12,16 +12,19 @@ import io.github.munzzyy.stamp.core.source.CheckResult
 import io.github.munzzyy.stamp.core.source.SourceException
 import io.github.munzzyy.stamp.core.source.SourceOptions
 import io.github.munzzyy.stamp.core.source.SourceTypes
-import java.io.FilterInputStream
-import java.util.concurrent.atomic.AtomicInteger
-import java.util.concurrent.atomic.AtomicLong
 import io.github.munzzyy.stamp.engine.Detection
+import io.github.munzzyy.stamp.engine.OrbotState
 import io.github.munzzyy.stamp.engine.ProxyMode
 import io.github.munzzyy.stamp.engine.Settings
 import io.github.munzzyy.stamp.engine.real.RealEngine
 import io.github.munzzyy.stamp.net.ProxyChoice
+import io.github.munzzyy.stamp.net.ProxyDoor
 import io.github.munzzyy.stamp.net.UrlConnectionHttp
+import java.io.FilterInputStream
 import java.io.IOException
+import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Assume.assumeTrue
 import org.junit.Test
@@ -34,6 +37,51 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class MeasureTest {
     private val args = InstrumentationRegistry.getArguments()
+
+    /**
+     * With a real Orbot on the device and the proxy set to Orbot: what Orbot answers, which port it
+     * names, whether the Tor project's own page sees the request come out of Tor, and whether a
+     * project can be read that way. Without Orbot running it shows that nothing is reached.
+     */
+    @Test
+    fun throughARealOrbot() = runBlocking<Unit> {
+        assumeTrue(args.getString("engineMeasure") == "orbot")
+        val store = "enginetest-orbot.db"
+        targetContext.deleteDatabase(store)
+        val door = ProxyDoor()
+        val engine = RealEngine(targetContext, UrlConnectionHttp(proxy = door::proxy, connectTimeoutMs = 30_000, readTimeoutMs = 60_000), storeName = store, prefsPrefix = "enginetest-orbot-")
+        door.follow(engine::proxy)
+        try {
+            engine.ready()
+            engine.saveSettings(engine.settings.value.copy(proxy = ProxyMode.ORBOT))
+            engine.askOrbot()
+            val waitMs = args.getString("orbotWaitMs")?.toLong() ?: 120_000
+            val end = System.currentTimeMillis() + waitMs
+            var last: OrbotState? = null
+            while (System.currentTimeMillis() < end && engine.orbot.value != OrbotState.ON) {
+                if (engine.orbot.value != last) {
+                    last = engine.orbot.value
+                    Log.i(TAG, "Orbot says: $last")
+                }
+                delay(1_000)
+            }
+            Log.i(TAG, "Orbot says: ${engine.orbot.value}, proxy in use: ${engine.proxy()}")
+            for (url in listOf("https://check.torproject.org/api/ip", "https://codeberg.org/api/v1/version")) {
+                val outcome = try {
+                    engine.http.execute(HttpRequest(url)).use { "HTTP ${it.status} ${it.text().take(200)}" }
+                } catch (e: IOException) {
+                    "${e.javaClass.simpleName}: ${e.message}"
+                }
+                Log.i(TAG, "with the proxy on Orbot, $url -> $outcome")
+            }
+            val url = args.getString("detectUrl") ?: "https://codeberg.org/forgejo/forgejo"
+            val found = engine.detect(url)
+            Log.i(TAG, "with the proxy on Orbot, detect $url -> ${found.javaClass.simpleName} ${(found as? Detection.Failed)?.problem ?: ""}")
+        } finally {
+            engine.close()
+            targetContext.deleteDatabase(store)
+        }
+    }
 
     @Test
     fun namesGoToTheSocksProxyUnresolved() {

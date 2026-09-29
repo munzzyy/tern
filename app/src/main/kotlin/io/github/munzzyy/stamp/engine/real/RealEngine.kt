@@ -320,7 +320,7 @@ class RealEngine(
             source = found.spec,
             name = "",
             releases = ReleasePolicy(
-                includePrereleases = s.includePrereleasesByDefault || found.release?.prerelease == true,
+                includePrereleases = s.includePrereleasesByDefault || found.release?.countsAsPrerelease == true,
                 minAgeDays = s.minAgeDaysByDefault,
             ),
             updates = s.defaultUpdateMode,

@@ -75,7 +75,7 @@ object ReleaseSelector {
         for (original in releases) {
             val release = if (extract == null) original else original.copy(version = extract.extract(original.version) ?: original.version)
             val reason = when {
-                !policy.includePrereleases && (release.prerelease || Version.parse(release.version).isPrerelease) -> Rejection.PRERELEASE
+                !policy.includePrereleases && release.countsAsPrerelease -> Rejection.PRERELEASE
                 tag != null && !tag.matches(release.id) -> Rejection.TAG_FILTER
                 title != null && !title.matches(release.title) -> Rejection.TITLE_FILTER
                 notes != null && !notes.matches(release.notes) -> Rejection.NOTES_FILTER

@@ -1,5 +1,7 @@
 package io.github.munzzyy.stamp.core.model
 
+import io.github.munzzyy.stamp.core.version.Version
+
 enum class AssetKind { APK, BUNDLE, ARCHIVE, CHECKSUM, SIGNATURE, OTHER }
 
 enum class NotesFormat { MARKDOWN, HTML, PLAIN }
@@ -46,4 +48,7 @@ data class Release(
     val assets: List<Asset> = emptyList(),
 ) {
     val installable: List<Asset> get() = assets.filter { it.kind == AssetKind.APK || it.kind == AssetKind.BUNDLE }
+
+    /** True when the source marks it as a pre-release, and when its version says so: 17.9.6-RC-1 is one whatever the source marks. */
+    val countsAsPrerelease: Boolean get() = prerelease || Version.parse(version).isPrerelease
 }

@@ -18,7 +18,7 @@
     <!-- Short status labels on each app row. Keep them to one or two words. -->
     <string name="status_unknown">Not checked yet</string>
     <string name="status_up_to_date">Up to date</string>
-    <string name="status_update">Update</string>
+    <string name="status_update">Update available</string>
     <!-- Only the version text could be compared, so the update is probable but not certain. -->
     <string name="status_update_likely">Update likely</string>
     <string name="status_not_installed">Not installed</string>
@@ -27,6 +27,7 @@
     <string name="status_blocked">Blocked</string>
     <string name="status_error">Check failed</string>
     <string name="status_rate_limited">Rate limited</string>
+    <string name="status_install_failed">Install failed</string>
     <string name="status_checking">Checking</string>
     <string name="status_queued">Queued</string>
     <string name="status_downloading">Downloading</string>
@@ -215,7 +216,7 @@
     <string name="group_advanced">Advanced</string>
     <string name="advanced_show">Show filters, pinned certificates and track only</string>
     <string name="advanced_hide">Hide advanced settings</string>
-    <string name="setting_update_mode">Updates</string>
+    <string name="setting_update_mode">When an update is found</string>
     <string name="mode_notify">Tell me about updates</string>
     <string name="mode_notify_effect">Checked in the background. You decide when to install.</string>
     <string name="mode_auto">Install updates by themselves</string>

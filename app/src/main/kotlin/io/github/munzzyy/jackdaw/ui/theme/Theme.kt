@@ -8,7 +8,11 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.material.ripple.RippleAlpha
+import androidx.compose.material3.LocalRippleConfiguration
+import androidx.compose.material3.RippleConfiguration
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import io.github.munzzyy.jackdaw.engine.Settings
@@ -80,6 +84,11 @@ private val DarkColors = darkColorScheme(
     surfaceContainerHighest = Color(0xFF333538),
 )
 
+/** Focus shows as a strong state layer, so keyboard and D-pad users can see where they are. */
+private val FocusVisibleRipple = RippleConfiguration(
+    rippleAlpha = RippleAlpha(draggedAlpha = 0.16f, focusedAlpha = 0.3f, hoveredAlpha = 0.08f, pressedAlpha = 0.12f),
+)
+
 fun ColorScheme.pureBlack(): ColorScheme = copy(
     background = Color.Black,
     surface = Color.Black,
@@ -110,5 +119,7 @@ fun JackdawTheme(settings: Settings, content: @Composable () -> Unit) {
         else -> LightColors
     }
     val scheme = if (dark && settings.pureBlack) base.pureBlack() else base
-    MaterialTheme(colorScheme = scheme, content = content)
+    MaterialTheme(colorScheme = scheme) {
+        CompositionLocalProvider(LocalRippleConfiguration provides FocusVisibleRipple, content = content)
+    }
 }

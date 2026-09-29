@@ -9,6 +9,9 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
 
+/** Wraps a value in first-strong isolates so a version or size keeps its own order inside a right-to-left sentence. */
+fun isolate(value: String): String = "\u2068$value\u2069"
+
 private val UNITS = arrayOf("B", "KB", "MB", "GB", "TB")
 
 fun formatBytes(bytes: Long, locale: Locale = Locale.getDefault()): String {

@@ -38,6 +38,7 @@ class StatusTest {
         val row = testRow(status = AppStatus.ERROR, problem = Problem(ProblemKind.RATE_LIMITED, "slow down", 5))
         assertEquals(StatusLabel.RATE_LIMITED, statusLabel(row))
         assertEquals(StatusLabel.ERROR, statusLabel(row.copy(problem = Problem(ProblemKind.NETWORK, "down"))))
+        assertEquals(StatusLabel.INSTALL_FAILED, statusLabel(row.copy(problem = Problem(ProblemKind.STORAGE, "full"))))
     }
 
     @Test
@@ -53,6 +54,8 @@ class StatusTest {
         assertEquals(RowAction.CANCEL, primaryAction(row))
         assertNull(inlineAction(row))
         assertFalse(canUpdateNow(row))
+        assertFalse(canSkip(row))
+        assertTrue(canSkip(row.copy(progress = null)))
     }
 
     @Test

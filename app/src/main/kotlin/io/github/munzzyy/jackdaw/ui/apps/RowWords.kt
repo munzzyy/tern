@@ -1,0 +1,49 @@
+package io.github.munzzyy.jackdaw.ui.apps
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import io.github.munzzyy.jackdaw.R
+import io.github.munzzyy.jackdaw.engine.AppRow
+import io.github.munzzyy.jackdaw.engine.Phase
+import io.github.munzzyy.jackdaw.engine.Progress
+import io.github.munzzyy.jackdaw.ui.text.VersionChange
+import io.github.munzzyy.jackdaw.ui.text.formatBytes
+import io.github.munzzyy.jackdaw.ui.text.isolate
+import io.github.munzzyy.jackdaw.ui.text.percentOf
+import io.github.munzzyy.jackdaw.ui.text.statusLabel
+import io.github.munzzyy.jackdaw.ui.text.versionChange
+
+@Composable
+fun versionText(change: VersionChange?): String? = when {
+    change == null -> null
+    change.from == null -> isolate(change.to)
+    else -> stringResource(R.string.version_change, isolate(change.from), isolate(change.to))
+}
+
+@Composable
+fun progressText(progress: Progress): String? {
+    if (progress.phase != Phase.DOWNLOADING) return null
+    val total = progress.bytesTotal
+    val fraction = progress.fraction
+    return if (total != null && fraction != null) {
+        stringResource(R.string.progress_bytes_percent, isolate(formatBytes(progress.bytesDone)), isolate(formatBytes(total)), percentOf(fraction))
+    } else {
+        stringResource(R.string.progress_bytes, isolate(formatBytes(progress.bytesDone)))
+    }
+}
+
+/** One sentence that TalkBack reads for the whole row. */
+@Composable
+fun rowDescription(row: AppRow): String {
+    val parts = mutableListOf(row.config.name, stringResource(statusLabel(row).text))
+    versionChange(row)?.let { change ->
+        parts += if (change.from == null) {
+            stringResource(R.string.version_single_spoken, change.to)
+        } else {
+            stringResource(R.string.version_change_spoken, change.from, change.to)
+        }
+    }
+    row.progress?.let { p -> progressText(p)?.let { parts += it } }
+    row.problem?.let { parts += it.message }
+    return parts.joinToString(". ") { it.trimEnd('.') } + "."
+}

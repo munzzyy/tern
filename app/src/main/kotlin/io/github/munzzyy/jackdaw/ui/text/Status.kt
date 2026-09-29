@@ -19,6 +19,7 @@ enum class StatusLabel(@param:StringRes val text: Int, val tone: Tone) {
     BLOCKED(R.string.status_blocked, Tone.PROBLEM),
     ERROR(R.string.status_error, Tone.PROBLEM),
     RATE_LIMITED(R.string.status_rate_limited, Tone.PROBLEM),
+    INSTALL_FAILED(R.string.status_install_failed, Tone.PROBLEM),
     CHECKING(R.string.status_checking, Tone.BUSY),
     QUEUED(R.string.status_queued, Tone.BUSY),
     DOWNLOADING(R.string.status_downloading, Tone.BUSY),
@@ -45,7 +46,11 @@ fun statusLabel(row: AppRow): StatusLabel {
         AppStatus.NOT_INSTALLED -> StatusLabel.NOT_INSTALLED
         AppStatus.NEW_RELEASE -> StatusLabel.NEW_RELEASE
         AppStatus.BLOCKED -> StatusLabel.BLOCKED
-        AppStatus.ERROR -> if (row.problem?.kind == ProblemKind.RATE_LIMITED) StatusLabel.RATE_LIMITED else StatusLabel.ERROR
+        AppStatus.ERROR -> when (row.problem?.kind) {
+            ProblemKind.RATE_LIMITED -> StatusLabel.RATE_LIMITED
+            ProblemKind.INSTALL_FAILED, ProblemKind.STORAGE -> StatusLabel.INSTALL_FAILED
+            else -> StatusLabel.ERROR
+        }
     }
 }
 
@@ -83,7 +88,7 @@ fun primaryAction(row: AppRow): RowAction? = when {
 }
 
 fun canSkip(row: AppRow): Boolean =
-    row.latest != null && (row.status == AppStatus.UPDATE_AVAILABLE || row.status == AppStatus.NEW_RELEASE)
+    row.latest != null && !isBusy(row) && (row.status == AppStatus.UPDATE_AVAILABLE || row.status == AppStatus.NEW_RELEASE)
 
 fun isUpdate(row: AppRow): Boolean = row.status == AppStatus.UPDATE_AVAILABLE || row.status == AppStatus.NEW_RELEASE
 

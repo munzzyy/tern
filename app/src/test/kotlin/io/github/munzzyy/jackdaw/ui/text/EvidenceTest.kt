@@ -40,6 +40,13 @@ class EvidenceTest {
     }
 
     @Test
+    fun wrappedFingerprintBreaksOnlyBetweenPairs() {
+        val shown = breakableFingerprint(formatFingerprint("abcd01"))
+        assertEquals("AB:​CD:​01", shown)
+        assertEquals("AB:CD:01", shown.replace("​", ""))
+    }
+
+    @Test
     fun oddOrNonHexFingerprintIsLeftAlone() {
         assertEquals("abc", formatFingerprint("abc"))
         assertEquals("zz", formatFingerprint("zz"))

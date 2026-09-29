@@ -21,6 +21,11 @@ class FormatTest {
     }
 
     @Test
+    fun isolatedValuesAreWrappedInFirstStrongIsolates() {
+        assertEquals("⁨1.4.2⁩", isolate("1.4.2"))
+    }
+
+    @Test
     fun percentIsClamped() {
         assertEquals(0, percentOf(-1f))
         assertEquals(50, percentOf(0.5f))

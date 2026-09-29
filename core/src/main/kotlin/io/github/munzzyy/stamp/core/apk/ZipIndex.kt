@@ -31,6 +31,8 @@ class ZipIndex private constructor(
     val entries: List<ZipEntry>,
     val centralDirectoryOffset: Long,
     val centralDirectorySize: Long,
+    val endRecordOffset: Long,
+    val isZip64: Boolean,
 ) {
     private val byName = entries.associateBy { it.name }
 
@@ -51,20 +53,25 @@ class ZipIndex private constructor(
         return start
     }
 
-    fun read(entry: ZipEntry, maxBytes: Int): ByteArray {
+    /** Offset of the entry's data, for an entry whose directory record and local header describe something that can be read. */
+    fun readableDataOffset(entry: ZipEntry): Long {
         if (entry.flags and FLAG_ENCRYPTED != 0) throw ApkFormatException("${entry.name} is encrypted")
-        if (entry.uncompressedSize > maxBytes) throw ApkFormatException("${entry.name} is ${entry.uncompressedSize} bytes, limit $maxBytes")
-        val start = dataOffset(entry)
-        val data = when (entry.method) {
-            ZipEntry.METHOD_STORED -> {
-                if (entry.compressedSize != entry.uncompressedSize) throw ApkFormatException("Stored ${entry.name} has two sizes")
-                source.read(start, entry.compressedSize.toInt())
-            }
-            ZipEntry.METHOD_DEFLATED -> {
-                if (entry.compressedSize > minOf(maxBytes.toLong() + DEFLATE_SLACK, Int.MAX_VALUE.toLong())) throw ApkFormatException("${entry.name} is too large compressed")
-                inflate(source.read(start, entry.compressedSize.toInt()), entry.uncompressedSize.toInt(), entry.name)
-            }
+        when (entry.method) {
+            ZipEntry.METHOD_STORED -> if (entry.compressedSize != entry.uncompressedSize) throw ApkFormatException("Stored ${entry.name} has two sizes")
+            ZipEntry.METHOD_DEFLATED -> Unit
             else -> throw ApkFormatException("${entry.name} uses unsupported method ${entry.method}")
+        }
+        return dataOffset(entry)
+    }
+
+    fun read(entry: ZipEntry, maxBytes: Int): ByteArray {
+        if (entry.uncompressedSize > maxBytes) throw ApkFormatException("${entry.name} is ${entry.uncompressedSize} bytes, limit $maxBytes")
+        val start = readableDataOffset(entry)
+        val data = if (entry.isStored) {
+            source.read(start, entry.compressedSize.toInt())
+        } else {
+            if (entry.compressedSize > minOf(maxBytes.toLong() + DEFLATE_SLACK, Int.MAX_VALUE.toLong())) throw ApkFormatException("${entry.name} is too large compressed")
+            inflate(source.read(start, entry.compressedSize.toInt()), entry.uncompressedSize.toInt(), entry.name)
         }
         val crc = CRC32().apply { update(data) }.value
         if (crc != entry.crc32) throw ApkFormatException("CRC mismatch in ${entry.name}")
@@ -128,7 +135,8 @@ class ZipIndex private constructor(
             var cdOffset = tail.u32(at + 16)
             var cdLimit = eocdOffset
             val locatorOffset = eocdOffset - 20
-            if (locatorOffset >= 0 && source.read(locatorOffset, 20).let { it.u32(0) == LOCATOR_SIGNATURE }) {
+            val zip64 = locatorOffset >= 0 && source.read(locatorOffset, 20).let { it.u32(0) == LOCATOR_SIGNATURE }
+            if (zip64) {
                 val locator = LeReader(source.read(locatorOffset, 20))
                 locator.skip(8)
                 val eocd64Offset = locator.u64()
@@ -148,7 +156,7 @@ class ZipIndex private constructor(
             if (cdOffset > cdLimit || cdSize > cdLimit - cdOffset) throw ApkFormatException("Central directory lies outside the file")
             val central = source.read(cdOffset, cdSize.toInt())
             val entries = parseCentral(central, count.toInt(), cdOffset)
-            return ZipIndex(source, entries, cdOffset, cdSize)
+            return ZipIndex(source, entries, cdOffset, cdSize, eocdOffset, zip64)
         }
 
         private fun findEocd(tail: ByteArray): Int? {

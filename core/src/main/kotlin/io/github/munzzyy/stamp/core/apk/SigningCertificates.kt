@@ -8,9 +8,10 @@ import java.security.cert.X509Certificate
 import javax.security.auth.x500.X500Principal
 
 /**
- * A certificate the APK CLAIMS to be signed with. Nothing here checks a signature: the file could
- * name any certificate at all, and only the device's installer proves the claim after download.
- * Use it to spot a changed key early, never as proof of who built the file.
+ * A certificate the APK CLAIMS to be signed with. Nothing in this file checks a signature: the file
+ * could name any certificate at all. It is what can be read of a file on a server, where only the
+ * ends of the file are fetched, and it is good for spotting a changed key early. Whether the claim
+ * is true is decided on the downloaded file, by Android and by [ApkVerifier].
  *
  * [scheme] is 1, 2, 3 or 31 (v3.1). [sha256] is the lowercase hex SHA-256 of the DER certificate, the
  * value `apksigner verify --print-certs` shows. [lineage] lists the proof-of-rotation chain oldest
@@ -35,44 +36,59 @@ object SignatureScheme {
     const val V31 = 31
 }
 
+/** The APK Signing Block of one file: where it starts, and the value stored for each signature scheme. */
+internal class SigningBlock(val offset: Long, private val bytes: ByteArray, private val values: Map<Int, IntRange>) {
+    fun has(id: Int): Boolean = id in values
+
+    fun value(id: Int): LeReader? = values[id]?.let { LeReader(bytes, it.first, it.last + 1) }
+}
+
 internal object ApkSigningBlock {
+    const val ID_V2 = 0x7109871a
+    const val ID_V3 = 0xf05368c0.toInt()
+    const val ID_V31 = 0x1b93ad61
+    const val ID_V32 = 0x70e1c89f
+    const val ATTR_LINEAGE = 0x3ba06f8c
     private const val MAGIC = "APK Sig Block 42"
-    private const val ID_V2 = 0x7109871a
-    private const val ID_V3 = 0xf05368c0.toInt()
-    private const val ID_V31 = 0x1b93ad61
-    private const val ATTR_LINEAGE = 0x3ba06f8c
     private const val MAX_BLOCK = 16 * 1024 * 1024
     private const val MAX_PAIRS = 1024
     private const val MAX_SIGNERS = 64
     private const val MAX_CERTS = 64
     private const val MAX_ATTRIBUTES = 256
     private const val MAX_LINEAGE = 256
+    private val SCHEMES = setOf(ID_V2, ID_V3, ID_V31, ID_V32)
 
-    fun read(source: RandomAccessSource, centralDirectoryOffset: Long): List<SignerInfo>? {
+    /** Null when nothing in front of the central directory ends in the magic of a signing block. */
+    fun locate(source: RandomAccessSource, centralDirectoryOffset: Long): SigningBlock? {
         if (centralDirectoryOffset < 32) return null
         val footer = source.read(centralDirectoryOffset - 24, 24)
         if (String(footer, 8, 16, Charsets.US_ASCII) != MAGIC) return null
         val size = LeReader(footer).u64()
         if (size < 24 || size > MAX_BLOCK || size > centralDirectoryOffset - 8) throw ApkFormatException("APK Signing Block size $size is impossible")
-        val block = source.read(centralDirectoryOffset - size - 8, (size + 8).toInt())
+        val offset = centralDirectoryOffset - size - 8
+        val block = source.read(offset, (size + 8).toInt())
         if (LeReader(block).u64() != size) throw ApkFormatException("APK Signing Block size fields disagree")
         val pairs = LeReader(block, 8, block.size - 24)
-        val values = HashMap<Int, LeReader>()
+        val values = HashMap<Int, IntRange>()
         var count = 0
         while (pairs.hasRemaining()) {
             if (++count > MAX_PAIRS) throw ApkFormatException("Too many APK Signing Block entries")
             val length = pairs.u64()
             if (length < 4 || length > pairs.remaining) throw ApkFormatException("APK Signing Block entry of $length bytes")
-            val pair = pairs.slice(length.toInt())
-            val id = pair.i32()
-            if (id == ID_V2 || id == ID_V3 || id == ID_V31) {
-                if (values.put(id, pair) != null) throw ApkFormatException("Signature scheme block appears twice")
-            }
+            val id = pairs.i32()
+            val start = pairs.position
+            pairs.skip(length.toInt() - 4)
+            if (id in SCHEMES && values.put(id, start until pairs.position) != null) throw ApkFormatException("Signature scheme block appears twice")
         }
+        return SigningBlock(offset, block, values)
+    }
+
+    fun read(source: RandomAccessSource, centralDirectoryOffset: Long): List<SignerInfo>? {
+        val block = locate(source, centralDirectoryOffset) ?: return null
         val signers = ArrayList<SignerInfo>()
-        values[ID_V2]?.let { signers += signers(it, SignatureScheme.V2) }
-        values[ID_V3]?.let { signers += signers(it, SignatureScheme.V3) }
-        values[ID_V31]?.let { signers += signers(it, SignatureScheme.V31) }
+        block.value(ID_V2)?.let { signers += signers(it, SignatureScheme.V2) }
+        block.value(ID_V3)?.let { signers += signers(it, SignatureScheme.V3) }
+        block.value(ID_V31)?.let { signers += signers(it, SignatureScheme.V31) }
         return signers
     }
 

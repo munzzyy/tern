@@ -7,6 +7,7 @@ import io.github.munzzyy.jackdaw.core.verify.Fingerprints
 import io.github.munzzyy.jackdaw.engine.AppStatus
 import io.github.munzzyy.jackdaw.engine.Detection
 import io.github.munzzyy.jackdaw.engine.EventKind
+import io.github.munzzyy.jackdaw.engine.Phase
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -20,7 +21,7 @@ import org.junit.runner.RunWith
 class HeadlineTest {
     @Before
     fun setUp() {
-        grantInstallPermissions()
+        prepareDevice()
         uninstallFixture()
     }
 
@@ -38,14 +39,15 @@ class HeadlineTest {
             assertEquals(SourceTypes.FORGEJO, found.spec.type)
             assertEquals(PKG, found.verification?.packageName)
             val id = h.engine.add(found, install = true)
-            val shownBy = Prompt.confirm()
+            val shownBy = h.confirm(id)
             android.util.Log.i("EngineTest", "first install confirmed through the $shownBy")
             waitUntil(60_000, "v1 to be installed and settled") { installedVersionCode() == 1L && h.state(id).pending == null }
-            waitUntil(10_000, "the row to settle on v1") { h.row(id).status == AppStatus.UP_TO_DATE }
-            assertEquals(true, h.row(id).silentUpdate)
-            assertTrue(h.row(id).config.pinnedSigners.isNotEmpty())
+            waitUntil(10_000, "the row to settle on v1") {
+                val row = h.row(id)
+                row.status == AppStatus.UP_TO_DATE && row.silentUpdate == true && row.config.pinnedSigners.isNotEmpty()
+            }
 
-            h.engine.save(h.row(id).config.copy(updates = UpdateMode.AUTO))
+            h.engine.configure(id) { it.copy(updates = UpdateMode.AUTO) }
             h.forge.releases = listOf(
                 FakeForge.Release("v2.0", listOf(FakeForge.File("app-v2.apk", v2))),
                 FakeForge.Release("v1.0", listOf(FakeForge.File("app-v1.apk", v1))),
@@ -53,7 +55,7 @@ class HeadlineTest {
             h.engine.runScheduledCheck()
             assertFalse("the system installer asked the user", Prompt.visible())
 
-            assertEquals(2L, installedVersionCode())
+            assertEquals(h.describe(id), 2L, installedVersionCode())
             waitUntil(10_000, "the row to settle on v2") { h.row(id).status == AppStatus.UP_TO_DATE && h.row(id).progress == null }
             val row = h.row(id)
             assertEquals(2L, row.installed?.versionCode)
@@ -66,6 +68,48 @@ class HeadlineTest {
             assertEquals(2, installs.size)
             assertTrue(installs.first().message.contains("2"))
             assertEquals(2, h.installer.committed.get())
+        }
+    }
+
+    @Test
+    fun whenAndroidAsksAnywayTheBackgroundUpdateWaitsForTheUserAndThenFinishes() = runBlocking {
+        throttleSilentUpdates(600)
+        Harness("throttled").use { h ->
+            val v1 = FakeForge.Release("v1.0", listOf(FakeForge.File("app-v1.apk", asset("apk/app-v1.apk"))))
+            val v2 = FakeForge.Release("v2.0", listOf(FakeForge.File("app-v2.apk", asset("apk/app-v2.apk"))))
+            h.forge.releases = listOf(v1)
+            val id = h.engine.add(h.engine.detect(FakeForge.PROJECT) as Detection.Found, install = true)
+            h.confirm(id)
+            waitUntil(60_000, "v1 to be installed and settled") { installedVersionCode() == 1L && h.row(id).status == AppStatus.UP_TO_DATE }
+            h.engine.configure(id) { it.copy(updates = UpdateMode.AUTO) }
+            h.forge.releases = listOf(v2, v1)
+            h.engine.runScheduledCheck()
+            assertEquals(h.describe(id), 2L, installedVersionCode())
+
+            uninstallFixture()
+            waitUntil(10_000, "the row to notice the uninstall") { h.row(id).installed == null }
+            h.forge.releases = listOf(v1)
+            h.engine.check(id)
+            h.engine.install(id)
+            h.confirm(id)
+            waitUntil(60_000, "v1 to be installed again") { installedVersionCode() == 1L && h.row(id).status == AppStatus.UP_TO_DATE }
+
+            h.forge.releases = listOf(v2, v1)
+            h.engine.runScheduledCheck()
+
+            assertFalse("the installer's dialog opened over whatever the user was doing", Prompt.visible())
+            assertEquals(h.describe(id), 1L, installedVersionCode())
+            val waiting = h.row(id)
+            assertEquals(h.describe(id), Phase.WAITING_FOR_USER, waiting.progress?.phase)
+            assertEquals(h.describe(id), true, h.state(id).pending?.waitingForUser)
+            assertEquals(h.describe(id), null, waiting.problem)
+            assertTrue(h.describe(id), h.eventsFor(id).none { it.kind == EventKind.FAILED })
+
+            assertEquals("notification", h.confirm(id))
+            waitUntil(60_000, "v2 to be installed once confirmed") {
+                installedVersionCode() == 2L && h.state(id).pending == null && h.row(id).status == AppStatus.UP_TO_DATE && h.row(id).progress == null
+            }
+            assertEquals("v2.0", h.state(id).record?.releaseId)
         }
     }
 }

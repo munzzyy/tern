@@ -104,7 +104,7 @@ class AdditionsTest {
 
     @Test
     fun aWaitingInstallCanBeReopenedAndSettlesWhenItsSessionIsGone() = runBlocking {
-        grantInstallPermissions()
+        prepareDevice()
         uninstallFixture()
         Harness("resume").use { h ->
             h.forge.releases = listOf(FakeForge.Release("v1.0", listOf(FakeForge.File("app-v1.apk", asset("apk/app-v1.apk")))))

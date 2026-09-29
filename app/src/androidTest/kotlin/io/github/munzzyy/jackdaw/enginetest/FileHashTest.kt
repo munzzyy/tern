@@ -41,7 +41,7 @@ class FileHashTest {
 
     @Test
     fun theMeasuredHashReplacesItOnceTheFileIsDownloaded() = runBlocking {
-        grantInstallPermissions()
+        prepareDevice()
         uninstallFixture()
         Harness("filehash").use { h ->
             val bytes = asset("apk/app-v1.apk")

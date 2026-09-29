@@ -27,7 +27,7 @@ import org.junit.runner.RunWith
 class GateTest {
     @Before
     fun setUp() {
-        grantInstallPermissions()
+        prepareDevice()
         uninstallFixture()
     }
 

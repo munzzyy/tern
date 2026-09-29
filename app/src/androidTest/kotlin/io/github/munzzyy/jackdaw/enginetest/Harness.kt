@@ -1,5 +1,6 @@
 package io.github.munzzyy.jackdaw.enginetest
 
+import android.app.NotificationManager
 import android.content.Context
 import android.os.ParcelFileDescriptor
 import androidx.test.platform.app.InstrumentationRegistry
@@ -53,10 +54,27 @@ fun installedVersionCode(): Long? = try {
     null
 }
 
-fun grantInstallPermissions() {
+/**
+ * Starts a test on a device no earlier test has left its mark on: a run that stopped halfway
+ * leaves its session and its notification behind, and the next run would tap the stale one.
+ * Android also refuses a second silent update of one package by one installer within 30 seconds,
+ * and every test here updates the same fixture, so that limit is lifted for this installer.
+ */
+fun prepareDevice() {
     val own = targetContext.packageName
     shell("appops set $own REQUEST_INSTALL_PACKAGES allow")
     shell("pm grant $own android.permission.POST_NOTIFICATIONS")
+    shell("pm set-silent-updates-policy --reset")
+    shell("pm set-silent-updates-policy --allow-unlimited-silent-updates $own")
+    val installer = targetContext.packageManager.packageInstaller
+    for (session in installer.mySessions) runCatching { installer.abandonSession(session.sessionId) }
+    targetContext.getSystemService(NotificationManager::class.java).cancelAll()
+}
+
+/** Puts Android's limit on silent updates back, holding it for [seconds] after each one. */
+fun throttleSilentUpdates(seconds: Int) {
+    shell("pm set-silent-updates-policy --reset")
+    shell("pm set-silent-updates-policy --throttle-time $seconds")
 }
 
 fun waitUntil(timeoutMs: Long, what: String, condition: () -> Boolean) {
@@ -129,6 +147,23 @@ class Harness(name: String, gate: Gate? = null, installer: Installer? = null, ht
 
     fun eventsFor(id: String) = engine.events.value.filter { it.appId == id }
 
+    /** Confirms the system installer's dialog for [id], and says what the engine held when none came. */
+    fun confirm(id: String): String = try {
+        Prompt.confirm()
+    } catch (e: AssertionError) {
+        throw AssertionError("${e.message}; ${describe(id)}; on screen: ${Prompt.onScreen()}", e)
+    }
+
+    /** What a failed assertion should say about the app, so a failure on a device explains itself. */
+    fun describe(id: String): String {
+        val row = row(id)
+        val state = state(id)
+        val events = engine.store.events().filter { it.appId == id }.joinToString(" | ") { "${it.kind}: ${it.message}" }
+        return "status=${row.status} mode=${row.config.updates} silent=${row.silentUpdate} problem=${row.problem} progress=${row.progress} " +
+            "latest=${row.latest?.id} installed=${row.installed?.versionCode} pending=${state.pending} installProblem=${state.installProblem} " +
+            "block=${state.block} events=[$events]"
+    }
+
     override fun close() {
         engine.close()
         targetContext.deleteDatabase(store)
@@ -170,6 +205,8 @@ object Prompt {
     }
 
     fun visible(): Boolean = device.hasObject(By.pkg(INSTALLER))
+
+    fun onScreen(): String = device.findObjects(By.textContains("")).mapNotNull { it.text?.takeIf(String::isNotBlank) }.take(40).joinToString(" / ")
 
     fun appears(timeoutMs: Long): Boolean = device.wait(Until.hasObject(By.pkg(INSTALLER).text(CONFIRM)), timeoutMs) == true
 

@@ -8,7 +8,7 @@ import io.github.munzzyy.stamp.core.select.PickReason
 import java.util.Date
 
 /** Every sentence the engine shows, from resources so it can be translated. */
-class Texts(context: Context) {
+class Texts(context: Context) : ImportTexts {
     private val c = context.applicationContext
 
     private fun s(id: Int, vararg args: Any): String = c.getString(id, *args)
@@ -70,6 +70,11 @@ class Texts(context: Context) {
     fun eventMoved(from: String, to: String) = s(R.string.engine_event_moved, from.take(300), to.take(300))
     fun starsBadName() = s(R.string.engine_stars_bad_name)
     fun starsNoUser(user: String) = s(R.string.engine_stars_no_user, user.take(40))
+
+    override fun importNotAnExport() = s(R.string.engine_import_not_an_export)
+    override fun importUnreadableExport(detail: String?) = s(R.string.engine_import_unreadable_export, detail.orEmpty().take(200))
+    override fun importTooLarge(limitBytes: Int) = s(R.string.engine_import_too_large, limitBytes / (1024 * 1024))
+
     fun trackOnly() = s(R.string.engine_track_only)
     fun noRelease() = s(R.string.engine_no_release)
 

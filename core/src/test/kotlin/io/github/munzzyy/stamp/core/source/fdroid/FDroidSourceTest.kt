@@ -1,10 +1,14 @@
 package io.github.munzzyy.stamp.core.source.fdroid
 
+import io.github.munzzyy.stamp.core.model.SourceSpec
+import io.github.munzzyy.stamp.core.net.Headers
+import io.github.munzzyy.stamp.core.net.HttpResponse
 import io.github.munzzyy.stamp.core.net.InMemoryValidatorStore
 import io.github.munzzyy.stamp.core.source.CheckContext
 import io.github.munzzyy.stamp.core.source.CheckResult
 import io.github.munzzyy.stamp.core.source.SourceErrorKind
 import io.github.munzzyy.stamp.core.source.SourceException
+import io.github.munzzyy.stamp.core.source.SourceOptions
 import io.github.munzzyy.stamp.core.testing.FakeHttp
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -86,6 +90,36 @@ class FDroidSourceTest {
             fail("expected SourceException")
         } catch (e: SourceException) {
             assertEquals(SourceErrorKind.NOT_FOUND, e.kind)
+        }
+    }
+
+    @Test
+    fun aPackageOptionThatIsNotAPackageNameNeverReachesAnAddress() {
+        val http = FakeHttp()
+        for (bad in listOf("../../repo/index", "org.example.app/../x", "org.example.app?x=1", "org.example.app#x", "org example", "")) {
+            val spec = SourceSpec(source.type, "https://f-droid.org/packages/org.example.app", mapOf(SourceOptions.PACKAGE to bad))
+            try {
+                source.check(spec, CheckContext(http, InMemoryValidatorStore()))
+                fail("checked with the package option \"$bad\"")
+            } catch (e: SourceException) {
+                assertEquals(SourceErrorKind.UNSUPPORTED, e.kind)
+            }
+        }
+        assertEquals(emptyList<String>(), http.requests.map { it.url })
+    }
+
+    @Test
+    fun anAnswerForAnotherPackageIsRefused() {
+        val api = "https://f-droid.org/api/v1/packages/org.example.app"
+        val http = FakeHttp().on(api) {
+            HttpResponse.of(200, """{"packageName":"org.example.other","suggestedVersionCode":3,"packages":[{"versionName":"1.0","versionCode":3}]}""", Headers.EMPTY, api)
+        }
+        val spec = SourceSpec(source.type, "https://f-droid.org/packages/org.example.app", mapOf(SourceOptions.PACKAGE to "org.example.app"))
+        try {
+            source.check(spec, CheckContext(http, InMemoryValidatorStore()))
+            fail("took an answer about another package")
+        } catch (e: SourceException) {
+            assertEquals(SourceErrorKind.PARSE, e.kind)
         }
     }
 }

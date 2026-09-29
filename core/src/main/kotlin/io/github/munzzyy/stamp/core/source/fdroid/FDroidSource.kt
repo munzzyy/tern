@@ -1,5 +1,6 @@
 package io.github.munzzyy.stamp.core.source.fdroid
 
+import io.github.munzzyy.stamp.core.apk.BinaryManifest
 import io.github.munzzyy.stamp.core.json.Json
 import io.github.munzzyy.stamp.core.model.Asset
 import io.github.munzzyy.stamp.core.model.Release
@@ -38,8 +39,8 @@ class FDroidSource : Source {
     override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
 
     private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {
-        val pkg = spec.option(SourceOptions.PACKAGE) ?: throw SourceException(SourceErrorKind.UNSUPPORTED, "Missing package option")
-        val izzy = spec.url.contains("izzysoft.de")
+        val pkg = packageOption(spec)
+        val izzy = Urls.host(spec.url).let { it == "izzysoft.de" || it.endsWith(".izzysoft.de") }
         val apiUrl = if (izzy) "https://apt.izzysoft.de/fdroid/api/v1/packages/$pkg" else "https://f-droid.org/api/v1/packages/$pkg"
         val repoBase = if (izzy) "https://apt.izzysoft.de/fdroid/repo" else "https://f-droid.org/repo"
         val key = validatorKey(spec, apiUrl)
@@ -51,7 +52,11 @@ class FDroidSource : Source {
             if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${it.status} for $apiUrl")
             context.validators.put(key, Validator.from(it.headers))
             val obj = Json.parseObject(it.text(2 * 1024 * 1024))
-            val packageName = obj.string("packageName") ?: pkg
+            // The answer may not rename the app that was asked for: the name goes into file and icon addresses.
+            val packageName = pkg
+            if (obj.string("packageName")?.let { it != pkg } == true) {
+                throw SourceException(SourceErrorKind.PARSE, "Asked for $pkg and was answered for another package")
+            }
             val suggested = obj.long("suggestedVersionCode") ?: Long.MAX_VALUE
             val entries = obj.array("packages")?.objects().orEmpty()
             val releases = entries.mapNotNull { entry ->

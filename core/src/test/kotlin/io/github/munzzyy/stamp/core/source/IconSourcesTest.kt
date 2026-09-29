@@ -18,6 +18,7 @@ import io.github.munzzyy.stamp.core.testing.Fixtures
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Test
 
 /** For each source that offers an icon: the answer of the service in, the addresses to try out. */
@@ -172,11 +173,16 @@ class IconSourcesTest {
     }
 
     @Test
-    fun aPackageNameThatIsNoPackageNameGivesNoIcon() {
+    fun anAnswerThatNamesNoPackageNameIsRefusedBeforeAnyAddressIsBuilt() {
         val source = FDroidSource()
         val body = "{\"packageName\": \"../../other\", \"suggestedVersionCode\": 12, \"packages\": [{\"versionName\": \"1.2\", \"versionCode\": 12}]}"
         val http = FakeHttp().text("https://f-droid.org/api/v1/packages/org.example.app", body)
-        assertEquals(emptyList<String>(), icons(source.check(source.match("https://f-droid.org/packages/org.example.app")!!, context(http))))
+        try {
+            source.check(source.match("https://f-droid.org/packages/org.example.app")!!, context(http))
+            fail("took an answer that names ../../other")
+        } catch (e: SourceException) {
+            assertEquals(SourceErrorKind.PARSE, e.kind)
+        }
     }
 
     private val repository = "https://example.com/fdroid/repo"

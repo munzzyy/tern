@@ -1,5 +1,6 @@
 package io.github.munzzyy.stamp.core.source.fdroid
 
+import io.github.munzzyy.stamp.core.apk.BinaryManifest
 import io.github.munzzyy.stamp.core.json.Json
 import io.github.munzzyy.stamp.core.json.JsonMergePatch
 import io.github.munzzyy.stamp.core.json.JsonNull
@@ -69,7 +70,7 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
     override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
 
     private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {
-        val pkg = spec.option(SourceOptions.PACKAGE) ?: throw SourceException(SourceErrorKind.UNSUPPORTED, "Missing package option")
+        val pkg = packageOption(spec)
         val pinned = spec.option(SourceOptions.FINGERPRINT)
 
         val entryKey = validatorKey(spec, "entry.jar")
@@ -377,6 +378,13 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         private const val INDEX_CAP = 96L * 1024 * 1024
         private val SCHEME = Regex("^fdroidrepos?://", RegexOption.IGNORE_CASE)
     }
+}
+
+/** The package a spec asks for. It comes from a link or an import, so it is checked before it goes into an address. */
+internal fun packageOption(spec: SourceSpec): String {
+    val pkg = spec.option(SourceOptions.PACKAGE) ?: throw SourceException(SourceErrorKind.UNSUPPORTED, "Missing package option")
+    if (!BinaryManifest.isValidName(pkg)) throw SourceException(SourceErrorKind.UNSUPPORTED, "The package option is not a package name")
+    return pkg
 }
 
 /** True when the manifest vouches for the file with SHA-256 or stronger. A file with no digest at all is left to the signer check. */

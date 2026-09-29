@@ -59,9 +59,10 @@ android {
     }
 }
 
-// BrandTest reads these from disk, so a change to one of them has to run the unit tests again.
+// BrandTest and ConsentTest read these from disk, so a change to one of them has to run the unit tests again.
 tasks.withType<Test>().configureEach {
     inputs.files(
+        "src/main/AndroidManifest.xml",
         "src/main/res/values/colors.xml",
         "src/main/res/values-night/colors.xml",
         "src/main/res/drawable/ic_launcher_foreground.xml",

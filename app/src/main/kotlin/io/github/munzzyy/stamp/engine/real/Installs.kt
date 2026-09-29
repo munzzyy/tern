@@ -385,7 +385,7 @@ internal class Installs(private val e: RealEngine) {
     }
 
     suspend fun runScheduled(settings: Settings) {
-        val targets = e.stored.values.filter { it.config.updates != UpdateMode.MANUAL }.map { it.config.id }
+        val targets = e.stored.values.filter { checkedInTheBackground(it.config) }.map { it.config.id }
         val checked = e.checks.checkMany(targets)
         val installed = ArrayList<String>()
         val failed = ArrayList<String>()
@@ -393,9 +393,7 @@ internal class Installs(private val e: RealEngine) {
         val allowed = e.device.mayInstall()
         for (id in targets) {
             val config = e.stored[id]?.config ?: continue
-            if (!allowed || config.updates != UpdateMode.AUTO || config.trackOnly) continue
-            val eval = e.evaluations[id] ?: continue
-            if (eval.status != AppStatus.UPDATE_AVAILABLE || !eval.certain || eval.problem != null || e.progress.containsKey(id)) continue
+            if (!installsByItself(config, allowed, e.evaluations[id], busy = e.progress.containsKey(id))) continue
             batch += id
             try {
                 val session = run(id, null, null)
@@ -416,13 +414,25 @@ internal class Installs(private val e: RealEngine) {
         if (settings.notifyFailures) e.notifier.failures(names(checked.filter { it.failed }.map { it.id }) + failed)
     }
 
-    private companion object {
-        const val TAG = "StampInstalls"
-        const val CONFIRM_INSTALL = "android.content.pm.action.CONFIRM_INSTALL"
-        const val DAY_MS = 24L * 60 * 60 * 1000
-        const val SUMS_LIMIT = 1024 * 1024
-        const val INSTALL_WAIT_MS = 3 * 60 * 1000L
-        val GATE_KINDS = setOf(
+    internal companion object {
+        /**
+         * Whether the background check may install an update of this app without being asked.
+         * Only where the user set this very app to it, Android lets Stamp install at all, and
+         * the update is sure and has nothing held against it.
+         */
+        fun installsByItself(config: AppConfig, mayInstall: Boolean, evaluation: Evaluation?, busy: Boolean): Boolean =
+            mayInstall && config.updates == UpdateMode.AUTO && !config.trackOnly && !busy && evaluation != null &&
+                evaluation.status == AppStatus.UPDATE_AVAILABLE && evaluation.certain && evaluation.problem == null
+
+        /** Which apps the background check looks at: all but those the user set to be left alone. */
+        fun checkedInTheBackground(config: AppConfig): Boolean = config.updates != UpdateMode.MANUAL
+
+        private const val TAG = "StampInstalls"
+        private const val CONFIRM_INSTALL = "android.content.pm.action.CONFIRM_INSTALL"
+        private const val DAY_MS = 24L * 60 * 60 * 1000
+        private const val SUMS_LIMIT = 1024 * 1024
+        private const val INSTALL_WAIT_MS = 3 * 60 * 1000L
+        private val GATE_KINDS = setOf(
             ProblemKind.CHECKSUM_MISMATCH, ProblemKind.SIGNER_MISMATCH, ProblemKind.PIN_MISMATCH, ProblemKind.PACKAGE_MISMATCH,
             ProblemKind.DOWNGRADE, ProblemKind.UNSUPPORTED, ProblemKind.NO_FILE_FOR_DEVICE, ProblemKind.PARSE,
         )

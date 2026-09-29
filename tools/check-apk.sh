@@ -42,20 +42,33 @@ else
   echo "ok   apk is not debuggable"
 fi
 
-# Release builds shorten resource paths (res/8G.xml), so the file is looked up by its resource name.
-netfile=$("$AAPT" dump resources "$APK" | awk '
-  /resource 0x[0-9a-f]+ xml\/network_security_config/ { found = 1; next }
-  found && /\(file\)/ { print $3; exit }')
-netconfig=""
-if [ -n "$netfile" ]; then
-  netconfig=$("$AAPT" dump xmltree --file "$netfile" "$APK" || true)
-fi
-if [ -z "$netconfig" ]; then
+# Release builds shorten resource paths (res/8G.xml), so the files are looked up by their resource
+# name. There is one for every Android version that has a configuration of its own.
+netfiles=$("$AAPT" dump resources "$APK" | awk '
+  /resource 0x[0-9a-f]+ / { found = ($0 ~ /xml\/network_security_config/) ; next }
+  found && /\(file\)/ { print $3 }')
+if [ -z "$netfiles" ]; then
   echo "FAIL network security config is missing from the apk"; fail=1
-elif echo "$netconfig" | grep -q 'cleartextTrafficPermitted.*=true'; then
-  echo "FAIL network security config permits cleartext somewhere"; fail=1
 else
-  echo "ok   network security config refuses cleartext everywhere"
+  open=""
+  transparent=""
+  for netfile in $netfiles; do
+    netconfig=$("$AAPT" dump xmltree --file "$netfile" "$APK" || true)
+    if [ -z "$netconfig" ] || echo "$netconfig" | grep -q 'cleartextTrafficPermitted.*=true' || ! echo "$netconfig" | grep -q 'cleartextTrafficPermitted.*=false'; then
+      open="$open $netfile"
+    fi
+    if echo "$netconfig" | grep -A1 'E: certificateTransparency' | grep -q 'enabled.*=true'; then transparent="yes"; fi
+  done
+  if [ -n "$open" ]; then
+    echo "FAIL network security config does not refuse cleartext in:$open"; fail=1
+  else
+    echo "ok   network security config refuses cleartext everywhere ($(echo "$netfiles" | wc -l) configurations)"
+  fi
+  if [ -z "$transparent" ]; then
+    echo "FAIL no configuration asks for certificate transparency"; fail=1
+  else
+    echo "ok   certificate transparency is asked for where Android can check it"
+  fi
 fi
 
 badging=$("$AAPT" dump badging "$APK")

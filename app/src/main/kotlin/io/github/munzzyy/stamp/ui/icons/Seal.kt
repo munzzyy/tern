@@ -40,7 +40,7 @@ object SealShape {
 }
 
 /**
- * The stamp impression, for the moment a file has passed all its checks. It is pressed on once,
+ * The seal as it is pressed on, for the moment a file has passed all its checks. It is pressed on once,
  * then stays. With animations off in Android it is simply there. It has no words of its own:
  * say what it means next to it.
  */

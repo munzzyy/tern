@@ -53,6 +53,7 @@ import io.github.munzzyy.jackdaw.engine.AppStatus
 import io.github.munzzyy.jackdaw.engine.Phase
 import io.github.munzzyy.jackdaw.engine.ProblemKind
 import io.github.munzzyy.jackdaw.ui.LocalEngine
+import io.github.munzzyy.jackdaw.ui.LocalOnline
 import io.github.munzzyy.jackdaw.ui.LocalSnackbar
 import io.github.munzzyy.jackdaw.ui.apps.progressText
 import io.github.munzzyy.jackdaw.ui.apps.versionText
@@ -60,17 +61,18 @@ import io.github.munzzyy.jackdaw.ui.common.LinkDialog
 import io.github.munzzyy.jackdaw.ui.common.LinkText
 import io.github.munzzyy.jackdaw.ui.common.ProblemBox
 import io.github.munzzyy.jackdaw.ui.common.StatusPill
+import io.github.munzzyy.jackdaw.ui.common.sourceText
 import io.github.munzzyy.jackdaw.ui.common.VerificationPanel
+import io.github.munzzyy.jackdaw.ui.common.confirmInstall
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
 import io.github.munzzyy.jackdaw.ui.icons.AppIcon
 import io.github.munzzyy.jackdaw.ui.text.RowAction
 import io.github.munzzyy.jackdaw.ui.text.canSkip
 import io.github.munzzyy.jackdaw.ui.text.formatTime
-import io.github.munzzyy.jackdaw.ui.text.shortUrl
+import io.github.munzzyy.jackdaw.ui.text.isWaitingForUser
 import io.github.munzzyy.jackdaw.ui.text.minutesUntil
 import io.github.munzzyy.jackdaw.ui.text.primaryAction
 import io.github.munzzyy.jackdaw.ui.text.problemAdvice
-import io.github.munzzyy.jackdaw.ui.text.sourceName
 import io.github.munzzyy.jackdaw.ui.text.statusLabel
 import io.github.munzzyy.jackdaw.ui.text.versionChange
 import kotlinx.coroutines.delay
@@ -166,7 +168,7 @@ private fun Header(row: AppRow) {
                 Text(stringResource(R.string.by_author, it), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             LinkText(
-                stringResource(R.string.source_line, sourceName(row.config.source), shortUrl(row.config.source.url)),
+                sourceText(row.config.source),
                 onClick = { link = row.config.source.url },
             )
         }
@@ -187,7 +189,7 @@ private fun ActionArea(row: AppRow) {
             .widthIn(max = 840.dp),
     ) {
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), itemVerticalAlignment = Alignment.CenterVertically) {
-            StatusPill(statusLabel(row))
+            StatusPill(statusLabel(row, LocalOnline.current))
             versionText(versionChange(row))?.let { Text(it, style = MaterialTheme.typography.bodyLarge) }
         }
         row.problem?.let { p ->
@@ -229,6 +231,7 @@ private fun ActionArea(row: AppRow) {
                         when (action) {
                             RowAction.UPDATE, RowAction.INSTALL -> engine.install(row.id)
                             RowAction.CANCEL -> engine.cancel(row.id)
+                            RowAction.CONFIRM -> confirmInstall(engine, row.id, actions)
                             RowAction.OPEN -> if (!engine.open(row.id)) actions.say(noLauncher)
                             RowAction.MARK_SEEN -> actions.run { engine.dismissRelease(row.id) }
                             RowAction.CHECK -> actions.run { engine.check(row.id) }
@@ -236,6 +239,9 @@ private fun ActionArea(row: AppRow) {
                     },
                     modifier = Modifier.testTag(DETAIL_PRIMARY_TAG),
                 ) { Text(stringResource(action.text)) }
+            }
+            if (isWaitingForUser(row)) {
+                OutlinedButton(onClick = { engine.cancel(row.id) }) { Text(stringResource(R.string.action_cancel)) }
             }
             if (row.installed != null && primaryAction(row) != RowAction.OPEN && row.progress == null) {
                 OutlinedButton(onClick = { if (!engine.open(row.id)) actions.say(noLauncher) }) {

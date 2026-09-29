@@ -90,6 +90,13 @@ class AddViewModel(private val engine: Engine) : ViewModel() {
         }
     }
 
+    /** What this link would set beyond a plain new app; nothing is stored until [add]. */
+    fun carried(found: Detection.Found): List<CarriedSetting> = try {
+        carriedSettings(engine.proposedConfig(found), engine.proposedConfig(found.copy(carried = null)))
+    } catch (_: Exception) {
+        emptyList()
+    }
+
     fun consumeAdded() {
         _added.value = null
     }

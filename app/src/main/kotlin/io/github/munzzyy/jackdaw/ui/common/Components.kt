@@ -37,8 +37,16 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import io.github.munzzyy.jackdaw.R
+import io.github.munzzyy.jackdaw.core.model.SourceSpec
+import io.github.munzzyy.jackdaw.ui.text.sourceParts
 import io.github.munzzyy.jackdaw.ui.text.StatusLabel
 import io.github.munzzyy.jackdaw.ui.text.Tone
+
+@Composable
+fun sourceText(spec: SourceSpec): String {
+    val (name, address) = sourceParts(spec)
+    return if (name == null) address else stringResource(R.string.source_line, name, address)
+}
 
 @Composable
 fun StatusPill(label: StatusLabel, modifier: Modifier = Modifier) {

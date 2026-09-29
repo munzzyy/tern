@@ -21,7 +21,11 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.Badge
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -50,12 +54,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.jackdaw.R
 import io.github.munzzyy.jackdaw.engine.Engine
@@ -69,6 +75,8 @@ import io.github.munzzyy.jackdaw.ui.importing.ImportScreen
 import io.github.munzzyy.jackdaw.ui.settings.SettingsScreen
 import io.github.munzzyy.jackdaw.ui.text.isUpdate
 import kotlinx.coroutines.CancellationException
+
+const val TAB_LABEL_TAG = "tab_label"
 
 private val RAIL_WIDTH = 600.dp
 private val TWO_PANE_WIDTH = 840.dp
@@ -108,6 +116,7 @@ fun JackdawApp(
 private fun Shell(stack: BackStack) {
     val engine = LocalEngine.current
     val rows by engine.apps.collectAsStateWithLifecycle()
+    val online by engine.online.collectAsStateWithLifecycle()
     val updates = remember(rows) { rows.count(::isUpdate) }
     val holder = rememberSaveableStateHolder()
     val reducedMotion = LocalReducedMotion.current
@@ -142,61 +151,63 @@ private fun Shell(stack: BackStack) {
         }
     }
 
-    BoxWithConstraints(Modifier.fillMaxSize()) {
-        val wide = maxWidth >= RAIL_WIDTH
-        val twoPane = maxWidth >= TWO_PANE_WIDTH
-        val current = stack.top
-        val select: (Tab) -> Unit = { tab ->
-            stack.routes.forEach { if (it != Route.Apps) holder.removeState(encodeRoute(it)) }
-            stack.select(tab)
-        }
-        if (!wide) {
-            Scaffold(
-                contentWindowInsets = WindowInsets(0),
-                bottomBar = {
-                    NavigationBar {
+    CompositionLocalProvider(LocalOnline provides online) {
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val wide = maxWidth >= RAIL_WIDTH
+            val twoPane = maxWidth >= TWO_PANE_WIDTH
+            val current = stack.top
+            val select: (Tab) -> Unit = { tab ->
+                stack.routes.forEach { if (it != Route.Apps) holder.removeState(encodeRoute(it)) }
+                stack.select(tab)
+            }
+            if (!wide) {
+                Scaffold(
+                    contentWindowInsets = WindowInsets(0),
+                    bottomBar = {
+                        NavigationBar {
+                            for (tab in Tab.entries) {
+                                NavigationBarItem(
+                                    selected = current.tab() == tab,
+                                    onClick = { select(tab) },
+                                    icon = { TabIcon(tab, updates) },
+                                    label = { TabLabel(tab) },
+                                )
+                            }
+                        }
+                    },
+                ) { padding ->
+                    Box(
+                        Modifier
+                            .fillMaxSize()
+                            .padding(padding)
+                            .consumeWindowInsets(padding)
+                            .then(backModifier),
+                    ) {
+                        Pane(stack, holder, current, twoPane = false)
+                    }
+                }
+            } else {
+                val railInsets = WindowInsets.systemBars.only(WindowInsetsSides.Vertical + WindowInsetsSides.Start)
+                Row(Modifier.fillMaxSize()) {
+                    NavigationRail(windowInsets = railInsets) {
                         for (tab in Tab.entries) {
-                            NavigationBarItem(
+                            NavigationRailItem(
                                 selected = current.tab() == tab,
                                 onClick = { select(tab) },
                                 icon = { TabIcon(tab, updates) },
-                                label = { Text(stringResource(tab.label), textAlign = TextAlign.Center, maxLines = 1) },
+                                label = { TabLabel(tab) },
                             )
                         }
                     }
-                },
-            ) { padding ->
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(padding)
-                        .consumeWindowInsets(padding)
-                        .then(backModifier),
-                ) {
-                    Pane(stack, holder, current, twoPane = false)
-                }
-            }
-        } else {
-            val railInsets = WindowInsets.systemBars.only(WindowInsetsSides.Vertical + WindowInsetsSides.Start)
-            Row(Modifier.fillMaxSize()) {
-                NavigationRail(windowInsets = railInsets) {
-                    for (tab in Tab.entries) {
-                        NavigationRailItem(
-                            selected = current.tab() == tab,
-                            onClick = { select(tab) },
-                            icon = { TabIcon(tab, updates) },
-                            label = { Text(stringResource(tab.label), textAlign = TextAlign.Center) },
-                        )
+                    Box(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .consumeWindowInsets(railInsets.only(WindowInsetsSides.Start))
+                            .then(backModifier),
+                    ) {
+                        Pane(stack, holder, current, twoPane)
                     }
-                }
-                Box(
-                    Modifier
-                        .weight(1f)
-                        .fillMaxHeight()
-                        .consumeWindowInsets(railInsets.only(WindowInsetsSides.Start))
-                        .then(backModifier),
-                ) {
-                    Pane(stack, holder, current, twoPane)
                 }
             }
         }
@@ -312,6 +323,19 @@ private val Tab.label: Int
         Tab.ACTIVITY -> R.string.tab_activity
         Tab.SETTINGS -> R.string.tab_settings
     }
+
+/** Large text shrinks to fit the slot rather than being cut off; it never grows past the bar's own size. */
+@Composable
+private fun TabLabel(tab: Tab) {
+    val style = LocalTextStyle.current
+    BasicText(
+        stringResource(tab.label),
+        style = style.copy(color = LocalContentColor.current, textAlign = TextAlign.Center),
+        maxLines = 1,
+        modifier = Modifier.testTag(TAB_LABEL_TAG),
+        autoSize = TextAutoSize.StepBased(minFontSize = 8.sp, maxFontSize = style.fontSize),
+    )
+}
 
 @Composable
 private fun TabIcon(tab: Tab, updates: Int) {

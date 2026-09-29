@@ -9,6 +9,9 @@ val LocalEngine = staticCompositionLocalOf<Engine> { error("No engine provided")
 
 val LocalSnackbar = staticCompositionLocalOf { SnackbarHostState() }
 
+/** False while the engine reports no working internet connection. */
+val LocalOnline = staticCompositionLocalOf { true }
+
 /** True when the system asks for no animations, so transitions snap instead. */
 val LocalReducedMotion = staticCompositionLocalOf { false }
 

@@ -28,6 +28,8 @@
     <string name="status_error">Check failed</string>
     <string name="status_rate_limited">Rate limited</string>
     <string name="status_install_failed">Install failed</string>
+    <!-- A check failed only because the device is offline; neutral, not an error. -->
+    <string name="status_offline">Waiting for connection</string>
     <string name="status_checking">Checking</string>
     <string name="status_queued">Queued</string>
     <string name="status_downloading">Downloading</string>
@@ -59,6 +61,8 @@
     <string name="action_check_now">Check now</string>
     <string name="action_check_all">Check all apps now</string>
     <string name="action_cancel">Cancel</string>
+    <!-- Reopens Android's install confirmation for an install that waits for the user. -->
+    <string name="action_confirm">Confirm</string>
     <string name="action_details">Details</string>
     <string name="action_more">More options</string>
     <string name="action_skip_version">Skip this version</string>
@@ -86,6 +90,9 @@
     <string name="open_no_launcher">This app has no screen to open</string>
 
     <!-- Apps screen -->
+    <string name="offline_banner">No internet connection. Jackdaw checks again when it is back.</string>
+    <!-- Read by TalkBack on buttons that are off while offline. -->
+    <string name="offline_reason">Unavailable without an internet connection</string>
     <string name="apps_search_hint">Search your apps</string>
     <string name="filter_all">All</string>
     <string name="filter_updates">Updates</string>
@@ -143,6 +150,39 @@
         <item quantity="other">%d stars</item>
     </plurals>
     <string name="file_why">Why this file</string>
+
+    <!-- Settings that came with a shared link or a file; they are only stored if the user presses Add. -->
+    <string name="carried_title">This link sets</string>
+    <string name="carried_mode">Updates: %1$s.</string>
+    <string name="carried_min_age_none">A release is used as soon as it is out.</string>
+    <plurals name="carried_min_age">
+        <item quantity="one">A release is ignored until it is %d day old.</item>
+        <item quantity="other">A release is ignored until it is %d days old.</item>
+    </plurals>
+    <!-- %1$s is a pattern in quotes. -->
+    <string name="carried_include">Only files matching %1$s are used.</string>
+    <string name="carried_include_none">Any file name may be used.</string>
+    <string name="carried_exclude">Files matching %1$s are skipped.</string>
+    <string name="carried_exclude_none">No file is skipped by name.</string>
+    <string name="carried_tag">Only releases whose tag matches %1$s are followed.</string>
+    <string name="carried_tag_none">Releases are followed whatever their tag.</string>
+    <string name="carried_title_filter">Only releases whose title matches %1$s are followed.</string>
+    <string name="carried_title_filter_none">Releases are followed whatever their title.</string>
+    <string name="carried_notes">Only releases whose notes match %1$s are followed.</string>
+    <string name="carried_notes_none">Releases are followed whatever their notes say.</string>
+    <string name="carried_version">The version is read from the tag with %1$s.</string>
+    <string name="carried_version_none">The version is read the usual way.</string>
+    <string name="carried_match_device_on">When several files are offered, the one built for this phone is preferred.</string>
+    <string name="carried_match_device_off">Files are not narrowed to this phone\'s processor.</string>
+    <string name="carried_fallback_on">An older release is used when the newest has no usable file.</string>
+    <string name="carried_fallback_off">Older releases are never used, even when the newest has no usable file.</string>
+    <string name="carried_track_on">Releases are only followed; nothing is downloaded or installed.</string>
+    <string name="carried_track_off">Releases are downloaded and installed, not just followed.</string>
+    <!-- Pinned certificates decide who may sign updates; here someone other than the user picked them. -->
+    <plurals name="carried_pins_warning">
+        <item quantity="one">The link pins this certificate, so only files it signed will install. Someone other than you chose it: add it only if you trust where the link came from.</item>
+        <item quantity="other">The link pins these certificates, so only files they signed will install. Someone other than you chose them: add them only if you trust where the link came from.</item>
+    </plurals>
 
     <!-- Verification panel -->
     <string name="checks_title">Checks</string>
@@ -206,7 +246,7 @@
     <string name="phase_downloading">Downloading</string>
     <string name="phase_verifying">Checking the file before installing</string>
     <string name="phase_installing">Installing</string>
-    <string name="phase_waiting">Waiting for you to confirm in Android\'s install dialog</string>
+    <string name="phase_waiting">Waiting for you to confirm in Android\'s install dialog. Confirm opens it again.</string>
     <!-- %s is a version. -->
     <string name="notes_title">What\'s new in %s</string>
     <string name="notes_title_unknown">What\'s new</string>

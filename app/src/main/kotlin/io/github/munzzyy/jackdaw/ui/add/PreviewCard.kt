@@ -28,17 +28,16 @@ import io.github.munzzyy.jackdaw.engine.Detection
 import io.github.munzzyy.jackdaw.ui.common.FileChoiceView
 import io.github.munzzyy.jackdaw.ui.common.TrustLine
 import io.github.munzzyy.jackdaw.ui.common.VerificationPanel
+import io.github.munzzyy.jackdaw.ui.common.sourceText
 import io.github.munzzyy.jackdaw.ui.icons.LetterAvatar
 import io.github.munzzyy.jackdaw.ui.text.Trust
 import io.github.munzzyy.jackdaw.ui.text.formatDate
 import io.github.munzzyy.jackdaw.ui.text.isolate
 import io.github.munzzyy.jackdaw.ui.text.knownVersion
-import io.github.munzzyy.jackdaw.ui.text.shortUrl
-import io.github.munzzyy.jackdaw.ui.text.sourceName
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun PreviewCard(found: Detection.Found, onAdd: (install: Boolean) -> Unit, onShow: (String) -> Unit) {
+fun PreviewCard(found: Detection.Found, carried: List<CarriedSetting>, onAdd: (install: Boolean) -> Unit, onShow: (String) -> Unit) {
     Surface(
         color = MaterialTheme.colorScheme.surfaceContainerLow,
         shape = RoundedCornerShape(16.dp),
@@ -53,7 +52,7 @@ fun PreviewCard(found: Detection.Found, onAdd: (install: Boolean) -> Unit, onSho
                         Text(stringResource(R.string.by_author, it), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Text(
-                        stringResource(R.string.source_line, sourceName(found.spec), shortUrl(found.spec.url)),
+                        sourceText(found.spec),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -110,6 +109,11 @@ fun PreviewCard(found: Detection.Found, onAdd: (install: Boolean) -> Unit, onSho
             found.verification?.let {
                 HorizontalDivider()
                 VerificationPanel(it)
+            }
+
+            if (carried.isNotEmpty() && found.alreadyTracked == null) {
+                HorizontalDivider()
+                CarriedSection(carried)
             }
 
             HorizontalDivider()

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import io.github.munzzyy.jackdaw.R
+import io.github.munzzyy.jackdaw.engine.Engine
 import io.github.munzzyy.jackdaw.ui.LocalActionScope
 import io.github.munzzyy.jackdaw.ui.LocalSnackbar
 import kotlinx.coroutines.CancellationException
@@ -28,6 +29,11 @@ class Actions(private val scope: CoroutineScope, private val snackbar: SnackbarH
     fun say(message: String) {
         scope.launch { snackbar.showSnackbar(message) }
     }
+}
+
+/** Reopens Android's confirmation; when nothing waits any more, a check makes the row tell the truth again. */
+fun confirmInstall(engine: Engine, appId: String, actions: Actions) {
+    if (!engine.resumeInstall(appId)) actions.run { engine.check(appId) }
 }
 
 @Composable

@@ -45,14 +45,17 @@ import io.github.munzzyy.jackdaw.R
 import io.github.munzzyy.jackdaw.engine.AppRow
 import io.github.munzzyy.jackdaw.engine.Phase
 import io.github.munzzyy.jackdaw.ui.LocalEngine
+import io.github.munzzyy.jackdaw.ui.LocalOnline
 import io.github.munzzyy.jackdaw.ui.common.ConfirmDialog
 import io.github.munzzyy.jackdaw.ui.common.StatusPill
 import io.github.munzzyy.jackdaw.ui.common.focusRing
+import io.github.munzzyy.jackdaw.ui.common.confirmInstall
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
 import io.github.munzzyy.jackdaw.ui.icons.AppIcon
 import io.github.munzzyy.jackdaw.ui.text.RowAction
 import io.github.munzzyy.jackdaw.ui.text.canSkip
 import io.github.munzzyy.jackdaw.ui.text.inlineAction
+import io.github.munzzyy.jackdaw.ui.text.isWaitingForUser
 import io.github.munzzyy.jackdaw.ui.text.statusLabel
 import io.github.munzzyy.jackdaw.ui.text.versionChange
 
@@ -73,6 +76,7 @@ fun AppRowItem(row: AppRow, selected: Boolean, onOpen: () -> Unit, modifier: Mod
     val runAction: (RowAction) -> Unit = { a ->
         when (a) {
             RowAction.UPDATE, RowAction.INSTALL -> engine.install(row.id)
+            RowAction.CONFIRM -> confirmInstall(engine, row.id, actions)
             else -> Unit
         }
     }
@@ -84,6 +88,7 @@ fun AppRowItem(row: AppRow, selected: Boolean, onOpen: () -> Unit, modifier: Mod
 
     val labelDetails = stringResource(R.string.action_details)
     val labelOpen = stringResource(R.string.action_open)
+    val labelCancel = stringResource(R.string.action_cancel)
     val labelCheck = stringResource(R.string.action_check_now)
     val labelSkip = stringResource(R.string.action_skip_version)
     val labelRemove = stringResource(R.string.action_remove)
@@ -96,6 +101,7 @@ fun AppRowItem(row: AppRow, selected: Boolean, onOpen: () -> Unit, modifier: Mod
         onClick(labelDetails) { onOpen(); true }
         customActions = buildList {
             if (action != null && labelAction != null) add(CustomAccessibilityAction(labelAction) { runAction(action); true })
+            if (isWaitingForUser(row)) add(CustomAccessibilityAction(labelCancel) { engine.cancel(row.id); true })
             if (row.installed != null) add(CustomAccessibilityAction(labelOpen) { openApp(); true })
             add(CustomAccessibilityAction(labelDetails) { onOpen(); true })
             add(CustomAccessibilityAction(labelCheck) { checkNow(); true })
@@ -182,7 +188,7 @@ private fun RowText(row: AppRow, modifier: Modifier) {
             verticalArrangement = Arrangement.spacedBy(2.dp),
             itemVerticalAlignment = Alignment.CenterVertically,
         ) {
-            StatusPill(statusLabel(row))
+            StatusPill(statusLabel(row, LocalOnline.current))
             val secondary = row.progress?.let { progressText(it) } ?: versionText(versionChange(row))
             secondary?.let {
                 Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)

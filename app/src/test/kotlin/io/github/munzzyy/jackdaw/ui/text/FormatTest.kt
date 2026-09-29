@@ -59,6 +59,8 @@ class FormatTest {
         assertEquals("github.com/example/app", shortUrl("https://github.com/example/app/"))
         assertEquals("GitHub", sourceName(SourceSpec("github", "https://github.com/a/b")))
         assertEquals("apps.example.net", sourceName(SourceSpec("html", "https://apps.example.net/download")))
+        assertEquals(null to "apps.example.net/download", sourceParts(SourceSpec("html", "https://apps.example.net/download")))
+        assertEquals("GitHub" to "github.com/a/b", sourceParts(SourceSpec("github", "https://github.com/a/b")))
     }
 
     @Test

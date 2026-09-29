@@ -79,6 +79,12 @@ fun sourceName(spec: SourceSpec): String = when (spec.type) {
     else -> hostOf(spec.url)
 }
 
+/** The source's name, null when it would only repeat the host, and its short address. */
+fun sourceParts(spec: SourceSpec): Pair<String?, String> {
+    val name = sourceName(spec)
+    return (if (name == hostOf(spec.url)) null else name) to shortUrl(spec.url)
+}
+
 private const val LETTER_FALLBACK = "?"
 
 /** First visible character of the name, uppercased, whole code point so surrogate pairs survive. */

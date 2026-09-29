@@ -8,7 +8,9 @@ import io.github.munzzyy.jackdaw.engine.Phase
 import io.github.munzzyy.jackdaw.engine.Progress
 import io.github.munzzyy.jackdaw.ui.text.VersionChange
 import io.github.munzzyy.jackdaw.ui.text.formatBytes
+import io.github.munzzyy.jackdaw.ui.LocalOnline
 import io.github.munzzyy.jackdaw.ui.text.isolate
+import io.github.munzzyy.jackdaw.ui.text.quietOffline
 import io.github.munzzyy.jackdaw.ui.text.percentOf
 import io.github.munzzyy.jackdaw.ui.text.statusLabel
 import io.github.munzzyy.jackdaw.ui.text.versionChange
@@ -45,9 +47,10 @@ fun progressText(progress: Progress): String? {
 /** One sentence that TalkBack reads for the whole row. */
 @Composable
 fun rowDescription(row: AppRow): String {
-    val parts = mutableListOf(row.config.name, stringResource(statusLabel(row).text))
+    val online = LocalOnline.current
+    val parts = mutableListOf(row.config.name, stringResource(statusLabel(row, online).text))
     versionChange(row)?.let { parts += spokenVersion(it) }
     row.progress?.let { p -> progressText(p)?.let { parts += it } }
-    row.problem?.let { parts += it.message }
+    row.problem?.takeUnless { quietOffline(row, online) }?.let { parts += it.message }
     return parts.joinToString(". ") { it.trimEnd('.') } + "."
 }

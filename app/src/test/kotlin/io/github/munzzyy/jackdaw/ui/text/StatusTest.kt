@@ -62,6 +62,25 @@ class StatusTest {
     }
 
     @Test
+    fun networkFailuresReadCalmlyWhileOffline() {
+        val row = testRow(status = AppStatus.ERROR, problem = Problem(ProblemKind.NETWORK, "no route"))
+        assertEquals(StatusLabel.OFFLINE, statusLabel(row, online = false))
+        assertEquals(Tone.NEUTRAL, StatusLabel.OFFLINE.tone)
+        assertEquals(StatusLabel.ERROR, statusLabel(row, online = true))
+        val blocked = testRow(status = AppStatus.BLOCKED, problem = Problem(ProblemKind.SIGNER_MISMATCH, "x"))
+        assertEquals(StatusLabel.BLOCKED, statusLabel(blocked, online = false))
+    }
+
+    @Test
+    fun waitingInstallOffersConfirmInTheRowAndOnTheDetail() {
+        val row = testRow(status = AppStatus.UPDATE_AVAILABLE, progress = Progress(Phase.WAITING_FOR_USER))
+        assertEquals(RowAction.CONFIRM, inlineAction(row))
+        assertEquals(RowAction.CONFIRM, primaryAction(row))
+        assertTrue(isWaitingForUser(row))
+        assertFalse(isWaitingForUser(row.copy(progress = Progress(Phase.INSTALLING))))
+    }
+
+    @Test
     fun trackOnlyNeverInstalls() {
         val row = testRow(status = AppStatus.NEW_RELEASE, trackOnly = true)
         assertEquals(RowAction.MARK_SEEN, primaryAction(row))

@@ -20,6 +20,7 @@ enum class StatusLabel(@param:StringRes val text: Int, val tone: Tone) {
     ERROR(R.string.status_error, Tone.PROBLEM),
     RATE_LIMITED(R.string.status_rate_limited, Tone.PROBLEM),
     INSTALL_FAILED(R.string.status_install_failed, Tone.PROBLEM),
+    OFFLINE(R.string.status_offline, Tone.NEUTRAL),
     CHECKING(R.string.status_checking, Tone.BUSY),
     QUEUED(R.string.status_queued, Tone.BUSY),
     DOWNLOADING(R.string.status_downloading, Tone.BUSY),
@@ -28,7 +29,11 @@ enum class StatusLabel(@param:StringRes val text: Int, val tone: Tone) {
     WAITING(R.string.status_waiting, Tone.BUSY),
 }
 
-fun statusLabel(row: AppRow): StatusLabel {
+/** While offline a network failure is the device's state, not the app's, so it reads calmly instead of as an error. */
+fun quietOffline(row: AppRow, online: Boolean): Boolean = !online && row.problem?.kind == ProblemKind.NETWORK
+
+fun statusLabel(row: AppRow, online: Boolean = true): StatusLabel {
+    if (quietOffline(row, online) && row.progress == null && !row.checking) return StatusLabel.OFFLINE
     row.progress?.let {
         return when (it.phase) {
             Phase.QUEUED -> StatusLabel.QUEUED
@@ -61,12 +66,16 @@ enum class RowAction(@param:StringRes val text: Int) {
     MARK_SEEN(R.string.action_mark_seen),
     CHECK(R.string.action_check_again),
     CANCEL(R.string.action_cancel),
+    CONFIRM(R.string.action_confirm),
 }
+
+fun isWaitingForUser(row: AppRow): Boolean = row.progress?.phase == Phase.WAITING_FOR_USER
 
 fun isBusy(row: AppRow): Boolean = row.progress != null
 
 /** The one button that fits inline in a list row, if any. */
 fun inlineAction(row: AppRow): RowAction? = when {
+    isWaitingForUser(row) -> RowAction.CONFIRM
     isBusy(row) || row.checking || row.config.trackOnly -> null
     row.status == AppStatus.UPDATE_AVAILABLE -> RowAction.UPDATE
     row.status == AppStatus.NOT_INSTALLED && row.file != null -> RowAction.INSTALL
@@ -75,6 +84,7 @@ fun inlineAction(row: AppRow): RowAction? = when {
 
 /** The main button on the detail screen. Blocked apps never get an install button. */
 fun primaryAction(row: AppRow): RowAction? = when {
+    isWaitingForUser(row) -> RowAction.CONFIRM
     isBusy(row) -> RowAction.CANCEL
     row.checking -> null
     row.status == AppStatus.BLOCKED || row.status == AppStatus.ERROR -> RowAction.CHECK

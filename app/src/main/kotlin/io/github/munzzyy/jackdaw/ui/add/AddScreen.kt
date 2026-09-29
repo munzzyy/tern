@@ -29,6 +29,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,6 +41,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -49,6 +51,8 @@ import io.github.munzzyy.jackdaw.R
 import io.github.munzzyy.jackdaw.engine.Detection
 import io.github.munzzyy.jackdaw.engine.SearchHit
 import io.github.munzzyy.jackdaw.ui.LocalEngine
+import io.github.munzzyy.jackdaw.ui.LocalOnline
+import io.github.munzzyy.jackdaw.ui.common.OfflineBanner
 import io.github.munzzyy.jackdaw.ui.LocalSnackbar
 import io.github.munzzyy.jackdaw.ui.common.ProblemBox
 import io.github.munzzyy.jackdaw.ui.common.focusRing
@@ -71,6 +75,8 @@ fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: 
     val clipboard = LocalClipboard.current
     val actions = rememberActions()
 
+    val online = LocalOnline.current
+    val offlineReason = stringResource(R.string.offline_reason)
     LaunchedEffect(prefill, nonce) { vm.prefill(prefill, nonce) }
     LaunchedEffect(added) {
         added?.let {
@@ -84,64 +90,74 @@ fun AddScreen(prefill: String?, nonce: Long, onAdded: (String) -> Unit, onShow: 
         snackbarHost = { SnackbarHost(LocalSnackbar.current) },
     ) { padding ->
         Column(
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
+            Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(padding),
         ) {
-            val busy = state is AddState.Looking || state is AddState.Adding
-            OutlinedTextField(
-                value = vm.input,
-                onValueChange = vm::edit,
-                label = { Text(stringResource(R.string.add_field_label)) },
-                placeholder = { Text(stringResource(R.string.add_field_hint)) },
-                supportingText = { Text(stringResource(R.string.add_field_help)) },
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri, imeAction = ImeAction.Go),
-                keyboardActions = KeyboardActions(onGo = { vm.detect() }),
+            OfflineBanner(online)
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .testTag(ADD_FIELD_TAG)
-                    .verticalKeysLeave(),
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End), modifier = Modifier.fillMaxWidth()) {
-                TextButton(onClick = {
-                    actions.run {
-                        val text = clipboard.getClipEntry()?.clipData?.takeIf { it.itemCount > 0 }?.getItemAt(0)?.text
-                        if (!text.isNullOrBlank()) vm.edit(text.toString().take(MAX_INCOMING_CHARS))
-                    }
-                }) { Text(stringResource(R.string.action_paste)) }
-                Button(
-                    onClick = { vm.detect() },
-                    enabled = vm.input.isNotBlank() && !busy,
-                    modifier = Modifier.testTag(ADD_FIND_TAG),
-                ) { Text(stringResource(R.string.action_find)) }
-            }
-            when (val s = state) {
-                AddState.Idle -> Unit
-                is AddState.Looking -> Busy(stringResource(R.string.add_looking), onCancel = vm::cancel)
-                is AddState.Adding -> Busy(stringResource(R.string.add_adding), onCancel = null)
-                AddState.Broken -> ProblemBox(
-                    title = stringResource(R.string.add_broken),
-                    body = null,
-                    action = stringResource(R.string.action_try_again),
-                    onAction = { vm.detect() },
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+            ) {
+                val busy = state is AddState.Looking || state is AddState.Adding
+                OutlinedTextField(
+                    value = vm.input,
+                    onValueChange = vm::edit,
+                    label = { Text(stringResource(R.string.add_field_label)) },
+                    placeholder = { Text(stringResource(R.string.add_field_hint)) },
+                    supportingText = { Text(stringResource(R.string.add_field_help)) },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri, imeAction = ImeAction.Go),
+                    keyboardActions = KeyboardActions(onGo = { if (online) vm.detect() }),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag(ADD_FIELD_TAG)
+                        .verticalKeysLeave(),
                 )
-                is AddState.Answer -> when (val d = s.detection) {
-                    is Detection.Found -> PreviewCard(
-                        found = d,
-                        onAdd = { install -> vm.add(d, install) },
-                        onShow = onShow,
-                    )
-                    is Detection.Results -> SearchResults(d, onPick = { vm.detect(it.url) })
-                    is Detection.Failed -> ProblemBox(
-                        title = d.problem.message,
-                        body = stringResource(io.github.munzzyy.jackdaw.ui.text.problemAdvice(d.problem.kind, installed = false)),
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End), modifier = Modifier.fillMaxWidth()) {
+                    TextButton(onClick = {
+                        actions.run {
+                            val text = clipboard.getClipEntry()?.clipData?.takeIf { it.itemCount > 0 }?.getItemAt(0)?.text
+                            if (!text.isNullOrBlank()) vm.edit(text.toString().take(MAX_INCOMING_CHARS))
+                        }
+                    }) { Text(stringResource(R.string.action_paste)) }
+                    Button(
+                        onClick = { vm.detect() },
+                        enabled = vm.input.isNotBlank() && !busy && online,
+                        modifier = Modifier
+                            .testTag(ADD_FIND_TAG)
+                            .then(if (online) Modifier else Modifier.semantics { stateDescription = offlineReason }),
+                    ) { Text(stringResource(R.string.action_find)) }
+                }
+                when (val s = state) {
+                    AddState.Idle -> Unit
+                    is AddState.Looking -> Busy(stringResource(R.string.add_looking), onCancel = vm::cancel)
+                    is AddState.Adding -> Busy(stringResource(R.string.add_adding), onCancel = null)
+                    AddState.Broken -> ProblemBox(
+                        title = stringResource(R.string.add_broken),
+                        body = null,
                         action = stringResource(R.string.action_try_again),
                         onAction = { vm.detect() },
                     )
+                    is AddState.Answer -> when (val d = s.detection) {
+                        is Detection.Found -> PreviewCard(
+                            found = d,
+                            carried = remember(d) { vm.carried(d) },
+                            onAdd = { install -> vm.add(d, install) },
+                            onShow = onShow,
+                        )
+                        is Detection.Results -> SearchResults(d, onPick = { vm.detect(it.url) })
+                        is Detection.Failed -> ProblemBox(
+                            title = d.problem.message,
+                            body = stringResource(io.github.munzzyy.jackdaw.ui.text.problemAdvice(d.problem.kind, installed = false)),
+                            action = stringResource(R.string.action_try_again),
+                            onAction = { vm.detect() },
+                        )
+                    }
                 }
             }
         }

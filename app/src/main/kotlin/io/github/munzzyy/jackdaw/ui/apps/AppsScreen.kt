@@ -47,6 +47,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
@@ -57,6 +58,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.jackdaw.R
 import io.github.munzzyy.jackdaw.engine.AppRow
 import io.github.munzzyy.jackdaw.ui.LocalEngine
+import io.github.munzzyy.jackdaw.ui.LocalOnline
+import io.github.munzzyy.jackdaw.ui.common.OfflineBanner
 import io.github.munzzyy.jackdaw.ui.LocalSnackbar
 import io.github.munzzyy.jackdaw.ui.common.rememberActions
 import io.github.munzzyy.jackdaw.ui.common.verticalKeysLeave
@@ -77,6 +80,8 @@ fun AppsScreen(
     val state by vm.state.collectAsStateWithLifecycle()
     val query by vm.query.collectAsStateWithLifecycle()
     val checking by engine.checkingAll.collectAsStateWithLifecycle()
+    val online = LocalOnline.current
+    val offlineReason = stringResource(R.string.offline_reason)
     val actions = rememberActions()
     var text by rememberSaveable { mutableStateOf(query.text) }
     LaunchedEffect(text) { vm.setText(text) }
@@ -87,7 +92,11 @@ fun AppsScreen(
                 title = { Text(stringResource(R.string.tab_apps)) },
                 actions = {
                     SortMenu(query.sort, vm::setSort)
-                    IconButton(onClick = { actions.run { engine.check() } }, enabled = !checking) {
+                    IconButton(
+                        onClick = { actions.run { engine.check() } },
+                        enabled = !checking && online,
+                        modifier = if (online) Modifier else Modifier.semantics { stateDescription = offlineReason },
+                    ) {
                         Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.action_check_all))
                     }
                 },
@@ -95,29 +104,36 @@ fun AppsScreen(
         },
         snackbarHost = { SnackbarHost(LocalSnackbar.current) },
     ) { padding ->
-        PullToRefreshBox(
-            isRefreshing = checking,
-            onRefresh = { actions.run { engine.check() } },
-            modifier = Modifier
+        Column(
+            Modifier
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            when {
-                !state.loaded -> Unit
-                state.total == 0 -> EmptyApps(onAdd)
-                else -> AppList(
-                    state = state,
-                    query = query,
-                    text = text,
-                    onText = { text = it.take(200) },
-                    onFilter = vm::setFilter,
-                    selectedId = selectedId,
-                    onOpen = onOpen,
-                    onUpdateAll = { engine.installAllUpdates() },
-                    listState = listState,
-                )
+            OfflineBanner(online)
+            PullToRefreshBox(
+                isRefreshing = checking,
+                onRefresh = { if (online) actions.run { engine.check() } },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
+            ) {
+                when {
+                    !state.loaded -> Unit
+                    state.total == 0 -> EmptyApps(onAdd)
+                    else -> AppList(
+                        state = state,
+                        query = query,
+                        text = text,
+                        onText = { text = it.take(200) },
+                        onFilter = vm::setFilter,
+                        selectedId = selectedId,
+                        onOpen = onOpen,
+                        onUpdateAll = { engine.installAllUpdates() },
+                        listState = listState,
+                    )
+                }
+                if (checking) LinearProgressIndicator(Modifier.fillMaxWidth().align(Alignment.TopCenter))
             }
-            if (checking) LinearProgressIndicator(Modifier.fillMaxWidth().align(Alignment.TopCenter))
         }
     }
 }
@@ -203,7 +219,13 @@ private fun UpdatesHeader(count: Int, updatable: Int, onUpdateAll: () -> Unit) {
                 .semantics { heading() },
         )
         if (updatable >= 2) {
-            Button(onClick = onUpdateAll) { Text(stringResource(R.string.action_update_all)) }
+            val online = LocalOnline.current
+            val offlineReason = stringResource(R.string.offline_reason)
+            Button(
+                onClick = onUpdateAll,
+                enabled = online,
+                modifier = if (online) Modifier else Modifier.semantics { stateDescription = offlineReason },
+            ) { Text(stringResource(R.string.action_update_all)) }
         }
     }
 }

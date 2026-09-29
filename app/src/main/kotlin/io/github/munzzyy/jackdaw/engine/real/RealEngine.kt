@@ -44,6 +44,7 @@ import io.github.munzzyy.jackdaw.engine.ImportSummary
 import io.github.munzzyy.jackdaw.engine.NoteBlock
 import io.github.munzzyy.jackdaw.engine.Problem
 import io.github.munzzyy.jackdaw.engine.ProblemKind
+import io.github.munzzyy.jackdaw.engine.SearchHit
 import io.github.munzzyy.jackdaw.engine.Progress
 import io.github.munzzyy.jackdaw.engine.Settings
 import io.github.munzzyy.jackdaw.install.ArchiveReader
@@ -152,6 +153,7 @@ class RealEngine(
     internal val installs = Installs(this)
     private val detector = Detector(this)
     private val interop = Interop(this)
+    private val stars = Stars(this)
 
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -428,6 +430,11 @@ class RealEngine(
     override suspend fun importFrom(uri: Uri): ImportSummary {
         ready()
         return interop.importFrom(uri)
+    }
+
+    override suspend fun starredBy(user: String): List<SearchHit> {
+        ready()
+        return stars.starredBy(user)
     }
 
     override suspend fun exportTo(uri: Uri): Int {

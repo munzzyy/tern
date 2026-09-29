@@ -19,7 +19,11 @@ import io.github.munzzyy.jackdaw.engine.EventKind
 import io.github.munzzyy.jackdaw.engine.ImportSummary
 import io.github.munzzyy.jackdaw.engine.NoteBlock
 import io.github.munzzyy.jackdaw.engine.Phase
+import io.github.munzzyy.jackdaw.engine.Problem
+import io.github.munzzyy.jackdaw.engine.ProblemException
+import io.github.munzzyy.jackdaw.engine.ProblemKind
 import io.github.munzzyy.jackdaw.engine.Progress
+import io.github.munzzyy.jackdaw.engine.SearchHit
 import io.github.munzzyy.jackdaw.engine.Settings
 import io.github.munzzyy.jackdaw.ui.Scenarios
 import kotlinx.coroutines.CoroutineName
@@ -341,6 +345,25 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
             ),
         )
     }
+
+    /** "example" stars a few of every kind, "many" stars 240 tools, "nobody" does not exist, "busy" meets a rate limit. */
+    override suspend fun starredBy(user: String): List<SearchHit> {
+        delay(stepMs * 4)
+        val name = user.trim().removePrefix("@")
+        return when (name.lowercase()) {
+            "nobody" -> throw ProblemException(Problem(ProblemKind.NOT_FOUND, "GitHub has no user named $name."))
+            "busy" -> throw ProblemException(Problem(ProblemKind.RATE_LIMITED, "GitHub asked Jackdaw to wait.", System.currentTimeMillis() + 20 * 60_000))
+            "many" -> (1..240).map { tool(it) }
+            "" -> throw ProblemException(Problem(ProblemKind.NOT_FOUND, "That is not a GitHub user name."))
+            else -> listOf(
+                SearchHit("sparrow", "example", "A small feed reader that works offline.", FakeLinks.NEW_APP, "GitHub", 1240),
+                SearchHit("trailmap", "example", "Maps for walking, kept on the phone.", FakeLinks.TRACKED_APP, "GitHub", 310),
+                SearchHit("missing", "example", null, FakeLinks.MISSING, "GitHub", 2),
+            ) + (1..5).map { tool(it) }
+        }
+    }
+
+    private fun tool(n: Int) = SearchHit("tool-$n", "example", "A command line tool with no Android build.", "${FakeLinks.NO_FILE_PREFIX}$n", "GitHub", n * 3)
 
     override suspend fun exportTo(uri: Uri): Int {
         val rows = _apps.value

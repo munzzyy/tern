@@ -299,7 +299,7 @@ private fun Screen(stack: BackStack, route: Route, listState: LazyListState, two
         )
         Route.Activity -> ActivityScreen(onOpenApp = { stack.showDetail(it) })
         Route.Settings -> SettingsScreen(onImport = { stack.push(Route.Import) })
-        Route.Import -> ImportScreen(onBack = { stack.pop() })
+        Route.Import -> ImportScreen(onBack = { stack.pop() }, onOpenApp = { stack.showDetail(it) })
     }
 }
 

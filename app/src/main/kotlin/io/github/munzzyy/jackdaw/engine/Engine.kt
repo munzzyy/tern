@@ -91,6 +91,12 @@ interface Engine {
 
     suspend fun importFrom(uri: Uri): ImportSummary
 
+    /**
+     * Repositories [user] has starred, at most 300, for the user to pick from. Nothing is added.
+     * Throws [ProblemException] when the name is not valid or the list cannot be had.
+     */
+    suspend fun starredBy(user: String): List<SearchHit>
+
     /** Returns how many apps were written. Tokens are never exported. */
     suspend fun exportTo(uri: Uri): Int
 

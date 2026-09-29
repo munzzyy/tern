@@ -22,6 +22,9 @@ object FakeLinks {
 
     /** Comes with settings of its own, the way an Obtainium link or an import does. */
     const val CARRIED = "https://github.com/example/finch"
+
+    /** A repository with releases but nothing an Android device can install, like most starred ones. */
+    const val NO_FILE_PREFIX = "https://github.com/example/tool-"
 }
 
 fun fakeDetect(input: String, invent: Invent): Detection {
@@ -56,6 +59,8 @@ fun fakeDetect(input: String, invent: Invent): Detection {
             checksum = ChecksumState.NOT_PUBLISHED, signer = SignerState.UNKNOWN,
         )
         lower.startsWith(FakeLinks.TRACKED_APP) -> found(invent, "Trail Map", SourceTypes.GITHUB, "trailmap", emptyList()).copy(alreadyTracked = "trailmap")
+        lower.startsWith(FakeLinks.NO_FILE_PREFIX) -> found(invent, text.substringAfterLast('/'), SourceTypes.GITHUB, text.substringAfterLast('/'), listOf("None of its files can be installed on this device."))
+            .copy(file = null, otherFiles = emptyList(), verification = null)
         lower.startsWith(FakeLinks.MISSING) -> Detection.Failed(Problem(ProblemKind.NOT_FOUND, "gitlab.com answered 404: there is no project at that address."))
         lower.startsWith("https://") -> Detection.Failed(Problem(ProblemKind.UNSUPPORTED, "Jackdaw does not know how to find releases on that page."))
         lower.startsWith("http://") -> Detection.Failed(Problem(ProblemKind.UNSUPPORTED, "Only https links are accepted."))

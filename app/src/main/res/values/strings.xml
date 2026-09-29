@@ -432,6 +432,46 @@
         <item quantity="one">%d could not be brought over:</item>
         <item quantity="other">%d could not be brought over:</item>
     </plurals>
+    <!-- Button under a group of skipped apps; %d is how many names it reveals. -->
+    <plurals name="import_show_names">
+        <item quantity="one">Show %d name</item>
+        <item quantity="other">Show all %d names</item>
+    </plurals>
+    <string name="import_hide_names">Hide the names</string>
+    <string name="import_file_heading">From a file</string>
+    <string name="import_stars_heading">From GitHub stars</string>
+    <string name="import_stars_explain">See the repositories someone has starred on GitHub and pick the ones to add. Nothing is picked for you, and nothing is installed.</string>
+    <string name="import_stars_user">GitHub user name</string>
+    <string name="import_stars_show">Show stars</string>
+    <string name="import_stars_loading">Asking GitHub for the list</string>
+    <string name="import_stars_failed">The list of stars could not be fetched.</string>
+    <string name="import_stars_failed_help">Check the connection and try again.</string>
+    <!-- %1$d is how many repositories, %2$s the GitHub user name. -->
+    <plurals name="import_stars_count">
+        <item quantity="one">%2$s has starred %1$d repository. Pick the ones to add.</item>
+        <item quantity="other">%2$s has starred %1$d repositories. Pick the ones to add.</item>
+    </plurals>
+    <!-- %1$s is the GitHub user name. -->
+    <string name="import_stars_none">%1$s has not starred any repositories.</string>
+    <!-- Button that adds the ticked repositories to the list; %d is how many are ticked. -->
+    <plurals name="import_stars_add">
+        <item quantity="one">Add %d selected</item>
+        <item quantity="other">Add %d selected</item>
+    </plurals>
+    <string name="import_stars_pick_some">Tick the repositories to add.</string>
+    <string name="import_stars_other_user">Look up someone else</string>
+    <!-- %1$d repositories done so far, out of %2$d. -->
+    <plurals name="import_stars_adding">
+        <item quantity="one">Checking %1$d of %2$d repository</item>
+        <item quantity="other">Checking %1$d of %2$d repositories</item>
+    </plurals>
+    <string name="import_stars_stop">Stop</string>
+    <string name="import_skip_no_file">Nothing in its releases can be installed on this device.</string>
+    <string name="import_skip_no_releases">It publishes no releases.</string>
+    <string name="import_skip_not_found">Jackdaw could not find it.</string>
+    <string name="import_skip_rate_limited">GitHub asked Jackdaw to wait. Try these again later.</string>
+    <string name="import_skip_network">The connection failed.</string>
+    <string name="import_skip_other">Jackdaw could not read its releases.</string>
 
     <!-- First run -->
     <string name="first_title">Jackdaw</string>

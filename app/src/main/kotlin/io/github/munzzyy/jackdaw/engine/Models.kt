@@ -53,6 +53,9 @@ data class Problem(
     val retryAtMs: Long? = null,
 )
 
+/** Thrown by an engine call that has no answer to give, with the reason already in plain words. */
+class ProblemException(val problem: Problem) : Exception(problem.message)
+
 enum class SignerState {
     /** Nothing known yet. */
     UNKNOWN,

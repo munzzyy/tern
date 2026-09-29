@@ -63,6 +63,9 @@
     <string name="engine_warn_moved">The project seems to have moved to %1$s.</string>
     <string name="engine_several_apps">This link holds several apps. Import it from settings instead.</string>
     <string name="engine_not_a_source">Jackdaw found no releases at this address.</string>
+    <string name="engine_stars_bad_name">That is not a GitHub user name. It can hold letters, digits and hyphens.</string>
+    <!-- %1$s is the GitHub user name the person typed. -->
+    <string name="engine_stars_no_user">GitHub has no user named %1$s.</string>
     <string name="engine_nothing_to_search">Type a link or a name to search for.</string>
 
     <string name="engine_event_added">Added from %1$s</string>

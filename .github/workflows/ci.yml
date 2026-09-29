@@ -11,11 +11,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
         with:
           distribution: temurin
           java-version: 21
+      - name: the Gradle wrapper is the one Gradle published
+        run: bash tools/check-wrapper.sh
       - name: translations match English
         run: python3 tools/strings.py check app/src/main/res
       - name: core tests
@@ -28,3 +32,16 @@ jobs:
         run: bash tools/check-java-api.sh
       - name: shipped apk keeps its promises
         run: bash tools/check-apk.sh app/build/outputs/apk/release/app-release-unsigned.apk
+
+  reproducible:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: two builds in two folders give the same file
+        run: bash tools/check-reproducible.sh "$RUNNER_TEMP/reproducible"

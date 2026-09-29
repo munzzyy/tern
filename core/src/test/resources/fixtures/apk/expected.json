@@ -1,0 +1,291 @@
+{
+  "app-jar-only.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 16,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      1
+    ],
+    "split": null,
+    "targetSdk": 29,
+    "versionCode": 1,
+    "versionName": "1.0-jar"
+  },
+  "app-rotated.apk": {
+    "certificates": [
+      "b09831fa62fc9415839a8d1bd7e6b32c607bf8fccd64a0893f5dba368ee62c86",
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63",
+      "b09831fa62fc9415839a8d1bd7e6b32c607bf8fccd64a0893f5dba368ee62c86"
+    ],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      1,
+      2,
+      3,
+      31
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 4,
+    "versionName": "4.0"
+  },
+  "app-v1.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 21,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 1,
+    "versionName": "1.0"
+  },
+  "app-v2-only.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      2
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 2,
+    "versionName": "2.0"
+  },
+  "app-v2-otherkey.apk": {
+    "certificates": [
+      "781f7ea07e52178e94a4a07a99c907eb79eadd042c51a099beaccce7977fd36e"
+    ],
+    "lineage": [],
+    "minSdk": 21,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 2,
+    "versionName": "2.0"
+  },
+  "app-v2.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 21,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 2,
+    "versionName": "2.0"
+  },
+  "app-zip64.apk": {
+    "certificates": [],
+    "lineage": [],
+    "minSdk": 21,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 1,
+    "versionName": "1.0"
+  },
+  "split-base.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [
+      "android.permission.INTERNET",
+      "android.permission.CAMERA"
+    ],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": null,
+    "targetSdk": 35,
+    "versionCode": 3,
+    "versionName": "3.0"
+  },
+  "split-config.arm64_v8a.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": "config.arm64_v8a",
+    "targetSdk": 35,
+    "versionCode": 3,
+    "versionName": "3.0"
+  },
+  "split-config.armeabi_v7a.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": "config.armeabi_v7a",
+    "targetSdk": 35,
+    "versionCode": 3,
+    "versionName": "3.0"
+  },
+  "split-config.de.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": "config.de",
+    "targetSdk": 35,
+    "versionCode": 3,
+    "versionName": "3.0"
+  },
+  "split-config.en.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": "config.en",
+    "targetSdk": 35,
+    "versionCode": 3,
+    "versionName": "3.0"
+  },
+  "split-config.mdpi.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": "config.mdpi",
+    "targetSdk": 35,
+    "versionCode": 3,
+    "versionName": "3.0"
+  },
+  "split-config.x86_64.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": "config.x86_64",
+    "targetSdk": 35,
+    "versionCode": 3,
+    "versionName": "3.0"
+  },
+  "split-config.xxhdpi.apk": {
+    "certificates": [
+      "eef5b9ce5894133be26265ab43801b2e142e846f4be056d13f0484bcedcc0e63"
+    ],
+    "lineage": [],
+    "minSdk": 24,
+    "package": "com.example.app",
+    "permissions": [],
+    "schemes": [
+      1,
+      2,
+      3
+    ],
+    "split": "config.xxhdpi",
+    "targetSdk": 35,
+    "versionCode": 3,
+    "versionName": "3.0"
+  }
+}

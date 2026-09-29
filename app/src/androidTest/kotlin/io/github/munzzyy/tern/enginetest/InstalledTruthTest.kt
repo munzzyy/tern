@@ -95,6 +95,25 @@ class InstalledTruthTest {
         }
     }
 
+    @Test
+    fun noInTheSystemInstallerIsACancelAndNoProblem() = runBlocking {
+        Harness("truth-cancelled").use { h ->
+            h.forge.releases = listOf(release2, release1)
+            val id = h.addFixture()
+            h.engine.check(id)
+            h.engine.install(id)
+            h.cancel(id)
+            waitUntil(30_000, "the answer to the cancel") { h.eventsFor(id).any { it.kind == EventKind.CANCELLED } }
+            waitUntil(10_000, "the row to settle") { h.row(id).progress == null && h.state(id).pending == null }
+            assertStillOnTheOldVersion(h, id)
+            assertNull(h.describe(id), h.state(id).installProblem)
+            assertEquals(h.describe(id), AppStatus.UPDATE_AVAILABLE, h.row(id).status)
+            assertNull(h.describe(id), h.row(id).problem)
+            assertTrue(h.eventsFor(id).none { it.kind == EventKind.FAILED })
+            assertNotNull("the file stays for the next try", h.engine.downloader.kept(id, h.row(id).file!!.asset.url))
+        }
+    }
+
     /** What a process that died between the download and the answer leaves behind: a pending install whose session is gone. */
     @Test
     fun anInstallLeftWaitingIsNotCountedWhenTernStartsAgain() = runBlocking {

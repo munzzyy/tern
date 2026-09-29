@@ -7,7 +7,7 @@ import java.time.LocalDate
 import java.time.ZoneId
 
 /** What an entry says first. [PLAIN] says what the engine wrote, for the kinds that have no words of their own. */
-enum class Headline { INSTALLED, UPDATED, UPDATE_WAITS, INSTALL_WAITS, NOT_INSTALLED, BLOCKED, ADDED, REMOVED, CHECK_FAILED, PLAIN }
+enum class Headline { INSTALLED, UPDATED, UPDATE_WAITS, INSTALL_WAITS, NOT_INSTALLED, CANCELLED, BLOCKED, ADDED, REMOVED, CHECK_FAILED, PLAIN }
 
 /** One thing that happened: a single event, or the events of one operation on one app. */
 data class Entry(
@@ -35,6 +35,7 @@ private val STAGES = mapOf(
     EventKind.INSTALLED to 3,
     EventKind.BLOCKED to 3,
     EventKind.FAILED to 3,
+    EventKind.CANCELLED to 3,
 )
 
 private val DOTTED = Regex("""[vV]?\d+(?:\.\d+)+[0-9A-Za-z.+_-]*""")
@@ -95,6 +96,7 @@ private fun headlineOf(outcome: EventKind, update: Boolean): Headline = when (ou
     EventKind.UPDATE_FOUND -> Headline.UPDATE_WAITS
     EventKind.DOWNLOADED, EventKind.VERIFIED -> if (update) Headline.UPDATE_WAITS else Headline.INSTALL_WAITS
     EventKind.FAILED -> Headline.NOT_INSTALLED
+    EventKind.CANCELLED -> Headline.CANCELLED
     EventKind.BLOCKED -> Headline.BLOCKED
     EventKind.ADDED -> Headline.ADDED
     EventKind.REMOVED -> Headline.REMOVED

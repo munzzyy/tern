@@ -223,6 +223,13 @@ class Harness(
         throw AssertionError("${e.message}; ${describe(id)}; on screen: ${Prompt.onScreen()}", e)
     }
 
+    /** Says no to the system installer's dialog for [id]. */
+    fun cancel(id: String, timeoutMs: Long = 30_000): String = try {
+        Prompt.cancel(timeoutMs) { engine.resumeInstall(id) }
+    } catch (e: AssertionError) {
+        throw AssertionError("${e.message}; ${describe(id)}; on screen: ${Prompt.onScreen()}", e)
+    }
+
     /** What a failed assertion should say about the app, so a failure on a device explains itself. */
     fun describe(id: String): String {
         val row = row(id)
@@ -247,6 +254,7 @@ class Harness(
 object Prompt {
     private val INSTALLER = Pattern.compile(".*packageinstaller.*")
     private val CONFIRM = Pattern.compile("(?i)^(install|update|reinstall)$")
+    private val CANCEL = Pattern.compile("(?i)^cancel$")
 
     private val device: UiDevice get() = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
@@ -255,16 +263,21 @@ object Prompt {
      * A television shows no notifications, so nothing can be tapped there. Its user opens the app
      * and presses Confirm, which is what [reopen] stands for.
      */
-    fun confirm(timeoutMs: Long = 30_000, reopen: (() -> Boolean)? = null): String {
+    fun confirm(timeoutMs: Long = 30_000, reopen: (() -> Boolean)? = null): String = press(CONFIRM, timeoutMs, reopen)
+
+    /** Says no in the system installer's dialog, the way [confirm] says yes. */
+    fun cancel(timeoutMs: Long = 30_000, reopen: (() -> Boolean)? = null): String = press(CANCEL, timeoutMs, reopen)
+
+    private fun press(button: Pattern, timeoutMs: Long, reopen: (() -> Boolean)?): String {
         val deadline = System.currentTimeMillis() + timeoutMs
         while (System.currentTimeMillis() < deadline) {
-            device.wait(Until.findObject(By.pkg(INSTALLER).text(CONFIRM)), 2_000)?.let {
+            device.wait(Until.findObject(By.pkg(INSTALLER).text(button)), 2_000)?.let {
                 it.click()
                 return "dialog"
             }
             if (television) {
                 if (reopen?.invoke() == true) {
-                    device.wait(Until.findObject(By.pkg(INSTALLER).text(CONFIRM)), 10_000)?.let {
+                    device.wait(Until.findObject(By.pkg(INSTALLER).text(button)), 10_000)?.let {
                         it.click()
                         return "app"
                     }
@@ -275,7 +288,7 @@ object Prompt {
             val tap = device.wait(Until.findObject(By.textStartsWith("Tap to finish installing")), 2_000)
             if (tap != null) {
                 tap.click()
-                device.wait(Until.findObject(By.pkg(INSTALLER).text(CONFIRM)), 10_000)?.let {
+                device.wait(Until.findObject(By.pkg(INSTALLER).text(button)), 10_000)?.let {
                     it.click()
                     return "notification"
                 }

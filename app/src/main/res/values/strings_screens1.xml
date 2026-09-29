@@ -57,6 +57,8 @@
     <string name="activity_install_waits_plain">An install waits</string>
     <string name="activity_not_installed">Could not install %1$s</string>
     <string name="activity_not_installed_plain">Could not install</string>
+    <string name="activity_cancelled">Install of %1$s cancelled</string>
+    <string name="activity_cancelled_plain">Install cancelled</string>
     <string name="activity_blocked">Blocked %1$s</string>
     <string name="activity_blocked_plain">Blocked</string>
     <string name="activity_added">Added</string>

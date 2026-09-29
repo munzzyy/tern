@@ -36,6 +36,21 @@ class EntriesTest {
     }
 
     @Test
+    fun anInstallTheUserCancelledIsOneEntryAndNoProblem() {
+        val found = e(day - 60 * minute, EventKind.UPDATE_FOUND, message = "Version 1.5.0 is available")
+        val steps = listOf(
+            e(day, EventKind.DOWNLOADED, message = "Downloaded 8.4 MB"),
+            e(day + 20_000, EventKind.VERIFIED, message = "Verified: package org.example.a, version code 1005000, signed by ab12"),
+            e(day + 40_000, EventKind.CANCELLED, message = "The install was cancelled."),
+        )
+        val entry = entriesOf(listOf(found) + steps).first()
+        assertEquals(Headline.CANCELLED, entry.headline)
+        assertEquals(listOf(EventKind.DOWNLOADED, EventKind.VERIFIED, EventKind.CANCELLED), entry.steps.map { it.kind })
+        assertEquals("1.5.0", entry.version)
+        assertEquals(false, entry.isProblem)
+    }
+
+    @Test
     fun anInstallAfterAnUpdateWasFoundIsAnUpdate() {
         val found = e(day - 60 * minute, EventKind.UPDATE_FOUND, message = "Version 1.5.0 is available")
         val entries = entriesOf(listOf(found) + install(day))

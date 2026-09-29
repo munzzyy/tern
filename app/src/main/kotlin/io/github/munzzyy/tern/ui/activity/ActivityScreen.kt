@@ -55,6 +55,7 @@ import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.common.rememberScreenFocus
 import io.github.munzzyy.tern.ui.common.returnFocus
 import io.github.munzzyy.tern.ui.icons.Bin
+import io.github.munzzyy.tern.ui.icons.Close
 import io.github.munzzyy.tern.ui.icons.Collapse
 import io.github.munzzyy.tern.ui.icons.Expand
 import io.github.munzzyy.tern.ui.icons.Glyphs
@@ -174,6 +175,7 @@ private fun headlineText(entry: Entry, spoken: Boolean = false): String {
         Headline.UPDATE_WAITS -> words(R.string.activity_update_waits, R.string.activity_update_waits_plain)
         Headline.INSTALL_WAITS -> words(R.string.activity_install_waits, R.string.activity_install_waits_plain)
         Headline.NOT_INSTALLED -> words(R.string.activity_not_installed, R.string.activity_not_installed_plain)
+        Headline.CANCELLED -> words(R.string.activity_cancelled, R.string.activity_cancelled_plain)
         Headline.BLOCKED -> words(R.string.activity_blocked, R.string.activity_blocked_plain)
         Headline.ADDED -> R.string.activity_added
         Headline.REMOVED -> R.string.activity_removed
@@ -197,6 +199,7 @@ private fun mark(entry: Entry): Pair<ImageVector, Color> {
         Headline.INSTALLED, Headline.UPDATED -> Glyphs.Seal to status.verified.color
         Headline.UPDATE_WAITS, Headline.INSTALL_WAITS -> Glyphs.Update to scheme.tertiary
         Headline.NOT_INSTALLED -> Glyphs.Failed to status.refused.color
+        Headline.CANCELLED -> Glyphs.Close to scheme.onSurfaceVariant
         Headline.BLOCKED -> Glyphs.Refused to status.refused.color
         Headline.CHECK_FAILED -> Glyphs.Caution to status.refused.color
         Headline.ADDED -> Glyphs.Plus to scheme.onSurfaceVariant

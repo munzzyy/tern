@@ -287,6 +287,7 @@ internal class Installs(private val e: RealEngine) {
                 return@withContext
             }
             PackageInstaller.STATUS_SUCCESS -> succeeded(appId, pending, notify = appId !in batch)
+            PackageInstaller.STATUS_FAILURE_ABORTED -> cancelled(appId)
             else -> failed(appId, problemFor(status, message))
         }
         e.notifier.cancelConfirm(appId)
@@ -320,6 +321,12 @@ internal class Installs(private val e: RealEngine) {
         if (notify && e.settings.value.notifyInstalled) e.notifier.installed(listOfNotNull(e.stored[appId]?.config?.name))
     }
 
+    /** Nothing went wrong: the row goes back to what it was, and the file stays for the next try. */
+    private fun cancelled(appId: String) {
+        e.saveState(appId) { it.copy(pending = null, installProblem = null) }
+        e.event(appId, EventKind.CANCELLED, e.texts.installCancelled())
+    }
+
     private fun failed(appId: String, problem: Problem) {
         e.saveState(appId) { it.copy(pending = null, installProblem = problem) }
         e.event(appId, EventKind.FAILED, problem.message)
@@ -330,7 +337,6 @@ internal class Installs(private val e: RealEngine) {
         val downgrade = message?.contains("DOWNGRADE", ignoreCase = true) == true
         return when {
             downgrade -> Problem(ProblemKind.DOWNGRADE, t.installDowngrade())
-            status == PackageInstaller.STATUS_FAILURE_ABORTED -> Problem(ProblemKind.INSTALL_FAILED, t.installCancelled())
             status == PackageInstaller.STATUS_FAILURE_BLOCKED -> Problem(ProblemKind.INSTALL_FAILED, t.installBlocked())
             status == PackageInstaller.STATUS_FAILURE_CONFLICT -> Problem(ProblemKind.INSTALL_FAILED, t.installConflict())
             status == PackageInstaller.STATUS_FAILURE_INCOMPATIBLE -> Problem(ProblemKind.INSTALL_FAILED, t.installIncompatible())

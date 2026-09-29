@@ -14,9 +14,19 @@ import javax.security.auth.x500.X500Principal
  *
  * [scheme] is 1, 2, 3 or 31 (v3.1). [sha256] is the lowercase hex SHA-256 of the DER certificate, the
  * value `apksigner verify --print-certs` shows. [lineage] lists the proof-of-rotation chain oldest
- * first, as claimed in a v3 or v3.1 block, and is empty otherwise.
+ * first, as claimed in a v3 or v3.1 block, and is empty otherwise. [minSdk] and [maxSdk] are the
+ * platform versions a v3 or v3.1 signer applies to.
  */
-data class SignerInfo(val scheme: Int, val sha256: String, val subject: String?, val lineage: List<String>)
+data class SignerInfo(
+    val scheme: Int,
+    val sha256: String,
+    val subject: String?,
+    val lineage: List<String>,
+    val minSdk: Int = 0,
+    val maxSdk: Int = Int.MAX_VALUE,
+) {
+    fun appliesTo(sdk: Int): Boolean = sdk in minSdk..maxSdk
+}
 
 object SignatureScheme {
     const val V1 = 1
@@ -81,11 +91,13 @@ internal object ApkSigningBlock {
                 if (++more > MAX_CERTS) throw ApkFormatException("Too many certificates")
                 certificates.lengthPrefixed()
             }
-            val lineage = if (scheme == SignatureScheme.V2) emptyList() else {
-                signedData.skip(8)
-                lineage(signedData.lengthPrefixed())
+            if (scheme == SignatureScheme.V2) {
+                out.add(Certificates.signer(scheme, first, emptyList()))
+            } else {
+                val minSdk = signedData.length()
+                val maxSdk = signedData.length()
+                out.add(Certificates.signer(scheme, first, lineage(signedData.lengthPrefixed())).copy(minSdk = minSdk, maxSdk = maxSdk))
             }
-            out.add(Certificates.signer(scheme, first, lineage))
         }
         if (out.isEmpty()) throw ApkFormatException("Signature block without signers")
         return out

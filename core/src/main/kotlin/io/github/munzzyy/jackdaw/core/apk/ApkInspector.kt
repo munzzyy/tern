@@ -7,7 +7,25 @@ import io.github.munzzyy.jackdaw.core.net.HttpClient
  * signatures are not checked, so [signers] is a claim until the device's installer accepts the file.
  * [schemes] holds the signature schemes present (see [SignatureScheme]), also unverified.
  */
-data class ApkInfo(val manifest: ManifestInfo, val signers: List<SignerInfo>, val schemes: Set<Int>, val fileSize: Long)
+data class ApkInfo(val manifest: ManifestInfo, val signers: List<SignerInfo>, val schemes: Set<Int>, val fileSize: Long) {
+    /**
+     * The signers a device running [sdk] would go by: Android trusts the newest scheme it understands
+     * and ignores the rest, so a certificate named only in an older block must not count.
+     */
+    fun signersFor(sdk: Int): List<SignerInfo> {
+        val order = buildList {
+            if (sdk >= 33) add(SignatureScheme.V31)
+            if (sdk >= 28) add(SignatureScheme.V3)
+            if (sdk >= 24) add(SignatureScheme.V2)
+            add(SignatureScheme.V1)
+        }
+        for (scheme in order) {
+            val matching = signers.filter { it.scheme == scheme && it.appliesTo(sdk) }
+            if (matching.isNotEmpty()) return matching
+        }
+        return emptyList()
+    }
+}
 
 object ApkInspector {
     const val MAX_MANIFEST_BYTES = 4 * 1024 * 1024

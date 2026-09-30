@@ -205,6 +205,7 @@ class Evaluator(
             checksumSource = source,
             newPermissions = newPermissions,
             fileSha256 = facts?.fileSha256 ?: asset.sha256?.let(Fingerprints::normalize),
+            checksumFromStore = fromStore(config.source.type, checksum),
         )
     }
 
@@ -221,6 +222,7 @@ class Evaluator(
     fun digestLabel(type: String): String = when (type) {
         SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS -> texts.checksumGitHub()
         SourceTypes.FDROID, SourceTypes.FDROID_REPO -> texts.checksumIndex()
+        in SourceTypes.THIRD_PARTY_STORES -> texts.checksumStore(SourceTypes.displayName(type) ?: type)
         else -> texts.checksumSource()
     }
 
@@ -249,6 +251,9 @@ class Evaluator(
         const val MAX_CANDIDATES = 4
         private val SIGNER_BLOCKS = setOf(Block.SIGNER_MISMATCH, Block.PIN_MISMATCH)
         private val SHARED_SUMS = setOf("sha256sums", "sha256sums.txt", "checksums.txt", "checksums-sha256.txt")
+
+        /** A checksum of an app of a third-party store is the store's own, which is said as such. */
+        fun fromStore(type: String, checksum: ChecksumState): Boolean = checksum != ChecksumState.NOT_PUBLISHED && type in SourceTypes.THIRD_PARTY_STORES
 
         fun filtersKey(config: AppConfig): String = listOf(
             config.releases.tagFilter, config.releases.titleFilter, config.releases.notesFilter,

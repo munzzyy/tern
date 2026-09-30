@@ -20,6 +20,7 @@ import io.github.munzzyy.tern.core.net.RemoteSize
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.source.Refusal
 import io.github.munzzyy.tern.core.source.SourceException
+import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.data.AppState
 import io.github.munzzyy.tern.data.SettingsJson
 import io.github.munzzyy.tern.data.StoredApp
@@ -349,6 +350,7 @@ internal class Interop(private val e: RealEngine) {
         val withPins = ArrayList<String>()
         val withFilters = ArrayList<String>()
         val askedForMore = ArrayList<String>()
+        val fromStores = ArrayList<String>()
         val others = LinkedHashMap<String, AppConfig>()
         for (imported in decoded.apps.take(MAX_APPS)) {
             val existing = e.findBySpec(imported.source)
@@ -372,6 +374,7 @@ internal class Interop(private val e: RealEngine) {
             if (imported.pinnedSigners.isNotEmpty()) withPins += config.shownName
             if (hasFilters(config)) withFilters += config.shownName
             if (imported.updates == UpdateMode.AUTO) askedForMore += config.shownName
+            if (config.source.type in SourceTypes.THIRD_PARTY_STORES) fromStores += config.shownName
         }
         e.publish()
         if (fresh.isNotEmpty()) e.scope.launch { e.checks.run(fresh, CheckCause.IMPORTED) }
@@ -383,6 +386,7 @@ internal class Interop(private val e: RealEngine) {
             replaceable = others.map { (id, imported) -> shownNameOf(id, imported) },
             settingsOffered = settings != null,
             offer = offer,
+            fromStores = fromStores,
         )
     }
 

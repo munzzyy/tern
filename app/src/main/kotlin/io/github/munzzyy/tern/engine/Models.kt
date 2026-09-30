@@ -94,6 +94,8 @@ data class Verification(
     val newPermissions: List<String>,
     /** SHA-256 of the file, lowercase hex: the publisher's digest before download, the measured hash after. */
     val fileSha256: String? = null,
+    /** The checksum is one a third-party store gives, which shows the file arrived as the store has it and says nothing of the developer. */
+    val checksumFromStore: Boolean = false,
 )
 
 enum class Phase { QUEUED, DOWNLOADING, VERIFYING, INSTALLING, WAITING_FOR_USER }
@@ -444,6 +446,8 @@ data class ImportSummary(
     val settingsOffered: Boolean = false,
     /** What [Engine.finishImport] is given to do what the file only offered; null when it offered nothing. */
     val offer: String? = null,
+    /** Names of added apps from third-party stores, whose first install decides the certificate unless they are pinned. */
+    val fromStores: List<String> = emptyList(),
 )
 
 /** Where the colours come from. [WALLPAPER] needs Android 12 and falls back to [PALETTE] before that. */

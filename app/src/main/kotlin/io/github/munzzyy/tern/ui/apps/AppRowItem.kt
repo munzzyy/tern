@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -59,6 +60,7 @@ import io.github.munzzyy.tern.ui.common.StatusLine
 import io.github.munzzyy.tern.ui.common.TonalButton
 import io.github.munzzyy.tern.ui.common.confirmInstall
 import io.github.munzzyy.tern.ui.common.focusLook
+import io.github.munzzyy.tern.ui.common.pressRoom
 import io.github.munzzyy.tern.ui.common.rememberHaptics
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.icons.AppIcon
@@ -316,9 +318,11 @@ private fun ReleaseLine(row: AppRow, ink: Color, onChanges: (() -> Unit)?) {
                 color = MaterialTheme.colorScheme.primary,
                 textDecoration = TextDecoration.Underline,
                 modifier = Modifier
+                    .pressRoom(look.touchTarget)
                     .focusLook(shape)
                     .clip(shape)
                     .clickable(role = Role.Button, onClick = onChanges)
+                    .wrapContentSize()
                     .padding(horizontal = look.gapSmall / 2, vertical = look.gapSmall / 4),
             )
         }

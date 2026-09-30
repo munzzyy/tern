@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -183,7 +184,7 @@ fun AppsScreen(
                 SelectionTopBar(
                     picked = picked,
                     onClose = vm::stopSelecting,
-                    onSelectAll = { vm.selectAll(state.sections.updates.map { it.id } + state.sections.others.map { it.id }) },
+                    onSelectAll = { vm.selectAll(shownIds(state.sections, collapsed)) },
                     onAction = { pending = it },
                 )
                 return@Scaffold
@@ -360,9 +361,9 @@ private fun AppList(
     val look = LocalLook.current
     val sections = state.sections
     val categoryColors = LocalEngine.current.settings.collectAsStateWithLifecycle().value.categoryColors
-    val firstId = (sections.updates.firstOrNull() ?: sections.others.firstOrNull())?.id
-    val rowFocus: (String) -> Modifier = { id ->
-        Modifier.returnFocus(screen, id).then(if (id == firstId) Modifier.firstFocus(screen) else Modifier)
+    val landing = remember(sections, collapsed) { firstPlace(sections, collapsed) }
+    val rowFocus: (String) -> Modifier = { key ->
+        Modifier.returnFocus(screen, key).then(if (key == landing) Modifier.firstFocus(screen) else Modifier)
     }
     BoxWithConstraints(Modifier.fillMaxSize()) {
     val place = actionPlace(maxWidth, look.iconList, LocalDensity.current.fontScale, LocalNoTouch.current)
@@ -399,9 +400,9 @@ private fun AppList(
         if (sections.groups.isNotEmpty()) {
             for (group in sections.groups) {
                 val folded = group.key in collapsed
-                item(key = "g-${group.key}", contentType = "group") {
+                item(key = headerKey(group), contentType = "group") {
                     val dot = group.title?.takeIf { group.key.startsWith(CATEGORY_GROUP) }?.let { categoryColor(it, categoryColors) }
-                    GroupHeader(group.title ?: stringResource(R.string.group_other), group.rows.size, folded, dot) { onToggleGroup(group.key) }
+                    GroupHeader(group.title ?: stringResource(R.string.group_other), group.rows.size, folded, dot, rowFocus(headerKey(group))) { onToggleGroup(group.key) }
                 }
                 if (!folded) rows(group.rows, selectedId, onOpen, onRemove, selection, onSelect, rowFocus, place, swipe, keyPrefix = group.key)
             }
@@ -434,7 +435,7 @@ private fun LazyListScope.rows(
                 row,
                 selected = row.id == selectedId,
                 onOpen = { onOpen(row.id) },
-                modifier = if (keyPrefix.isEmpty()) rowFocus(row.id) else Modifier,
+                modifier = rowFocus(keyPrefix + row.id),
                 selecting = selection != null,
                 checked = selection?.contains(row.id) == true,
                 onSelect = { onSelect(row.id) },
@@ -448,7 +449,7 @@ private fun LazyListScope.rows(
 
 /** The name of a group, how many apps it holds, and a press to fold it away or open it again. */
 @Composable
-private fun GroupHeader(title: String, count: Int, folded: Boolean, dot: Color?, onToggle: () -> Unit) {
+internal fun GroupHeader(title: String, count: Int, folded: Boolean, dot: Color?, focus: Modifier, onToggle: () -> Unit) {
     val look = LocalLook.current
     val spoken = stringResource(if (folded) R.string.group_folded else R.string.group_open)
     Row(
@@ -457,6 +458,7 @@ private fun GroupHeader(title: String, count: Int, folded: Boolean, dot: Color?,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = look.focusRoom, vertical = look.focusRoom / 2)
+            .then(focus)
             .focusLook(MaterialTheme.shapes.medium)
             .clip(MaterialTheme.shapes.medium)
             .clickable(onClick = onToggle)
@@ -464,6 +466,7 @@ private fun GroupHeader(title: String, count: Int, folded: Boolean, dot: Color?,
                 heading()
                 stateDescription = spoken
             }
+            .heightIn(min = look.touchTarget)
             .padding(horizontal = look.rowPaddingHorizontal - look.focusRoom, vertical = look.gapSmall),
     ) {
         if (dot != null) ColorDot(dot)

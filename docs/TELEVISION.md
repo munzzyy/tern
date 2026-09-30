@@ -11,10 +11,29 @@ Tern writes the export into `Download/Tern/` on the shared storage and names it 
 Tokens are never in it. Android lets an app put a file of its own there without any permission, so
 Tern asks for none.
 
+Export for Obtainium works the same way and writes a file Obtainium can import, named as Obtainium
+names its own: `obtainium-export-2026-09-29.json`, then `obtainium-export-2026-09-29-2.json`.
+What Obtainium has no setting for stays behind.
+
+### Keep an export up to date
+
+With Keep an export up to date on, Tern writes the export again a moment after anything in the
+list changes. Without a file picker there is no folder to choose, so it goes into `Download/Tern/`
+as well. It is always the same file, written over each time: `tern-apps.json`, or
+`obtainium-export.json` in Obtainium's format, or the name you type under File name. Tern takes out
+what a file name cannot hold and adds `.json` where it is missing.
+
+### Save files
+
+Save to Downloads on an app's page, and Save files to Downloads for several picked apps, put a copy
+of a release's file into `Download/Tern/` as it came, under its own name. Nothing is checked or
+installed.
+
 ## Import from a file
 
-Tern lists the exports it wrote itself, and every `.json` file in its own folder on the shared
-storage, newest first, at most 50. A file of more than 2 MiB is refused. Android does not let
+Tern lists every `.json` file it wrote itself into `Download/Tern/`, and every `.json` file in its
+own folder on the shared storage, newest first, at most 50. That takes in its exports in either
+format and the export it keeps up to date. A file of more than 2 MiB is refused. Android does not let
 Tern see a file in `Download/` that another app or an earlier installation of Tern wrote, so a
 file that comes from elsewhere has to go into Tern's own folder.
 

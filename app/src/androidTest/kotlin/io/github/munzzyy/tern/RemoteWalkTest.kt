@@ -101,7 +101,7 @@ class RemoteWalkTest {
         launch("default").use { scenario ->
             compose.assertFocusOn(row, "the list opens with focus on its first app")
             compose.openTab("Settings")
-            compose.assertFocusOn(hasText("How often", substring = true), "Settings opens on its first setting")
+            compose.assertFocusOn(hasContentDescription("Check more often"), "Settings opens on its first setting, the button that steps how often")
             val import = hasText("Import apps", substring = true)
             compose.moveTo(import, KEYCODE_DPAD_DOWN)
             compose.press(KEYCODE_DPAD_CENTER)

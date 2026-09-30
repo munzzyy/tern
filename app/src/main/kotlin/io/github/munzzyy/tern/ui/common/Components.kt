@@ -59,6 +59,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -70,6 +71,8 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Dp
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.ui.icons.Glyphs
@@ -752,6 +755,19 @@ fun ChoiceChip(text: String, selected: Boolean, onClick: () -> Unit, modifier: M
     }
 }
 
+/**
+ * Takes presses over at least [min] each way around something smaller, such as a link inside a
+ * row, without taking that room from the layout: the rest reaches over what lies around it. Put
+ * it first, and centre the content after the clickable.
+ */
+fun Modifier.pressRoom(min: Dp): Modifier = layout { measurable, constraints ->
+    val side = min.roundToPx()
+    val width = measurable.maxIntrinsicWidth(constraints.maxHeight).coerceIn(constraints.minWidth, constraints.maxWidth)
+    val height = measurable.minIntrinsicHeight(width).coerceIn(constraints.minHeight, constraints.maxHeight)
+    val pressed = measurable.measure(Constraints.fixed(maxOf(width, side), maxOf(height, side)))
+    layout(width, height) { pressed.placeRelative((width - pressed.width) / 2, (height - pressed.height) / 2) }
+}
+
 /** A small round swatch, such as the colour of a category next to its name. */
 @Composable
 fun ColorDot(color: Color, modifier: Modifier = Modifier) {
@@ -769,7 +785,6 @@ fun ColorDot(color: Color, modifier: Modifier = Modifier) {
  * order, also from the end of one line to the start of the next when large text has wrapped
  * them. Up and down leave them, so a remote never has to walk through every line of one choice.
  */
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ChoiceChips(
     title: String,
@@ -780,9 +795,6 @@ fun ChoiceChips(
     summary: String? = null,
 ) {
     val look = LocalLook.current
-    val focus = LocalFocusManager.current
-    val stops = remember(options.size) { List(options.size) { FocusRequester() } }
-    var inside by remember { mutableStateOf(false) }
     Column(
         verticalArrangement = Arrangement.spacedBy(look.gapSmall),
         modifier = modifier
@@ -790,41 +802,57 @@ fun ChoiceChips(
             .padding(horizontal = look.rowPaddingHorizontal, vertical = look.rowPaddingVertical),
     ) {
         Text(title, style = MaterialTheme.typography.bodyLarge)
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2),
-            verticalArrangement = Arrangement.spacedBy(look.focusRoom + (look.touchTarget - look.choiceHeight)),
-            modifier = Modifier
-                .selectableGroup()
-                .onFocusChanged { inside = it.hasFocus }
-                .onPreviewKeyEvent { event ->
-                    val direction = when (event.key) {
-                        Key.DirectionDown -> FocusDirection.Down
-                        Key.DirectionUp -> FocusDirection.Up
-                        else -> return@onPreviewKeyEvent false
-                    }
-                    if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent true
-                    repeat(options.size) {
-                        if (!focus.moveFocus(direction) || !inside) return@onPreviewKeyEvent true
-                    }
-                    true
-                },
-        ) {
-            options.forEachIndexed { index, option ->
-                ChoiceChip(
-                    option,
-                    selected = index == selected,
-                    onClick = { onSelect(index) },
-                    modifier = Modifier
-                        .focusRequester(stops[index])
-                        .focusProperties {
-                            if (index > 0) start = stops[index - 1]
-                            if (index < stops.lastIndex) end = stops[index + 1]
-                        },
-                )
-            }
+        ChipLines(options) { index, option, stop ->
+            ChoiceChip(option, selected = index == selected, onClick = { onSelect(index) }, modifier = stop)
         }
         if (summary != null) {
             Text(summary, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+    }
+}
+
+/**
+ * [items] as chips on as many lines as they need. Left and right move between them in their
+ * order, also from the end of one line to the start of the next, and up and down leave them, so a
+ * remote never walks through every line. [chip] draws one and puts the modifier it is handed on it.
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun <T> ChipLines(items: List<T>, modifier: Modifier = Modifier, chip: @Composable (index: Int, item: T, stop: Modifier) -> Unit) {
+    val look = LocalLook.current
+    val focus = LocalFocusManager.current
+    val stops = remember(items.size) { List(items.size) { FocusRequester() } }
+    var inside by remember { mutableStateOf(false) }
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2),
+        verticalArrangement = Arrangement.spacedBy(look.focusRoom + (look.touchTarget - look.choiceHeight)),
+        modifier = modifier
+            .selectableGroup()
+            .onFocusChanged { inside = it.hasFocus }
+            .onPreviewKeyEvent { event ->
+                val direction = when (event.key) {
+                    Key.DirectionDown -> FocusDirection.Down
+                    Key.DirectionUp -> FocusDirection.Up
+                    else -> return@onPreviewKeyEvent false
+                }
+                if (event.type != KeyEventType.KeyDown) return@onPreviewKeyEvent true
+                repeat(items.size) {
+                    if (!focus.moveFocus(direction) || !inside) return@onPreviewKeyEvent true
+                }
+                true
+            },
+    ) {
+        items.forEachIndexed { index, item ->
+            chip(
+                index,
+                item,
+                Modifier
+                    .focusRequester(stops[index])
+                    .focusProperties {
+                        if (index > 0) start = stops[index - 1]
+                        if (index < stops.lastIndex) end = stops[index + 1]
+                    },
+            )
         }
     }
 }

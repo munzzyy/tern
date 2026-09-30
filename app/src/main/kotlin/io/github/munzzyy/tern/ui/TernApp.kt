@@ -115,6 +115,7 @@ fun TernApp(
     firstRunDone: Boolean,
     onFirstRunDone: () -> Unit,
     reducedMotion: Boolean,
+    dialogs: @Composable () -> Unit = {},
 ) {
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -154,6 +155,7 @@ fun TernApp(
                 Shell(stack)
             }
             InstallPermissionDialog(guarded)
+            dialogs()
         }
     }
 }

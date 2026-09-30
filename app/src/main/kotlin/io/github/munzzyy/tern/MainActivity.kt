@@ -122,26 +122,27 @@ class MainActivity : ComponentActivity() {
                     firstRunDone = firstRunDone,
                     onFirstRunDone = ::finishFirstRun,
                     reducedMotion = animationsOff(),
-                )
-                problems?.let { ids -> ProblemsDialog(engine, ids, onOpen = { openApp = it }, onDismiss = { problems = null }) }
-                crash?.let { report -> CrashDialog(report, onDismiss = ::sawCrash) }
-                confirmCheck?.let { link ->
-                    val rows by engine.apps.collectAsStateWithLifecycle()
-                    val one = (link as? RefreshLink.One)?.let { l ->
-                        rows.firstOrNull { it.config.packageName == l.packageName || it.installed?.packageName == l.packageName }?.config?.shownName
+                ) {
+                    problems?.let { ids -> ProblemsDialog(engine, ids, onOpen = { openApp = it }, onDismiss = { problems = null }) }
+                    crash?.let { report -> CrashDialog(report, onDismiss = ::sawCrash) }
+                    confirmCheck?.let { link ->
+                        val rows by engine.apps.collectAsStateWithLifecycle()
+                        val one = (link as? RefreshLink.One)?.let { l ->
+                            rows.firstOrNull { it.config.packageName == l.packageName || it.installed?.packageName == l.packageName }?.config?.shownName
+                        }
+                        LinkCheckDialog(
+                            appName = one,
+                            count = rows.size,
+                            onCheck = {
+                                confirmCheck = null
+                                lastLinkCheckAtMs = System.currentTimeMillis()
+                                check(link, CheckCause.LINK)
+                            },
+                            onDismiss = { confirmCheck = null },
+                        )
                     }
-                    LinkCheckDialog(
-                        appName = one,
-                        count = rows.size,
-                        onCheck = {
-                            confirmCheck = null
-                            lastLinkCheckAtMs = System.currentTimeMillis()
-                            check(link, CheckCause.LINK)
-                        },
-                        onDismiss = { confirmCheck = null },
-                    )
+                    if (crash == null && verificationNote) VerificationNote(onDismiss = ::sawVerificationNote)
                 }
-                if (crash == null && verificationNote) VerificationNote(onDismiss = ::sawVerificationNote)
             }
         }
     }

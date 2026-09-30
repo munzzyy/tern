@@ -131,6 +131,29 @@ class AppListTest {
     }
 
     @Test
+    fun focusLandsOnTheFirstAppDrawnOrOnTheHeaderOfAFoldedFirstGroup() {
+        val grouped = arrange(rows, ListQuery(grouping = AppGrouping.CATEGORY, updatesFirst = false), Locale.US)
+        assertEquals("c:Maps" + "c", firstPlace(grouped, emptySet()))
+        assertEquals("g-c:Maps", firstPlace(grouped, setOf("c:Maps")))
+        assertEquals("g-c:Maps", firstPlace(grouped, grouped.groups.map { it.key }.toSet()))
+        assertEquals("a", firstPlace(arrange(rows, ListQuery(grouping = AppGrouping.CATEGORY), Locale.US), setOf("c:Maps")))
+        assertEquals("a", firstPlace(arrange(rows, ListQuery(), Locale.US), emptySet()))
+        assertEquals("b", firstPlace(arrange(rows, ListQuery(text = "birch", updatesFirst = false), Locale.US), emptySet()))
+        assertEquals(null, firstPlace(AppSections(emptyList(), emptyList()), emptySet()))
+    }
+
+    @Test
+    fun selectAllTakesOnlyWhatIsShownAndAnAppShownTwiceOnce() {
+        val grouped = arrange(rows, ListQuery(grouping = AppGrouping.CATEGORY, updatesFirst = false), Locale.US)
+        assertEquals(listOf("c", "b", "a", "d", "e"), shownIds(grouped, emptySet()))
+        assertEquals(listOf("b", "c", "a", "d", "e"), shownIds(grouped, setOf("c:Maps")))
+        assertEquals(listOf("c"), shownIds(grouped, setOf("c:Tools", "c:")))
+        val updatesOnTop = arrange(rows, ListQuery(grouping = AppGrouping.CATEGORY), Locale.US)
+        assertEquals(listOf("a", "d", "e"), shownIds(updatesOnTop, updatesOnTop.groups.map { it.key }.toSet()))
+        assertEquals(listOf("a", "d", "e", "b", "c"), shownIds(arrange(rows, ListQuery(), Locale.US), emptySet()))
+    }
+
+    @Test
     fun groupsBySourceAreNamedAsPeopleKnowThem() {
         val s = arrange(rows, ListQuery(grouping = AppGrouping.SOURCE, updatesFirst = false), Locale.US)
         assertEquals(listOf("GitHub", "GitLab"), s.groups.map { it.title })

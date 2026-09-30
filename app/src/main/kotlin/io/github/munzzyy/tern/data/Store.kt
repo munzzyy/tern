@@ -17,6 +17,10 @@ import java.io.Closeable
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
 import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 data class StoredApp(val config: AppConfig, val state: AppState)
 
@@ -48,8 +52,14 @@ class Store(context: Context, name: String = DEFAULT_NAME) : ValidatorStore, Clo
         if (c.moveToFirst()) decodeApp(c.getString(0), c.getString(1), c.getString(2)) else null
     }
 
+    private val _configChanges = MutableStateFlow(0L)
+
+    /** Counts every change to the list or to an app's settings, but not to what a check or an install learned. */
+    val configChanges: StateFlow<Long> get() = _configChanges.asStateFlow()
+
     fun putApp(config: AppConfig, state: AppState) = write { db ->
         db.insertWithOnConflict("apps", null, appValues(config, state), SQLiteDatabase.CONFLICT_REPLACE)
+        _configChanges.update { it + 1 }
         Unit
     }
 
@@ -58,6 +68,7 @@ class Store(context: Context, name: String = DEFAULT_NAME) : ValidatorStore, Clo
         val current = app(id) ?: return@write null
         val next = change(current)
         db.update("apps", appValues(next.config, next.state), "id = ?", arrayOf(id))
+        if (next.config != current.config) _configChanges.update { it + 1 }
         next
     }
 
@@ -65,6 +76,7 @@ class Store(context: Context, name: String = DEFAULT_NAME) : ValidatorStore, Clo
 
     fun deleteApp(id: String) = write { db ->
         db.delete("apps", "id = ?", arrayOf(id))
+        _configChanges.update { it + 1 }
         Unit
     }
 

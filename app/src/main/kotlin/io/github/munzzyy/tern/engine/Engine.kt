@@ -194,6 +194,15 @@ interface Engine {
      */
     suspend fun shareableExport(appIds: Collection<String>?, format: ExportFormat): Uri
 
+    /** How the kept export stands, null before it was first written in this run. */
+    val exportStatus: StateFlow<ExportStatus?>
+
+    /** Keeps Android's grant of the folder the person picked for the kept export. Store the folder with [saveSettings] after. */
+    suspend fun takeExportFolder(folder: Uri)
+
+    /** Writes the kept export now. */
+    suspend fun writeKeptExport()
+
     suspend fun clearEvents()
 
     /**

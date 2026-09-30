@@ -45,9 +45,11 @@ private fun AppRow.hasFilters(): Boolean = listOf(
 /**
  * Names the imported apps whose pins or filters were chosen by whoever made the file, each linked
  * to its page, and those the file set to update by themselves, which Tern stored as "Tell me".
+ * Says so first when the file's settings were taken too.
  */
 @Composable
 fun CarriedNote(summary: ImportSummary, onOpenApp: (String) -> Unit) {
+    if (summary.settingsTaken) TrustLine(Trust.NOTE, stringResource(R.string.import_settings_taken))
     if (summary.withPins.isEmpty() && summary.withFilters.isEmpty() && summary.askedToInstallByThemselves.isEmpty()) return
     val rows by LocalEngine.current.apps.collectAsStateWithLifecycle()
     if (summary.withPins.isNotEmpty() || summary.withFilters.isNotEmpty()) {

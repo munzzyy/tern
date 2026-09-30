@@ -200,6 +200,9 @@ enum class AppGrouping { NONE, CATEGORY, SOURCE }
 /** Tern's own export, or the file Obtainium imports, for a list that moves to Obtainium. */
 enum class ExportFormat { TERN, OBTAINIUM }
 
+/** How the kept export stands: when it was last written, or why it could not be. */
+data class ExportStatus(val writtenAtMs: Long?, val problem: String?)
+
 /** What hands a checked file to Android. Whichever it is, the file passed the same checks first. */
 enum class InstallerMode {
     /** Android's own installer: asks before a first install, and before an update where Android wants it. */
@@ -273,6 +276,14 @@ data class Settings(
     val buryNotInstalled: Boolean = false,
     /** Swiping a row starts its update, or the other way removes it. Only on touch screens. */
     val swipeActions: Boolean = true,
+    /** Keep an export of the list up to date in [exportFolder], rewritten a moment after anything changes. */
+    val autoExport: Boolean = false,
+    /** A folder the person picked, as the address Android gave for it; null means Download/Tern. */
+    val exportFolder: String? = null,
+    /** Every export leaves out apps that are not installed. */
+    val exportInstalledOnly: Boolean = false,
+    /** Every Tern export carries these settings too, never a token and never the proxy or the installer. */
+    val exportSettings: Boolean = false,
     val installer: InstallerMode = InstallerMode.SYSTEM,
     /** The package of the installer app used with [InstallerMode.OTHER_APP]. */
     val otherInstaller: String? = null,
@@ -294,6 +305,8 @@ data class ImportSummary(
      * stored as "tell me", because that is for the user of this device to switch on.
      */
     val askedToInstallByThemselves: List<String> = emptyList(),
+    /** The file carried settings, and they were taken: the look, the list, notifications and checks. */
+    val settingsTaken: Boolean = false,
 )
 
 /** Where the colours come from. [WALLPAPER] needs Android 12 and falls back to [PALETTE] before that. */

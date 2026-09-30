@@ -16,4 +16,14 @@
         <item quantity="one">%1$d app came in this link. Look at it to see its settings before you add it.</item>
         <item quantity="other">%1$d apps came in this link. Look at each to see its settings before you add it.</item>
     </plurals>
+    <string name="settings_export_obtainium">Export for Obtainium</string>
+    <string name="settings_export_obtainium_effect">A file Obtainium imports, for a list that moves there. What Obtainium has no setting for stays behind.</string>
+    <string name="settings_export_installed_only">Export only installed apps</string>
+    <string name="settings_export_settings">Put the settings in exports</string>
+    <string name="settings_export_settings_effect">The look, the list, notifications and checks. Never a token, the proxy or the installer.</string>
+    <string name="settings_kept_export">Keep an export up to date</string>
+    <string name="settings_kept_export_effect">A moment after anything in the list changes, Tern writes the export again.</string>
+    <string name="settings_kept_export_written">Written at %1$s</string>
+    <string name="settings_kept_export_folder">Where it is kept</string>
+    <string name="import_settings_taken">The settings in the file were taken too.</string>
 </resources>

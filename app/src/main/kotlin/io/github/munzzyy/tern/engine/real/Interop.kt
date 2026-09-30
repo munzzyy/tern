@@ -10,10 +10,12 @@ import io.github.munzzyy.tern.core.interop.TernExport
 import io.github.munzzyy.tern.core.interop.TernExportException
 import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonException
+import io.github.munzzyy.tern.core.json.JsonObject
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.data.AppState
+import io.github.munzzyy.tern.data.SettingsJson
 import io.github.munzzyy.tern.data.StoredApp
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.ExportFormat
@@ -53,7 +55,7 @@ interface ImportTexts {
     fun checkRateLimited(untilMs: Long?): String
 }
 
-internal class Decoded(val apps: List<AppConfig>, val skipped: List<Pair<String, String>>)
+internal class Decoded(val apps: List<AppConfig>, val skipped: List<Pair<String, String>>, val settings: JsonObject? = null)
 
 /** Reads a stream to its end and gives up once it is longer than allowed or has taken too long. */
 internal object Capped {
@@ -91,13 +93,14 @@ internal object ImportDecoder {
     private fun withoutLocalAddresses(decoded: Decoded, texts: ImportTexts): Decoded {
         val (local, other) = decoded.apps.partition { Urls.isLocal(Urls.host(it.source.url)) }
         if (local.isEmpty()) return decoded
-        return Decoded(other, decoded.skipped + local.map { it.name to texts.importLocalAddress() })
+        return Decoded(other, decoded.skipped + local.map { it.name to texts.importLocalAddress() }, decoded.settings)
     }
 
     private fun read(bytes: ByteArray, texts: ImportTexts, notAnExport: String): Decoded {
         val text = String(bytes, Charsets.UTF_8).trimStart { it.code == BYTE_ORDER_MARK }
         return try {
-            Decoded(TernExport.read(text), emptyList())
+            val file = TernExport.readFile(text)
+            Decoded(file.apps, emptyList(), file.settings)
         } catch (tern: TernExportException) {
             // Obtainium's reader finds no app in an export of Tern's and would report an import of nothing.
             if (saysItIsTerns(text)) throw ProblemException(Problem(ProblemKind.PARSE, texts.importUnreadableExport(tern.message)))
@@ -119,6 +122,7 @@ internal object ImportDecoder {
 
 internal class Interop(private val e: RealEngine) {
     private val files = Files(e.context, e.texts, e.nowMs)
+    val kept = AutoExport(e, files) { export(null, ExportFormat.TERN).first }
     private val links = Links(e.http, e.texts, e.nowMs)
     private val oneAtATime = Mutex()
 
@@ -172,7 +176,9 @@ internal class Interop(private val e: RealEngine) {
         }
         e.publish()
         if (fresh.isNotEmpty()) e.scope.launch { e.checks.checkMany(fresh) }
-        return ImportSummary(added, present, skipped, withPins, withFilters, askedForMore)
+        val settings = decoded.settings?.let { SettingsJson.apply(it, e.settings.value) }
+        if (settings != null) e.scope.launch { e.saveSettings(settings) }
+        return ImportSummary(added, present, skipped, withPins, withFilters, askedForMore, settingsTaken = settings != null)
     }
 
     private fun hasFilters(config: AppConfig): Boolean = listOf(
@@ -200,11 +206,18 @@ internal class Interop(private val e: RealEngine) {
         FileProvider.getUriForFile(e.context, OtherAppInstaller.authority(e.context), file)
     }
 
-    /** The apps in [appIds], or all of them, and how many were written. */
+    /**
+     * The apps in [appIds], or all of them, and how many were written. The settings say whether
+     * apps that are not installed stay out, and whether a Tern export carries the settings too.
+     */
     private fun export(appIds: Collection<String>?, format: ExportFormat): Pair<String, Int> {
-        val configs = e.stored.values.map { it.config }.filter { appIds == null || it.id in appIds }.sortedBy { it.name.lowercase() }
+        val s = e.settings.value
+        val configs = e.stored.values.map { it.config }
+            .filter { appIds == null || it.id in appIds }
+            .filter { !s.exportInstalledOnly || e.readInstalled(e.packageOf(it)) != null }
+            .sortedBy { it.name.lowercase() }
         return when (format) {
-            ExportFormat.TERN -> TernExport.write(configs, e.nowMs(), BuildConfig.VERSION_NAME) to configs.size
+            ExportFormat.TERN -> TernExport.write(configs, e.nowMs(), BuildConfig.VERSION_NAME, SettingsJson.encode(s).takeIf { s.exportSettings }) to configs.size
             ExportFormat.OBTAINIUM -> ObtainiumExport.write(configs, e.nowMs(), BuildConfig.VERSION_NAME).let { it.text to it.written }
         }
     }

@@ -42,6 +42,10 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             updatesFirst = prefs.getBoolean("updatesFirst", d.updatesFirst),
             buryNotInstalled = prefs.getBoolean("buryNotInstalled", d.buryNotInstalled),
             swipeActions = prefs.getBoolean("swipeActions", d.swipeActions),
+            autoExport = prefs.getBoolean("autoExport", d.autoExport),
+            exportFolder = prefs.getString("exportFolder", null)?.takeIf { it.startsWith("content://") },
+            exportInstalledOnly = prefs.getBoolean("exportInstalledOnly", d.exportInstalledOnly),
+            exportSettings = prefs.getBoolean("exportSettings", d.exportSettings),
             installer = enumOr(prefs.getString("installer", null), d.installer),
             otherInstaller = prefs.getString("otherInstaller", null)?.takeIf { PACKAGE.matches(it) },
             playInstaller = prefs.getBoolean("playInstaller", d.playInstaller),
@@ -82,6 +86,10 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putBoolean("updatesFirst", s.updatesFirst)
             .putBoolean("buryNotInstalled", s.buryNotInstalled)
             .putBoolean("swipeActions", s.swipeActions)
+            .putBoolean("autoExport", s.autoExport)
+            .putString("exportFolder", s.exportFolder?.takeIf { it.startsWith("content://") })
+            .putBoolean("exportInstalledOnly", s.exportInstalledOnly)
+            .putBoolean("exportSettings", s.exportSettings)
             .putString("installer", s.installer.name)
             .putString("otherInstaller", s.otherInstaller?.takeIf { PACKAGE.matches(it) })
             .putBoolean("playInstaller", s.playInstaller)

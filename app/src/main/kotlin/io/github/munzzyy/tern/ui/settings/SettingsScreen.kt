@@ -55,6 +55,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.tern.BuildConfig
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.model.UpdateMode
+import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.engine.InstallerChoice
 import io.github.munzzyy.tern.engine.InstallerMode
 import io.github.munzzyy.tern.engine.InstallerReadiness
@@ -86,10 +87,12 @@ import io.github.munzzyy.tern.ui.detail.minAgeLabel
 import io.github.munzzyy.tern.ui.detail.updateModeEffect
 import io.github.munzzyy.tern.ui.detail.updateModeLabel
 import io.github.munzzyy.tern.ui.icons.Glyphs
+import io.github.munzzyy.tern.ui.text.formatTime
 import io.github.munzzyy.tern.ui.text.intervalChoices
 import io.github.munzzyy.tern.ui.text.ltr
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.status
+import java.net.URLDecoder
 
 const val SOURCE_URL = "https://github.com/munzzyy/tern"
 const val ORBOT_URL = "https://github.com/guardianproject/orbot-android"
@@ -674,12 +677,12 @@ private fun DataSection(s: Settings, vm: SettingsViewModel, update: Update, onIm
     val resources = context.resources
     val hasPicker = remember(engine) { engine.hasFilePicker() }
     var outcome by rememberSaveable { mutableStateOf<String?>(null) }
+    val done: (Int?) -> Unit = { count -> actions.say(if (count == null) exportFailed else resources.getQuantityString(R.plurals.exported, count, count)) }
     val exporter = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
-        if (uri != null) {
-            vm.export(uri) { count ->
-                actions.say(if (count == null) exportFailed else resources.getQuantityString(R.plurals.exported, count, count))
-            }
-        }
+        if (uri != null) vm.export(uri, onDone = done)
+    }
+    val obtainiumExporter = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+        if (uri != null) vm.export(uri, ExportFormat.OBTAINIUM, done)
     }
     SectionCard(title = stringResource(R.string.settings_data)) {
         ActionRow(
@@ -713,6 +716,25 @@ private fun DataSection(s: Settings, vm: SettingsViewModel, update: Update, onIm
                 .testTag(EXPORT_ROW_TAG)
                 .semantics { liveRegion = LiveRegionMode.Polite },
         )
+        if (hasPicker) {
+            ActionRow(
+                title = stringResource(R.string.settings_export_obtainium),
+                summary = stringResource(R.string.settings_export_obtainium_effect),
+                onClick = { if (!exporting) obtainiumExporter.launch("obtainium-export.json") },
+            )
+        }
+        SwitchRow(
+            title = stringResource(R.string.settings_export_installed_only),
+            checked = s.exportInstalledOnly,
+            onChange = { v -> update { it.copy(exportInstalledOnly = v) } },
+        )
+        SwitchRow(
+            title = stringResource(R.string.settings_export_settings),
+            summary = stringResource(R.string.settings_export_settings_effect),
+            checked = s.exportSettings,
+            onChange = { v -> update { it.copy(exportSettings = v) } },
+        )
+        KeptExport(s, vm, update, hasPicker)
         SwitchRow(
             title = stringResource(R.string.settings_obtainium_links),
             summary = stringResource(R.string.settings_obtainium_links_effect),
@@ -723,6 +745,52 @@ private fun DataSection(s: Settings, vm: SettingsViewModel, update: Update, onIm
 }
 
 private const val MAX_SHOWN = 120
+
+/** Where the kept export goes when no folder was picked; the engine writes it there through Android's Downloads. */
+private const val DOWNLOAD_PLACE = "Download/Tern"
+
+/**
+ * The export that keeps itself up to date. Once it is on, the person may pick the folder, one a
+ * cloud app or a card may hold, and the row says when it was last written or why it was not.
+ */
+@Composable
+private fun KeptExport(s: Settings, vm: SettingsViewModel, update: Update, hasPicker: Boolean) {
+    val actions = rememberActions()
+    val failed = stringResource(R.string.save_failed)
+    val status by vm.exportStatus.collectAsStateWithLifecycle()
+    val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { folder ->
+        if (folder != null) vm.keepIn(folder) { actions.say(failed) }
+    }
+    val current = status
+    SwitchRow(
+        title = stringResource(R.string.settings_kept_export),
+        summary = when {
+            !s.autoExport -> stringResource(R.string.settings_kept_export_effect)
+            current?.problem != null -> current.problem
+            current?.writtenAtMs != null -> stringResource(R.string.settings_kept_export_written, formatTime(current.writtenAtMs))
+            else -> stringResource(R.string.settings_kept_export_effect)
+        },
+        checked = s.autoExport,
+        onChange = { v -> update { it.copy(autoExport = v) } },
+        modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+    )
+    if (s.autoExport && hasPicker) {
+        ActionRow(
+            title = stringResource(R.string.settings_kept_export_folder),
+            summary = ltr(folderName(s.exportFolder) ?: DOWNLOAD_PLACE),
+            onClick = { picker.launch(s.exportFolder?.let(Uri::parse)) },
+        )
+    }
+}
+
+/** The picked folder as a person knows it, "Documents/Backups" rather than its content address. */
+fun folderName(folder: String?): String? {
+    if (folder == null) return null
+    val encoded = folder.substringAfter("/tree/", "").substringBefore('/')
+    val id = runCatching { URLDecoder.decode(encoded.replace("+", "%2B"), "UTF-8") }.getOrNull()?.takeIf { it.isNotEmpty() } ?: return null
+    val path = id.substringAfter(':', id).trim('/')
+    return (path.ifEmpty { id.substringBefore(':') }).take(MAX_SHOWN)
+}
 
 @Composable
 private fun AboutSection() {

@@ -19,6 +19,7 @@ import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.ExportFormat
+import io.github.munzzyy.tern.engine.ExportStatus
 import io.github.munzzyy.tern.engine.ImportSummary
 import io.github.munzzyy.tern.engine.InstallerChoice
 import io.github.munzzyy.tern.engine.InstallerMode
@@ -581,6 +582,15 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         val json = rows.joinToString(",", "{\"apps\":[", "]}") { "{\"id\":\"${it.id}\"}" }
         context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) } ?: error("No output")
         return rows.size
+    }
+
+    private val _exportStatus = MutableStateFlow<ExportStatus?>(null)
+    override val exportStatus: StateFlow<ExportStatus?> = _exportStatus.asStateFlow()
+
+    override suspend fun takeExportFolder(folder: Uri) = Unit
+
+    override suspend fun writeKeptExport() {
+        _exportStatus.value = ExportStatus(System.currentTimeMillis(), null)
     }
 
     /** The stand-in writes its ids to the share folder, as the real engine writes a whole export there. */

@@ -45,6 +45,7 @@ import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.ExportFormat
+import io.github.munzzyy.tern.engine.ExportStatus
 import io.github.munzzyy.tern.engine.Handoff
 import io.github.munzzyy.tern.engine.HandoffEnd
 import io.github.munzzyy.tern.engine.OrbotState
@@ -197,6 +198,7 @@ class RealEngine(
     private val startup = scope.launch(Dispatchers.IO) {
         notifier.ensureChannels()
         installers.start()
+        interop.kept.start()
         Scheduler.apply(this@RealEngine.context, _settings.value)
         setObtainiumLinks(_settings.value.openObtainiumLinks)
         if (_settings.value.proxy == ProxyMode.ORBOT) orbotLink.ask()
@@ -496,6 +498,9 @@ class RealEngine(
             setObtainiumLinks(loaded.openObtainiumLinks)
             if (loaded.proxy == ProxyMode.ORBOT && before.proxy != ProxyMode.ORBOT) orbotLink.ask()
             if (loaded.installer != before.installer || loaded.otherInstaller != before.otherInstaller) installers.recheck()
+            val keeping = loaded.autoExport && (!before.autoExport || loaded.exportFolder != before.exportFolder ||
+                loaded.exportInstalledOnly != before.exportInstalledOnly || loaded.exportSettings != before.exportSettings)
+            if (keeping) scope.launch { interop.kept.write() }
         }
     }
 
@@ -575,6 +580,15 @@ class RealEngine(
     override suspend fun shareableExport(appIds: Collection<String>?, format: ExportFormat): Uri {
         ready()
         return interop.shareable(appIds, format)
+    }
+
+    override val exportStatus: StateFlow<ExportStatus?> get() = interop.kept.status
+
+    override suspend fun takeExportFolder(folder: Uri) = interop.kept.choose(folder)
+
+    override suspend fun writeKeptExport() {
+        ready()
+        interop.kept.write()
     }
 
     override suspend fun clearEvents() = withContext(Dispatchers.IO) {

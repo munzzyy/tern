@@ -74,9 +74,9 @@ internal class Files(context: Context, private val texts: Texts, private val now
 
     private class Entry(val file: SavedFile, val uri: Uri?)
 
-    fun save(text: String): SavedFile {
+    fun save(text: String, fixedName: String? = null): SavedFile {
         val bytes = text.toByteArray(Charsets.UTF_8)
-        val name = ExportNames.forDay(nowMs(), ZoneId.systemDefault(), asked { exports() }.orEmpty().map { it.file.name })
+        val name = fixedName ?: ExportNames.forDay(nowMs(), ZoneId.systemDefault(), asked { exports() }.orEmpty().map { it.file.name })
         val values = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, Device.EXPORT_TYPE)
@@ -98,6 +98,24 @@ internal class Files(context: Context, private val texts: Texts, private val now
         // MediaStore gives the file another name when one of that name exists that this app cannot see.
         val written = asked { exports(uri) }?.firstOrNull()?.file ?: SavedFile(name, PLACE, File(shared, "$PLACE/$name").path, nowMs(), 0)
         return written.copy(sizeBytes = bytes.size.toLong())
+    }
+
+    /**
+     * Writes [text] as [name] in Download/Tern, over the file of that name this app made before,
+     * so a kept export stays one file instead of one a day.
+     */
+    fun keep(name: String, text: String): SavedFile {
+        val existing = asked { exports() }.orEmpty().firstOrNull { it.file.name == name && it.uri != null }
+        val uri = existing?.uri ?: return save(text, name)
+        try {
+            val out = resolver.openOutputStream(uri, "wt") ?: throw IOException("MediaStore opened no file")
+            out.use { it.write(text.toByteArray(Charsets.UTF_8)) }
+        } catch (ex: IOException) {
+            throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportFailed(ex.message)))
+        } catch (ex: RuntimeException) {
+            throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportFailed(ex.message)))
+        }
+        return existing.file
     }
 
     fun list(): List<SavedFile> = entries().map { it.file }

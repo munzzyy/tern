@@ -1,2 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">Rexistro de actividade</string>
+    <string name="journal_keep_own">Manter as propias mensaxes de Tern no rexistro</string>
+    <string name="journal_keep_own_effect">Os seus avisos e erros, e cando comeza e remata cada comprobación. Todo o que poida ser un contrasinal ou un token déixase fóra, e o rexistro queda neste dispositivo a non ser que o compartas.</string>
+    <string name="journal_filter_own">Mensaxes de Tern</string>
+    <string name="journal_mark_note">Nota de Tern</string>
+    <string name="journal_mark_warning">Aviso de Tern</string>
+    <string name="journal_mark_error">Erro de Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Comezou unha comprobación de %1$d aplicación.</item>
+        <item quantity="other">Comezou unha comprobación de %1$d aplicacións.</item>
+    </plurals>
+    <string name="journal_check_started_one">Comezou unha comprobación de %1$s.</string>
+    <string name="journal_cause_asked">Pediuse en Tern.</string>
+    <string name="journal_cause_opening">Abriuse Tern.</string>
+    <string name="journal_cause_page">Abriuse a súa páxina.</string>
+    <string name="journal_cause_link">Pediuna unha ligazón.</string>
+    <string name="journal_cause_shortcut">Pediuna un atallo.</string>
+    <string name="journal_cause_widget">Pediuna o widget.</string>
+    <string name="journal_cause_tile">Pediuna o atallo de Configuración rápida.</string>
+    <string name="journal_cause_schedule">Iniciouna a planificación.</string>
+    <string name="journal_cause_retry">Tenta de novo onde fallou a última comprobación.</string>
+    <string name="journal_cause_added">Acaba de engadirse.</string>
+    <string name="journal_cause_imported">Acaban de importarse.</string>
+    <string name="journal_cause_changed">Cambiaron os seus axustes.</string>
+    <string name="journal_cause_install">Está a piques de instalarse, e compróbase primeiro.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">A comprobación de %1$d aplicación rematou despois de %2$s.</item>
+        <item quantity="other">A comprobación de %1$d aplicacións rematou despois de %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">A comprobación de %1$s rematou despois de %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Atopou %1$d actualización.</item>
+        <item quantity="other">Atopou %1$d actualizacións.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d aplicación non se puido comprobar.</item>
+        <item quantity="other">%1$d aplicacións non se puideron comprobar.</item>
+    </plurals>
+    <string name="journal_check_stopped">A comprobación parou despois de %1$s, antes de rematar.</string>
+</resources>

@@ -2,7 +2,7 @@
 <resources>
     <string name="journal_section">活动日志</string>
     <string name="journal_keep_own">在日志中保留 Tern 自己的消息</string>
-    <string name="journal_keep_own_effect">Tern 的警告和错误，以及每次检查开始和结束的时间。任何可能是密码或令牌的内容都会被排除，除非由您分享，否则日志只会保留在此设备上。</string>
+    <string name="journal_keep_own_effect">Tern 的警告和错误，以及每次检查开始和结束的时间。任何可能是密码或令牌的内容都会被排除。除非由您分享，否则日志只会保留在此设备上。</string>
     <string name="journal_filter_own">Tern 的消息</string>
     <string name="journal_mark_note">来自 Tern 的提示</string>
     <string name="journal_mark_warning">来自 Tern 的警告</string>

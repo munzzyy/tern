@@ -24,7 +24,7 @@
     <string name="journal_cause_retry">Ponovo pokušava tamo gdje prethodna provjera nije uspjela.</string>
     <string name="journal_cause_added">Aplikacija je upravo dodana.</string>
     <string name="journal_cause_imported">Aplikacije su upravo uvezene.</string>
-    <string name="journal_cause_changed">Postavke aplikacije su promijenjene.</string>
+    <string name="journal_cause_changed">Promijenile su se postavke aplikacije.</string>
     <string name="journal_cause_install">Aplikacija će se uskoro instalirati i prvo se provjerava.</string>
     <plurals name="journal_check_ended">
         <item quantity="one">Provjera %1$d aplikacije završena je nakon %2$s.</item>

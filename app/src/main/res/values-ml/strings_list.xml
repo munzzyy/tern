@@ -1,3 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="list_arrange">ലിസ്റ്റ് ക്രമീകരിക്കുക</string>
+    <string name="list_options_title">ലിസ്റ്റ് ക്രമീകരിക്കുക</string>
+    <string name="list_reverse">ക്രമം തിരിച്ചിടുക</string>
+    <string name="list_updates_first">അപ്ഡേറ്റുകൾ മുകളിൽ</string>
+    <string name="list_bury_not_installed">ഇൻസ്റ്റാൾ ചെയ്യാത്ത ആപ്പുകൾ താഴെ</string>
+    <string name="sort_author">ഡെവലപ്പർ പ്രകാരം</string>
+    <string name="sort_added">ചേർത്ത തീയതി പ്രകാരം</string>
+    <string name="sort_released">റിലീസ് തീയതി പ്രകാരം</string>
+    <string name="group_title">ഇതനുസരിച്ച് ഗ്രൂപ്പ് ചെയ്യുക</string>
+    <string name="group_none">ഒന്നുമില്ല</string>
+    <string name="group_category">കാറ്റഗറി</string>
+    <string name="group_source">ഉറവിടം</string>
+    <string name="group_category_effect">നിരവധി കാറ്റഗറികളിലുള്ള ഒരു ആപ്പ് അവയിൽ ഓരോന്നിലും കാണിക്കും.</string>
+    <string name="group_other">മറ്റെല്ലാം</string>
+    <string name="group_folded">മടക്കിയത്</string>
+    <string name="group_open">തുറന്നത്</string>
+    <string name="filter_favorites">പ്രിയപ്പെട്ടവ</string>
+    <string name="filter_track_only">പിന്തുടരുക മാത്രം</string>
+    <string name="filter_problems">പ്രശ്നങ്ങൾ</string>
+    <string name="action_done">പൂർത്തിയായി</string>
+    <string name="settings_swipe">പ്രവർത്തിക്കാൻ വരികൾ സ്വൈപ്പ് ചെയ്യുക</string>
+    <string name="settings_swipe_effect">ഒരു ആപ്പ് അപ്ഡേറ്റ് ചെയ്യാൻ അത് അവസാനഭാഗത്തേക്കും, നീക്കംചെയ്യാൻ തുടക്കഭാഗത്തേക്കും സ്വൈപ്പ് ചെയ്യുക.</string>
+    <string name="action_favorite">പ്രിയപ്പെട്ടവയിലേക്ക് ചേർക്കുക</string>
+    <string name="action_unfavorite">പ്രിയപ്പെട്ടവയിൽ നിന്ന് നീക്കംചെയ്യുക</string>
+    <string name="action_set_mode">അപ്ഡേറ്റുകൾ കണ്ടെത്തുമ്പോൾ</string>
+    <string name="action_share_addresses">വിലാസങ്ങൾ പങ്കിടുക</string>
+    <string name="action_share_export">ഒരു ഫയലായി പങ്കിടുക</string>
+    <string name="action_uninstall">അൺഇൻസ്റ്റാൾ ചെയ്യുക</string>
+    <string name="export_format_tern">ഒരു Tern ഫയൽ</string>
+    <string name="export_format_obtainium">Obtainium-നുള്ള ഒരു ഫയൽ</string>
+    <string name="bulk_uninstall_text">Android ഓരോ ആപ്പിനെക്കുറിച്ചും ഊഴമനുസരിച്ച് ചോദിക്കും. നിങ്ങൾ ഇവിടെ അവ നീക്കംചെയ്യുന്നത് വരെ Tern അവയെ പിന്തുടരുന്നത് തുടരും.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d ആപ്പ് ഇപ്പോൾ പ്രിയപ്പെട്ടതാണ്</item>
+        <item quantity="other">%1$d ആപ്പുകൾ ഇപ്പോൾ പ്രിയപ്പെട്ടവയാണ്</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d ആപ്പ് ഇനി പ്രിയപ്പെട്ടതല്ല</item>
+        <item quantity="other">%1$d ആപ്പുകൾ ഇനി പ്രിയപ്പെട്ടവയല്ല</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">%1$d ആപ്പിൻ്റെ അപ്ഡേറ്റ് കണ്ടെത്തുമ്പോൾ</item>
+        <item quantity="other">%1$d ആപ്പുകളുടെ അപ്ഡേറ്റുകൾ കണ്ടെത്തുമ്പോൾ</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">%1$d ആപ്പ് അൺഇൻസ്റ്റാൾ ചെയ്യണോ?</item>
+        <item quantity="other">%1$d ആപ്പുകൾ അൺഇൻസ്റ്റാൾ ചെയ്യണോ?</item>
+    </plurals>
 </resources>

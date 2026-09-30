@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">共有</string>
+    <string name="action_release_page">リリースページを開く</string>
+    <string name="action_share_address">アドレスを共有</string>
+    <string name="action_share_link">Ternで開くリンクを共有</string>
+    <string name="action_app_info">Androidのアプリ情報</string>
+    <string name="detail_last_checked">最終確認: %1$s</string>
+    <string name="state_favorite">お気に入り</string>
+    <string name="action_save_file">ダウンロードフォルダに保存</string>
+    <string name="file_saved">ダウンロードしたままの状態で、%2$s に %1$s として保存しました。Ternはファイルをインストールするときに確認します。</string>
+    <string name="action_save_files">ファイルをダウンロードフォルダに保存</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="other">%d 個のファイルを Download/Tern に保存しました</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="other">%d 件のリリースを既読にしました</item>
+    </plurals>
+    <string name="project_page">プロジェクトページ</string>
+    <string name="project_page_read">プロジェクトのページを読む</string>
+    <string name="project_page_effect">READMEをテキストで表示します。開くまで提供元には何も問い合わせません。</string>
+    <string name="project_page_loading">読み込み中…</string>
+    <string name="project_page_none">このプロジェクトにはTernが読み取れるページがありません。</string>
+    <string name="project_page_failed">ページを読み取れませんでした。タップして再試行してください。</string>
 </resources>

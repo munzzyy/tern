@@ -1,3 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">Compartilhar</string>
+    <string name="action_release_page">Abrir a página do lançamento</string>
+    <string name="action_share_address">Compartilhar o endereço</string>
+    <string name="action_share_link">Compartilhar um link que o abre no Tern</string>
+    <string name="action_app_info">Informações do app no Android</string>
+    <string name="detail_last_checked">Verificado %1$s</string>
+    <string name="state_favorite">Favorito</string>
+    <string name="action_save_file">Salvar em Downloads</string>
+    <string name="file_saved">Salvo como %1$s em %2$s, do jeito que foi baixado. O Tern verifica um arquivo quando o instala.</string>
+    <string name="action_save_files">Salvar arquivos em Downloads</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="one">%d arquivo salvo em Download/Tern</item>
+        <item quantity="many">%d arquivos salvos em Download/Tern</item>
+        <item quantity="other">%d arquivos salvos em Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d lançamento marcado como visto</item>
+        <item quantity="many">%d lançamentos marcados como vistos</item>
+        <item quantity="other">%d lançamentos marcados como vistos</item>
+    </plurals>
+    <string name="project_page">Página do projeto</string>
+    <string name="project_page_read">Ler a página do projeto</string>
+    <string name="project_page_effect">O README dele, mostrado como texto. Nada é pedido à forja até você abrir.</string>
+    <string name="project_page_loading">Lendo…</string>
+    <string name="project_page_none">O projeto não tem uma página que o Tern consiga ler.</string>
+    <string name="project_page_failed">Não foi possível ler a página. Toque para tentar novamente.</string>
 </resources>

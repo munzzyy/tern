@@ -1,3 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="list_arrange">整理列表</string>
+    <string name="list_options_title">整理列表</string>
+    <string name="list_reverse">倒序排列</string>
+    <string name="list_updates_first">更新置顶</string>
+    <string name="list_bury_not_installed">未安装的应用置底</string>
+    <string name="sort_author">按开发者</string>
+    <string name="sort_added">按添加日期</string>
+    <string name="sort_released">按发布日期</string>
+    <string name="group_title">分组依据</string>
+    <string name="group_none">不分组</string>
+    <string name="group_category">分类</string>
+    <string name="group_source">来源</string>
+    <string name="group_category_effect">属于多个分类的应用会在每个分类中出现。</string>
+    <string name="group_other">其他</string>
+    <string name="group_folded">已折叠</string>
+    <string name="group_open">已展开</string>
+    <string name="filter_favorites">收藏</string>
+    <string name="filter_track_only">仅跟踪</string>
+    <string name="filter_problems">有问题</string>
+    <string name="action_done">完成</string>
+    <string name="settings_swipe">滑动行以执行操作</string>
+    <string name="settings_swipe_effect">将应用向末端滑动即可更新，向起始端滑动即可移除。</string>
+    <string name="action_favorite">添加到收藏</string>
+    <string name="action_unfavorite">从收藏中移除</string>
+    <string name="action_set_mode">发现更新时</string>
+    <string name="action_share_addresses">分享地址</string>
+    <string name="action_share_export">以文件形式分享</string>
+    <string name="action_uninstall">卸载</string>
+    <string name="export_format_tern">Tern 文件</string>
+    <string name="export_format_obtainium">Obtainium 文件</string>
+    <string name="bulk_uninstall_text">Android 会依次询问每个应用。在您于此处移除它们之前，Tern 会继续跟踪它们。</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="other">已收藏 %1$d 个应用</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="other">已取消收藏 %1$d 个应用</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="other">%1$d 个应用发现更新时</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="other">卸载 %1$d 个应用？</item>
+    </plurals>
 </resources>

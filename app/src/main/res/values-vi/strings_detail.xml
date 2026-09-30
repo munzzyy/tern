@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">Chia sẻ</string>
+    <string name="action_release_page">Mở trang bản phát hành</string>
+    <string name="action_share_address">Chia sẻ địa chỉ</string>
+    <string name="action_share_link">Chia sẻ liên kết mở ứng dụng trong Tern</string>
+    <string name="action_app_info">Thông tin ứng dụng trong Android</string>
+    <string name="detail_last_checked">Đã kiểm tra %1$s</string>
+    <string name="state_favorite">Yêu thích</string>
+    <string name="action_save_file">Lưu vào Tải xuống</string>
+    <string name="file_saved">Đã lưu thành %1$s trong %2$s, đúng như khi tải xuống. Tern kiểm tra tệp khi cài đặt tệp đó.</string>
+    <string name="action_save_files">Lưu tệp vào Tải xuống</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="other">Đã lưu %d tệp vào Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="other">Đã đánh dấu đã xem %d bản phát hành</item>
+    </plurals>
+    <string name="project_page">Trang dự án</string>
+    <string name="project_page_read">Đọc trang của dự án</string>
+    <string name="project_page_effect">README của dự án, hiển thị dạng văn bản. Không có yêu cầu nào gửi đến nền tảng mã nguồn cho đến khi bạn mở.</string>
+    <string name="project_page_loading">Đang đọc…</string>
+    <string name="project_page_none">Dự án không có trang nào Tern có thể đọc.</string>
+    <string name="project_page_failed">Không thể đọc trang. Chạm để thử lại.</string>
 </resources>

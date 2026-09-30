@@ -1,3 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">Kiểm tra</string>
+    <string name="shortcut_check_long">Kiểm tra bản cập nhật</string>
+    <string name="shortcut_update_all_long">Cập nhật mọi ứng dụng</string>
+    <string name="shortcut_add_short">Thêm</string>
+    <string name="shortcut_add_long">Thêm ứng dụng</string>
+    <string name="tile_check">Kiểm tra bản cập nhật</string>
+    <string name="tile_checking">Đang kiểm tra…</string>
+    <string name="tile_up_to_date">Đã cập nhật</string>
+    <string name="widget_label">Bản cập nhật</string>
+    <string name="widget_description">Số ứng dụng có bản cập nhật, cùng một nút để kiểm tra và một nút để cập nhật tất cả.</string>
+    <plurals name="widget_updates">
+        <item quantity="other">%d bản cập nhật</item>
+    </plurals>
+    <string name="widget_up_to_date">Mọi thứ đều đã cập nhật</string>
+    <string name="widget_checked">Đã kiểm tra lúc %1$s</string>
+    <string name="widget_never_checked">Chưa kiểm tra</string>
+    <string name="widget_check">Kiểm tra</string>
 </resources>

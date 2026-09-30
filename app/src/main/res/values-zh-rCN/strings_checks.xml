@@ -1,3 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="other">每 %d 分钟</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="other">每 %d 天</item>
+    </plurals>
+    <string name="settings_check_now">立即运行后台检查</string>
+    <string name="settings_check_now_effect">与后台检查一样，检查所有应用，并安装设为自动更新的应用。</string>
+    <string name="settings_check_now_running">正在检查…</string>
+    <string name="settings_check_on_start">打开 Tern 时检查</string>
+    <string name="settings_check_on_open">打开应用页面时检查该应用</string>
+    <string name="settings_check_on_open_effect">距上次检查不足五分钟时不会再次检查。</string>
+    <string name="settings_only_installed">仅检查已安装的应用</string>
+    <string name="settings_only_installed_effect">仅跟踪的应用也会被检查。您打开的应用始终会被检查。</string>
+    <string name="settings_remove_uninstalled">移除在别处卸载的应用</string>
+    <string name="settings_remove_uninstalled_effect">在 Tern 之外卸载的应用也会从列表中移除。</string>
+    <string name="settings_file_filter">文件过滤器</string>
+    <string name="settings_file_filter_effect">所有没有自己过滤器的应用用来挑选文件的模式。</string>
+    <string name="settings_file_filter_none">无</string>
+    <string name="settings_file_filter_invalid">无法读取此模式。</string>
+    <string name="settings_allow_downgrades">允许较旧的版本</string>
+    <string name="settings_allow_downgrades_effect">已安装 Let Me Downgrade，因此 Android 可以用较旧的版本覆盖较新的版本。</string>
+    <string name="settings_collapse_groups">分组默认折叠</string>
+    <string name="settings_haptics">触感反馈</string>
+    <string name="settings_haptics_effect">滑动或长按触发操作时轻轻振动。</string>
+    <string name="settings_phone_layout">始终使用手机布局</string>
+    <string name="settings_phone_layout_effect">无论屏幕多宽，都使用单窗格和底部栏。</string>
+    <string name="density_minimal">极简</string>
+    <string name="search_in">搜索范围</string>
+    <string name="activity_share">分享活动</string>
+    <string name="sources_title">Tern 可以读取的来源</string>
+    <string name="sources_effect">代码托管平台、存储库、商店和网页，以及其中哪些可以搜索。</string>
+    <string name="sources_forges">代码托管平台</string>
+    <string name="sources_repositories">存储库</string>
+    <string name="sources_stores">商店</string>
+    <string name="sources_mirrors">重新发布应用的商店</string>
+    <string name="sources_modified">提供修改版应用的网站</string>
+    <string name="sources_other">其他地方</string>
+    <string name="sources_web_page">包含文件链接的网页</string>
+    <string name="sources_direct">文件的直接链接</string>
+    <string name="sources_searchable">可搜索</string>
+    <string name="sources_track_only">仅跟踪</string>
+    <string name="sources_self_hosted">架设在自有服务器上的 GitLab、Forgejo、Gitea 和 Jenkins 可通过其地址识别。</string>
+    <string name="shared_configs_title">Obtainium 用户分享的配置</string>
+    <string name="shared_configs_effect">一个提供现成应用设置的网站。在设置中开启“打开 Obtainium 链接”后，其链接会在 Tern 中打开。</string>
+    <string name="engine_archive_compression_unsupported">此压缩包使用 bzip2、xz 或 zstd 压缩，Android 无法打开。请选择此发布中的 .zip、.tar 或 .tar.gz 文件。</string>
+    <string name="engine_inner_filter_nothing">压缩包内文件的过滤器与此压缩包中的任何 APK 都不匹配。</string>
+    <string name="preview_republished">%1$s 会重新提供开发者在别处发布的内容。一旦 Tern 知道开发者的证书，其文件就必须符合该证书，因此请尽可能固定一个证书，或先从开发者处安装。</string>
+    <string name="preview_modified">%1$s 提供由开发者以外的人修改过的应用。这些应用由修改者签名，Tern 无法判断修改了什么。</string>
+    <string name="about_track_tern">让 Tern 自身保持最新</string>
+    <string name="about_track_tern_effect">将 Tern 自己的发布添加到列表，像其他应用一样检查和验证。</string>
+    <string name="engine_channel_tracked">跟踪应用的新发布</string>
+    <string name="engine_channel_checking">正在检查</string>
+    <string name="engine_notify_tracked_one">%1$s 有新发布</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="other">%1$d 个跟踪的应用有新发布</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="other">正在检查 %1$d 个应用</item>
+    </plurals>
+    <string name="settings_notify_tracked">跟踪的应用有新发布时</string>
+    <string name="settings_notify_checking">在后台检查期间</string>
+    <string name="settings_notify_checking_effect">一条安静的通知，检查完成后消失。</string>
+    <string name="engine_event_removed_uninstalled">已从列表中移除，因为它在 Tern 之外被卸载</string>
 </resources>

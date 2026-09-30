@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">Bagikan</string>
+    <string name="action_release_page">Buka halaman rilis</string>
+    <string name="action_share_address">Bagikan alamat</string>
+    <string name="action_share_link">Bagikan tautan yang membukanya di Tern</string>
+    <string name="action_app_info">Info aplikasi di Android</string>
+    <string name="detail_last_checked">Diperiksa %1$s</string>
+    <string name="state_favorite">Favorit</string>
+    <string name="action_save_file">Simpan ke Unduhan</string>
+    <string name="file_saved">Disimpan sebagai %1$s di %2$s, persis seperti yang diunduh. Tern memeriksa file saat menginstalnya.</string>
+    <string name="action_save_files">Simpan file ke Unduhan</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="other">%d file disimpan di Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="other">%d rilis ditandai sudah dilihat</item>
+    </plurals>
+    <string name="project_page">Halaman proyek</string>
+    <string name="project_page_read">Baca halaman proyek</string>
+    <string name="project_page_effect">README-nya, ditampilkan sebagai teks. Tidak ada yang diminta dari platform kode sampai Anda membukanya.</string>
+    <string name="project_page_loading">Membaca…</string>
+    <string name="project_page_none">Proyek ini tidak memiliki halaman yang dapat dibaca Tern.</string>
+    <string name="project_page_failed">Halaman tidak dapat dibaca. Ketuk untuk mencoba lagi.</string>
 </resources>

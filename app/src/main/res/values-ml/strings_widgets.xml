@@ -1,3 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">പരിശോധിക്കുക</string>
+    <string name="shortcut_check_long">അപ്ഡേറ്റുകൾക്കായി പരിശോധിക്കുക</string>
+    <string name="shortcut_update_all_long">എല്ലാ ആപ്പുകളും അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <string name="shortcut_add_short">ചേർക്കുക</string>
+    <string name="shortcut_add_long">ഒരു ആപ്പ് ചേർക്കുക</string>
+    <string name="tile_check">അപ്ഡേറ്റുകൾക്കായി പരിശോധിക്കുക</string>
+    <string name="tile_checking">പരിശോധിക്കുന്നു…</string>
+    <string name="tile_up_to_date">ഏറ്റവും പുതിയത്</string>
+    <string name="widget_label">അപ്ഡേറ്റുകൾ</string>
+    <string name="widget_description">എത്ര ആപ്പുകൾക്ക് അപ്ഡേറ്റ് ഉണ്ടെന്ന്, പരിശോധിക്കാൻ ഒരു ബട്ടണും എല്ലാം അപ്ഡേറ്റ് ചെയ്യാൻ മറ്റൊന്നും സഹിതം.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d അപ്ഡേറ്റ്</item>
+        <item quantity="other">%d അപ്ഡേറ്റുകൾ</item>
+    </plurals>
+    <string name="widget_up_to_date">എല്ലാം ഏറ്റവും പുതിയതാണ്</string>
+    <string name="widget_checked">%1$s-ന് പരിശോധിച്ചു</string>
+    <string name="widget_never_checked">ഇതുവരെ പരിശോധിച്ചിട്ടില്ല</string>
+    <string name="widget_check">പരിശോധിക്കുക</string>
 </resources>

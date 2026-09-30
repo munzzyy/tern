@@ -1,3 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="other">每 %d 分鐘</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="other">每 %d 天</item>
+    </plurals>
+    <string name="settings_check_now">立即執行背景檢查</string>
+    <string name="settings_check_now_effect">與背景檢查相同，檢查每個應用程式，並安裝設為自行更新的項目。</string>
+    <string name="settings_check_now_running">檢查中…</string>
+    <string name="settings_check_on_start">開啟 Tern 時檢查</string>
+    <string name="settings_check_on_open">開啟應用程式頁面時檢查該應用程式</string>
+    <string name="settings_check_on_open_effect">距離上次檢查五分鐘內不會再次檢查。</string>
+    <string name="settings_only_installed">只檢查已安裝的應用程式</string>
+    <string name="settings_only_installed_effect">僅追蹤的應用程式也會檢查。您開啟的應用程式一律會檢查。</string>
+    <string name="settings_remove_uninstalled">移除在其他地方解除安裝的應用程式</string>
+    <string name="settings_remove_uninstalled_effect">在 Tern 以外解除安裝的應用程式也會從清單中移除。</string>
+    <string name="settings_file_filter">檔案篩選器</string>
+    <string name="settings_file_filter_effect">所有沒有自己篩選器的應用程式用來挑選檔案的模式。</string>
+    <string name="settings_file_filter_none">無</string>
+    <string name="settings_file_filter_invalid">無法讀取這個模式。</string>
+    <string name="settings_allow_downgrades">允許較舊的版本</string>
+    <string name="settings_allow_downgrades_effect">已安裝 Let Me Downgrade，因此 Android 可以用較舊的版本覆蓋較新的版本。</string>
+    <string name="settings_collapse_groups">群組預設為摺疊</string>
+    <string name="settings_haptics">觸覺回饋</string>
+    <string name="settings_haptics_effect">滑動或長按觸發動作時輕微震動。</string>
+    <string name="settings_phone_layout">一律使用手機版面配置</string>
+    <string name="settings_phone_layout_effect">無論螢幕多寬，都使用單一窗格和底部列。</string>
+    <string name="density_minimal">極簡</string>
+    <string name="search_in">搜尋範圍</string>
+    <string name="activity_share">分享活動紀錄</string>
+    <string name="sources_title">Tern 可讀取的來源</string>
+    <string name="sources_effect">程式碼託管平台、軟體庫、商店和網頁，以及其中哪些可以搜尋。</string>
+    <string name="sources_forges">程式碼託管平台</string>
+    <string name="sources_repositories">軟體庫</string>
+    <string name="sources_stores">商店</string>
+    <string name="sources_mirrors">重新發佈應用程式的商店</string>
+    <string name="sources_modified">提供修改版應用程式的網站</string>
+    <string name="sources_other">其他地方</string>
+    <string name="sources_web_page">含有檔案連結的網頁</string>
+    <string name="sources_direct">檔案的直接連結</string>
+    <string name="sources_searchable">可搜尋</string>
+    <string name="sources_track_only">僅追蹤</string>
+    <string name="sources_self_hosted">架設在自有伺服器上的 GitLab、Forgejo、Gitea 和 Jenkins 可依網址辨識。</string>
+    <string name="shared_configs_title">Obtainium 使用者分享的設定</string>
+    <string name="shared_configs_effect">提供現成應用程式設定的網站。在「設定」中開啟「開啟 Obtainium 連結」時，其連結會在 Tern 中開啟。</string>
+    <string name="engine_archive_compression_unsupported">這個壓縮檔使用 bzip2、xz 或 zstd 壓縮，Android 無法開啟。請挑選此發行版本的 .zip、.tar 或 .tar.gz 檔案。</string>
+    <string name="engine_inner_filter_nothing">壓縮檔內檔案的篩選器不符合此壓縮檔中的任何 APK。</string>
+    <string name="preview_republished">%1$s 會重新提供開發者在其他地方發佈的內容。一旦 Tern 知道開發者的憑證，其檔案就必須符合該憑證，因此請盡可能釘選一個憑證，或先從開發者那裡安裝。</string>
+    <string name="preview_modified">%1$s 提供由開發者以外的人修改過的應用程式。這些應用程式由修改者簽署，Tern 無法得知修改了什麼。</string>
+    <string name="about_track_tern">讓 Tern 本身保持最新</string>
+    <string name="about_track_tern_effect">將 Tern 自己的發行版本加入清單，並像其他應用程式一樣檢查與驗證。</string>
+    <string name="engine_channel_tracked">追蹤中應用程式的新發行版本</string>
+    <string name="engine_channel_checking">檢查中</string>
+    <string name="engine_notify_tracked_one">%1$s 的新發行版本</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="other">%1$d 個追蹤中的應用程式有新發行版本</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="other">正在檢查 %1$d 個應用程式</item>
+    </plurals>
+    <string name="settings_notify_tracked">追蹤中的應用程式有新發行版本時</string>
+    <string name="settings_notify_checking">在背景檢查期間</string>
+    <string name="settings_notify_checking_effect">一則安靜的通知，檢查完成後就會消失。</string>
+    <string name="engine_event_removed_uninstalled">已從清單中移除，因為它在 Tern 以外被解除安裝</string>
 </resources>

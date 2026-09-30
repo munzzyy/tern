@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">分享</string>
+    <string name="action_release_page">開啟發行版本頁面</string>
+    <string name="action_share_address">分享網址</string>
+    <string name="action_share_link">分享可在 Tern 中開啟的連結</string>
+    <string name="action_app_info">Android 中的應用程式資訊</string>
+    <string name="detail_last_checked">上次檢查：%1$s</string>
+    <string name="state_favorite">最愛</string>
+    <string name="action_save_file">儲存至下載資料夾</string>
+    <string name="file_saved">已依下載時的原樣在 %2$s 中儲存為 %1$s。Tern 會在安裝檔案時進行檢查。</string>
+    <string name="action_save_files">將檔案儲存至下載資料夾</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="other">已將 %d 個檔案儲存至 Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="other">已將 %d 個發行版本標示為已讀</item>
+    </plurals>
+    <string name="project_page">專案頁面</string>
+    <string name="project_page_read">閱讀專案頁面</string>
+    <string name="project_page_effect">以文字顯示其 README。在您開啟之前，不會向程式碼託管平台發出任何請求。</string>
+    <string name="project_page_loading">讀取中…</string>
+    <string name="project_page_none">這個專案沒有 Tern 可讀取的頁面。</string>
+    <string name="project_page_failed">無法讀取頁面。輕觸即可再試一次。</string>
 </resources>

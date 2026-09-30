@@ -1,3 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">확인</string>
+    <string name="shortcut_check_long">업데이트 확인</string>
+    <string name="shortcut_update_all_long">모든 앱 업데이트</string>
+    <string name="shortcut_add_short">추가</string>
+    <string name="shortcut_add_long">앱 추가</string>
+    <string name="tile_check">업데이트 확인</string>
+    <string name="tile_checking">확인 중…</string>
+    <string name="tile_up_to_date">최신 상태</string>
+    <string name="widget_label">업데이트</string>
+    <string name="widget_description">업데이트가 있는 앱의 수와 함께 확인 버튼과 모두 업데이트 버튼을 표시합니다.</string>
+    <plurals name="widget_updates">
+        <item quantity="other">업데이트 %d개</item>
+    </plurals>
+    <string name="widget_up_to_date">모두 최신 상태입니다</string>
+    <string name="widget_checked">%1$s에 확인함</string>
+    <string name="widget_never_checked">아직 확인되지 않음</string>
+    <string name="widget_check">확인</string>
 </resources>

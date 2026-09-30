@@ -1,3 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="other">Setiap %d menit</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="other">Setiap %d hari</item>
+    </plurals>
+    <string name="settings_check_now">Jalankan pemeriksaan latar belakang sekarang</string>
+    <string name="settings_check_now_effect">Memeriksa setiap aplikasi dan menginstal yang diatur untuk memperbarui sendiri, seperti pemeriksaan latar belakang.</string>
+    <string name="settings_check_now_running">Memeriksa…</string>
+    <string name="settings_check_on_start">Periksa saat Tern dibuka</string>
+    <string name="settings_check_on_open">Periksa aplikasi saat halamannya dibuka</string>
+    <string name="settings_check_on_open_effect">Tidak lagi dalam lima menit sejak pemeriksaan terakhir.</string>
+    <string name="settings_only_installed">Hanya periksa aplikasi yang terinstal</string>
+    <string name="settings_only_installed_effect">Aplikasi yang hanya diikuti juga diperiksa. Aplikasi yang Anda buka selalu diperiksa.</string>
+    <string name="settings_remove_uninstalled">Hapus aplikasi yang di-uninstal di tempat lain</string>
+    <string name="settings_remove_uninstalled_effect">Aplikasi yang Anda uninstal di luar Tern juga keluar dari daftar.</string>
+    <string name="settings_file_filter">Filter untuk file</string>
+    <string name="settings_file_filter_effect">Pola yang dipakai setiap aplikasi tanpa filter sendiri untuk memilih filenya.</string>
+    <string name="settings_file_filter_none">Tidak ada</string>
+    <string name="settings_file_filter_invalid">Pola ini tidak dapat dibaca.</string>
+    <string name="settings_allow_downgrades">Izinkan versi lama</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade terinstal, jadi Android dapat memasang versi lama menimpa versi yang lebih baru.</string>
+    <string name="settings_collapse_groups">Mulai dengan grup terlipat</string>
+    <string name="settings_haptics">Umpan balik haptik</string>
+    <string name="settings_haptics_effect">Getaran ringan saat geser atau tekan lama melakukan sesuatu.</string>
+    <string name="settings_phone_layout">Selalu gunakan tata letak ponsel</string>
+    <string name="settings_phone_layout_effect">Satu panel dan bilah di bawah, seberapa pun lebar layarnya.</string>
+    <string name="density_minimal">Minimal</string>
+    <string name="search_in">Cari di</string>
+    <string name="activity_share">Bagikan aktivitas</string>
+    <string name="sources_title">Yang dapat dibaca Tern</string>
+    <string name="sources_effect">Platform kode, repositori, toko, dan halaman web, serta mana yang dapat dicari.</string>
+    <string name="sources_forges">Platform kode</string>
+    <string name="sources_repositories">Repositori</string>
+    <string name="sources_stores">Toko</string>
+    <string name="sources_mirrors">Toko yang menerbitkan ulang aplikasi</string>
+    <string name="sources_modified">Situs dengan aplikasi yang diubah</string>
+    <string name="sources_other">Tempat lain</string>
+    <string name="sources_web_page">Halaman web dengan tautan ke file</string>
+    <string name="sources_direct">Tautan langsung ke file</string>
+    <string name="sources_searchable">dapat dicari</string>
+    <string name="sources_track_only">hanya diikuti</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea, dan Jenkins di server sendiri dikenali dari alamatnya.</string>
+    <string name="shared_configs_title">Konfigurasi yang dibagikan pengguna Obtainium</string>
+    <string name="shared_configs_effect">Situs berisi setelan siap pakai untuk aplikasi. Tautannya terbuka di Tern saat \"Buka tautan Obtainium\" aktif di Setelan.</string>
+    <string name="engine_archive_compression_unsupported">Arsip ini dikompresi dengan bzip2, xz, atau zstd, yang tidak dapat dibuka Android. Pilih file .zip, .tar, atau .tar.gz dari rilis ini.</string>
+    <string name="engine_inner_filter_nothing">Filter untuk file di dalam arsip tidak cocok dengan APK mana pun di arsip ini.</string>
+    <string name="preview_republished">%1$s menawarkan ulang apa yang diterbitkan pengembang di tempat lain. Setelah Tern mengetahui sertifikat pengembang, file dari sini harus cocok dengan sertifikat itu, jadi sematkan sertifikat atau instal dari pengembang terlebih dahulu jika bisa.</string>
+    <string name="preview_modified">%1$s menawarkan aplikasi yang diubah oleh orang selain pengembangnya. Aplikasi itu ditandatangani oleh siapa pun yang mengubahnya, dan Tern tidak dapat mengetahui apa yang diubah.</string>
+    <string name="about_track_tern">Selalu perbarui Tern sendiri</string>
+    <string name="about_track_tern_effect">Menambahkan rilis Tern sendiri ke daftar, diperiksa dan diverifikasi seperti aplikasi lainnya.</string>
+    <string name="engine_channel_tracked">Rilis baru aplikasi yang diikuti</string>
+    <string name="engine_channel_checking">Memeriksa</string>
+    <string name="engine_notify_tracked_one">Rilis baru %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="other">%1$d aplikasi yang diikuti memiliki rilis baru</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="other">Memeriksa %1$d aplikasi</item>
+    </plurals>
+    <string name="settings_notify_tracked">Bila aplikasi yang diikuti memiliki rilis baru</string>
+    <string name="settings_notify_checking">Saat memeriksa di latar belakang</string>
+    <string name="settings_notify_checking_effect">Notifikasi senyap yang hilang saat pemeriksaan selesai.</string>
+    <string name="engine_event_removed_uninstalled">Dihapus dari daftar karena di-uninstal di luar Tern</string>
 </resources>

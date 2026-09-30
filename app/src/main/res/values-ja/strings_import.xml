@@ -1,3 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="import_addresses_heading">アドレスのリストから</string>
+    <string name="import_addresses_explain">アプリのアドレスを貼り付けるか（1行に1つ、またはテキスト内の任意の場所）、OPMLリストなどのファイルから読み込みます。各アドレスは確認され、単一のリンクと同じ方法で追加されます。</string>
+    <string name="import_addresses_field">アドレス</string>
+    <string name="import_addresses_show">内容を表示</string>
+    <string name="import_addresses_file">ファイルを読み込む</string>
+    <string name="import_addresses_none">httpsのアドレスが含まれていません。</string>
+    <string name="import_addresses_other">別のリスト</string>
+    <string name="import_addresses_unreadable">そのファイルを読み込めませんでした。</string>
+    <plurals name="import_addresses_count">
+        <item quantity="other">%1$d 件のアドレス。不要なもののチェックを外してから追加してください。</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="other">このリンクには %1$d 個のアプリが含まれています。追加する前に、それぞれを開いて設定を確認してください。</item>
+    </plurals>
+    <string name="settings_export_obtainium">Obtainium用にエクスポート</string>
+    <string name="settings_export_obtainium_effect">Obtainiumがインポートできるファイルで、リストをObtainiumに移すときに使います。Obtainiumに対応する設定がないものは引き継がれません。</string>
+    <string name="settings_export_installed_only">インストール済みのアプリのみエクスポート</string>
+    <string name="settings_export_settings">エクスポートに設定を含める</string>
+    <string name="settings_export_settings_effect">外観、リスト、通知、確認の設定。トークン、プロキシ、インストーラーは決して含みません。</string>
+    <string name="settings_kept_export">エクスポートを最新の状態に保つ</string>
+    <string name="settings_kept_export_effect">リストで何かが変わると、少し後にTernがエクスポートを書き直します。</string>
+    <string name="settings_kept_export_written">%1$s に書き込み済み</string>
+    <string name="settings_kept_export_folder">保存場所</string>
+    <string name="import_settings_taken">ファイル内の設定も取り込みました。</string>
 </resources>

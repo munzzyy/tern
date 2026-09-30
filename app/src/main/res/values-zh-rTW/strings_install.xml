@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_installer">安裝方式</string>
+    <string name="installer_system">Android 安裝程式</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">其他應用程式</string>
+    <string name="installer_system_effect">首次安裝前，以及 Android 認為需要的更新前，Android 會詢問。</string>
+    <string name="installer_shizuku_effect">透過 Shizuku 或 Sui 在不提示的情況下安裝和更新。每個檔案都會先通過相同的檢查。</string>
+    <string name="installer_root_effect">透過 su 在不提示的情況下安裝和更新。每個檔案都會先通過相同的檢查。</string>
+    <string name="installer_other_app_effect">將每個檢查過的檔案交給您選擇的安裝程式應用程式。該應用程式一律會詢問，因此不會在背景安裝任何東西。</string>
+    <string name="installer_ready">就緒</string>
+    <string name="installer_not_ready">未就緒，期間將使用 Android 安裝程式</string>
+    <string name="installer_shizuku_not_running">Shizuku 未在執行。請在 Shizuku 應用程式中啟動它，然後返回。</string>
+    <string name="installer_shizuku_too_old">這個版本的 Shizuku 對 Tern 來說太舊了。請更新 Shizuku。</string>
+    <string name="installer_shizuku_not_allowed">Tern 尚未獲准使用 Shizuku。按這裡提出要求。</string>
+    <string name="installer_no_root">Tern 沒有 root 權限。按這裡再次要求。</string>
+    <string name="installer_no_other_app">未選擇安裝程式應用程式，或所選的應用程式已不存在。</string>
+    <string name="installer_pick_app">安裝程式應用程式</string>
+    <string name="installer_pick_app_none">未選擇</string>
+    <string name="installer_no_apps">此裝置上沒有其他安裝程式應用程式。</string>
+    <string name="installer_play">聲稱應用程式由 Google Play 安裝</string>
+    <string name="installer_play_effect">有些應用程式只有在認為是 Google Play 安裝時才能正常運作。之後 Tern 就不會再顯示為它們的安裝程式。</string>
+    <string name="install_other_app_signer">安裝程式應用程式安裝的內容，其簽署者與 Tern 檢查過的檔案不同，因此這次安裝不算數。</string>
 </resources>

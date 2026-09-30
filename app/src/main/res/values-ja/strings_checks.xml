@@ -1,3 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="other">%d分ごと</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="other">%d日ごと</item>
+    </plurals>
+    <string name="settings_check_now">今すぐバックグラウンドチェックを実行</string>
+    <string name="settings_check_now_effect">バックグラウンドチェックと同じように、すべてのアプリを確認し、自動的に更新するよう設定されたものをインストールします。</string>
+    <string name="settings_check_now_running">確認中…</string>
+    <string name="settings_check_on_start">Ternを開いたときに確認</string>
+    <string name="settings_check_on_open">アプリのページを開いたときに確認</string>
+    <string name="settings_check_on_open_effect">前回の確認から5分以内は再確認しません。</string>
+    <string name="settings_only_installed">インストール済みのアプリのみ確認</string>
+    <string name="settings_only_installed_effect">追跡のみのアプリも確認されます。開いたアプリは常に確認されます。</string>
+    <string name="settings_remove_uninstalled">他でアンインストールされたアプリを削除</string>
+    <string name="settings_remove_uninstalled_effect">Tern以外でアンインストールしたアプリは、リストからも削除されます。</string>
+    <string name="settings_file_filter">ファイルのフィルター</string>
+    <string name="settings_file_filter_effect">独自のフィルターがないすべてのアプリが、ファイルを選ぶときに使うパターンです。</string>
+    <string name="settings_file_filter_none">なし</string>
+    <string name="settings_file_filter_invalid">このパターンは読み取れません。</string>
+    <string name="settings_allow_downgrades">古いバージョンを許可</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgradeがインストールされているため、Androidは新しいバージョンの上に古いバージョンをインストールできます。</string>
+    <string name="settings_collapse_groups">グループを折りたたんだ状態で開始</string>
+    <string name="settings_haptics">触覚フィードバック</string>
+    <string name="settings_haptics_effect">スワイプや長押しで操作が実行されたときに軽く振動します。</string>
+    <string name="settings_phone_layout">常にスマートフォン用のレイアウトを使用</string>
+    <string name="settings_phone_layout_effect">画面の幅にかかわらず、1つのペインと下部のバーで表示します。</string>
+    <string name="density_minimal">ミニマル</string>
+    <string name="search_in">検索対象</string>
+    <string name="activity_share">アクティビティを共有</string>
+    <string name="sources_title">Ternが読み取れるもの</string>
+    <string name="sources_effect">コードホスティング、リポジトリ、ストア、ウェブページと、そのうち検索できるもの。</string>
+    <string name="sources_forges">コードホスティング</string>
+    <string name="sources_repositories">リポジトリ</string>
+    <string name="sources_stores">ストア</string>
+    <string name="sources_mirrors">アプリを再配布するストア</string>
+    <string name="sources_modified">改変されたアプリのサイト</string>
+    <string name="sources_other">その他の場所</string>
+    <string name="sources_web_page">ファイルへのリンクがあるウェブページ</string>
+    <string name="sources_direct">ファイルへの直接リンク</string>
+    <string name="sources_searchable">検索可能</string>
+    <string name="sources_track_only">追跡のみ</string>
+    <string name="sources_self_hosted">独自サーバー上のGitLab、Forgejo、Gitea、Jenkinsはアドレスで認識されます。</string>
+    <string name="shared_configs_title">Obtainiumのユーザーが共有する設定</string>
+    <string name="shared_configs_effect">アプリ用の既成の設定を集めたサイトです。［設定］で「Obtainiumのリンクを開く」がオンのとき、そのリンクはTernで開きます。</string>
+    <string name="engine_archive_compression_unsupported">このアーカイブはbzip2、xz、またはzstdで圧縮されていて、Androidでは開けません。このリリースの.zip、.tar、または.tar.gzファイルを選択してください。</string>
+    <string name="engine_inner_filter_nothing">アーカイブ内のファイルのフィルターが、このアーカイブ内のどのAPKにも一致しません。</string>
+    <string name="preview_republished">%1$s は、開発者が別の場所で公開しているものを再配布しています。Ternが開発者の証明書を把握すると、ここのファイルにもその証明書が求められます。可能であれば証明書をピン留めするか、先に開発者からインストールしてください。</string>
+    <string name="preview_modified">%1$s は、開発者以外の人が改変したアプリを提供しています。それらは改変した人によって署名されており、Ternには何が変更されたか判断できません。</string>
+    <string name="about_track_tern">Tern自体を最新の状態に保つ</string>
+    <string name="about_track_tern_effect">Tern自身のリリースをリストに追加し、他のアプリと同じように確認・検証します。</string>
+    <string name="engine_channel_tracked">追跡中のアプリの新しいリリース</string>
+    <string name="engine_channel_checking">確認中</string>
+    <string name="engine_notify_tracked_one">%1$s の新しいリリース</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="other">追跡中の %1$d 個のアプリに新しいリリースがあります</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="other">%1$d 個のアプリを確認中</item>
+    </plurals>
+    <string name="settings_notify_tracked">追跡中のアプリに新しいリリースがあるとき</string>
+    <string name="settings_notify_checking">バックグラウンドで確認している間</string>
+    <string name="settings_notify_checking_effect">確認が終わると消える控えめな通知です。</string>
+    <string name="engine_event_removed_uninstalled">Tern以外でアンインストールされたため、リストから削除しました</string>
 </resources>

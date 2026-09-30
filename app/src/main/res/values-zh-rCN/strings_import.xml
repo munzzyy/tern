@@ -1,3 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="import_addresses_heading">从地址列表</string>
+    <string name="import_addresses_explain">粘贴应用的地址（每行一个，或位于文本中的任意位置），或从 OPML 列表等文件中读取。每个地址都会像单个链接一样被查看并添加。</string>
+    <string name="import_addresses_field">地址</string>
+    <string name="import_addresses_show">显示其中内容</string>
+    <string name="import_addresses_file">读取文件</string>
+    <string name="import_addresses_none">其中没有 https 地址。</string>
+    <string name="import_addresses_other">其他列表</string>
+    <string name="import_addresses_unreadable">无法读取该文件。</string>
+    <plurals name="import_addresses_count">
+        <item quantity="other">%1$d 个地址。取消勾选不需要的，然后添加。</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="other">此链接包含 %1$d 个应用。添加前请逐个查看其设置。</item>
+    </plurals>
+    <string name="settings_export_obtainium">导出为 Obtainium 格式</string>
+    <string name="settings_export_obtainium_effect">一个可供 Obtainium 导入的文件，用于将列表迁移过去。Obtainium 没有对应设置的内容会被留下。</string>
+    <string name="settings_export_installed_only">仅导出已安装的应用</string>
+    <string name="settings_export_settings">在导出中包含设置</string>
+    <string name="settings_export_settings_effect">外观、列表、通知和检查。绝不包含令牌、代理或安装程序。</string>
+    <string name="settings_kept_export">保持导出文件为最新</string>
+    <string name="settings_kept_export_effect">列表中有任何变化后，Tern 会稍后重新写入导出文件。</string>
+    <string name="settings_kept_export_written">写入于 %1$s</string>
+    <string name="settings_kept_export_folder">保存位置</string>
+    <string name="import_settings_taken">文件中的设置也已采用。</string>
 </resources>

@@ -1,3 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">確認</string>
+    <string name="shortcut_check_long">更新を確認</string>
+    <string name="shortcut_update_all_long">すべてのアプリを更新</string>
+    <string name="shortcut_add_short">追加</string>
+    <string name="shortcut_add_long">アプリを追加</string>
+    <string name="tile_check">更新を確認</string>
+    <string name="tile_checking">確認中…</string>
+    <string name="tile_up_to_date">最新</string>
+    <string name="widget_label">更新</string>
+    <string name="widget_description">更新があるアプリの数と、確認するボタン、すべて更新するボタン。</string>
+    <plurals name="widget_updates">
+        <item quantity="other">%d件の更新</item>
+    </plurals>
+    <string name="widget_up_to_date">すべて最新です</string>
+    <string name="widget_checked">%1$sに確認</string>
+    <string name="widget_never_checked">未確認</string>
+    <string name="widget_check">確認</string>
 </resources>

@@ -36,9 +36,7 @@
     <string name="settings_auto_installs">Tự động cài đặt bản cập nhật</string>
     <string name="settings_auto_installs_effect">Ứng dụng được đặt tự cập nhật sẽ cập nhật sau khi kiểm tra trong nền. Khi tắt, chúng chỉ báo là có bản cập nhật, và mỗi ứng dụng vẫn giữ lựa chọn riêng để dùng sau.</string>
     <string name="settings_unmetered_installs">Chỉ cài đặt trên Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">Việc kiểm tra chạy trên mọi mạng. Bản cập nhật lẽ ra sẽ tự cài đặt sẽ chờ đến khi có Wi-Fi hoặc cáp mạng, giống như Obtainium.</string>
     <string name="settings_charging_installs">Chỉ cài đặt khi đang sạc</string>
-    <string name="settings_charging_installs_effect">Việc kiểm tra cũng chạy khi dùng pin. Bản cập nhật lẽ ra sẽ tự cài đặt sẽ chờ đến khi thiết bị đang sạc.</string>
     <string name="engine_unreadable_app">Không thể đọc ứng dụng đã lưu %1$s, nên nó bị loại khỏi danh sách. Không có gì bị xóa: phiên bản Tern mới hơn có thể đọc được nó.</string>
     <string name="settings_pin_certificates">Ghim chứng chỉ của các nền tảng mã nguồn</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab và Codeberg phải xuất trình chứng chỉ từ tổ chức cấp chứng chỉ mà mỗi nền tảng được biết là đang dùng, giống như Obtainium. Chứng chỉ mà một tổ chức khác bị buộc phải cấp sẽ bị từ chối. Nếu một nền tảng mã nguồn đổi tổ chức cấp chứng chỉ, việc kiểm tra ở đó sẽ thất bại cho đến khi tắt tùy chọn này.</string>

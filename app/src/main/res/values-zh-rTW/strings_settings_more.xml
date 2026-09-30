@@ -36,9 +36,7 @@
     <string name="settings_auto_installs">自行安裝更新</string>
     <string name="settings_auto_installs_effect">設為自動更新的應用程式會在背景檢查後自行更新。關閉後，它們只會提示有更新，各應用程式會保留各自的選擇供日後使用。</string>
     <string name="settings_unmetered_installs">僅在 Wi-Fi 下安裝</string>
-    <string name="settings_unmetered_installs_effect">在任何網路下都會進行檢查。原本會自動安裝的更新將等待 Wi-Fi 或有線網路，與 Obtainium 相同。</string>
     <string name="settings_charging_installs">僅在充電時安裝</string>
-    <string name="settings_charging_installs_effect">使用電池時同樣會進行檢查。原本會自動安裝的更新會等到裝置正在充電時才安裝。</string>
     <string name="engine_unreadable_app">無法讀取已儲存的應用程式 %1$s，因此已將其排除在清單之外。並未刪除任何內容：較新版本的 Tern 可能可以讀取它。</string>
     <string name="settings_pin_certificates">釘選程式碼託管平台的憑證</string>
     <string name="settings_pin_certificates_effect">與 Obtainium 相同，GitHub、GitLab 和 Codeberg 必須出示由其已知所用憑證機構簽發的憑證。其他憑證機構被迫簽發的憑證會被拒絕。如果某個程式碼託管平台更換了憑證機構，在關閉此選項之前，對它的檢查都會失敗。</string>

@@ -9,9 +9,10 @@ import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.log.TernLog
 
 /**
- * One persisted periodic job, which checks on any network. Re-applying unchanged settings leaves
- * the job alone so its clock keeps running. Two one-off jobs go with it: one that installs what
- * waited for Wi-Fi or charging once there is, and one that checks again what could not be checked.
+ * One persisted periodic job, which checks on any network unless the settings hold checks back.
+ * Re-applying unchanged settings leaves the job alone so its clock keeps running. Two one-off jobs
+ * go with it: one that installs what waited for Wi-Fi or charging once there is, and one that
+ * checks again what could not be checked.
  */
 object Scheduler {
     const val JOB_ID = 1
@@ -31,7 +32,8 @@ object Scheduler {
         val wanted = JobInfo.Builder(JOB_ID, ComponentName(context, CheckJobService::class.java))
             .setPeriodic(settings.checkEveryMinutes * MINUTE_MS)
             .setPersisted(true)
-            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            .setRequiredNetworkType(checkNetwork(settings))
+            .setRequiresCharging(settings.checkOnlyWhileCharging)
             .setRequiresBatteryNotLow(true)
             .build()
         val current = scheduler.getPendingJob(JOB_ID)
@@ -47,7 +49,7 @@ object Scheduler {
     fun waitForInstalls(context: Context, settings: Settings) {
         val job = JobInfo.Builder(WAITING_JOB_ID, ComponentName(context, CheckJobService::class.java))
             .setPersisted(true)
-            .setRequiredNetworkType(if (settings.onlyOnUnmetered) JobInfo.NETWORK_TYPE_UNMETERED else JobInfo.NETWORK_TYPE_ANY)
+            .setRequiredNetworkType(installNetwork(settings))
             .setRequiresCharging(settings.onlyWhileCharging)
             .setRequiresBatteryNotLow(true)
             .build()
@@ -68,6 +70,12 @@ object Scheduler {
             .build()
         if (context.getSystemService(JobScheduler::class.java).schedule(job) != JobScheduler.RESULT_SUCCESS) TernLog.e(TAG, "JobScheduler refused the retry")
     }
+
+    /** The network the periodic check waits for. */
+    fun checkNetwork(settings: Settings): Int = if (settings.checkOnlyOnUnmetered) JobInfo.NETWORK_TYPE_UNMETERED else JobInfo.NETWORK_TYPE_ANY
+
+    /** The network the waiting job waits for. */
+    fun installNetwork(settings: Settings): Int = if (settings.onlyOnUnmetered) JobInfo.NETWORK_TYPE_UNMETERED else JobInfo.NETWORK_TYPE_ANY
 
     private fun same(a: JobInfo, b: JobInfo): Boolean =
         a.intervalMillis == b.intervalMillis && a.isPersisted == b.isPersisted && a.requiredNetwork == b.requiredNetwork &&

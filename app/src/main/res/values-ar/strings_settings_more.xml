@@ -41,9 +41,7 @@
     <string name="settings_auto_installs">تثبيت التحديثات تلقائيًا</string>
     <string name="settings_auto_installs_effect">التطبيقات المضبوطة على التحديث تلقائيًا تتحدث بعد فحص في الخلفية. عند إيقاف التشغيل، تكتفي بالإشارة إلى وجود تحديث، ويحتفظ كل منها باختياره الخاص لوقت لاحق.</string>
     <string name="settings_unmetered_installs">التثبيت عبر Wi-Fi فقط</string>
-    <string name="settings_unmetered_installs_effect">تعمل الفحوصات على أي شبكة. التحديث الذي كان سيُثبَّت من تلقاء نفسه ينتظر شبكة Wi-Fi أو كابل شبكة، كما في Obtainium.</string>
     <string name="settings_charging_installs">التثبيت أثناء الشحن فقط</string>
-    <string name="settings_charging_installs_effect">تعمل الفحوصات على البطارية أيضًا. التحديث الذي كان سيُثبَّت من تلقاء نفسه ينتظر حتى يبدأ الجهاز بالشحن.</string>
     <string name="engine_unreadable_app">تعذرت قراءة التطبيق المحفوظ %1$s، لذلك تُرك خارج القائمة. لم يُحذف شيء: قد يتمكن إصدار أحدث من Tern من قراءته.</string>
     <string name="settings_pin_certificates">تثبيت شهادات منصات الشيفرة</string>
     <string name="settings_pin_certificates_effect">يجب أن تقدم GitHub وGitLab وCodeberg شهادة من جهة إصدار الشهادات المعروف أن كلًا منها يستخدمها، كما في Obtainium. وتُرفض حينئذٍ شهادة أُجبرت جهة أخرى على إصدارها. إذا غيّرت منصة شيفرة جهتها، فستفشل الفحوصات عليها إلى أن يُوقَف هذا الخيار.</string>

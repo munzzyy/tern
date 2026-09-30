@@ -3,4 +3,10 @@
     <string name="settings_export_effect_plain">Saves your list and settings to a file. Tokens never go in, and neither does a request header that could hold a key.</string>
     <string name="engine_checksum_github_proxy">GitHub release digest, as the hubproxy %1$s passed it on</string>
     <string name="github_proxy_effect_trust">Every request to GitHub goes to this host. It sees each one and can change what comes back: the releases, their digests and the files. Apps you have stay held to their certificate, but a first install through it trusts the hubproxy as much as GitHub, and certificate pinning does not reach it. No token is sent through it, so private projects and GitHub Actions cannot be followed this way.</string>
+    <string name="settings_unmetered_checks">Check only on Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">Background checks wait for Wi-Fi or a cable, so they use no mobile data.</string>
+    <string name="settings_charging_checks">Check only while charging</string>
+    <string name="settings_charging_checks_effect">Background checks wait until the device is charging.</string>
+    <string name="settings_unmetered_installs_wait">An update that would install by itself waits for Wi-Fi or a cable, as in Obtainium.</string>
+    <string name="settings_charging_installs_wait">An update that would install by itself waits until the device is charging.</string>
 </resources>

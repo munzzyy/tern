@@ -36,9 +36,7 @@
     <string name="settings_auto_installs">Pembaruan diinstal dengan sendirinya</string>
     <string name="settings_auto_installs_effect">Aplikasi yang diatur untuk diperbarui dengan sendirinya melakukannya setelah pemeriksaan di latar belakang. Jika dimatikan, aplikasi hanya memberi tahu bahwa ada pembaruan, dan masing-masing tetap menyimpan pilihannya untuk nanti.</string>
     <string name="settings_unmetered_installs">Instal hanya di Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">Pemeriksaan berjalan di jaringan apa pun. Pembaruan yang akan diinstal dengan sendirinya menunggu Wi-Fi atau kabel, seperti di Obtainium.</string>
     <string name="settings_charging_installs">Instal hanya saat mengisi daya</string>
-    <string name="settings_charging_installs_effect">Pemeriksaan juga berjalan saat memakai baterai. Pembaruan yang akan diinstal dengan sendirinya menunggu hingga perangkat sedang mengisi daya.</string>
     <string name="engine_unreadable_app">Aplikasi tersimpan %1$s tidak dapat dibaca, jadi tidak dimasukkan ke daftar. Tidak ada yang dihapus: Tern versi yang lebih baru mungkin dapat membacanya.</string>
     <string name="settings_pin_certificates">Sematkan sertifikat platform kode</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab, dan Codeberg harus menunjukkan sertifikat dari otoritas sertifikat yang diketahui digunakan masing-masing, seperti di Obtainium. Sertifikat yang diterbitkan otoritas lain karena dipaksa akan ditolak. Jika sebuah platform kode mengganti otoritasnya, pemeriksaan di sana gagal hingga ini dimatikan.</string>

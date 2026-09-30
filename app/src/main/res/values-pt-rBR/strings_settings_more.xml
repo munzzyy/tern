@@ -38,9 +38,7 @@
     <string name="settings_auto_installs">As atualizações se instalam sozinhas</string>
     <string name="settings_auto_installs_effect">Apps configurados para se atualizar sozinhos fazem isso depois de uma verificação em segundo plano. Desligado, eles apenas avisam que há uma atualização, e cada um mantém sua própria escolha para depois.</string>
     <string name="settings_unmetered_installs">Instalar apenas no Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">As verificações rodam em qualquer rede. Uma atualização que se instalaria sozinha espera pelo Wi-Fi ou por um cabo, como no Obtainium.</string>
     <string name="settings_charging_installs">Instalar apenas durante o carregamento</string>
-    <string name="settings_charging_installs_effect">As verificações rodam também com a bateria. Uma atualização que se instalaria sozinha espera até o dispositivo estar carregando.</string>
     <string name="engine_unreadable_app">O app salvo %1$s não pôde ser lido, então fica fora da lista. Nada foi apagado: uma versão mais nova do Tern pode lê-lo.</string>
     <string name="settings_pin_certificates">Fixar os certificados das forjas</string>
     <string name="settings_pin_certificates_effect">O GitHub, o GitLab e o Codeberg precisam apresentar um certificado da autoridade que cada um é conhecido por usar, como no Obtainium. Um certificado que outra autoridade tenha sido obrigada a emitir é então recusado. Se uma forja mudar de autoridade, as verificações nela falham até isto ser desligado.</string>

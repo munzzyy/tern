@@ -289,8 +289,14 @@ enum class ProxyMode { NONE, ORBOT, CUSTOM }
 data class Settings(
     /** Minutes between background checks; 0 turns them off. Android runs them 15 minutes apart at the least. */
     val checkEveryMinutes: Int = 360,
+    /** Updates that would install by themselves wait for Wi-Fi or a cable. */
     val onlyOnUnmetered: Boolean = false,
+    /** Updates that would install by themselves wait for the charger. */
     val onlyWhileCharging: Boolean = false,
+    /** Background checks wait for Wi-Fi or a cable, as every check did in v0.1.0 with its one switch on. */
+    val checkOnlyOnUnmetered: Boolean = false,
+    /** Background checks wait for the charger. */
+    val checkOnlyWhileCharging: Boolean = false,
     val defaultUpdateMode: UpdateMode = UpdateMode.NOTIFY,
     val includePrereleasesByDefault: Boolean = false,
     val minAgeDaysByDefault: Int = 0,

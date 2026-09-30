@@ -37,9 +37,7 @@
     <string name="settings_auto_installs">Updates install by themselves</string>
     <string name="settings_auto_installs_effect">Apps set to update by themselves do so after a background check. Off, they only say an update is there, and each keeps its own choice for later.</string>
     <string name="settings_unmetered_installs">Install only on Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">Checks run on any network. An update that would install by itself waits for Wi-Fi or a cable, as in Obtainium.</string>
     <string name="settings_charging_installs">Install only while charging</string>
-    <string name="settings_charging_installs_effect">Checks run on battery too. An update that would install by itself waits until the device is charging.</string>
     <string name="engine_unreadable_app">The saved app %1$s could not be read, so it is left out of the list. Nothing was deleted: a newer version of Tern may read it.</string>
     <string name="settings_pin_certificates">Pin the certificates of the forges</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab and Codeberg must show a certificate from the authority each is known to use, as in Obtainium. A certificate another authority was made to issue is then refused. If a forge changes its authority, checks there fail until this is off.</string>

@@ -36,9 +36,7 @@
     <string name="settings_auto_installs">更新を自動的にインストールする</string>
     <string name="settings_auto_installs_effect">自動更新に設定されたアプリは、バックグラウンドでの確認後に更新されます。オフにすると、更新があることを知らせるだけになり、各アプリの設定は後のためにそのまま保持されます。</string>
     <string name="settings_unmetered_installs">Wi-Fiでのみインストール</string>
-    <string name="settings_unmetered_installs_effect">確認はどのネットワークでも実行されます。自動でインストールされる更新は、Obtainiumと同様に、Wi-Fiまたは有線接続になるまで待機します。</string>
     <string name="settings_charging_installs">充電中のみインストール</string>
-    <string name="settings_charging_installs_effect">確認はバッテリー駆動中も実行されます。自動でインストールされる更新は、端末が充電中になるまで待機します。</string>
     <string name="engine_unreadable_app">保存されたアプリ %1$s を読み込めなかったため、リストから除外しています。何も削除されていません。新しいバージョンのTernなら読み込める可能性があります。</string>
     <string name="settings_pin_certificates">コードホスティングの証明書をピン留め</string>
     <string name="settings_pin_certificates_effect">GitHub、GitLab、Codebergは、Obtainiumと同様に、それぞれが使用していることが知られている認証局の証明書を提示する必要があります。別の認証局が発行させられた証明書は拒否されます。コードホスティングが認証局を変更すると、これをオフにするまで、そこでの確認は失敗します。</string>

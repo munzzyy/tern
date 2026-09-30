@@ -37,9 +37,7 @@
     <string name="settings_auto_installs">Uppdateringar installeras av sig själva</string>
     <string name="settings_auto_installs_effect">Appar som är inställda på att uppdatera sig själva gör det efter en bakgrundskontroll. När det är av säger de bara att en uppdatering finns, och var och en behåller sitt eget val till senare.</string>
     <string name="settings_unmetered_installs">Installera endast på Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">Kontroller körs på alla nätverk. En uppdatering som skulle installeras av sig själv väntar på Wi-Fi eller en nätverkskabel, som i Obtainium.</string>
     <string name="settings_charging_installs">Installera endast under laddning</string>
-    <string name="settings_charging_installs_effect">Kontroller körs även på batteri. En uppdatering som skulle installeras av sig själv väntar tills enheten laddas.</string>
     <string name="engine_unreadable_app">Den sparade appen %1$s kunde inte läsas, så den lämnas utanför listan. Inget har raderats: en nyare version av Tern kan kanske läsa den.</string>
     <string name="settings_pin_certificates">Fäst kodplattformarnas certifikat</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab och Codeberg måste visa ett certifikat från den certifikatutfärdare som var och en är känd för att använda, som i Obtainium. Ett certifikat som en annan utfärdare har förmåtts att utfärda avvisas då. Om en kodplattform byter utfärdare misslyckas kontroller där tills detta är av.</string>

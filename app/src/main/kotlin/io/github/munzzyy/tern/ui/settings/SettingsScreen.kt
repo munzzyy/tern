@@ -185,15 +185,29 @@ private fun BackgroundSection(s: Settings, vm: SettingsViewModel, update: Update
             onChange = { v -> update { it.copy(autoInstalls = v) } },
         )
         SwitchRow(
+            title = stringResource(R.string.settings_unmetered_checks),
+            summary = stringResource(R.string.settings_unmetered_checks_effect),
+            checked = s.checkOnlyOnUnmetered,
+            enabled = on,
+            onChange = { v -> update { it.copy(checkOnlyOnUnmetered = v) } },
+        )
+        SwitchRow(
+            title = stringResource(R.string.settings_charging_checks),
+            summary = stringResource(R.string.settings_charging_checks_effect),
+            checked = s.checkOnlyWhileCharging,
+            enabled = on,
+            onChange = { v -> update { it.copy(checkOnlyWhileCharging = v) } },
+        )
+        SwitchRow(
             title = stringResource(R.string.settings_unmetered_installs),
-            summary = stringResource(R.string.settings_unmetered_installs_effect),
+            summary = stringResource(R.string.settings_unmetered_installs_wait),
             checked = s.onlyOnUnmetered,
             enabled = on && s.autoInstalls,
             onChange = { v -> update { it.copy(onlyOnUnmetered = v) } },
         )
         SwitchRow(
             title = stringResource(R.string.settings_charging_installs),
-            summary = stringResource(R.string.settings_charging_installs_effect),
+            summary = stringResource(R.string.settings_charging_installs_wait),
             checked = s.onlyWhileCharging,
             enabled = on && s.autoInstalls,
             onChange = { v -> update { it.copy(onlyWhileCharging = v) } },

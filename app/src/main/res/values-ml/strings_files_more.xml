@@ -24,6 +24,6 @@
     <string name="files_setting_verifier">പുതിയ ആപ്പുകൾ ആദ്യം Verified Apps-ന് കാണിക്കുക</string>
     <string name="files_setting_verifier_effect">ഒരു ആപ്പ് ആദ്യമായി ഇൻസ്റ്റാൾ ചെയ്യുന്നതിന് മുമ്പ്, പരിശോധിച്ച അതിൻ്റെ ഫയൽ രണ്ടാമതൊരു പരിശോധനയ്ക്കായി Verified Apps-ലേക്കോ AppVerifier-ലേക്കോ (അവയിൽ ഏതെങ്കിലും ഒന്ന് ഇൻസ്റ്റാൾ ചെയ്തിട്ടുണ്ടെങ്കിൽ) പോകുന്നു. നിങ്ങൾ Tern-ലേക്ക് തിരിച്ചെത്തിയാൽ ഇൻസ്റ്റാൾ തുടരും.</string>
     <string name="files_verifier_about">Verified Apps-നെക്കുറിച്ച്</string>
-    <string name="files_verifier_card_effect">%1$s ഒരു പ്രത്യേക ആപ്പാണ്. ഇത് ഈ ആപ്പിനെ, ഈ ആപ്പിനായി Tern കൈവശം വച്ചിരിക്കുന്ന സർട്ടിഫിക്കറ്റുമായും അതിന് അറിയാവുന്ന ആപ്പുകളുടെ സ്വന്തം ലിസ്റ്റുമായും താരതമ്യം ചെയ്യുന്നു.</string>
+    <string name="files_verifier_card_effect">%1$s വേറൊരു ആപ്പാണ്. ഇത് ഈ ആപ്പിനെ, ഈ ആപ്പിനായി Tern കൈവശം വച്ചിരിക്കുന്ന സർട്ടിഫിക്കറ്റുമായും അതിന് അറിയാവുന്ന ആപ്പുകളുടെ സ്വന്തം ലിസ്റ്റുമായും താരതമ്യം ചെയ്യുന്നു.</string>
     <string name="files_verifier_card_action">%1$s ഉപയോഗിച്ച് പരിശോധിക്കുക</string>
 </resources>

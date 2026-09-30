@@ -88,7 +88,7 @@ internal class Detector(private val e: RealEngine) {
             runInterruptible { e.registry.readAs(target.url, forced, context) }
                 ?: return Detection.Failed(Problem(ProblemKind.UNSUPPORTED, e.texts.notReadableAs(SourceTypes.displayName(forced) ?: forced)))
         } else {
-            target.spec ?: e.registry.match(normalized)
+            target.spec ?: e.registry.match(target.url)
         }
         val chosen = known?.let { spec -> reading.options?.let { spec.copy(options = it) } ?: spec }
         if (chosen != null && chosen.type == SourceTypes.FDROID_REPO && chosen.option(SourceOptions.PACKAGE) == null) {

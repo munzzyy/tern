@@ -102,7 +102,7 @@ Not yet observed: behaviour in Doze over many hours, and after a reboot.
 | GitHub Actions builds | 102 | Yes, with a token |
 | Share a link into the app | 109 | Yes |
 | Work out the source from the link | 1108 | Yes |
-| XAPK and split APKs | 682, 1056 | Yes, installed as one session, RuStore's base and splits too, every part held to the base's signer |
+| XAPK and split APKs | 682, 1056 | Yes, installed as one session, every part held to the base's signer |
 | Keep the file when an install fails | 1978 | Yes |
 | Older versions | 2934 | The version history installs any listed release. Going back needs the app removed first, which Android requires, unless the Let Me Downgrade module is installed; then a setting lets an older version go in over a newer one, as in Obtainium |
 | Update ownership | 2078 | A setting, off by default. Not yet tested |
@@ -120,14 +120,20 @@ run against answers recorded from the real services.
 | Obtainium | Tern |
 |---|---|
 | GitHub, GitLab, Codeberg and Forgejo, F-Droid, IzzyOnDroid, third-party F-Droid repositories, SourceHut, SourceForge, Jenkins, a direct link, any web page | All of them, and GitHub Actions artifacts |
-| APKPure, Aptoide, Uptodown, APKCombo, APKMirror (tracking only), Farsroid | All of them. The Add screen says the store offers again what developers publish elsewhere, and every file is still held to the developer's certificate once Tern knows it |
-| Huawei AppGallery, Samsung Galaxy Store (device model and CSC), vivo, Tencent, RuStore, CoolApk, itch.io | All of them |
-| Telegram, NeutronCode | Both |
-| LiteAPKs, Apk4Free, RockMods (tracking only) | All three, with a warning on the Add screen that they offer apps changed by someone else |
-| Search in GitHub, GitLab, Codeberg or another Forgejo, F-Droid, a third-party F-Droid repository, Uptodown, AppGallery, vivo and RuStore, with a picker of where to look, a fewest-stars limit and a filter over the results | All of them, and Aptoide. The picker is kept between searches, each place that fails is named with its reason, and a repository is searched by words |
+| APKPure, Aptoide, APKCombo, APKMirror (tracking only), Huawei AppGallery, Samsung Galaxy Store, vivo, Tencent | All of them behind one setting that starts off. The Add screen and the app page and an import say where the files come from and what the first install decides. The Galaxy Store is asked for one fixed model and region that is the same for everyone |
+| Uptodown, RuStore, CoolApk | Not read. Each answers only its own app. Reading it means sending a key taken from that app and signing requests as that app. Tern asks every place as itself |
+| LiteAPKs, Apk4Free, RockMods, Farsroid | Not read. They offer unlocked and modified builds signed by whoever changed them. Farsroid mixes them with the originals under names that do not always say which is which |
+| itch.io, Telegram, Neutron Code | All three, always on: they are the developers' own channels |
+| Search in GitHub, GitLab, Codeberg or another Forgejo, F-Droid, a third-party F-Droid repository, Uptodown, AppGallery, vivo and RuStore, with a picker of where to look, a fewest-stars limit and a filter over the results | All of them but Uptodown and RuStore. Aptoide too. The stores only once they are on. The picker is kept between searches, each place that fails is named with its reason, and a repository is searched by words |
 | Override source, for self-hosted instances | "Read as" on the Add screen, for every source Obtainium lets be overridden and GitHub Actions; GitHub on another host uses the API that kind of GitHub documents. Self-hosted GitLab, Forgejo and Gitea are also recognised by asking them, and an F-Droid repository by its site's address |
 | F-Droid's author and changelog, APKMirror's changes and file size, a SourceForge folder or `/p/` address | All of them |
 | Tags for a project without releases | For apps that are only tracked, on GitHub, GitLab and Forgejo |
+
+Obtainium reads every one of those stores and sites. That is its call to make.
+Tern leaves some out because it wants to say two things about every request:
+it comes from Tern, and it fetches the app the person asked for. An export from
+Obtainium that names a place Tern does not read still comes in. Those apps are
+listed as skipped with the reason.
 | Private repositories | With a token, GitHub's files come through its API, and a refused token is tried once without |
 
 ### Per-app options
@@ -145,7 +151,7 @@ run against answers recorded from the real services.
 | Google Play as the installer (Shizuku or root) | For one app or for all |
 | Skip update notifications | Muted apps |
 | Refresh before download | Yes |
-| Headers, steps through intermediate pages and other options of the HTML source | All of them: links in natural order and the last one taken, by address, text or last segment, up to ten steps with their own options, and the version read from the link, its text or the whole page. Set on the app's page or before adding; a header that carries credentials is refused |
+| Headers, steps through intermediate pages and other options of the HTML source | All of them: links in natural order and the last one taken, by address, text or last segment, up to ten steps with their own options, and the version read from the link, its text or the whole page. Set on the app's page or before adding; a header that carries credentials is refused, and so is User-Agent, because Tern says who it is |
 
 ### Settings
 
@@ -175,7 +181,7 @@ run against answers recorded from the real services.
 
 | Obtainium | Tern |
 |---|---|
-| `obtainium://add`, `app`, `apps`, `refresh` links, sharing an app's settings as a link | All of it, and `tern://` links of the same kinds; a link made by Tern opens in Obtainium too |
+| `obtainium://add`, `app`, `apps`, `refresh` links, sharing an app's settings as a link | All of it, and `tern://` links of the same kinds. Tern's own share links keep the address or the settings after `#` on tern.munzzyy.dev, so no server sees them; "Share as an Obtainium link" makes one Obtainium opens |
 | On each app: release date, changes, a dimmed icon when not installed, Mark updated for tracked apps, a moved repository first | All of them |
 | Install, categorize and share many apps at once, a determinate check | All of them; categories can be set, cleared or left for each |
 | Cancel a download from its tile or notification | Both, with how much has come |

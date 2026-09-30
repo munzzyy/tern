@@ -4,7 +4,7 @@
 [![ci](https://github.com/munzzyy/tern/actions/workflows/ci.yml/badge.svg)](https://github.com/munzzyy/tern/actions/workflows/ci.yml)
 [![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
 
-Android apps, straight from where their developers publish them, checked before they install.
+Android apps from where their developers publish them, checked before they install.
 
 Most open source Android apps put their releases on GitHub, GitLab, Codeberg or a
 repository of their own, days before any store carries them, if a store ever does.
@@ -14,15 +14,17 @@ what it was handed: who signed the file, whether it is the app you asked for, an
 whether it matches the checksum the publisher gave. Only then does Android's
 installer see it.
 
-It is a native app of about 7 MB, with no analytics and no account. It talks to
-the sources you add and to nobody else. [PRIVACY.md](PRIVACY.md) says what
-leaves the device.
+It is a native app of about 7 MB, with no analytics and no account. It talks
+only to where your apps come from and to the places [PRIVACY.md](PRIVACY.md)
+lists, such as an icon host or the places you search, and to nobody on its own
+behalf. Every request says it comes from Tern.
 
 - Every signature is verified twice: by Tern's own verifier and by Android.
 - Each app stays tied to the certificate of its first install. For 15
   well-known apps Tern knows the certificate before that.
-- It reads every source Obtainium reads, from GitHub to the Galaxy Store, and
-  installs through Android, Shizuku, Dhizuku, root or another installer app.
+- It reads the forges, repositories and sites Obtainium reads, and eight
+  third-party stores once you turn them on, and installs through Android,
+  Shizuku, Dhizuku, root or another installer app.
 - A widget, a Quick Settings tile and launcher shortcuts check and update from
   outside the app.
 - Android TV works by remote, and a phone can send links to it sealed with a
@@ -90,19 +92,26 @@ page also offers a second check there, against AppVerifier's own list.
 | A web page | Links to installable files, with optional steps through other pages |
 | A direct link | One file at a fixed address, whether or not the address ends in a file name |
 | Jenkins, SourceHut, SourceForge | The last successful build, tags, the project's files or one folder of them |
-| Huawei AppGallery, Samsung Galaxy Store, vivo, Tencent, RuStore, CoolApk, itch.io | Each store's own app record; the Galaxy Store with the device model and CSC of your choice |
-| Telegram, NeutronCode | Their own release channels |
-| APKPure, Aptoide, Uptodown, APKCombo, APKMirror, Farsroid | Stores that offer again what developers publish elsewhere (APKMirror for tracking only) |
-| LiteAPKs, Apk4Free, RockMods | Sites that offer apps changed by someone else (RockMods for tracking only) |
+| itch.io, Telegram, Neutron Code | The developer's own page and files |
+| Huawei AppGallery, Samsung Galaxy Store, vivo | Third-party stores, off until you turn them on: each store's own app record |
+| APKPure, Aptoide, APKCombo, APKMirror, Tencent | Third-party stores, off until you turn them on, that offer again what developers publish elsewhere (APKMirror for tracking only) |
 
 Paste a link, or share one from the browser, and Tern works out which of
-these it is. Searching by name looks in the forges, F-Droid and the stores
-you pick.
+these it is. Searching by name looks in the forges and F-Droid, and in the
+stores you pick once they are on.
 
-Tern follows the developer, so it says so before you add an app from a store
-that republishes other people's apps, and it says plainly when a site offers
-apps someone else changed. Whatever the source, a file is held to the
+The stores sit behind one setting, Settings, Network, Third-party stores, which
+starts off. A store serves its own copies of apps, and Tern reads it through the
+interface the store made for its own app or site, as Tern and with nothing
+borrowed from that app. Pasting a store's address while the setting is off
+shows what that means and a button to turn it on. An app from a store says so
+on its page, and says what its first install decides: the certificate its
+updates must carry, unless the app is one whose developer's certificate Tern
+carries, or you pinned one. Whatever the source, a file is held to the
 certificate of the app you have, and to the pinned one.
+
+Some places Obtainium reads are left out on purpose.
+[docs/COMPARISON.md](docs/COMPARISON.md) says which and why.
 
 ## Updates without a prompt
 
@@ -197,8 +206,9 @@ the page offers the download.
 
 Tern comes in English and 28 other languages, right-to-left ones included.
 The translations were made by a machine and checked by a second one; no native
-speaker has reviewed them yet, and corrections are welcome. On Android 13 and
-later you pick the language under Settings, apart from the phone's own.
+speaker has reviewed them yet, and corrections are welcome. Pick the language
+under Settings, Appearance, on any Android version; from Android 13 on,
+Android's own app language setting shows the same choice.
 
 Text at twice the normal size keeps each screen's main action on screen, on a
 phone and on a TV. The look is yours to change under Settings, Look: the theme,

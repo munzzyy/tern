@@ -90,6 +90,9 @@ Everything Obtainium does, and more.
   cancelled from the list and the notification, are tried again on a network
   failure, and can go one at a time. The file picked to install is kept for
   later updates. Tern updates itself last.
+- RuStore apps that come as a base and splits install as one, every part held
+  to the base's signer. The OBB files of an XAPK are put in `Android/obb` with
+  Shizuku or root, under the package the checks verified.
 
 ## 0.1.0, 2026-09-29
 

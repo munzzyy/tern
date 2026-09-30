@@ -100,7 +100,7 @@ Not yet observed: behaviour in Doze over many hours, and after a reboot.
 | GitHub Actions builds | 102 | Yes, with a token |
 | Share a link into the app | 109 | Yes |
 | Work out the source from the link | 1108 | Yes |
-| XAPK and split APKs | 682, 1056 | Yes, installed as one session |
+| XAPK and split APKs | 682, 1056 | Yes, installed as one session, RuStore's base and splits too, every part held to the base's signer |
 | Keep the file when an install fails | 1978 | Yes |
 | Older versions | 2934 | The version history installs any listed release. Going back needs the app removed first, which Android requires, unless the Let Me Downgrade module is installed; then a setting lets an older version go in over a newer one, as in Obtainium |
 | Update ownership | 2078 | A setting, off by default. Not yet tested |
@@ -151,6 +151,7 @@ run against answers recorded from the real services.
 | Background checks from 15 minutes to 30 days on a slider, Wi-Fi and charging only, retries of failed checks | All of them, through Android's job scheduler rather than a task that decides by itself whether it is due. As in Obtainium, Wi-Fi and charging hold back installs, not checks, and a rate limit is waited out |
 | Check on start, check on opening an app, only installed and tracked apps, remove apps uninstalled elsewhere, a global APK filter | All of them |
 | Installers: system, Shizuku, root, another app | All four; the other app is held to the same checks, and the signer of what it installed is compared afterwards |
+| OBB files of an XAPK put in `Android/obb`, through Android's folder picker | Through Shizuku or root, under the package the checks verified and with plain file names only. With another installer they stay in the release's file, and the log says where |
 | Parallel downloads, retries of a failed download, Obtainium installed last | All three: one download at a time if wanted, three more tries resuming where the server allows, and Tern's own update last |
 | An APK from another host than its source is pointed out | Yes, on the file, without holding it back |
 | GitHub through a hubproxy instance | Yes, and never with a token |

@@ -1,3 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_categories">Kategorier</string>
+    <string name="settings_categories_effect">Namnge dem, ge var och en en färg, och byt namn på eller ta bort dem för alla appar på en gång.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d kategori</item>
+        <item quantity="other">%d kategorier</item>
+    </plurals>
+    <string name="categories_none">Inga än. Skapa en här, eller lägg appar under en från listan.</string>
+    <string name="categories_new">Ny kategori</string>
+    <string name="category_edit">Redigera kategori</string>
+    <string name="category_name">Namn</string>
+    <string name="category_color">Färg</string>
+    <string name="category_color_spoken">Färg %1$d av %2$d</string>
+    <string name="category_exists">Det finns redan en kategori med detta namn.</string>
+    <string name="category_delete">Ta bort</string>
+    <string name="category_delete_effect">Apparna i den blir kvar i listan; de ligger bara inte längre under den.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d app</item>
+        <item quantity="other">%d appar</item>
+    </plurals>
+    <string name="action_close">Stäng</string>
+    <string name="categories_new_short">Ny…</string>
+    <string name="app_notes_title">Anteckningar</string>
+    <string name="app_notes_help">Markdown fungerar: **fet**, *kursiv*, listor och länkar.</string>
+    <string name="app_notes_add">Lägg till en anteckning</string>
+    <string name="app_notes_add_effect">Allt som är värt att komma ihåg om denna app. Den följer med i exporter.</string>
+    <string name="app_notes_edit">Redigera anteckningen</string>
 </resources>

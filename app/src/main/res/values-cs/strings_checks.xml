@@ -1,3 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Každou %d minutu</item>
+        <item quantity="few">Každé %d minuty</item>
+        <item quantity="many">Každých %d minut</item>
+        <item quantity="other">Každých %d minut</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Každý %d den</item>
+        <item quantity="few">Každé %d dny</item>
+        <item quantity="many">Každých %d dní</item>
+        <item quantity="other">Každých %d dní</item>
+    </plurals>
+    <string name="settings_check_now">Spustit kontrolu na pozadí nyní</string>
+    <string name="settings_check_now_effect">Zkontroluje všechny aplikace a nainstaluje to, co se má aktualizovat samostatně, stejně jako kontrola na pozadí.</string>
+    <string name="settings_check_now_running">Kontroluje se…</string>
+    <string name="settings_check_on_start">Kontrolovat po otevření aplikace Tern</string>
+    <string name="settings_check_on_open">Kontrolovat aplikaci při otevření její stránky</string>
+    <string name="settings_check_on_open_effect">Ne znovu do pěti minut od poslední kontroly.</string>
+    <string name="settings_only_installed">Kontrolovat jen nainstalované aplikace</string>
+    <string name="settings_only_installed_effect">Aplikace, které se jen sledují, se kontrolují také. Aplikace, kterou otevřete, se kontroluje vždy.</string>
+    <string name="settings_remove_uninstalled">Odebírat aplikace odinstalované jinde</string>
+    <string name="settings_remove_uninstalled_effect">Aplikace, kterou odinstalujete mimo Tern, zmizí i ze seznamu.</string>
+    <string name="settings_file_filter">Filtr souborů</string>
+    <string name="settings_file_filter_effect">Vzor, podle kterého si soubor vybírá každá aplikace bez vlastního filtru.</string>
+    <string name="settings_file_filter_none">Žádný</string>
+    <string name="settings_file_filter_invalid">Tento vzor nelze přečíst.</string>
+    <string name="settings_allow_downgrades">Povolit starší verze</string>
+    <string name="settings_allow_downgrades_effect">Je nainstalován Let Me Downgrade, takže Android může nainstalovat starší verzi přes novější.</string>
+    <string name="settings_collapse_groups">Začínat se sbalenými skupinami</string>
+    <string name="settings_haptics">Hmatová odezva</string>
+    <string name="settings_haptics_effect">Jemné zavibrování, když přejetí nebo dlouhé stisknutí něco provede.</string>
+    <string name="settings_phone_layout">Vždy použít rozvržení pro telefon</string>
+    <string name="settings_phone_layout_effect">Jeden panel a lišta dole, bez ohledu na šířku obrazovky.</string>
+    <string name="density_minimal">Minimální</string>
+    <string name="search_in">Kde hledat</string>
+    <string name="activity_share">Sdílet aktivitu</string>
+    <string name="sources_title">Co Tern umí číst</string>
+    <string name="sources_effect">Hostingy kódu, repozitáře, obchody a webové stránky, a ve kterých z nich lze hledat.</string>
+    <string name="sources_forges">Hostingy kódu</string>
+    <string name="sources_repositories">Repozitáře</string>
+    <string name="sources_stores">Obchody</string>
+    <string name="sources_mirrors">Obchody, které znovu vydávají aplikace</string>
+    <string name="sources_modified">Weby s upravenými aplikacemi</string>
+    <string name="sources_other">Jiná místa</string>
+    <string name="sources_web_page">Webová stránka s odkazy na soubory</string>
+    <string name="sources_direct">Přímý odkaz na soubor</string>
+    <string name="sources_searchable">lze hledat</string>
+    <string name="sources_track_only">pouze sledování</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea a Jenkins na vlastním serveru se rozpoznají podle adresy.</string>
+    <string name="shared_configs_title">Konfigurace sdílené uživateli Obtainium</string>
+    <string name="shared_configs_effect">Web s hotovými nastaveními pro aplikace. Jeho odkazy se otevřou v Tern, když je v Nastavení zapnuto „Otevírat odkazy Obtainium“.</string>
+    <string name="engine_archive_compression_unsupported">Tento archiv je komprimován pomocí bzip2, xz nebo zstd, které Android neumí otevřít. Vyberte soubor .zip, .tar nebo .tar.gz z tohoto vydání.</string>
+    <string name="engine_inner_filter_nothing">Filtr souborů uvnitř archivů neodpovídá žádnému APK v tomto archivu.</string>
+    <string name="preview_republished">%1$s znovu nabízí to, co vývojáři vydávají jinde. Jeho soubory se porovnávají s certifikátem vývojáře, jakmile ho Tern zná, takže pokud můžete, připněte certifikát nebo nejprve nainstalujte aplikaci od vývojáře.</string>
+    <string name="preview_modified">%1$s nabízí aplikace upravené někým jiným než jejich vývojářem. Jsou podepsané tím, kdo je upravil, a Tern nedokáže zjistit, co bylo změněno.</string>
+    <string name="about_track_tern">Udržovat aktuální i samotný Tern</string>
+    <string name="about_track_tern_effect">Přidá do seznamu vydání samotného Tern, kontrolovaná a ověřovaná jako u každé aplikace.</string>
+    <string name="engine_channel_tracked">Nová vydání sledovaných aplikací</string>
+    <string name="engine_channel_checking">Kontrola</string>
+    <string name="engine_notify_tracked_one">Nové vydání %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d sledovaná aplikace má nové vydání</item>
+        <item quantity="few">%1$d sledované aplikace mají nová vydání</item>
+        <item quantity="many">%1$d sledovaných aplikací má nová vydání</item>
+        <item quantity="other">%1$d sledovaných aplikací má nová vydání</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">Kontroluje se %1$d aplikace</item>
+        <item quantity="few">Kontrolují se %1$d aplikace</item>
+        <item quantity="many">Kontroluje se %1$d aplikací</item>
+        <item quantity="other">Kontroluje se %1$d aplikací</item>
+    </plurals>
+    <string name="settings_notify_tracked">Když má sledovaná aplikace nové vydání</string>
+    <string name="settings_notify_checking">Během kontroly na pozadí</string>
+    <string name="settings_notify_checking_effect">Tiché oznámení, které zmizí, když kontrola skončí.</string>
+    <string name="engine_event_removed_uninstalled">Odebráno ze seznamu, protože bylo odinstalováno mimo Tern</string>
 </resources>

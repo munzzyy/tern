@@ -1,3 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_categories">Kategóriák</string>
+    <string name="settings_categories_effect">Nevezze el őket, adjon mindegyiknek színt, és nevezze át vagy törölje őket egyszerre minden alkalmazásnál.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d kategória</item>
+        <item quantity="other">%d kategória</item>
+    </plurals>
+    <string name="categories_none">Még nincs. Hozzon létre egyet itt, vagy soroljon be alkalmazásokat egy kategóriába a listából.</string>
+    <string name="categories_new">Új kategória</string>
+    <string name="category_edit">Kategória szerkesztése</string>
+    <string name="category_name">Név</string>
+    <string name="category_color">Szín</string>
+    <string name="category_color_spoken">%1$d. szín a %2$d közül</string>
+    <string name="category_exists">Már létezik ilyen nevű kategória.</string>
+    <string name="category_delete">Törlés</string>
+    <string name="category_delete_effect">A benne lévő alkalmazások a listán maradnak; csak már nincsenek ebbe a kategóriába sorolva.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d alkalmazás</item>
+        <item quantity="other">%d alkalmazás</item>
+    </plurals>
+    <string name="action_close">Bezárás</string>
+    <string name="categories_new_short">Új…</string>
+    <string name="app_notes_title">Jegyzetek</string>
+    <string name="app_notes_help">A Markdown működik: **félkövér**, *dőlt*, listák és linkek.</string>
+    <string name="app_notes_add">Jegyzet hozzáadása</string>
+    <string name="app_notes_add_effect">Bármi, amit érdemes megjegyezni erről az alkalmazásról. Az exportálások is tartalmazzák.</string>
+    <string name="app_notes_edit">Jegyzet szerkesztése</string>
 </resources>

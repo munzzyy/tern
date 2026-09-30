@@ -1,3 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="import_addresses_heading">Címlistából</string>
+    <string name="import_addresses_explain">Illesszen be alkalmazáscímeket, soronként egyet vagy bárhol a szövegben, vagy olvassa be őket egy fájlból, például egy OPML-listából. Mindegyiket ugyanúgy megvizsgáljuk és hozzáadjuk, mint egy egyedi linket.</string>
+    <string name="import_addresses_field">Címek</string>
+    <string name="import_addresses_show">Tartalom megjelenítése</string>
+    <string name="import_addresses_file">Fájl beolvasása</string>
+    <string name="import_addresses_none">Nincs benne https cím.</string>
+    <string name="import_addresses_other">Másik lista</string>
+    <string name="import_addresses_unreadable">Azt a fájlt nem sikerült beolvasni.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d cím. Vegye ki a jelölést abból, amit nem szeretne, majd adja hozzá.</item>
+        <item quantity="other">%1$d cím. Vegye ki a jelölést abból, amit nem szeretne, majd adja hozzá.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">%1$d alkalmazás érkezett ezzel a linkkel. Nézze meg a beállításait, mielőtt hozzáadja.</item>
+        <item quantity="other">%1$d alkalmazás érkezett ezzel a linkkel. Mindegyiknél nézze meg a beállításait, mielőtt hozzáadja.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Exportálás az Obtainium számára</string>
+    <string name="settings_export_obtainium_effect">Az Obtainium által importálható fájl, egy oda költöző listához. Ami nem állítható be az Obtainiumban, az kimarad.</string>
+    <string name="settings_export_installed_only">Csak a telepített alkalmazások exportálása</string>
+    <string name="settings_export_settings">Beállítások belefoglalása az exportálásokba</string>
+    <string name="settings_export_settings_effect">A megjelenés, a lista, az értesítések és az ellenőrzések. Tokent, proxyt vagy telepítőt soha.</string>
+    <string name="settings_kept_export">Egy exportálás naprakészen tartása</string>
+    <string name="settings_kept_export_effect">Nem sokkal azután, hogy bármi változik a listán, a Tern újraírja az exportálást.</string>
+    <string name="settings_kept_export_written">Kiírva: %1$s</string>
+    <string name="settings_kept_export_folder">Hol tárolódik</string>
+    <string name="import_settings_taken">A fájlban lévő beállítások is át lettek véve.</string>
 </resources>

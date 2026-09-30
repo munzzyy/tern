@@ -1,3 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_categories">Kategorie</string>
+    <string name="settings_categories_effect">Pojmenujte je, dejte každé barvu a přejmenujte nebo smažte je naráz pro všechny aplikace.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d kategorie</item>
+        <item quantity="few">%d kategorie</item>
+        <item quantity="many">%d kategorie</item>
+        <item quantity="other">%d kategorií</item>
+    </plurals>
+    <string name="categories_none">Zatím žádné. Vytvořte kategorii zde, nebo zařaďte aplikace do kategorie ze seznamu.</string>
+    <string name="categories_new">Nová kategorie</string>
+    <string name="category_edit">Upravit kategorii</string>
+    <string name="category_name">Název</string>
+    <string name="category_color">Barva</string>
+    <string name="category_color_spoken">Barva %1$d z %2$d</string>
+    <string name="category_exists">Kategorie s tímto názvem už existuje.</string>
+    <string name="category_delete">Smazat</string>
+    <string name="category_delete_effect">Aplikace v ní zůstanou v seznamu, jen už do ní nebudou zařazeny.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d aplikace</item>
+        <item quantity="few">%d aplikace</item>
+        <item quantity="many">%d aplikace</item>
+        <item quantity="other">%d aplikací</item>
+    </plurals>
+    <string name="action_close">Zavřít</string>
+    <string name="categories_new_short">Nová…</string>
+    <string name="app_notes_title">Poznámky</string>
+    <string name="app_notes_help">Funguje Markdown: **tučně**, *kurzívou*, seznamy a odkazy.</string>
+    <string name="app_notes_add">Přidat poznámku</string>
+    <string name="app_notes_add_effect">Cokoli, co stojí za zapamatování o této aplikaci. Poznámka je součástí exportů.</string>
+    <string name="app_notes_edit">Upravit poznámku</string>
 </resources>

@@ -1,3 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">Podijeli</string>
+    <string name="action_release_page">Otvori stranicu izdanja</string>
+    <string name="action_share_address">Podijeli adresu</string>
+    <string name="action_share_link">Podijeli link koji je otvara u Ternu</string>
+    <string name="action_app_info">Informacije o aplikaciji u Androidu</string>
+    <string name="detail_last_checked">Provjereno %1$s</string>
+    <string name="state_favorite">Omiljena</string>
+    <string name="action_save_file">Sačuvaj u Preuzimanja</string>
+    <string name="file_saved">Sačuvano kao %1$s u %2$s, onako kako je preuzeto. Tern provjerava datoteku kada je instalira.</string>
+    <string name="action_save_files">Sačuvaj datoteke u Preuzimanja</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="one">%d datoteka sačuvana u Download/Tern</item>
+        <item quantity="few">%d datoteke sačuvane u Download/Tern</item>
+        <item quantity="other">%d datoteka sačuvano u Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d izdanje označeno kao viđeno</item>
+        <item quantity="few">%d izdanja označena kao viđena</item>
+        <item quantity="other">%d izdanja označeno kao viđeno</item>
+    </plurals>
+    <string name="project_page">Stranica projekta</string>
+    <string name="project_page_read">Pročitaj stranicu projekta</string>
+    <string name="project_page_effect">Njegov README, prikazan kao tekst. Ništa se ne traži od platforme za kod dok je ne otvorite.</string>
+    <string name="project_page_loading">Čita se…</string>
+    <string name="project_page_none">Projekt nema stranicu koju Tern može pročitati.</string>
+    <string name="project_page_failed">Stranica se nije mogla pročitati. Dodirnite da pokušate ponovo.</string>
 </resources>

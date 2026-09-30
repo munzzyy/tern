@@ -1,3 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="list_arrange">Organiser la liste</string>
+    <string name="list_options_title">Organiser la liste</string>
+    <string name="list_reverse">Inverser l\'ordre</string>
+    <string name="list_updates_first">Mises à jour en haut</string>
+    <string name="list_bury_not_installed">Applis non installées en bas</string>
+    <string name="sort_author">Par développeur</string>
+    <string name="sort_added">Par date d\'ajout</string>
+    <string name="sort_released">Par date de publication</string>
+    <string name="group_title">Grouper par</string>
+    <string name="group_none">Rien</string>
+    <string name="group_category">Catégorie</string>
+    <string name="group_source">Source</string>
+    <string name="group_category_effect">Une appli dans plusieurs catégories apparaît dans chacune d\'elles.</string>
+    <string name="group_other">Tout le reste</string>
+    <string name="group_folded">Replié</string>
+    <string name="group_open">Déplié</string>
+    <string name="filter_favorites">Favoris</string>
+    <string name="filter_track_only">Suivi uniquement</string>
+    <string name="filter_problems">Problèmes</string>
+    <string name="action_done">Terminé</string>
+    <string name="settings_swipe">Balayer les lignes pour agir</string>
+    <string name="settings_swipe_effect">Balayez une appli vers la fin pour la mettre à jour, vers le début pour la supprimer.</string>
+    <string name="action_favorite">Ajouter aux favoris</string>
+    <string name="action_unfavorite">Retirer des favoris</string>
+    <string name="action_set_mode">Quand des mises à jour sont trouvées</string>
+    <string name="action_share_addresses">Partager les adresses</string>
+    <string name="action_share_export">Partager sous forme de fichier</string>
+    <string name="action_uninstall">Désinstaller</string>
+    <string name="export_format_tern">Un fichier Tern</string>
+    <string name="export_format_obtainium">Un fichier pour Obtainium</string>
+    <string name="bulk_uninstall_text">Android pose la question pour chaque appli à tour de rôle. Tern continue de les suivre jusqu\'à ce que vous les supprimiez ici.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d appli ajoutée aux favoris</item>
+        <item quantity="many">%1$d applis ajoutées aux favoris</item>
+        <item quantity="other">%1$d applis ajoutées aux favoris</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d appli retirée des favoris</item>
+        <item quantity="many">%1$d applis retirées des favoris</item>
+        <item quantity="other">%1$d applis retirées des favoris</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">Quand une mise à jour de %1$d appli est trouvée</item>
+        <item quantity="many">Quand des mises à jour de %1$d applis sont trouvées</item>
+        <item quantity="other">Quand des mises à jour de %1$d applis sont trouvées</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">Désinstaller %1$d appli ?</item>
+        <item quantity="many">Désinstaller %1$d applis ?</item>
+        <item quantity="other">Désinstaller %1$d applis ?</item>
+    </plurals>
 </resources>

@@ -1,3 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">Udostępnij</string>
+    <string name="action_release_page">Otwórz stronę wydania</string>
+    <string name="action_share_address">Udostępnij adres</string>
+    <string name="action_share_link">Udostępnij link, który otworzy ją w Tern</string>
+    <string name="action_app_info">Informacje o aplikacji w Androidzie</string>
+    <string name="detail_last_checked">Sprawdzono %1$s</string>
+    <string name="state_favorite">Ulubiona</string>
+    <string name="action_save_file">Zapisz w Pobranych</string>
+    <string name="file_saved">Zapisano jako %1$s w %2$s, w takiej postaci, w jakiej plik został pobrany. Tern sprawdza plik podczas jego instalacji.</string>
+    <string name="action_save_files">Zapisz pliki w Pobranych</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="one">Zapisano %d plik w Download/Tern</item>
+        <item quantity="few">Zapisano %d pliki w Download/Tern</item>
+        <item quantity="many">Zapisano %d plików w Download/Tern</item>
+        <item quantity="other">Zapisano %d pliku w Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">Oznaczono %d wydanie jako widziane</item>
+        <item quantity="few">Oznaczono %d wydania jako widziane</item>
+        <item quantity="many">Oznaczono %d wydań jako widziane</item>
+        <item quantity="other">Oznaczono %d wydania jako widziane</item>
+    </plurals>
+    <string name="project_page">Strona projektu</string>
+    <string name="project_page_read">Przeczytaj stronę projektu</string>
+    <string name="project_page_effect">Jego README pokazane jako tekst. Hosting kodu nie jest o nic pytany, dopóki jej nie otworzysz.</string>
+    <string name="project_page_loading">Odczytywanie…</string>
+    <string name="project_page_none">Projekt nie ma strony, którą Tern może odczytać.</string>
+    <string name="project_page_failed">Nie udało się odczytać strony. Dotknij, aby spróbować ponownie.</string>
 </resources>

@@ -1,3 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="list_arrange">Uredi spisak</string>
+    <string name="list_options_title">Uredi spisak</string>
+    <string name="list_reverse">Obrni redoslijed</string>
+    <string name="list_updates_first">Ažuriranja na vrhu</string>
+    <string name="list_bury_not_installed">Aplikacije koje nisu instalirane na dnu</string>
+    <string name="sort_author">Po programeru</string>
+    <string name="sort_added">Po datumu dodavanja</string>
+    <string name="sort_released">Po datumu izdanja</string>
+    <string name="group_title">Grupiši po</string>
+    <string name="group_none">Ništa</string>
+    <string name="group_category">Kategorija</string>
+    <string name="group_source">Izvor</string>
+    <string name="group_category_effect">Aplikacija u više kategorija pojavljuje se u svakoj od njih.</string>
+    <string name="group_other">Sve ostalo</string>
+    <string name="group_folded">Sklopljena</string>
+    <string name="group_open">Otvorena</string>
+    <string name="filter_favorites">Omiljene</string>
+    <string name="filter_track_only">Samo praćenje</string>
+    <string name="filter_problems">Problemi</string>
+    <string name="action_done">Gotovo</string>
+    <string name="settings_swipe">Prevucite redove za radnju</string>
+    <string name="settings_swipe_effect">Prevucite aplikaciju prema kraju da je ažurirate, prema početku da je uklonite.</string>
+    <string name="action_favorite">Dodaj u omiljene</string>
+    <string name="action_unfavorite">Ukloni iz omiljenih</string>
+    <string name="action_set_mode">Kada se nađu ažuriranja</string>
+    <string name="action_share_addresses">Podijeli adrese</string>
+    <string name="action_share_export">Podijeli kao datoteku</string>
+    <string name="action_uninstall">Deinstaliraj</string>
+    <string name="export_format_tern">Tern datoteka</string>
+    <string name="export_format_obtainium">Datoteka za Obtainium</string>
+    <string name="bulk_uninstall_text">Android pita za svaku aplikaciju redom. Tern ih nastavlja pratiti dok ih ne uklonite ovdje.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d aplikacija je sada omiljena</item>
+        <item quantity="few">%1$d aplikacije su sada omiljene</item>
+        <item quantity="other">%1$d aplikacija je sada omiljeno</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d aplikacija više nije omiljena</item>
+        <item quantity="few">%1$d aplikacije više nisu omiljene</item>
+        <item quantity="other">%1$d aplikacija više nije omiljeno</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">Kada se nađe ažuriranje za %1$d aplikaciju</item>
+        <item quantity="few">Kada se nađu ažuriranja za %1$d aplikacije</item>
+        <item quantity="other">Kada se nađu ažuriranja za %1$d aplikacija</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">Deinstalirati %1$d aplikaciju?</item>
+        <item quantity="few">Deinstalirati %1$d aplikacije?</item>
+        <item quantity="other">Deinstalirati %1$d aplikacija?</item>
+    </plurals>
 </resources>

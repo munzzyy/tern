@@ -1,3 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="list_arrange">Uspořádat seznam</string>
+    <string name="list_options_title">Uspořádat seznam</string>
+    <string name="list_reverse">Obrátit pořadí</string>
+    <string name="list_updates_first">Aktualizace nahoře</string>
+    <string name="list_bury_not_installed">Nenainstalované aplikace dole</string>
+    <string name="sort_author">Podle vývojáře</string>
+    <string name="sort_added">Podle data přidání</string>
+    <string name="sort_released">Podle data vydání</string>
+    <string name="group_title">Seskupení</string>
+    <string name="group_none">Žádné</string>
+    <string name="group_category">Kategorie</string>
+    <string name="group_source">Zdroj</string>
+    <string name="group_category_effect">Aplikace ve více kategoriích se objeví v každé z nich.</string>
+    <string name="group_other">Všechno ostatní</string>
+    <string name="group_folded">Sbaleno</string>
+    <string name="group_open">Rozbaleno</string>
+    <string name="filter_favorites">Oblíbené</string>
+    <string name="filter_track_only">Pouze sledování</string>
+    <string name="filter_problems">Problémy</string>
+    <string name="action_done">Hotovo</string>
+    <string name="settings_swipe">Akce přejetím po řádcích</string>
+    <string name="settings_swipe_effect">Přejetím aplikace ke konci ji aktualizujete, k začátku ji odeberete.</string>
+    <string name="action_favorite">Přidat do oblíbených</string>
+    <string name="action_unfavorite">Odebrat z oblíbených</string>
+    <string name="action_set_mode">Při nalezení aktualizací</string>
+    <string name="action_share_addresses">Sdílet adresy</string>
+    <string name="action_share_export">Sdílet jako soubor</string>
+    <string name="action_uninstall">Odinstalovat</string>
+    <string name="export_format_tern">Soubor Tern</string>
+    <string name="export_format_obtainium">Soubor pro Obtainium</string>
+    <string name="bulk_uninstall_text">Android se zeptá na každou aplikaci postupně. Tern je bude sledovat dál, dokud je zde neodeberete.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d aplikace je nyní oblíbená</item>
+        <item quantity="few">%1$d aplikace jsou nyní oblíbené</item>
+        <item quantity="many">%1$d aplikací je nyní oblíbených</item>
+        <item quantity="other">%1$d aplikací je nyní oblíbených</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d aplikace už není oblíbená</item>
+        <item quantity="few">%1$d aplikace už nejsou oblíbené</item>
+        <item quantity="many">%1$d aplikací už není oblíbených</item>
+        <item quantity="other">%1$d aplikací už není oblíbených</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">Při nalezení aktualizace %1$d aplikace</item>
+        <item quantity="few">Při nalezení aktualizací %1$d aplikací</item>
+        <item quantity="many">Při nalezení aktualizací %1$d aplikací</item>
+        <item quantity="other">Při nalezení aktualizací %1$d aplikací</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">Odinstalovat %1$d aplikaci?</item>
+        <item quantity="few">Odinstalovat %1$d aplikace?</item>
+        <item quantity="many">Odinstalovat %1$d aplikací?</item>
+        <item quantity="other">Odinstalovat %1$d aplikací?</item>
+    </plurals>
 </resources>

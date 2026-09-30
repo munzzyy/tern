@@ -1,3 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">Kunhavigi</string>
+    <string name="action_release_page">Malfermi la eldonan paĝon</string>
+    <string name="action_share_address">Kunhavigi la adreson</string>
+    <string name="action_share_link">Kunhavigi ligilon kiu malfermas ĝin en Tern</string>
+    <string name="action_app_info">Aplikaĵaj informoj en Android</string>
+    <string name="detail_last_checked">Laste kontrolita: %1$s</string>
+    <string name="state_favorite">Preferata</string>
+    <string name="action_save_file">Konservi en la dosierujo Download</string>
+    <string name="file_saved">Konservita kiel %1$s en %2$s, tia kia ĝi estis elŝutita. Tern kontrolas dosieron kiam ĝi instalas ĝin.</string>
+    <string name="action_save_files">Konservi dosierojn en la dosierujo Download</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="one">%d dosiero konservita en Download/Tern</item>
+        <item quantity="other">%d dosieroj konservitaj en Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d eldono markita kiel vidita</item>
+        <item quantity="other">%d eldonoj markitaj kiel viditaj</item>
+    </plurals>
+    <string name="project_page">Projekta paĝo</string>
+    <string name="project_page_read">Legi la paĝon de la projekto</string>
+    <string name="project_page_effect">Ĝia README, montrata kiel teksto. Nenio estas petata de la kodgastigejo ĝis vi malfermas la paĝon.</string>
+    <string name="project_page_loading">Legas…</string>
+    <string name="project_page_none">La projekto havas neniun paĝon, kiun Tern povas legi.</string>
+    <string name="project_page_failed">La paĝo ne povis esti legita. Frapu por provi denove.</string>
 </resources>

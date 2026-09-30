@@ -1,3 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">Ellenőrzés</string>
+    <string name="shortcut_check_long">Frissítések keresése</string>
+    <string name="shortcut_update_all_long">Minden alkalmazás frissítése</string>
+    <string name="shortcut_add_short">Hozzáadás</string>
+    <string name="shortcut_add_long">Alkalmazás hozzáadása</string>
+    <string name="tile_check">Frissítések keresése</string>
+    <string name="tile_checking">Ellenőrzés…</string>
+    <string name="tile_up_to_date">Naprakész</string>
+    <string name="widget_label">Frissítések</string>
+    <string name="widget_description">Hány alkalmazáshoz van frissítés, egy gombbal az ellenőrzéshez és eggyel az összes frissítéséhez.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d frissítés</item>
+        <item quantity="other">%d frissítés</item>
+    </plurals>
+    <string name="widget_up_to_date">Minden naprakész</string>
+    <string name="widget_checked">Ellenőrizve: %1$s</string>
+    <string name="widget_never_checked">Még nincs ellenőrizve</string>
+    <string name="widget_check">Ellenőrzés</string>
 </resources>

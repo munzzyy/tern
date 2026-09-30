@@ -1,3 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">Перевірити</string>
+    <string name="shortcut_check_long">Перевірити оновлення</string>
+    <string name="shortcut_update_all_long">Оновити всі програми</string>
+    <string name="shortcut_add_short">Додати</string>
+    <string name="shortcut_add_long">Додати програму</string>
+    <string name="tile_check">Перевірити оновлення</string>
+    <string name="tile_checking">Перевірка…</string>
+    <string name="tile_up_to_date">Оновлено</string>
+    <string name="widget_label">Оновлення</string>
+    <string name="widget_description">Скільки програм мають оновлення, з кнопкою для перевірки та кнопкою, щоб оновити всі.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d оновлення</item>
+        <item quantity="few">%d оновлення</item>
+        <item quantity="many">%d оновлень</item>
+        <item quantity="other">%d оновлення</item>
+    </plurals>
+    <string name="widget_up_to_date">Усе оновлено</string>
+    <string name="widget_checked">Перевірено о %1$s</string>
+    <string name="widget_never_checked">Ще не перевірено</string>
+    <string name="widget_check">Перевірити</string>
 </resources>

@@ -1,3 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Minden %d percben</item>
+        <item quantity="other">Minden %d percben</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Minden %d napon</item>
+        <item quantity="other">Minden %d napon</item>
+    </plurals>
+    <string name="settings_check_now">Háttérbeli ellenőrzés futtatása most</string>
+    <string name="settings_check_now_effect">Minden alkalmazást ellenőriz, és telepíti azokat, amelyek automatikus frissítésre vannak állítva, ahogy a háttérbeli ellenőrzés is teszi.</string>
+    <string name="settings_check_now_running">Ellenőrzés…</string>
+    <string name="settings_check_on_start">Ellenőrzés a Tern megnyitásakor</string>
+    <string name="settings_check_on_open">Alkalmazás ellenőrzése az oldala megnyitásakor</string>
+    <string name="settings_check_on_open_effect">Nem újra a legutóbbi ellenőrzés utáni öt percen belül.</string>
+    <string name="settings_only_installed">Csak a telepített alkalmazások ellenőrzése</string>
+    <string name="settings_only_installed_effect">A csak követett alkalmazások is ellenőrzésre kerülnek. A megnyitott alkalmazás mindig ellenőrzésre kerül.</string>
+    <string name="settings_remove_uninstalled">Máshol eltávolított alkalmazások törlése a listáról</string>
+    <string name="settings_remove_uninstalled_effect">Ha a Ternen kívül eltávolít egy alkalmazást, az a listáról is lekerül.</string>
+    <string name="settings_file_filter">Fájlszűrő</string>
+    <string name="settings_file_filter_effect">Minta, amely alapján minden saját szűrő nélküli alkalmazás kiválasztja a fájlját.</string>
+    <string name="settings_file_filter_none">Nincs</string>
+    <string name="settings_file_filter_invalid">Ez a minta nem olvasható.</string>
+    <string name="settings_allow_downgrades">Régebbi verziók engedélyezése</string>
+    <string name="settings_allow_downgrades_effect">A Let Me Downgrade telepítve van, így az Android egy újabb verzióra régebbit is telepíthet.</string>
+    <string name="settings_collapse_groups">Kezdés összecsukott csoportokkal</string>
+    <string name="settings_haptics">Haptikus visszajelzés</string>
+    <string name="settings_haptics_effect">Enyhe rezgés, amikor egy elhúzás vagy hosszú nyomás hatására történik valami.</string>
+    <string name="settings_phone_layout">Mindig a telefonos elrendezés használata</string>
+    <string name="settings_phone_layout_effect">Egy panel és egy sáv alul, bármilyen széles is a képernyő.</string>
+    <string name="density_minimal">Minimális</string>
+    <string name="search_in">Keresés itt</string>
+    <string name="activity_share">Tevékenység megosztása</string>
+    <string name="sources_title">Mit tud olvasni a Tern</string>
+    <string name="sources_effect">Kódtárhelyek, tárolók, áruházak és weboldalak, és hogy melyikükben lehet keresni.</string>
+    <string name="sources_forges">Kódtárhelyek</string>
+    <string name="sources_repositories">Tárolók</string>
+    <string name="sources_stores">Áruházak</string>
+    <string name="sources_mirrors">Alkalmazásokat újra közzétevő áruházak</string>
+    <string name="sources_modified">Módosított alkalmazásokat kínáló oldalak</string>
+    <string name="sources_other">Egyéb helyek</string>
+    <string name="sources_web_page">Fájlokra mutató linkeket tartalmazó weboldal</string>
+    <string name="sources_direct">Közvetlen link egy fájlra</string>
+    <string name="sources_searchable">kereshető</string>
+    <string name="sources_track_only">csak követés</string>
+    <string name="sources_self_hosted">A saját szerveren futó GitLab, Forgejo, Gitea és Jenkins a címe alapján felismerhető.</string>
+    <string name="shared_configs_title">Az Obtainium felhasználói által megosztott konfigurációk</string>
+    <string name="shared_configs_effect">Kész alkalmazásbeállításokat tartalmazó oldal. A linkjei a Ternben nyílnak meg, ha az Obtainium linkek megnyitása be van kapcsolva a Beállításokban.</string>
+    <string name="engine_archive_compression_unsupported">Ez az archívum bzip2, xz vagy zstd tömörítésű, amelyet az Android nem tud megnyitni. Válasszon .zip, .tar vagy .tar.gz fájlt ebből a kiadásból.</string>
+    <string name="engine_inner_filter_nothing">Az archívumokon belüli fájlok szűrője ebben az archívumban egyik APK-ra sem illik.</string>
+    <string name="preview_republished">A(z) %1$s újra kínálja azt, amit a fejlesztők máshol tesznek közzé. A fájljait a Tern a fejlesztő tanúsítványához köti, amint ismeri azt, ezért ha teheti, rögzítsen egyet, vagy először a fejlesztőtől telepítsen.</string>
+    <string name="preview_modified">A(z) %1$s olyan alkalmazásokat kínál, amelyeket a fejlesztőjükön kívül valaki más módosított. Az írja alá őket, aki módosította őket, és a Tern nem tudja megállapítani, mi lett módosítva.</string>
+    <string name="about_track_tern">Maga a Tern is legyen naprakész</string>
+    <string name="about_track_tern_effect">Hozzáadja a Tern saját kiadásait a listához, ugyanúgy ellenőrizve és hitelesítve, mint bármely alkalmazást.</string>
+    <string name="engine_channel_tracked">Követett alkalmazások új kiadásai</string>
+    <string name="engine_channel_checking">Ellenőrzés</string>
+    <string name="engine_notify_tracked_one">Új kiadás: %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d követett alkalmazásnak új kiadása van</item>
+        <item quantity="other">%1$d követett alkalmazásnak új kiadása van</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">%1$d alkalmazás ellenőrzése</item>
+        <item quantity="other">%1$d alkalmazás ellenőrzése</item>
+    </plurals>
+    <string name="settings_notify_tracked">Ha egy követett alkalmazásnak új kiadása van</string>
+    <string name="settings_notify_checking">Háttérbeli ellenőrzés közben</string>
+    <string name="settings_notify_checking_effect">Csendes értesítés, amely eltűnik, amikor az ellenőrzés befejeződik.</string>
+    <string name="engine_event_removed_uninstalled">Lekerült a listáról, mert a Ternen kívül eltávolították</string>
 </resources>

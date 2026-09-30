@@ -1,3 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">Kontroli</string>
+    <string name="shortcut_check_long">Kontroli por ĝisdatigoj</string>
+    <string name="shortcut_update_all_long">Ĝisdatigi ĉiun aplikaĵon</string>
+    <string name="shortcut_add_short">Aldoni</string>
+    <string name="shortcut_add_long">Aldoni aplikaĵon</string>
+    <string name="tile_check">Kontroli por ĝisdatigoj</string>
+    <string name="tile_checking">Kontrolas…</string>
+    <string name="tile_up_to_date">Ĝisdata</string>
+    <string name="widget_label">Ĝisdatigoj</string>
+    <string name="widget_description">Kiom da aplikaĵoj havas ĝisdatigon, kun butono por kontroli kaj unu por ĝisdatigi ilin ĉiujn.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d ĝisdatigo</item>
+        <item quantity="other">%d ĝisdatigoj</item>
+    </plurals>
+    <string name="widget_up_to_date">Ĉio estas ĝisdata</string>
+    <string name="widget_checked">Kontrolita je %1$s</string>
+    <string name="widget_never_checked">Ankoraŭ ne kontrolita</string>
+    <string name="widget_check">Kontroli</string>
 </resources>

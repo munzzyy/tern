@@ -1,3 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_categories">Catégories</string>
+    <string name="settings_categories_effect">Nommez-les, donnez une couleur à chacune, et renommez-les ou supprimez-les pour toutes les applis à la fois.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d catégorie</item>
+        <item quantity="many">%d catégories</item>
+        <item quantity="other">%d catégories</item>
+    </plurals>
+    <string name="categories_none">Aucune pour l\'instant. Créez-en une ici, ou classez des applis dans une catégorie depuis la liste.</string>
+    <string name="categories_new">Nouvelle catégorie</string>
+    <string name="category_edit">Modifier la catégorie</string>
+    <string name="category_name">Nom</string>
+    <string name="category_color">Couleur</string>
+    <string name="category_color_spoken">Couleur %1$d sur %2$d</string>
+    <string name="category_exists">Une catégorie porte déjà ce nom.</string>
+    <string name="category_delete">Supprimer</string>
+    <string name="category_delete_effect">Ses applis restent dans la liste ; elles n\'y sont simplement plus classées.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d appli</item>
+        <item quantity="many">%d applis</item>
+        <item quantity="other">%d applis</item>
+    </plurals>
+    <string name="action_close">Fermer</string>
+    <string name="categories_new_short">Nouvelle…</string>
+    <string name="app_notes_title">Notes</string>
+    <string name="app_notes_help">Le Markdown fonctionne : **gras**, *italique*, listes et liens.</string>
+    <string name="app_notes_add">Ajouter une note</string>
+    <string name="app_notes_add_effect">Tout ce qui mérite d\'être retenu sur cette appli. La note est incluse dans les exportations.</string>
+    <string name="app_notes_edit">Modifier la note</string>
 </resources>

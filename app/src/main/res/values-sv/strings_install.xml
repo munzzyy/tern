@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_installer">Installera med</string>
+    <string name="installer_system">Androids installationsprogram</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">En annan app</string>
+    <string name="installer_system_effect">Android frågar före en första installation, och före en uppdatering där den vill.</string>
+    <string name="installer_shizuku_effect">Installerar och uppdaterar utan att fråga, via Shizuku eller Sui. Varje fil går igenom samma kontroller först.</string>
+    <string name="installer_root_effect">Installerar och uppdaterar utan att fråga, via su. Varje fil går igenom samma kontroller först.</string>
+    <string name="installer_other_app_effect">Lämnar varje kontrollerad fil till den installationsapp du väljer. Den appen frågar alltid, så inget installeras i bakgrunden.</string>
+    <string name="installer_ready">Redo</string>
+    <string name="installer_not_ready">Inte redo, Androids installationsprogram används så länge</string>
+    <string name="installer_shizuku_not_running">Shizuku körs inte. Starta det i Shizuku-appen och kom sedan tillbaka.</string>
+    <string name="installer_shizuku_too_old">Denna version av Shizuku är för gammal för Tern. Uppdatera Shizuku.</string>
+    <string name="installer_shizuku_not_allowed">Tern får inte använda Shizuku än. Tryck här för att fråga.</string>
+    <string name="installer_no_root">Tern har ingen root-åtkomst. Tryck här för att be om den igen.</string>
+    <string name="installer_no_other_app">Ingen installationsapp är vald, eller så är den valda borta.</string>
+    <string name="installer_pick_app">Installationsapp</string>
+    <string name="installer_pick_app_none">Ingen vald</string>
+    <string name="installer_no_apps">Det finns ingen annan installationsapp på denna enhet.</string>
+    <string name="installer_play">Säg att Google Play installerade apparna</string>
+    <string name="installer_play_effect">Vissa appar fungerar bara när de tror att Google Play installerade dem. Tern visas då inte längre som deras installationskälla.</string>
+    <string name="install_other_app_signer">Installationsappen installerade något som är signerat av någon annan än filen Tern kontrollerade, så installationen räknas inte.</string>
 </resources>

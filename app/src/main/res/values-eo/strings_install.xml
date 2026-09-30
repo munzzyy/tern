@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_installer">Instali per</string>
+    <string name="installer_system">La instalilo de Android</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">Alia aplikaĵo</string>
+    <string name="installer_system_effect">Android demandas antaŭ unua instalo, kaj antaŭ ĝisdatigo kiam ĝi volas.</string>
+    <string name="installer_shizuku_effect">Instalas kaj ĝisdatigas sen konfirmopeto, per Shizuku aŭ Sui. Ĉiu dosiero unue trapasas la samajn kontrolojn.</string>
+    <string name="installer_root_effect">Instalas kaj ĝisdatigas sen konfirmopeto, per su. Ĉiu dosiero unue trapasas la samajn kontrolojn.</string>
+    <string name="installer_other_app_effect">Transdonas ĉiun kontrolitan dosieron al la instalila aplikaĵo, kiun vi elektas. Tiu aplikaĵo ĉiam demandas, do nenio instaliĝas en la fono.</string>
+    <string name="installer_ready">Preta</string>
+    <string name="installer_not_ready">Ne preta, la instalilo de Android estas uzata intertempe</string>
+    <string name="installer_shizuku_not_running">Shizuku ne funkcias. Lanĉu ĝin en la aplikaĵo Shizuku, poste revenu.</string>
+    <string name="installer_shizuku_too_old">Ĉi tiu versio de Shizuku estas tro malnova por Tern. Ĝisdatigu Shizuku.</string>
+    <string name="installer_shizuku_not_allowed">Tern ankoraŭ ne rajtas uzi Shizuku. Premu ĉi tie por peti.</string>
+    <string name="installer_no_root">Tern ne havas root-aliron. Premu ĉi tie por peti ĝin denove.</string>
+    <string name="installer_no_other_app">Neniu instalila aplikaĵo estas elektita, aŭ la elektita malaperis.</string>
+    <string name="installer_pick_app">Instalila aplikaĵo</string>
+    <string name="installer_pick_app_none">Neniu elektita</string>
+    <string name="installer_no_apps">Ne estas alia instalila aplikaĵo en ĉi tiu aparato.</string>
+    <string name="installer_play">Diri ke Google Play instalis aplikaĵojn</string>
+    <string name="installer_play_effect">Iuj aplikaĵoj funkcias nur kiam ili kredas, ke Google Play instalis ilin. Tern tiam ne plu aperas kiel ilia instalinto.</string>
+    <string name="install_other_app_signer">La instalila aplikaĵo instalis ion subskribitan de iu alia ol la dosiero, kiun Tern kontrolis, do la instalo ne validas.</string>
 </resources>

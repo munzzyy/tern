@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_installer">Встановлювати через</string>
+    <string name="installer_system">Інсталятор Android</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">Інша програма</string>
+    <string name="installer_system_effect">Android запитує перед першим встановленням і перед оновленням, коли вважає за потрібне.</string>
+    <string name="installer_shizuku_effect">Встановлює та оновлює без запиту, через Shizuku або Sui. Кожен файл спершу проходить ті самі перевірки.</string>
+    <string name="installer_root_effect">Встановлює та оновлює без запиту, через su. Кожен файл спершу проходить ті самі перевірки.</string>
+    <string name="installer_other_app_effect">Передає кожен перевірений файл вибраній вами програмі-інсталятору. Вона завжди запитує, тож нічого не встановлюється у фоновому режимі.</string>
+    <string name="installer_ready">Готово</string>
+    <string name="installer_not_ready">Не готово, тим часом використовується інсталятор Android</string>
+    <string name="installer_shizuku_not_running">Shizuku не запущено. Запустіть його в програмі Shizuku, а потім поверніться.</string>
+    <string name="installer_shizuku_too_old">Ця версія Shizuku застара для Tern. Оновіть Shizuku.</string>
+    <string name="installer_shizuku_not_allowed">Tern поки не може використовувати Shizuku. Натисніть тут, щоб запросити дозвіл.</string>
+    <string name="installer_no_root">Tern не має root-доступу. Натисніть тут, щоб запросити його знову.</string>
+    <string name="installer_no_other_app">Програму-інсталятор не вибрано, або вибраної більше немає.</string>
+    <string name="installer_pick_app">Програма-інсталятор</string>
+    <string name="installer_pick_app_none">Не вибрано</string>
+    <string name="installer_no_apps">На цьому пристрої немає іншої програми-інсталятора.</string>
+    <string name="installer_play">Повідомляти, що програми встановив Google Play</string>
+    <string name="installer_play_effect">Деякі програми працюють, лише якщо вважають, що їх встановив Google Play. Tern тоді більше не показується як їхній інсталятор.</string>
+    <string name="install_other_app_signer">Програма-інсталятор встановила щось, підписане не тим, хто підписав перевірений Tern файл, тому встановлення не зараховується.</string>
 </resources>

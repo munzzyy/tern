@@ -1,3 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Var %d minut</item>
+        <item quantity="other">Var %d:e minut</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Var %d dag</item>
+        <item quantity="other">Var %d:e dag</item>
+    </plurals>
+    <string name="settings_check_now">Kör bakgrundskontrollen nu</string>
+    <string name="settings_check_now_effect">Kontrollerar varje app och installerar det som är inställt på att uppdateras av sig självt, som bakgrundskontrollen gör.</string>
+    <string name="settings_check_now_running">Kontrollerar…</string>
+    <string name="settings_check_on_start">Kontrollera när Tern öppnas</string>
+    <string name="settings_check_on_open">Kontrollera en app när dess sida öppnas</string>
+    <string name="settings_check_on_open_effect">Inte igen inom fem minuter från den senaste kontrollen.</string>
+    <string name="settings_only_installed">Kontrollera endast installerade appar</string>
+    <string name="settings_only_installed_effect">Appar som endast följs kontrolleras också. En app du öppnar kontrolleras alltid.</string>
+    <string name="settings_remove_uninstalled">Ta bort appar som avinstallerats någon annanstans</string>
+    <string name="settings_remove_uninstalled_effect">En app du avinstallerar utanför Tern försvinner också från listan.</string>
+    <string name="settings_file_filter">Filter för filer</string>
+    <string name="settings_file_filter_effect">Ett mönster som varje app utan eget filter väljer sin fil efter.</string>
+    <string name="settings_file_filter_none">Inget</string>
+    <string name="settings_file_filter_invalid">Detta mönster kan inte läsas.</string>
+    <string name="settings_allow_downgrades">Tillåt äldre versioner</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade är installerad, så Android får installera en äldre version över en nyare.</string>
+    <string name="settings_collapse_groups">Börja med grupperna hopfällda</string>
+    <string name="settings_haptics">Haptisk återkoppling</string>
+    <string name="settings_haptics_effect">En lätt vibration när en svepning eller ett långt tryck gör något.</string>
+    <string name="settings_phone_layout">Använd alltid telefonlayouten</string>
+    <string name="settings_phone_layout_effect">En panel och ett fält längst ned, oavsett hur bred skärmen är.</string>
+    <string name="density_minimal">Minimal</string>
+    <string name="search_in">Sök i</string>
+    <string name="activity_share">Dela aktivitet</string>
+    <string name="sources_title">Vad Tern kan läsa</string>
+    <string name="sources_effect">Kodplattformar, lagringsplatser, butiker och webbsidor, och vilka av dem som går att söka i.</string>
+    <string name="sources_forges">Kodplattformar</string>
+    <string name="sources_repositories">Lagringsplatser</string>
+    <string name="sources_stores">Butiker</string>
+    <string name="sources_mirrors">Butiker som återpublicerar appar</string>
+    <string name="sources_modified">Webbplatser med ändrade appar</string>
+    <string name="sources_other">Andra platser</string>
+    <string name="sources_web_page">En webbsida med länkar till filer</string>
+    <string name="sources_direct">En direktlänk till en fil</string>
+    <string name="sources_searchable">går att söka i</string>
+    <string name="sources_track_only">endast följning</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea och Jenkins på en egen server känns igen på sin adress.</string>
+    <string name="shared_configs_title">Konfigurationer som delas av Obtainiums användare</string>
+    <string name="shared_configs_effect">En webbplats med färdiga inställningar för appar. Dess länkar öppnas i Tern när Öppna Obtainium-länkar är på i Inställningar.</string>
+    <string name="engine_archive_compression_unsupported">Detta arkiv är komprimerat med bzip2, xz eller zstd, som Android inte kan öppna. Välj en .zip-, .tar- eller .tar.gz-fil från denna utgåva.</string>
+    <string name="engine_inner_filter_nothing">Filtret för filer i arkiv matchar ingen av APK-filerna i detta arkiv.</string>
+    <string name="preview_republished">%1$s erbjuder på nytt det som utvecklare publicerar på annat håll. Tern kräver utvecklarens certifikat för dess filer när det är känt, så fäst ett eller installera från utvecklaren först när du kan.</string>
+    <string name="preview_modified">%1$s erbjuder appar som ändrats av någon annan än deras utvecklare. De är signerade av den som ändrade dem, och Tern kan inte avgöra vad som ändrades.</string>
+    <string name="about_track_tern">Håll Tern själv uppdaterad</string>
+    <string name="about_track_tern_effect">Lägger till Terns egna utgåvor i listan, kontrollerade och verifierade som vilken app som helst.</string>
+    <string name="engine_channel_tracked">Nya utgåvor av följda appar</string>
+    <string name="engine_channel_checking">Kontrollerar</string>
+    <string name="engine_notify_tracked_one">Ny utgåva av %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d följd app har en ny utgåva</item>
+        <item quantity="other">%1$d följda appar har nya utgåvor</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">Kontrollerar %1$d app</item>
+        <item quantity="other">Kontrollerar %1$d appar</item>
+    </plurals>
+    <string name="settings_notify_tracked">När en följd app har en ny utgåva</string>
+    <string name="settings_notify_checking">Under kontroll i bakgrunden</string>
+    <string name="settings_notify_checking_effect">En tyst avisering som försvinner när kontrollen är klar.</string>
+    <string name="engine_event_removed_uninstalled">Togs bort från listan, eftersom den avinstallerades utanför Tern</string>
 </resources>

@@ -1,3 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Svake %d minute</item>
+        <item quantity="few">Svake %d minute</item>
+        <item quantity="other">Svakih %d minuta</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Svaki %d dan</item>
+        <item quantity="few">Svaka %d dana</item>
+        <item quantity="other">Svakih %d dana</item>
+    </plurals>
+    <string name="settings_check_now">Pokreni provjeru u pozadini sada</string>
+    <string name="settings_check_now_effect">Provjerava svaku aplikaciju i instalira ono što je postavljeno da se samo ažurira, kao što to radi provjera u pozadini.</string>
+    <string name="settings_check_now_running">Provjerava se…</string>
+    <string name="settings_check_on_start">Provjeri kada se Tern otvori</string>
+    <string name="settings_check_on_open">Provjeri aplikaciju kada se otvori njena stranica</string>
+    <string name="settings_check_on_open_effect">Ne ponovo u roku od pet minuta od posljednje provjere.</string>
+    <string name="settings_only_installed">Provjeravaj samo instalirane aplikacije</string>
+    <string name="settings_only_installed_effect">Aplikacije koje se samo prate također se provjeravaju. Aplikacija koju otvorite uvijek se provjerava.</string>
+    <string name="settings_remove_uninstalled">Ukloni aplikacije deinstalirane negdje drugo</string>
+    <string name="settings_remove_uninstalled_effect">Aplikacija koju deinstalirate izvan Terna također napušta spisak.</string>
+    <string name="settings_file_filter">Filter za datoteke</string>
+    <string name="settings_file_filter_effect">Obrazac po kojem svaka aplikacija bez vlastitog filtera bira svoju datoteku.</string>
+    <string name="settings_file_filter_none">Nijedan</string>
+    <string name="settings_file_filter_invalid">Ovaj obrazac se ne može pročitati.</string>
+    <string name="settings_allow_downgrades">Dozvoli starije verzije</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade je instaliran, pa Android može staviti stariju verziju preko novije.</string>
+    <string name="settings_collapse_groups">Počni sa sklopljenim grupama</string>
+    <string name="settings_haptics">Haptički odziv</string>
+    <string name="settings_haptics_effect">Lagana vibracija kada prevlačenje ili dugi pritisak nešto uradi.</string>
+    <string name="settings_phone_layout">Uvijek koristi raspored za telefon</string>
+    <string name="settings_phone_layout_effect">Jedno okno i traka na dnu, bez obzira na širinu ekrana.</string>
+    <string name="density_minimal">Minimalno</string>
+    <string name="search_in">Gdje tražiti</string>
+    <string name="activity_share">Podijeli aktivnost</string>
+    <string name="sources_title">Šta Tern može pročitati</string>
+    <string name="sources_effect">Platforme za kod, repozitoriji, trgovine i web stranice, te koje od njih se mogu pretraživati.</string>
+    <string name="sources_forges">Platforme za kod</string>
+    <string name="sources_repositories">Repozitoriji</string>
+    <string name="sources_stores">Trgovine</string>
+    <string name="sources_mirrors">Trgovine koje ponovo objavljuju aplikacije</string>
+    <string name="sources_modified">Stranice s izmijenjenim aplikacijama</string>
+    <string name="sources_other">Druga mjesta</string>
+    <string name="sources_web_page">Web stranica s linkovima na datoteke</string>
+    <string name="sources_direct">Direktan link na datoteku</string>
+    <string name="sources_searchable">može se pretraživati</string>
+    <string name="sources_track_only">samo praćenje</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea i Jenkins na vlastitom serveru prepoznaju se po adresi.</string>
+    <string name="shared_configs_title">Konfiguracije koje dijele korisnici Obtainiuma</string>
+    <string name="shared_configs_effect">Stranica s gotovim postavkama za aplikacije. Njeni linkovi se otvaraju u Ternu kada je u Postavkama uključeno \"Otvori Obtainium linkove\".</string>
+    <string name="engine_archive_compression_unsupported">Ova arhiva je komprimirana s bzip2, xz ili zstd, koje Android ne može otvoriti. Odaberite .zip, .tar ili .tar.gz datoteku ovog izdanja.</string>
+    <string name="engine_inner_filter_nothing">Filter za datoteke unutar arhiva ne odgovara nijednom APK-u u ovoj arhivi.</string>
+    <string name="preview_republished">%1$s ponovo nudi ono što programeri objavljuju negdje drugo. Njegove datoteke se provjeravaju prema certifikatu programera čim ga Tern sazna, zato prikvačite certifikat ili prvo instalirajte od programera kada možete.</string>
+    <string name="preview_modified">%1$s nudi aplikacije koje je izmijenio neko drugi, a ne njihov programer. Potpisao ih je onaj ko ih je izmijenio, i Tern ne može znati šta je izmijenjeno.</string>
+    <string name="about_track_tern">Održavaj i sam Tern ažurnim</string>
+    <string name="about_track_tern_effect">Dodaje Ternova izdanja na spisak, provjerena i verificirana kao i kod svake aplikacije.</string>
+    <string name="engine_channel_tracked">Nova izdanja praćenih aplikacija</string>
+    <string name="engine_channel_checking">Provjera</string>
+    <string name="engine_notify_tracked_one">Novo izdanje aplikacije %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d praćena aplikacija ima novo izdanje</item>
+        <item quantity="few">%1$d praćene aplikacije imaju nova izdanja</item>
+        <item quantity="other">%1$d praćenih aplikacija ima nova izdanja</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">Provjerava se %1$d aplikacija</item>
+        <item quantity="few">Provjeravaju se %1$d aplikacije</item>
+        <item quantity="other">Provjerava se %1$d aplikacija</item>
+    </plurals>
+    <string name="settings_notify_tracked">Kada praćena aplikacija ima novo izdanje</string>
+    <string name="settings_notify_checking">Tokom provjere u pozadini</string>
+    <string name="settings_notify_checking_effect">Tiha obavijest koja nestane kada se provjera završi.</string>
+    <string name="engine_event_removed_uninstalled">Uklonjeno sa spiska jer je deinstalirano izvan Terna</string>
 </resources>

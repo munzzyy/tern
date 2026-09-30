@@ -1,3 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">Vérifier</string>
+    <string name="shortcut_check_long">Vérifier les mises à jour</string>
+    <string name="shortcut_update_all_long">Mettre à jour toutes les applis</string>
+    <string name="shortcut_add_short">Ajouter</string>
+    <string name="shortcut_add_long">Ajouter une appli</string>
+    <string name="tile_check">Vérifier les mises à jour</string>
+    <string name="tile_checking">Vérification…</string>
+    <string name="tile_up_to_date">À jour</string>
+    <string name="widget_label">Mises à jour</string>
+    <string name="widget_description">Combien d\'applis ont une mise à jour, avec un bouton pour vérifier et un pour toutes les mettre à jour.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d mise à jour</item>
+        <item quantity="many">%d mises à jour</item>
+        <item quantity="other">%d mises à jour</item>
+    </plurals>
+    <string name="widget_up_to_date">Tout est à jour</string>
+    <string name="widget_checked">Vérifié à %1$s</string>
+    <string name="widget_never_checked">Pas encore vérifié</string>
+    <string name="widget_check">Vérifier</string>
 </resources>

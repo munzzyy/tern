@@ -1,3 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">Sdílet</string>
+    <string name="action_release_page">Otevřít stránku vydání</string>
+    <string name="action_share_address">Sdílet adresu</string>
+    <string name="action_share_link">Sdílet odkaz, který ji otevře v Tern</string>
+    <string name="action_app_info">Informace o aplikaci v Androidu</string>
+    <string name="detail_last_checked">Zkontrolováno %1$s</string>
+    <string name="state_favorite">Oblíbená</string>
+    <string name="action_save_file">Uložit do složky Download</string>
+    <string name="file_saved">Uloženo jako %1$s v %2$s, tak jak byl soubor stažen. Tern soubor kontroluje, až když ho instaluje.</string>
+    <string name="action_save_files">Uložit soubory do složky Download</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="one">%d soubor uložen do Download/Tern</item>
+        <item quantity="few">%d soubory uloženy do Download/Tern</item>
+        <item quantity="many">%d souborů uloženo do Download/Tern</item>
+        <item quantity="other">%d souborů uloženo do Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d vydání označeno jako přečtené</item>
+        <item quantity="few">%d vydání označena jako přečtená</item>
+        <item quantity="many">%d vydání označeno jako přečtené</item>
+        <item quantity="other">%d vydání označeno jako přečtené</item>
+    </plurals>
+    <string name="project_page">Stránka projektu</string>
+    <string name="project_page_read">Přečíst stránku projektu</string>
+    <string name="project_page_effect">Jeho README zobrazené jako text. Hosting kódu nedostane žádný dotaz, dokud ji neotevřete.</string>
+    <string name="project_page_loading">Čte se…</string>
+    <string name="project_page_none">Projekt nemá žádnou stránku, kterou by Tern uměl přečíst.</string>
+    <string name="project_page_failed">Stránku se nepodařilo přečíst. Klepnutím to zkusíte znovu.</string>
 </resources>

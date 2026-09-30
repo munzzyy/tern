@@ -1,3 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="import_addresses_heading">Ze seznamu adres</string>
+    <string name="import_addresses_explain">Vložte adresy aplikací, jednu na řádek nebo kdekoli v textu, nebo je načtěte ze souboru, například ze seznamu OPML. Každá se prohlédne a přidá stejně jako jednotlivý odkaz.</string>
+    <string name="import_addresses_field">Adresy</string>
+    <string name="import_addresses_show">Ukázat, co obsahuje</string>
+    <string name="import_addresses_file">Načíst soubor</string>
+    <string name="import_addresses_none">Není v něm žádná adresa https.</string>
+    <string name="import_addresses_other">Jiný seznam</string>
+    <string name="import_addresses_unreadable">Tento soubor se nepodařilo přečíst.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d adresa. Zrušte zaškrtnutí u toho, co nechcete, a pak přidejte.</item>
+        <item quantity="few">%1$d adresy. Zrušte zaškrtnutí u toho, co nechcete, a pak přidejte.</item>
+        <item quantity="many">%1$d adres. Zrušte zaškrtnutí u toho, co nechcete, a pak přidejte.</item>
+        <item quantity="other">%1$d adres. Zrušte zaškrtnutí u toho, co nechcete, a pak přidejte.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">V tomto odkazu přišla %1$d aplikace. Než ji přidáte, podívejte se na její nastavení.</item>
+        <item quantity="few">V tomto odkazu přišly %1$d aplikace. Než je přidáte, podívejte se na nastavení každé z nich.</item>
+        <item quantity="many">V tomto odkazu přišlo %1$d aplikací. Než je přidáte, podívejte se na nastavení každé z nich.</item>
+        <item quantity="other">V tomto odkazu přišlo %1$d aplikací. Než je přidáte, podívejte se na nastavení každé z nich.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Export pro Obtainium</string>
+    <string name="settings_export_obtainium_effect">Soubor, který Obtainium importuje, pro seznam, který se tam stěhuje. Co Obtainium nemá v nastavení, zůstane tady.</string>
+    <string name="settings_export_installed_only">Exportovat jen nainstalované aplikace</string>
+    <string name="settings_export_settings">Zahrnout nastavení do exportů</string>
+    <string name="settings_export_settings_effect">Vzhled, seznam, oznámení a kontroly. Nikdy token, proxy ani instalátor.</string>
+    <string name="settings_kept_export">Udržovat export aktuální</string>
+    <string name="settings_kept_export_effect">Chvíli po jakékoli změně v seznamu Tern export zapíše znovu.</string>
+    <string name="settings_kept_export_written">Zapsáno v %1$s</string>
+    <string name="settings_kept_export_folder">Kde je uložen</string>
+    <string name="import_settings_taken">Převzata byla i nastavení ze souboru.</string>
 </resources>

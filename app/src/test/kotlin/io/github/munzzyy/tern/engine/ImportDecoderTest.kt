@@ -21,7 +21,7 @@ class ImportDecoderTest {
                {"url":"https://apkpure.com/wren","name":"Copy","overrideSource":"APKPure"}]""",
         )
         assertEquals(listOf("https://github.com/example/wren"), decoded.apps.map { it.source.url })
-        assertEquals(listOf("Copy" to "APKPure is not supported by Tern; find the developer's own release page instead"), decoded.skipped)
+        assertEquals(listOf("Copy" to "Tern could not read this address as an app on APKPure"), decoded.skipped)
     }
 
     @Test

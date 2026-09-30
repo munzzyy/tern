@@ -223,7 +223,7 @@ class HandoffRefusalTest {
         val text = Seal.text(sealed)
         val misspelled = listOf(
             "sealed=" + text.dropLast(1), "sealed=" + text.dropLast(2), "sealed=$text=", "sealed=$text==", "sealed=$text&sealed=$text", "sealed=$text&a=b",
-            "sealed=" + text.replace('-', '+').replace('_', '/'), "sealed=%41" + text.drop(1), "sealed= $text", "sealed=$text\r\n", "Sealed=$text", "links=$text",
+            "sealed=+" + text.drop(1), "sealed=" + text.dropLast(1) + "/", "sealed=%41" + text.drop(1), "sealed= $text", "sealed=$text\r\n", "Sealed=$text", "links=$text",
             text, "sealed", "sealed=", "",
         )
         for (body in misspelled) assertArrayEquals(body.take(40), same.raw, phone.form("/send", body)!!.raw)

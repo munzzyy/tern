@@ -23,7 +23,7 @@ class VersionDisplayTest {
     @Test
     fun upToDateAppWithAVTagShowsOnlyItsVersion() {
         launch("default").use {
-            compose.shownRow("Tagged Weather").assert(hasContentDescription("Tagged Weather. Up to date. Version 0.4.4.", substring = false))
+            compose.shownRow("Tagged Weather").assert(hasContentDescription("Tagged Weather. Up to date. Version 0.4.4. Released", substring = true))
             compose.row("Tagged Weather").performClick()
             compose.onNodeWithText("\u20680.4.4\u2069").assertIsDisplayed()
             assertEquals(0, compose.textCount("to v0.4.4"))

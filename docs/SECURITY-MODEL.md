@@ -130,6 +130,17 @@ a server sent is ever part of it. Root runs it through `su -c` with every word
 quoted. If the chosen installer is not there, Tern falls back to Android's own
 and says so.
 
+OBB files are the one exception, and a narrow one. After Android has installed
+an app that passed the gate, Shizuku or root writes the OBB files of its
+archive to `Android/obb/<the package the gate verified>/`, each with `dd` and
+its size checked afterwards. The name of each file comes from the archive, so
+it is held to letters, digits and `. _ + -`, starts with no dot and has at most
+255 characters; any other name refuses the whole archive, before anything is
+installed. Nothing signs an OBB file, so it is never read by Tern and is only
+put where the app looks for it. Tern asks for no storage permission: with any
+other installer the OBB files stay in the release's file, and the activity log
+says where.
+
 With another installer app, the checked file is copied, read-only, to a folder
 of Tern's own and offered to that app alone through a content address. That app
 may do anything with it, so the install counts only when the package manager
@@ -150,6 +161,15 @@ https address like any other, and has to point to one of the hosts that store
 keeps its files on; each source names those hosts. The headers a source may add
 never include `Authorization`, `Cookie`, `Proxy-Authorization`, `Host`, `Range`
 or `If-Range`. A token still goes only to the host it was given for.
+
+## Parts named one by one
+
+A store that serves an app as a base and its splits at separate addresses, as
+RuStore does, gets each part downloaded from its own address, with the rule for
+tokens applied to each. The parts are packed into one zip in the staging folder
+and go through exactly the checks of a bundle: every part held to the base's
+signer, one install session. Every part must be an HTTPS address on the store's
+own hosts, or the bundle is left out.
 
 ## Archives
 

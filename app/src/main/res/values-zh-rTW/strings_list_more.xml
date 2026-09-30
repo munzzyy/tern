@@ -53,8 +53,8 @@
     </plurals>
     <string name="action_share_config_link">分享帶有其設定的連結</string>
     <string name="action_share_config_links">分享帶有各自設定的連結</string>
-    <string name="share_link_none">沒有連結能夠帶有此應用程式的設定。請改以檔案分享。</string>
+    <string name="share_link_none">沒有任何連結能攜帶此應用程式的設定。請改以檔案分享。</string>
     <plurals name="share_links_left">
-        <item quantity="other">有 %d 個應用程式未包含在內，因為沒有連結能夠帶有它們的設定。</item>
+        <item quantity="other">有 %d 個應用程式未包含在內，因為沒有任何連結能攜帶它們的設定。</item>
     </plurals>
 </resources>

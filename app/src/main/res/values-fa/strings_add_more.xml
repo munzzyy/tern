@@ -1,2 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="add_link_unknown">Tern این نوع پیوند را نمی‌شناسد.</string>
+    <string name="add_not_readable_as">این آدرس را نمی‌توان به‌عنوان %1$s خواند.</string>
+    <string name="add_event_replaced">تنظیمات آن با تنظیماتی که یک فایل یا پیوند برایش داشت جایگزین شد.</string>
+    <string name="search_miss_unreachable">جستجو در %1$s ممکن نشد: منبع پاسخ نداد.</string>
+    <string name="search_miss_wait">جستجو در %1$s ممکن نشد: منبع از Tern می‌خواهد کمی صبر کند.</string>
+    <string name="search_miss_wait_until">جستجو در %1$s ممکن نشد: منبع از Tern می‌خواهد تا %2$s صبر کند.</string>
+    <string name="search_miss_refused">جستجو در %1$s ممکن نشد: منبع درخواست را رد کرد.</string>
+    <string name="search_miss_status">جستجو در %1$s ممکن نشد: منبع با %2$d پاسخ داد.</string>
+    <string name="search_miss_unreadable">جستجو در %1$s ممکن نشد: پاسخ منبع قابل خواندن نبود.</string>
+    <string name="add_options_title">پیش از افزودن</string>
+    <string name="add_options_auto">Tern خودش نوع آدرس را تشخیص می‌دهد.</string>
+    <string name="add_options_forced">به‌عنوان %1$s خوانده می‌شود</string>
+    <string name="add_read_as">خواندن آدرس به‌عنوان</string>
+    <string name="add_read_as_auto">خودکار</string>
+    <string name="add_read_as_forgejo">Forgejo یا Gitea</string>
+    <string name="add_read_as_help">برای منبعی که Tern خودش آن را نمی‌شناسد، مانند منبعی روی سرور شخصی.</string>
+    <string name="add_package_label">نام بسته</string>
+    <string name="add_package_help">هر فایل باید مربوط به این بسته باشد. اگر خالی بماند، Tern آن را از فایل برنامه می‌خواند.</string>
+    <string name="add_package_invalid">این نام بسته نیست. نام بسته این شکل را دارد: org.example.app.</string>
+    <string name="add_set_options">تنظیم گزینه‌های آن</string>
+    <string name="add_failed_options">گزینه‌های آن ممکن است به Tern بگویند کجا را بگردد. آن‌ها را در بالا تنظیم کنید، سپس Tern دوباره بررسی می‌کند.</string>
+    <string name="add_replace">جایگزین کردن تنظیمات آن</string>
+    <string name="add_replace_explain">پیوند تنظیمات مخصوص خودش را برای این برنامه دارد. جایگزین کردن، گواهی‌هایی را که برنامه به آن‌ها اعتماد دارد و نام بسته‌اش را حفظ می‌کند و باعث نمی‌شود برنامه به‌روزرسانی‌ها را خودش نصب کند.</string>
+    <string name="results_filter">فیلتر</string>
+    <string name="results_filter_help">کلمه‌ها یا یک الگو</string>
+    <string name="results_filter_none">هیچ‌چیز در لیست با «%1$s» مطابقت ندارد.</string>
+    <string name="repo_search_all">جستجوی «%1$s» در کل مخزن</string>
+    <string name="repo_show_all">نمایش همه برنامه‌های آن</string>
+    <string name="repo_heading_within">برنامه‌های %1$s که با «%2$s» مطابقت دارند</string>
+    <string name="search_more">بیشتر از آنچه نشان داده شده پیدا شد. فیلتر آن را محدود می‌کند.</string>
+    <string name="search_forgejo_label">Forgejo یا Gitea برای جستجو</string>
+    <string name="search_forgejo_help">آدرس آن، مانند codeberg.org. توکنی که برایش ذخیره شده همراه درخواست ارسال می‌شود.</string>
+    <string name="search_forgejo_invalid">این آدرسی نیست که Tern بتواند در آن جستجو کند.</string>
+    <string name="search_min_stars_label">کمترین تعداد ستاره</string>
+    <string name="search_min_stars_help">پروژه‌های GitHub و Forgejo مشخص‌شده که ستاره کمتری دارند کنار گذاشته می‌شوند.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">فایل تنظیمات دیگری هم برای %1$d برنامه دارد که از قبل در لیست شماست. این تنظیمات تا وقتی جایگزینشان نکنید همان‌طور که هستند می‌مانند.</item>
+        <item quantity="other">فایل تنظیمات دیگری هم برای %1$d برنامه دارد که از قبل در لیست شما هستند. این تنظیمات تا وقتی جایگزینشان نکنید همان‌طور که هستند می‌مانند.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">جایگزین کردن تنظیمات %1$d برنامه</item>
+        <item quantity="other">جایگزین کردن تنظیمات %1$d برنامه</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">تنظیمات %1$d برنامه جایگزین شد. گواهی‌هایی که به آن اعتماد دارد باقی ماندند.</item>
+        <item quantity="other">تنظیمات %1$d برنامه جایگزین شد. گواهی‌هایی که به آن‌ها اعتماد دارند باقی ماندند.</item>
+    </plurals>
+    <string name="import_settings_offered">فایل تنظیمات خود Tern را هم دارد: ظاهر، لیست، اعلان‌ها و بررسی‌ها. تا وقتی نخواهید اعمال نمی‌شوند.</string>
+    <string name="import_take_settings">اعمال این تنظیمات</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">علامت زدن %1$d مورد نشان‌داده‌شده</item>
+        <item quantity="other">علامت زدن همه %1$d مورد نشان‌داده‌شده</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">برداشتن تیک %1$d مورد نشان‌داده‌شده</item>
+        <item quantity="other">برداشتن تیک همه %1$d مورد نشان‌داده‌شده</item>
+    </plurals>
+</resources>

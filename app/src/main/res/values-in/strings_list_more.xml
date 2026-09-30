@@ -32,7 +32,7 @@
     <string name="update_all_all">Pembaruan dan aplikasi yang belum terinstal</string>
     <string name="update_all_none">Tidak ditampilkan</string>
     <string name="settings_confirm_update_all">Tanya sebelum Perbarui semua</string>
-    <string name="settings_confirm_update_all_effect">Menyebutkan berapa aplikasi yang akan diinstal atau diperbarui, lalu menunggu persetujuan.</string>
+    <string name="settings_confirm_update_all_effect">Menyebutkan jumlah aplikasi yang akan diinstal atau diperbarui, lalu menunggu persetujuan.</string>
     <plurals name="bulk_install_title">
         <item quantity="other">Instal %d aplikasi?</item>
     </plurals>
@@ -44,7 +44,7 @@
     <plurals name="bulk_categories_title">
         <item quantity="other">Kategori %d aplikasi</item>
     </plurals>
-    <string name="bulk_categories_help">Tanda centang memasukkan setiap aplikasi yang dipilih ke suatu kategori, dan kotak kosong mengeluarkan semuanya dari kategori itu. Tanda garis membiarkan setiap aplikasi apa adanya.</string>
+    <string name="bulk_categories_help">Tanda centang memasukkan setiap aplikasi yang dipilih ke suatu kategori, dan kotak kosong mengeluarkan semuanya dari kategori itu. Garis mendatar membiarkan setiap aplikasi apa adanya.</string>
     <string name="categories_filed_all">Semua aplikasi yang dipilih</string>
     <string name="categories_filed_some">Sebagian aplikasi yang dipilih</string>
     <string name="categories_filed_none">Tidak ada aplikasi yang dipilih</string>

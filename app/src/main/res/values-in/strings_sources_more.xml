@@ -13,7 +13,7 @@
     <string name="option_steps_title">Halaman yang dilalui lebih dulu</string>
     <string name="option_steps_order_help">Di setiap halaman, tautan yang cocok diurutkan dan yang terakhir diikuti.</string>
     <string name="step_title">Halaman %1$d</string>
-    <string name="step_filter">Tautan yang diikuti</string>
+    <string name="step_filter">Tautan yang harus diikuti</string>
     <string name="step_text">Cocokkan teks tautan</string>
     <string name="step_arch">Utamakan prosesor perangkat ini</string>
     <string name="step_add">Tambah halaman</string>

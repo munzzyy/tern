@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="install_archive_zstd_unsupported">این آرشیو با zstd فشرده شده که Tern نمی‌تواند آن را باز کند. یک فایل .zip یا .tar از این انتشار انتخاب کنید، یا فایلی که با gzip، bzip2 یا xz فشرده شده است.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s از %2$s</string>
+    <string name="install_setting_one_download">یک دانلود در هر زمان</string>
+    <string name="install_setting_one_download_effect">دانلودها به‌جای اجرای هم‌زمان، منتظر یکدیگر می‌مانند.</string>
+    <string name="install_file_foreign_host">این فایل از %1$s می‌آید که سایت منبع این برنامه نیست. مانند هر فایل دیگری بررسی می‌شود.</string>
+    <string name="install_file_picked">انتخاب شما</string>
+    <string name="install_file_automatic">اجازه دادن به Tern برای انتخاب دوباره فایل</string>
+    <string name="install_file_picked_kept">به‌روزرسانی‌ها به فایلی که انتخاب کرده‌اید پایبند می‌مانند، %1$s.</string>
+    <string name="install_file_picked_missing">این انتشار فایلی مانند فایلی که انتخاب کرده‌اید (%1$s) ندارد، بنابراین Tern فایلی را انتخاب کرد.</string>
+</resources>

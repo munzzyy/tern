@@ -24,7 +24,7 @@
     <string name="add_replace">Thay thế cài đặt của ứng dụng</string>
     <string name="add_replace_explain">Liên kết chứa cài đặt riêng cho ứng dụng này. Việc thay thế giữ lại các chứng chỉ mà ứng dụng tin cậy và tên gói, và không khiến ứng dụng tự cài đặt bản cập nhật.</string>
     <string name="results_filter">Bộ lọc</string>
-    <string name="results_filter_help">Các từ hoặc một mẫu</string>
+    <string name="results_filter_help">Từ hoặc một mẫu</string>
     <string name="results_filter_none">Không có mục nào trong danh sách khớp với \"%1$s\".</string>
     <string name="repo_search_all">Tìm \"%1$s\" trong toàn bộ kho lưu trữ</string>
     <string name="repo_show_all">Hiện tất cả ứng dụng trong kho lưu trữ</string>

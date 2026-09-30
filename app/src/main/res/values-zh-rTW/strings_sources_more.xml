@@ -25,6 +25,6 @@
     <string name="github_proxy_host">hubproxy 主機</string>
     <string name="github_proxy_help">只填主機名稱，例如 gh-proxy.com。Tern 會透過 HTTPS 連線。</string>
     <string name="github_proxy_invalid">這不是 Tern 可以使用的主機名稱</string>
-    <string name="github_proxy_in_use">GitHub 請求會透過 %1$s</string>
+    <string name="github_proxy_in_use">GitHub 請求會透過 %1$s 轉送</string>
     <string name="github_proxy_remove">停止使用 hubproxy</string>
 </resources>

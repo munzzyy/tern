@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_track_only_forced">برنامه‌های %1$s فقط قابل دنبال کردن هستند، چون این منبع فایلی برای نصب ارائه نمی‌دهد.</string>
+    <string name="min_age_global">همان‌طور که برای همه برنامه‌ها تنظیم شده: %1$s</string>
+    <string name="setting_min_age_global_effect">برنامه‌هایی که انتظار مخصوص خود را ندارند، پیش از ارائه یک انتشار جدید این مدت صبر می‌کنند، تا انتشارهای بد پیش از آن حذف شوند.</string>
+    <string name="option_link_text">فیلتر کردن پیوندها بر اساس متن آن‌ها</string>
+    <string name="option_link_text_effect">فیلتر با متن پیوند مقایسه می‌شود، نه با آدرس آن.</string>
+    <string name="option_take_first">برداشتن اولین پیوند</string>
+    <string name="option_take_first_effect">در غیر این صورت آخرین پیوند به ترتیب برداشته می‌شود.</string>
+    <string name="option_natural_order_effect">در غیر این صورت پیوندها بر اساس آدرسشان به ترتیب طبیعی مرتب می‌شوند و اعداد به‌صورت عدد خوانده می‌شوند.</string>
+    <string name="option_by_last_segment">تکیه بر انتهای آدرس</string>
+    <string name="option_by_last_segment_effect">پیوندها مرتب می‌شوند و نسخه‌ها خوانده می‌شوند، بر اساس بخشی که بعد از آخرین خط مورب می‌آید.</string>
+    <string name="option_steps_title">صفحاتی که ابتدا باید از آن‌ها گذشت</string>
+    <string name="option_steps_order_help">در هر صفحه، پیوندهای مطابق مرتب می‌شوند و آخرین آن‌ها باز می‌شود.</string>
+    <string name="step_title">صفحه %1$d</string>
+    <string name="step_filter">پیوندی که باید باز شود</string>
+    <string name="step_text">تطبیق با متن پیوند</string>
+    <string name="step_arch">ترجیح پردازنده این دستگاه</string>
+    <string name="step_add">افزودن یک صفحه</string>
+    <string name="step_remove">حذف این صفحه</string>
+    <string name="option_file_version">استفاده از نام فایل به‌عنوان نسخه</string>
+    <string name="option_file_version_effect">در این صورت هر فایل یک انتشار جداگانه به حساب می‌آید.</string>
+    <string name="github_proxy_title">GitHub از طریق hubproxy</string>
+    <string name="github_proxy_effect">هر درخواست به GitHub به این میزبان می‌رود و میزبان همه آن‌ها را می‌بیند. هیچ توکنی از طریق آن ارسال نمی‌شود، بنابراین پروژه‌های خصوصی و GitHub Actions را نمی‌توان از این راه دنبال کرد.</string>
+    <string name="github_proxy_host">میزبان hubproxy</string>
+    <string name="github_proxy_help">فقط نام میزبان، مانند gh-proxy.com. Tern از طریق HTTPS به آن دسترسی پیدا می‌کند.</string>
+    <string name="github_proxy_invalid">این نام میزبانی نیست که Tern بتواند از آن استفاده کند</string>
+    <string name="github_proxy_in_use">درخواست‌های GitHub از طریق %1$s انجام می‌شوند</string>
+    <string name="github_proxy_remove">توقف استفاده از hubproxy</string>
+</resources>

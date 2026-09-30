@@ -25,6 +25,6 @@
     <string name="github_proxy_host">hubproxy 主机</string>
     <string name="github_proxy_help">只填主机名，例如 gh-proxy.com。Tern 通过 HTTPS 连接它。</string>
     <string name="github_proxy_invalid">这不是 Tern 可以使用的主机名</string>
-    <string name="github_proxy_in_use">GitHub 请求将通过 %1$s</string>
+    <string name="github_proxy_in_use">GitHub 请求将通过 %1$s 转发</string>
     <string name="github_proxy_remove">停止使用 hubproxy</string>
 </resources>

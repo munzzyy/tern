@@ -5,7 +5,7 @@
     <string name="filter_name">Tên</string>
     <string name="filter_author">Nhà phát triển</string>
     <string name="filter_package">Tên gói</string>
-    <string name="filter_show_up_to_date">Ứng dụng đã được cập nhật</string>
+    <string name="filter_show_up_to_date">Ứng dụng đã ở bản mới nhất</string>
     <string name="filter_show_not_installed">Ứng dụng chưa cài đặt</string>
     <string name="filter_show_tracked">Ứng dụng chỉ được theo dõi</string>
     <string name="filter_categories">Thuộc bất kỳ danh mục nào sau đây</string>

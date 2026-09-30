@@ -1,2 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">Aktivitetslog</string>
+    <string name="journal_keep_own">Behold Terns egne beskeder i loggen</string>
+    <string name="journal_keep_own_effect">Terns advarsler og fejl samt hvornår hvert tjek starter og slutter. Alt, der kunne være en adgangskode eller et token, udelades, og loggen bliver på denne enhed, medmindre du deler den.</string>
+    <string name="journal_filter_own">Terns beskeder</string>
+    <string name="journal_mark_note">Note fra Tern</string>
+    <string name="journal_mark_warning">Advarsel fra Tern</string>
+    <string name="journal_mark_error">Fejl fra Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Et tjek af %1$d app er startet.</item>
+        <item quantity="other">Et tjek af %1$d apps er startet.</item>
+    </plurals>
+    <string name="journal_check_started_one">Et tjek af %1$s er startet.</string>
+    <string name="journal_cause_asked">Der blev bedt om det i Tern.</string>
+    <string name="journal_cause_opening">Tern blev åbnet.</string>
+    <string name="journal_cause_page">Appens side blev åbnet.</string>
+    <string name="journal_cause_link">Et link bad om det.</string>
+    <string name="journal_cause_shortcut">En genvej bad om det.</string>
+    <string name="journal_cause_widget">Widgetten bad om det.</string>
+    <string name="journal_cause_tile">Handlingsfeltet i Kvikmenu bad om det.</string>
+    <string name="journal_cause_schedule">Tidsplanen startede det.</string>
+    <string name="journal_cause_retry">Det prøver igen, hvor det sidste tjek mislykkedes.</string>
+    <string name="journal_cause_added">Appen blev lige tilføjet.</string>
+    <string name="journal_cause_imported">Appene blev lige importeret.</string>
+    <string name="journal_cause_changed">Appens indstillinger blev ændret.</string>
+    <string name="journal_cause_install">Appen er ved at blive installeret og tjekkes først.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">Tjekket af %1$d app sluttede efter %2$s.</item>
+        <item quantity="other">Tjekket af %1$d apps sluttede efter %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Tjekket af %1$s sluttede efter %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Tjekket fandt %1$d opdatering.</item>
+        <item quantity="other">Tjekket fandt %1$d opdateringer.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d app kunne ikke tjekkes.</item>
+        <item quantity="other">%1$d apps kunne ikke tjekkes.</item>
+    </plurals>
+    <string name="journal_check_stopped">Tjekket stoppede efter %1$s, før det var færdigt.</string>
+</resources>

@@ -1,2 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">ആക്റ്റിവിറ്റി ലോഗ്</string>
+    <string name="journal_keep_own">Tern-ൻ്റെ സ്വന്തം സന്ദേശങ്ങൾ ലോഗിൽ സൂക്ഷിക്കുക</string>
+    <string name="journal_keep_own_effect">Tern-ൻ്റെ മുന്നറിയിപ്പുകളും പിശകുകളും, ഓരോ പരിശോധനയുടെയും ആരംഭവും അവസാനവും. പാസ്‌വേഡോ ടോക്കണോ ആകാൻ സാധ്യതയുള്ള ഒന്നും ഉൾപ്പെടുത്തില്ല, നിങ്ങൾ പങ്കിടുന്നില്ലെങ്കിൽ ലോഗ് ഈ ഉപകരണത്തിൽ മാത്രമേ ഉണ്ടാകൂ.</string>
+    <string name="journal_filter_own">Tern-ൻ്റെ സന്ദേശങ്ങൾ</string>
+    <string name="journal_mark_note">Tern-ൽ നിന്നുള്ള കുറിപ്പ്</string>
+    <string name="journal_mark_warning">Tern-ൽ നിന്നുള്ള മുന്നറിയിപ്പ്</string>
+    <string name="journal_mark_error">Tern-ൽ നിന്നുള്ള പിശക്</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">%1$d ആപ്പിൻ്റെ പരിശോധന ആരംഭിച്ചു.</item>
+        <item quantity="other">%1$d ആപ്പുകളുടെ പരിശോധന ആരംഭിച്ചു.</item>
+    </plurals>
+    <string name="journal_check_started_one">%1$s-ൻ്റെ പരിശോധന ആരംഭിച്ചു.</string>
+    <string name="journal_cause_asked">പരിശോധന Tern-ൽ ആവശ്യപ്പെട്ടതാണ്.</string>
+    <string name="journal_cause_opening">Tern തുറന്നു.</string>
+    <string name="journal_cause_page">ആപ്പിൻ്റെ പേജ് തുറന്നു.</string>
+    <string name="journal_cause_link">ഒരു ലിങ്ക് പരിശോധന ആവശ്യപ്പെട്ടു.</string>
+    <string name="journal_cause_shortcut">ഒരു ഷോർട്ട്‌കട്ട് പരിശോധന ആവശ്യപ്പെട്ടു.</string>
+    <string name="journal_cause_widget">വിജറ്റ് പരിശോധന ആവശ്യപ്പെട്ടു.</string>
+    <string name="journal_cause_tile">ക്വിക്ക് സെറ്റിംഗ്‌സ് ടൈൽ പരിശോധന ആവശ്യപ്പെട്ടു.</string>
+    <string name="journal_cause_schedule">ഷെഡ്യൂൾ അനുസരിച്ച് ആരംഭിച്ചു.</string>
+    <string name="journal_cause_retry">അവസാന പരിശോധന പരാജയപ്പെട്ടിടത്ത് ഇത് വീണ്ടും ശ്രമിക്കുന്നു.</string>
+    <string name="journal_cause_added">ഈ ആപ്പ് ഇപ്പോൾ ചേർത്തതേയുള്ളൂ.</string>
+    <string name="journal_cause_imported">ഈ ആപ്പുകൾ ഇപ്പോൾ ഇംപോർട്ട് ചെയ്തതേയുള്ളൂ.</string>
+    <string name="journal_cause_changed">ആപ്പിൻ്റെ സെറ്റിംഗ്‌സ് മാറി.</string>
+    <string name="journal_cause_install">ഈ ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യാൻ പോകുകയാണ്, ആദ്യം പരിശോധിക്കുകയും ചെയ്യുന്നു.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">%1$d ആപ്പിൻ്റെ പരിശോധന %2$s-ന് ശേഷം അവസാനിച്ചു.</item>
+        <item quantity="other">%1$d ആപ്പുകളുടെ പരിശോധന %2$s-ന് ശേഷം അവസാനിച്ചു.</item>
+    </plurals>
+    <string name="journal_check_ended_one">%1$s-ൻ്റെ പരിശോധന %2$s-ന് ശേഷം അവസാനിച്ചു.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">%1$d അപ്ഡേറ്റ് കണ്ടെത്തി.</item>
+        <item quantity="other">%1$d അപ്ഡേറ്റുകൾ കണ്ടെത്തി.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d ആപ്പ് പരിശോധിക്കാനായില്ല.</item>
+        <item quantity="other">%1$d ആപ്പുകൾ പരിശോധിക്കാനായില്ല.</item>
+    </plurals>
+    <string name="journal_check_stopped">%1$s-ന് ശേഷം പരിശോധന പൂർത്തിയാകാതെ നിലച്ചു.</string>
+</resources>

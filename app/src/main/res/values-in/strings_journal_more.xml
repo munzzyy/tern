@@ -1,2 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">Log aktivitas</string>
+    <string name="journal_keep_own">Simpan pesan Tern sendiri di log</string>
+    <string name="journal_keep_own_effect">Peringatan dan kesalahan dari Tern, serta kapan setiap pemeriksaan dimulai dan berakhir. Apa pun yang mungkin berupa kata sandi atau token tidak disertakan, dan log tetap berada di perangkat ini kecuali Anda membagikannya.</string>
+    <string name="journal_filter_own">Pesan Tern</string>
+    <string name="journal_mark_note">Catatan dari Tern</string>
+    <string name="journal_mark_warning">Peringatan dari Tern</string>
+    <string name="journal_mark_error">Kesalahan dari Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="other">Pemeriksaan %1$d aplikasi dimulai.</item>
+    </plurals>
+    <string name="journal_check_started_one">Pemeriksaan %1$s dimulai.</string>
+    <string name="journal_cause_asked">Pemeriksaan ini diminta di Tern.</string>
+    <string name="journal_cause_opening">Tern dibuka.</string>
+    <string name="journal_cause_page">Halaman aplikasi ini dibuka.</string>
+    <string name="journal_cause_link">Diminta oleh sebuah tautan.</string>
+    <string name="journal_cause_shortcut">Diminta oleh sebuah pintasan.</string>
+    <string name="journal_cause_widget">Diminta oleh widget.</string>
+    <string name="journal_cause_tile">Diminta oleh kartu Setelan Cepat.</string>
+    <string name="journal_cause_schedule">Dimulai sesuai jadwal.</string>
+    <string name="journal_cause_retry">Mencoba lagi bagian yang gagal pada pemeriksaan terakhir.</string>
+    <string name="journal_cause_added">Aplikasi ini baru saja ditambahkan.</string>
+    <string name="journal_cause_imported">Aplikasi ini baru saja diimpor.</string>
+    <string name="journal_cause_changed">Setelan aplikasi ini berubah.</string>
+    <string name="journal_cause_install">Aplikasi ini akan segera diinstal dan diperiksa terlebih dahulu.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="other">Pemeriksaan %1$d aplikasi berakhir setelah %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Pemeriksaan %1$s berakhir setelah %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="other">Ditemukan %1$d pembaruan.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="other">%1$d aplikasi tidak dapat diperiksa.</item>
+    </plurals>
+    <string name="journal_check_stopped">Pemeriksaan berhenti setelah %1$s, sebelum selesai.</string>
+</resources>

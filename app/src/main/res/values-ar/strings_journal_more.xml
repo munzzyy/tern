@@ -1,2 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">سجل النشاط</string>
+    <string name="journal_keep_own">الاحتفاظ برسائل Tern نفسه في السجل</string>
+    <string name="journal_keep_own_effect">تحذيرات Tern وأخطاؤه، وبداية كل فحص ونهايته. لا يتم تضمين أي شيء قد يكون كلمة مرور أو رمزًا، ويبقى السجل على هذا الجهاز ما لم تشاركه.</string>
+    <string name="journal_filter_own">رسائل Tern</string>
+    <string name="journal_mark_note">ملاحظة من Tern</string>
+    <string name="journal_mark_warning">تحذير من Tern</string>
+    <string name="journal_mark_error">خطأ من Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="zero">بدأ فحص %1$d تطبيق.</item>
+        <item quantity="one">بدأ فحص تطبيق واحد (%1$d).</item>
+        <item quantity="two">بدأ فحص تطبيقين (%1$d).</item>
+        <item quantity="few">بدأ فحص %1$d تطبيقات.</item>
+        <item quantity="many">بدأ فحص %1$d تطبيقًا.</item>
+        <item quantity="other">بدأ فحص %1$d تطبيق.</item>
+    </plurals>
+    <string name="journal_check_started_one">بدأ فحص %1$s.</string>
+    <string name="journal_cause_asked">طُلب في Tern.</string>
+    <string name="journal_cause_opening">فُتح Tern.</string>
+    <string name="journal_cause_page">فُتحت صفحة التطبيق.</string>
+    <string name="journal_cause_link">طلبه رابط.</string>
+    <string name="journal_cause_shortcut">طلبه اختصار.</string>
+    <string name="journal_cause_widget">طلبته الأداة.</string>
+    <string name="journal_cause_tile">طلبه مربع الإعدادات السريعة.</string>
+    <string name="journal_cause_schedule">شغّله الجدول الزمني.</string>
+    <string name="journal_cause_retry">يعيد المحاولة حيث فشل الفحص الأخير.</string>
+    <string name="journal_cause_added">أُضيف التطبيق للتو.</string>
+    <string name="journal_cause_imported">تم استيراد التطبيقات للتو.</string>
+    <string name="journal_cause_changed">تغيرت إعدادات التطبيق.</string>
+    <string name="journal_cause_install">التطبيق على وشك أن يُثبَّت، ويُفحص أولًا.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="zero">انتهى فحص %1$d تطبيق بعد %2$s.</item>
+        <item quantity="one">انتهى فحص تطبيق واحد (%1$d) بعد %2$s.</item>
+        <item quantity="two">انتهى فحص تطبيقين (%1$d) بعد %2$s.</item>
+        <item quantity="few">انتهى فحص %1$d تطبيقات بعد %2$s.</item>
+        <item quantity="many">انتهى فحص %1$d تطبيقًا بعد %2$s.</item>
+        <item quantity="other">انتهى فحص %1$d تطبيق بعد %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">انتهى فحص %1$s بعد %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="zero">لم يتم العثور على أي تحديث (%1$d).</item>
+        <item quantity="one">تم العثور على تحديث واحد (%1$d).</item>
+        <item quantity="two">تم العثور على تحديثين (%1$d).</item>
+        <item quantity="few">تم العثور على %1$d تحديثات.</item>
+        <item quantity="many">تم العثور على %1$d تحديثًا.</item>
+        <item quantity="other">تم العثور على %1$d تحديث.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="zero">تعذر فحص %1$d تطبيق.</item>
+        <item quantity="one">تعذر فحص تطبيق واحد (%1$d).</item>
+        <item quantity="two">تعذر فحص تطبيقين (%1$d).</item>
+        <item quantity="few">تعذر فحص %1$d تطبيقات.</item>
+        <item quantity="many">تعذر فحص %1$d تطبيقًا.</item>
+        <item quantity="other">تعذر فحص %1$d تطبيق.</item>
+    </plurals>
+    <string name="journal_check_stopped">توقف الفحص بعد %1$s قبل أن يكتمل.</string>
+</resources>

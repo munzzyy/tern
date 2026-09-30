@@ -1,2 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">Aktivitetslogg</string>
+    <string name="journal_keep_own">Behåll Terns egna meddelanden i loggen</string>
+    <string name="journal_keep_own_effect">Terns varningar och fel samt när varje kontroll startar och slutar. Allt som kan vara ett lösenord eller en token utelämnas, och loggen stannar på denna enhet om du inte delar den.</string>
+    <string name="journal_filter_own">Terns meddelanden</string>
+    <string name="journal_mark_note">Anteckning från Tern</string>
+    <string name="journal_mark_warning">Varning från Tern</string>
+    <string name="journal_mark_error">Fel från Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">En kontroll av %1$d app har startat.</item>
+        <item quantity="other">En kontroll av %1$d appar har startat.</item>
+    </plurals>
+    <string name="journal_check_started_one">En kontroll av %1$s har startat.</string>
+    <string name="journal_cause_asked">Den begärdes i Tern.</string>
+    <string name="journal_cause_opening">Tern öppnades.</string>
+    <string name="journal_cause_page">Appens sida öppnades.</string>
+    <string name="journal_cause_link">En länk begärde den.</string>
+    <string name="journal_cause_shortcut">En genväg begärde den.</string>
+    <string name="journal_cause_widget">Widgeten begärde den.</string>
+    <string name="journal_cause_tile">Rutan i snabbinställningarna begärde den.</string>
+    <string name="journal_cause_schedule">Schemat startade den.</string>
+    <string name="journal_cause_retry">Den försöker igen där den senaste kontrollen misslyckades.</string>
+    <string name="journal_cause_added">Appen lades precis till.</string>
+    <string name="journal_cause_imported">Apparna importerades precis.</string>
+    <string name="journal_cause_changed">Appens inställningar ändrades.</string>
+    <string name="journal_cause_install">Appen är på väg att installeras och kontrolleras först.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">Kontrollen av %1$d app slutade efter %2$s.</item>
+        <item quantity="other">Kontrollen av %1$d appar slutade efter %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Kontrollen av %1$s slutade efter %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Den hittade %1$d uppdatering.</item>
+        <item quantity="other">Den hittade %1$d uppdateringar.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d app kunde inte kontrolleras.</item>
+        <item quantity="other">%1$d appar kunde inte kontrolleras.</item>
+    </plurals>
+    <string name="journal_check_stopped">Kontrollen stannade efter %1$s, innan den var klar.</string>
+</resources>

@@ -1,2 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">گزارش فعالیت</string>
+    <string name="journal_keep_own">حفظ پیام‌های خود Tern در گزارش</string>
+    <string name="journal_keep_own_effect">هشدارها و خطاهای Tern و همچنین آغاز و پایان هر بررسی. هر چیزی که ممکن است رمز عبور یا توکن باشد کنار گذاشته می‌شود و گزارش در این دستگاه می‌ماند، مگر اینکه آن را به اشتراک بگذارید.</string>
+    <string name="journal_filter_own">پیام‌های Tern</string>
+    <string name="journal_mark_note">یادداشت از Tern</string>
+    <string name="journal_mark_warning">هشدار از Tern</string>
+    <string name="journal_mark_error">خطا از Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">بررسی %1$d برنامه شروع شد.</item>
+        <item quantity="other">بررسی %1$d برنامه شروع شد.</item>
+    </plurals>
+    <string name="journal_check_started_one">بررسی %1$s شروع شد.</string>
+    <string name="journal_cause_asked">در Tern درخواست شد.</string>
+    <string name="journal_cause_opening">Tern باز شد.</string>
+    <string name="journal_cause_page">صفحه برنامه باز شد.</string>
+    <string name="journal_cause_link">یک پیوند آن را درخواست کرد.</string>
+    <string name="journal_cause_shortcut">یک میان‌بر آن را درخواست کرد.</string>
+    <string name="journal_cause_widget">ابزارک آن را درخواست کرد.</string>
+    <string name="journal_cause_tile">کاشی تنظیمات فوری آن را درخواست کرد.</string>
+    <string name="journal_cause_schedule">زمان‌بندی آن را آغاز کرد.</string>
+    <string name="journal_cause_retry">هر جا بررسی قبلی ناموفق بود، دوباره تلاش می‌کند.</string>
+    <string name="journal_cause_added">برنامه همین حالا اضافه شد.</string>
+    <string name="journal_cause_imported">برنامه‌ها همین حالا درون‌ریزی شدند.</string>
+    <string name="journal_cause_changed">تنظیمات برنامه تغییر کرد.</string>
+    <string name="journal_cause_install">برنامه در آستانه نصب است و ابتدا بررسی می‌شود.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">بررسی %1$d برنامه پس از %2$s به پایان رسید.</item>
+        <item quantity="other">بررسی %1$d برنامه پس از %2$s به پایان رسید.</item>
+    </plurals>
+    <string name="journal_check_ended_one">بررسی %1$s پس از %2$s به پایان رسید.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">%1$d به‌روزرسانی پیدا شد.</item>
+        <item quantity="other">%1$d به‌روزرسانی پیدا شد.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">بررسی %1$d برنامه امکان‌پذیر نشد.</item>
+        <item quantity="other">بررسی %1$d برنامه امکان‌پذیر نشد.</item>
+    </plurals>
+    <string name="journal_check_stopped">بررسی پس از %1$s و پیش از تمام شدن متوقف شد.</string>
+</resources>

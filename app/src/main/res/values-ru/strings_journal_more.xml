@@ -1,2 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">Журнал активности</string>
+    <string name="journal_keep_own">Сохранять в журнале собственные сообщения Tern</string>
+    <string name="journal_keep_own_effect">Предупреждения и ошибки Tern, а также начало и конец каждой проверки. Все, что может быть паролем или токеном, не включается, а журнал остается на этом устройстве, если вы им не поделитесь.</string>
+    <string name="journal_filter_own">Сообщения Tern</string>
+    <string name="journal_mark_note">Примечание от Tern</string>
+    <string name="journal_mark_warning">Предупреждение от Tern</string>
+    <string name="journal_mark_error">Ошибка от Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Началась проверка %1$d приложения.</item>
+        <item quantity="few">Началась проверка %1$d приложений.</item>
+        <item quantity="many">Началась проверка %1$d приложений.</item>
+        <item quantity="other">Началась проверка %1$d приложения.</item>
+    </plurals>
+    <string name="journal_check_started_one">Началась проверка %1$s.</string>
+    <string name="journal_cause_asked">Ее запросили в Tern.</string>
+    <string name="journal_cause_opening">Tern был открыт.</string>
+    <string name="journal_cause_page">Была открыта страница приложения.</string>
+    <string name="journal_cause_link">Ее запросила ссылка.</string>
+    <string name="journal_cause_shortcut">Ее запросил ярлык.</string>
+    <string name="journal_cause_widget">Ее запросил виджет.</string>
+    <string name="journal_cause_tile">Ее запросила плитка быстрых настроек.</string>
+    <string name="journal_cause_schedule">Ее запустило расписание.</string>
+    <string name="journal_cause_retry">Она повторяет попытку там, где прошлая проверка не удалась.</string>
+    <string name="journal_cause_added">Приложение только что добавлено.</string>
+    <string name="journal_cause_imported">Приложения только что импортированы.</string>
+    <string name="journal_cause_changed">Настройки приложения изменились.</string>
+    <string name="journal_cause_install">Приложение вот-вот будет установлено и сначала проверяется.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">Проверка %1$d приложения завершилась за %2$s.</item>
+        <item quantity="few">Проверка %1$d приложений завершилась за %2$s.</item>
+        <item quantity="many">Проверка %1$d приложений завершилась за %2$s.</item>
+        <item quantity="other">Проверка %1$d приложения завершилась за %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Проверка %1$s завершилась за %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Найдено %1$d обновление.</item>
+        <item quantity="few">Найдено %1$d обновления.</item>
+        <item quantity="many">Найдено %1$d обновлений.</item>
+        <item quantity="other">Найдено %1$d обновления.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">Не удалось проверить %1$d приложение.</item>
+        <item quantity="few">Не удалось проверить %1$d приложения.</item>
+        <item quantity="many">Не удалось проверить %1$d приложений.</item>
+        <item quantity="other">Не удалось проверить %1$d приложения.</item>
+    </plurals>
+    <string name="journal_check_stopped">Проверка остановилась через %1$s, не дойдя до конца.</string>
+</resources>

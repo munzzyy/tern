@@ -1,2 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">アクティビティログ</string>
+    <string name="journal_keep_own">Tern自身のメッセージをログに残す</string>
+    <string name="journal_keep_own_effect">Ternの警告とエラー、および各確認の開始と終了を記録します。パスワードやトークンの可能性があるものは除外され、ログは共有しない限りこの端末の外には出ません。</string>
+    <string name="journal_filter_own">Ternのメッセージ</string>
+    <string name="journal_mark_note">Ternからのお知らせ</string>
+    <string name="journal_mark_warning">Ternからの警告</string>
+    <string name="journal_mark_error">Ternからのエラー</string>
+    <plurals name="journal_check_started">
+        <item quantity="other">%1$d 個のアプリの確認を開始しました。</item>
+    </plurals>
+    <string name="journal_check_started_one">%1$s の確認を開始しました。</string>
+    <string name="journal_cause_asked">Ternで要求されました。</string>
+    <string name="journal_cause_opening">Ternが開かれました。</string>
+    <string name="journal_cause_page">そのアプリのページが開かれました。</string>
+    <string name="journal_cause_link">リンクから要求されました。</string>
+    <string name="journal_cause_shortcut">ショートカットから要求されました。</string>
+    <string name="journal_cause_widget">ウィジェットから要求されました。</string>
+    <string name="journal_cause_tile">クイック設定タイルから要求されました。</string>
+    <string name="journal_cause_schedule">スケジュールに従って実行されました。</string>
+    <string name="journal_cause_retry">前回の確認が失敗した分を再試行します。</string>
+    <string name="journal_cause_added">そのアプリは追加されたばかりです。</string>
+    <string name="journal_cause_imported">それらのアプリはインポートされたばかりです。</string>
+    <string name="journal_cause_changed">そのアプリの設定が変更されました。</string>
+    <string name="journal_cause_install">そのアプリはこれからインストールされるところで、先に確認されます。</string>
+    <plurals name="journal_check_ended">
+        <item quantity="other">%1$d 個のアプリの確認が%2$s後に終了しました。</item>
+    </plurals>
+    <string name="journal_check_ended_one">%1$s の確認が%2$s後に終了しました。</string>
+    <plurals name="journal_check_updates">
+        <item quantity="other">%1$d件の更新が見つかりました。</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="other">%1$d 個のアプリを確認できませんでした。</item>
+    </plurals>
+    <string name="journal_check_stopped">確認が%1$s後に停止し、完了しませんでした。</string>
+</resources>

@@ -1,2 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">Журнал активності</string>
+    <string name="journal_keep_own">Зберігати в журналі власні повідомлення Tern</string>
+    <string name="journal_keep_own_effect">Попередження та помилки Tern, а також початок і кінець кожної перевірки. Усе, що може бути паролем або маркером, не включається, а журнал залишається на цьому пристрої, якщо ви ним не поділитеся.</string>
+    <string name="journal_filter_own">Повідомлення Tern</string>
+    <string name="journal_mark_note">Примітка від Tern</string>
+    <string name="journal_mark_warning">Попередження від Tern</string>
+    <string name="journal_mark_error">Помилка від Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Почалася перевірка %1$d програми.</item>
+        <item quantity="few">Почалася перевірка %1$d програм.</item>
+        <item quantity="many">Почалася перевірка %1$d програм.</item>
+        <item quantity="other">Почалася перевірка %1$d програми.</item>
+    </plurals>
+    <string name="journal_check_started_one">Почалася перевірка %1$s.</string>
+    <string name="journal_cause_asked">Її ініціювали в Tern.</string>
+    <string name="journal_cause_opening">Tern було відкрито.</string>
+    <string name="journal_cause_page">Було відкрито сторінку програми.</string>
+    <string name="journal_cause_link">Її ініціювало посилання.</string>
+    <string name="journal_cause_shortcut">Її ініціював ярлик.</string>
+    <string name="journal_cause_widget">Її ініціював віджет.</string>
+    <string name="journal_cause_tile">Її ініціювала плитка швидких налаштувань.</string>
+    <string name="journal_cause_schedule">Її запустив розклад.</string>
+    <string name="journal_cause_retry">Вона повторює спробу там, де попередня перевірка не вдалася.</string>
+    <string name="journal_cause_added">Програму щойно додано.</string>
+    <string name="journal_cause_imported">Програми щойно імпортовано.</string>
+    <string name="journal_cause_changed">Налаштування програми змінилися.</string>
+    <string name="journal_cause_install">Програму ось-ось буде встановлено, і спершу її перевіряють.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">Перевірка %1$d програми завершилася за %2$s.</item>
+        <item quantity="few">Перевірка %1$d програм завершилася за %2$s.</item>
+        <item quantity="many">Перевірка %1$d програм завершилася за %2$s.</item>
+        <item quantity="other">Перевірка %1$d програми завершилася за %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Перевірка %1$s завершилася за %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Знайдено %1$d оновлення.</item>
+        <item quantity="few">Знайдено %1$d оновлення.</item>
+        <item quantity="many">Знайдено %1$d оновлень.</item>
+        <item quantity="other">Знайдено %1$d оновлення.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">Не вдалося перевірити %1$d програму.</item>
+        <item quantity="few">Не вдалося перевірити %1$d програми.</item>
+        <item quantity="many">Не вдалося перевірити %1$d програм.</item>
+        <item quantity="other">Не вдалося перевірити %1$d програми.</item>
+    </plurals>
+    <string name="journal_check_stopped">Перевірка зупинилася через %1$s, не дійшовши до кінця.</string>
+</resources>

@@ -1,2 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">활동 기록</string>
+    <string name="journal_keep_own">Tern의 자체 메시지를 기록에 보관</string>
+    <string name="journal_keep_own_effect">Tern의 경고와 오류, 그리고 각 확인이 시작되고 끝나는 시점을 기록합니다. 비밀번호나 토큰일 수 있는 내용은 제외되며, 기록은 공유하지 않는 한 이 기기에만 남습니다.</string>
+    <string name="journal_filter_own">Tern의 메시지</string>
+    <string name="journal_mark_note">Tern의 안내</string>
+    <string name="journal_mark_warning">Tern의 경고</string>
+    <string name="journal_mark_error">Tern의 오류</string>
+    <plurals name="journal_check_started">
+        <item quantity="other">앱 %1$d개 확인이 시작되었습니다.</item>
+    </plurals>
+    <string name="journal_check_started_one">%1$s 확인이 시작되었습니다.</string>
+    <string name="journal_cause_asked">Tern 안에서 요청되었습니다.</string>
+    <string name="journal_cause_opening">Tern이 열렸습니다.</string>
+    <string name="journal_cause_page">이 앱의 페이지가 열렸습니다.</string>
+    <string name="journal_cause_link">링크를 통해 요청되었습니다.</string>
+    <string name="journal_cause_shortcut">바로가기를 통해 요청되었습니다.</string>
+    <string name="journal_cause_widget">위젯을 통해 요청되었습니다.</string>
+    <string name="journal_cause_tile">빠른 설정 타일을 통해 요청되었습니다.</string>
+    <string name="journal_cause_schedule">일정에 따라 실행되었습니다.</string>
+    <string name="journal_cause_retry">지난 확인에서 실패한 부분을 다시 시도합니다.</string>
+    <string name="journal_cause_added">이 앱은 방금 추가되었습니다.</string>
+    <string name="journal_cause_imported">이 앱들은 방금 가져왔습니다.</string>
+    <string name="journal_cause_changed">이 앱의 설정이 변경되었습니다.</string>
+    <string name="journal_cause_install">이 앱은 곧 설치되며, 먼저 확인됩니다.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="other">앱 %1$d개 확인이 %2$s 후에 끝났습니다.</item>
+    </plurals>
+    <string name="journal_check_ended_one">%1$s 확인이 %2$s 후에 끝났습니다.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="other">업데이트 %1$d개를 찾았습니다.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="other">앱 %1$d개를 확인할 수 없었습니다.</item>
+    </plurals>
+    <string name="journal_check_stopped">확인이 %1$s 후에 중단되었으며, 완료되지 않았습니다.</string>
+</resources>

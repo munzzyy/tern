@@ -1,2 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">Tevékenységnapló</string>
+    <string name="journal_keep_own">A Tern saját üzeneteinek megtartása a naplóban</string>
+    <string name="journal_keep_own_effect">A Tern figyelmeztetései és hibái, valamint az egyes ellenőrzések kezdete és vége. Minden, ami jelszó vagy token lehet, kimarad, és a napló ezen az eszközön marad, hacsak nem osztja meg.</string>
+    <string name="journal_filter_own">A Tern üzenetei</string>
+    <string name="journal_mark_note">A Tern megjegyzése</string>
+    <string name="journal_mark_warning">A Tern figyelmeztetése</string>
+    <string name="journal_mark_error">A Tern hibaüzenete</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Elindult %1$d alkalmazás ellenőrzése.</item>
+        <item quantity="other">Elindult %1$d alkalmazás ellenőrzése.</item>
+    </plurals>
+    <string name="journal_check_started_one">Elindult a(z) %1$s ellenőrzése.</string>
+    <string name="journal_cause_asked">Az ellenőrzést a Tern alkalmazásban kérték.</string>
+    <string name="journal_cause_opening">Megnyílt a Tern alkalmazás.</string>
+    <string name="journal_cause_page">Megnyílt az alkalmazás oldala.</string>
+    <string name="journal_cause_link">Egy link kérte az ellenőrzést.</string>
+    <string name="journal_cause_shortcut">Egy parancsikon kérte az ellenőrzést.</string>
+    <string name="journal_cause_widget">A widget kérte az ellenőrzést.</string>
+    <string name="journal_cause_tile">A Gyorsbeállítások mozaikja kérte az ellenőrzést.</string>
+    <string name="journal_cause_schedule">Az ütemezés indította el az ellenőrzést.</string>
+    <string name="journal_cause_retry">Ott próbálkozik újra, ahol a legutóbbi ellenőrzés sikertelen volt.</string>
+    <string name="journal_cause_added">Az alkalmazást épp most adták hozzá.</string>
+    <string name="journal_cause_imported">Az alkalmazásokat épp most importálták.</string>
+    <string name="journal_cause_changed">Az alkalmazás beállításai megváltoztak.</string>
+    <string name="journal_cause_install">Az alkalmazás telepítése mindjárt megkezdődik, és előbb ellenőrzésre kerül.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">Véget ért %1$d alkalmazás ellenőrzése %2$s után.</item>
+        <item quantity="other">Véget ért %1$d alkalmazás ellenőrzése %2$s után.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Véget ért a(z) %1$s ellenőrzése %2$s után.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">%1$d frissítést talált.</item>
+        <item quantity="other">%1$d frissítést talált.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d alkalmazást nem sikerült ellenőrizni.</item>
+        <item quantity="other">%1$d alkalmazást nem sikerült ellenőrizni.</item>
+    </plurals>
+    <string name="journal_check_stopped">Az ellenőrzés %1$s után leállt, mielőtt befejeződött volna.</string>
+</resources>

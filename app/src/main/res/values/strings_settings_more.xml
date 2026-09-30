@@ -23,4 +23,15 @@
     <string name="look_color_code">Colour code</string>
     <string name="look_color_code_effect">Tern takes the hue and strength of this colour and picks the shades of it that stay easy to read.</string>
     <string name="look_color_code_invalid">Six hexadecimal digits, such as #3D5A80.</string>
+    <string name="crash_title">Tern stopped unexpectedly</string>
+    <string name="crash_text">This is what it was doing when it stopped. It stays on this device; share it with the developer if you would like it looked at.</string>
+    <string name="crash_share">Share</string>
+    <string name="crash_copied">Copied</string>
+    <string name="activity_range">Show</string>
+    <string name="activity_range_all">Every day</string>
+    <plurals name="activity_range_days">
+        <item quantity="one">The last day</item>
+        <item quantity="other">The last %d days</item>
+    </plurals>
+    <string name="activity_copied">The log was copied</string>
 </resources>

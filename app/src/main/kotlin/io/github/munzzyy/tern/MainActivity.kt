@@ -19,12 +19,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import io.github.munzzyy.tern.data.AppLanguage
+import io.github.munzzyy.tern.data.CrashReport
 import io.github.munzzyy.tern.ui.BackStack
 import io.github.munzzyy.tern.ui.EXTRA_SCENARIO
 import io.github.munzzyy.tern.ui.RefreshLink
 import io.github.munzzyy.tern.ui.SCENARIO_FIRST_RUN
 import io.github.munzzyy.tern.ui.Scenarios
 import io.github.munzzyy.tern.ui.TernApp
+import io.github.munzzyy.tern.ui.common.CrashDialog
 import io.github.munzzyy.tern.ui.incomingAddInput
 import io.github.munzzyy.tern.ui.refreshLink
 import io.github.munzzyy.tern.ui.settings.VerificationNote
@@ -53,6 +55,9 @@ class MainActivity : ComponentActivity() {
     /** Shown once, on the first start after the first run, so it never stands in the way of that run. */
     private var verificationNote by mutableStateOf(false)
 
+    /** What Tern was doing when it last stopped unexpectedly, until the person has seen it. */
+    private var crash by mutableStateOf<String?>(null)
+
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(AppLanguage.wrap(newBase))
     }
@@ -62,6 +67,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         firstRunDone = prefs().getBoolean(KEY_FIRST_RUN_DONE, false)
         verificationNote = firstRunDone && !prefs().getBoolean(KEY_VERIFICATION_NOTE_SHOWN, false)
+        if (savedInstanceState == null) crash = CrashReport.pending(this)
         applyScenario(intent)
         if (savedInstanceState == null) receive(intent)
         if (savedInstanceState == null && firstRunDone && engine.settings.value.checkOnStart) checkOnStart()
@@ -96,7 +102,8 @@ class MainActivity : ComponentActivity() {
                     onFirstRunDone = ::finishFirstRun,
                     reducedMotion = animationsOff(),
                 )
-                if (verificationNote) VerificationNote(onDismiss = ::sawVerificationNote)
+                crash?.let { report -> CrashDialog(report, onDismiss = ::sawCrash) }
+                if (crash == null && verificationNote) VerificationNote(onDismiss = ::sawVerificationNote)
             }
         }
     }
@@ -171,6 +178,11 @@ class MainActivity : ComponentActivity() {
         prefs().edit().putBoolean(KEY_FIRST_RUN_DONE, true).apply()
     }
 
+    private fun sawCrash() {
+        crash = null
+        CrashReport.dismiss(this)
+    }
+
     private fun sawVerificationNote() {
         verificationNote = false
         prefs().edit().putBoolean(KEY_VERIFICATION_NOTE_SHOWN, true).apply()
@@ -185,6 +197,7 @@ class MainActivity : ComponentActivity() {
         } ?: return
         (engine as? Scenarios)?.loadScenario(name)
         verificationNote = false
+        crash = null
         firstRunDone = name != SCENARIO_FIRST_RUN
         prefs().edit().putBoolean(KEY_FIRST_RUN_DONE, firstRunDone).apply()
     }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -43,7 +44,8 @@ fun ProblemBox(
                 Icon(Glyphs.Caution, contentDescription = null, modifier = Modifier.size(look.glyph))
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
                     Text(title, style = MaterialTheme.typography.titleSmall)
-                    body?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
+                    // What went wrong can be selected and copied, to look it up or to report it.
+                    body?.let { SelectionContainer { Text(it, style = MaterialTheme.typography.bodyMedium) } }
                 }
             }
             if (action != null && onAction != null) {

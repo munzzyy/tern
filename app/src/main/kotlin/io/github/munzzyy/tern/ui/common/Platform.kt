@@ -1,6 +1,8 @@
 package io.github.munzzyy.tern.ui.common
 
 import android.content.ActivityNotFoundException
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
@@ -13,6 +15,11 @@ fun openNotificationSettings(context: Context): Boolean {
     } catch (_: ActivityNotFoundException) {
         false
     }
+}
+
+/** Puts [text] on the clipboard, for a device where no app takes a share, as most TVs are. */
+fun copyText(context: Context, label: String, text: String) {
+    context.getSystemService(ClipboardManager::class.java)?.setPrimaryClip(ClipData.newPlainText(label, text))
 }
 
 /** Offers [text] to whatever app the person picks. False when no app takes text. */

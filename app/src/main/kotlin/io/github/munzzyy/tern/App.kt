@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
 import io.github.munzzyy.tern.data.AppLanguage
+import io.github.munzzyy.tern.data.CrashReport
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.widget.Surfaces
 
@@ -12,6 +13,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        CrashReport.install(this)
         AppLanguage.applyTo(this)
     }
 

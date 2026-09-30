@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -45,11 +46,13 @@ import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.apps.TernSnackbarHost
 import io.github.munzzyy.tern.ui.common.ChoiceChip
+import io.github.munzzyy.tern.ui.common.ChoiceDialog
 import io.github.munzzyy.tern.ui.common.ConfirmDialog
 import io.github.munzzyy.tern.ui.common.GlyphButton
 import io.github.munzzyy.tern.ui.common.LocalNoTouch
 import io.github.munzzyy.tern.ui.common.RevealWithRoom
 import io.github.munzzyy.tern.ui.common.ScreenTop
+import io.github.munzzyy.tern.ui.common.copyText
 import io.github.munzzyy.tern.ui.common.firstFocus
 import io.github.munzzyy.tern.ui.common.focusLook
 import io.github.munzzyy.tern.ui.common.rememberActions
@@ -83,30 +86,43 @@ fun stepsToggleTag(entryId: Long): String = "activity_toggle_$entryId"
 private const val STACK_FONT_SCALE = 1.5f
 
 @Composable
+private fun rangeName(days: Int?): String =
+    if (days == null) stringResource(R.string.activity_range_all) else pluralStringResource(R.plurals.activity_range_days, days, days)
+
+@Composable
 fun ActivityScreen(onOpenApp: (String) -> Unit) {
     val engine = LocalEngine.current
     val look = LocalLook.current
     val events by engine.events.collectAsStateWithLifecycle()
     var problemsOnly by rememberSaveable { mutableStateOf(false) }
+    var lastDays by rememberSaveable { mutableStateOf<Int?>(null) }
+    var pickingDays by remember { mutableStateOf(false) }
     var confirmClear by remember { mutableStateOf(false) }
     val actions = rememberActions()
     val zone = remember { ZoneId.systemDefault() }
-    val days = remember(events, problemsOnly) { entriesByDay(events, zone, problemsOnly) }
+    val recent = remember(events, lastDays) { within(events, lastDays, System.currentTimeMillis()) }
+    val days = remember(recent, problemsOnly) { entriesByDay(recent, zone, problemsOnly) }
     val today = LocalDate.now(zone)
     val screen = rememberScreenFocus()
     val context = LocalContext.current
     val shareTitle = stringResource(R.string.activity_share)
-    val noApp = stringResource(R.string.action_failed)
+    val copied = stringResource(R.string.activity_copied)
 
     Scaffold(
         topBar = {
             ScreenTop(stringResource(R.string.tab_activity)) {
-                val shared = remember(events, problemsOnly) { activityText(events, zone, problemsOnly) }
+                val shared = remember(recent, problemsOnly) { activityText(recent, zone, problemsOnly) }
                 GlyphButton(
                     Glyphs.Share,
                     stringResource(R.string.activity_share),
-                    onClick = { if (!shareText(context, shareTitle, shared)) actions.say(noApp) },
-                    enabled = events.isNotEmpty(),
+                    onClick = {
+                        // A TV often has no app to share with; the log then goes on the clipboard.
+                        if (!shareText(context, shareTitle, shared)) {
+                            copyText(context, shareTitle, shared)
+                            actions.say(copied)
+                        }
+                    },
+                    enabled = recent.isNotEmpty(),
                 )
                 GlyphButton(Glyphs.Bin, stringResource(R.string.activity_clear), onClick = { confirmClear = true }, enabled = events.isNotEmpty())
             }
@@ -122,13 +138,22 @@ fun ActivityScreen(onOpenApp: (String) -> Unit) {
                 .testTag(ACTIVITY_LIST_TAG),
         ) {
             item(key = "filter") {
-                Row(Modifier.padding(horizontal = look.screenPadding, vertical = look.gapSmall / 2 + look.focusRoom / 2)) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(look.gapSmall),
+                    modifier = Modifier.padding(horizontal = look.screenPadding, vertical = look.gapSmall / 2 + look.focusRoom / 2),
+                ) {
                     ChoiceChip(
                         stringResource(R.string.activity_problems_only),
                         selected = problemsOnly,
                         onClick = { problemsOnly = !problemsOnly },
                         modifier = Modifier.firstFocus(screen),
                         role = Role.Checkbox,
+                    )
+                    ChoiceChip(
+                        rangeName(lastDays),
+                        selected = lastDays != null,
+                        onClick = { pickingDays = true },
+                        role = Role.Button,
                     )
                 }
             }
@@ -157,6 +182,18 @@ fun ActivityScreen(onOpenApp: (String) -> Unit) {
                 items(day.entries, key = { "e-${it.id}" }) { entry -> EntryRow(entry, onOpenApp, Modifier.returnFocus(screen, "e-${entry.id}")) }
             }
         }
+        }
+    }
+    if (pickingDays) {
+        ChoiceDialog(
+            title = stringResource(R.string.activity_range),
+            options = RANGES,
+            selected = lastDays,
+            label = { rangeName(it) },
+            onDismiss = { pickingDays = false },
+        ) {
+            lastDays = it
+            pickingDays = false
         }
     }
     if (confirmClear) {

@@ -18,6 +18,15 @@ private val PROBLEM_KINDS = setOf(EventKind.BLOCKED, EventKind.FAILED, EventKind
 
 fun isProblem(event: Event): Boolean = event.kind in PROBLEM_KINDS
 
+/** How far back the log can be cut, as in Obtainium; null keeps all of it. */
+val RANGES: List<Int?> = listOf(null, 1, 2, 3, 4, 5, 7)
+
+private const val DAY_MS = 24 * 60 * 60 * 1000L
+
+/** The events of the last [days] days before [nowMs], or all of them for null. */
+fun within(events: List<Event>, days: Int?, nowMs: Long): List<Event> =
+    if (days == null) events else events.filter { it.atMs > nowMs - days * DAY_MS }
+
 fun dayName(date: LocalDate, today: LocalDate): DayName = when (date) {
     today -> DayName.Today
     today.minusDays(1) -> DayName.Yesterday

@@ -93,6 +93,11 @@ Everything Obtainium does, and more.
 - RuStore apps that come as a base and splits install as one, every part held
   to the base's signer. The OBB files of an XAPK are put in `Android/obb` with
   Shizuku or root, under the package the checks verified.
+- F-Droid apps show their author and changelog, APKMirror apps what changed
+  and the size of the file, and a SourceForge project can be followed in one
+  folder. The package name can be set on an app's page as well as when adding.
+  An app without one leaves in Obtainium's format with an id Obtainium replaces
+  at the first install, and comes back without one.
 
 ## 0.1.0, 2026-09-29
 

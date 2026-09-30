@@ -22,6 +22,13 @@ whether this is a TV; the Galaxy Store and Tencent whether the phone runs
 identifier of it. The Galaxy Store is asked as a fixed model, which you can
 change for an app, and RuStore as a made-up phone with an id drawn at random.
 
+For an app from F-Droid's own repository, a check that finds a new answer also
+reads the app's entry in F-Droid's data on gitlab.com, for its author and
+changes, and the changelog file on GitHub or GitLab when that entry names one.
+For an app from APKMirror it reads the pages of the newest releases on
+www.apkmirror.com, for what changed and the size of the file. None of these
+carries a token or a cookie.
+
 The list of well known apps is part of Tern. Showing it asks nobody
 anything. A request goes out when you press Look on one of them, to that app's
 own address, the same as for a link you typed.

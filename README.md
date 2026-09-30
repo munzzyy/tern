@@ -89,7 +89,7 @@ page also offers a second check there, against AppVerifier's own list.
 | Any F-Droid format repository | The signed index, with the repository's key pinned |
 | A web page | Links to installable files, with optional steps through other pages |
 | A direct link | One file at a fixed address, whether or not the address ends in a file name |
-| Jenkins, SourceHut, SourceForge | The last successful build, tags, the project's files |
+| Jenkins, SourceHut, SourceForge | The last successful build, tags, the project's files or one folder of them |
 | Huawei AppGallery, Samsung Galaxy Store, vivo, Tencent, RuStore, CoolApk, itch.io | Each store's own app record; the Galaxy Store with the device model and CSC of your choice |
 | Telegram, NeutronCode | Their own release channels |
 | APKPure, Aptoide, Uptodown, APKCombo, APKMirror, Farsroid | Stores that offer again what developers publish elsewhere (APKMirror for tracking only) |

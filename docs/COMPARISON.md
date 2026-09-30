@@ -124,6 +124,7 @@ run against answers recorded from the real services.
 | LiteAPKs, Apk4Free, RockMods (tracking only) | All three, with a warning on the Add screen that they offer apps changed by someone else |
 | Search in GitHub, GitLab, Codeberg or another Forgejo, F-Droid, a third-party F-Droid repository, Uptodown, AppGallery, vivo and RuStore, with a picker of where to look, a fewest-stars limit and a filter over the results | All of them, and Aptoide. The picker is kept between searches, each place that fails is named with its reason, and a repository is searched by words |
 | Override source, for self-hosted instances | "Read as" on the Add screen, for every source Obtainium lets be overridden and GitHub Actions; GitHub on another host uses the API that kind of GitHub documents. Self-hosted GitLab, Forgejo and Gitea are also recognised by asking them, and an F-Droid repository by its site's address |
+| F-Droid's author and changelog, APKMirror's changes and file size, a SourceForge folder or `/p/` address | All of them |
 | Tags for a project without releases | For apps that are only tracked, on GitHub, GitLab and Forgejo |
 | Private repositories | With a token, GitHub's files come through its API, and a refused token is tried once without |
 
@@ -136,7 +137,7 @@ run against answers recorded from the real services.
 | Sort releases by date or by name, verify the latest tag, use the asset's date | Order by version, date, the source's own order or name; the release the forge marks as latest comes first |
 | Zip and tar archives, gzip, bzip2 and xz, a filter inside them | All of them, with Tern's own bzip2 and xz readers |
 | The file picked to install is kept for later updates | Yes, by the shape of its name, so a new version's file is found again |
-| An app ID of your own | A package name field when adding |
+| An app ID of your own | A package name, set when adding or later on the app's page; every file is held to it |
 | Track only, exempt from background updates, pinned certificate hashes | All three; the pin is set by itself at first install |
 | Custom name and author, notes, categories, pinned to top | All of them |
 | Google Play as the installer (Shizuku or root) | For one app or for all |

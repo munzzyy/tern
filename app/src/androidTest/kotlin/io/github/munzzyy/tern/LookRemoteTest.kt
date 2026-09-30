@@ -119,7 +119,7 @@ class LookRemoteTest {
             compose.assertFocusOn(slider, "the slider keeps focus while it moves")
 
             compose.press(KEYCODE_DPAD_DOWN)
-            compose.assertFocusOn(hasText("Standard") or hasText("Medium") or hasText("High"), "down leaves the slider")
+            compose.assertFocusOn(hasText("Colour code"), "down leaves the slider for the colour code under it")
             compose.press(KEYCODE_DPAD_UP)
             compose.assertFocusOn(slider, "and up comes back to it")
             compose.press(KEYCODE_DPAD_UP)

@@ -151,7 +151,7 @@ internal class Detector(private val e: RealEngine) {
     private fun found(spec: SourceSpec, listing: SourceListing, carried: AppConfig?, given: String?): Detection.Found {
         val settings = e.settings.value
         val listed = listing.packageName?.takeIf { BinaryManifest.isValidName(it) }
-        val builtIn = e.builtIn.of(spec.url)
+        var builtIn = e.builtIn.forApp(spec, given ?: carried?.packageName ?: listed)
         var config = carried?.copy(id = "detect", source = spec, packageName = given ?: carried.packageName ?: listed) ?: AppConfig(
             id = "detect",
             source = spec,
@@ -174,6 +174,9 @@ internal class Detector(private val e: RealEngine) {
         val learned = eval.facts?.packageName
         if (config.packageName == null && learned != null) {
             config = config.copy(packageName = learned)
+            // A store that names no package is held to the developer's certificate once its file does.
+            if (builtIn.isEmpty()) builtIn = e.builtIn.forApp(spec, learned)
+            if (builtIn.isNotEmpty()) config = config.copy(pinnedSigners = builtIn)
             eval = e.evaluator.evaluate(config, state, e.readInstalled(learned), e.inspectorFor(config.source))
         }
         val installed = e.readInstalled(config.packageName)

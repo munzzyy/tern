@@ -411,14 +411,15 @@ class RealEngine(
             releases = ReleasePolicy(includePrereleases = s.includePrereleasesByDefault || found.release?.countsAsPrerelease == true),
             updates = s.defaultUpdateMode,
         )
+        val packageName = found.packageName ?: found.verification?.packageName ?: base.packageName ?: found.installed?.packageName
         return validated(
             base.copy(
                 id = idFor(found.spec),
                 source = found.spec,
                 name = found.name.take(200).ifBlank { found.spec.url.take(200) },
                 author = found.author?.take(200),
-                packageName = found.packageName ?: found.verification?.packageName ?: base.packageName ?: found.installed?.packageName,
-                pinnedSigners = builtIn.orElse(found.spec.url, base.pinnedSigners.ifEmpty { found.installed?.signers.orEmpty() }),
+                packageName = packageName,
+                pinnedSigners = builtIn.orElse(found.spec, packageName, base.pinnedSigners.ifEmpty { found.installed?.signers.orEmpty() }),
             ),
         )
     }

@@ -129,7 +129,7 @@ internal class Checks(private val e: RealEngine) {
                 config = config.copy(source = config.source.copy(options = config.source.options + listing.learnedOptions))
             }
             val listed = listing.packageName
-            if (config.packageName == null && listed != null && BinaryManifest.isValidName(listed)) config = config.copy(packageName = listed)
+            if (config.packageName == null && listed != null && BinaryManifest.isValidName(listed)) config = withPackage(config, listed)
             // While every release listed now is too young, the last ones that were old enough stay on offer.
             val kept = ReleaseSelector.keptUntilOldEnough(listing.releases, s.state.releases, e.evaluator.minAgeDays(config), now)
             val releases = kept.take(StateJson.MAX_RELEASES).map { it.copy(notes = it.notes?.take(StateJson.MAX_NOTES)) }
@@ -147,6 +147,10 @@ internal class Checks(private val e: RealEngine) {
             )
         }
     }
+
+    /** [config] once its package is known, held to the certificates Tern carries for that package where it had no pin yet. */
+    private fun withPackage(config: AppConfig, packageName: String): AppConfig =
+        config.copy(packageName = packageName, pinnedSigners = config.pinnedSigners.ifEmpty { e.builtIn.forApp(config.source, packageName) })
 
     private val evaluating = ConcurrentHashMap<String, Any>()
 
@@ -183,7 +187,7 @@ internal class Checks(private val e: RealEngine) {
         var eval = e.evaluator.evaluate(config, stored.state, installed, inspect)
         val learned = eval.facts?.packageName
         if (config.packageName == null && learned != null) {
-            config = e.saveApp(id) { it.copy(config = it.config.copy(packageName = learned)) }?.config ?: config
+            config = e.saveApp(id) { it.copy(config = withPackage(it.config, learned)) }?.config ?: config
             installed = e.readInstalled(learned)
             eval = e.evaluator.evaluate(config, stored.state, installed, inspect)
         }

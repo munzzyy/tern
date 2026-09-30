@@ -139,15 +139,27 @@ class AdditionsTest {
             waitUntil(30_000, "the install to wait for the user") { h.row(id).progress?.phase == Phase.WAITING_FOR_USER }
             assertTrue(h.engine.resumeInstall(id))
             assertTrue("the confirmation did not reopen", Prompt.appears(10_000))
-            val session = h.state(id).pending!!.sessionId
-            targetContext.packageManager.packageInstaller.abandonSession(session)
+            val pending = h.state(id).pending!!
+            targetContext.packageManager.packageInstaller.abandonSession(pending.sessionId)
             Prompt.dismiss()
 
+            // Android answers an abandoned session as aborted, as it answers a No in its installer: a cancel, not a problem.
+            waitUntil(10_000, "Android's answer to the abandoned session") { h.eventsFor(id).any { it.kind == EventKind.CANCELLED } }
             assertFalse(h.engine.resumeInstall(id))
             waitUntil(10_000, "the phase to settle") { h.state(id).pending == null && h.row(id).progress == null }
-            assertNull(h.state(id).pending)
-            assertNull(h.row(id).progress)
-            assertEquals(ProblemKind.INSTALL_FAILED, h.row(id).problem?.kind)
+            assertNull(h.describe(id), h.row(id).problem)
+
+            h.engine.saveState(id) { it.copy(pending = pending.copy(sessionId = GONE_SESSION)) }
+            assertFalse(h.engine.resumeInstall(id))
+            assertNull(h.describe(id), h.state(id).pending)
+            assertNull(h.describe(id), h.row(id).progress)
+            assertEquals(h.describe(id), ProblemKind.INSTALL_FAILED, h.row(id).problem?.kind)
+            assertEquals(h.describe(id), 1, h.eventsFor(id).count { it.kind == EventKind.CANCELLED })
         }
+    }
+
+    private companion object {
+        /** A session Android never had, as one is after Tern stopped before Android answered. */
+        const val GONE_SESSION = 987_654
     }
 }

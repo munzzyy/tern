@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="install_archive_zstd_unsupported">Ez az archívum zstd tömörítésű, amelyet a Tern nem tud megnyitni. Válasszon .zip vagy .tar fájlt ebből a kiadásból, vagy gzip, bzip2 vagy xz tömörítésűt.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s / %2$s</string>
+    <string name="install_setting_one_download">Egyszerre egy letöltés</string>
+    <string name="install_setting_one_download_effect">A letöltések egymásra várnak, ahelyett, hogy egyszerre futnának.</string>
+    <string name="install_file_foreign_host">Ez a fájl innen érkezik: %1$s, ami nem az alkalmazás forrásának oldala. Ugyanúgy ellenőrizzük, mint bármely más fájlt.</string>
+    <string name="install_file_picked">Az Ön választása</string>
+    <string name="install_file_automatic">A Tern válassza ki újra a fájlt</string>
+    <string name="install_file_picked_kept">A frissítések az Ön által választott fájlnál maradnak: %1$s.</string>
+    <string name="install_file_picked_missing">Ebben a kiadásban nincs az Ön által választotthoz hasonló fájl (%1$s), ezért a Tern választott egyet.</string>
+</resources>

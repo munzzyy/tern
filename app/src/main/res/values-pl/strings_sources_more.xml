@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_track_only_forced">Aplikacje z %1$s można tylko śledzić, ponieważ to źródło nie oferuje pliku do zainstalowania.</string>
+    <string name="min_age_global">Jak ustawiono dla wszystkich aplikacji: %1$s</string>
+    <string name="setting_min_age_global_effect">Aplikacje bez własnego czasu oczekiwania czekają tyle, zanim zostanie zaoferowane nowe wydanie, więc wadliwe może zostać wycofane jako pierwsze.</string>
+    <string name="option_link_text">Filtruj linki według ich tekstu</string>
+    <string name="option_link_text_effect">Filtr jest dopasowywany do tekstu linku, a nie do jego adresu.</string>
+    <string name="option_take_first">Bierz pierwszy link</string>
+    <string name="option_take_first_effect">W przeciwnym razie brany jest ostatni link w kolejności.</string>
+    <string name="option_natural_order_effect">W przeciwnym razie linki są układane w naturalnej kolejności ich adresów, a liczby są czytane jako liczby.</string>
+    <string name="option_by_last_segment">Kieruj się końcem adresu</string>
+    <string name="option_by_last_segment_effect">Linki są układane w kolejności, a wersje odczytywane według części po ostatnim ukośniku.</string>
+    <string name="option_steps_title">Strony, przez które trzeba najpierw przejść</string>
+    <string name="option_steps_order_help">Na każdej stronie pasujące linki są układane w kolejności i otwierany jest ostatni z nich.</string>
+    <string name="step_title">Strona %1$d</string>
+    <string name="step_filter">Link do otwarcia</string>
+    <string name="step_text">Dopasowuj do tekstu linku</string>
+    <string name="step_arch">Preferuj procesor tego urządzenia</string>
+    <string name="step_add">Dodaj stronę</string>
+    <string name="step_remove">Usuń tę stronę</string>
+    <string name="option_file_version">Używaj nazwy pliku jako wersji</string>
+    <string name="option_file_version_effect">Każdy plik jest wtedy liczony jako osobne wydanie.</string>
+    <string name="github_proxy_title">GitHub przez hubproxy</string>
+    <string name="github_proxy_effect">Każde żądanie do GitHub trafia do tego hosta, który widzi je wszystkie. Nie jest przez niego wysyłany żaden token, więc prywatnych projektów i GitHub Actions nie można w ten sposób śledzić.</string>
+    <string name="github_proxy_host">Host hubproxy</string>
+    <string name="github_proxy_help">Sama nazwa hosta, na przykład gh-proxy.com. Tern łączy się z nim przez HTTPS.</string>
+    <string name="github_proxy_invalid">To nie jest nazwa hosta, której Tern może użyć</string>
+    <string name="github_proxy_in_use">Żądania do GitHub idą przez %1$s</string>
+    <string name="github_proxy_remove">Przestań używać hubproxy</string>
+</resources>

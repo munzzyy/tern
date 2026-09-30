@@ -35,7 +35,7 @@
     <string name="update_all_all">Ĝisdatigoj kaj aplikaĵoj ankoraŭ ne instalitaj</string>
     <string name="update_all_none">Ne montrata</string>
     <string name="settings_confirm_update_all">Demandi antaŭ Ĝisdatigi ĉiujn</string>
-    <string name="settings_confirm_update_all_effect">Diras, kiom da aplikaĵoj ĝi instalas aŭ ĝisdatigas, kaj atendas jesan.</string>
+    <string name="settings_confirm_update_all_effect">Diras, kiom da aplikaĵoj ĝi instalas aŭ ĝisdatigas, kaj atendas jesan respondon.</string>
     <plurals name="bulk_install_title">
         <item quantity="one">Ĉu instali %d aplikaĵon?</item>
         <item quantity="other">Ĉu instali %d aplikaĵojn?</item>

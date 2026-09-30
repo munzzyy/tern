@@ -1,2 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="filter_open">Filtruj listę</string>
+    <string name="filter_state_on">Filtry są włączone</string>
+    <string name="filter_name">Nazwa</string>
+    <string name="filter_author">Twórca</string>
+    <string name="filter_package">Nazwa pakietu</string>
+    <string name="filter_show_up_to_date">Aktualne aplikacje</string>
+    <string name="filter_show_not_installed">Niezainstalowane aplikacje</string>
+    <string name="filter_show_tracked">Aplikacje, które są tylko śledzone</string>
+    <string name="filter_categories">W dowolnej z tych kategorii</string>
+    <string name="filter_sources">Z dowolnego z tych źródeł</string>
+    <string name="filter_clear">Wyczyść filtry</string>
+    <plurals name="filter_shown">
+        <item quantity="one">Pokazano %1$d z %2$d aplikacji</item>
+        <item quantity="few">Pokazano %1$d z %2$d aplikacji</item>
+        <item quantity="many">Pokazano %1$d z %2$d aplikacji</item>
+        <item quantity="other">Pokazano %1$d z %2$d aplikacji</item>
+    </plurals>
+    <string name="checking_count">Sprawdzanie %1$d z %2$d</string>
+    <string name="row_moved">Przeniesiono do %1$s</string>
+    <string name="row_released">Wydano %1$s</string>
+    <string name="row_changes">Zmiany</string>
+    <string name="action_show_changes">Pokaż zmiany</string>
+    <string name="action_install_all">Zainstaluj wszystkie</string>
+    <string name="action_install_update_all">Zainstaluj i zaktualizuj wszystkie</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d aplikacja nie jest jeszcze zainstalowana</item>
+        <item quantity="few">%d aplikacje nie są jeszcze zainstalowane</item>
+        <item quantity="many">%d aplikacji nie jest jeszcze zainstalowanych</item>
+        <item quantity="other">%d aplikacji nie jest jeszcze zainstalowanych</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Zainstalować i zaktualizować %d aplikację?</item>
+        <item quantity="few">Zainstalować i zaktualizować %d aplikacje?</item>
+        <item quantity="many">Zainstalować i zaktualizować %d aplikacji?</item>
+        <item quantity="other">Zainstalować i zaktualizować %d aplikacji?</item>
+    </plurals>
+    <string name="settings_update_all">Przycisk „Aktualizuj wszystkie”</string>
+    <string name="update_all_updates">Tylko aktualizacje</string>
+    <string name="update_all_all">Aktualizacje i jeszcze niezainstalowane aplikacje</string>
+    <string name="update_all_none">Nie pokazuj</string>
+    <string name="settings_confirm_update_all">Pytaj przed „Aktualizuj wszystkie”</string>
+    <string name="settings_confirm_update_all_effect">Podaje, ile aplikacji zainstaluje lub zaktualizuje, i czeka na Twoje potwierdzenie.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Zainstalować %d aplikację?</item>
+        <item quantity="few">Zainstalować %d aplikacje?</item>
+        <item quantity="many">Zainstalować %d aplikacji?</item>
+        <item quantity="other">Zainstalować %d aplikacji?</item>
+    </plurals>
+    <string name="bulk_install_text">Każdy plik jest pobierany i sprawdzany przed poproszeniem Androida o jego instalację. Tern zapamiętuje certyfikat, którym podpisana jest każda nowa aplikacja, i wymaga go przy każdej kolejnej aktualizacji.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d z wybranych aplikacji nie ma teraz nic do zainstalowania i pozostaje bez zmian.</item>
+        <item quantity="few">%d z wybranych aplikacji nie mają teraz nic do zainstalowania i pozostają bez zmian.</item>
+        <item quantity="many">%d z wybranych aplikacji nie ma teraz nic do zainstalowania i pozostaje bez zmian.</item>
+        <item quantity="other">%d z wybranych aplikacji nie ma teraz nic do zainstalowania i pozostaje bez zmian.</item>
+    </plurals>
+    <string name="action_change_categories">Zmień kategorie</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Kategorie %d aplikacji</item>
+        <item quantity="few">Kategorie %d aplikacji</item>
+        <item quantity="many">Kategorie %d aplikacji</item>
+        <item quantity="other">Kategorie %d aplikacji</item>
+    </plurals>
+    <string name="bulk_categories_help">Zaznaczenie przypisuje wszystkie wybrane aplikacje do kategorii, a puste pole usuwa je z niej. Kreska zostawia każdą aplikację bez zmian.</string>
+    <string name="categories_filed_all">Każda wybrana aplikacja</string>
+    <string name="categories_filed_some">Niektóre z wybranych aplikacji</string>
+    <string name="categories_filed_none">Żadna z wybranych aplikacji</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Zmieniono kategorie %d aplikacji.</item>
+        <item quantity="few">Zmieniono kategorie %d aplikacji.</item>
+        <item quantity="many">Zmieniono kategorie %d aplikacji.</item>
+        <item quantity="other">Zmieniono kategorie %d aplikacji.</item>
+    </plurals>
+    <string name="action_share_config_link">Udostępnij link z ustawieniami</string>
+    <string name="action_share_config_links">Udostępnij linki z ustawieniami</string>
+    <string name="share_link_none">Żaden link nie pomieści ustawień tej aplikacji. Udostępnij ją zamiast tego jako plik.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d aplikacja została pominięta, bo żaden link nie pomieści jej ustawień.</item>
+        <item quantity="few">%d aplikacje zostały pominięte, bo żaden link nie pomieści ich ustawień.</item>
+        <item quantity="many">%d aplikacji zostało pominiętych, bo żaden link nie pomieści ich ustawień.</item>
+        <item quantity="other">%d aplikacji zostało pominiętych, bo żaden link nie pomieści ich ustawień.</item>
+    </plurals>
+</resources>

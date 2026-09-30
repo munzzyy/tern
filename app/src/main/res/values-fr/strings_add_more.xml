@@ -1,2 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="add_link_unknown">Tern ne connaît pas ce type de lien.</string>
+    <string name="add_not_readable_as">Cette adresse ne peut pas être lue comme %1$s.</string>
+    <string name="add_event_replaced">Ses paramètres ont été remplacés par ceux qu\'un fichier ou un lien contenait pour elle.</string>
+    <string name="search_miss_unreachable">Recherche impossible dans %1$s : la source n\'a pas répondu.</string>
+    <string name="search_miss_wait">Recherche impossible dans %1$s : la source demande à Tern de patienter un moment.</string>
+    <string name="search_miss_wait_until">Recherche impossible dans %1$s : la source demande à Tern d\'attendre jusqu\'à %2$s.</string>
+    <string name="search_miss_refused">Recherche impossible dans %1$s : la source a refusé la requête.</string>
+    <string name="search_miss_status">Recherche impossible dans %1$s : la source a répondu %2$d.</string>
+    <string name="search_miss_unreadable">Recherche impossible dans %1$s : la réponse de la source n\'a pas pu être lue.</string>
+    <string name="add_options_title">Avant l\'ajout</string>
+    <string name="add_options_auto">Tern détermine lui-même ce qu\'est l\'adresse.</string>
+    <string name="add_options_forced">Lue comme : %1$s</string>
+    <string name="add_read_as">Lire l\'adresse comme</string>
+    <string name="add_read_as_auto">Automatique</string>
+    <string name="add_read_as_forgejo">Forgejo ou Gitea</string>
+    <string name="add_read_as_help">Pour une source que Tern ne reconnaît pas de lui-même, comme une source sur son propre serveur.</string>
+    <string name="add_package_label">Nom du paquet</string>
+    <string name="add_package_help">Chaque fichier doit appartenir à ce paquet. Vide, Tern le lit dans le fichier de l\'appli.</string>
+    <string name="add_package_invalid">Ce n\'est pas un nom de paquet, comme org.example.app.</string>
+    <string name="add_set_options">Régler ses options</string>
+    <string name="add_failed_options">Ses options peuvent indiquer à Tern où chercher. Réglez-les ci-dessus, puis Tern vérifie à nouveau.</string>
+    <string name="add_replace">Remplacer ses paramètres</string>
+    <string name="add_replace_explain">Le lien contient ses propres paramètres pour cette appli. Le remplacement conserve les certificats auxquels elle fait confiance et son nom de paquet, et ne lui fait pas installer les mises à jour automatiquement.</string>
+    <string name="results_filter">Filtre</string>
+    <string name="results_filter_help">Des mots ou un modèle</string>
+    <string name="results_filter_none">Rien dans la liste ne correspond à « %1$s ».</string>
+    <string name="repo_search_all">Chercher « %1$s » dans tout le dépôt</string>
+    <string name="repo_show_all">Afficher toutes ses applis</string>
+    <string name="repo_heading_within">Applis dans %1$s avec « %2$s »</string>
+    <string name="search_more">Il y a plus de résultats que ceux affichés. Le filtre permet de les restreindre.</string>
+    <string name="search_forgejo_label">Forgejo ou Gitea où chercher</string>
+    <string name="search_forgejo_help">Son adresse, comme codeberg.org. Un jeton enregistré pour cet hôte accompagne la requête.</string>
+    <string name="search_forgejo_invalid">Ce n\'est pas une adresse où Tern peut chercher.</string>
+    <string name="search_min_stars_label">Minimum d\'étoiles</string>
+    <string name="search_min_stars_help">Les projets sur GitHub et sur le Forgejo qui ont moins d\'étoiles sont écartés.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">Le fichier contient aussi d\'autres paramètres pour %1$d appli déjà présente dans votre liste. Ils restent tels quels, sauf si vous les remplacez.</item>
+        <item quantity="many">Le fichier contient aussi d\'autres paramètres pour %1$d applis déjà présentes dans votre liste. Ils restent tels quels, sauf si vous les remplacez.</item>
+        <item quantity="other">Le fichier contient aussi d\'autres paramètres pour %1$d applis déjà présentes dans votre liste. Ils restent tels quels, sauf si vous les remplacez.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">Remplacer les paramètres de %1$d appli</item>
+        <item quantity="many">Remplacer les paramètres de %1$d applis</item>
+        <item quantity="other">Remplacer les paramètres de %1$d applis</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">Les paramètres de %1$d appli ont été remplacés. Les certificats auxquels elle fait confiance ont été conservés.</item>
+        <item quantity="many">Les paramètres de %1$d applis ont été remplacés. Les certificats auxquels elles font confiance ont été conservés.</item>
+        <item quantity="other">Les paramètres de %1$d applis ont été remplacés. Les certificats auxquels elles font confiance ont été conservés.</item>
+    </plurals>
+    <string name="import_settings_offered">Le fichier contient aussi des paramètres pour Tern : l\'apparence, la liste, les notifications et les vérifications. Ils ne sont pas repris, sauf si vous le demandez.</string>
+    <string name="import_take_settings">Reprendre ces paramètres</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">Cocher %1$d affiché</item>
+        <item quantity="many">Cocher tous les %1$d affichés</item>
+        <item quantity="other">Cocher tous les %1$d affichés</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">Décocher %1$d affiché</item>
+        <item quantity="many">Décocher tous les %1$d affichés</item>
+        <item quantity="other">Décocher tous les %1$d affichés</item>
+    </plurals>
+</resources>

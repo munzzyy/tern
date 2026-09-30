@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="install_archive_zstd_unsupported">Tệp lưu trữ này được nén bằng zstd, Tern không thể mở. Hãy chọn tệp .zip hoặc .tar của bản phát hành này, hoặc tệp nén bằng gzip, bzip2 hoặc xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s trên %2$s</string>
+    <string name="install_setting_one_download">Tải xuống từng tệp một</string>
+    <string name="install_setting_one_download_effect">Các lượt tải xuống chờ nhau thay vì chạy song song.</string>
+    <string name="install_file_foreign_host">Tệp này đến từ %1$s, không phải trang của nguồn ứng dụng này. Nó được kiểm tra như mọi tệp khác.</string>
+    <string name="install_file_picked">Lựa chọn của bạn</string>
+    <string name="install_file_automatic">Để Tern chọn lại tệp</string>
+    <string name="install_file_picked_kept">Các bản cập nhật giữ nguyên tệp bạn đã chọn, %1$s.</string>
+    <string name="install_file_picked_missing">Bản phát hành này không có tệp nào giống tệp bạn đã chọn, %1$s, nên Tern đã chọn một tệp.</string>
+</resources>

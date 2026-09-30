@@ -1,2 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="add_link_unknown">A Tern nem ismeri ezt a fajta linket.</string>
+    <string name="add_not_readable_as">Ez a cím nem olvasható be ilyen forrásként: %1$s.</string>
+    <string name="add_event_replaced">A beállításait lecseréltük azokra, amelyeket egy fájl vagy egy link tartalmazott ehhez az alkalmazáshoz.</string>
+    <string name="search_miss_unreachable">%1$s: a keresés nem sikerült, mert nem válaszolt.</string>
+    <string name="search_miss_wait">%1$s: a keresés nem sikerült, mert arra kéri a Ternt, hogy várjon egy ideig.</string>
+    <string name="search_miss_wait_until">%1$s: a keresés nem sikerült, mert arra kéri a Ternt, hogy várjon eddig: %2$s.</string>
+    <string name="search_miss_refused">%1$s: a keresés nem sikerült, mert elutasította a kérést.</string>
+    <string name="search_miss_status">%1$s: a keresés nem sikerült, mert %2$d kóddal válaszolt.</string>
+    <string name="search_miss_unreadable">%1$s: a keresés nem sikerült, mert a válaszát nem sikerült beolvasni.</string>
+    <string name="add_options_title">Hozzáadás előtt</string>
+    <string name="add_options_auto">A Tern maga állapítja meg, mi a cím.</string>
+    <string name="add_options_forced">Értelmezés: %1$s</string>
+    <string name="add_read_as">A cím értelmezése így</string>
+    <string name="add_read_as_auto">Automatikus</string>
+    <string name="add_read_as_forgejo">Forgejo vagy Gitea</string>
+    <string name="add_read_as_help">Olyan forráshoz, amelyet a Tern magától nem ismer fel, például egy saját szerveren lévőhöz.</string>
+    <string name="add_package_label">Csomagnév</string>
+    <string name="add_package_help">Minden fájlnak ehhez a csomaghoz kell tartoznia. Üresen hagyva a Tern az alkalmazás fájljából olvassa ki.</string>
+    <string name="add_package_invalid">Ez nem olyan csomagnév, mint az org.example.app.</string>
+    <string name="add_set_options">Beállítások megadása</string>
+    <string name="add_failed_options">A forrás beállításai megmondhatják a Ternnek, hol keressen. Adja meg őket fent, és a Tern újra ellenőriz.</string>
+    <string name="add_replace">Beállítások lecserélése</string>
+    <string name="add_replace_explain">A link saját beállításokat tartalmaz hozzá. A lecserélés megtartja a tanúsítványokat, amelyekben megbízik, és a csomagnevét, de nem állítja be, hogy magától telepítse a frissítéseket.</string>
+    <string name="results_filter">Szűrő</string>
+    <string name="results_filter_help">Szavak vagy egy minta</string>
+    <string name="results_filter_none">A listában nincs egyezés erre: „%1$s”.</string>
+    <string name="repo_search_all">A teljes tároló keresése erre: „%1$s”</string>
+    <string name="repo_show_all">A tároló összes alkalmazásának megjelenítése</string>
+    <string name="repo_heading_within">Alkalmazások itt: %1$s, erre szűrve: „%2$s”</string>
+    <string name="search_more">Több találat van, mint amennyi megjelenik. A szűrő leszűkíti őket.</string>
+    <string name="search_forgejo_label">Keresendő Forgejo vagy Gitea</string>
+    <string name="search_forgejo_help">A címe, például codeberg.org. Az ehhez mentett tokent is elküldjük.</string>
+    <string name="search_forgejo_invalid">Ez nem olyan cím, amelyben a Tern tud keresni.</string>
+    <string name="search_min_stars_label">Legkevesebb csillag</string>
+    <string name="search_min_stars_help">A GitHub- és Forgejo-projektek közül a kevesebb csillaggal rendelkezők kimaradnak.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">A fájl más beállításokat is tartalmaz %1$d olyan alkalmazáshoz, amely már szerepel a listán. Ezek változatlanok maradnak, hacsak le nem cseréli őket.</item>
+        <item quantity="other">A fájl más beállításokat is tartalmaz %1$d olyan alkalmazáshoz, amely már szerepel a listán. Ezek változatlanok maradnak, hacsak le nem cseréli őket.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">%1$d alkalmazás beállításainak lecserélése</item>
+        <item quantity="other">%1$d alkalmazás beállításainak lecserélése</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">%1$d alkalmazás beállításai le lettek cserélve. Az általa elfogadott tanúsítványok megmaradtak.</item>
+        <item quantity="other">%1$d alkalmazás beállításai le lettek cserélve. Az általuk elfogadott tanúsítványok megmaradtak.</item>
+    </plurals>
+    <string name="import_settings_offered">A fájl a Tern beállításait is tartalmazza: a megjelenést, a listát, az értesítéseket és az ellenőrzéseket. Csak akkor vesszük át őket, ha Ön ezt kéri.</string>
+    <string name="import_take_settings">Ezen beállítások átvétele</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">%1$d megjelenített elem bejelölése</item>
+        <item quantity="other">Mind a(z) %1$d megjelenített elem bejelölése</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">%1$d megjelenített elem jelölésének kivétele</item>
+        <item quantity="other">Mind a(z) %1$d megjelenített elem jelölésének kivétele</item>
+    </plurals>
+</resources>

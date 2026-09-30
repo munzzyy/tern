@@ -1,2 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="filter_open">Lọc danh sách</string>
+    <string name="filter_state_on">Bộ lọc đang bật</string>
+    <string name="filter_name">Tên</string>
+    <string name="filter_author">Nhà phát triển</string>
+    <string name="filter_package">Tên gói</string>
+    <string name="filter_show_up_to_date">Ứng dụng đã được cập nhật</string>
+    <string name="filter_show_not_installed">Ứng dụng chưa cài đặt</string>
+    <string name="filter_show_tracked">Ứng dụng chỉ được theo dõi</string>
+    <string name="filter_categories">Thuộc bất kỳ danh mục nào sau đây</string>
+    <string name="filter_sources">Từ bất kỳ nguồn nào sau đây</string>
+    <string name="filter_clear">Xóa bộ lọc</string>
+    <plurals name="filter_shown">
+        <item quantity="other">Hiển thị %1$d trên %2$d ứng dụng</item>
+    </plurals>
+    <string name="checking_count">Đang kiểm tra %1$d trên %2$d</string>
+    <string name="row_moved">Đã dời đến %1$s</string>
+    <string name="row_released">Phát hành ngày %1$s</string>
+    <string name="row_changes">Thay đổi</string>
+    <string name="action_show_changes">Xem các thay đổi</string>
+    <string name="action_install_all">Cài đặt tất cả</string>
+    <string name="action_install_update_all">Cài đặt và cập nhật tất cả</string>
+    <plurals name="apps_section_installs">
+        <item quantity="other">%d ứng dụng chưa được cài đặt</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="other">Cài đặt và cập nhật %d ứng dụng?</item>
+    </plurals>
+    <string name="settings_update_all">Nút Cập nhật tất cả</string>
+    <string name="update_all_updates">Chỉ bản cập nhật</string>
+    <string name="update_all_all">Bản cập nhật và ứng dụng chưa cài đặt</string>
+    <string name="update_all_none">Không hiển thị</string>
+    <string name="settings_confirm_update_all">Hỏi trước khi Cập nhật tất cả</string>
+    <string name="settings_confirm_update_all_effect">Cho biết số ứng dụng sẽ cài đặt hoặc cập nhật, và chờ bạn đồng ý.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="other">Cài đặt %d ứng dụng?</item>
+    </plurals>
+    <string name="bulk_install_text">Mỗi tệp được tải xuống và kiểm tra trước khi yêu cầu Android cài đặt. Tern giữ chứng chỉ mà mỗi ứng dụng mới được ký, và đối chiếu mọi bản cập nhật sau đó với chứng chỉ này.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="other">%d ứng dụng đã chọn hiện không có gì để cài đặt và được giữ nguyên.</item>
+    </plurals>
+    <string name="action_change_categories">Đổi danh mục</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="other">Danh mục của %d ứng dụng</item>
+    </plurals>
+    <string name="bulk_categories_help">Dấu tích xếp mọi ứng dụng đã chọn vào một danh mục, còn ô trống đưa tất cả ra khỏi danh mục đó. Dấu gạch ngang để mỗi ứng dụng như cũ.</string>
+    <string name="categories_filed_all">Mọi ứng dụng đã chọn</string>
+    <string name="categories_filed_some">Một số ứng dụng đã chọn</string>
+    <string name="categories_filed_none">Không có ứng dụng nào đã chọn</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="other">Đã đổi danh mục của %d ứng dụng.</item>
+    </plurals>
+    <string name="action_share_config_link">Chia sẻ liên kết chứa cài đặt của ứng dụng</string>
+    <string name="action_share_config_links">Chia sẻ các liên kết chứa cài đặt của từng ứng dụng</string>
+    <string name="share_link_none">Không liên kết nào chứa được cài đặt của ứng dụng này. Hãy chia sẻ dưới dạng tệp.</string>
+    <plurals name="share_links_left">
+        <item quantity="other">%d ứng dụng bị bỏ qua vì không liên kết nào chứa được cài đặt của chúng.</item>
+    </plurals>
+</resources>

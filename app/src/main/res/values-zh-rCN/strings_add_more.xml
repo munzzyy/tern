@@ -1,2 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="add_link_unknown">Tern 无法识别这种链接。</string>
+    <string name="add_not_readable_as">此地址无法作为 %1$s 读取。</string>
+    <string name="add_event_replaced">它的设置已替换为文件或链接中为它保存的设置。</string>
+    <string name="search_miss_unreachable">无法搜索 %1$s：它没有响应。</string>
+    <string name="search_miss_wait">无法搜索 %1$s：它要求 Tern 稍候一段时间。</string>
+    <string name="search_miss_wait_until">无法搜索 %1$s：它要求 Tern 等到 %2$s。</string>
+    <string name="search_miss_refused">无法搜索 %1$s：它拒绝了请求。</string>
+    <string name="search_miss_status">无法搜索 %1$s：它返回了 %2$d。</string>
+    <string name="search_miss_unreadable">无法搜索 %1$s：无法读取它的响应。</string>
+    <string name="add_options_title">添加之前</string>
+    <string name="add_options_auto">Tern 会自行判断地址是什么。</string>
+    <string name="add_options_forced">按 %1$s 读取</string>
+    <string name="add_read_as">将地址读取为</string>
+    <string name="add_read_as_auto">自动</string>
+    <string name="add_read_as_forgejo">Forgejo 或 Gitea</string>
+    <string name="add_read_as_help">适用于 Tern 无法自行识别的来源，例如位于自有主机上的来源。</string>
+    <string name="add_package_label">包名</string>
+    <string name="add_package_help">每个文件都必须属于此包。留空时，Tern 会从应用的文件中读取。</string>
+    <string name="add_package_invalid">这不是包名，包名形如 org.example.app。</string>
+    <string name="add_set_options">设置其选项</string>
+    <string name="add_failed_options">其选项可能会告诉 Tern 到哪里查找。请在上方设置，然后 Tern 会再次检查。</string>
+    <string name="add_replace">替换其设置</string>
+    <string name="add_replace_explain">该链接自带针对它的设置。替换时会保留它信任的证书和包名，也不会让它自动安装更新。</string>
+    <string name="results_filter">过滤器</string>
+    <string name="results_filter_help">词语或模式</string>
+    <string name="results_filter_none">列表中没有匹配“%1$s”的内容。</string>
+    <string name="repo_search_all">在整个存储库中搜索“%1$s”</string>
+    <string name="repo_show_all">显示其所有应用</string>
+    <string name="repo_heading_within">%1$s 中含“%2$s”的应用</string>
+    <string name="search_more">找到的结果多于显示的数量。可用过滤器缩小范围。</string>
+    <string name="search_forgejo_label">要搜索的 Forgejo 或 Gitea</string>
+    <string name="search_forgejo_help">其地址，例如 codeberg.org。为它保存的令牌会一并发送。</string>
+    <string name="search_forgejo_invalid">这不是 Tern 可以搜索的地址。</string>
+    <string name="search_min_stars_label">最少星标数</string>
+    <string name="search_min_stars_help">GitHub 和该 Forgejo 上星标数低于此值的项目会被排除。</string>
+    <plurals name="import_replaceable">
+        <item quantity="other">该文件还包含已在您列表中的 %1$d 个应用的其他设置。除非您替换，否则它们保持原样。</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="other">替换 %1$d 个应用的设置</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="other">已替换 %1$d 个应用的设置。它们信任的证书保持不变。</item>
+    </plurals>
+    <string name="import_settings_offered">该文件还带有 Tern 的设置：外观、列表、通知和检查。除非您要求，否则不会采用。</string>
+    <string name="import_take_settings">采用这些设置</string>
+    <plurals name="import_pick_shown">
+        <item quantity="other">勾选显示的全部 %1$d 项</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="other">取消勾选显示的全部 %1$d 项</item>
+    </plurals>
+</resources>

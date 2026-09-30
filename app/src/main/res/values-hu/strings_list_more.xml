@@ -1,2 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="filter_open">Lista szűrése</string>
+    <string name="filter_state_on">A szűrők be vannak kapcsolva</string>
+    <string name="filter_name">Név</string>
+    <string name="filter_author">Fejlesztő</string>
+    <string name="filter_package">Csomagnév</string>
+    <string name="filter_show_up_to_date">Naprakész alkalmazások</string>
+    <string name="filter_show_not_installed">Nem telepített alkalmazások</string>
+    <string name="filter_show_tracked">Csak követett alkalmazások</string>
+    <string name="filter_categories">Ezen kategóriák bármelyikében</string>
+    <string name="filter_sources">Ezen források bármelyikéből</string>
+    <string name="filter_clear">Szűrők törlése</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%2$d alkalmazásból %1$d látható</item>
+        <item quantity="other">%2$d alkalmazásból %1$d látható</item>
+    </plurals>
+    <string name="checking_count">Ellenőrzés: %1$d / %2$d</string>
+    <string name="row_moved">Ide költözött: %1$s</string>
+    <string name="row_released">Kiadva: %1$s</string>
+    <string name="row_changes">Változások</string>
+    <string name="action_show_changes">Változások megjelenítése</string>
+    <string name="action_install_all">Összes telepítése</string>
+    <string name="action_install_update_all">Összes telepítése és frissítése</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d alkalmazás még nincs telepítve</item>
+        <item quantity="other">%d alkalmazás még nincs telepítve</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">%d app telepítése és frissítése?</item>
+        <item quantity="other">%d app telepítése és frissítése?</item>
+    </plurals>
+    <string name="settings_update_all">Az Összes frissítése gomb</string>
+    <string name="update_all_updates">Csak frissítések</string>
+    <string name="update_all_all">Frissítések és a még nem telepített alkalmazások</string>
+    <string name="update_all_none">Nem jelenik meg</string>
+    <string name="settings_confirm_update_all">Rákérdezés az Összes frissítése előtt</string>
+    <string name="settings_confirm_update_all_effect">Megmondja, hány alkalmazást telepít vagy frissít, és igenre vár.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">%d app telepítése?</item>
+        <item quantity="other">%d app telepítése?</item>
+    </plurals>
+    <string name="bulk_install_text">Minden fájlt letölt és ellenőriz, mielőtt megkérné az Androidot a telepítésére. A Tern megjegyzi azt a tanúsítványt, amellyel az egyes új alkalmazások alá vannak írva, és minden későbbi frissítést ahhoz köt.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">A kiválasztott alkalmazások közül %d esetében most nincs mit telepíteni, így érintetlen marad.</item>
+        <item quantity="other">A kiválasztott alkalmazások közül %d esetében most nincs mit telepíteni, így érintetlen marad.</item>
+    </plurals>
+    <string name="action_change_categories">Kategóriák módosítása</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">%d alkalmazás kategóriái</item>
+        <item quantity="other">%d alkalmazás kategóriái</item>
+    </plurals>
+    <string name="bulk_categories_help">A pipa minden kiválasztott alkalmazást besorol a kategóriába, az üres négyzet pedig mindegyiket kiveszi belőle. A vonás mindegyik alkalmazást változatlanul hagyja.</string>
+    <string name="categories_filed_all">Minden kiválasztott alkalmazás</string>
+    <string name="categories_filed_some">A kiválasztott alkalmazások egy része</string>
+    <string name="categories_filed_none">A kiválasztott alkalmazások egyike sem</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">%d alkalmazás kategóriái módosítva.</item>
+        <item quantity="other">%d alkalmazás kategóriái módosítva.</item>
+    </plurals>
+    <string name="action_share_config_link">Link megosztása a beállításaival</string>
+    <string name="action_share_config_links">Linkek megosztása a beállításaikkal</string>
+    <string name="share_link_none">Egyetlen link sem tudja hordozni ennek az alkalmazásnak a beállításait. Ossza meg inkább fájlként.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d alkalmazás kimarad, mert egyetlen link sem tudja hordozni a beállításait.</item>
+        <item quantity="other">%d alkalmazás kimarad, mert egyetlen link sem tudja hordozni a beállításaikat.</item>
+    </plurals>
+</resources>

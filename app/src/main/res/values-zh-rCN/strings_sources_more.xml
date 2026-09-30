@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_track_only_forced">来自 %1$s 的应用只能被跟踪，因为它不提供可安装的文件。</string>
+    <string name="min_age_global">按所有应用的设置：%1$s</string>
+    <string name="setting_min_age_global_effect">没有自己等待时间的应用，会先等待这么久再提供新发布，以便有问题的版本被提前撤下。</string>
+    <string name="option_link_text">按链接文本过滤链接</string>
+    <string name="option_link_text_effect">过滤器匹配的是链接的文本，而不是它的地址。</string>
+    <string name="option_take_first">取第一个链接</string>
+    <string name="option_take_first_effect">关闭时，取排序后的最后一个链接。</string>
+    <string name="option_natural_order_effect">关闭时，链接按其地址的自然顺序排列，数字按数值处理。</string>
+    <string name="option_by_last_segment">以地址末尾为准</string>
+    <string name="option_by_last_segment_effect">链接的排序和版本的读取，都以最后一个斜杠之后的部分为准。</string>
+    <string name="option_steps_title">先经过的页面</string>
+    <string name="option_steps_order_help">在每个页面上，匹配的链接会被排序，并跟随最后一个。</string>
+    <string name="step_title">页面 %1$d</string>
+    <string name="step_filter">要跟随的链接</string>
+    <string name="step_text">匹配链接的文本</string>
+    <string name="step_arch">优先选择此设备的处理器</string>
+    <string name="step_add">添加页面</string>
+    <string name="step_remove">移除此页面</string>
+    <string name="option_file_version">使用文件名作为版本</string>
+    <string name="option_file_version_effect">这样每个文件都算作一个独立的发布。</string>
+    <string name="github_proxy_title">通过 hubproxy 访问 GitHub</string>
+    <string name="github_proxy_effect">对 GitHub 的每个请求都会发送到此主机，该主机能看到每一个请求。不会通过它发送令牌，因此无法通过这种方式跟踪私有项目和 GitHub Actions。</string>
+    <string name="github_proxy_host">hubproxy 主机</string>
+    <string name="github_proxy_help">只填主机名，例如 gh-proxy.com。Tern 通过 HTTPS 连接它。</string>
+    <string name="github_proxy_invalid">这不是 Tern 可以使用的主机名</string>
+    <string name="github_proxy_in_use">GitHub 请求将通过 %1$s</string>
+    <string name="github_proxy_remove">停止使用 hubproxy</string>
+</resources>

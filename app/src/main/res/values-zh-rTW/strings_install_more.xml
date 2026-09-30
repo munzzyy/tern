@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="install_archive_zstd_unsupported">此壓縮檔使用 zstd 壓縮，Tern 無法開啟。請選擇此發行版本的 .zip 或 .tar 檔案，或使用 gzip、bzip2 或 xz 壓縮的檔案。</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s / %2$s</string>
+    <string name="install_setting_one_download">一次只下載一個</string>
+    <string name="install_setting_one_download_effect">下載會互相等待，而不是同時進行。</string>
+    <string name="install_file_foreign_host">此檔案來自 %1$s，它不是此應用程式來源的網站。它會像其他檔案一樣接受檢查。</string>
+    <string name="install_file_picked">您的選擇</string>
+    <string name="install_file_automatic">讓 Tern 重新選擇檔案</string>
+    <string name="install_file_picked_kept">更新會繼續使用您選擇的檔案 %1$s。</string>
+    <string name="install_file_picked_missing">此發行版本中沒有與您選擇的檔案 %1$s 相似的檔案，因此 Tern 選了一個。</string>
+</resources>

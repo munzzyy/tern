@@ -1,2 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="filter_open">リストをフィルター</string>
+    <string name="filter_state_on">フィルターがオンです</string>
+    <string name="filter_name">名前</string>
+    <string name="filter_author">開発者</string>
+    <string name="filter_package">パッケージ名</string>
+    <string name="filter_show_up_to_date">最新のアプリ</string>
+    <string name="filter_show_not_installed">未インストールのアプリ</string>
+    <string name="filter_show_tracked">追跡のみのアプリ</string>
+    <string name="filter_categories">次のいずれかのカテゴリに含まれる</string>
+    <string name="filter_sources">次のいずれかの提供元から</string>
+    <string name="filter_clear">フィルターをクリア</string>
+    <plurals name="filter_shown">
+        <item quantity="other">%2$d 個中 %1$d 個のアプリを表示</item>
+    </plurals>
+    <string name="checking_count">%2$d 個中 %1$d 個を確認中</string>
+    <string name="row_moved">%1$s に移動</string>
+    <string name="row_released">リリース日: %1$s</string>
+    <string name="row_changes">変更点</string>
+    <string name="action_show_changes">変更点を表示</string>
+    <string name="action_install_all">すべてインストール</string>
+    <string name="action_install_update_all">すべてインストールして更新</string>
+    <plurals name="apps_section_installs">
+        <item quantity="other">%d 個のアプリがまだインストールされていません</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="other">%d 個のアプリをインストールして更新しますか？</item>
+    </plurals>
+    <string name="settings_update_all">「すべて更新」ボタン</string>
+    <string name="update_all_updates">更新のみ</string>
+    <string name="update_all_all">更新と未インストールのアプリ</string>
+    <string name="update_all_none">表示しない</string>
+    <string name="settings_confirm_update_all">「すべて更新」の前に確認</string>
+    <string name="settings_confirm_update_all_effect">インストールまたは更新するアプリの数を表示し、承認を待ちます。</string>
+    <plurals name="bulk_install_title">
+        <item quantity="other">%d 個のアプリをインストールしますか？</item>
+    </plurals>
+    <string name="bulk_install_text">各ファイルをダウンロードして確認した後、Androidにインストールを要求します。Ternは新しいアプリごとに署名の証明書を保持し、以降のすべての更新にその証明書を要求します。</string>
+    <plurals name="bulk_install_left">
+        <item quantity="other">選択したアプリのうち %d 個は、今インストールするものがないため、そのままにします。</item>
+    </plurals>
+    <string name="action_change_categories">カテゴリを変更</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="other">%d 個のアプリのカテゴリ</item>
+    </plurals>
+    <string name="bulk_categories_help">チェックを入れると、選択したすべてのアプリがそのカテゴリに分類されます。空のボックスにすると、すべてのアプリがそのカテゴリから外れます。横線のままにすると、各アプリはそのままです。</string>
+    <string name="categories_filed_all">選択したすべてのアプリ</string>
+    <string name="categories_filed_some">選択したアプリの一部</string>
+    <string name="categories_filed_none">選択したアプリはなし</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="other">%d 個のアプリのカテゴリを変更しました。</item>
+    </plurals>
+    <string name="action_share_config_link">設定を含むリンクを共有</string>
+    <string name="action_share_config_links">それぞれの設定を含むリンクを共有</string>
+    <string name="share_link_none">このアプリの設定を含められるリンクはありません。代わりにファイルとして共有してください。</string>
+    <plurals name="share_links_left">
+        <item quantity="other">%d 個のアプリは、設定を含められるリンクがないため除外されました。</item>
+    </plurals>
+</resources>

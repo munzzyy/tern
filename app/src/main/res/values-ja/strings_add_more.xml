@@ -1,2 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="add_link_unknown">Ternはこの種類のリンクを認識できません。</string>
+    <string name="add_not_readable_as">このアドレスは %1$s として読み取れません。</string>
+    <string name="add_event_replaced">ファイルまたはリンクに含まれていた設定で、このアプリの設定を置き換えました。</string>
+    <string name="search_miss_unreachable">%1$s を検索できませんでした: 応答がありませんでした。</string>
+    <string name="search_miss_wait">%1$s を検索できませんでした: Ternにしばらく待つよう求めています。</string>
+    <string name="search_miss_wait_until">%1$s を検索できませんでした: Ternに %2$s まで待つよう求めています。</string>
+    <string name="search_miss_refused">%1$s を検索できませんでした: リクエストが拒否されました。</string>
+    <string name="search_miss_status">%1$s を検索できませんでした: %2$d を返しました。</string>
+    <string name="search_miss_unreadable">%1$s を検索できませんでした: 応答を読み取れませんでした。</string>
+    <string name="add_options_title">追加する前に</string>
+    <string name="add_options_auto">Ternがアドレスの種類を判別します。</string>
+    <string name="add_options_forced">%1$s として読み取る</string>
+    <string name="add_read_as">アドレスの読み取り方</string>
+    <string name="add_read_as_auto">自動</string>
+    <string name="add_read_as_forgejo">ForgejoまたはGitea</string>
+    <string name="add_read_as_help">Ternが自動では認識できない提供元向けです。独自のホスト上にあるものなどが該当します。</string>
+    <string name="add_package_label">パッケージ名</string>
+    <string name="add_package_help">すべてのファイルがこのパッケージのものである必要があります。空欄の場合、Ternはアプリのファイルから読み取ります。</string>
+    <string name="add_package_invalid">パッケージ名ではありません。org.example.app のような形式です。</string>
+    <string name="add_set_options">オプションを設定</string>
+    <string name="add_failed_options">オプションで、Ternに探す場所を伝えられる場合があります。上で設定すると、Ternが再確認します。</string>
+    <string name="add_replace">設定を置き換える</string>
+    <string name="add_replace_explain">リンクには、このアプリ用の独自の設定が含まれています。置き換えても、信頼する証明書とパッケージ名はそのまま保持され、更新の自動インストールも有効にはなりません。</string>
+    <string name="results_filter">フィルター</string>
+    <string name="results_filter_help">語句またはパターン</string>
+    <string name="results_filter_none">リストに「%1$s」に一致するものはありません。</string>
+    <string name="repo_search_all">リポジトリ全体から「%1$s」を検索</string>
+    <string name="repo_show_all">すべてのアプリを表示</string>
+    <string name="repo_heading_within">%1$s 内の「%2$s」を含むアプリ</string>
+    <string name="search_more">表示されている数より多く見つかりました。フィルターで絞り込めます。</string>
+    <string name="search_forgejo_label">検索するForgejoまたはGitea</string>
+    <string name="search_forgejo_help">そのアドレス（例: codeberg.org）。保存されているトークンがあれば一緒に送信されます。</string>
+    <string name="search_forgejo_invalid">Ternが検索できるアドレスではありません。</string>
+    <string name="search_min_stars_label">スターの最小数</string>
+    <string name="search_min_stars_help">GitHubおよびForgejo上のプロジェクトのうち、スターがこの数より少ないものは除外されます。</string>
+    <plurals name="import_replaceable">
+        <item quantity="other">このファイルには、すでにリストにある %1$d 個のアプリについて、別の設定も含まれています。置き換えない限り、現在の設定のまま変わりません。</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="other">%1$d 個のアプリの設定を置き換える</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="other">%1$d 個のアプリの設定を置き換えました。信頼する証明書はそのまま残っています。</item>
+    </plurals>
+    <string name="import_settings_offered">このファイルには、Tern自体の設定（外観、リスト、通知、確認）も含まれています。指示しない限り取り込まれません。</string>
+    <string name="import_take_settings">これらの設定を取り込む</string>
+    <plurals name="import_pick_shown">
+        <item quantity="other">表示中の %1$d 件すべてにチェックを入れる</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="other">表示中の %1$d 件すべてのチェックを外す</item>
+    </plurals>
+</resources>

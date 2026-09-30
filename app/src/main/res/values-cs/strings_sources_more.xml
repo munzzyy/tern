@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_track_only_forced">Aplikace z %1$s lze jen sledovat, protože tento zdroj nenabízí žádný soubor k instalaci.</string>
+    <string name="min_age_global">Jak je nastaveno pro všechny aplikace: %1$s</string>
+    <string name="setting_min_age_global_effect">Aplikace bez vlastní doby čekání čekají tak dlouho, než se jim nabídne nové vydání, aby bylo možné případné špatné vydání včas stáhnout.</string>
+    <string name="option_link_text">Filtrovat odkazy podle jejich textu</string>
+    <string name="option_link_text_effect">Filtr se porovnává s textem odkazu, ne s jeho adresou.</string>
+    <string name="option_take_first">Vzít první odkaz</string>
+    <string name="option_take_first_effect">Jinak se vezme poslední odkaz v pořadí.</string>
+    <string name="option_natural_order_effect">Jinak se odkazy řadí přirozeně podle adresy, přičemž čísla se čtou jako čísla.</string>
+    <string name="option_by_last_segment">Řídit se koncem adresy</string>
+    <string name="option_by_last_segment_effect">Odkazy se řadí a verze se čtou podle části za posledním lomítkem.</string>
+    <string name="option_steps_title">Stránky, kterými je třeba nejdřív projít</string>
+    <string name="option_steps_order_help">Na každé stránce se odpovídající odkazy seřadí a otevře se poslední z nich.</string>
+    <string name="step_title">Stránka %1$d</string>
+    <string name="step_filter">Odkaz, který se má otevřít</string>
+    <string name="step_text">Porovnávat s textem odkazu</string>
+    <string name="step_arch">Upřednostnit procesor tohoto zařízení</string>
+    <string name="step_add">Přidat stránku</string>
+    <string name="step_remove">Odebrat tuto stránku</string>
+    <string name="option_file_version">Použít název souboru jako verzi</string>
+    <string name="option_file_version_effect">Každý soubor se pak počítá jako samostatné vydání.</string>
+    <string name="github_proxy_title">GitHub přes hubproxy</string>
+    <string name="github_proxy_effect">Každý požadavek na GitHub jde na tohoto hostitele, který vidí všechny požadavky. Přes něj se neposílá žádný token, takže soukromé projekty a GitHub Actions se tak sledovat nedají.</string>
+    <string name="github_proxy_host">Hostitel hubproxy</string>
+    <string name="github_proxy_help">Jen název hostitele, například gh-proxy.com. Tern se k němu připojuje přes HTTPS.</string>
+    <string name="github_proxy_invalid">To není název hostitele, který Tern může použít</string>
+    <string name="github_proxy_in_use">Požadavky na GitHub jdou přes %1$s</string>
+    <string name="github_proxy_remove">Přestat používat hubproxy</string>
+</resources>

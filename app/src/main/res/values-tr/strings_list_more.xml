@@ -1,2 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="filter_open">Listeyi filtrele</string>
+    <string name="filter_state_on">Filtreler açık</string>
+    <string name="filter_name">Ad</string>
+    <string name="filter_author">Geliştirici</string>
+    <string name="filter_package">Paket adı</string>
+    <string name="filter_show_up_to_date">Güncel olan uygulamalar</string>
+    <string name="filter_show_not_installed">Yüklü olmayan uygulamalar</string>
+    <string name="filter_show_tracked">Yalnızca izlenen uygulamalar</string>
+    <string name="filter_categories">Bu kategorilerden herhangi birinde</string>
+    <string name="filter_sources">Bu kaynaklardan herhangi birinden</string>
+    <string name="filter_clear">Filtreleri temizle</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%2$d uygulamadan %1$d tanesi gösteriliyor</item>
+        <item quantity="other">%2$d uygulamadan %1$d tanesi gösteriliyor</item>
+    </plurals>
+    <string name="checking_count">Denetleniyor: %1$d / %2$d</string>
+    <string name="row_moved">Şuraya taşındı: %1$s</string>
+    <string name="row_released">Yayınlandı: %1$s</string>
+    <string name="row_changes">Değişiklikler</string>
+    <string name="action_show_changes">Değişiklikleri göster</string>
+    <string name="action_install_all">Tümünü yükle</string>
+    <string name="action_install_update_all">Tümünü yükle ve güncelle</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d uygulama henüz yüklü değil</item>
+        <item quantity="other">%d uygulama henüz yüklü değil</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">%d uygulama yüklensin ve güncellensin mi?</item>
+        <item quantity="other">%d uygulama yüklensin ve güncellensin mi?</item>
+    </plurals>
+    <string name="settings_update_all">Tümünü güncelle düğmesi</string>
+    <string name="update_all_updates">Yalnızca güncellemeler</string>
+    <string name="update_all_all">Güncellemeler ve henüz yüklü olmayan uygulamalar</string>
+    <string name="update_all_none">Gösterilmez</string>
+    <string name="settings_confirm_update_all">Tümünü güncelle öncesinde sor</string>
+    <string name="settings_confirm_update_all_effect">Kaç uygulamanın yükleneceğini veya güncelleneceğini söyler ve bir onay bekler.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">%d uygulama yüklensin mi?</item>
+        <item quantity="other">%d uygulama yüklensin mi?</item>
+    </plurals>
+    <string name="bulk_install_text">Android\'den yüklemesi istenmeden önce her dosya indirilir ve denetlenir. Tern, her yeni uygulamanın imzalandığı sertifikayı saklar ve sonraki her güncellemeyi aynı sertifikaya tabi tutar.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">Seçilen uygulamalardan %d tanesinin şimdi yüklenecek bir şeyi yok ve olduğu gibi bırakıldı.</item>
+        <item quantity="other">Seçilen uygulamalardan %d tanesinin şimdi yüklenecek bir şeyi yok ve olduğu gibi bırakıldı.</item>
+    </plurals>
+    <string name="action_change_categories">Kategorileri değiştir</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">%d uygulamanın kategorileri</item>
+        <item quantity="other">%d uygulamanın kategorileri</item>
+    </plurals>
+    <string name="bulk_categories_help">Bir işaret, seçilen her uygulamayı bir kategorinin altına ekler; boş kutu hepsini ondan çıkarır. Bir tire her uygulamayı olduğu gibi bırakır.</string>
+    <string name="categories_filed_all">Seçilen her uygulama</string>
+    <string name="categories_filed_some">Seçilen uygulamalardan bazıları</string>
+    <string name="categories_filed_none">Seçilen uygulamalardan hiçbiri</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">%d uygulamanın kategorileri değiştirildi.</item>
+        <item quantity="other">%d uygulamanın kategorileri değiştirildi.</item>
+    </plurals>
+    <string name="action_share_config_link">Ayarlarını içeren bir bağlantı paylaş</string>
+    <string name="action_share_config_links">Ayarlarıyla birlikte bağlantıları paylaş</string>
+    <string name="share_link_none">Hiçbir bağlantı bu uygulamanın ayarlarını taşıyamaz. Bunun yerine dosya olarak paylaşın.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d uygulama dışarıda bırakıldı, çünkü hiçbir bağlantı ayarlarını taşıyamaz.</item>
+        <item quantity="other">%d uygulama dışarıda bırakıldı, çünkü hiçbir bağlantı ayarlarını taşıyamaz.</item>
+    </plurals>
+</resources>

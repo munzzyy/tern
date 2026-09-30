@@ -1,2 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="filter_open">过滤列表</string>
+    <string name="filter_state_on">过滤器已开启</string>
+    <string name="filter_name">名称</string>
+    <string name="filter_author">开发者</string>
+    <string name="filter_package">包名</string>
+    <string name="filter_show_up_to_date">已是最新的应用</string>
+    <string name="filter_show_not_installed">未安装的应用</string>
+    <string name="filter_show_tracked">仅跟踪的应用</string>
+    <string name="filter_categories">属于以下任一分类</string>
+    <string name="filter_sources">来自以下任一来源</string>
+    <string name="filter_clear">清除过滤器</string>
+    <plurals name="filter_shown">
+        <item quantity="other">显示 %2$d 个应用中的 %1$d 个</item>
+    </plurals>
+    <string name="checking_count">正在检查 %1$d/%2$d</string>
+    <string name="row_moved">已移至 %1$s</string>
+    <string name="row_released">发布于 %1$s</string>
+    <string name="row_changes">更新内容</string>
+    <string name="action_show_changes">查看更新内容</string>
+    <string name="action_install_all">全部安装</string>
+    <string name="action_install_update_all">全部安装并更新</string>
+    <plurals name="apps_section_installs">
+        <item quantity="other">%d 个应用尚未安装</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="other">安装并更新 %d 个应用？</item>
+    </plurals>
+    <string name="settings_update_all">“全部更新”按钮</string>
+    <string name="update_all_updates">仅更新</string>
+    <string name="update_all_all">更新及尚未安装的应用</string>
+    <string name="update_all_none">不显示</string>
+    <string name="settings_confirm_update_all">“全部更新”前询问</string>
+    <string name="settings_confirm_update_all_effect">会说明将安装或更新多少个应用，并等待您确认。</string>
+    <plurals name="bulk_install_title">
+        <item quantity="other">安装 %d 个应用？</item>
+    </plurals>
+    <string name="bulk_install_text">每个文件都会先下载并检查，然后才请 Android 安装。Tern 会保存每个新应用的签名证书，并要求此后的每次更新都使用该证书。</string>
+    <plurals name="bulk_install_left">
+        <item quantity="other">选中的应用中有 %d 个现在没有可安装的内容，将保持原样。</item>
+    </plurals>
+    <string name="action_change_categories">更改分类</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="other">%d 个应用的分类</item>
+    </plurals>
+    <string name="bulk_categories_help">勾选会将所有选中的应用归入该分类，空框会将它们全部移出该分类。短横线则保持每个应用不变。</string>
+    <string name="categories_filed_all">所有选中的应用</string>
+    <string name="categories_filed_some">部分选中的应用</string>
+    <string name="categories_filed_none">没有选中的应用</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="other">已更改 %d 个应用的分类。</item>
+    </plurals>
+    <string name="action_share_config_link">分享带有其设置的链接</string>
+    <string name="action_share_config_links">分享带有各自设置的链接</string>
+    <string name="share_link_none">没有链接能携带此应用的设置。请改为以文件形式分享。</string>
+    <plurals name="share_links_left">
+        <item quantity="other">有 %d 个应用未包含在内，因为没有链接能携带它们的设置。</item>
+    </plurals>
+</resources>

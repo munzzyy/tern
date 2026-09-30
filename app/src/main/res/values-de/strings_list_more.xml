@@ -58,8 +58,8 @@
         <item quantity="one">Kategorien von %d App geändert.</item>
         <item quantity="other">Kategorien von %d Apps geändert.</item>
     </plurals>
-    <string name="action_share_config_link">Einen Link mit ihren Einstellungen teilen</string>
-    <string name="action_share_config_links">Links mit ihren Einstellungen teilen</string>
+    <string name="action_share_config_link">Einen Link mit den Einstellungen der App teilen</string>
+    <string name="action_share_config_links">Links mit den Einstellungen der Apps teilen</string>
     <string name="share_link_none">Kein Link kann die Einstellungen dieser App enthalten. Teile sie stattdessen als Datei.</string>
     <plurals name="share_links_left">
         <item quantity="one">%d App wird ausgelassen, da kein Link ihre Einstellungen enthalten kann.</item>

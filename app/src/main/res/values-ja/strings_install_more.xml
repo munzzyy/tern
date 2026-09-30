@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="install_archive_zstd_unsupported">このアーカイブはzstdで圧縮されており、Ternでは開けません。このリリースの.zipまたは.tarファイル、あるいはgzip、bzip2、xzで圧縮されたものを選んでください。</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%2$s 中 %1$s</string>
+    <string name="install_setting_one_download">ダウンロードは一度に1つ</string>
+    <string name="install_setting_one_download_effect">ダウンロードは並行して実行されず、互いに順番を待ちます。</string>
+    <string name="install_file_foreign_host">このファイルは %1$s から提供されており、このアプリの提供元のサイトではありません。他のファイルと同じように確認されます。</string>
+    <string name="install_file_picked">あなたの選択</string>
+    <string name="install_file_automatic">Ternにファイルを選び直させる</string>
+    <string name="install_file_picked_kept">更新では、選択したファイル %1$s が引き続き使われます。</string>
+    <string name="install_file_picked_missing">このリリースには、選択したファイル %1$s に該当するファイルがないため、Ternが選びました。</string>
+</resources>

@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="install_archive_zstd_unsupported">Bu arşiv, Tern\'ın açamadığı zstd ile sıkıştırılmış. Bu sürümün .zip veya .tar dosyasını ya da gzip, bzip2 veya xz ile sıkıştırılmış bir dosyasını seçin.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s / %2$s</string>
+    <string name="install_setting_one_download">Aynı anda tek indirme</string>
+    <string name="install_setting_one_download_effect">İndirmeler yan yana çalışmak yerine birbirini bekler.</string>
+    <string name="install_file_foreign_host">Bu dosya %1$s sunucusundan geliyor; burası bu uygulamanın kaynağının sitesi değil. Diğer dosyalar gibi denetlenir.</string>
+    <string name="install_file_picked">Sizin seçiminiz</string>
+    <string name="install_file_automatic">Dosyayı yine Tern seçsin</string>
+    <string name="install_file_picked_kept">Güncellemeler seçtiğiniz dosyaya bağlı kalır: %1$s.</string>
+    <string name="install_file_picked_missing">Bu sürümde seçtiğiniz dosyaya benzer bir dosya yok (%1$s), bu yüzden Tern bir dosya seçti.</string>
+</resources>

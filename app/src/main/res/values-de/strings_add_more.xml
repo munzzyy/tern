@@ -2,7 +2,7 @@
 <resources>
     <string name="add_link_unknown">Tern kennt diese Art von Link nicht.</string>
     <string name="add_not_readable_as">Diese Adresse kann nicht als %1$s gelesen werden.</string>
-    <string name="add_event_replaced">Ihre Einstellungen wurden durch die ersetzt, die eine Datei oder ein Link für sie enthielt.</string>
+    <string name="add_event_replaced">Die Einstellungen der App wurden durch die ersetzt, die eine Datei oder ein Link für sie enthielt.</string>
     <string name="search_miss_unreachable">%1$s konnte nicht durchsucht werden: Von dort kam keine Antwort.</string>
     <string name="search_miss_wait">%1$s konnte nicht durchsucht werden: Dort wird Tern gebeten, eine Weile zu warten.</string>
     <string name="search_miss_wait_until">%1$s konnte nicht durchsucht werden: Dort wird Tern gebeten, bis %2$s zu warten.</string>
@@ -21,7 +21,7 @@
     <string name="add_package_invalid">Das ist kein Paketname wie org.example.app.</string>
     <string name="add_set_options">Optionen festlegen</string>
     <string name="add_failed_options">Die Optionen der Quelle können Tern sagen, wo es suchen soll. Lege sie oben fest, dann prüft Tern erneut.</string>
-    <string name="add_replace">Ihre Einstellungen ersetzen</string>
+    <string name="add_replace">Einstellungen der App ersetzen</string>
     <string name="add_replace_explain">Der Link enthält eigene Einstellungen für diese App. Beim Ersetzen bleiben die Zertifikate, denen sie vertraut, und ihr Paketname erhalten, und sie installiert Updates dadurch nicht selbstständig.</string>
     <string name="results_filter">Filter</string>
     <string name="results_filter_help">Wörter oder ein Muster</string>

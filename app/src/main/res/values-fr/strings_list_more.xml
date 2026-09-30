@@ -1,2 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="filter_open">Filtrer la liste</string>
+    <string name="filter_state_on">Filtres activés</string>
+    <string name="filter_name">Nom</string>
+    <string name="filter_author">Développeur</string>
+    <string name="filter_package">Nom du paquet</string>
+    <string name="filter_show_up_to_date">Applis à jour</string>
+    <string name="filter_show_not_installed">Applis non installées</string>
+    <string name="filter_show_tracked">Applis uniquement suivies</string>
+    <string name="filter_categories">Dans l\'une de ces catégories</string>
+    <string name="filter_sources">De l\'une de ces sources</string>
+    <string name="filter_clear">Effacer les filtres</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%1$d sur %2$d appli affichée</item>
+        <item quantity="many">%1$d sur %2$d applis affichées</item>
+        <item quantity="other">%1$d sur %2$d applis affichées</item>
+    </plurals>
+    <string name="checking_count">Vérification de %1$d sur %2$d</string>
+    <string name="row_moved">Déplacé vers %1$s</string>
+    <string name="row_released">Publiée le %1$s</string>
+    <string name="row_changes">Changements</string>
+    <string name="action_show_changes">Afficher les changements</string>
+    <string name="action_install_all">Tout installer</string>
+    <string name="action_install_update_all">Tout installer et mettre à jour</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d appli n\'est pas encore installée</item>
+        <item quantity="many">%d applis ne sont pas encore installées</item>
+        <item quantity="other">%d applis ne sont pas encore installées</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Installer et mettre à jour %d appli ?</item>
+        <item quantity="many">Installer et mettre à jour %d applis ?</item>
+        <item quantity="other">Installer et mettre à jour %d applis ?</item>
+    </plurals>
+    <string name="settings_update_all">Le bouton Tout mettre à jour</string>
+    <string name="update_all_updates">Mises à jour uniquement</string>
+    <string name="update_all_all">Mises à jour et applis pas encore installées</string>
+    <string name="update_all_none">Non affiché</string>
+    <string name="settings_confirm_update_all">Demander avant de tout mettre à jour</string>
+    <string name="settings_confirm_update_all_effect">Indique combien d\'applis seront installées ou mises à jour, et attend un oui.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Installer %d appli ?</item>
+        <item quantity="many">Installer %d applis ?</item>
+        <item quantity="other">Installer %d applis ?</item>
+    </plurals>
+    <string name="bulk_install_text">Chaque fichier est téléchargé et vérifié avant de demander à Android de l\'installer. Tern mémorise le certificat avec lequel chaque nouvelle appli est signée, et exige le même pour chaque mise à jour ultérieure.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d des applis choisies n\'a rien à installer pour le moment et reste telle quelle.</item>
+        <item quantity="many">%d des applis choisies n\'ont rien à installer pour le moment et restent telles quelles.</item>
+        <item quantity="other">%d des applis choisies n\'ont rien à installer pour le moment et restent telles quelles.</item>
+    </plurals>
+    <string name="action_change_categories">Modifier les catégories</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Catégories de %d appli</item>
+        <item quantity="many">Catégories de %d applis</item>
+        <item quantity="other">Catégories de %d applis</item>
+    </plurals>
+    <string name="bulk_categories_help">Une coche classe chaque appli choisie dans une catégorie, et une case vide les en retire toutes. Un tiret laisse chaque appli telle quelle.</string>
+    <string name="categories_filed_all">Toutes les applis choisies</string>
+    <string name="categories_filed_some">Certaines des applis choisies</string>
+    <string name="categories_filed_none">Aucune des applis choisies</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Les catégories de %d appli ont été modifiées.</item>
+        <item quantity="many">Les catégories de %d applis ont été modifiées.</item>
+        <item quantity="other">Les catégories de %d applis ont été modifiées.</item>
+    </plurals>
+    <string name="action_share_config_link">Partager un lien avec ses paramètres</string>
+    <string name="action_share_config_links">Partager des liens avec leurs paramètres</string>
+    <string name="share_link_none">Aucun lien ne peut contenir les paramètres de cette appli. Partagez-la plutôt sous forme de fichier.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d appli est écartée, car aucun lien ne peut contenir ses paramètres.</item>
+        <item quantity="many">%d applis sont écartées, car aucun lien ne peut contenir leurs paramètres.</item>
+        <item quantity="other">%d applis sont écartées, car aucun lien ne peut contenir leurs paramètres.</item>
+    </plurals>
+</resources>

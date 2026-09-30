@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_track_only_forced">Aplikasi dari %1$s hanya dapat diikuti, karena tidak menyediakan file untuk diinstal.</string>
+    <string name="min_age_global">Sesuai setelan semua aplikasi: %1$s</string>
+    <string name="setting_min_age_global_effect">Aplikasi tanpa waktu tunggu sendiri menunggu selama ini sebelum rilis baru ditawarkan, jadi rilis yang buruk dapat ditarik lebih dulu.</string>
+    <string name="option_link_text">Filter tautan berdasarkan teksnya</string>
+    <string name="option_link_text_effect">Filter dicocokkan dengan teks tautan, bukan alamatnya.</string>
+    <string name="option_take_first">Ambil tautan pertama</string>
+    <string name="option_take_first_effect">Jika dimatikan, yang diambil adalah tautan terakhir dalam urutan.</string>
+    <string name="option_natural_order_effect">Jika dimatikan, tautan diurutkan secara alami menurut alamatnya, dengan angka dibaca sebagai angka.</string>
+    <string name="option_by_last_segment">Berdasarkan akhir alamat</string>
+    <string name="option_by_last_segment_effect">Tautan diurutkan, dan versi dibaca, berdasarkan bagian setelah garis miring terakhir.</string>
+    <string name="option_steps_title">Halaman yang dilalui lebih dulu</string>
+    <string name="option_steps_order_help">Di setiap halaman, tautan yang cocok diurutkan dan yang terakhir diikuti.</string>
+    <string name="step_title">Halaman %1$d</string>
+    <string name="step_filter">Tautan yang diikuti</string>
+    <string name="step_text">Cocokkan teks tautan</string>
+    <string name="step_arch">Utamakan prosesor perangkat ini</string>
+    <string name="step_add">Tambah halaman</string>
+    <string name="step_remove">Hapus halaman ini</string>
+    <string name="option_file_version">Pakai nama file sebagai versi</string>
+    <string name="option_file_version_effect">Setiap file lalu dihitung sebagai rilis tersendiri.</string>
+    <string name="github_proxy_title">GitHub melalui hubproxy</string>
+    <string name="github_proxy_effect">Setiap permintaan ke GitHub dikirim ke host ini, yang melihat semuanya. Tidak ada token yang dikirim melaluinya, sehingga proyek privat dan GitHub Actions tidak dapat diikuti dengan cara ini.</string>
+    <string name="github_proxy_host">Host hubproxy</string>
+    <string name="github_proxy_help">Nama host saja, misalnya gh-proxy.com. Tern terhubung ke sana melalui HTTPS.</string>
+    <string name="github_proxy_invalid">Itu bukan nama host yang dapat digunakan Tern</string>
+    <string name="github_proxy_in_use">Permintaan GitHub melalui %1$s</string>
+    <string name="github_proxy_remove">Berhenti memakai hubproxy</string>
+</resources>

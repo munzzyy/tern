@@ -58,6 +58,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             haptics = prefs.getBoolean("haptics", d.haptics),
             phoneLayout = prefs.getBoolean("phoneLayout", d.phoneLayout),
             allowDowngrades = prefs.getBoolean("allowDowngrades", d.allowDowngrades),
+            searchIn = prefs.getStringSet("searchIn", null)?.filterTo(LinkedHashSet()) { it.length <= MAX_ORIGIN }?.take(MAX_ORIGINS)?.toSet() ?: d.searchIn,
         )
     }
 
@@ -119,6 +120,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putBoolean("haptics", s.haptics)
             .putBoolean("phoneLayout", s.phoneLayout)
             .putBoolean("allowDowngrades", s.allowDowngrades)
+            .putStringSet("searchIn", s.searchIn.filterTo(LinkedHashSet()) { it.length <= MAX_ORIGIN })
             .commit()
     }
 
@@ -134,6 +136,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
         /** The shortest period Android runs a job at. */
         const val MIN_MINUTES = 15
         const val MAX_FILTER = 500
+        private const val MAX_ORIGIN = 60
+        private const val MAX_ORIGINS = 40
 
         /** 0 stays off; anything else is taken to the range Android keeps to. */
         fun cleanMinutes(minutes: Int): Int = if (minutes <= 0) 0 else minutes.coerceIn(MIN_MINUTES, MAX_MINUTES)

@@ -199,6 +199,7 @@ fun AddScreen(
                         PrimaryButton(stringResource(R.string.action_find), onClick = find, modifier = findButton, enabled = ready)
                     }
                 }
+                if (searchesByName(vm.input, state)) SearchPlaces()
                 when (val s = state) {
                     AddState.Idle -> if (starting) {
                         if (handoff) {
@@ -269,5 +270,16 @@ private fun Busy(text: String, onCancel: (() -> Unit)?) {
         CircularProgressIndicator(Modifier.size(look.glyph + look.gapSmall))
         Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
         onCancel?.let { QuietButton(stringResource(R.string.action_cancel), onClick = it, modifier = Modifier.focusWhenShown()) }
+    }
+}
+
+/** Words, not an address, and nothing found yet but what a search found: where to search is worth choosing. */
+fun searchesByName(input: String, state: AddState): Boolean {
+    val text = input.trim()
+    if (text.isEmpty() || text.contains("://") || text.contains('/') || text.contains('.') && !text.contains(' ')) return false
+    return when (state) {
+        AddState.Idle -> true
+        is AddState.Answer -> (state.detection as? Detection.Results)?.let { !isRepository(it) && !isCarriedList(it) } ?: false
+        else -> false
     }
 }

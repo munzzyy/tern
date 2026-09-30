@@ -30,5 +30,6 @@
     <string name="settings_phone_layout">Always use the phone layout</string>
     <string name="settings_phone_layout_effect">One pane and a bar at the bottom, however wide the screen.</string>
     <string name="density_minimal">Minimal</string>
+    <string name="search_in">Search in</string>
     <string name="engine_event_removed_uninstalled">Removed from the list, as it was uninstalled outside Tern</string>
 </resources>

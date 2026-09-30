@@ -630,6 +630,8 @@ class RealEngine(
 
     override suspend fun runBackgroundCheck() = runScheduledCheck()
 
+    override val searchOrigins: List<String> get() = detector.searchOrigins
+
     override fun canDowngrade(): Boolean = device.read(LET_ME_DOWNGRADE) != null
 
     override suspend fun writeKeptExport() {

@@ -28,6 +28,9 @@ interface Engine {
     /** Looks at what the user typed, pasted or shared: a link is resolved, anything else is searched. */
     suspend fun detect(input: String): Detection
 
+    /** Every place a search can look, by the name each goes by; [Settings.searchIn] picks among them. */
+    val searchOrigins: List<String>
+
     /**
      * The configuration [add] would store for [found]. An app that arrives by link or import can
      * carry filters and pinned certificates, and the user has to see them before they are stored.

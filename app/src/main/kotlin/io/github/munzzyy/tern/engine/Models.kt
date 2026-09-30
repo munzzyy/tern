@@ -307,7 +307,14 @@ data class Settings(
     val phoneLayout: Boolean = false,
     /** Lets an older version replace a newer one. Android refuses unless Let Me Downgrade is installed. */
     val allowDowngrades: Boolean = false,
-)
+    /** Where a search looks, by the name each place goes by. */
+    val searchIn: Set<String> = DEFAULT_SEARCH,
+) {
+    companion object {
+        /** The forges and F-Droid; the stores are there to be picked. */
+        val DEFAULT_SEARCH: Set<String> = setOf("GitHub", "Codeberg", "GitLab", "F-Droid")
+    }
+}
 
 data class ImportSummary(
     val added: Int,

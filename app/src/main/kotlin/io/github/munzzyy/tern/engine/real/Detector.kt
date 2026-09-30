@@ -33,7 +33,10 @@ import kotlinx.coroutines.withContext
 
 /** Turns what the user typed, pasted or shared into a source to add, or into search results. */
 internal class Detector(private val e: RealEngine) {
-    private val search = Search(e.http, e.tokens)
+    private val search = Search(e.http, e.tokens, e.registry.searchable) { e.sourceContext() }
+
+    /** Every place a search can look. */
+    val searchOrigins: List<String> get() = search.origins
 
     suspend fun detect(input: String): Detection {
         val text = input.trim().take(MAX_INPUT)
@@ -42,7 +45,7 @@ internal class Detector(private val e: RealEngine) {
             is ObtainiumLink.Add -> Target(link.url, null, null)
             is ObtainiumLink.App -> fromObtainiumApp(link.json) ?: return Detection.Failed(Problem(ProblemKind.UNSUPPORTED, e.texts.notASource()))
             is ObtainiumLink.Apps -> return several(link.json) ?: Detection.Failed(Problem(ProblemKind.UNSUPPORTED, e.texts.notASource()))
-            null -> if (looksLikeLink(text)) Target(text, null, null) else return Detection.Results(text, search.search(text))
+            null -> if (looksLikeLink(text)) Target(text, null, null) else return Detection.Results(text, search.search(text, e.settings.value.searchIn))
         }
         return withContext(Dispatchers.IO) { resolve(target) }
     }

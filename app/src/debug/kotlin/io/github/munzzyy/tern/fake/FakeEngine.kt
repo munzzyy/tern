@@ -591,6 +591,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override suspend fun runBackgroundCheck() = check(null)
 
+    override val searchOrigins: List<String> = listOf("GitHub", "Codeberg", "GitLab", "F-Droid", "Aptoide", "Uptodown")
+
     override fun canDowngrade(): Boolean = false
 
     override suspend fun writeKeptExport() {

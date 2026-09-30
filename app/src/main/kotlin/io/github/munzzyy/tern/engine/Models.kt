@@ -394,8 +394,8 @@ data class Settings(
     val oneDownloadAtATime: Boolean = false,
     /** The activity of [otherInstaller] the file goes to, for an installer app with several; null leaves it to the app. */
     val otherInstallerActivity: String? = null,
-    /** Before the first install of an app, its checked file goes to Verified Apps or AppVerifier, where one is installed. */
-    val shareToVerifier: Boolean = true,
+    /** Before the first install of an app, its checked file goes to Verified Apps or AppVerifier, where a genuine one is installed. Off until the person turns it on. */
+    val shareToVerifier: Boolean = false,
     /** The activity log keeps Tern's own warnings and errors too, and when each check starts and ends, with nothing secret in them. */
     val keepOwnMessages: Boolean = false,
 ) {

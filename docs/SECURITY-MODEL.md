@@ -173,6 +173,10 @@ counted.
 Before the first install of an app, when the setting asks for it and Verified
 Apps or AppVerifier is on the phone, a read-only copy of the checked file goes
 to that app alone, for a second look by code that shares nothing with Tern's.
+The setting is off at first. Tern knows the certificate each of these apps is
+signed with, as its makers publish it, and sends nothing, neither this file nor
+the package and certificate the "Check with" button hands over, to an app that
+has the name but not the certificate.
 This happens only for an install the person started while Tern is on the
 screen. The installer then gets the file the gate passed, never the copy.
 

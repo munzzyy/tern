@@ -66,9 +66,10 @@ if there is one, and only when you press it.
 "Check with Verified Apps" hands the package name of an app and the certificate
 Tern holds it to to Verified Apps or AppVerifier, another app on this device,
 and only when you press it. With "Show new apps to Verified Apps first" on,
-which it is at first as in Obtainium, the checked file of an app's first install
-goes to that app too, read-only, before the installer gets it. Nothing goes
-over the network for that.
+which it is not at first, the checked file of an app's first install goes to
+that app too, read-only, before the installer gets it. Either one goes only to
+an app signed with the certificate its makers publish, never to another app
+that took the same name. Nothing goes over the network for that.
 
 With another app chosen as the installer, Tern hands that app each file once
 the file has passed its checks, and that app alone may read it. With Shizuku

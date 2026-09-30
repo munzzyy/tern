@@ -281,7 +281,8 @@ internal class Installs(private val e: RealEngine) {
      */
     private suspend fun handToVerifier(appId: String, apk: File, packageName: String) {
         val send = { pkg: String -> Intent(Intent.ACTION_SEND).setPackage(pkg).setType(APK_MIME) }
-        val verifier = VerifiedApps.first { send(it).resolveActivity(e.context.packageManager) != null }
+        val pm = e.context.packageManager
+        val verifier = VerifiedApps.first({ VerifiedApps.signers(pm, it) }) { send(it).resolveActivity(pm) != null }
         if (!VerifiedApps.handsOver(e.settings.value.shareToVerifier, firstInstall = true, there = appId in e.userTransfers && inForeground(), verifier = verifier)) return
         val copy = runInterruptible {
             val folder = File(e.context.cacheDir, "${OtherAppInstaller.FOLDER}/$VERIFY_FOLDER").apply {

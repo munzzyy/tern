@@ -108,7 +108,7 @@ fun DetailMenu(row: AppRow) {
 }
 
 /** The page of Tern's site that opens an address in Tern, or offers Tern to whoever does not have it yet. */
-fun ternLink(sourceUrl: String): String = "https://munzzyy.github.io/tern/add/?url=" + Uri.encode(sourceUrl)
+fun ternLink(sourceUrl: String): String = "https://tern.munzzyy.dev/add/?url=" + Uri.encode(sourceUrl)
 
 private fun openAppInfo(context: android.content.Context, packageName: String): Boolean = try {
     context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))

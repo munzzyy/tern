@@ -448,11 +448,12 @@ pins, a package name it already knew, its repository's signing key and a
 release the person skipped, and it never starts installing by itself. Taking a
 file's settings never makes new apps install by themselves either.
 
-A link that carries an app's settings is Obtainium's `obtainium://app/` form,
-or the same link behind Obtainium's web page for opening it from a browser.
-Tern makes such links without a token, which an app's settings never hold,
-and with no request header but User-Agent, Accept, Accept-Language and
-Referer, since any other could hold a key. The same rule holds for every
+A link that carries an app's settings is Tern's own page on tern.munzzyy.dev
+with the settings after `#app=`, a part of the address browsers never send, so
+no server sees them. "Share as an Obtainium link" makes Obtainium's
+`obtainium://app/` form instead. Either way the link carries no token, which an
+app's settings never hold, and no request header but Accept, Accept-Language
+and Referer, since any other could hold a key. The same rule holds for every
 config that leaves the phone: an export in either format, the kept export and
 a file shared with another app. A header such as X-Api-Key stays on the device
 and has to be set again after an import. Whoever opens the web form in a

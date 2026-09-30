@@ -58,11 +58,10 @@ internal class ProjectPages(private val http: HttpClient, private val tokens: To
     private fun forgejo(spec: SourceSpec): String? {
         val host = Urls.host(spec.url)
         val (owner, repo) = ownerRepo(spec) ?: return null
-        val token = tokens.tokenFor(host)
-        val headers = token?.let { mapOf("Authorization" to "token $it") }.orEmpty()
+        val token = tokens.tokenFor(host)?.let { "token $it" }
         val base = "https://$host/api/v1/repos/${Urls.encodeSegment(owner)}/${Urls.encodeSegment(repo)}"
         for (name in README_NAMES) {
-            val answer = get("$base/contents/${Urls.encodeSegment(name)}", headers) ?: continue
+            val answer = get("$base/contents/${Urls.encodeSegment(name)}", authorization = token) ?: continue
             val content = parsed { Json.parseObject(answer).string("content") } ?: continue
             return try {
                 String(Base64.getMimeDecoder().decode(content), Charsets.UTF_8)

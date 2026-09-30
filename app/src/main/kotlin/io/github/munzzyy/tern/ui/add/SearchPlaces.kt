@@ -2,14 +2,9 @@ package io.github.munzzyy.tern.ui.add
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -22,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
@@ -32,11 +28,12 @@ import io.github.munzzyy.tern.data.SettingsStore
 import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.engine.real.Search
 import io.github.munzzyy.tern.ui.LocalEngine
+import io.github.munzzyy.tern.ui.common.ChipLines
+import io.github.munzzyy.tern.ui.common.ChoiceChip
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.common.textFieldKeys
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
-import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.theme.LocalLook
 
 /** The places a search looks in after [picked] was switched: at least one always stays. */
@@ -64,27 +61,17 @@ fun SearchPlaces(modifier: Modifier = Modifier) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = look.focusRoom).semantics { heading() },
         )
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(look.gapSmall),
-            verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2),
-            modifier = Modifier.padding(horizontal = look.focusRoom),
-        ) {
-            for (place in places) {
-                val on = place in settings.searchIn
-                FilterChip(
-                    selected = on,
-                    onClick = {
-                        val next = settings.copy(searchIn = toggledPlaces(settings.searchIn, place))
-                        actions.run { engine.saveSettings(next) }
-                    },
-                    label = { Text(if (place == Search.CODEBERG_PLACE) Search.forgejoOrigin(settings.searchForgejo) else place) },
-                    leadingIcon = if (on) {
-                        { Icon(Glyphs.Check, contentDescription = null, modifier = Modifier.size(FilterChipDefaults.IconSize)) }
-                    } else {
-                        null
-                    },
-                )
-            }
+        ChipLines(places, modifier = Modifier.padding(horizontal = look.focusRoom)) { _, place, stop ->
+            ChoiceChip(
+                if (place == Search.CODEBERG_PLACE) Search.forgejoOrigin(settings.searchForgejo) else place,
+                selected = place in settings.searchIn,
+                onClick = {
+                    val next = settings.copy(searchIn = toggledPlaces(settings.searchIn, place))
+                    actions.run { engine.saveSettings(next) }
+                },
+                modifier = stop,
+                role = Role.Checkbox,
+            )
         }
         val forgejo = Search.CODEBERG_PLACE in settings.searchIn
         if (forgejo || "GitHub" in settings.searchIn) SearchScope(forgejo)

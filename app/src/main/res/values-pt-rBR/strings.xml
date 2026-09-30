@@ -384,7 +384,6 @@
     <string name="settings_import_effect">De uma exportação do Tern ou Obtainium</string>
     <string name="settings_export">Exportar apps</string>
     <string name="settings_exporting">Exportando</string>
-    <string name="settings_export_effect">Salva sua lista e configurações em um arquivo. Os tokens nunca são incluídos.</string>
     <plurals name="exported">
         <item quantity="one">Exportou %d app</item>
         <item quantity="many">Exportou %d apps</item>

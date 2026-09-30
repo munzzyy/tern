@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Tredjepartsbutiker är av, så Tern frågar inte denna butik något. Slå på dem i Inställningar för att kontrollera den igen.</string>
+</resources>

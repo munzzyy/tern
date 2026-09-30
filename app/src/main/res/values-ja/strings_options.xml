@@ -60,10 +60,6 @@
     <string name="option_workflow">ワークフローファイル</string>
     <string name="option_workflow_help">例: build.yml</string>
     <string name="option_branch">ブランチ</string>
-    <string name="option_device_model">端末のモデル</string>
-    <string name="option_device_model_help">Galaxy Storeはモデルごとに別のビルドを提供します（例: SM-S948B）。</string>
-    <string name="option_csc">地域コード (CSC)</string>
-    <string name="option_csc_help">3文字（例: DBT）。</string>
     <string name="option_link_filter">ダウンロードリンクのフィルター</string>
     <string name="option_link_filter_help">一致するリンクのみダウンロードとみなされます。</string>
     <string name="option_page_order">ページ上の順序を保つ</string>
@@ -74,11 +70,14 @@
     <string name="version_from_text">リンクのテキスト</string>
     <string name="version_from_page">ページ全体</string>
     <string name="option_headers">リクエストヘッダー</string>
-    <string name="option_headers_help">1行に1つ、Name: value の形式で。パスワードやCookieは決して入れないでください。</string>
     <string name="option_pseudo">バージョンがない場合</string>
     <string name="pseudo_default">サーバーの方法でファイルを区別</string>
     <string name="pseudo_hash">ファイルの先頭のハッシュで区別</string>
     <string name="pseudo_link">ファイルのアドレスで区別</string>
     <string name="pseudo_etag">サーバーのETagで区別</string>
     <string name="option_invalid">このままでは使用できません。</string>
+    <string name="option_device_model">端末のモデル</string>
+    <string name="option_device_model_help">Galaxy Storeはモデルごとに別のビルドを提供します（例: SM-S948B）。</string>
+    <string name="option_csc">地域コード (CSC)</string>
+    <string name="option_csc_help">3文字（例: DBT）。</string>
 </resources>

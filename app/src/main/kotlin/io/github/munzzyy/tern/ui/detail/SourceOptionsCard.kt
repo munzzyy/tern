@@ -34,7 +34,7 @@ import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.fingerprint
 
 /** The sources that have options a person may set. */
-val SOURCES_WITH_OPTIONS = setOf(SourceTypes.GITHUB, SourceTypes.FORGEJO, SourceTypes.GITHUB_ACTIONS, SourceTypes.HTML, SourceTypes.DIRECT, SourceTypes.SAMSUNG, SourceTypes.FARSROID)
+val SOURCES_WITH_OPTIONS = setOf(SourceTypes.GITHUB, SourceTypes.FORGEJO, SourceTypes.GITHUB_ACTIONS, SourceTypes.HTML, SourceTypes.DIRECT, SourceTypes.SAMSUNG)
 
 private val WORKFLOW_NAME = Regex("^[A-Za-z0-9._-]{1,100}\\.ya?ml$")
 private val BRANCH_NAME = Regex("^[A-Za-z0-9._/-]{1,100}$")
@@ -163,13 +163,13 @@ fun SourceOptionsCard(id: String, spec: SourceSpec, save: ((SourceSpec) -> Sourc
                     onChange = { setFlag(SourceOptions.ASSET_DATE, it) },
                 )
             }
-            SourceTypes.FARSROID -> SwitchRow(
-                title = stringResource(R.string.option_file_version),
-                summary = stringResource(R.string.option_file_version_effect),
-                checked = flag(SourceOptions.FILE_VERSION),
-                onChange = { setFlag(SourceOptions.FILE_VERSION, it) },
-            )
             SourceTypes.HTML -> {
+                SwitchRow(
+                    title = stringResource(R.string.option_highest_version),
+                    summary = stringResource(R.string.option_highest_version_effect),
+                    checked = flag(SourceOptions.HIGHEST_VERSION),
+                    onChange = { setFlag(SourceOptions.HIGHEST_VERSION, it) },
+                )
                 SwitchRow(
                     title = stringResource(R.string.option_link_text),
                     summary = stringResource(R.string.option_link_text_effect),
@@ -262,7 +262,7 @@ private enum class OptionField(val key: String, val label: Int, val help: Int?, 
     DEVICE_MODEL("deviceModel", R.string.option_device_model, R.string.option_device_model_help),
     CSC("csc", R.string.option_csc, R.string.option_csc_help),
     LINK_FILTER("linkFilter", R.string.option_link_filter, R.string.option_link_filter_help, code = true),
-    HEADERS("headers", R.string.option_headers, R.string.option_headers_help, lines = true, code = true),
+    HEADERS("headers", R.string.option_headers, R.string.option_headers_help_own_agent, lines = true, code = true),
 }
 
 private fun fieldsFor(type: String): List<OptionField> = when (type) {

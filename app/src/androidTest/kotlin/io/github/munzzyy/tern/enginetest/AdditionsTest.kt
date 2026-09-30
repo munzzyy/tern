@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.engine.AppStatus
@@ -15,6 +16,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assume
@@ -139,15 +141,39 @@ class AdditionsTest {
             waitUntil(30_000, "the install to wait for the user") { h.row(id).progress?.phase == Phase.WAITING_FOR_USER }
             assertTrue(h.engine.resumeInstall(id))
             assertTrue("the confirmation did not reopen", Prompt.appears(10_000))
-            val session = h.state(id).pending!!.sessionId
-            targetContext.packageManager.packageInstaller.abandonSession(session)
+            val pending = h.state(id).pending!!
+            targetContext.packageManager.packageInstaller.abandonSession(pending.sessionId)
             Prompt.dismiss()
 
+            // Android answers an abandoned session as aborted, as it answers a No in its installer: a cancel, not a problem.
+            waitUntil(10_000, "Android's answer to the abandoned session") { h.eventsFor(id).any { it.kind == EventKind.CANCELLED } }
             assertFalse(h.engine.resumeInstall(id))
             waitUntil(10_000, "the phase to settle") { h.state(id).pending == null && h.row(id).progress == null }
-            assertNull(h.state(id).pending)
-            assertNull(h.row(id).progress)
-            assertEquals(ProblemKind.INSTALL_FAILED, h.row(id).problem?.kind)
+            assertNull(h.describe(id), h.row(id).problem)
+
+            h.engine.saveState(id) { it.copy(pending = pending.copy(sessionId = GONE_SESSION)) }
+            assertFalse(h.engine.resumeInstall(id))
+            assertNull(h.describe(id), h.state(id).pending)
+            assertNull(h.describe(id), h.row(id).progress)
+            assertEquals(h.describe(id), ProblemKind.INSTALL_FAILED, h.row(id).problem?.kind)
+            assertEquals(h.describe(id), 1, h.eventsFor(id).count { it.kind == EventKind.CANCELLED })
         }
+    }
+
+    @Test
+    fun anAppWithOnlyAPreReleaseFollowsPreReleasesEvenWithoutAFileForThisDevice() = runBlocking {
+        val foreign = listOf("x86_64", "x86", "arm64-v8a", "armeabi-v7a").first { it !in Build.SUPPORTED_ABIS }
+        Harness("prerelease-only").use { h ->
+            h.forge.releases = listOf(FakeForge.Release("v2.0-beta", listOf(FakeForge.File("app-$foreign.apk", asset("apk/app-v1.apk"))), prerelease = true))
+            val found = h.engine.detect(FakeForge.PROJECT) as Detection.Found
+            val id = h.engine.add(found, install = false)
+            assertTrue(h.describe(id), h.row(id).config.releases.includePrereleases)
+            assertNotEquals(h.describe(id), h.engine.texts.onlyPrereleases(), h.row(id).problem?.message)
+        }
+    }
+
+    private companion object {
+        /** A session Android never had, as one is after Tern stopped before Android answered. */
+        const val GONE_SESSION = 987_654
     }
 }

@@ -64,10 +64,6 @@
     <string name="option_workflow">Fitxer de flux de treball</string>
     <string name="option_workflow_help">Com ara build.yml.</string>
     <string name="option_branch">Branca</string>
-    <string name="option_device_model">Model del dispositiu</string>
-    <string name="option_device_model_help">Galaxy Store dona a cada model la seva pròpia compilació, com ara SM-S948B.</string>
-    <string name="option_csc">Codi de regió (CSC)</string>
-    <string name="option_csc_help">Tres lletres, com ara DBT.</string>
     <string name="option_link_filter">Filtre d\'enllaços de baixada</string>
     <string name="option_link_filter_help">Només els enllaços que coincideixen compten com a baixades.</string>
     <string name="option_page_order">Mantén l\'ordre de la pàgina</string>
@@ -78,11 +74,14 @@
     <string name="version_from_text">El text de l\'enllaç</string>
     <string name="version_from_page">Tota la pàgina</string>
     <string name="option_headers">Capçaleres de la petició</string>
-    <string name="option_headers_help">Una per línia, com a Name: value. Mai una contrasenya ni una galeta.</string>
     <string name="option_pseudo">Quan no hi ha versió</string>
     <string name="pseudo_default">Distingeix els fitxers com ho fa el servidor</string>
     <string name="pseudo_hash">Per un hash de l\'inici del fitxer</string>
     <string name="pseudo_link">Per l\'adreça del fitxer</string>
     <string name="pseudo_etag">Per l\'ETag del servidor</string>
     <string name="option_invalid">Això no es pot usar tal com està.</string>
+    <string name="option_device_model">Model del dispositiu</string>
+    <string name="option_device_model_help">Galaxy Store dona a cada model la seva pròpia compilació, com ara SM-S948B.</string>
+    <string name="option_csc">Codi de regió (CSC)</string>
+    <string name="option_csc_help">Tres lletres, com ara DBT.</string>
 </resources>

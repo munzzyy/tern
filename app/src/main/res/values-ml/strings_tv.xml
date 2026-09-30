@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="interval_turn_off">പശ്ചാത്തല പരിശോധനകൾ ഓഫ് ചെയ്യുക</string>
+    <string name="interval_turn_on">പശ്ചാത്തല പരിശോധനകൾ ഓൺ ചെയ്യുക</string>
+</resources>

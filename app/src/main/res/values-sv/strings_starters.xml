@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">I din lista</string>
+    <string name="starter_on_phone">På denna telefon</string>
+    <string name="starter_on_phone_other">På denna telefon från en annan signerare</string>
+    <string name="starter_on_phone_other_explain">Kopian du har är signerad med en annan nyckel, så Tern kan inte uppdatera den från denna adress.</string>
+</resources>

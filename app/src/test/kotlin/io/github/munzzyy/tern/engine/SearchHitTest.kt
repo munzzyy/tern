@@ -51,6 +51,7 @@ class SearchHitTest {
     @Test
     fun onlyThePlacesPickedAreAsked() = runBlocking {
         val asked = ArrayList<String>()
+        var storesOn = true
         val store = object : Searchable {
             override val origin = "Aptoide"
             override fun search(query: String, context: CheckContext): List<Hit> {
@@ -63,12 +64,17 @@ class SearchHitTest {
                 override fun execute(request: HttpRequest): HttpResponse = throw IOException("no network in this test")
             },
             TokenProvider.NONE,
-            listOf(store),
+            { if (storesOn) listOf(store) else emptyList() },
         )
         assertEquals(listOf("GitHub", "Codeberg", "GitLab", "Aptoide"), both.origins)
         assertEquals(emptyList<SearchHit>(), both.search("maps", setOf("Somewhere else")).hits)
         assertEquals(emptyList<String>(), asked)
         assertEquals(listOf("Found"), both.search("maps", setOf("Aptoide")).hits.map { it.name })
+        assertEquals(listOf("maps"), asked)
+
+        storesOn = false
+        assertEquals("a store switched off is no place to search", listOf("GitHub", "Codeberg", "GitLab"), both.origins)
+        assertEquals(emptyList<SearchHit>(), both.search("maps", setOf("Aptoide")).hits)
         assertEquals(listOf("maps"), asked)
     }
 

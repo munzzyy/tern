@@ -354,7 +354,6 @@
     <string name="settings_import_effect">從 Tern 或 Obtainium 的匯出檔</string>
     <string name="settings_export">匯出應用程式</string>
     <string name="settings_exporting">正在匯出</string>
-    <string name="settings_export_effect">將您的清單與設定儲存至檔案。絕不會包含權杖。</string>
     <plurals name="exported">
         <item quantity="other">已匯出 %d 個應用程式</item>
     </plurals>

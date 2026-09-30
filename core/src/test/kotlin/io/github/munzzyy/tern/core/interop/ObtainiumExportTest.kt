@@ -13,6 +13,7 @@ import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.web.PseudoVersion
 import io.github.munzzyy.tern.core.source.web.RequestHeaders
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -114,6 +115,16 @@ class ObtainiumExportTest {
         // A pattern without a group named goes out naming the one Tern takes, and comes back unnamed.
         val plain = github.copy(releases = ReleasePolicy(versionExtract = "v(.+)"))
         assertEquals(plain.releases, ObtainiumImport.read(ObtainiumExport.write(listOf(plain), 0, "0.2.0").text).apps.single().releases)
+    }
+
+    @Test
+    fun aHeaderThatCouldHoldAKeyNeverLeavesForObtainium() {
+        val headers = RequestHeaders.write(mapOf("Accept-Language" to "de", "X-Api-Key" to "k123"))
+        val direct = AppConfig("direct", SourceSpec(SourceTypes.DIRECT, "https://example.org/app.apk", mapOf(SourceOptions.HEADERS to headers)), "Direct")
+        val text = ObtainiumExport.write(listOf(direct), 0, "0.2.0").text
+        assertFalse(text, "k123" in text || "X-Api-Key" in text)
+        val back = ObtainiumImport.read(text).apps.single()
+        assertEquals(mapOf("Accept-Language" to "de"), RequestHeaders.parse(back.source.option(SourceOptions.HEADERS)))
     }
 
     @Test

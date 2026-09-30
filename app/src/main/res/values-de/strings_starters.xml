@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">In deiner Liste</string>
+    <string name="starter_on_phone">Auf diesem Telefon</string>
+    <string name="starter_on_phone_other">Auf diesem Telefon, anders signiert</string>
+    <string name="starter_on_phone_other_explain">Die Kopie, die du hast, ist mit einem anderen Schlüssel signiert, daher kann Tern sie von dieser Adresse nicht aktualisieren.</string>
+</resources>

@@ -18,10 +18,7 @@
     <string name="step_arch">Daj prednost procesoru ovog uređaja</string>
     <string name="step_add">Dodaj stranicu</string>
     <string name="step_remove">Ukloni ovu stranicu</string>
-    <string name="option_file_version">Koristi naziv datoteke kao verziju</string>
-    <string name="option_file_version_effect">Svaka datoteka se tada računa kao zasebno izdanje.</string>
     <string name="github_proxy_title">GitHub preko hubproxy</string>
-    <string name="github_proxy_effect">Svaki zahtjev prema GitHubu ide ovom domaćinu, koji vidi svaki od njih. Preko njega se ne šalje token, pa se privatni projekti i GitHub Actions na ovaj način ne mogu pratiti.</string>
     <string name="github_proxy_host">Hubproxy domaćin</string>
     <string name="github_proxy_help">Samo naziv domaćina, na primjer gh-proxy.com. Tern mu pristupa preko HTTPS-a.</string>
     <string name="github_proxy_invalid">To nije naziv domaćina koji Tern može koristiti</string>

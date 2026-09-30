@@ -5,6 +5,7 @@ import io.github.munzzyy.tern.core.model.AssetPolicy
 import io.github.munzzyy.tern.core.model.ReleaseOrder
 import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.VersionFrom
+import io.github.munzzyy.tern.core.source.Refusal
 import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.web.RequestHeaders
@@ -65,8 +66,55 @@ class ObtainiumImportTest {
         val skipped = result().skipped
         assertEquals(2, skipped.size)
         assertTrue(skipped.any { it.name == "Thirteen" && it.reason.contains("APKPure") })
-        assertTrue(skipped.any { it.name == "Fourteen" && it.reason.contains("Uptodown") })
+        assertTrue(skipped.any { it.name == "Fourteen" && it.refusal == Refusal.IMPERSONATION })
         assertEquals(SourceTypes.TELEGRAM, result().apps.first { it.name == "Fifteen" }.source.type)
+    }
+
+    @Test
+    fun appsOfSitesTernRefusesAreSkippedWithTheReasonAndTheRestIsImported() {
+        val entries = listOf(
+            "LiteAPKs" to "https://liteapks.com/example.html",
+            "Apk4Free" to "https://apk4free.net/example/",
+            "RockMods" to "https://www.rockmods.net/apps/example",
+            "Farsroid" to "https://www.farsroid.com/example/",
+            "RuStore" to "https://www.rustore.ru/catalog/app/org.example.ru",
+            "Uptodown" to "https://example.en.uptodown.com/android",
+            "CoolApk" to "https://www.coolapk.com/apk/org.example.cool",
+            null to "https://liteapks.com/found-by-address.html",
+            "HTML" to "https://dl.farsroid.com/ap/example.apk",
+        ).mapIndexed { i, (type, url) ->
+            val override = if (type == null) "null" else "\"$type\""
+            """{"id":"org.example.skipped$i","url":"$url","author":"","name":"Skipped $i","overrideSource":$override,"additionalSettings":"{}"}"""
+        }
+        val github = """{"id":"org.example.kept","url":"https://github.com/example/kept","author":"","name":"Kept","overrideSource":"GitHub","additionalSettings":"{}"}"""
+        val result = ObtainiumImport.read("""{"apps":[${(entries + github).joinToString(",")}]}""")
+
+        assertEquals(listOf("Kept"), result.apps.map { it.name })
+        assertEquals(9, result.skipped.size)
+        val modified = result.skipped.filter { it.refusal == Refusal.MODIFIED_APPS }.map { it.name }
+        assertEquals(listOf("Skipped 0", "Skipped 1", "Skipped 2", "Skipped 3", "Skipped 7", "Skipped 8"), modified)
+        assertTrue(result.skipped.filter { it.refusal == Refusal.MODIFIED_APPS }.all { it.reason == "Tern does not read sites that offer modified apps" })
+        val impersonation = result.skipped.filter { it.refusal == Refusal.IMPERSONATION }
+        assertEquals(listOf("Skipped 4", "Skipped 5", "Skipped 6"), impersonation.map { it.name })
+        assertTrue(impersonation.all { it.reason == "Tern cannot read this store without pretending to be its app" })
+    }
+
+    @Test
+    fun obtainiumsDefaultBrowserUserAgentIsNotCarriedOver() {
+        val settings = """{\"requestHeader\": [{\"requestHeader\": \"User-Agent: Mozilla/5.0 (Linux; Android 10; K) Chrome/114.0.0.0\"}, {\"requestHeader\": \"Referer: https://example.com/\"}]}"""
+        val text = """{"apps":[{"id":"org.example.page","url":"https://example.com/app","author":"","name":"Page","overrideSource":"HTML","additionalSettings":"$settings"}]}"""
+        val source = ObtainiumImport.read(text).apps.single().source
+        assertEquals(mapOf("Referer" to "https://example.com/"), RequestHeaders.parse(source.option(SourceOptions.HEADERS)))
+    }
+
+    @Test
+    fun aGalaxyStoreAppKeepsTheModelAndRegionItWasFollowedWith() {
+        val settings = """{\"deviceId\": \"SM-A556B\", \"csc\": \"EUX\"}"""
+        val text = """{"apps":[{"id":"org.example.app","url":"https://galaxystore.samsung.com/detail/org.example.app","author":"","name":"Galaxy","overrideSource":"SamsungGalaxyStore","additionalSettings":"$settings"}]}"""
+        val source = ObtainiumImport.read(text).apps.single().source
+        assertEquals(SourceTypes.SAMSUNG, source.type)
+        assertEquals("SM-A556B", source.option(SourceOptions.DEVICE_MODEL))
+        assertEquals("EUX", source.option(SourceOptions.CSC))
     }
 
     @Test
@@ -195,7 +243,7 @@ class ObtainiumImportTest {
         assertEquals("true", page.option(SourceOptions.LAST_SEGMENT))
         assertEquals("true", page.option(SourceOptions.ANY_TEXT))
         assertEquals("link", page.option(SourceOptions.PSEUDO))
-        assertEquals(mapOf("X-Mirror" to "eu:west", "user-agent" to "Example/2.0"), RequestHeaders.parse(page.option(SourceOptions.HEADERS)))
+        assertEquals(mapOf("X-Mirror" to "eu:west"), RequestHeaders.parse(page.option(SourceOptions.HEADERS)))
         assertEquals(
             Json.parseArray("""[{"filter": "Releases", "text": true}, "/latest/", {"filter": "/builds/", "arch": true}]"""),
             Json.parseArray(page.option(SourceOptions.STEPS)!!),
@@ -218,7 +266,7 @@ class ObtainiumImportTest {
         val direct = options().getValue("Direct").source
         assertEquals(SourceTypes.DIRECT, direct.type)
         assertEquals("etag", direct.option(SourceOptions.PSEUDO))
-        assertTrue(RequestHeaders.parse(direct.option(SourceOptions.HEADERS)).getValue("User-Agent").startsWith("Mozilla/5.0 (Linux; Android 10; K)"))
+        assertNull("Obtainium's browser User-Agent stays behind: Tern says who it is", direct.option(SourceOptions.HEADERS))
         val byAddress = options().getValue("Direct By Address").source
         assertEquals(SourceTypes.DIRECT, byAddress.type)
         assertEquals("hash", byAddress.option(SourceOptions.PSEUDO))

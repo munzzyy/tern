@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Lưu danh sách và cài đặt của bạn vào một tệp. Các mã thông báo không bao giờ được đưa vào, và tiêu đề yêu cầu có thể chứa khóa cũng không bao giờ được đưa vào.</string>
+    <string name="engine_checksum_github_proxy">Digest bản phát hành GitHub, do hubproxy %1$s chuyển đến</string>
+    <string name="github_proxy_effect_trust">Mọi yêu cầu đến GitHub đều đi đến máy chủ này. Nó thấy từng yêu cầu và có thể thay đổi những gì trả về: các bản phát hành, digest của chúng và các tệp. Các ứng dụng bạn có vẫn giữ nguyên chứng chỉ của chúng, nhưng lần cài đặt đầu tiên thông qua nó tin tưởng hubproxy nhiều như GitHub, và việc ghim chứng chỉ không áp dụng cho nó. Không có mã thông báo nào được gửi qua nó, nên không thể theo dõi các dự án riêng tư và GitHub Actions theo cách này.</string>
+    <string name="settings_unmetered_checks">Chỉ kiểm tra khi dùng Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">Kiểm tra trong nền chờ Wi-Fi hoặc cáp, nên chúng không dùng dữ liệu di động.</string>
+    <string name="settings_charging_checks">Chỉ kiểm tra khi đang sạc</string>
+    <string name="settings_charging_checks_effect">Kiểm tra trong nền chờ cho đến khi thiết bị đang sạc.</string>
+    <string name="settings_unmetered_installs_wait">Một bản cập nhật tự cài đặt sẽ chờ Wi-Fi hoặc cáp, giống như trong Obtainium.</string>
+    <string name="settings_charging_installs_wait">Một bản cập nhật tự cài đặt sẽ chờ cho đến khi thiết bị đang sạc.</string>
+    <string name="engine_downgrade_not_as_named">Nguồn đã gọi mã phiên bản %2$d, nhưng tệp này là %1$d, cũ hơn bản đã cài đặt. Nó không được đặt đè lên bản mới hơn.</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgrade đã được cài đặt, nên Android có thể đặt phiên bản cũ hơn đè lên bản mới hơn. Tern chỉ làm vậy đối với bản phát hành bạn chọn từ lịch sử của ứng dụng, không bao giờ trong nền hoặc với Cập nhật tất cả.</string>
+    <string name="option_highest_version">Lấy phiên bản cao nhất, như Tern 0.1.0 đã làm</string>
+    <string name="option_highest_version_effect">Đề xuất liên kết có phiên bản cao nhất trên trang, bất kể vị trí của nó, và chạy mẫu phiên bản trên phiên bản đọc được từ mỗi liên kết. Khi tắt sẽ đọc trang theo cách Obtainium làm: liên kết cuối cùng theo thứ tự là mới nhất.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Một ứng dụng bạn gỡ cài đặt bên ngoài Tern cũng sẽ rời khỏi danh sách. Một ứng dụng đã lưu trữ vẫn được giữ lại. Nếu được thêm lại từ cùng một nơi, ứng dụng sẽ phải mang chứng chỉ mà nó đã có; việc xóa nó trong Tern sẽ quên đi điều đó.</string>
+    <string name="link_check_title">Kiểm tra bản cập nhật ngay?</string>
+    <string name="link_check_one">Một liên kết đã yêu cầu Tern kiểm tra các bản cập nhật của %1$s. Nguồn của nó được hỏi, và không có gì được cài đặt.</string>
+    <plurals name="link_check_all">
+        <item quantity="other">Một liên kết đã yêu cầu Tern kiểm tra %d ứng dụng trong danh sách của bạn để tìm bản cập nhật. Các nguồn của chúng được hỏi, và không có gì được cài đặt.</item>
+    </plurals>
+    <string name="link_check_confirm">Kiểm tra</string>
+    <string name="link_check_not_now">Không phải bây giờ</string>
+    <string name="engine_installer_fell_back">%1$s chưa sẵn sàng, nên trình cài đặt của Android đã được dùng cho việc này.</string>
+    <string name="about_track_tern_fdroid_effect">F-Droid đã cài đặt bản sao này, nên Tern theo dõi mục của nó ở đó: các bản cập nhật là những bản dựng do F-Droid tạo ra và kiểm tra, giống như cách ứng dụng F-Droid nhận được chúng.</string>
+    <string name="about_track_tern_github">Theo dõi bản phát hành GitHub thay thế</string>
+    <string name="about_track_tern_github_effect">Bản cập nhật đến từ GitHub ngay khi chúng được xuất bản, trước khi F-Droid dựng và kiểm tra chúng. Điều này bỏ qua các kiểm tra của F-Droid. Tern vẫn kiểm tra từng tệp và buộc nó phải mang chứng chỉ của riêng nó.</string>
+</resources>

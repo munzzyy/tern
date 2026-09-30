@@ -26,7 +26,7 @@ class SourceOptionsTest {
         val draft = OptionsDraft.of(page)
         assertEquals(listOf(HtmlStep("releases"), HtmlStep("arm64", byText = true, arch = true)), draft.steps)
         val typed = draft.steps + HtmlStep(" latest ", pageOrder = true, firstLink = true, lastSegment = true, anyText = true)
-        val saved = draft.copy(steps = typed, headers = "User-Agent: Mozilla/5.0").applyTo(page)
+        val saved = draft.copy(steps = typed, headers = "Referer: https://example.com/").applyTo(page)
         val steps = Json.parseArray(saved.option(SourceOptions.STEPS)!!)
         assertEquals("releases", (steps[0] as io.github.munzzyy.tern.core.json.JsonString).value)
         assertEquals(Json.parseObject("""{"filter":"arm64","text":true,"arch":true}"""), steps[1])
@@ -34,7 +34,7 @@ class SourceOptionsTest {
         assertTrue("steps" in draft.copy(steps = listOf(HtmlStep(" "))).invalid(SourceTypes.HTML))
         assertTrue("steps" in draft.copy(steps = listOf(HtmlStep("("))).invalid(SourceTypes.HTML))
         assertEquals("page", saved.option(SourceOptions.SORT))
-        assertEquals("""{"User-Agent":"Mozilla/5.0"}""", saved.option(SourceOptions.HEADERS))
+        assertEquals("""{"Referer":"https://example.com/"}""", saved.option(SourceOptions.HEADERS))
         assertNull(draft.copy(linkFilter = "  ").applyTo(page).option(SourceOptions.LINK_FILTER))
     }
 
@@ -48,6 +48,7 @@ class SourceOptionsTest {
         assertTrue("linkFilter" in OptionsDraft(linkFilter = "(").invalid(SourceTypes.HTML))
         assertTrue("workflow" in OptionsDraft(workflow = "build").invalid(SourceTypes.GITHUB_ACTIONS))
         assertEquals(emptySet<String>(), OptionsDraft(workflow = "build.yml", branch = "main").invalid(SourceTypes.GITHUB_ACTIONS))
-        assertTrue("csc" in OptionsDraft(csc = "EUROPE").invalid(SourceTypes.SAMSUNG))
+        assertNull("Tern says who it is to every site", OptionsDraft.headerMap("User-Agent: Mozilla/5.0"))
+        assertTrue("headers" in OptionsDraft(headers = "user-agent: Example/1.0").invalid(SourceTypes.HTML))
     }
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">In your list</string>
+    <string name="starter_on_phone">On this phone</string>
+    <string name="starter_on_phone_other">On this phone from another signer</string>
+    <string name="starter_on_phone_other_explain">The copy you have is signed with a different key, so Tern cannot update it from this address.</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">Ve vašem seznamu</string>
+    <string name="starter_on_phone">Na tomto telefonu</string>
+    <string name="starter_on_phone_other">Na tomto telefonu od jiného podepisatele</string>
+    <string name="starter_on_phone_other_explain">Kopie, kterou máte, je podepsána jiným klíčem, takže ji Tern nemůže z této adresy aktualizovat.</string>
+</resources>

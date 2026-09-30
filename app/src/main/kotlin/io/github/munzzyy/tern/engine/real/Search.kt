@@ -34,12 +34,13 @@ import kotlinx.coroutines.runInterruptible
 class Search(
     private val http: HttpClient,
     private val tokens: TokenProvider,
-    private val stores: List<Searchable> = emptyList(),
+    /** The sources that may be searched now, asked each time: third-party stores come and go with their setting. */
+    private val stores: () -> List<Searchable> = { emptyList() },
     private val context: () -> CheckContext = { CheckContext(http, InMemoryValidatorStore(), tokens) },
     private val log: (String) -> Unit = { TernLog.i(TAG, it) },
 ) {
     /** Every place a search can look, in the order their hits are shown. */
-    val origins: List<String> = FORGES + stores.map { it.origin }
+    val origins: List<String> get() = FORGES + stores().map { it.origin }
 
     /** The Forgejo or Gitea a search looks in, by its host, and the fewest stars a project on GitHub or a Forgejo may have. */
     data class Scope(val forgejo: String = Settings.DEFAULT_FORGEJO, val minStars: Int = 0)
@@ -65,7 +66,7 @@ class Search(
             Triple(CODEBERG_PLACE, forgejoOrigin(forgejo)) { forgejo(query, forgejo, scope.minStars) },
             Triple("GitLab", "GitLab") { gitlab(query) },
         ).filter { it.first in within }.map { (_, origin, block) -> async { safely(origin, block) } }
-        val others = stores.filter { it.origin in within }.map { store ->
+        val others = stores().filter { it.origin in within }.map { store ->
             async { safely(store.origin) { store.search(query.take(MAX_QUERY), context()).take(PER_STORE).mapNotNull { hit(it, store.origin) } } }
         }
         val places = (forges + others).awaitAll()

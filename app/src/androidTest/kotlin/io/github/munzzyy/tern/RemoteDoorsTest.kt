@@ -170,7 +170,7 @@ class RemoteDoorsTest {
             compose.assertFocusOn(row, "the list opens with focus on its first app")
             compose.openTab("Settings")
             val import = hasText("Import apps", substring = true)
-            compose.moveTo(import, KEYCODE_DPAD_DOWN)
+            compose.moveTo(import, KEYCODE_DPAD_DOWN, max = SETTINGS_STOPS)
             compose.press(KEYCODE_DPAD_CENTER)
             val files = hasTestTag(DOOR_FILES_TAG)
             compose.assertFocusOn(files, "Import opens on its first door")
@@ -213,7 +213,7 @@ class RemoteDoorsTest {
         launch(FakeEngine.BARE).use {
             compose.assertFocusOn(row, "the list opens with focus on its first app")
             compose.openTab("Settings")
-            compose.moveTo(hasText("Import apps", substring = true), KEYCODE_DPAD_DOWN)
+            compose.moveTo(hasText("Import apps", substring = true), KEYCODE_DPAD_DOWN, max = SETTINGS_STOPS)
             compose.press(KEYCODE_DPAD_CENTER)
             compose.assertFocusOn(hasTestTag(DOOR_FILES_TAG), "Import opens on its first door")
             compose.press(KEYCODE_DPAD_CENTER)
@@ -233,10 +233,10 @@ class RemoteDoorsTest {
             runBlocking { fake.saveSettings(fake.settings.value.copy(proxy = ProxyMode.ORBOT)) }
             compose.assertFocusOn(row, "the list opens with focus on its first app")
             compose.openTab("Settings")
-            compose.assertFocusOn(hasText("How often", substring = true), "Settings opens on its first setting")
+            compose.assertFocusOn(firstSetting, "Settings opens on its first setting, how often")
             val last = hasText("Source code", substring = true)
             val stops = mutableListOf<String>()
-            repeat(60) {
+            repeat(SETTINGS_STOPS) {
                 if (compose.hasFocusOn(last)) return@repeat
                 compose.press(KEYCODE_DPAD_DOWN)
                 val now = compose.focusedLabel()

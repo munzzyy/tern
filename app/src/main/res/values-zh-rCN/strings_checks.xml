@@ -15,13 +15,11 @@
     <string name="settings_only_installed">仅检查已安装的应用</string>
     <string name="settings_only_installed_effect">仅跟踪的应用也会被检查。您打开的应用始终会被检查。</string>
     <string name="settings_remove_uninstalled">移除在别处卸载的应用</string>
-    <string name="settings_remove_uninstalled_effect">在 Tern 之外卸载的应用也会从列表中移除。</string>
     <string name="settings_file_filter">文件过滤器</string>
     <string name="settings_file_filter_effect">所有没有自己过滤器的应用用来挑选文件的模式。</string>
     <string name="settings_file_filter_none">无</string>
     <string name="settings_file_filter_invalid">无法读取此模式。</string>
     <string name="settings_allow_downgrades">允许较旧的版本</string>
-    <string name="settings_allow_downgrades_effect">已安装 Let Me Downgrade，因此 Android 可以用较旧的版本覆盖较新的版本。</string>
     <string name="settings_collapse_groups">分组默认折叠</string>
     <string name="settings_haptics">触感反馈</string>
     <string name="settings_haptics_effect">滑动或长按触发操作时轻轻振动。</string>
@@ -36,7 +34,6 @@
     <string name="sources_repositories">存储库</string>
     <string name="sources_stores">商店</string>
     <string name="sources_mirrors">重新发布应用的商店</string>
-    <string name="sources_modified">提供修改版应用的网站</string>
     <string name="sources_other">其他地方</string>
     <string name="sources_web_page">包含文件链接的网页</string>
     <string name="sources_direct">文件的直接链接</string>
@@ -46,8 +43,6 @@
     <string name="shared_configs_title">Obtainium 用户分享的配置</string>
     <string name="shared_configs_effect">一个提供现成应用设置的网站。在设置中开启“打开 Obtainium 链接”后，其链接会在 Tern 中打开。</string>
     <string name="engine_inner_filter_nothing">压缩包内文件的过滤器与此压缩包中的任何 APK 都不匹配。</string>
-    <string name="preview_republished">%1$s 会重新提供开发者在别处发布的内容。一旦 Tern 知道开发者的证书，其文件就必须符合该证书，因此请尽可能固定一个证书，或先从开发者处安装。</string>
-    <string name="preview_modified">%1$s 提供由开发者以外的人修改过的应用。这些应用由修改者签名，Tern 无法判断修改了什么。</string>
     <string name="about_track_tern">让 Tern 自身保持最新</string>
     <string name="about_track_tern_effect">将 Tern 自己的发布添加到列表，像其他应用一样检查和验证。</string>
     <string name="engine_channel_tracked">跟踪应用的新发布</string>

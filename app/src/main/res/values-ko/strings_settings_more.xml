@@ -36,9 +36,7 @@
     <string name="settings_auto_installs">업데이트 자동 설치</string>
     <string name="settings_auto_installs_effect">자동으로 업데이트하도록 설정된 앱은 백그라운드 확인 후 업데이트됩니다. 끄면 업데이트가 있다고 알리기만 하며, 각 앱의 선택은 나중을 위해 그대로 유지됩니다.</string>
     <string name="settings_unmetered_installs">Wi-Fi에서만 설치</string>
-    <string name="settings_unmetered_installs_effect">확인은 모든 네트워크에서 실행됩니다. 자동으로 설치될 업데이트는 Obtainium과 마찬가지로 Wi-Fi나 유선 연결이 될 때까지 기다립니다.</string>
     <string name="settings_charging_installs">충전 중일 때만 설치</string>
-    <string name="settings_charging_installs_effect">확인은 배터리 사용 중에도 실행됩니다. 자동으로 설치될 업데이트는 기기가 충전될 때까지 기다립니다.</string>
     <string name="engine_unreadable_app">저장된 앱 %1$s을(를) 읽을 수 없어 목록에서 제외했습니다. 삭제된 것은 없습니다. 더 최신 버전의 Tern은 읽을 수도 있습니다.</string>
     <string name="settings_pin_certificates">코드 호스팅 인증서 고정</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab, Codeberg는 Obtainium과 마찬가지로 각각 사용하는 것으로 알려진 인증 기관의 인증서를 제시해야 합니다. 다른 인증 기관이 발급하도록 강제된 인증서는 거부됩니다. 코드 호스팅이 인증 기관을 바꾸면, 이 설정을 끌 때까지 해당 사이트에 대한 확인이 실패합니다.</string>

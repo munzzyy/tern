@@ -354,7 +354,6 @@
     <string name="settings_import_effect">Dari ekspor Tern atau Obtainium</string>
     <string name="settings_export">Ekspor aplikasi</string>
     <string name="settings_exporting">Mengekspor</string>
-    <string name="settings_export_effect">Menyimpan daftar dan setelan Anda ke dalam sebuah file. Token tidak pernah disertakan.</string>
     <plurals name="exported">
         <item quantity="other">Mengekspor %d aplikasi</item>
     </plurals>

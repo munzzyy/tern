@@ -31,8 +31,8 @@ object AppVerifier {
 class VerifierSend(val intent: Intent, val name: String)
 
 /**
- * What to send for [row] to the first of [VerifiedApps.PACKAGES] on this device, or null when the
- * app is not installed or none of them is there.
+ * What to send for [row] to the first of [VerifiedApps.PACKAGES] on this device that carries its
+ * own certificate, or null when the app is not installed or no genuine verifier is there.
  */
 @Composable
 fun rememberAppVerifier(row: AppRow): VerifierSend? {
@@ -48,7 +48,7 @@ fun rememberAppVerifier(row: AppRow): VerifierSend? {
                 .setType("text/plain")
                 .putExtra(Intent.EXTRA_TEXT, AppVerifier.text(packageName, signers))
         }
-        val verifier = VerifiedApps.first { send(it).resolveActivity(pm) != null } ?: return@remember null
+        val verifier = VerifiedApps.first({ VerifiedApps.signers(pm, it) }) { send(it).resolveActivity(pm) != null } ?: return@remember null
         val name = try {
             pm.getApplicationLabel(pm.getApplicationInfo(verifier, 0)).toString().take(60)
         } catch (_: PackageManager.NameNotFoundException) {

@@ -243,6 +243,7 @@ class Invent(private val now: Long) {
         ProblemKind.INSTALL_FAILED -> "Android said: the package conflicts with an existing package."
         ProblemKind.STORAGE -> "Only 40 MB free; the file needs 120 MB."
         ProblemKind.UNSUPPORTED -> "The app needs Android 17."
+        ProblemKind.STORES_OFF -> "Third-party stores are off, so Tern asks this store nothing."
     }
 
     fun manyRows(count: Int): List<AppRow> {

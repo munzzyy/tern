@@ -1,12 +1,14 @@
 package io.github.munzzyy.tern.ui.text
 
 import io.github.munzzyy.tern.R
+import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.engine.AppStatus
 import io.github.munzzyy.tern.engine.ChecksumState
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.SignerState
 import io.github.munzzyy.tern.engine.Verification
+import io.github.munzzyy.tern.engine.real.Evaluator
 import io.github.munzzyy.tern.ui.testRow
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -37,6 +39,21 @@ class EvidenceTest {
         assertEquals(Trust.BAD, checksumLine(v(SignerState.MATCHES_PIN, true, ChecksumState.MISMATCH)).trust)
         assertEquals(Trust.NOTE, checksumLine(v(SignerState.MATCHES_PIN, true, ChecksumState.NOT_PUBLISHED)).trust)
         assertEquals(R.string.checksum_not_published, checksumLine(v(SignerState.MATCHES_PIN, true, ChecksumState.NOT_PUBLISHED)).text)
+    }
+
+    @Test
+    fun aStoresChecksumIsCalledTheStoresAndNotThePublishers() {
+        val store = v(SignerState.FIRST_SEEN, true).copy(checksumFromStore = true)
+        assertEquals(R.string.stores_checksum_matched, checksumLine(store).text)
+        assertEquals(R.string.stores_explain_checksum_matched, checksumExplanation(store))
+        assertEquals(R.string.checksum_matched, checksumLine(v(SignerState.FIRST_SEEN, true)).text)
+        assertEquals(R.string.explain_checksum_matched, checksumExplanation(v(SignerState.FIRST_SEEN, true)))
+
+        assertTrue(Evaluator.fromStore(SourceTypes.APKPURE, ChecksumState.MATCHED))
+        assertTrue(Evaluator.fromStore(SourceTypes.HUAWEI, ChecksumState.PENDING))
+        assertFalse(Evaluator.fromStore(SourceTypes.APKPURE, ChecksumState.NOT_PUBLISHED))
+        assertFalse(Evaluator.fromStore(SourceTypes.GITHUB, ChecksumState.MATCHED))
+        assertFalse(Evaluator.fromStore(SourceTypes.ITCHIO, ChecksumState.MATCHED))
     }
 
     @Test

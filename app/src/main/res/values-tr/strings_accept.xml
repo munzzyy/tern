@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Üçüncü taraf mağazalar kapalı, bu nedenle Tern bu mağazaya hiçbir şey sormuyor. Tekrar denetlemek için bunları Ayarlar\'dan açın.</string>
+</resources>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">As lojas de terceiros estão desligadas, por isso o Tern não consulta esta loja. Ligue-as nas Definições para a verificar novamente.</string>
+</resources>

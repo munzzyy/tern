@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">将您的列表和设置保存到文件。令牌绝不会包含在内，可能包含密钥的请求标头也不会包含在内。</string>
+    <string name="engine_checksum_github_proxy">GitHub 发布版本的摘要，由 hubproxy %1$s 传递</string>
+    <string name="github_proxy_effect_trust">每个发往 GitHub 的请求都会发送到此主机。它可以查看每个请求，并能更改返回的内容：发布版本、其摘要与文件。您现有的应用仍受其证书约束，但通过它进行的首次安装将像信任 GitHub 一样信任 hubproxy，且固定证书对其无效。令牌不会通过它发送，因此无法通过这种方式跟踪私人项目和 GitHub Actions。</string>
+    <string name="settings_unmetered_checks">仅在 Wi-Fi 下检查</string>
+    <string name="settings_unmetered_checks_effect">后台检查会等待连接 Wi-Fi 或有线网络，因此不会消耗移动数据流量。</string>
+    <string name="settings_charging_checks">仅在充电时检查</string>
+    <string name="settings_charging_checks_effect">后台检查会等待设备充电时再进行。</string>
+    <string name="settings_unmetered_installs_wait">自动安装的更新会等待连接 Wi-Fi 或有线网络，与 Obtainium 相同。</string>
+    <string name="settings_charging_installs_wait">自动安装的更新会等待设备充电时再进行。</string>
+    <string name="engine_downgrade_not_as_named">来源指定的版本号为 %2$d，但此文件为 %1$d，比已安装的版本旧。它不会覆盖较新的版本。</string>
+    <string name="settings_allow_downgrades_picked">已安装 Let Me Downgrade，因此 Android 可能会用旧版本覆盖新版本。Tern 仅在您从应用历史记录中挑选发布版本时才会执行此操作，绝不会在后台或使用“全部更新”时执行。</string>
+    <string name="option_highest_version">像 Tern 0.1.0 一样选取最高版本</string>
+    <string name="option_highest_version_effect">提供页面上版本最高的链接（无论其位置如何），并对从每个链接读取的版本运行版本模式。关闭时，将按照 Obtainium 的方式读取页面：排序后的最后一个链接即为最新。</string>
+    <string name="settings_remove_uninstalled_keeps_pins">在 Tern 之外卸载的应用也会从列表中移除。已归档的应用会保留。从同一位置再次添加时，应用仍受其原有证书约束；但在 Tern 中将其移除则会清除该记录。</string>
+    <string name="link_check_title">立即检查更新？</string>
+    <string name="link_check_one">有链接请求 Tern 检查 %1$s 的更新。将请求其来源，且不会安装任何内容。</string>
+    <plurals name="link_check_all">
+        <item quantity="other">有链接请求 Tern 检查您列表中的 %d 个应用的更新。将请求它们的来源，且不会安装任何内容。</item>
+    </plurals>
+    <string name="link_check_confirm">检查</string>
+    <string name="link_check_not_now">暂不</string>
+    <string name="engine_installer_fell_back">%1$s 未准备就绪，因此此应用使用了 Android 的安装程序。</string>
+    <string name="about_track_tern_fdroid_effect">此副本由 F-Droid 安装，因此 Tern 会跟踪其在 F-Droid 上的条目：更新为 F-Droid 构建并检查过的版本，与 F-Droid 应用获取的相同。</string>
+    <string name="about_track_tern_github">改为跟踪 GitHub 发布</string>
+    <string name="about_track_tern_github_effect">更新会在 GitHub 上发布后立即获取，在 F-Droid 构建和检查它们之前。这会跳过 F-Droid 的检查。Tern 仍会检查每个文件并使其受自己的证书约束。</string>
+</resources>

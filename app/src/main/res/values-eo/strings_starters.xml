@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">En via listo</string>
+    <string name="starter_on_phone">En ĉi tiu telefono</string>
+    <string name="starter_on_phone_other">En ĉi tiu telefono de alia subskribinto</string>
+    <string name="starter_on_phone_other_explain">La kopio, kiun vi havas, estas subskribita per alia ŝlosilo, do Tern ne povas ĝisdatigi ĝin de ĉi tiu adreso.</string>
+</resources>

@@ -289,7 +289,7 @@ class HtmlSourceTest {
             .text(start, """<a href="/download">downloads</a>""")
             .text(page, """<a href="/dl/latest.apk">get</a>""")
             .on(file) { HttpResponse.of(200, "", Headers.of("ETag" to "\"e1\""), file) }
-        val headers = mapOf("User-Agent" to "Mozilla/5.0 Example", "X-Mirror" to "eu")
+        val headers = mapOf("Referer" to "https://example.com/project", "X-Mirror" to "eu")
         val spec = SourceSpec(source.type, start, mapOf(SourceOptions.HEADERS to RequestHeaders.write(headers), SourceOptions.STEPS to "[\"download\"]"))
         listing(http, spec)
         assertEquals(listOf(start, page, file), http.requests.map { it.url })

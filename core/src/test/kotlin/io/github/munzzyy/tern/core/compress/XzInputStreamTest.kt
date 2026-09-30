@@ -11,8 +11,13 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class XzInputStreamTest {
-    private fun unpack(bytes: ByteArray, maxOutput: Long = Long.MAX_VALUE, maxDictionary: Int = XzInputStream.MAX_DICTIONARY, chunk: Int = 8192): ByteArray =
-        Samples.readAll(XzInputStream(ByteArrayInputStream(bytes), maxOutput, maxDictionary), chunk)
+    private fun unpack(
+        bytes: ByteArray,
+        maxOutput: Long = Long.MAX_VALUE,
+        maxDictionary: Int = XzInputStream.MAX_DICTIONARY,
+        chunk: Int = 8192,
+        firstWindow: Int = XzInputStream.FIRST_WINDOW,
+    ): ByteArray = Samples.readAll(XzInputStream(ByteArrayInputStream(bytes), maxOutput, maxDictionary, firstWindow), chunk)
 
     private fun fixture(name: String) = Fixtures.bytes("compress/$name")
 
@@ -51,6 +56,27 @@ class XzInputStreamTest {
     fun theLargestDictionaryAllowedIsRead() {
         // xz -9e names a dictionary of 64 MiB, the most allowed.
         assertArrayEquals(Samples.text(20_000, 11), unpack(fixture("text-extreme.xz")))
+    }
+
+    @Test
+    fun aDictionaryGrowsOnlyAsFarAsTheDataFillsIt() {
+        val window = Window(64 * 1024 * 1024, XzInputStream.FIRST_WINDOW)
+        assertEquals(XzInputStream.FIRST_WINDOW, window.capacity)
+        // Grown many times over from the smallest start, every match still finds what it points back to.
+        for (name in listOf("text-crc64.xz", "text-extreme.xz", "blocks.xz", "noise.xz", "two-streams.xz")) {
+            assertArrayEquals(name, unpack(fixture(name)), unpack(fixture(name), firstWindow = 4096, chunk = 777))
+        }
+        assertArrayEquals(Samples.text(250_000, 7), unpack(fixture("text-crc64.xz"), firstWindow = 4096))
+    }
+
+    @Test
+    fun aDictionaryTheDeviceHasNoMemoryForIsRefusedAndNotACrash() {
+        var asked = 0
+        val stingy = { length: Int -> if (length > 8192) throw OutOfMemoryError("Failed to allocate $length bytes") else ByteArray(length).also { asked++ } }
+        val window = Window(64 * 1024 * 1024, 4096, stingy)
+        val error = assertThrows(CompressedDataException::class.java) { repeat(3) { window.limit(4096); while (window.space()) window.put(1); window.flush(ByteArray(4096), 0) } }
+        assertTrue(error.message!!, error.message!!.contains("64 MiB"))
+        assertEquals(2, asked)
     }
 
     @Test

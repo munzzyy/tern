@@ -2,12 +2,9 @@ package io.github.munzzyy.tern.ui.apps
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
@@ -25,6 +22,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.ui.LocalEngine
+import io.github.munzzyy.tern.ui.common.ChipLines
 import io.github.munzzyy.tern.ui.common.ChoiceChip
 import io.github.munzzyy.tern.ui.common.SwitchRow
 import io.github.munzzyy.tern.ui.common.focusHighlight
@@ -100,7 +98,6 @@ private fun Words(label: String, value: String, onValue: (String) -> Unit) {
 }
 
 /** Chips of one kind, any number of them on; the list keeps an app that is under any of them. */
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun Chips(
     title: String,
@@ -117,20 +114,15 @@ private fun Chips(
             .padding(horizontal = look.rowPaddingHorizontal, vertical = look.rowPaddingVertical),
     ) {
         Text(title, style = MaterialTheme.typography.bodyLarge)
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2),
-            verticalArrangement = Arrangement.spacedBy(look.focusRoom + (look.touchTarget - look.choiceHeight)),
-            modifier = Modifier.selectableGroup(),
-        ) {
-            for ((label, chip) in chips) {
-                ChoiceChip(
-                    label,
-                    selected = filter.has(chip),
-                    onClick = { onChange(filter.toggled(chip)) },
-                    role = Role.Checkbox,
-                    dot = (chip as? AppFilter.Category)?.let { dot(it.name) },
-                )
-            }
+        ChipLines(chips) { _, (label, chip), stop ->
+            ChoiceChip(
+                label,
+                selected = filter.has(chip),
+                onClick = { onChange(filter.toggled(chip)) },
+                modifier = stop,
+                role = Role.Checkbox,
+                dot = (chip as? AppFilter.Category)?.let { dot(it.name) },
+            )
         }
     }
 }

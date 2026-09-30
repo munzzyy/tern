@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">En per rad, som Namn: värde. Aldrig ett lösenord, en cookie eller en User-Agent: Tern talar om för varje webbplats att den är Tern.</string>
+    <string name="origin_republished_first">%1$s erbjuder igen det som utvecklare publicerar någon annanstans, och är inte utvecklaren. Tills appen är fäst vid ett certifikat avgör den första filen som Tern installerar från den vilket certifikat varje senare uppdatering måste ha.</string>
+    <string name="origin_republished_pinned">%1$s erbjuder igen det som utvecklare publicerar någon annanstans, och är inte utvecklaren. Dess filer måste ha det certifikat som denna app är fäst vid.</string>
+    <string name="origin_store_first">%1$s är en butik, inte utvecklarens egen webbplats. Tills appen är fäst vid ett certifikat avgör den första filen som Tern installerar från den vilket certifikat varje senare uppdatering måste ha.</string>
+    <string name="origin_store_pinned">%1$s är en butik, inte utvecklarens egen webbplats. Dess filer måste ha det certifikat som denna app är fäst vid.</string>
+    <string name="stores_refused_modified">Tern läser inte webbplatser som erbjuder modifierade appar. Deras filer är ändrade av någon annan än utvecklaren och signerade av den som ändrade dem.</string>
+    <string name="stores_refused_impersonation">Tern kan inte läsa denna butik utan att låtsas vara dess app, så den läser den inte.</string>
+    <string name="stores_checksum_source">%1$s, som inte är utvecklaren</string>
+    <string name="stores_off_title">%1$s är en tredjepartsbutik</string>
+    <string name="stores_off_body">Tredjepartsbutiker är avstängda. En butik tillhandahåller sina egna kopior av appar, inte filer från utvecklarens egen webbplats, och Tern läser den genom gränssnittet som butiken gjorde för sin egen app eller webbplats. När de är på frågar Tern en butik endast om de appar du lägger till från den, och tills en app är fäst vid ett certifikat avgör den första filen som Tern installerar från en butik vilket certifikat dess uppdateringar måste ha.</string>
+    <string name="stores_turn_on">Slå på tredjepartsbutiker</string>
+    <string name="stores_advice">Slå på Tredjepartsbutiker i Inställningar för att kontrollera denna app igen.</string>
+    <string name="stores_status_paused">Pausad</string>
+    <string name="stores_row_paused">Tredjepartsbutiker är avstängda</string>
+    <string name="stores_setting">Tredjepartsbutiker</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store och vivo. De tillhandahåller sina egna kopior av appar, inte filer från utvecklarens egen webbplats, och Tern läser dem genom de gränssnitt de gjorde för sina egna appar och webbplatser. När de är av frågar Tern ingen av dem något, en sökning utelämnar dem och appar från dem är pausade.</string>
+    <string name="stores_off_tag">av i Inställningar</string>
+    <string name="stores_checksum_matched">Filen matchar butikens kontrollsumma</string>
+    <string name="stores_explain_checksum_matched">En kontrollsumma är ett fingeravtryck av själva filen. Butiken gav en, och filen Tern laddade ned har samma, så den anlände som butiken har den. Butiken är inte utvecklaren, så detta säger ingenting om vem som gjorde filen. Det gör certifikatet.</string>
+    <string name="stores_import_from_stores">Dessa kommer från tredjepartsbutiker, som tillhandahåller sina egna kopior av appar. Tills en app är fäst vid ett certifikat avgör den första filen som Tern installerar från dess butik vilket certifikat dess uppdateringar måste ha.</string>
+    <string name="stores_import_paused">Tredjepartsbutiker är avstängda, så dessa appar är pausade. Tern frågar inte dessa butiker något förrän du slår på dem.</string>
+    <string name="stores_import_names">Från tredjepartsbutiker</string>
+    <string name="share_obtainium_link">Dela som en Obtainium-länk</string>
+    <string name="share_obtainium_links">Dela som Obtainium-länkar</string>
+</resources>

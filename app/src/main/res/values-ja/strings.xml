@@ -354,7 +354,6 @@
     <string name="settings_import_effect">TernまたはObtainiumのエクスポートから</string>
     <string name="settings_export">アプリをエクスポート</string>
     <string name="settings_exporting">エクスポート中</string>
-    <string name="settings_export_effect">リストと設定をファイルに保存します。トークンは含まれません。</string>
     <plurals name="exported">
         <item quantity="other">%d個のアプリをエクスポートしました</item>
     </plurals>

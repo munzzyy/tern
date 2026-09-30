@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Soronként egy, Név: érték formátumban. Soha ne legyen jelszó, süti vagy User-Agent: a Tern minden oldalnak jelzi, hogy ő a Tern.</string>
+    <string name="origin_republished_first">%1$s újra kínálja azt, amit a fejlesztők máshol közzétesznek, és nem ő a fejlesztő. Amíg az alkalmazás nincs egy tanúsítványhoz rögzítve, az első fájl, amelyet a Tern telepít belőle, dönti el, hogy minden későbbi frissítésnek melyik tanúsítványt kell hordoznia.</string>
+    <string name="origin_republished_pinned">%1$s újra kínálja azt, amit a fejlesztők máshol közzétesznek, és nem ő a fejlesztő. Fájljainak azt a tanúsítványt kell hordozniuk, amelyhez ez az alkalmazás rögzítve van.</string>
+    <string name="origin_store_first">%1$s egy áruház, nem a fejlesztő saját oldala. Amíg az alkalmazás nincs egy tanúsítványhoz rögzítve, az első fájl, amelyet a Tern telepít belőle, dönti el, hogy minden későbbi frissítésnek melyik tanúsítványt kell hordoznia.</string>
+    <string name="origin_store_pinned">%1$s egy áruház, nem a fejlesztő saját oldala. Fájljainak azt a tanúsítványt kell hordozniuk, amelyhez ez az alkalmazás rögzítve van.</string>
+    <string name="stores_refused_modified">A Tern nem olvassa be azokat az oldalakat, amelyek módosított alkalmazásokat kínálnak. A fájljaikat a fejlesztőn kívül más módosította, és az írta alá, aki megváltoztatta őket.</string>
+    <string name="stores_refused_impersonation">A Tern nem tudja beolvasni ezt az áruházat anélkül, hogy az áruház alkalmazásának adná ki magát, ezért nem olvassa be.</string>
+    <string name="stores_checksum_source">%1$s, amely nem a fejlesztő</string>
+    <string name="stores_off_title">%1$s egy harmadik féltől származó áruház</string>
+    <string name="stores_off_body">A harmadik féltől származó áruházak ki vannak kapcsolva. Egy áruház az alkalmazások saját példányait szolgálja ki, nem a fejlesztő saját oldaláról származó fájlokat, és a Tern azon a felületen keresztül olvassa be, amelyet az áruház a saját alkalmazásához vagy weboldalához készített. Ha be vannak kapcsolva, a Tern csak azokról az alkalmazásokról kérdezi az áruházat, amelyeket Ön hozzáad belőle, és amíg egy alkalmazás nincs egy tanúsítványhoz rögzítve, az első fájl, amelyet a Tern egy áruházból telepít, dönti el, hogy a frissítéseknek melyik tanúsítványt kell hordozniuk.</string>
+    <string name="stores_turn_on">Harmadik féltől származó áruházak bekapcsolása</string>
+    <string name="stores_advice">Kapcsolja be a Harmadik féltől származó áruházakat a Beállításokban az alkalmazás ismételt ellenőrzéséhez.</string>
+    <string name="stores_status_paused">Szüneteltetve</string>
+    <string name="stores_row_paused">A harmadik féltől származó áruházak ki vannak kapcsolva</string>
+    <string name="stores_setting">Harmadik féltől származó áruházak</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, a Galaxy Store és a vivo. Az alkalmazások saját példányait szolgálják ki, nem a fejlesztő saját oldaláról származó fájlokat, és a Tern azon a felületeken keresztül olvassa be őket, amelyeket a saját alkalmazásaikhoz és weboldalaikhoz készítettek. Kikapcsolva a Tern egyiküktől sem kérdez semmit, a keresés kihagyja őket, és a tőlük származó alkalmazások szüneteltetnek.</string>
+    <string name="stores_off_tag">kikapcsolva a Beállításokban</string>
+    <string name="stores_checksum_matched">A fájl megegyezik az áruház ellenőrző összegével</string>
+    <string name="stores_explain_checksum_matched">Az ellenőrző összeg magának a fájlnak az ujjlenyomata. Az áruház megadott egyet, és a Tern által letöltött fájl ugyanazzal rendelkezik, tehát úgy érkezett meg, ahogy az az áruházban szerepel. Az áruház nem a fejlesztő, így ez nem mond semmit arról, hogy ki készítette a fájlt. A tanúsítvány igen.</string>
+    <string name="stores_import_from_stores">Ezek harmadik féltől származó áruházakból érkeznek, amelyek az alkalmazások saját példányait szolgálják ki. Amíg egy alkalmazás nincs egy tanúsítványhoz rögzítve, az első fájl, amelyet a Tern a saját áruházából telepít, dönti el, hogy a frissítéseinek melyik tanúsítványt kell hordozniuk.</string>
+    <string name="stores_import_paused">A harmadik féltől származó áruházak ki vannak kapcsolva, így ezek az alkalmazások szüneteltetve vannak. A Tern semmit sem kérdez ezektől az áruházaktól, amíg be nem kapcsolja őket.</string>
+    <string name="stores_import_names">Harmadik féltől származó áruházakból</string>
+    <string name="share_obtainium_link">Megosztás Obtainium-linkként</string>
+    <string name="share_obtainium_links">Megosztás Obtainium-linkekként</string>
+</resources>

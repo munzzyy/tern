@@ -97,6 +97,26 @@ data class AppSections(val updates: List<AppRow>, val others: List<AppRow>, val 
     val isEmpty: Boolean get() = updates.isEmpty() && others.isEmpty()
 }
 
+fun headerKey(group: RowGroup): String = "g-${group.key}"
+
+/**
+ * The key of what focus lands on when the list opens under keys: its first app, or the header of
+ * the first group when that group is [folded]. An app in a group is keyed by the group and its id,
+ * so an app filed under two categories has a place of its own in each.
+ */
+fun firstPlace(sections: AppSections, folded: Set<String>): String? {
+    sections.updates.firstOrNull()?.let { return it.id }
+    val group = sections.groups.firstOrNull() ?: return sections.others.firstOrNull()?.id
+    val first = group.rows.firstOrNull()
+    return if (group.key in folded || first == null) headerKey(group) else group.key + first.id
+}
+
+/** The apps the list shows: none of those inside a folded group, and an app shown twice only once. */
+fun shownIds(sections: AppSections, folded: Set<String>): List<String> {
+    val others = if (sections.groups.isEmpty()) sections.others else sections.groups.filter { it.key !in folded }.flatMap { it.rows }
+    return (sections.updates + others).map { it.id }.distinct()
+}
+
 fun categoriesOf(rows: List<AppRow>, locale: Locale = Locale.getDefault()): List<String> {
     val collator = Collator.getInstance(locale)
     return rows.flatMap { it.config.categories }.map { it.trim() }.filter { it.isNotEmpty() }

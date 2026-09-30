@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Jeden w wierszu, jako Nazwa: wartość. Nigdy hasło, plik cookie ani User-Agent: Tern informuje każdą witrynę, że to Tern.</string>
+    <string name="origin_republished_first">%1$s oferuje ponownie to, co twórcy publikują gdzie indziej, i nie jest twórcą. Dopóki aplikacja nie jest przypięta do certyfikatu, pierwszy plik zainstalowany z niego przez Tern decyduje, jaki certyfikat musi mieć każda późniejsza aktualizacja.</string>
+    <string name="origin_republished_pinned">%1$s oferuje ponownie to, co twórcy publikują gdzie indziej, i nie jest twórcą. Jego pliki muszą mieć certyfikat, do którego przypisana jest ta aplikacja.</string>
+    <string name="origin_store_first">%1$s to sklep, a nie własna strona twórcy. Dopóki aplikacja nie jest przypięta do certyfikatu, pierwszy plik zainstalowany z niego przez Tern decyduje, jaki certyfikat musi mieć każda późniejsza aktualizacja.</string>
+    <string name="origin_store_pinned">%1$s to sklep, a nie własna strona twórcy. Jego pliki muszą mieć certyfikat, do którego przypisana jest ta aplikacja.</string>
+    <string name="stores_refused_modified">Tern nie czyta witryn oferujących zmodyfikowane aplikacje. Ich pliki są zmieniane przez kogoś innego niż twórca i podpisane przez tego, kto je zmienił.</string>
+    <string name="stores_refused_impersonation">Tern nie może odczytać tego sklepu bez podszywania się pod jego aplikację, więc go nie czyta.</string>
+    <string name="stores_checksum_source">%1$s, a nie twórca</string>
+    <string name="stores_off_title">%1$s to sklep innej firmy</string>
+    <string name="stores_off_body">Sklepy innych firm są wyłączone. Sklep udostępnia własne kopie aplikacji, a nie pliki z własnej strony twórcy, a Tern odczytuje go przez interfejs stworzony przez sklep dla jego własnej aplikacji lub strony internetowej. Gdy są włączone, Tern pyta sklep tylko o aplikacje dodane z niego, a dopóki aplikacja nie jest przypięta do certyfikatu, pierwszy plik zainstalowany przez Tern ze sklepu decyduje, jaki certyfikat muszą mieć jej aktualizacje.</string>
+    <string name="stores_turn_on">Włącz sklepy innych firm</string>
+    <string name="stores_advice">Włącz Sklepy innych firm w Ustawieniach, aby ponownie sprawdzić tę aplikację.</string>
+    <string name="stores_status_paused">Wstrzymane</string>
+    <string name="stores_row_paused">Sklepy innych firm są wyłączone</string>
+    <string name="stores_setting">Sklepy innych firm</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store i vivo. Udostępniają one własne kopie aplikacji, a nie pliki z własnej strony twórcy, a Tern czyta je przez interfejsy stworzone przez nie dla własnych aplikacji i witryn. Gdy opcja jest wyłączona, Tern nie pyta żadnego z nich o nic, wyszukiwanie je pomija, a pochodzące z nich aplikacje są wstrzymane.</string>
+    <string name="stores_off_tag">wyłączone w Ustawieniach</string>
+    <string name="stores_checksum_matched">Plik jest zgodny z sumą kontrolną sklepu</string>
+    <string name="stores_explain_checksum_matched">Suma kontrolna to odcisk palca samego pliku. Sklep podał jedną, a plik pobrany przez Tern ma taką samą, więc dotarł w takiej postaci, w jakiej ma go sklep. Sklep nie jest twórcą, więc to nic nie mówi o tym, kto stworzył plik. Mówi o tym certyfikat.</string>
+    <string name="stores_import_from_stores">Pochodzą one ze sklepów innych firm, które udostępniają własne kopie aplikacji. Dopóki aplikacja nie jest przypięta do certyfikatu, pierwszy plik, który Tern zainstaluje z jej sklepu, decyduje, jaki certyfikat muszą mieć jej aktualizacje.</string>
+    <string name="stores_import_paused">Sklepy innych firm są wyłączone, więc te aplikacje są wstrzymane. Tern o nic nie pyta tych sklepów, dopóki ich nie włączysz.</string>
+    <string name="stores_import_names">Ze sklepów innych firm</string>
+    <string name="share_obtainium_link">Udostępnij jako link Obtainium</string>
+    <string name="share_obtainium_links">Udostępnij jako linki Obtainium</string>
+</resources>

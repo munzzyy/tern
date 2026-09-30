@@ -38,9 +38,7 @@
     <string name="settings_auto_installs">Les actualitzacions s\'instal·len soles</string>
     <string name="settings_auto_installs_effect">Les aplicacions configurades per actualitzar-se soles ho fan després d\'una comprovació en segon pla. Si es desactiva, només avisen que hi ha una actualització, i cadascuna conserva la seva pròpia elecció per a més endavant.</string>
     <string name="settings_unmetered_installs">Instal·la només amb Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">Les comprovacions es fan a qualsevol xarxa. Una actualització que s\'instal·laria sola espera el Wi-Fi o un cable, com a Obtainium.</string>
     <string name="settings_charging_installs">Instal·la només mentre es carrega</string>
-    <string name="settings_charging_installs_effect">Les comprovacions es fan també amb bateria. Una actualització que s\'instal·laria sola espera fins que el dispositiu estigui carregant-se.</string>
     <string name="engine_unreadable_app">No s\'ha pogut llegir l\'aplicació desada %1$s, de manera que es deixa fora de la llista. No s\'ha esborrat res: una versió més nova de Tern podria llegir-la.</string>
     <string name="settings_pin_certificates">Fixa els certificats de les forges</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab i Codeberg han de mostrar un certificat de l\'autoritat que se sap que usa cadascun, com a Obtainium. Un certificat que una altra autoritat hagi estat obligada a emetre es rebutja llavors. Si una forja canvia d\'autoritat, les comprovacions allà fallen fins que això es desactivi.</string>

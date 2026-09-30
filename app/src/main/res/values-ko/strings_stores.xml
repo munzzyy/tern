@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">한 줄에 하나씩 Name: value 형식으로 입력하세요. 비밀번호, 쿠키, User-Agent는 절대 입력하지 마세요. Tern은 모든 사이트에 자신이 Tern임을 알립니다.</string>
+    <string name="origin_republished_first">%1$s은(는) 개발자가 다른 곳에 게시한 항목을 다시 제공할 뿐, 개발자가 아닙니다. 앱이 인증서에 고정될 때까지 Tern이 이곳에서 설치하는 첫 파일이 이후 모든 업데이트에 포함되어야 할 인증서를 결정합니다.</string>
+    <string name="origin_republished_pinned">%1$s은(는) 개발자가 다른 곳에 게시한 항목을 다시 제공할 뿐, 개발자가 아닙니다. 이 소스의 파일은 이 앱에 고정된 인증서를 포함해야 합니다.</string>
+    <string name="origin_store_first">%1$s은(는) 개발자 자체 사이트가 아닌 스토어입니다. 앱이 인증서에 고정될 때까지 Tern이 이곳에서 설치하는 첫 파일이 이후 모든 업데이트에 포함되어야 할 인증서를 결정합니다.</string>
+    <string name="origin_store_pinned">%1$s은(는) 개발자 자체 사이트가 아닌 스토어입니다. 이 스토어의 파일은 이 앱에 고정된 인증서를 포함해야 합니다.</string>
+    <string name="stores_refused_modified">Tern은 수정된 앱을 제공하는 사이트를 읽지 않습니다. 이러한 파일은 개발자가 아닌 다른 사람이 변경했으며 변경한 사람이 서명했습니다.</string>
+    <string name="stores_refused_impersonation">Tern은 이 스토어의 앱인 척하지 않고는 스토어를 읽을 수 없으므로 읽지 않습니다.</string>
+    <string name="stores_checksum_source">개발자가 아닌 %1$s</string>
+    <string name="stores_off_title">%1$s은(는) 서드파티 스토어입니다</string>
+    <string name="stores_off_body">서드파티 스토어가 꺼져 있습니다. 스토어는 개발자 자체 사이트의 파일이 아닌 앱의 자체 사본을 제공하며, Tern은 스토어가 자체 앱이나 웹사이트를 위해 만든 인터페이스를 통해 이를 읽습니다. 이 설정을 켜면 Tern은 사용자가 해당 스토어에서 추가한 앱에 대해서만 스토어에 요청하며, 앱이 인증서에 고정될 때까지 Tern이 스토어에서 설치하는 첫 파일이 이후 모든 업데이트에 포함되어야 할 인증서를 결정합니다.</string>
+    <string name="stores_turn_on">서드파티 스토어 켜기</string>
+    <string name="stores_advice">이 앱을 다시 확인하려면 설정에서 서드파티 스토어를 켜세요.</string>
+    <string name="stores_status_paused">일시중지됨</string>
+    <string name="stores_row_paused">서드파티 스토어 꺼짐</string>
+    <string name="stores_setting">서드파티 스토어</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store 및 vivo입니다. 스토어는 개발자 자체 사이트의 파일이 아닌 자체 앱 사본을 제공하며, Tern은 스토어가 자체 앱이나 웹사이트를 위해 만든 인터페이스를 통해 이를 읽습니다. 끄면 Tern은 이들에게 아무것도 요청하지 않으며 검색에서 제외되고 해당 스토어의 앱이 일시중지됩니다.</string>
+    <string name="stores_off_tag">설정에서 꺼짐</string>
+    <string name="stores_checksum_matched">파일이 스토어의 체크섬과 일치합니다</string>
+    <string name="stores_explain_checksum_matched">체크섬은 파일 자체의 지문입니다. 스토어에서 제공한 체크섬과 Tern이 다운로드한 파일이 동일하므로 스토어에 있는 그대로 도착했습니다. 스토어는 개발자가 아니므로 이것만으로는 누가 파일을 만들었는지 알 수 없습니다. 이는 인증서로 알 수 있습니다.</string>
+    <string name="stores_import_from_stores">자체 앱 사본을 제공하는 서드파티 스토어에서 가져왔습니다. 앱이 인증서에 고정될 때까지 Tern이 해당 스토어에서 설치하는 첫 파일이 이후 모든 업데이트에 포함되어야 할 인증서를 결정합니다.</string>
+    <string name="stores_import_paused">서드파티 스토어가 꺼져 있어 이 앱들이 일시중지되었습니다. 설정을 켤 때까지 Tern은 해당 스토어에 아무것도 요청하지 않습니다.</string>
+    <string name="stores_import_names">서드파티 스토어에서 가져옴</string>
+    <string name="share_obtainium_link">Obtainium 링크로 공유</string>
+    <string name="share_obtainium_links">Obtainium 링크로 공유</string>
+</resources>

@@ -62,10 +62,6 @@
     <string name="option_workflow">İş akışı dosyası</string>
     <string name="option_workflow_help">Örneğin build.yml.</string>
     <string name="option_branch">Dal</string>
-    <string name="option_device_model">Cihaz modeli</string>
-    <string name="option_device_model_help">Galaxy Store her modele kendi derlemesini verir, örneğin SM-S948B.</string>
-    <string name="option_csc">Bölge kodu (CSC)</string>
-    <string name="option_csc_help">Üç harf, örneğin DBT.</string>
     <string name="option_link_filter">İndirme bağlantıları için filtre</string>
     <string name="option_link_filter_help">Yalnızca eşleşen bağlantılar indirme sayılır.</string>
     <string name="option_page_order">Sayfanın sırasını koru</string>
@@ -76,11 +72,14 @@
     <string name="version_from_text">Bağlantının metni</string>
     <string name="version_from_page">Tüm sayfa</string>
     <string name="option_headers">İstek başlıkları</string>
-    <string name="option_headers_help">Her satıra bir tane, Name: value biçiminde. Asla parola veya çerez yazmayın.</string>
     <string name="option_pseudo">Sürüm olmadığında</string>
     <string name="pseudo_default">Dosyaları sunucunun yaptığı gibi ayırt et</string>
     <string name="pseudo_hash">Dosyanın başlangıcının bir özetiyle</string>
     <string name="pseudo_link">Dosyanın adresiyle</string>
     <string name="pseudo_etag">Sunucunun ETag değeriyle</string>
     <string name="option_invalid">Bu, olduğu haliyle kullanılamaz.</string>
+    <string name="option_device_model">Cihaz modeli</string>
+    <string name="option_device_model_help">Galaxy Store her modele kendi derlemesini verir, örneğin SM-S948B.</string>
+    <string name="option_csc">Bölge kodu (CSC)</string>
+    <string name="option_csc_help">Üç harf, örneğin DBT.</string>
 </resources>

@@ -29,6 +29,7 @@ import io.github.munzzyy.tern.core.net.InMemoryValidatorStore
 import io.github.munzzyy.tern.core.net.ValidatorStore
 import io.github.munzzyy.tern.core.source.CheckContext
 import io.github.munzzyy.tern.data.FileFacts
+import io.github.munzzyy.tern.data.KeptPins
 import io.github.munzzyy.tern.core.net.HttpClient
 import io.github.munzzyy.tern.core.net.PoliteHttp
 import io.github.munzzyy.tern.core.net.RateLimiter
@@ -130,19 +131,25 @@ class RealEngine(
     internal val context: Context = context.applicationContext
     internal val store = Store(this.context, storeName)
     private val settingsStore = SettingsStore(this.context, prefsPrefix + SettingsStore.DEFAULT_NAME)
+    internal val keptPins = KeptPins(this.context, prefsPrefix + KeptPins.DEFAULT_NAME, nowMs)
     private val vault = TokenVault(this.context, prefsPrefix + TokenVault.DEFAULT_NAME)
     internal val texts = Texts(this.context)
     internal val device = Device(this.context)
     /** No token for GitHub while its requests go through a hubproxy, which must never see one. */
     internal val tokens = TokenProvider { host -> if (_settings.value.githubProxy != null && GitHubProxy.isGitHubHost(host)) null else vault.tokenFor(host) }
     internal val http: HttpClient = PoliteHttp(GitHubProxyHttp(transport) { _settings.value.githubProxy }, RateLimiter(nowMs), "Tern/${BuildConfig.VERSION_NAME}")
-    internal val registry = SourceRegistry.standard(::trackedInRepository)
+    internal val registry = SourceRegistry.standard(::trackedInRepository) { _settings.value.thirdPartyStores }
     internal val inspector = FileInspector(http, store, tokens, device.sdk)
     internal val builtIn = BuiltInPins(catalog)
-    internal val evaluator = Evaluator(texts, device.profile, builtIn, nowMs, { _settings.value.globalFileFilter }) { _settings.value.minAgeDaysByDefault }
+    internal val evaluator = Evaluator(
+        texts, device.profile, builtIn, nowMs,
+        globalFilter = { _settings.value.globalFileFilter },
+        globalMinAgeDays = { _settings.value.minAgeDaysByDefault },
+        githubProxy = { _settings.value.githubProxy },
+    )
     internal val downloader = Downloader(http, downloadsDir ?: File(this.context.filesDir, "downloads"), texts)
     internal val gate: Gate = gate ?: InstallGate(archiveReader ?: PackageManagerArchiveReader(this.context.packageManager), texts)
-    private val installers = Installers(this)
+    internal val installers = Installers(this)
     internal val installer: Installer = installer ?: installers.routing
     internal val notifier = Notifier(this.context, texts) { _settings.value.notifyNames }
     internal val staging = File(this.context.cacheDir, "staging")
@@ -224,7 +231,11 @@ class RealEngine(
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val pkg = intent.data?.schemeSpecificPart ?: return
-            val gone = intent.action == Intent.ACTION_PACKAGE_REMOVED && !intent.getBooleanExtra(Intent.EXTRA_REPLACING, false)
+            val gone = removedForGood(
+                intent.action,
+                replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false),
+                archival = intent.getBooleanExtra(EXTRA_ARCHIVAL, false),
+            )
             orbotLink.packageChanged(pkg)
             scope.launch(Dispatchers.IO) {
                 checks.onPackageChanged(pkg)
@@ -403,22 +414,25 @@ class RealEngine(
 
     override fun proposedConfig(found: Detection.Found): AppConfig {
         val s = _settings.value
-        val base = found.carried ?: AppConfig(
+        val given = found.carried ?: AppConfig(
             id = "",
             source = found.spec,
             name = "",
             // No wait of its own: a new app follows the setting for all apps, also when that changes.
-            releases = ReleasePolicy(includePrereleases = s.includePrereleasesByDefault || found.release?.countsAsPrerelease == true),
+            releases = ReleasePolicy(includePrereleases = s.includePrereleasesByDefault || found.prereleases || found.release?.countsAsPrerelease == true),
             updates = s.defaultUpdateMode,
         )
+        // An app Tern dropped when it was uninstalled elsewhere comes back held to what it was held to.
+        val base = keptPins.restore(given.copy(source = found.spec))
+        val packageName = found.packageName ?: found.verification?.packageName ?: base.packageName ?: found.installed?.packageName
         return validated(
             base.copy(
                 id = idFor(found.spec),
-                source = found.spec,
+                source = base.source,
                 name = found.name.take(200).ifBlank { found.spec.url.take(200) },
                 author = found.author?.take(200),
-                packageName = found.packageName ?: found.verification?.packageName ?: base.packageName ?: found.installed?.packageName,
-                pinnedSigners = builtIn.orElse(found.spec.url, base.pinnedSigners.ifEmpty { found.installed?.signers.orEmpty() }),
+                packageName = packageName,
+                pinnedSigners = builtIn.orElse(found.spec, packageName, base.pinnedSigners.ifEmpty { found.installed?.signers.orEmpty() }),
             ),
         )
     }
@@ -495,7 +509,7 @@ class RealEngine(
 
     override suspend fun remove(appId: String) {
         ready()
-        drop(appId, texts.eventRemoved())
+        drop(appId, texts.eventRemoved(), keepPins = false)
     }
 
     /**
@@ -508,13 +522,15 @@ class RealEngine(
             val pkg = packageOf(app.config) ?: continue
             if (packageName != null && pkg != packageName) continue
             if (!app.state.seenInstalled || app.state.pending != null || progress.containsKey(app.config.id)) continue
-            if (readInstalled(pkg) == null) drop(app.config.id, texts.eventRemovedUninstalled())
+            if (readInstalled(pkg) == null && !device.archived(pkg)) drop(app.config.id, texts.eventRemovedUninstalled(), keepPins = true)
         }
     }
 
-    private suspend fun drop(appId: String, why: String) {
+    /** [keepPins] keeps what the app was held to for when its source is added again; otherwise that is forgotten too. */
+    private suspend fun drop(appId: String, why: String, keepPins: Boolean) {
         withContext(Dispatchers.IO) {
             val app = stored[appId] ?: return@withContext
+            if (keepPins) keptPins.keep(app.config) else keptPins.forget(app.config.source)
             installs.cancel(appId)
             event(appId, EventKind.REMOVED, why)
             store.deleteApp(appId)
@@ -621,11 +637,17 @@ class RealEngine(
             val before = _settings.value
             settingsStore.save(settings)
             val loaded = settingsStore.load()
+            val wasPaused = stored.values.filter { registry.paused(it.config.source) }.map { it.config.id }
             _settings.value = loaded
             Scheduler.apply(context, loaded)
             setObtainiumLinks(loaded.openObtainiumLinks)
             if (loaded.proxy == ProxyMode.ORBOT && before.proxy != ProxyMode.ORBOT) orbotLink.ask()
             if (loaded.installer != before.installer || loaded.otherInstaller != before.otherInstaller) installers.recheck()
+            if (loaded.thirdPartyStores != before.thirdPartyStores) {
+                for (id in stored.keys) checks.reevaluate(id, network = false)
+                publish()
+                if (wasPaused.isNotEmpty() && loaded.thirdPartyStores) scope.launch { checks.run(wasPaused, CheckCause.CHANGED) }
+            }
             if (loaded.globalFileFilter != before.globalFileFilter || loaded.minAgeDaysByDefault != before.minAgeDaysByDefault) {
                 for (id in stored.keys) checks.reevaluate(id, network = false)
                 publish()
@@ -675,7 +697,14 @@ class RealEngine(
         return interop.finish(offer, replace, takeSettings)
     }
 
-    override fun suggestions(): List<Suggestion> = Suggestions.list(device.profile.television, catalog, context::getString)
+    override fun suggestions(): List<Suggestion> {
+        val rows = _apps.value
+        return Suggestions.list(device.profile.television, catalog, here = { app ->
+            val followed = rows.any { it.config.source.url.equals(app.url, ignoreCase = true) || it.config.packageName == app.packageName }
+            val installed = if (followed) null else device.read(app.packageName)?.let { it.app.signers + it.lineage }
+            Suggestions.here(app, followed, installed)
+        }, text = context::getString)
+    }
 
     override fun canOpenInstallSettings(): Boolean = device.canOpenInstallSettings()
 
@@ -803,7 +832,7 @@ class RealEngine(
                 }
             }
         }
-        if (pkg == null && kept == null) sourceIcons.forRow(row, size) else drawable?.toBitmap(size, size)
+        if (pkg == null && kept == null) sourceIcons.forRow(row, size).takeUnless { registry.paused(row.config.source) } else drawable?.toBitmap(size, size)
     }
 
     /** The background check: every app not set to manual, then automatic installs where Android allows them. */
@@ -822,12 +851,22 @@ class RealEngine(
         }
         _lastRunProblem.value = null
         val settings = _settings.value
-        val installsNow = settings.autoInstalls &&
-            (!settings.onlyOnUnmetered || device.onUnmeteredNetwork()) &&
-            (!settings.onlyWhileCharging || device.isCharging())
+        val installsNow = Scheduler.installsNow(settings, waitingJob = false, device::onUnmeteredNetwork, device::isCharging)
         val run = installs.runScheduled(settings, installsNow, only, cause)
-        if (run.waited && settings.autoInstalls) Scheduler.waitForInstalls(context, settings)
+        if (Scheduler.armsWaiting(settings, waitingJob = false, waited = run.waited)) Scheduler.waitForInstalls(context, settings)
         retryDelay(run.failed, attempt, nowMs())?.let { (again, delay) -> Scheduler.retry(context, again, attempt + 1, delay) }
+    }
+
+    /** The waiting job: installs what the last check held back, without checking the list again or setting itself anew. */
+    suspend fun runWaitingInstalls() {
+        ready()
+        if (!_online.value) {
+            offline(null)
+            return
+        }
+        val settings = _settings.value
+        if (!Scheduler.installsNow(settings, waitingJob = true, device::onUnmeteredNetwork, device::isCharging)) return
+        installs.runScheduled(settings, installsNow = true, check = false)
     }
 
     /** Which of [failed] to check again and how long to wait first, or null for none. */
@@ -923,6 +962,16 @@ class RealEngine(
 
         /** The sources whose projects keep a README Tern reads for an app's page. */
         private val PROJECT_PAGE_SOURCES = setOf(SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS, SourceTypes.GITLAB, SourceTypes.FORGEJO)
+
+        /** Intent.EXTRA_ARCHIVAL, which Android 15 sets on the removal that archives an app. */
+        private const val EXTRA_ARCHIVAL = "android.intent.extra.ARCHIVAL"
+
+        /**
+         * Whether a package broadcast means the app is gone: removed, and neither being replaced
+         * nor archived. An archived app keeps its data and comes back with one tap.
+         */
+        internal fun removedForGood(action: String?, replacing: Boolean, archival: Boolean): Boolean =
+            action == Intent.ACTION_PACKAGE_REMOVED && !replacing && !archival
 
         /** Whether [a] and [b] are one app's source: one kind at one address, and in a repository of many apps, one package. */
         internal fun sameSource(a: SourceSpec, b: SourceSpec): Boolean =

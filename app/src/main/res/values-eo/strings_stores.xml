@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Unu po linio, kiel Nomo: valoro. Neniam pasvorton, kuketon aŭ User-Agent: Tern diras al ĉiu retejo, ke ĝi estas Tern.</string>
+    <string name="origin_republished_first">%1$s denove ofertas tion kion programistoj publikigas aliloke, kaj ne estas la programisto. Ĝis la aplikaĵo estas alpinglita al atestilo, la unua dosiero kiun Tern instalas de ĝi decidas kiun atestilon ĉiu posta ĝisdatigo devas porti.</string>
+    <string name="origin_republished_pinned">%1$s denove ofertas tion kion programistoj publikigas aliloke, kaj ne estas la programisto. Ĝiaj dosieroj devas porti la atestilon al kiu ĉi tiu aplikaĵo estas tenata.</string>
+    <string name="origin_store_first">%1$s estas vendejo, ne la propra retejo de la programisto. Ĝis la aplikaĵo estas alpinglita al atestilo, la unua dosiero kiun Tern instalas de ĝi decidas kiun atestilon ĉiu posta ĝisdatigo devas porti.</string>
+    <string name="origin_store_pinned">%1$s estas vendejo, ne la propra retejo de la programisto. Ĝiaj dosieroj devas porti la atestilon al kiu ĉi tiu aplikaĵo estas tenata.</string>
+    <string name="stores_refused_modified">Tern ne legas retejojn kiuj ofertas modifitajn aplikaĵojn. Iliaj dosieroj estas ŝanĝitaj de iu alia ol la programisto kaj subskribitaj de tiu, kiu ŝanĝis ilin.</string>
+    <string name="stores_refused_impersonation">Tern ne povas legi ĉi tiun vendejon sen ŝajnigi esti ĝia aplikaĵo, do ĝi ne legas ĝin.</string>
+    <string name="stores_checksum_source">%1$s, kiu ne estas la programisto</string>
+    <string name="stores_off_title">%1$s estas triaparta vendejo</string>
+    <string name="stores_off_body">Triapartaj vendejoj estas malŝaltitaj. Vendejo servas siajn proprajn kopiojn de aplikaĵoj, ne dosierojn de la propra retejo de la programisto, kaj Tern legas ĝin per la interfaco kiun la vendejo faris por sia propra aplikaĵo aŭ retejo. Kun ili ŝaltitaj, Tern demandas vendejon nur pri la aplikaĵoj kiujn vi aldonas de ĝi, kaj ĝis aplikaĵo estas alpinglita al atestilo, la unua dosiero kiun Tern instalas de vendejo decidas kiun atestilon ĝiaj ĝisdatigoj devas porti.</string>
+    <string name="stores_turn_on">Ŝalti triapartajn vendejojn</string>
+    <string name="stores_advice">Ŝaltu Triapartajn vendejojn en Agordoj por kontroli ĉi tiun aplikaĵon denove.</string>
+    <string name="stores_status_paused">Paŭzita</string>
+    <string name="stores_row_paused">Triapartaj vendejoj estas malŝaltitaj</string>
+    <string name="stores_setting">Triapartaj vendejoj</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, la Galaxy Store kaj vivo. Ili servas siajn proprajn kopiojn de aplikaĵoj, ne dosierojn de la propra retejo de la programisto, kaj Tern legas ilin per la interfacoj kiujn ili faris por siaj propraj aplikaĵoj kaj retejoj. Malŝaltite, Tern demandas al neniu el ili ion ajn, serĉo preterlasas ilin kaj aplikaĵoj de ili estas paŭzitaj.</string>
+    <string name="stores_off_tag">malŝaltita en Agordoj</string>
+    <string name="stores_checksum_matched">La dosiero kongruas kun la kontrolsumo de la vendejo</string>
+    <string name="stores_explain_checksum_matched">Kontrolsumo estas fingrospuro de la dosiero mem. La vendejo donis unu, kaj la dosiero kiun Tern elŝutis havas la saman, do ĝi alvenis kiel la vendejo havas ĝin. La vendejo ne estas la programisto, do ĉi tio diras nenion pri kiu faris la dosieron. La atestilo faras tion.</string>
+    <string name="stores_import_from_stores">Ĉi tiuj venas de triapartaj vendejoj, kiuj servas siajn proprajn kopiojn de aplikaĵoj. Ĝis aplikaĵo estas alpinglita al atestilo, la unua dosiero kiun Tern instalas de ĝia vendejo decidas kiun atestilon ĝiaj ĝisdatigoj devas porti.</string>
+    <string name="stores_import_paused">Triapartaj vendejoj estas malŝaltitaj, do ĉi tiuj aplikaĵoj estas paŭzitaj. Tern demandas al tiuj vendejoj nenion ĝis vi ŝaltas ilin.</string>
+    <string name="stores_import_names">De triapartaj vendejoj</string>
+    <string name="share_obtainium_link">Kunhavigi kiel Obtainium-ligilon</string>
+    <string name="share_obtainium_links">Kunhavigi kiel Obtainium-ligilojn</string>
+</resources>

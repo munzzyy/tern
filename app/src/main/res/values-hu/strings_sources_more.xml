@@ -18,10 +18,7 @@
     <string name="step_arch">Az eszköz processzorának előnyben részesítése</string>
     <string name="step_add">Oldal hozzáadása</string>
     <string name="step_remove">Oldal eltávolítása</string>
-    <string name="option_file_version">A fájlnév használata verzióként</string>
-    <string name="option_file_version_effect">Ekkor minden fájl külön kiadásnak számít.</string>
     <string name="github_proxy_title">GitHub egy hubproxyn keresztül</string>
-    <string name="github_proxy_effect">A GitHubra irányuló minden kérés ehhez a gazdagéphez megy, amely mindegyiket látja. Rajta keresztül nem megy token, így a privát projektek és a GitHub Actions ilyen módon nem követhetők.</string>
     <string name="github_proxy_host">Hubproxy gazdagép</string>
     <string name="github_proxy_help">Csak egy gazdagépnév, például gh-proxy.com. A Tern HTTPS-en keresztül éri el.</string>
     <string name="github_proxy_invalid">Ez nem olyan gazdagépnév, amelyet a Tern használni tud</string>

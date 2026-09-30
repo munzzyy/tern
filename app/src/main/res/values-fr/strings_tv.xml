@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="interval_turn_off">Désactiver les vérifications en arrière-plan</string>
+    <string name="interval_turn_on">Activer les vérifications en arrière-plan</string>
+</resources>

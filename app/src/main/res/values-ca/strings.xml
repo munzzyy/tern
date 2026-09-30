@@ -384,7 +384,6 @@
     <string name="settings_import_effect">D\'una exportació de Tern o Obtainium</string>
     <string name="settings_export">Exporta aplicacions</string>
     <string name="settings_exporting">S\'està exportant</string>
-    <string name="settings_export_effect">Desa la teva llista i la configuració en un fitxer. Mai s\'inclouen els tokens.</string>
     <plurals name="exported">
         <item quantity="one">S\'ha exportat %d aplicació</item>
         <item quantity="many">S\'han exportat %d aplicacions</item>

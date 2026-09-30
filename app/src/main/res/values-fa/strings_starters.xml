@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">در لیست شما</string>
+    <string name="starter_on_phone">روی این گوشی</string>
+    <string name="starter_on_phone_other">روی این گوشی از امضاکننده دیگر</string>
+    <string name="starter_on_phone_other_explain">نسخه‌ای که دارید با کلید متفاوتی امضا شده است، بنابراین Tern نمی‌تواند آن را از این آدرس به‌روزرسانی کند.</string>
+</resources>

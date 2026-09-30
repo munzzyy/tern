@@ -16,6 +16,7 @@ import androidx.compose.ui.test.click
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
@@ -85,10 +86,16 @@ class LookLargeTextTest {
     private fun everyChoiceCanBeReadAndReached() {
         compose.onNodeWithTag(LOOK_PREVIEW_TAG).assertIsDisplayed()
         assertFalse("a text of the example is cut", compose.drawn().cut)
-        val choices = if (dynamicColorSupported) CHOICES + "Wallpaper" else CHOICES
+        // The style of Tern's own colours shows unless Android's wallpaper colours are in use, and it has a Standard of its own.
+        val styles = fake.settings.value.colorSource != ColorSource.WALLPAPER || !dynamicColorSupported
+        val choices = (if (dynamicColorSupported) CHOICES + "Wallpaper" else CHOICES) + (if (styles) listOf("Vibrant", "Expressive") else emptyList())
         for (choice in choices) {
-            compose.onNodeWithText(choice).performScrollTo().assertIsDisplayed()
-            assertEquals("cut while $choice is on screen", emptyList<String>(), compose.cutTexts())
+            val found = compose.onAllNodesWithText(choice)
+            assertTrue("no $choice on the page", found.fetchSemanticsNodes().isNotEmpty())
+            for (i in found.fetchSemanticsNodes().indices) {
+                found[i].performScrollTo().assertIsDisplayed()
+                assertEquals("cut while $choice is on screen", emptyList<String>(), compose.cutTexts())
+            }
         }
         compose.pick("Own colour")
         compose.onNodeWithTag(LOOK_HUE_TAG).performScrollTo().assertIsDisplayed()

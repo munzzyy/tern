@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">타사 스토어가 꺼져 있어 Tern은 이 스토어에 아무것도 요청하지 않습니다. 다시 확인하려면 설정에서 켜세요.</string>
+</resources>

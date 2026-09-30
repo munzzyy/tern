@@ -18,10 +18,7 @@
     <string name="step_arch">Preferi la procesoron de ĉi tiu aparato</string>
     <string name="step_add">Aldoni paĝon</string>
     <string name="step_remove">Forigi ĉi tiun paĝon</string>
-    <string name="option_file_version">Uzi la dosiernomon kiel version</string>
-    <string name="option_file_version_effect">Ĉiu dosiero tiam validas kiel propra eldono.</string>
     <string name="github_proxy_title">GitHub tra hubproxy</string>
-    <string name="github_proxy_effect">Ĉiu peto al GitHub iras al ĉi tiu gastiganto, kiu vidas ĉiun. Neniu ĵetono estas sendata tra ĝi, do privataj projektoj kaj GitHub Actions ne povas esti sekvataj tiel.</string>
     <string name="github_proxy_host">Gastiganto de hubproxy</string>
     <string name="github_proxy_help">Nur gastignomo, ekzemple gh-proxy.com. Tern atingas ĝin per HTTPS.</string>
     <string name="github_proxy_invalid">Tio ne estas gastignomo, kiun Tern povas uzi</string>

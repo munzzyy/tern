@@ -18,10 +18,7 @@
     <string name="step_arch">Preferir o processador deste dispositivo</string>
     <string name="step_add">Adicionar uma página</string>
     <string name="step_remove">Remover esta página</string>
-    <string name="option_file_version">Usar o nome do arquivo como versão</string>
-    <string name="option_file_version_effect">Cada arquivo passa então a contar como um lançamento próprio.</string>
     <string name="github_proxy_title">GitHub por meio de um hubproxy</string>
-    <string name="github_proxy_effect">Toda solicitação ao GitHub vai para este host, que vê cada uma delas. Nenhum token é enviado por ele, então projetos privados e o GitHub Actions não podem ser acompanhados assim.</string>
     <string name="github_proxy_host">Host do hubproxy</string>
     <string name="github_proxy_help">Apenas um nome de host, como gh-proxy.com. O Tern se conecta a ele por HTTPS.</string>
     <string name="github_proxy_invalid">Este não é um nome de host que o Tern possa usar</string>

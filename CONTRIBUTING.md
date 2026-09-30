@@ -38,7 +38,19 @@ Use conditional requests, keep to HTTPS, and send a token only to the host it
 was stored for. Fixtures are synthetic: learn the real response shape, then
 write your own with invented names.
 
-Sources that republish other people's apps are out of scope.
+Add one real app of the new source to `LiveSourcesTest` and run it on a device:
+
+```sh
+bash tools/device-suite.sh <serial> -e live true -e class io.github.munzzyy.tern.enginetest.LiveSourcesTest
+```
+
+The JVM tests cannot stand in for this. Android compiles patterns with ICU, and a
+pattern Java takes can stop Tern on start on every device.
+
+A store that serves its own copies of other people's apps goes behind the
+Third-party stores setting, which starts off. Sites that offer modified apps,
+and stores that can only be read by pretending to be their own app, are out of
+scope.
 
 ## Looking at the screens
 

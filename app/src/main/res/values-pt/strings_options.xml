@@ -64,10 +64,6 @@
     <string name="option_workflow">Ficheiro de workflow</string>
     <string name="option_workflow_help">Como build.yml.</string>
     <string name="option_branch">Ramo</string>
-    <string name="option_device_model">Modelo do dispositivo</string>
-    <string name="option_device_model_help">A Galaxy Store dá a cada modelo a sua própria compilação, como SM-S948B.</string>
-    <string name="option_csc">Código de região (CSC)</string>
-    <string name="option_csc_help">Três letras, como DBT.</string>
     <string name="option_link_filter">Filtro de ligações de transferência</string>
     <string name="option_link_filter_help">Apenas as ligações correspondentes contam como transferências.</string>
     <string name="option_page_order">Manter a ordem da página</string>
@@ -78,11 +74,14 @@
     <string name="version_from_text">O texto da ligação</string>
     <string name="version_from_page">A página inteira</string>
     <string name="option_headers">Cabeçalhos do pedido</string>
-    <string name="option_headers_help">Um por linha, como Name: value. Nunca uma palavra-passe ou um cookie.</string>
     <string name="option_pseudo">Quando não há versão</string>
     <string name="pseudo_default">Distinguir os ficheiros como o servidor faz</string>
     <string name="pseudo_hash">Por um hash do início do ficheiro</string>
     <string name="pseudo_link">Pelo endereço do ficheiro</string>
     <string name="pseudo_etag">Pelo ETag do servidor</string>
     <string name="option_invalid">Isto não pode ser usado tal como está.</string>
+    <string name="option_device_model">Modelo do dispositivo</string>
+    <string name="option_device_model_help">A Galaxy Store dá a cada modelo a sua própria compilação, como SM-S948B.</string>
+    <string name="option_csc">Código de região (CSC)</string>
+    <string name="option_csc_help">Três letras, como DBT.</string>
 </resources>

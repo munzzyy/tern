@@ -107,7 +107,7 @@ class AddViewModel(private val engine: Engine) : ViewModel() {
                 spec = when (detection) {
                     is Detection.Found -> detection.spec
                     is Detection.Failed -> detection.spec
-                    is Detection.Results -> null
+                    is Detection.Results, is Detection.StoresOff -> null
                 }
                 AddState.Answer(detection, again)
             } catch (e: CancellationException) {
@@ -115,6 +115,22 @@ class AddViewModel(private val engine: Engine) : ViewModel() {
             } catch (_: Exception) {
                 AddState.Broken
             }
+        }
+    }
+
+    /** Turns third-party stores on because the person asked on the card that explains them, then reads the address again. */
+    fun turnOnStores() {
+        job?.cancel()
+        job = viewModelScope.launch {
+            try {
+                engine.saveSettings(engine.settings.value.copy(thirdPartyStores = true))
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                _state.value = AddState.Broken
+                return@launch
+            }
+            detect()
         }
     }
 

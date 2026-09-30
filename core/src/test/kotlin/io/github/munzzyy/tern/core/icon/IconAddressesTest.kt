@@ -72,8 +72,6 @@ class IconAddressesTest {
                 "appgallery.huawei.ru" to setOf("appimg-dra.dbankcdn.com", "appimg-drcn.dbankcdn.com"),
                 "detail-browser.vivo.com.cn" to setOf("imgwsdl.vivo.com.cn", "appstoreimg-ipv6.vivo.com.cn"),
                 "sj.qq.com" to setOf("pp.myapp.com"),
-                "www.coolapk.com" to setOf("pp.myapp.com"),
-                "www.rustore.ru" to setOf("static.rustore.ru"),
                 "apkpure.com" to setOf("image.winudf.com"),
                 "apkpure.net" to setOf("image.winudf.com"),
                 "www.apkmirror.com" to setOf("downloadr2.apkmirror.com"),
@@ -81,7 +79,7 @@ class IconAddressesTest {
             IconAddresses.OTHER_HOSTS,
         )
         assertEquals(
-            mapOf("aptoide.com" to setOf("pool.img.aptoide.com"), "uptodown.com" to setOf("img.utdstc.com")),
+            mapOf("aptoide.com" to setOf("pool.img.aptoide.com")),
             IconAddresses.OTHER_HOSTS_UNDER,
         )
     }

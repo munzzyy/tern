@@ -4,7 +4,7 @@
 [![ci](https://github.com/munzzyy/tern/actions/workflows/ci.yml/badge.svg)](https://github.com/munzzyy/tern/actions/workflows/ci.yml)
 [![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
 
-Android apps, straight from where their developers publish them, checked before they install.
+Android apps from where their developers publish them, checked before they install.
 
 Most open source Android apps put their releases on GitHub, GitLab, Codeberg or a
 repository of their own, days before any store carries them, if a store ever does.
@@ -14,15 +14,17 @@ what it was handed: who signed the file, whether it is the app you asked for, an
 whether it matches the checksum the publisher gave. Only then does Android's
 installer see it.
 
-It is a native app of about 7 MB, with no analytics and no account. It talks to
-the sources you add and to nobody else. [PRIVACY.md](PRIVACY.md) says what
-leaves the device.
+It is a native app of about 7 MB, with no analytics and no account. It talks
+only to where your apps come from and to the places [PRIVACY.md](PRIVACY.md)
+lists, such as an icon host or the places you search, and to nobody on its own
+behalf. Every request says it comes from Tern.
 
 - Every signature is verified twice: by Tern's own verifier and by Android.
 - Each app stays tied to the certificate of its first install. For 15
   well-known apps Tern knows the certificate before that.
-- It reads every source Obtainium reads, from GitHub to the Galaxy Store, and
-  installs through Android, Shizuku, Dhizuku, root or another installer app.
+- It reads the forges, repositories and sites Obtainium reads, and eight
+  third-party stores once you turn them on, and installs through Android,
+  Shizuku, Dhizuku, root or another installer app.
 - A widget, a Quick Settings tile and launcher shortcuts check and update from
   outside the app.
 - Android TV works by remote, and a phone can send links to it sealed with a
@@ -31,7 +33,7 @@ leaves the device.
 - An Obtainium export brings your list and your settings along, and Tern can
   write one for Obtainium too.
 
-[<img src="site/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/?url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Ftern)
+[<img src="site/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/#url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Ftern)
 
 Or download `tern.apk` from the [latest release](https://github.com/munzzyy/tern/releases/latest).
 It runs on Android 10 and later, on phones, tablets and TVs. Once it is
@@ -90,19 +92,26 @@ page also offers a second check there, against AppVerifier's own list.
 | A web page | Links to installable files, with optional steps through other pages |
 | A direct link | One file at a fixed address, whether or not the address ends in a file name |
 | Jenkins, SourceHut, SourceForge | The last successful build, tags, the project's files or one folder of them |
-| Huawei AppGallery, Samsung Galaxy Store, vivo, Tencent, RuStore, CoolApk, itch.io | Each store's own app record; the Galaxy Store with the device model and CSC of your choice |
-| Telegram, NeutronCode | Their own release channels |
-| APKPure, Aptoide, Uptodown, APKCombo, APKMirror, Farsroid | Stores that offer again what developers publish elsewhere (APKMirror for tracking only) |
-| LiteAPKs, Apk4Free, RockMods | Sites that offer apps changed by someone else (RockMods for tracking only) |
+| itch.io, Telegram, Neutron Code | The developer's own page and files |
+| Huawei AppGallery, Samsung Galaxy Store, vivo | Third-party stores, off until you turn them on: each store's own app record |
+| APKPure, Aptoide, APKCombo, APKMirror, Tencent | Third-party stores, off until you turn them on, that offer again what developers publish elsewhere (APKMirror for tracking only) |
 
 Paste a link, or share one from the browser, and Tern works out which of
-these it is. Searching by name looks in the forges, F-Droid and the stores
-you pick.
+these it is. Searching by name looks in the forges and F-Droid, and in the
+stores you pick once they are on.
 
-Tern follows the developer, so it says so before you add an app from a store
-that republishes other people's apps, and it says plainly when a site offers
-apps someone else changed. Whatever the source, a file is held to the
+The stores sit behind one setting, Settings, Network, Third-party stores, which
+starts off. A store serves its own copies of apps, and Tern reads it through the
+interface the store made for its own app or site, as Tern and with nothing
+borrowed from that app. Pasting a store's address while the setting is off
+shows what that means and a button to turn it on. An app from a store says so
+on its page, and says what its first install decides: the certificate its
+updates must carry, unless the app is one whose developer's certificate Tern
+carries, or you pinned one. Whatever the source, a file is held to the
 certificate of the app you have, and to the pinned one.
+
+Some places Obtainium reads are left out on purpose.
+[docs/COMPARISON.md](docs/COMPARISON.md) says which and why.
 
 ## Updates without a prompt
 
@@ -118,16 +127,20 @@ surprise. Android refuses a second silent update of the same app within 30
 seconds of the last one, and that is one of the cases where you are asked.
 
 With Shizuku, Dhizuku or root chosen under Settings, Installing, first installs
-and updates install without a prompt on any Android from 10 on. Android then
-names Dhizuku as the installer, and may show its own notice that an admin
-installed the app. You can also hand
+and updates install without a prompt. Shizuku 13.6 and Dhizuku 2.12 did that on
+an Android 13 emulator, for a first install and for an update. Root has not
+been tried yet: the su of Android's emulator images answers only adb, so Tern
+could not be given root there. With Dhizuku, Android names Dhizuku as the
+installer, and may show its own notice that an admin installed the app. You can
+also hand
 every checked file to another installer app; Tern then compares the signer of
 what it installed with the file it checked.
 
 Checks run every six hours by default, and anywhere from every 15 minutes to
 every 30 days, through Android's own job scheduler. The schedule is put back
 after a reboot and after Tern itself is updated. You can limit them to unmetered
-networks or to charging, check when Tern opens or when an app's page opens, and
+networks or to charging, and hold updates that install by themselves for Wi-Fi
+or a charger on their own. You can check when Tern opens or when an app's page opens, and
 choose per app between being told, updating automatically, and never checking
 in the background. If you force stop Tern, Android drops the schedule until you
 open the app again.
@@ -185,7 +198,7 @@ If you publish an Android app on GitHub or anywhere else Tern reads, a badge in
 your README lets people add it to Tern with one tap:
 
 ```markdown
-[<img src="https://tern.munzzyy.dev/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/?url=https%3A%2F%2Fgithub.com%2FYOU%2FYOUR-APP)
+[<img src="https://tern.munzzyy.dev/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/#url=https%3A%2F%2Fgithub.com%2FYOU%2FYOUR-APP)
 ```
 
 The [site](https://tern.munzzyy.dev/) writes this line for you from your
@@ -197,13 +210,15 @@ the page offers the download.
 
 Tern comes in English and 28 other languages, right-to-left ones included.
 The translations were made by a machine and checked by a second one; no native
-speaker has reviewed them yet, and corrections are welcome. On Android 13 and
-later you pick the language under Settings, apart from the phone's own.
+speaker has reviewed them yet, and corrections are welcome. Pick the language
+under Settings, Appearance, on any Android version; from Android 13 on,
+Android's own app language setting shows the same choice.
 
 Text at twice the normal size keeps each screen's main action on screen, on a
-phone and on a TV. The look is yours to change under Settings, Look: the theme,
-colours from the wallpaper, a palette or a colour of your own, contrast,
-density, corners and the shape of app icons.
+phone and on a TV. From one and a half times the size, a TV shows the list and
+an app's page one at a time, as a phone does. The look is yours to change under
+Settings, Look: the theme, colours from the wallpaper, a palette or a colour of
+your own, contrast, density, corners and the shape of app icons.
 
 ## How it compares
 
@@ -221,11 +236,11 @@ Obtainium does that Tern does not.
 - The translations are machine-made. Details of an error that come from a
   server or a parser stay in English, and an entry in the activity log stays in
   the language it was written in.
-- It has run on emulators: Android 10, 13 and 16 phones and Android TV 11 and
-  14. It has not yet run on a shelf of real devices. Vendor installers, Doze over
-  many hours and a reboot are untested. On the television image Play Protect
-  stopped the first install of an app it had not seen and offered "Install
-  anyway"; that answer is yours to give.
+- This version has run on emulators: phones with Android 10, 13 and 16, and a
+  television with Android TV 14. It has not yet run on a shelf of real devices.
+  Vendor installers, Doze over many hours and a reboot are untested. On the
+  television image Play Protect stopped the first install of an app it had not
+  seen and offered "Install anyway"; that answer is yours to give.
 - F-Droid and IzzyOnDroid are read through their per-app listings, which are
   protected by TLS and not by the index signature. Add either as a repository by
   its address if you want the signature checked; the first contact then downloads
@@ -256,6 +271,17 @@ package, version and certificate is `aapt2` and `apksigner` and not Tern.
 same code against GitHub, F-Droid, Codeberg and GitLab. It reads public data and
 sends no credentials.
 
+`bash tools/device-suite.sh <serial> -e live true -e class io.github.munzzyy.tern.enginetest.LiveSourcesTest`
+does the same on a device, through the real engine, with one real app from each
+of GitHub, GitLab, Codeberg, F-Droid, IzzyOnDroid, a web page, SourceForge,
+itch.io, Telegram, Neutron Code and the eight stores. It leaves out GitHub
+Actions, which needs a token, Jenkins, SourceHut, direct links and other F-Droid
+format repositories. Every request has to carry Tern's User-Agent, and a refused
+site, or a store while the stores are off, must not be asked anything. On an
+Android 16 phone emulator and an Android TV 14 emulator every source gave a
+listing. Where a store offers only ARM files that the emulator cannot run, Tern
+says there is no file for that device.
+
 `bash tools/device-suite.sh <serial>` runs the device tests on an emulator or a
 phone, after `./gradlew :app:assembleDebug :app:assembleDebugAndroidTest`. They
 install a test app through Tern, publish a new version, and check that the
@@ -272,7 +298,9 @@ real Chromium to a live handoff and checks that the page broke no rule of its
 Content-Security-Policy.
 
 `bash tools/check-network-doors.sh` fails if any code other than the one HTTP
-client opens a connection or resolves a name on the device.
+client opens a connection or resolves a name on the device, or uses anything
+else that fetches by itself. `bash tools/tests/network-doors/run.sh` proves it
+catches each of those ways.
 
 `bash tools/check-reproducible.sh <folder>` builds the release twice from two
 clones in different places and compares the files byte for byte.

@@ -354,7 +354,6 @@
     <string name="settings_import_effect">从 Tern 或 Obtainium 导出文件</string>
     <string name="settings_export">导出应用</string>
     <string name="settings_exporting">正在导出</string>
-    <string name="settings_export_effect">将列表和设置保存到文件。绝不会包含令牌。</string>
     <plurals name="exported">
         <item quantity="other">已导出 %d 个应用</item>
     </plurals>

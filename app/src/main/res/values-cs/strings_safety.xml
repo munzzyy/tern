@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Uloží váš seznam a nastavení do souboru. Tokeny do něj nikdy nejdou, a stejně tak ani hlavička požadavku, která by mohla obsahovat klíč.</string>
+    <string name="engine_checksum_github_proxy">Otisk vydání na GitHub, jak ho předal hubproxy %1$s</string>
+    <string name="github_proxy_effect_trust">Každý požadavek na GitHub jde na tohoto hostitele. Vidí každý z nich a může změnit to, co se vrací: vydání, jejich otisky i soubory. Aplikace, které máte, zůstanou vázány na svůj certifikát, ale první instalace přes něj důvěřuje hubproxy stejně jako GitHub, a připnutí certifikátu na ni nedosáhne. Neposílá se přes něj žádný token, takže soukromé projekty a GitHub Actions nelze tímto způsobem sledovat.</string>
+    <string name="settings_unmetered_checks">Kontrolovat jen na Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">Kontroly na pozadí čekají na Wi-Fi nebo kabel, takže nepoužívají mobilní data.</string>
+    <string name="settings_charging_checks">Kontrolovat jen při nabíjení</string>
+    <string name="settings_charging_checks_effect">Kontroly na pozadí čekají, dokud se zařízení nenabíjí.</string>
+    <string name="settings_unmetered_installs_wait">Aktualizace, která by se nainstalovala sama, čeká na Wi-Fi nebo kabel, jako v Obtainium.</string>
+    <string name="settings_charging_installs_wait">Aktualizace, která by se nainstalovala sama, čeká, dokud se zařízení nenabíjí.</string>
+    <string name="engine_downgrade_not_as_named">Zdroj uvedl kód verze %2$d, ale tento soubor je %1$d, starší než ten nainstalovaný. Nepřepíše tu novější.</string>
+    <string name="settings_allow_downgrades_picked">Aplikace Let Me Downgrade je nainstalována, takže Android může umístit starší verzi přes novější. Tern to dělá jen pro vydání, které si vyberete z historie aplikace, nikdy na pozadí nebo pomocí Aktualizovat vše.</string>
+    <string name="option_highest_version">Vzít nejvyšší verzi, jako to dělal Tern 0.1.0</string>
+    <string name="option_highest_version_effect">Nabízí odkaz s nejvyšší verzí na stránce, ať je kdekoli, a aplikuje vzor verze na verzi načtenou z každého odkazu. Vypnuto čte stránku tak, jak to dělá Obtainium: poslední odkaz v pořadí je ten nejnovější.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Aplikace, kterou odinstalujete mimo Tern, také opustí seznam. Archivovaná aplikace zůstane. Pokud se aplikace znovu přidá ze stejného místa, je vázána na certifikát, který měla; její odstranění v Tern to zapomene.</string>
+    <string name="link_check_title">Zkontrolovat aktualizace nyní?</string>
+    <string name="link_check_one">Odkaz požádal Tern, aby zkontroloval aktualizace pro %1$s. Zdroj dostane dotaz a nic se nenainstaluje.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">Odkaz požádal Tern, aby zkontroloval aktualizace pro %d aplikaci ve vašem seznamu. Její zdroj dostane dotaz a nic se nenainstaluje.</item>
+        <item quantity="few">Odkaz požádal Tern, aby zkontroloval aktualizace pro %d aplikace ve vašem seznamu. Jejich zdroje dostanou dotaz a nic se nenainstaluje.</item>
+        <item quantity="many">Odkaz požádal Tern, aby zkontroloval aktualizace pro %d aplikací ve vašem seznamu. Jejich zdroje dostanou dotaz a nic se nenainstaluje.</item>
+        <item quantity="other">Odkaz požádal Tern, aby zkontroloval aktualizace pro %d aplikací ve vašem seznamu. Jejich zdroje dostanou dotaz a nic se nenainstaluje.</item>
+    </plurals>
+    <string name="link_check_confirm">Zkontrolovat</string>
+    <string name="link_check_not_now">Teď ne</string>
+    <string name="engine_installer_fell_back">%1$s nebyl připraven, takže pro tuto instalaci byl použit instalátor Androidu.</string>
+    <string name="about_track_tern_fdroid_effect">Tuto kopii nainstaloval F-Droid, takže Tern sleduje jeho záznam tam: aktualizace jsou sestavení, která F-Droid vytvořil a zkontroloval, tak jak je získává aplikace F-Droid.</string>
+    <string name="about_track_tern_github">Sledovat místo toho vydání na GitHub</string>
+    <string name="about_track_tern_github_effect">Aktualizace pocházejí z GitHub hned po jejich zveřejnění, dříve než je F-Droid sestaví a zkontroluje. Tím se přeskočí kontroly F-Droid. Tern stále kontroluje každý soubor a váže jej na jeho vlastní certifikát.</string>
+</resources>

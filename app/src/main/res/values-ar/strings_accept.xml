@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">المتاجر الخارجية متوقفة، لذا لا يسأل Tern هذا المتجر عن أي شيء. شغّلها في الإعدادات لفحصه مرة أخرى.</string>
+</resources>

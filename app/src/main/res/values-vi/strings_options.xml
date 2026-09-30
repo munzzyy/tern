@@ -60,10 +60,6 @@
     <string name="option_workflow">Tệp workflow</string>
     <string name="option_workflow_help">Chẳng hạn build.yml.</string>
     <string name="option_branch">Nhánh</string>
-    <string name="option_device_model">Mẫu thiết bị</string>
-    <string name="option_device_model_help">Galaxy Store cung cấp bản dựng riêng cho từng mẫu máy, chẳng hạn SM-S948B.</string>
-    <string name="option_csc">Mã vùng (CSC)</string>
-    <string name="option_csc_help">Ba chữ cái, chẳng hạn DBT.</string>
     <string name="option_link_filter">Bộ lọc liên kết tải xuống</string>
     <string name="option_link_filter_help">Chỉ những liên kết khớp mới được tính là tải xuống.</string>
     <string name="option_page_order">Giữ thứ tự của trang</string>
@@ -74,11 +70,14 @@
     <string name="version_from_text">Văn bản của liên kết</string>
     <string name="version_from_page">Toàn bộ trang</string>
     <string name="option_headers">Tiêu đề yêu cầu</string>
-    <string name="option_headers_help">Mỗi dòng một mục, dạng Name: value. Không bao giờ nhập mật khẩu hay cookie.</string>
     <string name="option_pseudo">Khi không có phiên bản</string>
     <string name="pseudo_default">Phân biệt tệp theo cách của máy chủ</string>
     <string name="pseudo_hash">Theo mã băm phần đầu tệp</string>
     <string name="pseudo_link">Theo địa chỉ của tệp</string>
     <string name="pseudo_etag">Theo ETag của máy chủ</string>
     <string name="option_invalid">Không thể dùng nguyên trạng như vậy.</string>
+    <string name="option_device_model">Mẫu thiết bị</string>
+    <string name="option_device_model_help">Galaxy Store cung cấp bản dựng riêng cho từng mẫu máy, chẳng hạn SM-S948B.</string>
+    <string name="option_csc">Mã vùng (CSC)</string>
+    <string name="option_csc_help">Ba chữ cái, chẳng hạn DBT.</string>
 </resources>

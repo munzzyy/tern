@@ -62,10 +62,6 @@
     <string name="option_workflow">فایل گردش کار</string>
     <string name="option_workflow_help">مانند build.yml.</string>
     <string name="option_branch">شاخه</string>
-    <string name="option_device_model">مدل دستگاه</string>
-    <string name="option_device_model_help">Galaxy Store برای هر مدل نسخه ساخت خودش را دارد، مانند SM-S948B.</string>
-    <string name="option_csc">کد منطقه (CSC)</string>
-    <string name="option_csc_help">سه حرف، مانند DBT.</string>
     <string name="option_link_filter">فیلتر پیوندهای دانلود</string>
     <string name="option_link_filter_help">فقط پیوندهای مطابق به‌عنوان دانلود حساب می‌شوند.</string>
     <string name="option_page_order">حفظ ترتیب صفحه</string>
@@ -76,11 +72,14 @@
     <string name="version_from_text">متن پیوند</string>
     <string name="version_from_page">کل صفحه</string>
     <string name="option_headers">سرآیندهای درخواست</string>
-    <string name="option_headers_help">هر کدام در یک خط، به‌صورت Name: value. هرگز رمز عبور یا کوکی وارد نکنید.</string>
     <string name="option_pseudo">وقتی نسخه‌ای وجود ندارد</string>
     <string name="pseudo_default">تشخیص فایل‌ها از هم به روش سرور</string>
     <string name="pseudo_hash">با هش ابتدای فایل</string>
     <string name="pseudo_link">با آدرس فایل</string>
     <string name="pseudo_etag">با ETag سرور</string>
     <string name="option_invalid">این را نمی‌توان به همین شکل استفاده کرد.</string>
+    <string name="option_device_model">مدل دستگاه</string>
+    <string name="option_device_model_help">Galaxy Store برای هر مدل نسخه ساخت خودش را دارد، مانند SM-S948B.</string>
+    <string name="option_csc">کد منطقه (CSC)</string>
+    <string name="option_csc_help">سه حرف، مانند DBT.</string>
 </resources>

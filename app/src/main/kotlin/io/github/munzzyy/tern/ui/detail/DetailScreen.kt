@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -48,10 +49,12 @@ import io.github.munzzyy.tern.engine.Phase
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.LocalOnline
+import io.github.munzzyy.tern.ui.add.OriginLine
 import io.github.munzzyy.tern.ui.apps.TernSnackbarHost
 import io.github.munzzyy.tern.ui.apps.progressText
 import io.github.munzzyy.tern.ui.apps.rememberRemovals
 import io.github.munzzyy.tern.ui.apps.versionText
+import io.github.munzzyy.tern.ui.apps.whenGoneWithFocus
 import io.github.munzzyy.tern.ui.common.Explained
 import io.github.munzzyy.tern.ui.common.LinkDialog
 import io.github.munzzyy.tern.ui.common.LinkText
@@ -113,7 +116,8 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit, fo
     val current = row?.takeUnless { it.id in hidden }
     val listState = rememberLazyListState()
     val headerGone by remember { derivedStateOf { listState.firstVisibleItemIndex > 0 } }
-    val screen = rememberScreenFocus(again = focusAgain)
+    var landAgain by remember { mutableIntStateOf(0) }
+    val screen = rememberScreenFocus(again = focusAgain + landAgain)
     val look = LocalLook.current
 
     Scaffold(
@@ -142,7 +146,7 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit, fo
                 .testTag(DETAIL_LIST_TAG),
         ) {
             item(key = "header") { Header(current, Modifier.backupFocus(screen), top = if (onBack == null) look.gap else look.gapSmall / 2) }
-            item(key = "action") { ActionArea(current, Modifier.firstFocus(screen)) }
+            item(key = "action") { ActionArea(current, Modifier.firstFocus(screen), onFocusGone = { landAgain++ }) }
             val moveState = move
             if (current.movedTo != null || moveState is MoveState.Refused || moveState == MoveState.Followed) {
                 item(key = "moved") { MovedBox(current.movedTo, moveState, vm) }
@@ -157,7 +161,7 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit, fo
             }
             verifier?.let { intent -> item(key = "appverifier") { AppVerifierCard(intent) } }
             item(key = "categories") { CategoriesCard(current) }
-            item(key = "notes") { NotesCard(vm, current) }
+            item(key = "own-notes") { NotesCard(vm, current) }
             if (engine.hasProjectPage(current)) item(key = "project") { ProjectPageCard(current) }
             history(vm, current)
             settings(vm, current, onRemoved)
@@ -262,6 +266,19 @@ private fun Header(row: AppRow, focus: Modifier, top: Dp) {
     link?.let { LinkDialog(it, onDismiss = { link = null }) }
 }
 
+/** An app of a third-party store while those are off, and the switch that turns them on, which checks it again. */
+@Composable
+private fun StoresPaused(message: String) {
+    val engine = LocalEngine.current
+    val actions = rememberActions()
+    ProblemBox(
+        title = message,
+        body = null,
+        action = stringResource(R.string.stores_turn_on),
+        onAction = { actions.run { engine.saveSettings(engine.settings.value.copy(thirdPartyStores = true)) } },
+    )
+}
+
 /** What the source says the app is. Long ones open on a press, so the actions stay near the top. */
 @Composable
 private fun Description(text: String) {
@@ -286,7 +303,7 @@ private fun relativeTime(ms: Long): String =
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ActionArea(row: AppRow, focus: Modifier) {
+private fun ActionArea(row: AppRow, focus: Modifier, onFocusGone: () -> Unit) {
     val engine = LocalEngine.current
     val actions = rememberActions()
     val look = LocalLook.current
@@ -308,12 +325,17 @@ private fun ActionArea(row: AppRow, focus: Modifier) {
         }
         promptLine(row, Build.VERSION.SDK_INT)?.let { Prompt(it) }
         row.problem?.let { p ->
-            val body = buildString {
-                append(stringResource(problemAdvice(p.kind, installed = row.installed != null)))
-                if (p.kind == ProblemKind.RATE_LIMITED) p.retryAtMs?.let { append(" ").append(retryText(it)) }
+            if (p.kind == ProblemKind.STORES_OFF) {
+                StoresPaused(p.message)
+            } else {
+                val body = buildString {
+                    append(stringResource(problemAdvice(p.kind, installed = row.installed != null)))
+                    if (p.kind == ProblemKind.RATE_LIMITED) p.retryAtMs?.let { append(" ").append(retryText(it)) }
+                }
+                ProblemBox(title = p.message, body = body)
             }
-            ProblemBox(title = p.message, body = body)
         }
+        OriginLine(row.config.source, pinned = row.config.pinnedSigners.isNotEmpty() || row.installed != null)
         row.progress?.let { progress ->
             Column(
                 verticalArrangement = Arrangement.spacedBy(look.gapSmall),
@@ -356,20 +378,22 @@ private fun ActionArea(row: AppRow, focus: Modifier) {
                         RowAction.CHECK -> actions.run { engine.check(row.id) }
                     }
                 }
+                // A button that goes with the focus on it, as Cancel does when an install ends, hands the focus back to this row.
+                val tagged = Modifier.whenGoneWithFocus(onFocusGone).testTag(DETAIL_PRIMARY_TAG)
                 if (action == RowAction.CANCEL) {
-                    TonalButton(stringResource(action.text), press, Modifier.testTag(DETAIL_PRIMARY_TAG))
+                    TonalButton(stringResource(action.text), press, tagged)
                 } else {
-                    PrimaryButton(stringResource(action.text), press, Modifier.testTag(DETAIL_PRIMARY_TAG))
+                    PrimaryButton(stringResource(action.text), press, tagged)
                 }
             }
             if (isWaitingForUser(row)) {
-                TonalButton(stringResource(R.string.action_cancel), onClick = { engine.cancel(row.id) })
+                TonalButton(stringResource(R.string.action_cancel), onClick = { engine.cancel(row.id) }, modifier = Modifier.whenGoneWithFocus(onFocusGone))
             }
             if (row.installed != null && primaryAction(row) != RowAction.OPEN && row.progress == null) {
-                TonalButton(stringResource(R.string.action_open), onClick = { if (!engine.open(row.id)) actions.say(noLauncher) })
+                TonalButton(stringResource(R.string.action_open), onClick = { if (!engine.open(row.id)) actions.say(noLauncher) }, modifier = Modifier.whenGoneWithFocus(onFocusGone))
             }
             if (canSkip(row) && row.progress == null && !row.config.trackOnly) {
-                QuietButton(stringResource(R.string.action_skip_version), onClick = { actions.run { engine.dismissRelease(row.id) } })
+                QuietButton(stringResource(R.string.action_skip_version), onClick = { actions.run { engine.dismissRelease(row.id) } }, modifier = Modifier.whenGoneWithFocus(onFocusGone))
             }
         }
     }

@@ -1,0 +1,81 @@
+{
+  "format": "tern-export",
+  "schema": 1,
+  "exportedAt": 1759200000000,
+  "appVersion": "0.1.0",
+  "apps": [
+    {
+      "schema": 1,
+      "id": "3f2a9b8c7d6e5f40",
+      "source": {
+        "type": "html",
+        "url": "https://example.com/project",
+        "options": {
+          "steps": "[\"/v/\"]",
+          "linkFilter": "\\.apk$"
+        }
+      },
+      "name": "Example Web",
+      "author": null,
+      "packageName": "org.example.web",
+      "releases": {
+        "includePrereleases": false,
+        "tagFilter": null,
+        "titleFilter": null,
+        "notesFilter": null,
+        "versionExtract": "^(\\d+\\.\\d+)",
+        "minAgeDays": 0,
+        "skippedReleaseId": null,
+        "fallbackToOlder": true
+      },
+      "assets": {
+        "include": null,
+        "exclude": null,
+        "matchDevice": true
+      },
+      "updates": "NOTIFY",
+      "trackOnly": false,
+      "pinnedSigners": [
+        "a894d99944e6d3a5f69bbdfc6f8c4a0a8bb0b85c1e0d0a8c5c1d2e3f4a5b6c7d"
+      ],
+      "categories": [],
+      "favorite": false,
+      "notes": null
+    },
+    {
+      "schema": 1,
+      "id": "9c8b7a6f5e4d3c21",
+      "source": {
+        "type": "github",
+        "url": "https://github.com/example/app",
+        "options": {}
+      },
+      "name": "Example",
+      "author": "example",
+      "packageName": "org.example.app",
+      "releases": {
+        "includePrereleases": false,
+        "tagFilter": null,
+        "titleFilter": null,
+        "notesFilter": null,
+        "versionExtract": null,
+        "minAgeDays": 0,
+        "skippedReleaseId": null,
+        "fallbackToOlder": true
+      },
+      "assets": {
+        "include": null,
+        "exclude": null,
+        "matchDevice": true
+      },
+      "updates": "AUTO",
+      "trackOnly": false,
+      "pinnedSigners": [],
+      "categories": [
+        "Tools"
+      ],
+      "favorite": true,
+      "notes": null
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Menyimpan daftar dan setelan Anda ke file. Token tidak pernah disertakan, begitu pula header permintaan yang dapat memuat kunci.</string>
+    <string name="engine_checksum_github_proxy">Digest rilis GitHub, sebagaimana diteruskan oleh hubproxy %1$s</string>
+    <string name="github_proxy_effect_trust">Setiap permintaan ke GitHub masuk ke host ini. Host melihat masing-masingnya dan dapat mengubah apa yang kembali: rilis, digest, dan filenya. Aplikasi yang Anda miliki tetap terikat pada sertifikatnya, tetapi instalasi pertama melaluinya memercayai hubproxy sama seperti GitHub, dan penyematan sertifikat tidak menjangkaunya. Tidak ada token yang dikirim melaluinya, jadi proyek pribadi dan GitHub Actions tidak dapat diikuti dengan cara ini.</string>
+    <string name="settings_unmetered_checks">Periksa hanya di Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">Pemeriksaan latar belakang menunggu Wi-Fi atau kabel, jadi tidak menggunakan data seluler.</string>
+    <string name="settings_charging_checks">Periksa hanya saat mengisi daya</string>
+    <string name="settings_charging_checks_effect">Pemeriksaan latar belakang menunggu hingga perangkat sedang mengisi daya.</string>
+    <string name="settings_unmetered_installs_wait">Pembaruan yang akan menginstal dengan sendirinya menunggu Wi-Fi atau kabel, seperti di Obtainium.</string>
+    <string name="settings_charging_installs_wait">Pembaruan yang akan menginstal dengan sendirinya menunggu hingga perangkat sedang mengisi daya.</string>
+    <string name="engine_downgrade_not_as_named">Sumber menyebutkan kode versi %2$d, tetapi file ini %1$d, lebih lama dari yang terinstal. File ini tidak diinstal menimpa yang lebih baru.</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgrade terinstal, sehingga Android dapat menginstal versi lama menimpa yang baru. Tern melakukannya hanya untuk rilis yang Anda pilih dari riwayat aplikasi, tidak pernah di latar belakang atau dengan Perbarui semua.</string>
+    <string name="option_highest_version">Ambil versi tertinggi, seperti Tern 0.1.0</string>
+    <string name="option_highest_version_effect">Menawarkan tautan dengan versi tertinggi di halaman, di mana pun letaknya, dan menjalankan pola versi pada versi yang dibaca dari setiap tautan. Jika nonaktif akan membaca halaman seperti yang dilakukan Obtainium: tautan terakhir dalam urutan adalah yang terbaru.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Aplikasi yang Anda uninstal di luar Tern juga akan keluar dari daftar. Aplikasi yang diarsipkan akan tetap ada. Jika ditambahkan lagi dari tempat yang sama, aplikasi akan tetap terikat pada sertifikat yang dimilikinya; menghapusnya di Tern akan melupakan hal itu.</string>
+    <string name="link_check_title">Periksa pembaruan sekarang?</string>
+    <string name="link_check_one">Sebuah tautan meminta Tern memeriksa pembaruan %1$s. Sumbernya ditanya, dan tidak ada yang diinstal.</string>
+    <plurals name="link_check_all">
+        <item quantity="other">Sebuah tautan meminta Tern memeriksa pembaruan untuk %d aplikasi di daftar Anda. Sumber mereka ditanya, dan tidak ada yang diinstal.</item>
+    </plurals>
+    <string name="link_check_confirm">Periksa</string>
+    <string name="link_check_not_now">Jangan sekarang</string>
+    <string name="engine_installer_fell_back">%1$s belum siap, jadi aplikasi penginstal Android digunakan untuk yang ini.</string>
+    <string name="about_track_tern_fdroid_effect">F-Droid menginstal salinan ini, jadi Tern mengikuti entrinya di sana: pembaruan adalah versi yang dibuat dan diperiksa F-Droid, sama seperti yang didapat aplikasi F-Droid.</string>
+    <string name="about_track_tern_github">Ikuti rilis GitHub saja</string>
+    <string name="about_track_tern_github_effect">Pembaruan berasal dari GitHub segera setelah diterbitkan, sebelum F-Droid membuat dan memeriksanya. Ini melewati pemeriksaan F-Droid. Tern tetap memeriksa setiap file dan memastikannya sesuai dengan sertifikatnya sendiri.</string>
+</resources>

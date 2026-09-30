@@ -15,7 +15,7 @@ class FileOriginTest {
         assertNull(foreign(SourceTypes.GITHUB, "https://github.com/example/app", "https://github.com/example/app/releases/download/v1/app.apk"))
         assertNull(foreign(SourceTypes.FDROID, "https://apt.izzysoft.de/fdroid/index/apk/org.example", "https://apt.izzysoft.de/fdroid/repo/org.example_1.apk"))
         assertNull(foreign(SourceTypes.HTML, "https://www.example.org/download", "https://downloads.example.org/app.apk"))
-        assertNull(foreign(SourceTypes.RUSTORE, "https://www.rustore.ru/catalog/app/org.example", "https://static.rustore.ru/a.apk"))
+        assertNull(foreign(SourceTypes.APTOIDE, "https://example.en.aptoide.com/app", "https://pool.apk.aptoide.com/a.apk"))
     }
 
     @Test

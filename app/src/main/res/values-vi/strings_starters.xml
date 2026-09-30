@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">Trong danh sách của bạn</string>
+    <string name="starter_on_phone">Trên điện thoại này</string>
+    <string name="starter_on_phone_other">Trên điện thoại này từ người ký khác</string>
+    <string name="starter_on_phone_other_explain">Bản sao bạn có được ký bằng khóa khác, nên Tern không thể cập nhật từ địa chỉ này.</string>
+</resources>

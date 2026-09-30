@@ -15,13 +15,11 @@
     <string name="settings_only_installed">Hanya periksa aplikasi yang terinstal</string>
     <string name="settings_only_installed_effect">Aplikasi yang hanya diikuti juga diperiksa. Aplikasi yang Anda buka selalu diperiksa.</string>
     <string name="settings_remove_uninstalled">Hapus aplikasi yang di-uninstal di tempat lain</string>
-    <string name="settings_remove_uninstalled_effect">Aplikasi yang Anda uninstal di luar Tern juga keluar dari daftar.</string>
     <string name="settings_file_filter">Filter untuk file</string>
     <string name="settings_file_filter_effect">Pola yang dipakai setiap aplikasi tanpa filter sendiri untuk memilih filenya.</string>
     <string name="settings_file_filter_none">Tidak ada</string>
     <string name="settings_file_filter_invalid">Pola ini tidak dapat dibaca.</string>
     <string name="settings_allow_downgrades">Izinkan versi lama</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade terinstal, jadi Android dapat memasang versi lama menimpa versi yang lebih baru.</string>
     <string name="settings_collapse_groups">Mulai dengan grup terlipat</string>
     <string name="settings_haptics">Umpan balik haptik</string>
     <string name="settings_haptics_effect">Getaran ringan saat geser atau tekan lama melakukan sesuatu.</string>
@@ -36,7 +34,6 @@
     <string name="sources_repositories">Repositori</string>
     <string name="sources_stores">Toko</string>
     <string name="sources_mirrors">Toko yang menerbitkan ulang aplikasi</string>
-    <string name="sources_modified">Situs dengan aplikasi yang diubah</string>
     <string name="sources_other">Tempat lain</string>
     <string name="sources_web_page">Halaman web dengan tautan ke file</string>
     <string name="sources_direct">Tautan langsung ke file</string>
@@ -46,8 +43,6 @@
     <string name="shared_configs_title">Konfigurasi yang dibagikan pengguna Obtainium</string>
     <string name="shared_configs_effect">Situs berisi setelan siap pakai untuk aplikasi. Tautannya terbuka di Tern saat \"Buka tautan Obtainium\" aktif di Setelan.</string>
     <string name="engine_inner_filter_nothing">Filter untuk file di dalam arsip tidak cocok dengan APK mana pun di arsip ini.</string>
-    <string name="preview_republished">%1$s menawarkan ulang apa yang diterbitkan pengembang di tempat lain. Setelah Tern mengetahui sertifikat pengembang, file dari sini harus cocok dengan sertifikat itu, jadi sematkan sertifikat atau instal dari pengembang terlebih dahulu jika bisa.</string>
-    <string name="preview_modified">%1$s menawarkan aplikasi yang diubah oleh orang selain pengembangnya. Aplikasi itu ditandatangani oleh siapa pun yang mengubahnya, dan Tern tidak dapat mengetahui apa yang diubah.</string>
     <string name="about_track_tern">Selalu perbarui Tern sendiri</string>
     <string name="about_track_tern_effect">Menambahkan rilis Tern sendiri ke daftar, diperiksa dan diverifikasi seperti aplikasi lainnya.</string>
     <string name="engine_channel_tracked">Rilis baru aplikasi yang diikuti</string>

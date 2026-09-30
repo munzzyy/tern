@@ -14,6 +14,7 @@ import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.model.VersionFrom
 import io.github.munzzyy.tern.core.net.Urls
+import io.github.munzzyy.tern.core.source.Refusal
 import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceRegistry
 import io.github.munzzyy.tern.core.source.SourceTypes
@@ -34,7 +35,8 @@ import io.github.munzzyy.tern.core.verify.Fingerprints
 
 class ObtainiumImportException(message: String) : Exception(message)
 
-data class Skipped(val name: String, val url: String, val reason: String)
+/** An app that was not brought over. [refusal] is set when Tern reads nothing from its site at all, and says why in the app's words. */
+data class Skipped(val name: String, val url: String, val reason: String, val refusal: Refusal? = null)
 
 /** [settings] are those of the file Tern has a setting for, under Tern's names; null when it carries none. */
 data class ImportResult(val apps: List<AppConfig>, val skipped: List<Skipped>, val settings: JsonObject? = null)
@@ -63,6 +65,11 @@ object ObtainiumImport {
                 ?: entry.string("additionalSettings")?.let { raw -> runCatching { Json.parseObject(raw) }.getOrNull() }
                 ?: JsonObject(emptyMap())
 
+            val refusal = Refusal.ofObtainium(overrideSource) ?: Refusal.ofUrl(url)
+            if (refusal != null) {
+                skipped.add(Skipped(Shown.line(name, MAX_NAME), Shown.line(url, MAX_NAME), SourceRegistry.refusalText(refusal), refusal))
+                continue
+            }
             val source = mapSource(url, overrideSource, settings)?.let { withOptions(it, settings) }
             if (source == null) {
                 val reason = if (Urls.normalize(url) == null) "Its address is not a web address Tern can open" else unsupportedReason(overrideSource)
@@ -101,7 +108,7 @@ object ObtainiumImport {
                         minAgeDays = settingInt(settings, "minimumUpdateAgeDays")?.coerceIn(0, 365),
                         fallbackToOlder = settingBool(settings, "fallbackToOlderReleases") ?: true,
                         matchGroup = matchGroup(settings, versionExtract),
-                        versionFrom = versionFrom(settings, source.type),
+                        versionFrom = versionFrom(settings),
                         order = order(settings),
                         stayBehind = if (settingBool(settings, "stayOneVersionBehind") == true) 1 else 0,
                         versionFilter = settingString(settings, "filterVersionsByRegEx"),
@@ -251,10 +258,9 @@ object ObtainiumImport {
         return named.takeUnless { it.removePrefix("$") == ObtainiumOptions.defaultGroup(versionExtract) }
     }
 
-    /** On Farsroid, releaseTitleAsVersion names the file instead, which is an option of that source; see [store]. */
-    private fun versionFrom(settings: JsonObject, type: String): VersionFrom = when {
+    private fun versionFrom(settings: JsonObject): VersionFrom = when {
         settingBool(settings, "releaseDateAsVersion") == true || settingString(settings, "versionDetection") == "releaseDateAsVersion" -> VersionFrom.DATE
-        settingBool(settings, "releaseTitleAsVersion") == true && type != SourceTypes.FARSROID -> VersionFrom.TITLE
+        settingBool(settings, "releaseTitleAsVersion") == true -> VersionFrom.TITLE
         else -> VersionFrom.TAG
     }
 
@@ -286,18 +292,14 @@ object ObtainiumImport {
         return "Tern could not read this address as an app on $name"
     }
 
-    /** A store source by its type, with the options Obtainium keeps for it that Tern reads too. */
+    /** A store source by its type. The Galaxy Store's device and region settings are not read: Tern asks every store as itself. */
+    /** A store source by its type, with the Galaxy Store model and region Obtainium keeps for it. */
     private fun store(type: String, address: String, settings: JsonObject): SourceSpec? {
         val spec = REGISTRY.get(type)?.match(address) ?: return null
+        if (type != SourceTypes.SAMSUNG) return spec
         val options = LinkedHashMap(spec.options)
-        when (type) {
-            SourceTypes.SAMSUNG -> {
-                settingString(settings, "deviceId")?.let { options[SourceOptions.DEVICE_MODEL] = it.take(40) }
-                settingString(settings, "csc")?.let { options[SourceOptions.CSC] = it.take(10) }
-            }
-            // Farsroid's "release title as version" takes the name of the file.
-            SourceTypes.FARSROID -> if (settingBool(settings, "releaseTitleAsVersion") == true) options[SourceOptions.FILE_VERSION] = "true"
-        }
+        settingString(settings, "deviceId")?.let { options[SourceOptions.DEVICE_MODEL] = it.take(40) }
+        settingString(settings, "csc")?.let { options[SourceOptions.CSC] = it.take(10) }
         return if (options == spec.options) spec else spec.copy(options = options)
     }
 
@@ -330,20 +332,13 @@ object ObtainiumImport {
         "SamsungGalaxyStore" to SourceTypes.SAMSUNG,
         "VivoAppStore" to SourceTypes.VIVO,
         "Tencent" to SourceTypes.TENCENT,
-        "RuStore" to SourceTypes.RUSTORE,
-        "CoolApk" to SourceTypes.COOLAPK,
         "ItchIO" to SourceTypes.ITCHIO,
         "TelegramApp" to SourceTypes.TELEGRAM,
         "NeutronCode" to SourceTypes.NEUTRONCODE,
         "APKPure" to SourceTypes.APKPURE,
         "Aptoide" to SourceTypes.APTOIDE,
-        "Uptodown" to SourceTypes.UPTODOWN,
         "APKCombo" to SourceTypes.APKCOMBO,
         "APKMirror" to SourceTypes.APKMIRROR,
-        "Farsroid" to SourceTypes.FARSROID,
-        "LiteAPKs" to SourceTypes.LITEAPKS,
-        "Apk4Free" to SourceTypes.APK4FREE,
-        "RockMods" to SourceTypes.ROCKMODS,
     )
 
     private val REGISTRY = SourceRegistry.standard()

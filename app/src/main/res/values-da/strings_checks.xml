@@ -17,13 +17,11 @@
     <string name="settings_only_installed">Tjek kun installerede apps</string>
     <string name="settings_only_installed_effect">Apps, der kun spores, tjekkes også. En app, du åbner, tjekkes altid.</string>
     <string name="settings_remove_uninstalled">Fjern apps, der er afinstalleret andetsteds</string>
-    <string name="settings_remove_uninstalled_effect">En app, du afinstallerer uden for Tern, forsvinder også fra listen.</string>
     <string name="settings_file_filter">Filter for filer</string>
     <string name="settings_file_filter_effect">Et mønster, som enhver app uden sit eget filter vælger sin fil efter.</string>
     <string name="settings_file_filter_none">Intet</string>
     <string name="settings_file_filter_invalid">Dette mønster kan ikke læses.</string>
     <string name="settings_allow_downgrades">Tillad ældre versioner</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade er installeret, så Android må installere en ældre version oven på en nyere.</string>
     <string name="settings_collapse_groups">Start med grupper foldet sammen</string>
     <string name="settings_haptics">Haptisk feedback</string>
     <string name="settings_haptics_effect">En let vibration, når et stryg eller et langt tryk gør noget.</string>
@@ -38,7 +36,6 @@
     <string name="sources_repositories">Arkiver</string>
     <string name="sources_stores">Butikker</string>
     <string name="sources_mirrors">Butikker, der genudgiver apps</string>
-    <string name="sources_modified">Websteder med ændrede apps</string>
     <string name="sources_other">Andre steder</string>
     <string name="sources_web_page">En webside med links til filer</string>
     <string name="sources_direct">Et direkte link til en fil</string>
@@ -48,8 +45,6 @@
     <string name="shared_configs_title">Konfigurationer delt af Obtainiums brugere</string>
     <string name="shared_configs_effect">Et websted med færdige indstillinger til apps. Dets links åbner i Tern, når Åbn Obtainium-links er slået til i Indstillinger.</string>
     <string name="engine_inner_filter_nothing">Filteret for filer i arkiver matcher ingen af APK\'erne i dette arkiv.</string>
-    <string name="preview_republished">%1$s tilbyder igen det, som udviklere udgiver andre steder. Dets filer holdes op imod udviklerens certifikat, når Tern kender det, så fastgør et, eller installer fra udvikleren først, når du kan.</string>
-    <string name="preview_modified">%1$s tilbyder apps, der er ændret af en anden end deres udvikler. De er signeret af den, der ændrede dem, og Tern kan ikke se, hvad der blev ændret.</string>
     <string name="about_track_tern">Hold Tern selv opdateret</string>
     <string name="about_track_tern_effect">Tilføjer Terns egne udgivelser til listen, tjekket og verificeret som enhver app.</string>
     <string name="engine_channel_tracked">Nye udgivelser af sporede apps</string>

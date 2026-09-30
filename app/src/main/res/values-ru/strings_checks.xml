@@ -21,13 +21,11 @@
     <string name="settings_only_installed">Проверять только установленные приложения</string>
     <string name="settings_only_installed_effect">Приложения, которые только отслеживаются, тоже проверяются. Открытое вами приложение проверяется всегда.</string>
     <string name="settings_remove_uninstalled">Убирать приложения, удаленные в другом месте</string>
-    <string name="settings_remove_uninstalled_effect">Приложение, которое вы удалили не через Tern, тоже исчезает из списка.</string>
     <string name="settings_file_filter">Фильтр файлов</string>
     <string name="settings_file_filter_effect">Шаблон, по которому выбирают файл все приложения без собственного фильтра.</string>
     <string name="settings_file_filter_none">Нет</string>
     <string name="settings_file_filter_invalid">Этот шаблон невозможно прочитать.</string>
     <string name="settings_allow_downgrades">Разрешить старые версии</string>
-    <string name="settings_allow_downgrades_effect">Установлен Let Me Downgrade, поэтому Android может установить старую версию поверх более новой.</string>
     <string name="settings_collapse_groups">Изначально сворачивать группы</string>
     <string name="settings_haptics">Тактильный отклик</string>
     <string name="settings_haptics_effect">Легкая вибрация, когда свайп или долгое нажатие что-то делает.</string>
@@ -42,7 +40,6 @@
     <string name="sources_repositories">Репозитории</string>
     <string name="sources_stores">Магазины</string>
     <string name="sources_mirrors">Магазины, повторно публикующие приложения</string>
-    <string name="sources_modified">Сайты с измененными приложениями</string>
     <string name="sources_other">Другие места</string>
     <string name="sources_web_page">Веб-страница со ссылками на файлы</string>
     <string name="sources_direct">Прямая ссылка на файл</string>
@@ -52,8 +49,6 @@
     <string name="shared_configs_title">Конфигурации от пользователей Obtainium</string>
     <string name="shared_configs_effect">Сайт с готовыми настройками для приложений. Его ссылки открываются в Tern, если в Настройках включено «Открывать ссылки Obtainium».</string>
     <string name="engine_inner_filter_nothing">Фильтр файлов внутри архивов не совпадает ни с одним APK в этом архиве.</string>
-    <string name="preview_republished">%1$s повторно публикует то, что разработчики выпускают в других местах. Его файлы сверяются с сертификатом разработчика, как только Tern его узнает, поэтому по возможности закрепите сертификат или сначала установите приложение от разработчика.</string>
-    <string name="preview_modified">%1$s предлагает приложения, измененные не их разработчиком. Они подписаны тем, кто их изменил, и Tern не может определить, что именно изменено.</string>
     <string name="about_track_tern">Обновлять сам Tern</string>
     <string name="about_track_tern_effect">Добавляет в список релизы самого Tern: они проверяются и сверяются, как у любого приложения.</string>
     <string name="engine_channel_tracked">Новые релизы отслеживаемых приложений</string>

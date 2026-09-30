@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Én per linje, som Navn: værdi. Aldrig en adgangskode, en cookie eller en User-Agent: Tern fortæller ethvert websted, at den er Tern.</string>
+    <string name="origin_republished_first">%1$s tilbyder igen, hvad udviklere udgiver andre steder, og er ikke udvikleren. Indtil appen er fastgjort til et certifikat, afgør den første fil, Tern installerer derfra, hvilket certifikat hver senere opdatering skal bære.</string>
+    <string name="origin_republished_pinned">%1$s tilbyder igen, hvad udviklere udgiver andre steder, og er ikke udvikleren. Dens filer skal bære det certifikat, denne app er fastgjort til.</string>
+    <string name="origin_store_first">%1$s er en butik, ikke udviklerens eget websted. Indtil appen er fastgjort til et certifikat, afgør den første fil, Tern installerer derfra, hvilket certifikat hver senere opdatering skal bære.</string>
+    <string name="origin_store_pinned">%1$s er en butik, ikke udviklerens eget websted. Dens filer skal bære det certifikat, denne app er fastgjort til.</string>
+    <string name="stores_refused_modified">Tern læser ikke websteder, der tilbyder ændrede apps. Deres filer er ændret af en anden end udvikleren og signeret af den, der ændrede dem.</string>
+    <string name="stores_refused_impersonation">Tern kan ikke læse denne butik uden at lade som om, den er dens app, så den læser den ikke.</string>
+    <string name="stores_checksum_source">%1$s, som ikke er udvikleren</string>
+    <string name="stores_off_title">%1$s er en tredjepartsbutik</string>
+    <string name="stores_off_body">Tredjepartsbutikker er slået fra. En butik serverer sine egne kopier af apps, ikke filer fra udviklerens eget websted, og Tern læser den gennem den grænseflade, butikken lavede til sin egen app eller sit websted. Med dem slået til, spørger Tern kun en butik om de apps, du tilføjer fra den, og indtil en app er fastgjort til et certifikat, afgør den første fil, Tern installerer fra en butik, hvilket certifikat dens opdateringer skal bære.</string>
+    <string name="stores_turn_on">Slå tredjepartsbutikker til</string>
+    <string name="stores_advice">Slå Tredjepartsbutikker til i Indstillinger for at tjekke denne app igen.</string>
+    <string name="stores_status_paused">På pause</string>
+    <string name="stores_row_paused">Tredjepartsbutikker er slået fra</string>
+    <string name="stores_setting">Tredjepartsbutikker</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store og vivo. De serverer deres egne kopier af apps, ikke filer fra udviklerens eget websted, og Tern læser dem gennem de grænseflader, de lavede til deres egne apps og websteder. Når de er slået fra, spørger Tern ingen af dem om noget, en søgning udelader dem, og apps fra dem er sat på pause.</string>
+    <string name="stores_off_tag">slået fra i Indstillinger</string>
+    <string name="stores_checksum_matched">Filen matcher butikkens kontrolsum</string>
+    <string name="stores_explain_checksum_matched">En kontrolsum er et fingeraftryk af selve filen. Butikken gav en, og den fil, Tern hentede, har den samme, så den ankom, som butikken har den. Butikken er ikke udvikleren, så dette siger intet om, hvem der lavede filen. Det gør certifikatet.</string>
+    <string name="stores_import_from_stores">Disse kommer fra tredjepartsbutikker, som serverer deres egne kopier af apps. Indtil en app er fastgjort til et certifikat, afgør den første fil, Tern installerer fra dens butik, hvilket certifikat dens opdateringer skal bære.</string>
+    <string name="stores_import_paused">Tredjepartsbutikker er slået fra, så disse apps er sat på pause. Tern spørger ikke disse butikker om noget, før du slår dem til.</string>
+    <string name="stores_import_names">Fra tredjepartsbutikker</string>
+    <string name="share_obtainium_link">Del som et Obtainium-link</string>
+    <string name="share_obtainium_links">Del som Obtainium-links</string>
+</resources>

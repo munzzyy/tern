@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Elmenti a listáját és a beállításait egy fájlba. Tokenek soha nem kerülnek bele, ahogyan olyan kérésfejléc sem, amely kulcsot tartalmazhat.</string>
+    <string name="engine_checksum_github_proxy">GitHub kiadás kivonat, ahogy a(z) %1$s hubproxy továbbította</string>
+    <string name="github_proxy_effect_trust">Minden GitHubra irányuló kérés ehhez a gazdagéphez megy. Mindegyiket látja, és megváltoztathatja, ami visszajön: a kiadásokat, azok kivonatait és a fájlokat. A meglévő alkalmazásai a tanúsítványukhoz rögzítve maradnak, de az ezen keresztül történő első telepítés ugyanannyira megbízik a hubproxyban, mint a GitHubban, és a tanúsítvány rögzítése nem terjed ki rá. Rajta keresztül nem küldünk tokent, így a privát projekteket és a GitHub Actions-t nem lehet ezen a módon követni.</string>
+    <string name="settings_unmetered_checks">Ellenőrzés csak Wi-Fi-n</string>
+    <string name="settings_unmetered_checks_effect">A háttérbeli ellenőrzések Wi-Fi-re vagy kábelre várnak, így nem használnak mobiladatot.</string>
+    <string name="settings_charging_checks">Ellenőrzés csak töltés közben</string>
+    <string name="settings_charging_checks_effect">A háttérbeli ellenőrzések megvárják, amíg az eszköz töltődik.</string>
+    <string name="settings_unmetered_installs_wait">Egy magától települő frissítés Wi-Fi-re vagy kábelre vár, ahogy az Obtainiumban.</string>
+    <string name="settings_charging_installs_wait">Egy magától települő frissítés megvárja, amíg az eszköz töltődik.</string>
+    <string name="engine_downgrade_not_as_named">A forrás a(z) %2$d verziókódot nevezte meg, de ez a fájl %1$d, régebbi, mint a telepített. Nem kerül az újabb fölé.</string>
+    <string name="settings_allow_downgrades_picked">A Let Me Downgrade telepítve van, így az Android képes egy régebbi verziót egy újabb fölé telepíteni. A Tern ezt csak olyan kiadás esetén teszi meg, amelyet Ön választ ki egy alkalmazás előzményeiből, sosem a háttérben vagy az Összes frissítésével.</string>
+    <string name="option_highest_version">A legmagasabb verzió átvétele, ahogy a Tern 0.1.0 tette</string>
+    <string name="option_highest_version_effect">A legmagasabb verziójú linket kínálja fel az oldalon, bárhol is legyen az, és a verziómintát minden linkből kiolvasott verzión futtatja. Kikapcsolva úgy olvassa az oldalt, ahogy az Obtainium teszi: a sorban az utolsó link a legújabb.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Egy, a Tern alkalmazáson kívül eltávolított alkalmazás a listáról is lekerül. Az archivált alkalmazás megmarad. Ugyanonnan újra hozzáadva egy alkalmazás ahhoz a tanúsítványhoz lesz rögzítve, amellyel korábban rendelkezett; a Tern alkalmazásból való eltávolítás ezt elfelejti.</string>
+    <string name="link_check_title">Frissítések ellenőrzése most?</string>
+    <string name="link_check_one">Egy link arra kérte a Tern-t, hogy ellenőrizze a(z) %1$s frissítéseit. A forrása lekérdezésre kerül, és semmi nem lesz telepítve.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">Egy link arra kérte a Tern alkalmazást, hogy ellenőrizze a listán szereplő %d alkalmazás frissítéseit. Lekérdezzük a forrását, és semmi nem lesz telepítve.</item>
+        <item quantity="other">Egy link arra kérte a Tern alkalmazást, hogy ellenőrizze a listán szereplő %d alkalmazás frissítéseit. Lekérdezzük a forrásaikat, és semmi nem lesz telepítve.</item>
+    </plurals>
+    <string name="link_check_confirm">Ellenőrzés</string>
+    <string name="link_check_not_now">Most nem</string>
+    <string name="engine_installer_fell_back">A(z) %1$s nem volt kész, ezért ennél az Android telepítőjét használta.</string>
+    <string name="about_track_tern_fdroid_effect">Az F-Droid telepítette ezt a példányt, így a Tern az ottani bejegyzését követi: a frissítések azok a változatok, amelyeket az F-Droid készített és ellenőrzött, ahogy az F-Droid alkalmazás is megkapja őket.</string>
+    <string name="about_track_tern_github">Inkább a GitHub-kiadások követése</string>
+    <string name="about_track_tern_github_effect">A frissítések a GitHubról érkeznek, amint közzéteszik őket, mielőtt az F-Droid elkészítené és ellenőrizné őket. Ez kihagyja az F-Droid ellenőrzéseit. A Tern továbbra is ellenőriz minden fájlt, és a saját tanúsítványukhoz rögzíti őket.</string>
+</resources>

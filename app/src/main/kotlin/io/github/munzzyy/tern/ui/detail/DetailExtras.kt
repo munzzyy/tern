@@ -2,7 +2,6 @@ package io.github.munzzyy.tern.ui.detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -32,6 +31,7 @@ import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.apps.MAX_CATEGORY
 import io.github.munzzyy.tern.ui.apps.cleanCategory
 import io.github.munzzyy.tern.ui.common.ActionRow
+import io.github.munzzyy.tern.ui.common.ChipLines
 import io.github.munzzyy.tern.ui.common.ChoiceChip
 import io.github.munzzyy.tern.ui.common.QuietButton
 import io.github.munzzyy.tern.ui.common.TonalButton
@@ -76,18 +76,19 @@ fun CategoriesCard(row: AppRow) {
         actions.run { engine.configure(row.id) { it.copy(categories = toggledCategory(it.categories, name, on)) } }
     }
     DetailCard(stringResource(R.string.setting_categories)) {
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2),
-            verticalArrangement = Arrangement.spacedBy(look.focusRoom),
+        // The last chip, null, names a new category.
+        ChipLines(
+            names + listOf<String?>(null),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = look.cardPadding - look.focusRoom, vertical = look.gapSmall / 2),
-        ) {
-            for (name in names) {
+        ) { _, name, stop ->
+            if (name == null) {
+                ChoiceChip(stringResource(R.string.categories_new_short), selected = false, onClick = { naming = true }, modifier = stop, role = Role.Button)
+            } else {
                 val on = row.config.categories.any { it.trim().equals(name, ignoreCase = true) }
-                ChoiceChip(name, selected = on, onClick = { toggle(name, !on) }, role = Role.Checkbox, dot = categoryColor(name, settings.categoryColors))
+                ChoiceChip(name, selected = on, onClick = { toggle(name, !on) }, modifier = stop, role = Role.Checkbox, dot = categoryColor(name, settings.categoryColors))
             }
-            ChoiceChip(stringResource(R.string.categories_new_short), selected = false, onClick = { naming = true }, role = Role.Button)
         }
     }
     if (naming) {

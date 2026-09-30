@@ -39,9 +39,7 @@
     <string name="settings_auto_installs">Aktualizace se instalují samostatně</string>
     <string name="settings_auto_installs_effect">Aplikace nastavené na samostatnou aktualizaci ji provedou po kontrole na pozadí. Pokud je to vypnuto, jen oznámí, že aktualizace je k dispozici, a každá si ponechá vlastní volbu pro později.</string>
     <string name="settings_unmetered_installs">Instalovat jen přes Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">Kontroly probíhají v jakékoli síti. Aktualizace, která by se nainstalovala sama, počká na Wi-Fi nebo kabel, jako v Obtainium.</string>
     <string name="settings_charging_installs">Instalovat jen při nabíjení</string>
-    <string name="settings_charging_installs_effect">Kontroly probíhají i na baterii. Aktualizace, která by se nainstalovala sama, počká, až se zařízení začne nabíjet.</string>
     <string name="engine_unreadable_app">Uloženou aplikaci %1$s se nepodařilo přečíst, proto je ze seznamu vynechána. Nic nebylo smazáno: novější verze Tern ji může přečíst.</string>
     <string name="settings_pin_certificates">Připínat certifikáty hostingů kódu</string>
     <string name="settings_pin_certificates_effect">Stejně jako v Obtainium musí GitHub, GitLab a Codeberg předložit certifikát od certifikační autority, o které je známo, že ji každý z nich používá. Certifikát vydaný pod nátlakem jinou autoritou se pak odmítne. Pokud hosting kódu změní svou autoritu, kontroly tam selhávají, dokud toto nastavení nevypnete.</string>

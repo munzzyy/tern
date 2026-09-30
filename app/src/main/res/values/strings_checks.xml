@@ -17,13 +17,11 @@
     <string name="settings_only_installed">Only check installed apps</string>
     <string name="settings_only_installed_effect">Apps that are only tracked are checked too. An app you open is always checked.</string>
     <string name="settings_remove_uninstalled">Remove apps uninstalled elsewhere</string>
-    <string name="settings_remove_uninstalled_effect">An app you uninstall outside Tern leaves the list as well.</string>
     <string name="settings_file_filter">Filter for files</string>
     <string name="settings_file_filter_effect">A pattern every app without a filter of its own picks its file by.</string>
     <string name="settings_file_filter_none">None</string>
     <string name="settings_file_filter_invalid">This pattern cannot be read.</string>
     <string name="settings_allow_downgrades">Allow older versions</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade is installed, so Android may put an older version over a newer one.</string>
     <string name="settings_collapse_groups">Start with groups folded</string>
     <string name="settings_haptics">Haptic feedback</string>
     <string name="settings_haptics_effect">A light tap when a swipe or a long press does something.</string>
@@ -38,7 +36,6 @@
     <string name="sources_repositories">Repositories</string>
     <string name="sources_stores">Stores</string>
     <string name="sources_mirrors">Stores that republish apps</string>
-    <string name="sources_modified">Sites with changed apps</string>
     <string name="sources_other">Other places</string>
     <string name="sources_web_page">A web page with links to files</string>
     <string name="sources_direct">A direct link to a file</string>
@@ -48,8 +45,6 @@
     <string name="shared_configs_title">Configurations shared by Obtainium\'s users</string>
     <string name="shared_configs_effect">A site of ready-made settings for apps. Its links open in Tern when Open Obtainium links is on in Settings.</string>
     <string name="engine_inner_filter_nothing">The filter for files inside archives matches none of the APKs in this one.</string>
-    <string name="preview_republished">%1$s offers again what developers publish elsewhere. Its files are held to the developer\'s certificate once Tern knows it, so pin one or install from the developer first when you can.</string>
-    <string name="preview_modified">%1$s offers apps changed by someone other than their developer. They are signed by whoever changed them, and Tern cannot tell what was changed.</string>
     <string name="about_track_tern">Keep Tern itself up to date</string>
     <string name="about_track_tern_effect">Adds Tern\'s own releases to the list, checked and verified like any app.</string>
     <string name="engine_channel_tracked">New releases of tracked apps</string>

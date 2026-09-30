@@ -12,10 +12,13 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
 
     fun load(): Settings {
         val d = Settings()
+        val stored = prefs.all
         return Settings(
-            checkEveryMinutes = storedMinutes(d.checkEveryMinutes),
+            checkEveryMinutes = storedMinutes(stored, d.checkEveryMinutes),
             onlyOnUnmetered = prefs.getBoolean("onlyOnUnmetered", d.onlyOnUnmetered),
             onlyWhileCharging = prefs.getBoolean("onlyWhileCharging", d.onlyWhileCharging),
+            checkOnlyOnUnmetered = checkLimit(stored, "checkOnlyOnUnmetered", "onlyOnUnmetered"),
+            checkOnlyWhileCharging = checkLimit(stored, "checkOnlyWhileCharging", "onlyWhileCharging"),
             defaultUpdateMode = enumOr(prefs.getString("defaultUpdateMode", null), d.defaultUpdateMode),
             includePrereleasesByDefault = prefs.getBoolean("includePrereleasesByDefault", d.includePrereleasesByDefault),
             minAgeDaysByDefault = prefs.getInt("minAgeDaysByDefault", d.minAgeDaysByDefault).coerceIn(0, 365),
@@ -82,15 +85,10 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             otherInstallerActivity = prefs.getString("otherInstallerActivity", null)?.takeIf { CLASS.matches(it) },
             shareToVerifier = prefs.getBoolean("shareToVerifier", d.shareToVerifier),
             keepOwnMessages = prefs.getBoolean("keepOwnMessages", d.keepOwnMessages),
+            thirdPartyStores = prefs.getBoolean("thirdPartyStores", d.thirdPartyStores),
         )
     }
 
-    /** Tern kept hours before it kept minutes; a value stored as hours is read as that many minutes. */
-    private fun storedMinutes(fallback: Int): Int = when {
-        prefs.contains("checkEveryMinutes") -> cleanMinutes(prefs.getInt("checkEveryMinutes", fallback))
-        prefs.contains("checkEveryHours") -> cleanMinutes(prefs.getInt("checkEveryHours", 0) * 60)
-        else -> fallback
-    }
 
     fun save(s: Settings) {
         prefs.edit()
@@ -98,6 +96,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .remove("checkEveryHours")
             .putBoolean("onlyOnUnmetered", s.onlyOnUnmetered)
             .putBoolean("onlyWhileCharging", s.onlyWhileCharging)
+            .putBoolean("checkOnlyOnUnmetered", s.checkOnlyOnUnmetered)
+            .putBoolean("checkOnlyWhileCharging", s.checkOnlyWhileCharging)
             .putString("defaultUpdateMode", s.defaultUpdateMode.name)
             .putBoolean("includePrereleasesByDefault", s.includePrereleasesByDefault)
             .putInt("minAgeDaysByDefault", s.minAgeDaysByDefault.coerceIn(0, 365))
@@ -163,6 +163,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putString("otherInstallerActivity", s.otherInstallerActivity?.takeIf { CLASS.matches(it) })
             .putBoolean("shareToVerifier", s.shareToVerifier)
             .putBoolean("keepOwnMessages", s.keepOwnMessages)
+            .putBoolean("thirdPartyStores", s.thirdPartyStores)
             .commit()
     }
 
@@ -181,6 +182,27 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
         private const val MAX_ORIGIN = 60
         private const val MAX_ORIGINS = 40
         private const val OPAQUE = 0xFF000000.toInt()
+
+        /** What only v0.1.0 wrote: it kept hours, and save() has taken the key out since. */
+        private const val V010_HOURS = "checkEveryHours"
+
+        /** Tern kept hours before it kept minutes; a value stored as hours is read as that many minutes. */
+        internal fun storedMinutes(stored: Map<String, *>, fallback: Int): Int = when {
+            "checkEveryMinutes" in stored -> cleanMinutes(stored["checkEveryMinutes"] as? Int ?: fallback)
+            V010_HOURS in stored -> cleanMinutes((stored[V010_HOURS] as? Int ?: 0) * 60)
+            else -> fallback
+        }
+
+        /**
+         * A limit on background checks as stored under [key]. v0.1.0 had one switch for checks and
+         * installs alike and kept it under [v010Key], so settings it wrote keep holding the checks
+         * back as they did then.
+         */
+        internal fun checkLimit(stored: Map<String, *>, key: String, v010Key: String): Boolean = when {
+            key in stored -> stored[key] == true
+            V010_HOURS in stored -> stored[v010Key] == true
+            else -> false
+        }
 
         /** 0 stays off; anything else is taken to the range Android keeps to. */
         fun cleanMinutes(minutes: Int): Int = if (minutes <= 0) 0 else minutes.coerceIn(MIN_MINUTES, MAX_MINUTES)

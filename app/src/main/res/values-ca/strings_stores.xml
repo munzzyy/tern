@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Un per línia, com a Nom: valor. Mai una contrasenya, una galeta o un User-Agent: Tern diu a cada lloc que és Tern.</string>
+    <string name="origin_republished_first">%1$s torna a oferir el que els desenvolupadors publiquen en un altre lloc, i no és el desenvolupador. Fins que l\'aplicació no es fixi a un certificat, el primer fitxer que Tern hi instal·li decideix quin certificat ha de portar cada actualització posterior.</string>
+    <string name="origin_republished_pinned">%1$s torna a oferir el que els desenvolupadors publiquen en un altre lloc, i no és el desenvolupador. Els seus fitxers han de portar el certificat al qual aquesta aplicació està fixada.</string>
+    <string name="origin_store_first">%1$s és una botiga, no el lloc del desenvolupador. Fins que l\'aplicació no es fixi a un certificat, el primer fitxer que Tern hi instal·li decideix quin certificat ha de portar cada actualització posterior.</string>
+    <string name="origin_store_pinned">%1$s és una botiga, no el lloc del desenvolupador. Els seus fitxers han de portar el certificat al qual aquesta aplicació està fixada.</string>
+    <string name="stores_refused_modified">Tern no llegeix llocs que ofereixen aplicacions modificades. Els seus fitxers han estat canviats per algú que no és el desenvolupador i signats per qui els hagi canviat.</string>
+    <string name="stores_refused_impersonation">Tern no pot llegir aquesta botiga sense fer-se passar per la seva aplicació, de manera que no la llegeix.</string>
+    <string name="stores_checksum_source">%1$s, que no és el desenvolupador</string>
+    <string name="stores_off_title">%1$s és una botiga de tercers</string>
+    <string name="stores_off_body">Les botigues de tercers estan desactivades. Una botiga serveix les seves pròpies còpies de les aplicacions, no fitxers del lloc del desenvolupador, i Tern la llegeix a través de la interfície que la botiga ha creat per a la seva pròpia aplicació o lloc web. Amb elles activades, Tern només demana a una botiga les aplicacions que hi afegeixes, i fins que una aplicació no es fixi a un certificat, el primer fitxer que Tern instal·li des d\'una botiga decideix quin certificat han de portar les seves actualitzacions.</string>
+    <string name="stores_turn_on">Activa les botigues de tercers</string>
+    <string name="stores_advice">Activa les botigues de tercers a la Configuració per tornar a comprovar aquesta aplicació.</string>
+    <string name="stores_status_paused">Pausat</string>
+    <string name="stores_row_paused">Botigues de tercers desactivades</string>
+    <string name="stores_setting">Botigues de tercers</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store i vivo. Serveixen les seves pròpies còpies de les aplicacions, no fitxers del lloc del desenvolupador, i Tern les llegeix a través de les interfícies que han creat per a les seves pròpies aplicacions i llocs web. Desactivades, Tern no els demana res, una cerca les omet i les aplicacions que en provenen es pausen.</string>
+    <string name="stores_off_tag">desactivat a la Configuració</string>
+    <string name="stores_checksum_matched">El fitxer coincideix amb la suma de verificació de la botiga</string>
+    <string name="stores_explain_checksum_matched">Una suma de verificació és una empremta digital del propi fitxer. La botiga n\'ha donat una, i el fitxer que Tern ha baixat té la mateixa, així que ha arribat tal com la té la botiga. La botiga no és el desenvolupador, així que això no diu res sobre qui ha creat el fitxer. El certificat sí.</string>
+    <string name="stores_import_from_stores">Aquestes provenen de botigues de tercers, que serveixen les seves pròpies còpies de les aplicacions. Fins que una aplicació no es fixi a un certificat, el primer fitxer que Tern instal·li de la seva botiga decideix quin certificat han de portar les seves actualitzacions.</string>
+    <string name="stores_import_paused">Les botigues de tercers estan desactivades, així que aquestes aplicacions estan pausades. Tern no pregunta res a aquestes botigues fins que les activis.</string>
+    <string name="stores_import_names">De botigues de tercers</string>
+    <string name="share_obtainium_link">Comparteix com a enllaç d\'Obtainium</string>
+    <string name="share_obtainium_links">Comparteix com a enllaços d\'Obtainium</string>
+</resources>

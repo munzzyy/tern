@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">كل واحد في سطر، بصيغة الاسم: القيمة. لا تضع أبدًا كلمة مرور أو ملف تعريف ارتباط أو وكيل مستخدم: يخبر Tern كل موقع أنه Tern.</string>
+    <string name="origin_republished_first">يقدم %1$s مرة أخرى ما ينشره المطورون في مكان آخر، وليس هو المطور. حتى يُثبَّت التطبيق على شهادة، يقرر أول ملف يثبته Tern منه أي شهادة يجب أن يحملها كل تحديث لاحق.</string>
+    <string name="origin_republished_pinned">يقدم %1$s مرة أخرى ما ينشره المطورون في مكان آخر، وليس هو المطور. يجب أن تحمل ملفاته الشهادة التي يُلزم بها هذا التطبيق.</string>
+    <string name="origin_store_first">%1$s هو متجر، وليس موقع المطور الخاص. حتى يُثبَّت التطبيق على شهادة، يقرر أول ملف يثبته Tern منه أي شهادة يجب أن يحملها كل تحديث لاحق.</string>
+    <string name="origin_store_pinned">%1$s هو متجر، وليس موقع المطور الخاص. يجب أن تحمل ملفاته الشهادة التي يُلزم بها هذا التطبيق.</string>
+    <string name="stores_refused_modified">لا يقرأ Tern المواقع التي تقدم تطبيقات معدلة. يتم تغيير ملفاتها من قبل شخص آخر غير المطور ويتم توقيعها من قبل من غيّرها.</string>
+    <string name="stores_refused_impersonation">لا يستطيع Tern قراءة هذا المتجر دون التظاهر بأنه تطبيقه، لذلك لا يقرؤه.</string>
+    <string name="stores_checksum_source">%1$s، وهو ليس المطور</string>
+    <string name="stores_off_title">%1$s هو متجر خارجي</string>
+    <string name="stores_off_body">المتاجر الخارجية متوقفة. يقدم المتجر نسخه الخاصة من التطبيقات، وليس الملفات من موقع المطور الخاص، ويقرؤه Tern من خلال الواجهة التي صنعها المتجر لتطبيقه أو موقعه على الويب. عند تشغيلها، يسأل Tern متجرًا فقط عن التطبيقات التي تضيفها منه، وحتى يُثبَّت تطبيق على شهادة، يقرر أول ملف يثبته Tern من متجر أي شهادة يجب أن تحملها تحديثاته.</string>
+    <string name="stores_turn_on">تشغيل المتاجر الخارجية</string>
+    <string name="stores_advice">شغّل المتاجر الخارجية في الإعدادات لفحص هذا التطبيق مرة أخرى.</string>
+    <string name="stores_status_paused">متوقف مؤقتًا</string>
+    <string name="stores_row_paused">المتاجر الخارجية متوقفة</string>
+    <string name="stores_setting">المتاجر الخارجية</string>
+    <string name="stores_setting_effect">APKPure و Aptoide و APKCombo و APKMirror و Tencent و Huawei AppGallery و Galaxy Store و vivo. تقدم هذه المتاجر نسخها الخاصة من التطبيقات، وليس ملفات من موقع المطور الخاص، ويقرؤها Tern عبر الواجهات التي صنعوها لتطبيقاتها ومواقعها على الويب. عند الإيقاف، لا يسأل Tern أيًا منها عن أي شيء، ويستثنيها البحث وتُوقف التطبيقات التي منها مؤقتًا.</string>
+    <string name="stores_off_tag">متوقف في الإعدادات</string>
+    <string name="stores_checksum_matched">يطابق الملف المجموع الاختباري للمتجر</string>
+    <string name="stores_explain_checksum_matched">المجموع الاختباري هو بصمة للملف نفسه. أعطى المتجر واحدًا، والملف الذي نزله Tern لديه المجموع نفسه، لذلك وصل كما هو لدى المتجر. المتجر ليس المطور، لذلك هذا لا يقول شيئًا عمن صنع الملف. الشهادة هي التي تفعل ذلك.</string>
+    <string name="stores_import_from_stores">تأتي هذه من متاجر خارجية، والتي تقدم نسخها الخاصة من التطبيقات. حتى يُثبَّت تطبيق على شهادة، يقرر أول ملف يثبته Tern من متجره أي شهادة يجب أن تحملها تحديثاته.</string>
+    <string name="stores_import_paused">المتاجر الخارجية متوقفة، لذلك هذه التطبيقات متوقفة مؤقتًا. لا يسأل Tern هذه المتاجر عن أي شيء حتى تقوم بتشغيلها.</string>
+    <string name="stores_import_names">من متاجر خارجية</string>
+    <string name="share_obtainium_link">مشاركة كرابط Obtainium</string>
+    <string name="share_obtainium_links">مشاركة كروابط Obtainium</string>
+</resources>

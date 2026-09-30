@@ -17,13 +17,11 @@
     <string name="settings_only_installed">Nur installierte Apps prüfen</string>
     <string name="settings_only_installed_effect">Apps, die nur verfolgt werden, werden auch geprüft. Eine App, die du öffnest, wird immer geprüft.</string>
     <string name="settings_remove_uninstalled">Anderswo deinstallierte Apps entfernen</string>
-    <string name="settings_remove_uninstalled_effect">Eine App, die du außerhalb von Tern deinstallierst, verschwindet auch aus der Liste.</string>
     <string name="settings_file_filter">Filter für Dateien</string>
     <string name="settings_file_filter_effect">Ein Muster, nach dem jede App ohne eigenen Filter ihre Datei auswählt.</string>
     <string name="settings_file_filter_none">Keiner</string>
     <string name="settings_file_filter_invalid">Dieses Muster kann nicht gelesen werden.</string>
     <string name="settings_allow_downgrades">Ältere Versionen erlauben</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade ist installiert, daher darf Android eine ältere Version über eine neuere installieren.</string>
     <string name="settings_collapse_groups">Mit eingeklappten Gruppen beginnen</string>
     <string name="settings_haptics">Haptisches Feedback</string>
     <string name="settings_haptics_effect">Eine leichte Vibration, wenn Wischen oder langes Drücken etwas auslöst.</string>
@@ -38,7 +36,6 @@
     <string name="sources_repositories">Repositories</string>
     <string name="sources_stores">Stores</string>
     <string name="sources_mirrors">Stores, die Apps erneut veröffentlichen</string>
-    <string name="sources_modified">Seiten mit veränderten Apps</string>
     <string name="sources_other">Andere Orte</string>
     <string name="sources_web_page">Eine Webseite mit Links zu Dateien</string>
     <string name="sources_direct">Ein direkter Link zu einer Datei</string>
@@ -48,8 +45,6 @@
     <string name="shared_configs_title">Von Obtainium-Nutzern geteilte Konfigurationen</string>
     <string name="shared_configs_effect">Eine Seite mit fertigen Einstellungen für Apps. Ihre Links öffnen sich in Tern, wenn Obtainium-Links öffnen in den Einstellungen an ist.</string>
     <string name="engine_inner_filter_nothing">Der Filter für Dateien in Archiven passt auf keine der APKs in diesem Archiv.</string>
-    <string name="preview_republished">%1$s bietet erneut an, was Entwickler anderswo veröffentlichen. Seine Dateien werden an das Zertifikat des Entwicklers gebunden, sobald Tern es kennt, also hefte eines an oder installiere zuerst vom Entwickler, wenn du kannst.</string>
-    <string name="preview_modified">%1$s bietet Apps an, die jemand anderes als ihr Entwickler verändert hat. Sie sind von demjenigen signiert, der sie verändert hat, und Tern kann nicht erkennen, was verändert wurde.</string>
     <string name="about_track_tern">Tern selbst aktuell halten</string>
     <string name="about_track_tern_effect">Fügt die eigenen Releases von Tern der Liste hinzu, geprüft und verifiziert wie jede App.</string>
     <string name="engine_channel_tracked">Neue Releases verfolgter Apps</string>

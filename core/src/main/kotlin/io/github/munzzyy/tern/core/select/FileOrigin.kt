@@ -44,11 +44,9 @@ object FileOrigin {
         SourceTypes.HUAWEI to setOf("dbankcloud.com", "dbankcloud.ru", "dbankcdn.com"),
         SourceTypes.TENCENT to setOf("myapp.com"),
         SourceTypes.SAMSUNG to setOf("samsungapps.com", "galaxyappstore.com"),
-        SourceTypes.COOLAPK to setOf("coolapkmarket.com"),
         SourceTypes.APKPURE to setOf("winudf.com"),
         SourceTypes.APKCOMBO to setOf("apks.39b7cb94d40914bac590886981b0ed6e.r2.cloudflarestorage.com"),
         SourceTypes.ITCHIO to setOf("itchio-mirror.cb031a832f44726753d6267436f3b414.r2.cloudflarestorage.com"),
-        SourceTypes.UPTODOWN to setOf("uptodown.net"),
         SourceTypes.TELEGRAM to setOf("telesco.pe"),
     )
 }

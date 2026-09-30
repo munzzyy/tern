@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">A listáján</string>
+    <string name="starter_on_phone">Ezen a telefonon</string>
+    <string name="starter_on_phone_other">Ezen a telefonon más aláírótól</string>
+    <string name="starter_on_phone_other_explain">Az Ön példánya más kulccsal van aláírva, így a Tern nem tudja frissíteni erről a címről.</string>
+</resources>

@@ -66,10 +66,6 @@
     <string name="option_workflow">Файл робочого процесу</string>
     <string name="option_workflow_help">Наприклад, build.yml.</string>
     <string name="option_branch">Гілка</string>
-    <string name="option_device_model">Модель пристрою</string>
-    <string name="option_device_model_help">Galaxy Store має для кожної моделі власну збірку, наприклад SM-S948B.</string>
-    <string name="option_csc">Код регіону (CSC)</string>
-    <string name="option_csc_help">Три літери, наприклад DBT.</string>
     <string name="option_link_filter">Фільтр посилань на завантаження</string>
     <string name="option_link_filter_help">Завантаженнями вважаються лише відповідні посилання.</string>
     <string name="option_page_order">Зберігати порядок сторінки</string>
@@ -80,11 +76,14 @@
     <string name="version_from_text">Текст посилання</string>
     <string name="version_from_page">Уся сторінка</string>
     <string name="option_headers">Заголовки запиту</string>
-    <string name="option_headers_help">По одному на рядок, у вигляді Name: value. Ніколи не вказуйте пароль чи cookie.</string>
     <string name="option_pseudo">Коли версії немає</string>
     <string name="pseudo_default">Розрізняти файли так, як це робить сервер</string>
     <string name="pseudo_hash">За хешем початку файлу</string>
     <string name="pseudo_link">За адресою файлу</string>
     <string name="pseudo_etag">За ETag сервера</string>
     <string name="option_invalid">Це не можна використати в такому вигляді.</string>
+    <string name="option_device_model">Модель пристрою</string>
+    <string name="option_device_model_help">Galaxy Store має для кожної моделі власну збірку, наприклад SM-S948B.</string>
+    <string name="option_csc">Код регіону (CSC)</string>
+    <string name="option_csc_help">Три літери, наприклад DBT.</string>
 </resources>

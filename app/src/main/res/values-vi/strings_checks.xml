@@ -15,13 +15,11 @@
     <string name="settings_only_installed">Chỉ kiểm tra ứng dụng đã cài đặt</string>
     <string name="settings_only_installed_effect">Ứng dụng chỉ được theo dõi vẫn được kiểm tra. Ứng dụng bạn mở luôn được kiểm tra.</string>
     <string name="settings_remove_uninstalled">Xóa ứng dụng đã gỡ cài đặt ở nơi khác</string>
-    <string name="settings_remove_uninstalled_effect">Ứng dụng bạn gỡ cài đặt bên ngoài Tern cũng sẽ rời khỏi danh sách.</string>
     <string name="settings_file_filter">Bộ lọc tệp</string>
     <string name="settings_file_filter_effect">Mẫu mà mọi ứng dụng không có bộ lọc riêng dùng để chọn tệp.</string>
     <string name="settings_file_filter_none">Không có</string>
     <string name="settings_file_filter_invalid">Không thể đọc mẫu này.</string>
     <string name="settings_allow_downgrades">Cho phép phiên bản cũ hơn</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade đã được cài đặt, nên Android có thể cài phiên bản cũ đè lên phiên bản mới hơn.</string>
     <string name="settings_collapse_groups">Bắt đầu với các nhóm được thu gọn</string>
     <string name="settings_haptics">Phản hồi xúc giác</string>
     <string name="settings_haptics_effect">Rung nhẹ khi thao tác vuốt hoặc nhấn giữ thực hiện một việc gì đó.</string>
@@ -36,7 +34,6 @@
     <string name="sources_repositories">Kho lưu trữ</string>
     <string name="sources_stores">Cửa hàng</string>
     <string name="sources_mirrors">Cửa hàng đăng lại ứng dụng</string>
-    <string name="sources_modified">Trang có ứng dụng đã bị sửa đổi</string>
     <string name="sources_other">Nơi khác</string>
     <string name="sources_web_page">Trang web có liên kết đến tệp</string>
     <string name="sources_direct">Liên kết trực tiếp đến tệp</string>
@@ -46,8 +43,6 @@
     <string name="shared_configs_title">Cấu hình do người dùng Obtainium chia sẻ</string>
     <string name="shared_configs_effect">Một trang web chứa các thiết lập làm sẵn cho ứng dụng. Liên kết của trang sẽ mở trong Tern khi bật \"Mở liên kết Obtainium\" trong Cài đặt.</string>
     <string name="engine_inner_filter_nothing">Bộ lọc cho tệp bên trong tệp lưu trữ không khớp với APK nào trong tệp này.</string>
-    <string name="preview_republished">%1$s cung cấp lại những gì nhà phát triển xuất bản ở nơi khác. Khi Tern đã biết chứng chỉ của nhà phát triển, tệp từ đây phải khớp với chứng chỉ đó, vì vậy khi có thể, hãy ghim một chứng chỉ hoặc cài đặt từ nhà phát triển trước.</string>
-    <string name="preview_modified">%1$s cung cấp các ứng dụng đã bị người khác ngoài nhà phát triển sửa đổi. Chúng được ký bởi người đã sửa đổi, và Tern không thể biết những gì đã bị thay đổi.</string>
     <string name="about_track_tern">Giữ cho chính Tern luôn được cập nhật</string>
     <string name="about_track_tern_effect">Thêm các bản phát hành của chính Tern vào danh sách, được kiểm tra và xác minh như mọi ứng dụng.</string>
     <string name="engine_channel_tracked">Bản phát hành mới của ứng dụng đang theo dõi</string>

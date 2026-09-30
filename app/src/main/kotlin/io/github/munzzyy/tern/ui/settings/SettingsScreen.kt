@@ -2,7 +2,9 @@ package io.github.munzzyy.tern.ui.settings
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -156,9 +158,39 @@ fun SettingsScreen(onImport: () -> Unit, onLook: () -> Unit, onAdd: (String) -> 
     }
 }
 
+/** Tern's entry in F-Droid, which a copy F-Droid installed follows. */
+const val FDROID_URL = "https://f-droid.org/packages/io.github.munzzyy.tern/"
+
+/** Apps that install from F-Droid's repository: F-Droid itself, its privileged extension, and the clients built on its index. */
+val FDROID_CLIENTS = setOf(
+    "org.fdroid.fdroid", "org.fdroid.basic", "org.fdroid.fdroid.privileged",
+    "com.looker.droidify", "com.machiav3lli.fdroid", "eu.bubu1.fdroidclassic",
+)
+
+/**
+ * Where Tern follows its own updates. A copy an F-Droid client installed follows F-Droid, so its
+ * updates stay builds F-Droid made and checked. Any other copy, or one whose installer is not
+ * known, follows the releases on GitHub.
+ */
+fun selfSource(installer: String?): String = if (installer in FDROID_CLIENTS) FDROID_URL else SOURCE_URL
+
 /** Whether Tern is in its own list already, by its address or by its package. */
 fun tracksItself(apps: List<Pair<String, String?>>, ownPackage: String): Boolean =
-    apps.any { (url, pkg) -> pkg == ownPackage || url.trimEnd('/').equals(SOURCE_URL, ignoreCase = true) }
+    apps.any { (url, pkg) -> pkg == ownPackage || url.trimEnd('/').let { it.equals(SOURCE_URL, ignoreCase = true) || it.equals(FDROID_URL.trimEnd('/'), ignoreCase = true) } }
+
+/** The app that installed Tern, as Android recorded it; null when it cannot say. */
+private fun ownInstaller(context: Context): String? = try {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        context.packageManager.getInstallSourceInfo(context.packageName).installingPackageName
+    } else {
+        @Suppress("DEPRECATION")
+        context.packageManager.getInstallerPackageName(context.packageName)
+    }
+} catch (_: PackageManager.NameNotFoundException) {
+    null
+} catch (_: IllegalArgumentException) {
+    null
+}
 
 /** A television posts notifications and shows none of them, so the rows about them would do nothing there. */
 fun showsNotifications(television: Boolean): Boolean = !television
@@ -185,15 +217,29 @@ private fun BackgroundSection(s: Settings, vm: SettingsViewModel, update: Update
             onChange = { v -> update { it.copy(autoInstalls = v) } },
         )
         SwitchRow(
+            title = stringResource(R.string.settings_unmetered_checks),
+            summary = stringResource(R.string.settings_unmetered_checks_effect),
+            checked = s.checkOnlyOnUnmetered,
+            enabled = on,
+            onChange = { v -> update { it.copy(checkOnlyOnUnmetered = v) } },
+        )
+        SwitchRow(
+            title = stringResource(R.string.settings_charging_checks),
+            summary = stringResource(R.string.settings_charging_checks_effect),
+            checked = s.checkOnlyWhileCharging,
+            enabled = on,
+            onChange = { v -> update { it.copy(checkOnlyWhileCharging = v) } },
+        )
+        SwitchRow(
             title = stringResource(R.string.settings_unmetered_installs),
-            summary = stringResource(R.string.settings_unmetered_installs_effect),
+            summary = stringResource(R.string.settings_unmetered_installs_wait),
             checked = s.onlyOnUnmetered,
             enabled = on && s.autoInstalls,
             onChange = { v -> update { it.copy(onlyOnUnmetered = v) } },
         )
         SwitchRow(
             title = stringResource(R.string.settings_charging_installs),
-            summary = stringResource(R.string.settings_charging_installs_effect),
+            summary = stringResource(R.string.settings_charging_installs_wait),
             checked = s.onlyWhileCharging,
             enabled = on && s.autoInstalls,
             onChange = { v -> update { it.copy(onlyWhileCharging = v) } },
@@ -223,7 +269,7 @@ private fun BackgroundSection(s: Settings, vm: SettingsViewModel, update: Update
         )
         SwitchRow(
             title = stringResource(R.string.settings_remove_uninstalled),
-            summary = stringResource(R.string.settings_remove_uninstalled_effect),
+            summary = stringResource(R.string.settings_remove_uninstalled_keeps_pins),
             checked = s.removeUninstalled,
             onChange = { v -> update { it.copy(removeUninstalled = v) } },
         )
@@ -307,7 +353,7 @@ private fun InstallingSection(s: Settings, vm: SettingsViewModel, update: Update
         if (vm.canDowngrade || s.allowDowngrades) {
             SwitchRow(
                 title = stringResource(R.string.settings_allow_downgrades),
-                summary = stringResource(R.string.settings_allow_downgrades_effect),
+                summary = stringResource(R.string.settings_allow_downgrades_picked),
                 checked = s.allowDowngrades,
                 onChange = { v -> update { it.copy(allowDowngrades = v) } },
             )
@@ -513,7 +559,7 @@ private fun GitHubProxyRow(s: Settings, update: Update) {
             .padding(horizontal = look.cardPadding, vertical = look.gapSmall / 2),
     ) {
         Text(stringResource(R.string.github_proxy_title), style = MaterialTheme.typography.titleSmall)
-        Text(stringResource(R.string.github_proxy_effect), style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
+        Text(stringResource(R.string.github_proxy_effect_trust), style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
         s.githubProxy?.let { Text(stringResource(R.string.github_proxy_in_use, ltr(it)), style = MaterialTheme.typography.bodyMedium) }
         OutlinedTextField(
             value = host,
@@ -655,8 +701,17 @@ private fun NetworkSection(s: Settings, update: Update, onGetOrbot: () -> Unit, 
             checked = s.pinCertificates,
             onChange = { v -> update { it.copy(pinCertificates = v) } },
         )
+        SwitchRow(
+            title = stringResource(R.string.stores_setting),
+            summary = stringResource(R.string.stores_setting_effect),
+            checked = s.thirdPartyStores,
+            onChange = { v -> update { it.copy(thirdPartyStores = v) } },
+            modifier = Modifier.testTag(STORES_SETTING_TAG),
+        )
     }
 }
+
+const val STORES_SETTING_TAG = "settings_third_party_stores"
 
 /** What there is to say about each state of Orbot: the sentence, and the action when there is one. */
 data class OrbotWords(val sentence: Int, val action: Int?)
@@ -868,7 +923,7 @@ private fun DataSection(s: Settings, vm: SettingsViewModel, update: Update, onIm
                     else -> R.string.door_export
                 },
             ),
-            summary = outcome ?: stringResource(R.string.settings_export_effect),
+            summary = outcome ?: stringResource(R.string.settings_export_effect_plain),
             onClick = {
                 when {
                     exporting -> Unit
@@ -991,11 +1046,19 @@ private fun AboutSection(onAdd: (String) -> Unit) {
     SectionCard(title = stringResource(R.string.settings_about)) {
         InfoRow(title = stringResource(R.string.about_version), value = BuildConfig.VERSION_NAME)
         if (!tracked) {
+            val self = remember { selfSource(ownInstaller(context)) }
             ActionRow(
                 title = stringResource(R.string.about_track_tern),
-                summary = stringResource(R.string.about_track_tern_effect),
-                onClick = { onAdd(SOURCE_URL) },
+                summary = stringResource(if (self == FDROID_URL) R.string.about_track_tern_fdroid_effect else R.string.about_track_tern_effect),
+                onClick = { onAdd(self) },
             )
+            if (self == FDROID_URL) {
+                ActionRow(
+                    title = stringResource(R.string.about_track_tern_github),
+                    summary = stringResource(R.string.about_track_tern_github_effect),
+                    onClick = { onAdd(SOURCE_URL) },
+                )
+            }
         }
         ActionRow(
             title = stringResource(R.string.about_help),

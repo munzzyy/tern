@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Einer pro Zeile, als Name: Wert. Niemals ein Passwort, ein Cookie oder ein User-Agent: Tern sagt jeder Seite, dass es Tern ist.</string>
+    <string name="origin_republished_first">%1$s bietet erneut an, was Entwickler woanders veröffentlichen, und ist nicht der Entwickler. Bis die App an ein Zertifikat angeheftet ist, entscheidet die erste Datei, die Tern daraus installiert, welches Zertifikat jedes spätere Update tragen muss.</string>
+    <string name="origin_republished_pinned">%1$s bietet erneut an, was Entwickler woanders veröffentlichen, und ist nicht der Entwickler. Seine Dateien müssen das Zertifikat tragen, an das diese App gebunden ist.</string>
+    <string name="origin_store_first">%1$s ist ein Store, nicht die eigene Seite des Entwicklers. Bis die App an ein Zertifikat angeheftet ist, entscheidet die erste Datei, die Tern daraus installiert, welches Zertifikat jedes spätere Update tragen muss.</string>
+    <string name="origin_store_pinned">%1$s ist ein Store, nicht die eigene Seite des Entwicklers. Seine Dateien müssen das Zertifikat tragen, an das diese App gebunden ist.</string>
+    <string name="stores_refused_modified">Tern liest keine Seiten, die modifizierte Apps anbieten. Deren Dateien werden von jemand anderem als dem Entwickler geändert und von demjenigen signiert, der sie geändert hat.</string>
+    <string name="stores_refused_impersonation">Tern kann diesen Store nicht lesen, ohne vorzugeben, seine App zu sein, daher liest es ihn nicht.</string>
+    <string name="stores_checksum_source">%1$s, was nicht der Entwickler ist</string>
+    <string name="stores_off_title">%1$s ist ein Drittanbieter-Store</string>
+    <string name="stores_off_body">Drittanbieter-Stores sind aus. Ein Store liefert seine eigenen Kopien von Apps, keine Dateien von der eigenen Seite des Entwicklers, und Tern liest ihn über die Schnittstelle, die der Store für seine eigene App oder Website gemacht hat. Wenn sie an sind, fragt Tern einen Store nur nach den Apps, die du von dort hinzufügst, und bis eine App an ein Zertifikat angeheftet ist, entscheidet die erste Datei, die Tern aus einem Store installiert, welches Zertifikat ihre Updates tragen müssen.</string>
+    <string name="stores_turn_on">Drittanbieter-Stores einschalten</string>
+    <string name="stores_advice">Schalte Drittanbieter-Stores in den Einstellungen ein, um diese App erneut zu prüfen.</string>
+    <string name="stores_status_paused">Pausiert</string>
+    <string name="stores_row_paused">Drittanbieter-Stores sind aus</string>
+    <string name="stores_setting">Drittanbieter-Stores</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, der Galaxy Store und vivo. Sie liefern ihre eigenen Kopien von Apps, keine Dateien von der eigenen Seite des Entwicklers, und Tern liest sie über die Schnittstellen, die sie für ihre eigenen Apps und Websites gemacht haben. Wenn sie aus sind, fragt Tern keinen von ihnen etwas, eine Suche lässt sie aus und Apps von ihnen sind pausiert.</string>
+    <string name="stores_off_tag">aus in den Einstellungen</string>
+    <string name="stores_checksum_matched">Die Datei stimmt mit der Prüfsumme des Stores überein</string>
+    <string name="stores_explain_checksum_matched">Eine Prüfsumme ist ein Fingerabdruck der Datei selbst. Der Store hat eine angegeben, und die von Tern heruntergeladene Datei hat dieselbe, also kam sie so an, wie der Store sie hat. Der Store ist nicht der Entwickler, daher sagt dies nichts darüber aus, wer die Datei gemacht hat. Das Zertifikat tut dies.</string>
+    <string name="stores_import_from_stores">Diese kommen von Drittanbieter-Stores, die ihre eigenen Kopien von Apps liefern. Bis eine App an ein Zertifikat angeheftet ist, entscheidet die erste Datei, die Tern aus ihrem Store installiert, welches Zertifikat ihre Updates tragen müssen.</string>
+    <string name="stores_import_paused">Drittanbieter-Stores sind aus, daher sind diese Apps pausiert. Tern fragt diese Stores nichts, bis du sie einschaltest.</string>
+    <string name="stores_import_names">Von Drittanbieter-Stores</string>
+    <string name="share_obtainium_link">Als Obtainium-Link teilen</string>
+    <string name="share_obtainium_links">Als Obtainium-Links teilen</string>
+</resources>

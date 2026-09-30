@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Satu per baris, sebagai Nama: nilai. Jangan pernah sandi, cookie, atau User-Agent: Tern memberi tahu setiap situs bahwa ia adalah Tern.</string>
+    <string name="origin_republished_first">%1$s kembali menawarkan apa yang diterbitkan pengembang di tempat lain, dan bukan pengembangnya. Hingga aplikasi disematkan ke sertifikat, file pertama yang diinstal Tern darinya menentukan sertifikat mana yang harus dibawa oleh setiap pembaruan berikutnya.</string>
+    <string name="origin_republished_pinned">%1$s kembali menawarkan apa yang diterbitkan pengembang di tempat lain, dan bukan pengembangnya. File-filenya harus membawa sertifikat yang telah disematkan pada aplikasi ini.</string>
+    <string name="origin_store_first">%1$s adalah toko, bukan situs milik pengembang. Hingga aplikasi disematkan ke sertifikat, file pertama yang diinstal Tern darinya menentukan sertifikat mana yang harus dibawa oleh setiap pembaruan berikutnya.</string>
+    <string name="origin_store_pinned">%1$s adalah toko, bukan situs milik pengembang. File-filenya harus membawa sertifikat yang telah disematkan pada aplikasi ini.</string>
+    <string name="stores_refused_modified">Tern tidak membaca situs yang menawarkan aplikasi yang dimodifikasi. File mereka diubah oleh pihak selain pengembang dan ditandatangani oleh siapa pun yang mengubahnya.</string>
+    <string name="stores_refused_impersonation">Tern tidak dapat membaca toko ini tanpa berpura-pura menjadi aplikasinya, jadi Tern tidak membacanya.</string>
+    <string name="stores_checksum_source">%1$s, yang bukan pengembangnya</string>
+    <string name="stores_off_title">%1$s adalah toko pihak ketiga</string>
+    <string name="stores_off_body">Toko pihak ketiga nonaktif. Sebuah toko menyajikan salinan aplikasinya sendiri, bukan file dari situs milik pengembang, dan Tern membacanya melalui antarmuka yang dibuat toko tersebut untuk aplikasi atau situs webnya sendiri. Jika diaktifkan, Tern hanya bertanya pada toko untuk aplikasi yang Anda tambahkan dari sana, dan hingga aplikasi disematkan ke sertifikat, file pertama yang diinstal Tern dari suatu toko menentukan sertifikat mana yang harus dibawa pembaruannya.</string>
+    <string name="stores_turn_on">Aktifkan toko pihak ketiga</string>
+    <string name="stores_advice">Aktifkan Toko pihak ketiga di Setelan untuk memeriksa aplikasi ini lagi.</string>
+    <string name="stores_status_paused">Dijeda</string>
+    <string name="stores_row_paused">Toko pihak ketiga nonaktif</string>
+    <string name="stores_setting">Toko pihak ketiga</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store, dan vivo. Mereka menyajikan salinan aplikasi sendiri, bukan file dari situs milik pengembang, dan Tern membacanya melalui antarmuka yang mereka buat untuk aplikasi dan situs web mereka sendiri. Jika nonaktif, Tern tidak menanyakan apa pun kepada mereka, pencarian akan mengabaikannya, dan aplikasi dari mereka dijeda.</string>
+    <string name="stores_off_tag">nonaktif di Setelan</string>
+    <string name="stores_checksum_matched">File cocok dengan checksum toko</string>
+    <string name="stores_explain_checksum_matched">Checksum adalah sidik jari dari file itu sendiri. Toko memberikan satu, dan file yang diunduh Tern memiliki checksum yang sama, jadi file tiba seperti yang dimiliki toko. Toko bukanlah pengembangnya, jadi ini tidak menyatakan apa pun tentang siapa yang membuat file tersebut. Sertifikatlah yang menyatakannya.</string>
+    <string name="stores_import_from_stores">Aplikasi ini berasal dari toko pihak ketiga, yang menyajikan salinan aplikasinya sendiri. Hingga aplikasi disematkan ke sertifikat, file pertama yang diinstal Tern dari tokonya menentukan sertifikat mana yang harus dibawa pembaruannya.</string>
+    <string name="stores_import_paused">Toko pihak ketiga nonaktif, jadi aplikasi ini dijeda. Tern tidak menanyakan apa pun kepada toko tersebut hingga Anda mengaktifkannya.</string>
+    <string name="stores_import_names">Dari toko pihak ketiga</string>
+    <string name="share_obtainium_link">Bagikan sebagai tautan Obtainium</string>
+    <string name="share_obtainium_links">Bagikan sebagai tautan-tautan Obtainium</string>
+</resources>

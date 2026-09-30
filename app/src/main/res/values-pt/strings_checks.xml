@@ -19,13 +19,11 @@
     <string name="settings_only_installed">Verificar apenas aplicações instaladas</string>
     <string name="settings_only_installed_effect">As aplicações que são apenas seguidas também são verificadas. Uma aplicação que abra é sempre verificada.</string>
     <string name="settings_remove_uninstalled">Remover aplicações desinstaladas fora do Tern</string>
-    <string name="settings_remove_uninstalled_effect">Uma aplicação que desinstale fora do Tern também sai da lista.</string>
     <string name="settings_file_filter">Filtro de ficheiros</string>
     <string name="settings_file_filter_effect">Um padrão pelo qual cada aplicação sem filtro próprio escolhe o seu ficheiro.</string>
     <string name="settings_file_filter_none">Nenhum</string>
     <string name="settings_file_filter_invalid">Este padrão não pode ser lido.</string>
     <string name="settings_allow_downgrades">Permitir versões mais antigas</string>
-    <string name="settings_allow_downgrades_effect">O Let Me Downgrade está instalado, por isso o Android pode instalar uma versão mais antiga sobre uma mais recente.</string>
     <string name="settings_collapse_groups">Começar com os grupos fechados</string>
     <string name="settings_haptics">Resposta tátil</string>
     <string name="settings_haptics_effect">Uma vibração leve quando um deslize ou um toque longo faz algo.</string>
@@ -40,7 +38,6 @@
     <string name="sources_repositories">Repositórios</string>
     <string name="sources_stores">Lojas</string>
     <string name="sources_mirrors">Lojas que republicam aplicações</string>
-    <string name="sources_modified">Sites com aplicações modificadas</string>
     <string name="sources_other">Outros locais</string>
     <string name="sources_web_page">Uma página web com ligações para ficheiros</string>
     <string name="sources_direct">Uma ligação direta para um ficheiro</string>
@@ -50,8 +47,6 @@
     <string name="shared_configs_title">Configurações partilhadas pelos utilizadores do Obtainium</string>
     <string name="shared_configs_effect">Um site de definições prontas para aplicações. As suas ligações abrem no Tern quando Abrir ligações do Obtainium está ativado nas Definições.</string>
     <string name="engine_inner_filter_nothing">O filtro de ficheiros dentro de arquivos não corresponde a nenhum dos APK deste.</string>
-    <string name="preview_republished">%1$s volta a oferecer o que os programadores publicam noutros locais. O Tern sujeita os seus ficheiros ao certificado do programador assim que o conhece, por isso fixe um ou instale primeiro a partir do programador quando puder.</string>
-    <string name="preview_modified">%1$s oferece aplicações alteradas por outra pessoa que não o seu programador. São assinadas por quem as alterou, e o Tern não consegue saber o que foi alterado.</string>
     <string name="about_track_tern">Manter o próprio Tern atualizado</string>
     <string name="about_track_tern_effect">Adiciona os lançamentos do Tern à lista, verificados e confirmados como qualquer aplicação.</string>
     <string name="engine_channel_tracked">Novos lançamentos de aplicações seguidas</string>

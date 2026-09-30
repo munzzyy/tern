@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import io.github.munzzyy.tern.R
+import io.github.munzzyy.tern.engine.StarterHere
 import io.github.munzzyy.tern.engine.Suggestion
 import io.github.munzzyy.tern.ui.common.ChipTone
 import io.github.munzzyy.tern.ui.common.PressRow
@@ -86,5 +87,14 @@ private fun StarterRow(app: Suggestion, onLook: () -> Unit, modifier: Modifier) 
         Text(app.name, style = MaterialTheme.typography.titleMedium.heavier())
         Text(app.summary, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (app.pinned) StatusChip(Glyphs.Seal, stringResource(R.string.starter_pinned), tone = ChipTone.VERIFIED)
+        when (app.here) {
+            StarterHere.NONE -> Unit
+            StarterHere.IN_LIST -> StatusChip(Glyphs.Check, stringResource(R.string.starter_in_list))
+            StarterHere.ON_PHONE -> StatusChip(Glyphs.Check, stringResource(R.string.starter_on_phone))
+            StarterHere.ON_PHONE_OTHER_SIGNER -> {
+                StatusChip(Glyphs.Caution, stringResource(R.string.starter_on_phone_other), tone = ChipTone.CAUTION)
+                Text(stringResource(R.string.starter_on_phone_other_explain), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
     }
 }

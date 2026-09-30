@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">Listenizde</string>
+    <string name="starter_on_phone">Bu telefonda</string>
+    <string name="starter_on_phone_other">Bu telefonda başka bir imzalayandan</string>
+    <string name="starter_on_phone_other_explain">Sahip olduğunuz kopya farklı bir anahtarla imzalanmış, bu yüzden Tern onu bu adresten güncelleyemez.</string>
+</resources>

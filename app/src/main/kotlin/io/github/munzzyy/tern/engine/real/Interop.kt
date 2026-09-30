@@ -6,6 +6,7 @@ import androidx.core.content.FileProvider
 import io.github.munzzyy.tern.core.interop.ObtainiumExport
 import io.github.munzzyy.tern.core.interop.ObtainiumImport
 import io.github.munzzyy.tern.core.interop.ObtainiumImportException
+import io.github.munzzyy.tern.core.interop.Skipped
 import io.github.munzzyy.tern.core.interop.TernExport
 import io.github.munzzyy.tern.core.interop.TernExportException
 import io.github.munzzyy.tern.core.json.Json
@@ -17,7 +18,9 @@ import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.net.RemoteSize
 import io.github.munzzyy.tern.core.net.Urls
+import io.github.munzzyy.tern.core.source.Refusal
 import io.github.munzzyy.tern.core.source.SourceException
+import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.data.AppState
 import io.github.munzzyy.tern.data.SettingsJson
 import io.github.munzzyy.tern.data.StoredApp
@@ -63,6 +66,7 @@ interface ImportTexts {
     fun linkNotAnExport(): String
     fun serverStatus(code: Int): String
     fun checkRateLimited(untilMs: Long?): String
+    fun importRefused(refusal: Refusal): String
 }
 
 internal class Decoded(val apps: List<AppConfig>, val skipped: List<Pair<String, String>>, val settings: JsonObject? = null)
@@ -110,18 +114,20 @@ internal object ImportDecoder {
         val text = String(bytes, Charsets.UTF_8).trimStart { it.code == BYTE_ORDER_MARK }
         return try {
             val file = TernExport.readFile(text)
-            Decoded(file.apps, emptyList(), file.settings)
+            Decoded(file.apps, file.skipped.map { it.name to reason(it, texts) }, file.settings)
         } catch (tern: TernExportException) {
             // Obtainium's reader finds no app in an export of Tern's and would report an import of nothing.
             if (saysItIsTerns(text)) throw ProblemException(Problem(ProblemKind.PARSE, texts.importUnreadableExport(tern.message)))
             try {
                 val result = ObtainiumImport.read(text)
-                Decoded(result.apps, result.skipped.map { it.name to it.reason }, result.settings)
+                Decoded(result.apps, result.skipped.map { it.name to reason(it, texts) }, result.settings)
             } catch (_: ObtainiumImportException) {
                 throw ProblemException(Problem(ProblemKind.PARSE, notAnExport))
             }
         }
     }
+
+    private fun reason(skipped: Skipped, texts: ImportTexts): String = skipped.refusal?.let(texts::importRefused) ?: skipped.reason
 
     private fun saysItIsTerns(text: String): Boolean = try {
         Json.parseObject(text).string("format") == TERN_FORMAT
@@ -344,6 +350,7 @@ internal class Interop(private val e: RealEngine) {
         val withPins = ArrayList<String>()
         val withFilters = ArrayList<String>()
         val askedForMore = ArrayList<String>()
+        val fromStores = ArrayList<String>()
         val others = LinkedHashMap<String, AppConfig>()
         for (imported in decoded.apps.take(MAX_APPS)) {
             val existing = e.findBySpec(imported.source)
@@ -353,7 +360,7 @@ internal class Interop(private val e: RealEngine) {
                 continue
             }
             val config = try {
-                e.validated(Arrivals.stored(imported, if (e.stored.containsKey(imported.id)) e.newId() else imported.id, e.builtIn))
+                e.validated(e.keptPins.restore(Arrivals.stored(imported, if (e.stored.containsKey(imported.id)) e.newId() else imported.id, e.builtIn)))
             } catch (ex: IllegalArgumentException) {
                 skipped += imported.name to (ex.message ?: "")
                 continue
@@ -367,6 +374,7 @@ internal class Interop(private val e: RealEngine) {
             if (imported.pinnedSigners.isNotEmpty()) withPins += config.shownName
             if (hasFilters(config)) withFilters += config.shownName
             if (imported.updates == UpdateMode.AUTO) askedForMore += config.shownName
+            if (config.source.type in SourceTypes.THIRD_PARTY_STORES) fromStores += config.shownName
         }
         e.publish()
         if (fresh.isNotEmpty()) e.scope.launch { e.checks.run(fresh, CheckCause.IMPORTED) }
@@ -378,6 +386,7 @@ internal class Interop(private val e: RealEngine) {
             replaceable = others.map { (id, imported) -> shownNameOf(id, imported) },
             settingsOffered = settings != null,
             offer = offer,
+            fromStores = fromStores,
         )
     }
 

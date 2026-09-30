@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">リストと設定をファイルに保存します。トークンが含まれることはなく、鍵を保持する可能性のあるリクエストヘッダーも含まれません。</string>
+    <string name="engine_checksum_github_proxy">ハブプロキシ %1$s が渡した、GitHubリリースのダイジェスト</string>
+    <string name="github_proxy_effect_trust">GitHubへのすべてのリクエストはこのホストを経由します。ホストは各リクエストを監視し、リリース、ダイジェスト、ファイルなど、返される内容を変更できます。保持しているアプリはそれぞれの証明書に維持されますが、これを経由した初回インストールではGitHubと同じくらいハブプロキシを信頼することになり、証明書のピン留めもそこには及びません。トークンはここを経由して送信されないため、プライベートプロジェクトやGitHub Actionsをこの方法で追跡することはできません。</string>
+    <string name="settings_unmetered_checks">Wi-Fi時のみ確認</string>
+    <string name="settings_unmetered_checks_effect">バックグラウンドチェックはWi-Fiまたはケーブル接続を待機するため、モバイルデータ通信を消費しません。</string>
+    <string name="settings_charging_checks">充電中のみ確認</string>
+    <string name="settings_charging_checks_effect">バックグラウンドチェックは端末が充電されるまで待機します。</string>
+    <string name="settings_unmetered_installs_wait">自動的にインストールされる更新は、Obtainiumと同様に、Wi-Fiまたはケーブル接続を待機します。</string>
+    <string name="settings_charging_installs_wait">自動的にインストールされる更新は、端末が充電されるまで待機します。</string>
+    <string name="engine_downgrade_not_as_named">提供元はバージョンコードを %2$d としていますが、このファイルは %1$d であり、インストールされているものより古いです。インストール済みの新しいバージョンに上書きインストールされることはありません。</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgradeがインストールされているため、Androidは新しいバージョンに古いバージョンを上書きすることがあります。Ternはアプリの履歴から選択したリリースに対してのみこれを行い、バックグラウンドや「すべて更新」で実行することはありません。</string>
+    <string name="option_highest_version">Tern 0.1.0 のように、最も高いバージョンを取得する</string>
+    <string name="option_highest_version_effect">ページ内の位置に関係なく、最も高いバージョンのリンクを提供し、各リンクから読み取ったバージョンにバージョンのパターンを適用します。オフにすると、Obtainiumと同じようにページを読み取ります: 順番の最後にあるリンクが最新になります。</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Tern以外でアンインストールしたアプリもリストから削除されます。アーカイブされたアプリは残ります。同じ場所から再度追加された場合、アプリは以前保持していた証明書に維持されますが、Tern内で削除するとその情報は忘れられます。</string>
+    <string name="link_check_title">今すぐ更新を確認しますか？</string>
+    <string name="link_check_one">リンクからTernに %1$s の更新を確認するよう要求がありました。その提供元に問い合わせを行いますが、何もインストールされません。</string>
+    <plurals name="link_check_all">
+        <item quantity="other">リンクからTernにリスト内の %d 個のアプリの更新を確認するよう要求がありました。それぞれの提供元に問い合わせを行いますが、何もインストールされません。</item>
+    </plurals>
+    <string name="link_check_confirm">確認</string>
+    <string name="link_check_not_now">今はしない</string>
+    <string name="engine_installer_fell_back">%1$s は準備ができていなかったため、今回はAndroidのインストーラーが使用されました。</string>
+    <string name="about_track_tern_fdroid_effect">F-Droidがこのコピーをインストールしたため、Ternはそこにあるエントリを追跡します: 更新は、F-Droidアプリが取得するのと同じ、F-Droidがビルドして確認したものです。</string>
+    <string name="about_track_tern_github">代わりにGitHubリリースを追跡</string>
+    <string name="about_track_tern_github_effect">更新は、F-Droidがビルドして確認する前、公開されるとすぐにGitHubから取得されます。これによりF-Droidの確認はスキップされます。Ternは引き続き各ファイルを確認し、独自の証明書に維持します。</string>
+</resources>

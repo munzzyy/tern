@@ -19,13 +19,11 @@
     <string name="settings_only_installed">Comprova només les aplicacions instal·lades</string>
     <string name="settings_only_installed_effect">Les aplicacions que només se segueixen també es comproven. Una aplicació que obres sempre es comprova.</string>
     <string name="settings_remove_uninstalled">Suprimeix les aplicacions desinstal·lades fora de Tern</string>
-    <string name="settings_remove_uninstalled_effect">Una aplicació que desinstal·les fora de Tern també surt de la llista.</string>
     <string name="settings_file_filter">Filtre de fitxers</string>
     <string name="settings_file_filter_effect">Un patró amb què cada aplicació sense filtre propi tria el seu fitxer.</string>
     <string name="settings_file_filter_none">Cap</string>
     <string name="settings_file_filter_invalid">Aquest patró no es pot llegir.</string>
     <string name="settings_allow_downgrades">Permet versions anteriors</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade està instal·lat, així que Android pot posar una versió més antiga per sobre d\'una de més nova.</string>
     <string name="settings_collapse_groups">Comença amb els grups plegats</string>
     <string name="settings_haptics">Resposta hàptica</string>
     <string name="settings_haptics_effect">Una vibració lleugera quan un lliscament o una pulsació llarga fa alguna cosa.</string>
@@ -40,7 +38,6 @@
     <string name="sources_repositories">Repositoris</string>
     <string name="sources_stores">Botigues</string>
     <string name="sources_mirrors">Botigues que tornen a publicar aplicacions</string>
-    <string name="sources_modified">Llocs amb aplicacions modificades</string>
     <string name="sources_other">Altres llocs</string>
     <string name="sources_web_page">Una pàgina web amb enllaços a fitxers</string>
     <string name="sources_direct">Un enllaç directe a un fitxer</string>
@@ -50,8 +47,6 @@
     <string name="shared_configs_title">Configuracions compartides pels usuaris d\'Obtainium</string>
     <string name="shared_configs_effect">Un lloc de configuracions ja fetes per a aplicacions. Els seus enllaços s\'obren a Tern quan Obre enllaços d\'Obtainium està activat a la Configuració.</string>
     <string name="engine_inner_filter_nothing">El filtre de fitxers dins d\'arxius no coincideix amb cap dels APK d\'aquest.</string>
-    <string name="preview_republished">%1$s torna a oferir el que els desenvolupadors publiquen en altres llocs. Tern exigeix als seus fitxers el certificat del desenvolupador tan bon punt el coneix, així que fixa\'n un o instal·la primer des del desenvolupador quan puguis.</string>
-    <string name="preview_modified">%1$s ofereix aplicacions modificades per algú que no és el seu desenvolupador. Estan signades per qui les ha modificat, i Tern no pot saber què s\'ha canviat.</string>
     <string name="about_track_tern">Mantén actualitzat el mateix Tern</string>
     <string name="about_track_tern_effect">Afegeix els llançaments de Tern a la llista, comprovats i verificats com qualsevol aplicació.</string>
     <string name="engine_channel_tracked">Llançaments nous d\'aplicacions seguides</string>

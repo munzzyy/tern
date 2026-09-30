@@ -29,6 +29,15 @@ the same one as the developer's own file. `docs/SUGGESTIONS.md` has the list,
 the second place for each, and the ten entries for which none was found. A pin
 that arrives with a link or an import does not take the place of a carried one.
 
+A carried certificate is found by the app's address, and for an app from a
+third-party store, a web page or a direct link also by its package: Aegis added
+from APKPure is held to the developer's certificate at its first install, as it
+is from GitHub. A package can ship from several channels, so it is held to every
+certificate the list carries for it. The package is taken from the listing, or
+from the file once a check reads it. Forges are matched by address only,
+because a fork may keep the package, and so are F-Droid repositories, whose
+signed index names the signer.
+
 ## Every install after that
 
 The checks run in this order, and the first one that fails ends it.
@@ -106,10 +115,25 @@ passes on what it claims.
 The log shows a file as verified after every file that goes to the installer
 has been verified by Android or by Tern.
 
+When "Remove apps uninstalled elsewhere" takes an app out of the list, Tern
+keeps the certificates it was pinned to and its repository's key. Added again
+from the same source, the app is held to them again, so uninstalling and
+reinstalling does not let the next file served become the pin. An app Android
+15 archived is not taken out at all. Removing an app in Tern by hand forgets
+what was kept, which is how a person lets an app change its signer.
+
 ### Package, version and kind
 
 A file for another package is refused. So is an older version code, a test-only
 build, and a build for a newer Android than the device runs.
+
+With Let Me Downgrade installed and "Allow older versions" on, an older version
+code can go in, but only for a release the person picked from an app's history.
+A background install, Update all and a plain install of the latest release
+never go back. Even a picked release is refused when the file's version code is
+lower than the one its source named, since then the source said it was newer.
+A store that lies about version codes cannot roll an app back to a version with
+known holes that way.
 
 ### Android
 
@@ -151,6 +175,12 @@ only once Dhizuku is chosen. No hidden install flag is set. Where one of these
 calls is missing on some version of Android, Settings and the install say that
 Tern cannot install through Dhizuku there.
 
+Sui, the Magisk module that serves Shizuku's interface, is found the same way:
+its library reads `ServiceManager` and sends a call of its own to the activity
+service. Shizuku's library would do that at every start of Tern. Tern turns it
+off before anything starts and asks Sui only once Shizuku is the chosen
+installer. With Android's installer chosen, neither is asked anything.
+
 OBB files are the one exception, and a narrow one. After Android has installed
 an app that passed the gate, Shizuku or root writes the OBB files of its
 archive to `Android/obb/<the package the gate verified>/`, each with `dd` and
@@ -173,16 +203,39 @@ counted.
 Before the first install of an app, when the setting asks for it and Verified
 Apps or AppVerifier is on the phone, a read-only copy of the checked file goes
 to that app alone, for a second look by code that shares nothing with Tern's.
+The setting is off at first. Tern knows the certificate each of these apps is
+signed with, as its makers publish it, and sends nothing, neither this file nor
+the package and certificate the "Check with" button hands over, to an app that
+has the name but not the certificate.
 This happens only for an install the person started while Tern is on the
 screen. The installer then gets the file the gate passed, never the copy.
 
 ## Stores and mirrors
 
-Some sources are stores that offer again what developers published elsewhere,
-and three are sites that offer apps someone else changed. The Add screen says so
-before an app from one is stored. Their files are held to the same pin as any
-other, so once the developer's certificate is known a file signed by someone
-else is refused as an update.
+Eight sources are third-party stores: APKPure, Aptoide, APKCombo, APKMirror and
+Tencent, which offer again what others published, and Huawei AppGallery, the
+Galaxy Store and vivo, where developers upload their own. They are off until
+the person turns on Settings, Network, Third-party stores, and no file or link
+can turn that on. While it is off, no host of theirs is asked, an address on
+one is not read even as a web page, and an app from one that arrived with an
+import stays in the list, paused.
+
+Tern asks each store as itself, with its own User-Agent, and borrows nothing
+from the store's own app: no package name, no key, no signature, no made-up
+phone. Only the Galaxy Store needs a device model, and every copy of Tern asks
+for the same one. `HonestIdentityTest` fails when a source sets its own
+User-Agent, signs a request or names a store's app, and a person cannot set a
+User-Agent header either. Stores that answer only their own app, as RuStore,
+Uptodown and CoolApk do, are not read at all, and neither are sites that offer
+modified apps, such as LiteAPKs, Apk4Free, RockMods and Farsroid. An import
+that names them keeps the rest and says why these were left out.
+
+The Add screen, an app's page and the summary of an import say where a store's
+files come from. Until an app is pinned, the certificate of the first file
+installed from a store is the one its updates must carry, unless Tern carries
+the developer's for that package. A checksum a store gives is called the
+store's, and matching it says the file arrived as the store has it, not that
+the developer made it.
 
 Some stores hand out a link that expires, or a file only to a request with the
 right headers. Such a link is asked for right before the download, has to be an
@@ -193,9 +246,9 @@ or `If-Range`. A token still goes only to the host it was given for.
 
 ## Parts named one by one
 
-A store that serves an app as a base and its splits at separate addresses, as
-RuStore does, gets each part downloaded from its own address, with the rule for
-tokens applied to each. The parts are packed into one zip in the staging folder
+A source that serves an app as a base and its splits at separate addresses gets
+each part downloaded from its own address, with the rule for tokens applied to
+each. No source Tern reads today does this. The parts are packed into one zip in the staging folder
 and go through exactly the checks of a bundle: every part held to the base's
 signer, one install session. Every part must be an HTTPS address on the store's
 own hosts, or the bundle is left out.
@@ -271,6 +324,17 @@ request Tern makes to GitHub. It is never sent a token or a cookie, and while
 one is set Tern holds back the tokens of GitHub's hosts altogether, so private
 projects and GitHub Actions cannot be followed through it.
 
+It can also change every answer. The release list, the digest GitHub gives
+for a file and the file itself all come from the hubproxy. Tern hands them on
+as if GitHub sent them. So the hubproxy decides what GitHub appears to publish.
+An app already installed stays held to its certificate and a built-in pin
+still holds. A changed file cannot replace it. The first install of a GitHub
+app through a hubproxy trusts the hubproxy as much as GitHub, since the
+certificate Tern pins is whatever the hubproxy served. Certificate pinning
+does not reach the hubproxy either, because the connection goes to its host.
+While one is set, a digest from GitHub is shown as passed on by that host. The
+setting says all of this where it is turned on.
+
 With a SOCKS proxy set, host names are resolved by the proxy. This was checked
 with a logging proxy and a packet capture, and with a real Orbot on an emulator:
 Tor Project's own check answered `{"IsTor":true}` for a request Tern sent.
@@ -280,7 +344,12 @@ also when the proxy does not answer and when the setting names no proxy at
 all. One file opens connections, `net/UrlConnectionHttp.kt`, and
 `tools/check-network-doors.sh` fails in CI when a second one appears, when
 anything outside the handoff makes a socket, or when a name is resolved on the
-device. Device tests send a check, a download and an icon through a proxy that
+device. It also fails on everything else that can fetch by itself:
+`java.net.URL` or a URLConnection outside that file, Android's DownloadManager,
+HttpEngine or Cronet, a web view, DnsResolver, and HTTP libraries such as OkHttp
+or Ktor. `tools/tests/network-doors` keeps a small file for each of these ways,
+and CI proves that each one makes the check fail and that the tree passes.
+Device tests send a check, a download and an icon through a proxy that
 is not there and count the requests that arrive: none. When a request through a
 proxy on the device fails, Tern asks the proxy whether it is there at all. If
 not, the failure says "The proxy did not answer, so nothing was sent" instead of
@@ -304,10 +373,14 @@ app that holds Orbot's package name.
 
 ### Which certificates are trusted
 
-Android's own trust store decides, with certificate transparency asked for on
-Android 16. Certificates a user or an administrator added are not trusted.
+Android's own trust store decides, for every host, with certificate
+transparency asked for on Android 16 and never turned off. Certificates a user
+or an administrator added are not trusted, and Tern ships no certificate of its
+own. `NetworkSecurityConfigTest` parses both network security configs and fails
+on any other trust anchor, on a host with rules of its own, on transparency
+turned off and on a certificate file anywhere in the app's resources.
 
-Two exceptions, both narrow:
+One exception, and it only adds a condition:
 
 - Pinning, off by default as in Obtainium. With it on, a connection to
   `github.com`, GitHub's two hosts for release files, `gitlab.com` or
@@ -318,15 +391,6 @@ Two exceptions, both narrow:
   lifts one. The keys are in `net/Pinning.kt`, and `PinsTest` checks each one
   against the root certificate it names. A forge that moves to another
   authority fails there until the setting is off or Tern is updated.
-- RuStore serves part of its addresses with a certificate of the Russian
-  Trusted Root CA, which Android does not trust. That root is trusted for
-  `rustore.ru` and its subdomains and for nothing else, as Obtainium does; its
-  SHA-256 fingerprint is
-  `D2:6D:2D:02:31:B7:C3:9F:92:CC:73:85:12:BA:54:10:35:19:E4:40:5D:68:B5:BD:70:3E:97:88:CA:8E:CF:31`.
-  Certificates under it are in no transparency log, so Android 16 does not ask
-  for one there. Whoever holds that root could read and change Tern's requests
-  to RuStore, and only those. A file from RuStore still has to pass every
-  check, including the certificate of the app itself.
 
 ## Notifications
 
@@ -341,6 +405,14 @@ The Update and Update all buttons on a notification about updates start the
 same install as the buttons in Tern, through every check above. So do the
 widget's Update all button and the launcher shortcut of that name. The tile and
 the widget's Check button only check.
+
+Only Tern can start these. The widget's buttons go to a receiver that is not
+exported. The launcher shortcuts go to an activity alias that is not exported
+either. Tern's window has to be exported for the launcher, but an intent that
+reaches it any other way cannot run Update all, Add or a check. A
+`tern://refresh` or `obtainium://refresh` link from a web page or another app
+asks the person before it checks anything. One such link a minute at most gets
+that far, and it never installs.
 
 A notification about problems gives each app's reason only in the version that
 names apps. A tap on it carries the ids of the apps and nothing else, and the
@@ -376,11 +448,15 @@ pins, a package name it already knew, its repository's signing key and a
 release the person skipped, and it never starts installing by itself. Taking a
 file's settings never makes new apps install by themselves either.
 
-A link that carries an app's settings is Obtainium's `obtainium://app/` form,
-or the same link behind Obtainium's web page for opening it from a browser.
-Tern makes such links without a token, which an app's settings never hold,
-and with no request header but User-Agent, Accept, Accept-Language and
-Referer, since any other could hold a key. Whoever opens the web form in a
+A link that carries an app's settings is Tern's own page on tern.munzzyy.dev
+with the settings after `#app=`, a part of the address browsers never send, so
+no server sees them. "Share as an Obtainium link" makes Obtainium's
+`obtainium://app/` form instead. Either way the link carries no token, which an
+app's settings never hold, and no request header but Accept, Accept-Language
+and Referer, since any other could hold a key. The same rule holds for every
+config that leaves the phone: an export in either format, the kept export and
+a file shared with another app. A header such as X-Api-Key stays on the device
+and has to be set again after an import. Whoever opens the web form in a
 browser shows the settings in it to Obtainium's page; Tern reads that form on
 the device and never asks the page. A link of a kind Tern does not know is
 named on the Add screen and goes no further.
@@ -579,14 +655,23 @@ import it.
   is the one to compare.
 - Tern's verifier has been tested on a computer, against files signed by
   apksigner and against files changed after signing. On a device it uses the
-  cryptography and the JAR reader of that device. The tests for that have not
-  been run yet.
+  cryptography and the JAR reader of that device. The tests for that have run
+  on Android 10 and 16 phone emulators and an Android TV 14 emulator.
 - It has been tested on emulators. Vendor builds of Android can behave
   differently.
 - Installing through Dhizuku has been checked against Android's sources for
-  versions 10 to 16 and tested on a computer, not yet on a device with Dhizuku
-  as its owner.
+  versions 10 to 16 and tested on a computer. On an Android 13 emulator with
+  Dhizuku 2.12 as its device owner, a first install and an update went in
+  without a prompt, with Dhizuku named as the installer. No other version has
+  been tried with it.
+- Keeping an app that Android 15 archived has not been tried on a device. No
+  installer on Android's emulator images can archive an app.
+- Installing through Shizuku has been tried on an Android 13 emulator only.
+  Installing as root has not been tried on a device: the su of Android's
+  emulator images answers only adb.
 - The handoff has been tested with real connections on a computer, and its
-  page in Chromium on a computer. No phone has loaded the page yet. How the
-  handoff finds the device's address and how it closes when Tern leaves the
-  screen has tests for a device that have not been run yet.
+  page in Chromium on a computer. No phone has loaded the page yet. Its tests
+  for a device, where it listens and how it closes when Tern leaves the
+  screen, have run on Android 10, 14 and 16 emulators. A link and an export
+  file sent from a computer to an Android TV 14 emulator arrived sealed and
+  were shown, and what was changed on the way was refused.

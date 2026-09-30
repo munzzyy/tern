@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import io.github.munzzyy.tern.BuildConfig
+import io.github.munzzyy.tern.log.Scrub
 import java.io.File
 import java.io.IOException
 import java.time.Instant
@@ -29,16 +30,21 @@ object CrashReport {
         }
     }
 
-    /** The report of [error]: where it happened and the stack, cut to [MAX_CHARS]. */
-    fun text(thread: String, error: Throwable, version: String, sdk: Int, atMs: Long): String = buildString {
-        appendLine("Tern $version on Android API $sdk")
-        appendLine("${Instant.ofEpochMilli(atMs)}, thread $thread")
-        append(error.stackTraceToString())
-    }.take(MAX_CHARS)
+    /** The report of [error]: where it happened and the stack, scrubbed and cut to [MAX_CHARS]. */
+    fun text(thread: String, error: Throwable, version: String, sdk: Int, atMs: Long): String = scrubbed(
+        buildString {
+            appendLine("Tern $version on Android API $sdk")
+            appendLine("${Instant.ofEpochMilli(atMs)}, thread $thread")
+            append(error.stackTraceToString())
+        }.take(MAX_CHARS),
+    )
 
-    /** The report of the last unexpected stop, until it is dismissed. */
+    /** [report] with what could open an account taken out, a line at a time so the frames stay as they were. */
+    fun scrubbed(report: String): String = report.lineSequence().joinToString("\n") { Scrub.text(it) }
+
+    /** The report of the last unexpected stop, until it is dismissed. One an older Tern wrote is scrubbed here. */
     fun pending(context: Context): String? = try {
-        File(context.filesDir, FILE).takeIf { it.isFile }?.readText()?.take(MAX_CHARS)
+        File(context.filesDir, FILE).takeIf { it.isFile }?.readText()?.take(MAX_CHARS)?.let(::scrubbed)
     } catch (_: IOException) {
         null
     }

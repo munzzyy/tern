@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Um por linha, como Nome: valor. Nunca uma senha, um cookie ou um User-Agent: o Tern diz a cada site que é o Tern.</string>
+    <string name="origin_republished_first">%1$s oferece de novo o que desenvolvedores publicam em outro lugar, e não é o desenvolvedor. Até que o app seja fixado a um certificado, o primeiro arquivo que o Tern instala dele decide qual certificado cada atualização posterior precisará ter.</string>
+    <string name="origin_republished_pinned">%1$s oferece de novo o que desenvolvedores publicam em outro lugar, e não é o desenvolvedor. Seus arquivos precisam ter o certificado ao qual este app está fixado.</string>
+    <string name="origin_store_first">%1$s é uma loja, não o site do próprio desenvolvedor. Até que o app seja fixado a um certificado, o primeiro arquivo que o Tern instala dela decide qual certificado cada atualização posterior precisará ter.</string>
+    <string name="origin_store_pinned">%1$s é uma loja, não o site do próprio desenvolvedor. Seus arquivos precisam ter o certificado ao qual este app está fixado.</string>
+    <string name="stores_refused_modified">O Tern não lê sites que oferecem apps modificados. Os arquivos deles são alterados por alguém além do desenvolvedor e assinados por quem os alterou.</string>
+    <string name="stores_refused_impersonation">O Tern não consegue ler esta loja sem fingir ser o app dela, então não a lê.</string>
+    <string name="stores_checksum_source">%1$s, que não é o desenvolvedor</string>
+    <string name="stores_off_title">%1$s é uma loja de terceiros</string>
+    <string name="stores_off_body">As lojas de terceiros estão desativadas. Uma loja serve as próprias cópias de apps, não arquivos do site do próprio desenvolvedor, e o Tern a lê pela interface que a loja fez para o seu próprio app ou site. Com elas ativadas, o Tern pergunta a uma loja apenas sobre os apps que você adiciona dela, e até que um app seja fixado a um certificado, o primeiro arquivo que o Tern instala de uma loja decide qual certificado as suas atualizações precisarão ter.</string>
+    <string name="stores_turn_on">Ativar lojas de terceiros</string>
+    <string name="stores_advice">Ative Lojas de terceiros nas Configurações para verificar este app novamente.</string>
+    <string name="stores_status_paused">Pausado</string>
+    <string name="stores_row_paused">As lojas de terceiros estão desativadas</string>
+    <string name="stores_setting">Lojas de terceiros</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, a Galaxy Store e vivo. Elas servem suas próprias cópias de apps, não arquivos do site do próprio desenvolvedor, e o Tern as lê pelas interfaces que elas fizeram para seus próprios apps e sites. Desativadas, o Tern não pergunta nada a elas, uma pesquisa as deixa de fora e apps vindos delas ficam pausados.</string>
+    <string name="stores_off_tag">desativado nas Configurações</string>
+    <string name="stores_checksum_matched">O arquivo corresponde à soma de verificação da loja</string>
+    <string name="stores_explain_checksum_matched">Uma soma de verificação é uma impressão digital do próprio arquivo. A loja deu uma, e o arquivo que o Tern baixou tem a mesma, então ele chegou como a loja o tem. A loja não é o desenvolvedor, então isso não diz nada sobre quem fez o arquivo. O certificado diz.</string>
+    <string name="stores_import_from_stores">Estes vêm de lojas de terceiros, que servem suas próprias cópias de apps. Até que um app seja fixado a um certificado, o primeiro arquivo que o Tern instala da sua loja decide qual certificado as suas atualizações precisarão ter.</string>
+    <string name="stores_import_paused">As lojas de terceiros estão desativadas, então estes apps estão pausados. O Tern não pergunta nada a essas lojas até você ativá-las.</string>
+    <string name="stores_import_names">De lojas de terceiros</string>
+    <string name="share_obtainium_link">Compartilhar como link do Obtainium</string>
+    <string name="share_obtainium_links">Compartilhar como links do Obtainium</string>
+</resources>

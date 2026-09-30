@@ -11,8 +11,8 @@ android {
         applicationId = "io.github.munzzyy.tern"
         minSdk = 29
         targetSdk = 36
-        versionCode = 100
-        versionName = "0.1.0"
+        versionCode = 200
+        versionName = "0.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -72,6 +72,8 @@ tasks.withType<Test>().configureEach {
     ).withPropertyName("brandFiles").withPathSensitivity(PathSensitivity.RELATIVE)
     // SignerJudgeTest reads the parts of the test bundle from core.
     inputs.dir("../core/src/test/resources/fixtures/apk").withPropertyName("bundleParts").withPathSensitivity(PathSensitivity.RELATIVE)
+    // NetworkSecurityConfigTest reads the configs and looks for certificates anywhere under res.
+    inputs.dir("src/main/res").withPropertyName("resources").withPathSensitivity(PathSensitivity.RELATIVE)
 }
 
 dependencies {

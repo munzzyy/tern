@@ -22,9 +22,14 @@ import io.github.munzzyy.tern.core.source.guarded
 /**
  * Tencent App Store (sj.qq.com). Reads the app's download page on a.app.qq.com, which carries the
  * store's record of the app as JSON in window.systemData, and lists the file that record names.
+ * The store holds copies that others than the developer upload, so it counts as republishing.
  */
 class TencentSource : Source {
     override val type: String = SourceTypes.TENCENT
+
+    override val republishes: Boolean get() = true
+
+    override val domains: Set<String> get() = setOf("sj.qq.com", "a.app.qq.com") + FILE_HOSTS
 
     override fun match(url: String): SourceSpec? {
         val uri = Urls.parseHttps(url) ?: return null

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">In je lijst</string>
+    <string name="starter_on_phone">Op deze telefoon</string>
+    <string name="starter_on_phone_other">Op deze telefoon van een andere ondertekenaar</string>
+    <string name="starter_on_phone_other_explain">De kopie die je hebt is ondertekend met een andere sleutel, dus Tern kan deze niet updaten vanaf dit adres.</string>
+</resources>

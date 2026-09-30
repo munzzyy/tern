@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Her satıra bir tane, Ad: değer şeklinde. Asla bir parola, çerez veya User-Agent değil: Tern her siteye kendisinin Tern olduğunu söyler.</string>
+    <string name="origin_republished_first">%1$s, geliştiricilerin başka bir yerde yayınladıklarını tekrar sunar ve geliştirici değildir. Uygulama bir sertifikaya sabitlenene kadar, Tern\'in ondan yüklediği ilk dosya her sonraki güncellemenin taşıması gereken sertifikayı belirler.</string>
+    <string name="origin_republished_pinned">%1$s, geliştiricilerin başka bir yerde yayınladıklarını tekrar sunar ve geliştirici değildir. Dosyaları bu uygulamanın tabi olduğu sertifikayı taşımalıdır.</string>
+    <string name="origin_store_first">%1$s bir mağazadır, geliştiricinin kendi sitesi değildir. Uygulama bir sertifikaya sabitlenene kadar, Tern\'in ondan yüklediği ilk dosya her sonraki güncellemenin taşıması gereken sertifikayı belirler.</string>
+    <string name="origin_store_pinned">%1$s bir mağazadır, geliştiricinin kendi sitesi değildir. Dosyaları bu uygulamanın tabi olduğu sertifikayı taşımalıdır.</string>
+    <string name="stores_refused_modified">Tern, değiştirilmiş uygulamalar sunan siteleri okumaz. Dosyaları geliştirici dışında biri tarafından değiştirilmiş ve kim değiştirdiyse onun tarafından imzalanmıştır.</string>
+    <string name="stores_refused_impersonation">Tern bu mağazayı onun uygulamasıymış gibi davranmadan okuyamaz, bu yüzden onu okumaz.</string>
+    <string name="stores_checksum_source">Geliştirici olmayan %1$s</string>
+    <string name="stores_off_title">%1$s üçüncü taraf bir mağazadır</string>
+    <string name="stores_off_body">Üçüncü taraf mağazalar kapalı. Bir mağaza, geliştiricinin kendi sitesinden dosyaları değil, uygulamaların kendi kopyalarını sunar ve Tern onu mağazanın kendi uygulaması veya web sitesi için yaptığı arayüz üzerinden okur. Açık olduklarında, Tern bir mağazaya yalnızca ondan eklediğiniz uygulamaları sorar ve uygulama bir sertifikaya sabitlenene kadar, Tern\'in bir mağazadan yüklediği ilk dosya güncellemelerinin taşıması gereken sertifikayı belirler.</string>
+    <string name="stores_turn_on">Üçüncü taraf mağazaları aç</string>
+    <string name="stores_advice">Bu uygulamayı tekrar denetlemek için Ayarlar\'da Üçüncü taraf mağazalar\'ı açın.</string>
+    <string name="stores_status_paused">Duraklatıldı</string>
+    <string name="stores_row_paused">Üçüncü taraf mağazalar kapalı</string>
+    <string name="stores_setting">Üçüncü taraf mağazalar</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store ve vivo. Geliştiricinin kendi sitesinden dosyaları değil, uygulamaların kendi kopyalarını sunarlar ve Tern onları kendi uygulamaları ve web siteleri için yaptıkları arayüzler üzerinden okur. Kapalıyken Tern hiçbirine hiçbir şey sormaz, arama onları dışarıda bırakır ve onlardan gelen uygulamalar duraklatılır.</string>
+    <string name="stores_off_tag">Ayarlar\'da kapalı</string>
+    <string name="stores_checksum_matched">Dosya, mağazanın sağlama toplamıyla eşleşiyor</string>
+    <string name="stores_explain_checksum_matched">Sağlama toplamı, dosyanın kendisinin bir parmak izidir. Mağaza bir tane verdi ve Tern\'in indirdiği dosya aynı şeye sahip, yani mağazada olduğu gibi geldi. Mağaza geliştirici değildir, bu yüzden bu, dosyayı kimin yaptığı hakkında hiçbir şey söylemez. Sertifika söyler.</string>
+    <string name="stores_import_from_stores">Bunlar, uygulamaların kendi kopyalarını sunan üçüncü taraf mağazalardan geliyor. Bir uygulama bir sertifikaya sabitlenene kadar, Tern\'in o uygulamanın mağazasından yüklediği ilk dosya, güncellemelerinin taşıması gereken sertifikayı belirler.</string>
+    <string name="stores_import_paused">Üçüncü taraf mağazalar kapalı, bu yüzden bu uygulamalar duraklatıldı. Siz onları açana kadar Tern bu mağazalara hiçbir şey sormaz.</string>
+    <string name="stores_import_names">Üçüncü taraf mağazalardan</string>
+    <string name="share_obtainium_link">Obtainium bağlantısı olarak paylaş</string>
+    <string name="share_obtainium_links">Obtainium bağlantıları olarak paylaş</string>
+</resources>

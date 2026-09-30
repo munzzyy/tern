@@ -21,6 +21,7 @@ enum class StatusLabel(@param:StringRes val text: Int, val tone: Tone) {
     RATE_LIMITED(R.string.status_rate_limited, Tone.PROBLEM),
     INSTALL_FAILED(R.string.status_install_failed, Tone.PROBLEM),
     OFFLINE(R.string.status_offline, Tone.NEUTRAL),
+    PAUSED(R.string.stores_status_paused, Tone.NEUTRAL),
     CHECKING(R.string.status_checking, Tone.BUSY),
     QUEUED(R.string.status_queued, Tone.BUSY),
     DOWNLOADING(R.string.status_downloading, Tone.BUSY),
@@ -53,6 +54,7 @@ fun statusLabel(row: AppRow, online: Boolean = true): StatusLabel {
         AppStatus.BLOCKED -> StatusLabel.BLOCKED
         AppStatus.ERROR -> when (row.problem?.kind) {
             ProblemKind.RATE_LIMITED -> StatusLabel.RATE_LIMITED
+            ProblemKind.STORES_OFF -> StatusLabel.PAUSED
             ProblemKind.INSTALL_FAILED, ProblemKind.STORAGE -> StatusLabel.INSTALL_FAILED
             else -> StatusLabel.ERROR
         }
@@ -70,6 +72,9 @@ enum class RowAction(@param:StringRes val text: Int) {
 }
 
 fun isWaitingForUser(row: AppRow): Boolean = row.progress?.phase == Phase.WAITING_FOR_USER
+
+/** An app of a third-party store while those are off: nothing of it is asked for, so nothing is offered but turning them on. */
+fun isPaused(row: AppRow): Boolean = row.problem?.kind == ProblemKind.STORES_OFF
 
 fun isBusy(row: AppRow): Boolean = row.progress != null
 
@@ -112,7 +117,7 @@ fun inlineAction(row: AppRow): RowAction? = when {
 fun primaryAction(row: AppRow): RowAction? = when {
     isWaitingForUser(row) -> RowAction.CONFIRM
     isBusy(row) -> RowAction.CANCEL
-    row.checking -> null
+    row.checking || isPaused(row) -> null
     row.status == AppStatus.BLOCKED || row.status == AppStatus.ERROR -> RowAction.CHECK
     row.config.trackOnly && row.status == AppStatus.NEW_RELEASE -> RowAction.MARK_SEEN
     row.config.trackOnly -> RowAction.CHECK
@@ -127,7 +132,7 @@ fun canSkip(row: AppRow): Boolean =
     row.latest != null && !isBusy(row) && (row.status == AppStatus.UPDATE_AVAILABLE || row.status == AppStatus.NEW_RELEASE)
 
 /** Installing a chosen version or file is offered only when nothing stops installs for this app. */
-fun canPickInstall(row: AppRow): Boolean = !row.config.trackOnly && !isBusy(row) && row.status != AppStatus.BLOCKED
+fun canPickInstall(row: AppRow): Boolean = !row.config.trackOnly && !isBusy(row) && row.status != AppStatus.BLOCKED && !isPaused(row)
 
 fun isUpdate(row: AppRow): Boolean = row.status == AppStatus.UPDATE_AVAILABLE || row.status == AppStatus.NEW_RELEASE
 
@@ -156,4 +161,5 @@ fun problemAdvice(kind: ProblemKind, installed: Boolean = false): Int = when (ki
     ProblemKind.INSTALL_FAILED -> R.string.advice_install_failed
     ProblemKind.STORAGE -> R.string.advice_storage
     ProblemKind.UNSUPPORTED -> R.string.advice_unsupported
+    ProblemKind.STORES_OFF -> R.string.stores_advice
 }

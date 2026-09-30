@@ -37,9 +37,7 @@
     <string name="settings_auto_installs">A frissítések maguktól települnek</string>
     <string name="settings_auto_installs_effect">Az automatikus frissítésre beállított alkalmazások háttérbeli ellenőrzés után frissítik magukat. Kikapcsolva csak jelzik, hogy van frissítés, és mindegyik megtartja a saját választását későbbre.</string>
     <string name="settings_unmetered_installs">Telepítés csak Wi-Fi esetén</string>
-    <string name="settings_unmetered_installs_effect">Az ellenőrzések bármilyen hálózaton futnak. Az a frissítés, amely magától települne, Wi-Fi-re vagy hálózati kábelre vár, ahogy az Obtainiumban.</string>
     <string name="settings_charging_installs">Telepítés csak töltés közben</string>
-    <string name="settings_charging_installs_effect">Az ellenőrzések akkumulátorról is futnak. Az a frissítés, amely magától települne, addig vár, amíg az eszköz töltődik.</string>
     <string name="engine_unreadable_app">A mentett alkalmazást (%1$s) nem sikerült beolvasni, ezért kimarad a listából. Semmi nem lett törölve: a Tern egy újabb verziója talán be tudja olvasni.</string>
     <string name="settings_pin_certificates">A kódtárhelyek tanúsítványainak rögzítése</string>
     <string name="settings_pin_certificates_effect">A GitHubnak, a GitLabnak és a Codebergnek annak a tanúsítványkiadónak a tanúsítványát kell felmutatnia, amelyről ismert, hogy az adott oldal használja, ahogy az Obtainiumban is. Az olyan tanúsítvány, amelynek kiállítására egy másik tanúsítványkiadót vettek rá, ilyenkor elutasításra kerül. Ha egy kódtárhely másik tanúsítványkiadóra vált, az ottani ellenőrzések addig sikertelenek, amíg ez ki nincs kapcsolva.</string>

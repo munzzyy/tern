@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Na každý řádek jedno, jako Název: hodnota. Nikdy heslo, soubor cookie nebo User-Agent: Tern každému webu sděluje, že je Tern.</string>
+    <string name="origin_republished_first">%1$s znovu nabízí to, co vývojáři publikují jinde, a není vývojářem. Dokud není aplikace připnuta k certifikátu, první soubor, který z něj Tern nainstaluje, určí, jaký certifikát musí nést každá další aktualizace.</string>
+    <string name="origin_republished_pinned">%1$s znovu nabízí to, co vývojáři publikují jinde, a není vývojářem. Jeho soubory musí nést certifikát, ke kterému je tato aplikace vázána.</string>
+    <string name="origin_store_first">%1$s je obchod, ne vlastní web vývojáře. Dokud není aplikace připnuta k certifikátu, první soubor, který z něj Tern nainstaluje, určí, jaký certifikát musí nést každá další aktualizace.</string>
+    <string name="origin_store_pinned">%1$s je obchod, ne vlastní web vývojáře. Jeho soubory musí nést certifikát, ke kterému je tato aplikace vázána.</string>
+    <string name="stores_refused_modified">Tern nečte weby, které nabízejí upravené aplikace. Jejich soubory jsou změněny někým jiným než vývojářem a podepsány tím, kdo je změnil.</string>
+    <string name="stores_refused_impersonation">Tern nemůže číst tento obchod bez toho, aby předstíral, že je jeho aplikací, takže ho nečte.</string>
+    <string name="stores_checksum_source">%1$s, což není vývojář</string>
+    <string name="stores_off_title">%1$s je obchod třetí strany</string>
+    <string name="stores_off_body">Obchody třetích stran jsou vypnuté. Obchod podává vlastní kopie aplikací, ne soubory z vlastního webu vývojáře, a Tern ho čte přes rozhraní, které obchod vytvořil pro svou vlastní aplikaci nebo web. Pokud jsou zapnuté, Tern se obchodu ptá jen na aplikace, které z něj přidáte, a dokud není aplikace připnuta k certifikátu, první soubor, který Tern z obchodu nainstaluje, určí, jaký certifikát musí nést její aktualizace.</string>
+    <string name="stores_turn_on">Zapnout obchody třetích stran</string>
+    <string name="stores_advice">Zapněte Obchody třetích stran v Nastavení a zkontrolujte tuto aplikaci znovu.</string>
+    <string name="stores_status_paused">Pozastaveno</string>
+    <string name="stores_row_paused">Obchody třetích stran jsou vypnuté</string>
+    <string name="stores_setting">Obchody třetích stran</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store a vivo. Podávají vlastní kopie aplikací, ne soubory z vlastního webu vývojáře, a Tern je čte přes rozhraní, která vytvořily pro své vlastní aplikace a weby. Pokud jsou vypnuté, Tern se nikoho z nich na nic neptá, vyhledávání je vynechá a aplikace z nich jsou pozastaveny.</string>
+    <string name="stores_off_tag">vypnuto v Nastavení</string>
+    <string name="stores_checksum_matched">Soubor odpovídá kontrolnímu součtu obchodu</string>
+    <string name="stores_explain_checksum_matched">Kontrolní součet je otisk samotného souboru. Obchod jeden poskytl a soubor, který Tern stáhl, má stejný, takže dorazil tak, jak ho má obchod. Obchod není vývojář, takže to neříká nic o tom, kdo soubor vytvořil. To říká certifikát.</string>
+    <string name="stores_import_from_stores">Tyto pocházejí z obchodů třetích stran, které podávají vlastní kopie aplikací. Dokud není aplikace připnuta k certifikátu, první soubor, který Tern nainstaluje z jejího obchodu, určí, jaký certifikát musí nést její aktualizace.</string>
+    <string name="stores_import_paused">Obchody třetích stran jsou vypnuté, takže tyto aplikace jsou pozastaveny. Tern se těchto obchodů na nic neptá, dokud je nezapnete.</string>
+    <string name="stores_import_names">Z obchodů třetích stran</string>
+    <string name="share_obtainium_link">Sdílet jako odkaz Obtainium</string>
+    <string name="share_obtainium_links">Sdílet jako odkazy Obtainium</string>
+</resources>

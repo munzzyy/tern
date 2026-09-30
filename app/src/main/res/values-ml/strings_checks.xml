@@ -17,13 +17,11 @@
     <string name="settings_only_installed">ഇൻസ്റ്റാൾ ചെയ്ത ആപ്പുകൾ മാത്രം പരിശോധിക്കുക</string>
     <string name="settings_only_installed_effect">പിന്തുടരുക മാത്രം ചെയ്യുന്ന ആപ്പുകളും പരിശോധിക്കും. നിങ്ങൾ തുറക്കുന്ന ആപ്പ് എപ്പോഴും പരിശോധിക്കും.</string>
     <string name="settings_remove_uninstalled">മറ്റിടങ്ങളിൽ അൺഇൻസ്റ്റാൾ ചെയ്ത ആപ്പുകൾ നീക്കംചെയ്യുക</string>
-    <string name="settings_remove_uninstalled_effect">Tern-ന് പുറത്ത് നിങ്ങൾ അൺഇൻസ്റ്റാൾ ചെയ്യുന്ന ആപ്പ് ലിസ്റ്റിൽ നിന്നും പോകും.</string>
     <string name="settings_file_filter">ഫയലുകൾക്കുള്ള ഫിൽട്ടർ</string>
     <string name="settings_file_filter_effect">സ്വന്തമായി ഫിൽട്ടർ ഇല്ലാത്ത ഓരോ ആപ്പും അതിൻ്റെ ഫയൽ തിരഞ്ഞെടുക്കാൻ ഉപയോഗിക്കുന്ന പാറ്റേൺ.</string>
     <string name="settings_file_filter_none">ഒന്നുമില്ല</string>
     <string name="settings_file_filter_invalid">ഈ പാറ്റേൺ വായിക്കാനാകില്ല.</string>
     <string name="settings_allow_downgrades">പഴയ പതിപ്പുകൾ അനുവദിക്കുക</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade ഇൻസ്റ്റാൾ ചെയ്തിട്ടുണ്ട്, അതിനാൽ Android-ന് പുതിയ പതിപ്പിന് മുകളിൽ പഴയ പതിപ്പ് ഇൻസ്റ്റാൾ ചെയ്യാം.</string>
     <string name="settings_collapse_groups">ഗ്രൂപ്പുകൾ മടക്കിയ നിലയിൽ ആരംഭിക്കുക</string>
     <string name="settings_haptics">ഹാപ്റ്റിക് ഫീഡ്ബാക്ക്</string>
     <string name="settings_haptics_effect">ഒരു സ്വൈപ്പോ ദീർഘനേരമുള്ള അമർത്തലോ എന്തെങ്കിലും ചെയ്യുമ്പോൾ ഒരു ചെറിയ വൈബ്രേഷൻ.</string>
@@ -38,7 +36,6 @@
     <string name="sources_repositories">റെപ്പോസിറ്ററികൾ</string>
     <string name="sources_stores">സ്റ്റോറുകൾ</string>
     <string name="sources_mirrors">ആപ്പുകൾ വീണ്ടും പ്രസിദ്ധീകരിക്കുന്ന സ്റ്റോറുകൾ</string>
-    <string name="sources_modified">മാറ്റം വരുത്തിയ ആപ്പുകളുള്ള സൈറ്റുകൾ</string>
     <string name="sources_other">മറ്റ് ഇടങ്ങൾ</string>
     <string name="sources_web_page">ഫയലുകളിലേക്കുള്ള ലിങ്കുകളുള്ള ഒരു വെബ് പേജ്</string>
     <string name="sources_direct">ഒരു ഫയലിലേക്കുള്ള നേരിട്ടുള്ള ലിങ്ക്</string>
@@ -48,8 +45,6 @@
     <string name="shared_configs_title">Obtainium ഉപയോക്താക്കൾ പങ്കിട്ട കോൺഫിഗറേഷനുകൾ</string>
     <string name="shared_configs_effect">ആപ്പുകൾക്കായി തയ്യാറാക്കിയ സെറ്റിംഗ്‌സുള്ള ഒരു സൈറ്റ്. സെറ്റിംഗ്‌സിൽ \"Obtainium ലിങ്കുകൾ തുറക്കുക\" ഓൺ ആയിരിക്കുമ്പോൾ അതിലെ ലിങ്കുകൾ Tern-ൽ തുറക്കും.</string>
     <string name="engine_inner_filter_nothing">ആർക്കൈവുകൾക്കുള്ളിലെ ഫയലുകൾക്കുള്ള ഫിൽട്ടർ ഇതിലെ ഒരു APK-യുമായും പൊരുത്തപ്പെടുന്നില്ല.</string>
-    <string name="preview_republished">ഡെവലപ്പർമാർ മറ്റിടങ്ങളിൽ പ്രസിദ്ധീകരിക്കുന്നവ %1$s വീണ്ടും വാഗ്ദാനം ചെയ്യുന്നു. ഡെവലപ്പറുടെ സർട്ടിഫിക്കറ്റ് Tern-ന് അറിയാമായിക്കഴിഞ്ഞാൽ, ഇതിലെ ഫയലുകൾ ആ സർട്ടിഫിക്കറ്റുമായി പൊരുത്തപ്പെടണം, അതിനാൽ കഴിയുമെങ്കിൽ ഒരു സർട്ടിഫിക്കറ്റ് പിൻ ചെയ്യുക അല്ലെങ്കിൽ ആദ്യം ഡെവലപ്പറിൽ നിന്ന് ഇൻസ്റ്റാൾ ചെയ്യുക.</string>
-    <string name="preview_modified">ഡെവലപ്പർ അല്ലാത്ത മറ്റാരോ മാറ്റം വരുത്തിയ ആപ്പുകളാണ് %1$s വാഗ്ദാനം ചെയ്യുന്നത്. മാറ്റം വരുത്തിയവരാണ് അവ ഒപ്പിട്ടിരിക്കുന്നത്, എന്താണ് മാറ്റിയതെന്ന് Tern-ന് പറയാനാകില്ല.</string>
     <string name="about_track_tern">Tern-നെ തന്നെ ഏറ്റവും പുതിയതായി നിലനിർത്തുക</string>
     <string name="about_track_tern_effect">Tern-ൻ്റെ സ്വന്തം റിലീസുകൾ ലിസ്റ്റിലേക്ക് ചേർക്കുന്നു, മറ്റേതൊരു ആപ്പിനെയും പോലെ പരിശോധിച്ച് സ്ഥിരീകരിക്കുന്നു.</string>
     <string name="engine_channel_tracked">പിന്തുടരുന്ന ആപ്പുകളുടെ പുതിയ റിലീസുകൾ</string>

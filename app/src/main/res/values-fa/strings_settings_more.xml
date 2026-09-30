@@ -37,9 +37,7 @@
     <string name="settings_auto_installs">نصب خودکار به‌روزرسانی‌ها</string>
     <string name="settings_auto_installs_effect">برنامه‌هایی که برای به‌روزرسانی خودکار تنظیم شده‌اند، این کار را پس از یک بررسی در پس‌زمینه انجام می‌دهند. در حالت خاموش، فقط اعلام می‌کنند که به‌روزرسانی هست و هر کدام انتخاب خودش را برای بعد نگه می‌دارد.</string>
     <string name="settings_unmetered_installs">نصب فقط با Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">بررسی‌ها روی هر شبکه‌ای انجام می‌شوند. به‌روزرسانی‌ای که قرار بود خودکار نصب شود، منتظر Wi-Fi یا کابل شبکه می‌ماند، مانند Obtainium.</string>
     <string name="settings_charging_installs">نصب فقط هنگام شارژ</string>
-    <string name="settings_charging_installs_effect">بررسی‌ها روی باتری هم انجام می‌شوند. به‌روزرسانی‌ای که قرار بود خودکار نصب شود، منتظر می‌ماند تا دستگاه در حال شارژ باشد.</string>
     <string name="engine_unreadable_app">برنامه ذخیره‌شده %1$s خوانده نشد، بنابراین از لیست کنار گذاشته شد. چیزی حذف نشده است: ممکن است نسخه جدیدتر Tern بتواند آن را بخواند.</string>
     <string name="settings_pin_certificates">پین کردن گواهی‌های میزبان‌های کد</string>
     <string name="settings_pin_certificates_effect">GitHub، GitLab و Codeberg باید گواهی‌ای از مرجع صدور گواهی شناخته‌شده خود ارائه دهند، مانند Obtainium. گواهی‌ای که مرجعی دیگر مجبور به صدور آن شده باشد، در این حالت رد می‌شود. اگر یکی از میزبان‌های کد مرجع خود را عوض کند، تا وقتی این گزینه خاموش نشده، بررسی‌ها در آنجا ناموفق می‌شوند.</string>

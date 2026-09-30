@@ -4,6 +4,8 @@ import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.suggest.Catalog
 import io.github.munzzyy.tern.core.suggest.SuggestedApp
 import io.github.munzzyy.tern.core.suggest.SuggestedKind
+import io.github.munzzyy.tern.core.verify.Fingerprints
+import io.github.munzzyy.tern.engine.StarterHere
 import io.github.munzzyy.tern.engine.Suggestion
 import io.github.munzzyy.tern.engine.SuggestionKind
 
@@ -51,10 +53,27 @@ internal object Suggestions {
     }
 
     /** [text] turns a string resource into its text. */
-    fun list(television: Boolean, text: (Int) -> String): List<Suggestion> = list(television, Catalog.all, text)
+    fun list(television: Boolean, text: (Int) -> String): List<Suggestion> = list(television, Catalog.all, text = text)
 
-    fun list(television: Boolean, catalog: List<SuggestedApp>, text: (Int) -> String): List<Suggestion> = Catalog.ordered(television, catalog).mapNotNull { app ->
+    fun list(
+        television: Boolean,
+        catalog: List<SuggestedApp>,
+        here: (SuggestedApp) -> StarterHere = { StarterHere.NONE },
+        text: (Int) -> String,
+    ): List<Suggestion> = Catalog.ordered(television, catalog).mapNotNull { app ->
         val summary = summaryOf(app.summaryKey) ?: return@mapNotNull null
-        Suggestion(app.name, text(summary), app.url, kindOf(app.kind), app.television, pinned = app.signers.isNotEmpty())
+        Suggestion(app.name, text(summary), app.url, kindOf(app.kind), app.television, pinned = app.signers.isNotEmpty(), here = here(app))
+    }
+
+    /**
+     * Where [app] already is. An installed copy counts as another signer's only when Tern carries the
+     * developer's certificate and neither the copy's signer nor any it rotated from is one of them.
+     */
+    fun here(app: SuggestedApp, followed: Boolean, installedSigners: List<String>?): StarterHere {
+        if (followed) return StarterHere.IN_LIST
+        val installed = installedSigners ?: return StarterHere.NONE
+        val carried = app.signers.mapNotNull(Fingerprints::normalize).toSet()
+        if (carried.isEmpty()) return StarterHere.ON_PHONE
+        return if (installed.mapNotNull(Fingerprints::normalize).any { it in carried }) StarterHere.ON_PHONE else StarterHere.ON_PHONE_OTHER_SIGNER
     }
 }

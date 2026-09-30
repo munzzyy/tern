@@ -58,8 +58,10 @@ data class GateRequest(
     val staging: File,
     /** True when [pinnedSigners] are certificates Tern itself carries for this app, which changes what a refusal says. */
     val builtInPin: Boolean = false,
-    /** An older version may replace a newer one: the person allowed it, and something lets Android do it. */
+    /** An older version may replace a newer one: the person picked it, allowed it, and something lets Android do it. */
     val allowDowngrade: Boolean = false,
+    /** The versionCode the source named for this file, if it named one. */
+    val claimedVersionCode: Long? = null,
     /** Which files inside an archive or a bundle may be installed, by their names there. */
     val installsInside: (String) -> Boolean = { true },
     /**
@@ -70,6 +72,20 @@ data class GateRequest(
     /** Whether the OBB files of an archive are unpacked, for an installer that can put them in place; otherwise only their names are read. */
     val unpacksObb: Boolean = false,
 )
+
+internal enum class Downgrade { NONE, ALLOWED, REFUSED, NOT_AS_NAMED }
+
+/**
+ * Whether a file of [file] may go over [installed]. An older one goes only where [allowed], and
+ * never when the source named a higher versionCode than the file has: the source said it was
+ * newer, so going back was not what anyone chose.
+ */
+internal fun downgrade(file: Long, installed: Long?, allowed: Boolean, claimed: Long?): Downgrade = when {
+    installed == null || file >= installed -> Downgrade.NONE
+    claimed != null && file < claimed -> Downgrade.NOT_AS_NAMED
+    allowed -> Downgrade.ALLOWED
+    else -> Downgrade.REFUSED
+}
 
 fun interface Gate {
     fun check(request: GateRequest): GatePass
@@ -265,8 +281,10 @@ class InstallGate(
                 Block.PIN_MISMATCH -> StepFailure(ProblemKind.PIN_MISMATCH, if (request.builtInPin) texts.builtInPinMismatch() else texts.pinMismatch())
             }
         }
-        if (installed != null && android.versionCode < installed.versionCode && !request.allowDowngrade) {
-            throw StepFailure(ProblemKind.DOWNGRADE, texts.downgrade(installed.versionName, android.versionName))
+        when (downgrade(android.versionCode, installed?.versionCode, request.allowDowngrade, request.claimedVersionCode)) {
+            Downgrade.NONE, Downgrade.ALLOWED -> Unit
+            Downgrade.REFUSED -> throw StepFailure(ProblemKind.DOWNGRADE, texts.downgrade(installed?.versionName, android.versionName))
+            Downgrade.NOT_AS_NAMED -> throw StepFailure(ProblemKind.DOWNGRADE, texts.downgradeNotAsNamed(android.versionCode, request.claimedVersionCode ?: 0))
         }
         if (android.testOnly || ours.manifest.testOnly) throw StepFailure(ProblemKind.UNSUPPORTED, texts.testOnly())
         val minSdk = android.minSdk ?: ours.manifest.minSdk

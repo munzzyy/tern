@@ -17,13 +17,11 @@
     <string name="settings_only_installed">Yalnızca yüklü uygulamaları denetle</string>
     <string name="settings_only_installed_effect">Yalnızca izlenen uygulamalar da denetlenir. Açtığınız bir uygulama her zaman denetlenir.</string>
     <string name="settings_remove_uninstalled">Başka yerden kaldırılan uygulamaları listeden çıkar</string>
-    <string name="settings_remove_uninstalled_effect">Tern dışında kaldırdığınız bir uygulama listeden de çıkar.</string>
     <string name="settings_file_filter">Dosya filtresi</string>
     <string name="settings_file_filter_effect">Kendi filtresi olmayan her uygulamanın dosyasını seçerken kullandığı bir kalıp.</string>
     <string name="settings_file_filter_none">Yok</string>
     <string name="settings_file_filter_invalid">Bu kalıp okunamıyor.</string>
     <string name="settings_allow_downgrades">Eski sürümlere izin ver</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade yüklü, bu yüzden Android daha yeni bir sürümün üzerine daha eski bir sürüm yükleyebilir.</string>
     <string name="settings_collapse_groups">Gruplar daraltılmış olarak başla</string>
     <string name="settings_haptics">Dokunsal geri bildirim</string>
     <string name="settings_haptics_effect">Bir kaydırma veya uzun basma bir şey yaptığında hafif bir titreşim.</string>
@@ -38,7 +36,6 @@
     <string name="sources_repositories">Depolar</string>
     <string name="sources_stores">Mağazalar</string>
     <string name="sources_mirrors">Uygulamaları yeniden yayınlayan mağazalar</string>
-    <string name="sources_modified">Değiştirilmiş uygulamalar sunan siteler</string>
     <string name="sources_other">Diğer yerler</string>
     <string name="sources_web_page">Dosya bağlantıları içeren bir web sayfası</string>
     <string name="sources_direct">Bir dosyaya doğrudan bağlantı</string>
@@ -48,8 +45,6 @@
     <string name="shared_configs_title">Obtainium kullanıcılarının paylaştığı yapılandırmalar</string>
     <string name="shared_configs_effect">Uygulamalar için hazır ayarlar içeren bir site. Ayarlar\'da Obtainium bağlantılarını aç seçeneği açıkken bağlantıları Tern\'de açılır.</string>
     <string name="engine_inner_filter_nothing">Arşivlerin içindeki dosyalar için filtre, bu arşivdeki APK\'lerin hiçbiriyle eşleşmiyor.</string>
-    <string name="preview_republished">%1$s, geliştiricilerin başka yerde yayınladıklarını yeniden sunar. Tern geliştiricinin sertifikasını öğrendiğinde bu dosyaları o sertifikaya tabi tutar, bu yüzden mümkünse bir sertifika sabitleyin veya önce geliştiriciden yükleyin.</string>
-    <string name="preview_modified">%1$s, geliştiricilerinden başka biri tarafından değiştirilmiş uygulamalar sunar. Bunlar, onları değiştiren kişi tarafından imzalanır ve Tern neyin değiştirildiğini anlayamaz.</string>
     <string name="about_track_tern">Tern\'in kendisini güncel tut</string>
     <string name="about_track_tern_effect">Tern\'in kendi sürümlerini listeye ekler, herhangi bir uygulama gibi denetlenir ve doğrulanır.</string>
     <string name="engine_channel_tracked">İzlenen uygulamaların yeni sürümleri</string>

@@ -31,7 +31,7 @@ fun signerLine(v: Verification): EvidenceLine {
 fun checksumLine(v: Verification): EvidenceLine = when (v.checksum) {
     ChecksumState.NOT_PUBLISHED -> EvidenceLine(R.string.checksum_not_published, Trust.NOTE)
     ChecksumState.PENDING -> EvidenceLine(R.string.checksum_pending, Trust.NOTE)
-    ChecksumState.MATCHED -> EvidenceLine(R.string.checksum_matched, Trust.GOOD)
+    ChecksumState.MATCHED -> EvidenceLine(if (v.checksumFromStore) R.string.stores_checksum_matched else R.string.checksum_matched, Trust.GOOD)
     ChecksumState.MISMATCH -> EvidenceLine(R.string.checksum_mismatch, Trust.BAD)
 }
 
@@ -60,7 +60,7 @@ fun signerExplanation(v: Verification, installed: Boolean): Int = when (v.signer
 fun checksumExplanation(v: Verification): Int = when (v.checksum) {
     ChecksumState.NOT_PUBLISHED -> R.string.explain_checksum_none
     ChecksumState.PENDING -> R.string.explain_checksum_pending
-    ChecksumState.MATCHED -> R.string.explain_checksum_matched
+    ChecksumState.MATCHED -> if (v.checksumFromStore) R.string.stores_explain_checksum_matched else R.string.explain_checksum_matched
     ChecksumState.MISMATCH -> R.string.explain_checksum_mismatch
 }
 

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Why an app of a third-party store is not checked. Shown after the status "Paused", so it does not say paused again. -->
+    <string name="stores_paused_reason">Third-party stores are off, so Tern asks this store nothing. Turn them on in Settings to check it again.</string>
+</resources>

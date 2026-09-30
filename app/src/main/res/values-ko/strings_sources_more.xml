@@ -18,10 +18,7 @@
     <string name="step_arch">이 기기의 프로세서 우선</string>
     <string name="step_add">페이지 추가</string>
     <string name="step_remove">이 페이지 제거</string>
-    <string name="option_file_version">파일 이름을 버전으로 사용</string>
-    <string name="option_file_version_effect">그러면 각 파일이 별개의 릴리스로 취급됩니다.</string>
     <string name="github_proxy_title">hubproxy를 통한 GitHub</string>
-    <string name="github_proxy_effect">GitHub로 가는 모든 요청이 이 호스트로 전달되며, 호스트는 각 요청을 볼 수 있습니다. 토큰은 이 호스트를 통해 전송되지 않으므로 이 방식으로는 비공개 프로젝트와 GitHub Actions를 추적할 수 없습니다.</string>
     <string name="github_proxy_host">hubproxy 호스트</string>
     <string name="github_proxy_help">gh-proxy.com처럼 호스트 이름만 입력하세요. Tern은 HTTPS로 접속합니다.</string>
     <string name="github_proxy_invalid">Tern이 사용할 수 있는 호스트 이름이 아닙니다</string>

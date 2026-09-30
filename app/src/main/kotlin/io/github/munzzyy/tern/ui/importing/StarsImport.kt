@@ -35,7 +35,7 @@ suspend fun addEach(
                     }
                 }
                 is Detection.Failed -> skipped += label to reasonFor(found.problem.kind)
-                is Detection.Results -> skipped += label to SkipReason.OTHER
+                is Detection.Results, is Detection.StoresOff -> skipped += label to SkipReason.OTHER
             }
         } catch (e: CancellationException) {
             throw e

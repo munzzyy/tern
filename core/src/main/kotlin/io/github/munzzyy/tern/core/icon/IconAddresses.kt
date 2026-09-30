@@ -17,8 +17,6 @@ object IconAddresses {
         "appgallery.huawei.ru" to setOf("appimg-dra.dbankcdn.com", "appimg-drcn.dbankcdn.com"),
         "detail-browser.vivo.com.cn" to setOf("imgwsdl.vivo.com.cn", "appstoreimg-ipv6.vivo.com.cn"),
         "sj.qq.com" to setOf("pp.myapp.com"),
-        "www.coolapk.com" to setOf("pp.myapp.com"),
-        "www.rustore.ru" to setOf("static.rustore.ru"),
         "apkpure.com" to setOf("image.winudf.com"),
         "apkpure.net" to setOf("image.winudf.com"),
         "www.apkmirror.com" to setOf("downloadr2.apkmirror.com"),
@@ -27,7 +25,6 @@ object IconAddresses {
     /** The same, for stores that give every app a host of its own under theirs, as in app.en.aptoide.com. */
     val OTHER_HOSTS_UNDER: Map<String, Set<String>> = mapOf(
         "aptoide.com" to setOf("pool.img.aptoide.com"),
-        "uptodown.com" to setOf("img.utdstc.com"),
     )
 
     /** What is left of [candidates], in their order, for a source at [sourceUrl]: HTTPS only, and no host but the allowed ones. */

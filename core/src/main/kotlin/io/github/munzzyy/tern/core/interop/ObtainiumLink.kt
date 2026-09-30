@@ -7,6 +7,9 @@ sealed interface ObtainiumLink {
 
     companion object {
         private const val PREFIX = "obtainium://"
+
+        /** Tern's own links of the same kinds, which the page at [ConfigLink.ADD_PAGE] makes. */
+        private const val TERN = "tern://"
         private const val MAX_LENGTH = 200_000
 
         /**
@@ -17,14 +20,18 @@ sealed interface ObtainiumLink {
 
         private val REDIRECT = Regex("^https://apps\\.obtainium\\.imranr\\.dev/redirect/?\\?(.*)$", RegexOption.IGNORE_CASE)
 
+        /** Tern's add page, with what it carries after '#', or after '?' in the links made before it used '#'. */
+        private val ADD_PAGE = Regex("^https://tern\\.munzzyy\\.dev/add/?(?:\\?([^#]*))?(?:#(.*))?$", RegexOption.IGNORE_CASE)
+
         /**
          * Read by hand: payloads arrive with raw braces and quotes that a strict URI parser refuses.
          * A link behind [WEB_REDIRECT] is read as the link it carries; the page itself is never asked.
          */
         fun parse(uri: String): ObtainiumLink? {
             val text = carried(uri.trim()) ?: return null
-            if (text.length > MAX_LENGTH || !text.startsWith(PREFIX, ignoreCase = true)) return null
-            val rest = text.substring(PREFIX.length)
+            val prefix = listOf(PREFIX, TERN).firstOrNull { text.startsWith(it, ignoreCase = true) } ?: return null
+            if (text.length > MAX_LENGTH) return null
+            val rest = text.substring(prefix.length)
             val action = rest.substringBefore('/').substringBefore('?').lowercase()
             val afterAction = rest.substring(action.length)
             val data = when {
@@ -40,8 +47,16 @@ sealed interface ObtainiumLink {
             }
         }
 
-        /** [text] as it is, or the obtainium:// link that Obtainium's web page carries in it; null when that page carries none. */
+        /**
+         * [text] as it is, or the link that Tern's add page or Obtainium's web page carries in it;
+         * null when the page carries none. Neither page is asked for anything.
+         */
         private fun carried(text: String): String? {
+            ADD_PAGE.matchEntire(text)?.let { page ->
+                val parts = page.groupValues[2].split('&') + page.groupValues[1].split('&')
+                parts.firstOrNull { it.startsWith("app=") }?.let { return TERN + "app/" + it.removePrefix("app=") }
+                return parts.firstOrNull { it.startsWith("url=") }?.let { TERN + "add?url=" + it.removePrefix("url=") }
+            }
             val query = REDIRECT.matchEntire(text)?.groupValues?.get(1) ?: return text
             val raw = query.split('&').firstOrNull { it.startsWith("r=") }?.removePrefix("r=") ?: return null
             // Obtainium leaves the link after r= as it is and only its payload encoded; some pages encode the whole of it.

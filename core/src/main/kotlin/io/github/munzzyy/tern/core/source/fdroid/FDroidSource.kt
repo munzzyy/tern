@@ -10,6 +10,8 @@ import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.net.Validator
 import io.github.munzzyy.tern.core.source.CheckContext
 import io.github.munzzyy.tern.core.source.CheckResult
+import io.github.munzzyy.tern.core.source.Hit
+import io.github.munzzyy.tern.core.source.Searchable
 import io.github.munzzyy.tern.core.source.Source
 import io.github.munzzyy.tern.core.source.SourceErrorKind
 import io.github.munzzyy.tern.core.source.SourceException
@@ -17,9 +19,12 @@ import io.github.munzzyy.tern.core.source.SourceListing
 import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.guarded
+import io.github.munzzyy.tern.core.xml.XmlScanner
 
-class FDroidSource : Source {
+class FDroidSource : Source, Searchable {
     override val type: String = SourceTypes.FDROID
+
+    override val origin: String = "F-Droid"
 
     override fun match(url: String): SourceSpec? {
         val uri = Urls.parseHttps(url) ?: return null
@@ -77,12 +82,56 @@ class FDroidSource : Source {
         }
     }
 
+    /** The first page of search.f-droid.org, as the site shows it. Each hit is the package page of f-droid.org. */
+    override fun search(query: String, context: CheckContext): List<Hit> = guarded(context) { searchOnce(query, it) }
+
+    private fun searchOnce(query: String, context: CheckContext): List<Hit> {
+        val words = query.trim().take(MAX_QUERY)
+        if (words.isEmpty()) return emptyList()
+        val url = "$SEARCH?q=${Urls.encodeSegment(words)}&lang=en"
+        val html = context.http.execute(HttpRequest(url)).use {
+            if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${it.status} for $SEARCH")
+            it.text(SEARCH_CAP)
+        }
+        val headers = PACKAGE_HEADER.findAll(html).take(MAX_HEADERS).toList()
+        return headers.asSequence().mapIndexedNotNull { i, header ->
+            val href = HREF.find(header.value)?.groupValues?.get(1)?.let(XmlScanner::decode) ?: return@mapIndexedNotNull null
+            val page = Urls.resolve(url, href)?.let(::match)?.url?.takeIf { it.startsWith(PACKAGES) } ?: return@mapIndexedNotNull null
+            val block = html.substring(header.range.last + 1, minOf(headers.getOrNull(i + 1)?.range?.first ?: html.length, header.range.last + 1 + HIT_WINDOW))
+            val name = inside(block, PACKAGE_NAME, "</h4")
+            val summary = inside(block, PACKAGE_SUMMARY, "</span")
+            Hit(name = name ?: page.removePrefix(PACKAGES), owner = null, description = summary, url = page)
+        }.distinctBy { it.url }.take(MAX_HITS).toList()
+    }
+
+    /** The text of the element that [opening] finds in [block], up to [closing]. */
+    private fun inside(block: String, opening: Regex, closing: String): String? {
+        val from = opening.find(block)?.range?.last?.plus(1) ?: return null
+        val to = block.indexOf(closing, from, ignoreCase = true)
+        if (to < 0) return null
+        return XmlScanner.decode(TAG.replace(block.substring(from, to), " ")).replace(SPACES, " ").trim().takeIf { it.isNotEmpty() }
+    }
+
     companion object {
         private const val MAX_RELEASES = 30
         private val FDROID_PATH = Regex("^(?:/[a-zA-Z-]{2,7})?/packages/([^/]+)$")
         private val IZZY_APT_PATH = Regex("^/fdroid/index/apk/([^/]+)$")
         private val IZZY_ANDROID_PATH = Regex("^/repo/apk/([^/]+)$")
         private val SEGMENT = Regex("^[A-Za-z][A-Za-z0-9_]*$")
+
+        private const val SEARCH = "https://search.f-droid.org/"
+        private const val PACKAGES = "https://f-droid.org/packages/"
+        private const val SEARCH_CAP = 2 * 1024 * 1024
+        private const val MAX_QUERY = 200
+        private const val MAX_HITS = 25
+        private const val MAX_HEADERS = 200
+        private const val HIT_WINDOW = 8 * 1024
+        private val PACKAGE_HEADER = Regex("""<a\s[^>]{0,1000}?class="(?:[^"]{0,500}\s)?package-header(?:\s[^"]{0,500})?"[^>]{0,1000}>""")
+        private val HREF = Regex("""(?:^|\s)href="([^"]{1,2000})"""")
+        private val PACKAGE_NAME = Regex("""class="(?:[^"]{0,500}\s)?package-name(?:\s[^"]{0,500})?"[^>]{0,1000}>""")
+        private val PACKAGE_SUMMARY = Regex("""class="(?:[^"]{0,500}\s)?package-summary(?:\s[^"]{0,500})?"[^>]{0,1000}>""")
+        private val TAG = Regex("<[^>]*>")
+        private val SPACES = Regex("\\s+")
 
         fun isValidPackage(pkg: String): Boolean {
             val segments = pkg.split('.')

@@ -45,10 +45,10 @@ class ObtainiumImportTest {
     @Test
     fun skipsUnsupportedSourcesWithReasons() {
         val skipped = result().skipped
-        assertEquals(3, skipped.size)
+        assertEquals(2, skipped.size)
         assertTrue(skipped.any { it.name == "Thirteen" && it.reason.contains("APKPure") })
         assertTrue(skipped.any { it.name == "Fourteen" && it.reason.contains("Uptodown") })
-        assertTrue(skipped.any { it.name == "Fifteen" && it.reason.contains("Telegram") })
+        assertEquals(SourceTypes.TELEGRAM, result().apps.first { it.name == "Fifteen" }.source.type)
     }
 
     @Test

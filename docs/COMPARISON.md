@@ -151,7 +151,7 @@ run against answers recorded from the real services.
 |---|---|
 | Background checks from 15 minutes to 30 days on a slider, Wi-Fi and charging only, retries of failed checks | All of them, through Android's job scheduler rather than a task that decides by itself whether it is due. As in Obtainium, Wi-Fi and charging hold back installs, not checks, and a rate limit is waited out |
 | Check on start, check on opening an app, only installed and tracked apps, remove apps uninstalled elsewhere, a global APK filter | All of them |
-| Installers: system, Shizuku, root, another app picked from a list with icons and its way in | All four; the other app is held to the same checks, and the signer of what it installed is compared afterwards |
+| Installers: system, Shizuku, Dhizuku, root, another app picked from a list with icons and its way in | All five. Every file is checked before any of them sees it, and the signer of what was installed is compared with the checked file afterwards, whichever installed it. Dhizuku is reached through its own owner and eight named classes, never all of Android's hidden interfaces |
 | New apps shown to Verified Apps first, and its About link | Yes, on at first as in Obtainium, for an install started with Tern on the screen. The installer still gets the checked file |
 | OBB files of an XAPK put in `Android/obb`, through Android's folder picker | Through Shizuku or root, under the package the checks verified and with plain file names only. With another installer they stay in the release's file, and the log says where |
 | Parallel downloads, retries of a failed download, Obtainium installed last | All three: one download at a time if wanted, three more tries resuming where the server allows, and Tern's own update last |
@@ -226,8 +226,6 @@ such a review has something to disagree with.
   crowdsourced app configurations.
 - A web view of the app's page inside the app. Tern shows the project's README
   instead, read from the forge's API, with no script running.
-- Dhizuku as an installer. Tern installs through Android, Shizuku or Sui,
-  root, or another installer app.
 - Settings that lower a check: accepting any certificate or plain HTTP for an
   app, installing over a different signing certificate, and "Hide downgrades"
   turned off. With downgrades allowed, Tern's version history installs any

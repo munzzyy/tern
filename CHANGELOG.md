@@ -15,9 +15,9 @@ Everything Obtainium does, and more.
   download, for stores whose addresses expire.
 - Searches F-Droid, Aptoide, Uptodown, AppGallery, the vivo store and RuStore
   as well as GitHub, Codeberg and GitLab, in the places ticked under "Search in".
-- Installs through Shizuku, root or another installer app. Google Play can be
-  named as the installer, for every app or for one, and with Let Me Downgrade
-  installed an older version can go in over a newer one.
+- Installs through Shizuku, Dhizuku, root or another installer app. Google
+  Play can be named as the installer, for every app or for one, and with Let Me
+  Downgrade installed an older version can go in over a newer one.
 - Every per-app option Obtainium has: pre-releases, falling back to older
   releases, a minimum age, filters on titles, notes and versions, the version
   read from the tag, the title or the date with a match group, the order of
@@ -51,6 +51,9 @@ Everything Obtainium does, and more.
   names each app with its reason, a tap away from what went wrong.
 - New apps can be shown to Verified Apps first, as in Obtainium. The installer
   app is picked from a list with icons, with the way in it takes.
+- Dhizuku's state shows in Settings: not installed, not the device owner, not
+  allowed yet, or ready. Every install, whichever installer made it, counts
+  only when the installed app carries the certificate the checks verified.
 - The activity log can keep Tern's own messages: warnings, errors, and each
   check's start and end, with what started it, how many apps, what it found and
   how long it took. Off at first. They are marked and coloured by level, have a

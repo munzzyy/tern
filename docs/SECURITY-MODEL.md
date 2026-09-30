@@ -115,7 +115,8 @@ build, and a build for a newer Android than the device runs.
 
 The system installer runs its own checks after all of that. Tern treats an
 install as done when Android reports success and the package manager shows the
-expected version code.
+expected version code and the certificate the gate verified, whichever
+installer was used.
 
 ## Installers other than Android's
 
@@ -128,7 +129,27 @@ session. The command is made of fixed words, the package name the gate read and
 checked, the sizes of the files and the session number `pm` gave back. Nothing
 a server sent is ever part of it. Root runs it through `su -c` with every word
 quoted. If the chosen installer is not there, Tern falls back to Android's own
-and says so.
+and says so, except for Dhizuku, below.
+
+Dhizuku is an app that holds Android's device owner role and lends it to apps
+the person lets in; a device owner installs without a prompt. Tern speaks
+Dhizuku's protocol itself, finds the owner through Android's device policy
+service, and asks only the provider that belongs to that package. Through it,
+Tern creates the install session as Dhizuku's, so the device owner installs;
+Dhizuku relays the calls about that session, and the files go from Tern to
+Android. Dhizuku asks the person before it lets Tern in. It never falls back to
+another installer: while it is not ready, nothing is installed, and Settings
+says what is missing. Google Play as the named installer, update ownership and
+OBB files do not apply to it.
+
+Those calls use four of Android's non-SDK interfaces: the package service from
+`ServiceManager`, `IPackageManager.getPackageInstaller`, a `PackageInstaller`
+made for Dhizuku's package, and a `PackageInstaller.Session` over the session
+Dhizuku opened. Android keeps such interfaces from apps, so Tern lifts that for
+eight named classes, with LSPosed's HiddenApiBypass (Apache-2.0, 15 KB), and
+only once Dhizuku is chosen. No hidden install flag is set. Where one of these
+calls is missing on some version of Android, Settings and the install say that
+Tern cannot install through Dhizuku there.
 
 OBB files are the one exception, and a narrow one. After Android has installed
 an app that passed the gate, Shizuku or root writes the OBB files of its
@@ -562,6 +583,9 @@ import it.
   been run yet.
 - It has been tested on emulators. Vendor builds of Android can behave
   differently.
+- Installing through Dhizuku has been checked against Android's sources for
+  versions 10 to 16 and tested on a computer, not yet on a device with Dhizuku
+  as its owner.
 - The handoff has been tested with real connections on a computer, and its
   page in Chromium on a computer. No phone has loaded the page yet. How the
   handoff finds the device's address and how it closes when Tern leaves the

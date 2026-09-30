@@ -72,8 +72,9 @@ over the network for that.
 
 With another app chosen as the installer, Tern hands that app each file once
 the file has passed its checks, and that app alone may read it. With Shizuku
-or root chosen, the file goes to Android's package manager through them. None
-of this leaves the device.
+or root chosen, the file goes to Android's package manager through them. With
+Dhizuku chosen, the file goes to Android's package manager in a session that
+Dhizuku holds for Tern. None of this leaves the device.
 
 ## Send from a phone
 
@@ -148,6 +149,7 @@ From Android 13 on, Android keeps it.
 | Run at startup | To put the background check back after a reboot |
 | Foreground service, data sync | To keep a download you started alive when you leave the app |
 | Shizuku (`moe.shizuku.manager.permission.API_V23`) | To install through Shizuku, when you choose it as the installer. Shizuku asks you before it lets Tern in |
+| Dhizuku (`com.rosan.dhizuku.permission.API`) | To install through Dhizuku, when you choose it as the installer. It lets Dhizuku list Tern among the apps it may let in; Dhizuku asks you before it does |
 
 `tools/check-apk.sh` fails the build if the APK asks for anything that is not in
 this table.

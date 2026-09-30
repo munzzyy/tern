@@ -22,7 +22,7 @@ leaves the device.
 - Each app stays tied to the certificate of its first install. For 15
   well-known apps Tern knows the certificate before that.
 - It reads every source Obtainium reads, from GitHub to the Galaxy Store, and
-  installs through Android, Shizuku, root or another installer app.
+  installs through Android, Shizuku, Dhizuku, root or another installer app.
 - A widget, a Quick Settings tile and launcher shortcuts check and update from
   outside the app.
 - Android TV works by remote, and a phone can send links to it sealed with a
@@ -117,8 +117,10 @@ update; where Android wants a confirmation you get a notification instead of a
 surprise. Android refuses a second silent update of the same app within 30
 seconds of the last one, and that is one of the cases where you are asked.
 
-With Shizuku or root chosen under Settings, Installing, first installs and
-updates install without a prompt on any Android from 10 on. You can also hand
+With Shizuku, Dhizuku or root chosen under Settings, Installing, first installs
+and updates install without a prompt on any Android from 10 on. Android then
+names Dhizuku as the installer, and may show its own notice that an admin
+installed the app. You can also hand
 every checked file to another installer app; Tern then compares the signer of
 what it installed with the file it checked.
 
@@ -212,8 +214,8 @@ Obtainium does that Tern does not.
 
 ## What it does not do
 
-- Without Shizuku or root, a first install always asks, and silent updates
-  need Android 12, as Android decides.
+- Without Shizuku, Dhizuku or root, a first install always asks, and silent
+  updates need Android 12, as Android decides.
 - An archive compressed with zstd is not opened; zip, tar, and tar compressed
   with gzip, bzip2 or xz are.
 - The translations are machine-made. Details of an error that come from a

@@ -71,6 +71,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -106,6 +107,10 @@ private val RAIL_WIDTH = 600.dp
 private val TWO_PANE_WIDTH = 840.dp
 private val LIST_PANE_WIDTH = 400.dp
 private const val LIST_PANE_SHARE = 0.45f
+private const val LARGE_TEXT = 1.5f
+
+/** Whether the list and an app's page fit side by side; with large text each needs more room, so the width asked for grows with the text. */
+fun twoPanesFit(width: Dp, fontScale: Float): Boolean = width >= TWO_PANE_WIDTH * (if (fontScale >= LARGE_TEXT) fontScale else 1f)
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -205,7 +210,7 @@ private fun Shell(stack: BackStack) {
     CompositionLocalProvider(LocalOnline provides online) {
         BoxWithConstraints(Modifier.fillMaxSize()) {
             val wide = !phoneLayout && maxWidth >= RAIL_WIDTH
-            val twoPane = !phoneLayout && maxWidth >= TWO_PANE_WIDTH
+            val twoPane = !phoneLayout && twoPanesFit(maxWidth, LocalDensity.current.fontScale)
             val current = stack.top
             val select: (Tab) -> Unit = { tab ->
                 stack.routes.forEach { if (it != Route.Apps) holder.removeState(encodeRoute(it)) }

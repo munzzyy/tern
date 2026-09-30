@@ -119,12 +119,12 @@ class ObtainiumExportTest {
 
     @Test
     fun aHeaderThatCouldHoldAKeyNeverLeavesForObtainium() {
-        val headers = RequestHeaders.write(mapOf("User-Agent" to "Example/1.0", "X-Api-Key" to "k123"))
+        val headers = RequestHeaders.write(mapOf("Accept-Language" to "de", "X-Api-Key" to "k123"))
         val direct = AppConfig("direct", SourceSpec(SourceTypes.DIRECT, "https://example.org/app.apk", mapOf(SourceOptions.HEADERS to headers)), "Direct")
         val text = ObtainiumExport.write(listOf(direct), 0, "0.2.0").text
         assertFalse(text, "k123" in text || "X-Api-Key" in text)
         val back = ObtainiumImport.read(text).apps.single()
-        assertEquals(mapOf("User-Agent" to "Example/1.0"), RequestHeaders.parse(back.source.option(SourceOptions.HEADERS)))
+        assertEquals(mapOf("Accept-Language" to "de"), RequestHeaders.parse(back.source.option(SourceOptions.HEADERS)))
     }
 
     @Test

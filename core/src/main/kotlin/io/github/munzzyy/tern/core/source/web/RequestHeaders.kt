@@ -27,7 +27,7 @@ object RequestHeaders {
     private val REFUSED_PREFIXES = listOf("if-", "proxy-")
 
     /** Headers that say how to ask and never who asks. Any other can hold a key. */
-    private val PLAIN = setOf("user-agent", "accept", "accept-language", "referer")
+    private val PLAIN = setOf("accept", "accept-language", "referer")
     private const val NAME_MARKS = "!#$%&'*+-.^_`|~"
 
     /** The headers [spec] asks for; a refused one fails the check as an unsupported option. */

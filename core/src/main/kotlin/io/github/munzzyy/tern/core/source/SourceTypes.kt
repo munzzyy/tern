@@ -185,7 +185,7 @@ object SourceOptions {
      */
     const val HIGHEST_VERSION = "highestVersion"
 
-    /** samsung: the device model the store is asked for, such as "SM-S948B". */
+    /** samsung: the device model the store is asked for, as the model number printed in a Galaxy phone's settings. */
     const val DEVICE_MODEL = "deviceModel"
 
     /** samsung: the country and carrier code the store is asked for, such as "DBT". */

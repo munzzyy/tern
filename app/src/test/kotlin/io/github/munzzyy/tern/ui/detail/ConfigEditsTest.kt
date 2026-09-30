@@ -2,6 +2,7 @@ package io.github.munzzyy.tern.ui.detail
 
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.ui.apps.cleanCategory
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -36,19 +37,19 @@ class ConfigEditsTest {
 
     @Test
     fun categoriesAreTrimmedAndCapped() {
-        assertEquals(listOf("Maps", "Tools"), parseCategories(" Maps, ,Tools,Maps "))
-        assertEquals(20, parseCategories((1..50).joinToString(",") { "c$it" }).size)
-        assertEquals(40, parseCategories("x".repeat(100)).single().length)
+        assertEquals("Maps", cleanCategory("  Maps "))
+        assertEquals(40, cleanCategory("x".repeat(100))?.length)
+        assertNull(cleanCategory("   "))
     }
 
     @Test
     fun draftRoundTripsAndBlankMeansUnset() {
         val config = AppConfig("id", SourceSpec("github", "https://github.com/example/app"), "App", categories = listOf("A"))
-        val draft = PatternDraft.of(config).copy(include = "  arm64 ", exclude = "   ", categories = "A, B")
+        val draft = PatternDraft.of(config).copy(include = "  arm64 ", exclude = "   ")
         val saved = draft.applyTo(config)
         assertEquals("arm64", saved.assets.include)
         assertNull(saved.assets.exclude)
-        assertEquals(listOf("A", "B"), saved.categories)
+        assertEquals(listOf("A"), saved.categories)
         assertEquals(PatternDraft.of(saved), PatternDraft.of(saved.copy()))
         assertEquals(config, PatternDraft.of(config).applyTo(config))
     }

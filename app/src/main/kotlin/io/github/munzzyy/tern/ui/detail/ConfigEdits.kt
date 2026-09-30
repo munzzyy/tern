@@ -22,9 +22,6 @@ fun isValidPattern(text: String): Boolean {
     }
 }
 
-fun parseCategories(text: String): List<String> =
-    text.split(',').map { it.trim().take(40) }.filter { it.isNotEmpty() }.distinct().take(20)
-
 /** The free-text fields of an app's settings, edited together and saved with one button. */
 data class PatternDraft(
     val include: String = "",
@@ -33,7 +30,6 @@ data class PatternDraft(
     val title: String = "",
     val notes: String = "",
     val version: String = "",
-    val categories: String = "",
 ) {
     val invalid: Set<String>
         get() = buildSet {
@@ -53,7 +49,6 @@ data class PatternDraft(
             notesFilter = notes.blankToNull(),
             versionExtract = version.blankToNull(),
         ),
-        categories = parseCategories(categories),
     )
 
     companion object {
@@ -64,7 +59,6 @@ data class PatternDraft(
             title = config.releases.titleFilter.orEmpty(),
             notes = config.releases.notesFilter.orEmpty(),
             version = config.releases.versionExtract.orEmpty(),
-            categories = config.categories.joinToString(", "),
         )
     }
 }

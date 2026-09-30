@@ -20,4 +20,10 @@
         <item quantity="other">%d apps</item>
     </plurals>
     <string name="action_close">Close</string>
+    <string name="categories_new_short">New…</string>
+    <string name="app_notes_title">Notes</string>
+    <string name="app_notes_help">Markdown works: **bold**, *italic*, lists and links.</string>
+    <string name="app_notes_add">Add a note</string>
+    <string name="app_notes_add_effect">Anything worth remembering about this app. It travels with exports.</string>
+    <string name="app_notes_edit">Edit the note</string>
 </resources>

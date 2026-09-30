@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.engine.real
 
+import io.github.munzzyy.tern.core.model.NotesFormat
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.notes.Block
 import io.github.munzzyy.tern.core.notes.ReleaseNotes
@@ -12,6 +13,10 @@ object NotesMapper {
         val text = release.notes?.takeIf { it.isNotBlank() } ?: return emptyList()
         return ReleaseNotes.parse(text, release.notesFormat).map(::block)
     }
+
+    /** Markdown written by a person, such as an app's notes. */
+    fun markdown(text: String): List<NoteBlock> =
+        if (text.isBlank()) emptyList() else ReleaseNotes.parse(text, NotesFormat.MARKDOWN).map(::block)
 
     private fun block(b: Block): NoteBlock = when (b) {
         is Block.Heading -> NoteBlock.Heading(b.level, spans(b.spans))

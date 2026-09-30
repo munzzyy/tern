@@ -42,6 +42,7 @@ class SourceRegistryTest {
         val registry = SourceRegistry.standard()
         assertEquals(SourceTypes.REPUBLISHING, registry.sources.filter { it.republishes }.map { it.type }.toSet())
         assertTrue(SourceTypes.REPUBLISHING.containsAll(SourceTypes.MODIFIED))
+        assertEquals(SourceTypes.TRACK_ONLY, registry.sources.filter { it.trackOnly }.map { it.type }.toSet())
     }
 
     @Test

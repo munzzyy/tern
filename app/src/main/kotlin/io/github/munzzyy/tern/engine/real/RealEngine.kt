@@ -632,6 +632,8 @@ class RealEngine(
 
     override val searchOrigins: List<String> get() = detector.searchOrigins
 
+    override fun renderNotes(text: String): List<NoteBlock> = NotesMapper.markdown(text)
+
     override fun canDowngrade(): Boolean = device.read(LET_ME_DOWNGRADE) != null
 
     override suspend fun writeKeptExport() {

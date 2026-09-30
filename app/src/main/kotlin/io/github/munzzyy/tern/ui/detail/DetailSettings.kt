@@ -229,14 +229,6 @@ private fun AdvancedGroup(vm: DetailViewModel, config: AppConfig) {
             PatternField(R.string.setting_version_pattern, R.string.setting_version_pattern_help, draft.version, "version" in invalid) { v ->
                 vm.editDraft(config) { it.copy(version = v) }
             }
-            OutlinedTextField(
-                value = draft.categories,
-                onValueChange = { v -> vm.editDraft(config) { it.copy(categories = v.take(500)) } },
-                label = { Text(stringResource(R.string.setting_categories)) },
-                supportingText = { Text(stringResource(R.string.setting_categories_help)) },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth().textFieldKeys(),
-            )
             SaveDraft(vm, config)
         }
         SwitchRow(

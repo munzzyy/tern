@@ -151,6 +151,8 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit, fo
                 }
             }
             verifier?.let { intent -> item(key = "appverifier") { AppVerifierCard(intent) } }
+            item(key = "categories") { CategoriesCard(current) }
+            item(key = "notes") { NotesCard(vm, current) }
             history(vm, current)
             settings(vm, current, onRemoved)
         }

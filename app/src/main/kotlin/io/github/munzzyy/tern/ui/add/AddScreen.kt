@@ -223,6 +223,7 @@ fun AddScreen(
                             },
                             rowFocus = { Modifier.returnFocus(screen, it.url) },
                         )
+                        SourcesCard()
                     }
                     is AddState.Looking -> Busy(stringResource(R.string.add_looking), onCancel = vm::cancel)
                     is AddState.Adding -> Busy(stringResource(R.string.add_adding), onCancel = null)

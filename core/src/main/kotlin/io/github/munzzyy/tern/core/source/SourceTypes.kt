@@ -56,6 +56,9 @@ object SourceTypes {
      */
     val REPUBLISHING: Set<String> = setOf(APKPURE, APTOIDE, UPTODOWN, APKCOMBO, APKMIRROR, FARSROID) + MODIFIED
 
+    /** Sources that only tell of new releases and offer no file Tern may install, each of which says so through [Source.trackOnly]. */
+    val TRACK_ONLY: Set<String> = setOf(APKMIRROR, ROCKMODS)
+
     /** The name a person knows the source by. Null for the general ones, which are named by their host. */
     fun displayName(type: String): String? = when (type) {
         GITHUB -> "GitHub"

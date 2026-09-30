@@ -31,6 +31,9 @@ interface Engine {
     /** Every place a search can look, by the name each goes by; [Settings.searchIn] picks among them. */
     val searchOrigins: List<String>
 
+    /** [text] written in Markdown, such as an app's notes, as blocks to show. Links go only to web addresses. */
+    fun renderNotes(text: String): List<NoteBlock>
+
     /**
      * The configuration [add] would store for [found]. An app that arrives by link or import can
      * carry filters and pinned certificates, and the user has to see them before they are stored.

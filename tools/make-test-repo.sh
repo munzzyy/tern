@@ -9,13 +9,13 @@ WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
 mkdir -p "$OUT/repo" "$OUT/repo-v1"
-STOREPASS=jackdawtest
+STOREPASS=terntest
 
 keytool -genkeypair -alias good -keystore "$WORK/good.jks" -storepass "$STOREPASS" -keypass "$STOREPASS" \
-  -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=Jackdaw Test Repo" -storetype PKCS12 >/dev/null
+  -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=Tern Test Repo" -storetype PKCS12 >/dev/null
 
 keytool -genkeypair -alias other -keystore "$WORK/other.jks" -storepass "$STOREPASS" -keypass "$STOREPASS" \
-  -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=Jackdaw Test Repo Impostor" -storetype PKCS12 >/dev/null
+  -keyalg RSA -keysize 2048 -validity 3650 -dname "CN=Tern Test Repo Impostor" -storetype PKCS12 >/dev/null
 
 python3 - "$WORK/index-v2.json" <<'PY'
 import json, sys
@@ -28,7 +28,7 @@ def hex64(digit):
 
 
 index = {
-    "repo": {"timestamp": 1700000000000, "version": 20000, "name": {"en-US": "Jackdaw Test Repo"}},
+    "repo": {"timestamp": 1700000000000, "version": 20000, "name": {"en-US": "Tern Test Repo"}},
     "packages": {
         "org.example.one": {
             "metadata": {
@@ -358,7 +358,7 @@ import json, sys
 path = sys.argv[1]
 # The shape of a real index-v1.json: "apps" is a list, "packages" maps each package to its versions.
 index = {
-    "repo": {"timestamp": 1700000000000, "name": "Jackdaw Test Repo"},
+    "repo": {"timestamp": 1700000000000, "name": "Tern Test Repo"},
     "requests": {"install": [], "uninstall": []},
     "apps": [
         {"packageName": "org.example.one", "name": "Example One"},

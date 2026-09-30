@@ -246,7 +246,7 @@ class FDroidRepoSourceTest {
         assertEquals("Example One", listing.apps[0].name)
         assertEquals("An example app with split builds", listing.apps[0].summary)
         assertEquals(fingerprint, listing.fingerprint)
-        assertEquals("Jackdaw Test Repo", listing.repositoryName)
+        assertEquals("Tern Test Repo", listing.repositoryName)
         assertTrue(!listing.more)
     }
 
@@ -259,7 +259,7 @@ class FDroidRepoSourceTest {
         val spec = SourceSpec(source.type, repoUrl)
         val listing = source.listApps(spec, CheckContext(http, InMemoryValidatorStore()))
         assertEquals(listOf("org.example.one", "org.example.two"), listing.apps.map { it.packageName })
-        assertEquals("Jackdaw Test Repo", listing.repositoryName)
+        assertEquals("Tern Test Repo", listing.repositoryName)
         assertEquals(fingerprint, listing.fingerprint)
     }
 

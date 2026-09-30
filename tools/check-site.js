@@ -11,7 +11,7 @@ ok(good, 'a plain GitHub address is taken');
 const target = t.addTarget(good);
 eq(target.shown, 'github.com/munzzyy/starling', 'the page shows host and path');
 eq(target.link, 'tern://add?url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Fstarling', 'the tern link carries the address encoded');
-eq(target.intent, 'intent://add?url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Fstarling#Intent;scheme=tern;package=io.github.munzzyy.tern;S.browser_fallback_url=https%3A%2F%2Fmunzzyy.github.io%2Ftern%2F%3Ffrom%3Dadd;end', 'the intent names the package and falls back to the home page');
+eq(target.intent, 'intent://add?url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Fstarling#Intent;scheme=tern;package=io.github.munzzyy.tern;S.browser_fallback_url=https%3A%2F%2Ftern.munzzyy.dev%2F%3Ffrom%3Dadd;end', 'the intent names the package and falls back to the home page');
 
 for (const bad of ['http://github.com/a/b', 'javascript:alert(1)', 'https://user:pw@github.com/a/b', 'https://github.com/a b', 'https://github.com/a\nb', 'data:text/html,x', '', 'https://' + 'a'.repeat(2000) + '.org', 'file:///etc/passwd', 'intent://x#Intent;end']) {
   eq(t.appAddress('?url=' + encodeURIComponent(bad)), null, 'refused: ' + JSON.stringify(bad.slice(0, 40)));
@@ -26,5 +26,5 @@ ok(tricky.intent.split('#Intent;').length === 2, 'the address cannot add a secon
 const angle = t.addTarget(t.appAddress('?url=' + encodeURIComponent('https://example.org/"><script>x</script>')));
 ok(!angle.intent.includes('<') && !angle.intent.includes('"'), 'markup in the address is encoded in the intent');
 
-eq(t.badgeMarkdown(good), '[<img src="https://munzzyy.github.io/tern/badge.png" alt="Get it with Tern" height="80">](https://munzzyy.github.io/tern/add/?url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Fstarling)', 'the badge Markdown links the add page with the address encoded');
+eq(t.badgeMarkdown(good), '[<img src="https://tern.munzzyy.dev/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/?url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Fstarling)', 'the badge Markdown links the add page with the address encoded');
 console.log(`ok   ${n} checks of the site's script`);

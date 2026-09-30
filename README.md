@@ -26,7 +26,7 @@ leaves the device.
 - With Orbot chosen, everything goes through Tor and nothing goes around it.
 - An Obtainium export brings your list along.
 
-[<img src="site/badge.png" alt="Get it with Tern" height="80">](https://munzzyy.github.io/tern/add/?url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Ftern)
+[<img src="site/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/?url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Ftern)
 
 Or download `tern.apk` from the [latest release](https://github.com/munzzyy/tern/releases/latest).
 It runs on Android 10 and later, on phones, tablets and TVs. Once it is
@@ -155,10 +155,10 @@ If you publish an Android app on GitHub or anywhere else Tern reads, a badge in
 your README lets people add it to Tern with one tap:
 
 ```markdown
-[<img src="https://munzzyy.github.io/tern/badge.png" alt="Get it with Tern" height="80">](https://munzzyy.github.io/tern/add/?url=https%3A%2F%2Fgithub.com%2FYOU%2FYOUR-APP)
+[<img src="https://tern.munzzyy.dev/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/?url=https%3A%2F%2Fgithub.com%2FYOU%2FYOUR-APP)
 ```
 
-The [site](https://munzzyy.github.io/tern/) writes this line for you from your
+The [site](https://tern.munzzyy.dev/) writes this line for you from your
 address. The link opens a small page that hands the address to Tern, which
 shows the app first and adds nothing until the person presses Add. Without Tern
 the page offers the download.

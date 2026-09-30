@@ -108,10 +108,7 @@ object AppConfigJson {
     private const val MAX_SHORT = 200
     private const val MAX_LONG = 4000
     private const val MAX_OPTIONS = 32
-    private val KNOWN_TYPES = setOf(
-        SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS, SourceTypes.GITLAB, SourceTypes.FORGEJO, SourceTypes.FDROID,
-        SourceTypes.FDROID_REPO, SourceTypes.HTML, SourceTypes.DIRECT, SourceTypes.JENKINS, SourceTypes.SOURCEHUT, SourceTypes.SOURCEFORGE,
-    )
+    private val KNOWN_TYPES = SourceTypes.ALL.toSet()
 
     private fun stringValue(value: io.github.munzzyy.tern.core.json.JsonValue): String? = when (value) {
         is io.github.munzzyy.tern.core.json.JsonString -> value.value

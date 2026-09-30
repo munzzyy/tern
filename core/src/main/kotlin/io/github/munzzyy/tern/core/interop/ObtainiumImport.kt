@@ -13,6 +13,7 @@ import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.source.SourceOptions
+import io.github.munzzyy.tern.core.source.SourceRegistry
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.forge.ForgejoSource
 import io.github.munzzyy.tern.core.source.forge.GitHubSource
@@ -109,8 +110,8 @@ object ObtainiumImport {
     }
 
     private fun mapSource(url: String, overrideSource: String?, settings: JsonObject): SourceSpec? {
-        if (overrideSource in UNSUPPORTED_SOURCES) return null
         val address = Urls.normalize(url) ?: return null
+        STORE_SOURCES[overrideSource]?.let { type -> return store(type, address, settings) }
         return when (overrideSource) {
             "GitHub" -> GitHubSource().match(address)
             "GitLab" -> GitLabSource().match(address) ?: repository(SourceTypes.GITLAB, address, minSegments = 2, maxSegments = 12)
@@ -157,7 +158,7 @@ object ObtainiumImport {
     }
 
     private fun matchByUrl(address: String, settings: JsonObject): SourceSpec? {
-        if (Urls.host(address).removePrefix("www.") in UNSUPPORTED_HOSTS) return null
+        for (type in STORE_SOURCES.values) store(type, address, settings)?.let { return it }
         GitHubSource().match(address)?.let { return it }
         GitLabSource().match(address)?.let { return it }
         ForgejoSource().match(address)?.let { return it }
@@ -170,26 +171,20 @@ object ObtainiumImport {
         return html(address, settings)
     }
 
-    private fun unsupportedReason(overrideSource: String?): String = when (overrideSource) {
-        "APKPure" -> "APKPure is not supported by Tern; find the developer's own release page instead"
-        "APKMirror" -> "APKMirror is not supported by Tern (its maintainers block direct downloads)"
-        "APKCombo" -> "APKCombo is not supported by Tern"
-        "Aptoide" -> "Aptoide is not supported by Tern"
-        "Uptodown" -> "Uptodown is not supported by Tern"
-        "HuaweiAppGallery" -> "Huawei AppGallery is not supported by Tern"
-        "SamsungGalaxyStore" -> "Samsung Galaxy Store is not supported by Tern"
-        "VivoAppStore" -> "Vivo App Store is not supported by Tern"
-        "Tencent" -> "Tencent My App is not supported by Tern"
-        "CoolApk" -> "CoolApk is not supported by Tern"
-        "RuStore" -> "RuStore is not supported by Tern"
-        "RockMods" -> "RockMods is not supported by Tern"
-        "LiteAPKs" -> "LiteAPKs is not supported by Tern"
-        "NeutronCode" -> "NeutronCode is not supported by Tern"
-        "Apk4Free" -> "Apk4Free is not supported by Tern"
-        "Farsroid" -> "Farsroid is not supported by Tern"
-        "TelegramApp" -> "Telegram is not supported by Tern"
-        "ItchIO" -> "itch.io is not supported by Tern"
-        else -> "This source is not supported by Tern"
+    private fun unsupportedReason(overrideSource: String?): String {
+        val type = STORE_SOURCES[overrideSource] ?: return "This source is not supported by Tern"
+        val name = SourceTypes.displayName(type) ?: overrideSource
+        return "Tern could not read this address as an app on $name"
+    }
+
+    /** A store source by its type, with the options Obtainium keeps for it that Tern reads too. */
+    private fun store(type: String, address: String, settings: JsonObject): SourceSpec? {
+        val spec = REGISTRY.get(type)?.match(address) ?: return null
+        if (type != SourceTypes.SAMSUNG) return spec
+        val options = LinkedHashMap(spec.options)
+        settingString(settings, "deviceId")?.let { options[SourceOptions.DEVICE_MODEL] = it.take(40) }
+        settingString(settings, "csc")?.let { options[SourceOptions.CSC] = it.take(10) }
+        return spec.copy(options = options)
     }
 
     private fun settingString(settings: JsonObject, key: String): String? = when (val v = settings[key]) {
@@ -216,14 +211,27 @@ object ObtainiumImport {
     private const val MAX_NAME = 200
     private const val MAX_STEPS = 5
 
-    private val UNSUPPORTED_SOURCES = setOf(
-        "APKPure", "APKMirror", "APKCombo", "Aptoide", "Uptodown", "HuaweiAppGallery", "SamsungGalaxyStore",
-        "VivoAppStore", "Tencent", "CoolApk", "RuStore", "RockMods", "LiteAPKs", "NeutronCode", "Apk4Free",
-        "Farsroid", "TelegramApp", "ItchIO",
+    /** Obtainium's names for the stores and single-app sites, as its exports write them. */
+    private val STORE_SOURCES = linkedMapOf(
+        "HuaweiAppGallery" to SourceTypes.HUAWEI,
+        "SamsungGalaxyStore" to SourceTypes.SAMSUNG,
+        "VivoAppStore" to SourceTypes.VIVO,
+        "Tencent" to SourceTypes.TENCENT,
+        "RuStore" to SourceTypes.RUSTORE,
+        "CoolApk" to SourceTypes.COOLAPK,
+        "ItchIO" to SourceTypes.ITCHIO,
+        "TelegramApp" to SourceTypes.TELEGRAM,
+        "NeutronCode" to SourceTypes.NEUTRONCODE,
+        "APKPure" to SourceTypes.APKPURE,
+        "Aptoide" to SourceTypes.APTOIDE,
+        "Uptodown" to SourceTypes.UPTODOWN,
+        "APKCombo" to SourceTypes.APKCOMBO,
+        "APKMirror" to SourceTypes.APKMIRROR,
+        "Farsroid" to SourceTypes.FARSROID,
+        "LiteAPKs" to SourceTypes.LITEAPKS,
+        "Apk4Free" to SourceTypes.APK4FREE,
+        "RockMods" to SourceTypes.ROCKMODS,
     )
 
-    private val UNSUPPORTED_HOSTS = setOf(
-        "apkpure.com", "apkpure.net", "apkmirror.com", "apkcombo.com", "aptoide.com", "uptodown.com",
-        "telegram.org", "itch.io",
-    )
+    private val REGISTRY = SourceRegistry.standard()
 }

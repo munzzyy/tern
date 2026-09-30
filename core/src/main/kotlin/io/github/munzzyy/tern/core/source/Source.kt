@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.core.source
 
 import io.github.munzzyy.tern.core.icon.IconAddresses
+import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.SourceSpec
@@ -57,6 +58,27 @@ sealed interface CheckResult {
     data class Listing(val listing: SourceListing) : CheckResult
 }
 
+/**
+ * Where a file is fetched from right now. Most sources name a file by an address that lasts, and
+ * that address is the one to fetch. Some stores hand out addresses that expire within minutes, or
+ * want a header with the request; for those, [Source.resolve] asks again just before the download.
+ */
+data class Download(
+    val url: String,
+    /** Sent with the download and with the reads of the file's header before it. Never a token. */
+    val headers: Map<String, String> = emptyMap(),
+)
+
+/** One thing a search found: a page Tern can add, and what the source says about it. */
+data class Hit(
+    val name: String,
+    val owner: String?,
+    val description: String?,
+    /** An address [Source.match] accepts. */
+    val url: String,
+    val stars: Int? = null,
+)
+
 enum class SourceErrorKind { NOT_FOUND, AUTH, RATE_LIMITED, NETWORK, PARSE, UNSUPPORTED, NO_RELEASES }
 
 class SourceException(
@@ -87,4 +109,33 @@ interface Source {
 
     /** Key under which conditional-request validators for [spec] are stored. */
     fun validatorKey(spec: SourceSpec, endpoint: String): String = "$type|${spec.url}|$endpoint"
+
+    /**
+     * Where to fetch [asset] from now. Default: its own address. A source whose addresses expire
+     * asks its server again here, and a source may only answer with an address it would itself
+     * have listed: on its own host or a host it names as its file store.
+     */
+    @Throws(SourceException::class)
+    fun resolve(spec: SourceSpec, asset: Asset, context: CheckContext): Download = Download(asset.url)
+
+    /**
+     * True for a source that shows what exists and never offers a file, as when a site's owners
+     * forbid downloads by others. An app from it is always track-only.
+     */
+    val trackOnly: Boolean get() = false
+
+    /**
+     * True for a store or a site that republishes apps it did not build. What it serves is held to
+     * the same checks, but the person should know the file does not come from the developer.
+     */
+    val republishes: Boolean get() = false
+}
+
+/** A source that can be searched by name. Each search is one or two requests and stores nothing. */
+interface Searchable {
+    /** Shown next to each hit, such as "Uptodown". */
+    val origin: String
+
+    @Throws(SourceException::class)
+    fun search(query: String, context: CheckContext): List<Hit>
 }

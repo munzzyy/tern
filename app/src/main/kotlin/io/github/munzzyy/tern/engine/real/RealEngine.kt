@@ -697,7 +697,14 @@ class RealEngine(
         return interop.finish(offer, replace, takeSettings)
     }
 
-    override fun suggestions(): List<Suggestion> = Suggestions.list(device.profile.television, catalog, context::getString)
+    override fun suggestions(): List<Suggestion> {
+        val rows = _apps.value
+        return Suggestions.list(device.profile.television, catalog, here = { app ->
+            val followed = rows.any { it.config.source.url.equals(app.url, ignoreCase = true) || it.config.packageName == app.packageName }
+            val installed = if (followed) null else device.read(app.packageName)?.let { it.app.signers + it.lineage }
+            Suggestions.here(app, followed, installed)
+        }, text = context::getString)
+    }
 
     override fun canOpenInstallSettings(): Boolean = device.canOpenInstallSettings()
 

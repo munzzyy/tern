@@ -491,7 +491,11 @@ data class Suggestion(
     val forTelevision: Boolean,
     /** Tern carries the certificate this app has to be signed with, so its first install is checked against it too. */
     val pinned: Boolean = false,
+    val here: StarterHere = StarterHere.NONE,
 )
+
+/** Whether a well known app is already followed or on this device, so the list does not offer a second copy. */
+enum class StarterHere { NONE, IN_LIST, ON_PHONE, ON_PHONE_OTHER_SIGNER }
 
 /** A file the app can read or has written without a file picker. */
 data class SavedFile(

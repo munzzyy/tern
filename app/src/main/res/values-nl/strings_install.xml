@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_installer">Installeren met</string>
+    <string name="installer_system">Installatieprogramma van Android</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">Een andere app</string>
+    <string name="installer_system_effect">Android vraagt het voor een eerste installatie, en voor een update wanneer het dat wil.</string>
+    <string name="installer_shizuku_effect">Installeert en updatet zonder te vragen, via Shizuku of Sui. Elk bestand doorloopt eerst dezelfde controles.</string>
+    <string name="installer_root_effect">Installeert en updatet zonder te vragen, via su. Elk bestand doorloopt eerst dezelfde controles.</string>
+    <string name="installer_other_app_effect">Geeft elk gecontroleerd bestand aan de installatie-app die je kiest. Die app vraagt het altijd, dus er wordt niets op de achtergrond geïnstalleerd.</string>
+    <string name="installer_ready">Klaar</string>
+    <string name="installer_not_ready">Niet klaar, intussen wordt het installatieprogramma van Android gebruikt</string>
+    <string name="installer_shizuku_not_running">Shizuku draait niet. Start het in de Shizuku-app en kom dan terug.</string>
+    <string name="installer_shizuku_too_old">Deze versie van Shizuku is te oud voor Tern. Update Shizuku.</string>
+    <string name="installer_shizuku_not_allowed">Tern mag Shizuku nog niet gebruiken. Druk hier om het te vragen.</string>
+    <string name="installer_no_root">Tern heeft geen roottoegang. Druk hier om er opnieuw om te vragen.</string>
+    <string name="installer_no_other_app">Er is geen installatie-app gekozen, of de gekozen app is weg.</string>
+    <string name="installer_pick_app">Installatie-app</string>
+    <string name="installer_pick_app_none">Geen gekozen</string>
+    <string name="installer_no_apps">Er is geen andere installatie-app op dit apparaat.</string>
+    <string name="installer_play">Google Play als installatiebron opgeven</string>
+    <string name="installer_play_effect">Sommige apps werken alleen als ze denken dat Google Play ze heeft geïnstalleerd. Tern staat dan niet meer als hun installatiebron vermeld.</string>
+    <string name="install_other_app_signer">De installatie-app heeft iets geïnstalleerd dat is ondertekend door iemand anders dan het bestand dat Tern heeft gecontroleerd, dus de installatie telt niet.</string>
 </resources>

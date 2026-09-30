@@ -1,3 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">Controleren</string>
+    <string name="shortcut_check_long">Controleren op updates</string>
+    <string name="shortcut_update_all_long">Elke app updaten</string>
+    <string name="shortcut_add_short">Toevoegen</string>
+    <string name="shortcut_add_long">Een app toevoegen</string>
+    <string name="tile_check">Controleren op updates</string>
+    <string name="tile_checking">Controleren…</string>
+    <string name="tile_up_to_date">Up-to-date</string>
+    <string name="widget_label">Updates</string>
+    <string name="widget_description">Hoeveel apps een update hebben, met een knop om te controleren en een om ze allemaal te updaten.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d update</item>
+        <item quantity="other">%d updates</item>
+    </plurals>
+    <string name="widget_up_to_date">Alles is up-to-date</string>
+    <string name="widget_checked">Gecontroleerd om %1$s</string>
+    <string name="widget_never_checked">Nog niet gecontroleerd</string>
+    <string name="widget_check">Controleren</string>
 </resources>

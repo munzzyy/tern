@@ -1,3 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">Prüfen</string>
+    <string name="shortcut_check_long">Auf Updates prüfen</string>
+    <string name="shortcut_update_all_long">Alle Apps aktualisieren</string>
+    <string name="shortcut_add_short">Hinzufügen</string>
+    <string name="shortcut_add_long">App hinzufügen</string>
+    <string name="tile_check">Auf Updates prüfen</string>
+    <string name="tile_checking">Wird geprüft…</string>
+    <string name="tile_up_to_date">Aktuell</string>
+    <string name="widget_label">Updates</string>
+    <string name="widget_description">Wie viele Apps ein Update haben, mit einer Schaltfläche zum Prüfen und einer, um alle zu aktualisieren.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d Update</item>
+        <item quantity="other">%d Updates</item>
+    </plurals>
+    <string name="widget_up_to_date">Alles ist aktuell</string>
+    <string name="widget_checked">Geprüft um %1$s</string>
+    <string name="widget_never_checked">Noch nicht geprüft</string>
+    <string name="widget_check">Prüfen</string>
 </resources>

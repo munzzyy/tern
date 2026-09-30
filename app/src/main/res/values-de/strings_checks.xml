@@ -1,3 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Alle %d Minute</item>
+        <item quantity="other">Alle %d Minuten</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Alle %d Tag</item>
+        <item quantity="other">Alle %d Tage</item>
+    </plurals>
+    <string name="settings_check_now">Hintergrundprüfung jetzt ausführen</string>
+    <string name="settings_check_now_effect">Prüft jede App und installiert, was sich selbstständig aktualisieren soll, so wie die Hintergrundprüfung.</string>
+    <string name="settings_check_now_running">Wird geprüft…</string>
+    <string name="settings_check_on_start">Prüfen, wenn Tern geöffnet wird</string>
+    <string name="settings_check_on_open">Eine App prüfen, wenn ihre Seite geöffnet wird</string>
+    <string name="settings_check_on_open_effect">Nicht erneut innerhalb von fünf Minuten nach der letzten Prüfung.</string>
+    <string name="settings_only_installed">Nur installierte Apps prüfen</string>
+    <string name="settings_only_installed_effect">Apps, die nur verfolgt werden, werden auch geprüft. Eine App, die du öffnest, wird immer geprüft.</string>
+    <string name="settings_remove_uninstalled">Anderswo deinstallierte Apps entfernen</string>
+    <string name="settings_remove_uninstalled_effect">Eine App, die du außerhalb von Tern deinstallierst, verschwindet auch aus der Liste.</string>
+    <string name="settings_file_filter">Filter für Dateien</string>
+    <string name="settings_file_filter_effect">Ein Muster, nach dem jede App ohne eigenen Filter ihre Datei auswählt.</string>
+    <string name="settings_file_filter_none">Keiner</string>
+    <string name="settings_file_filter_invalid">Dieses Muster kann nicht gelesen werden.</string>
+    <string name="settings_allow_downgrades">Ältere Versionen erlauben</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade ist installiert, daher darf Android eine ältere Version über eine neuere installieren.</string>
+    <string name="settings_collapse_groups">Mit eingeklappten Gruppen beginnen</string>
+    <string name="settings_haptics">Haptisches Feedback</string>
+    <string name="settings_haptics_effect">Eine leichte Vibration, wenn Wischen oder langes Drücken etwas auslöst.</string>
+    <string name="settings_phone_layout">Immer das Telefon-Layout verwenden</string>
+    <string name="settings_phone_layout_effect">Ein Bereich und eine Leiste unten, egal wie breit der Bildschirm ist.</string>
+    <string name="density_minimal">Minimal</string>
+    <string name="search_in">Suchen in</string>
+    <string name="activity_share">Aktivität teilen</string>
+    <string name="sources_title">Was Tern lesen kann</string>
+    <string name="sources_effect">Code-Plattformen, Repositories, Stores und Webseiten, und welche davon durchsucht werden können.</string>
+    <string name="sources_forges">Code-Plattformen</string>
+    <string name="sources_repositories">Repositories</string>
+    <string name="sources_stores">Stores</string>
+    <string name="sources_mirrors">Stores, die Apps erneut veröffentlichen</string>
+    <string name="sources_modified">Seiten mit veränderten Apps</string>
+    <string name="sources_other">Andere Orte</string>
+    <string name="sources_web_page">Eine Webseite mit Links zu Dateien</string>
+    <string name="sources_direct">Ein direkter Link zu einer Datei</string>
+    <string name="sources_searchable">durchsuchbar</string>
+    <string name="sources_track_only">nur verfolgen</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea und Jenkins auf einem eigenen Server werden an ihrer Adresse erkannt.</string>
+    <string name="shared_configs_title">Von Obtainium-Nutzern geteilte Konfigurationen</string>
+    <string name="shared_configs_effect">Eine Seite mit fertigen Einstellungen für Apps. Ihre Links öffnen sich in Tern, wenn Obtainium-Links öffnen in den Einstellungen an ist.</string>
+    <string name="engine_archive_compression_unsupported">Dieses Archiv ist mit bzip2, xz oder zstd komprimiert, was Android nicht öffnen kann. Wähle eine .zip-, .tar- oder .tar.gz-Datei dieses Releases.</string>
+    <string name="engine_inner_filter_nothing">Der Filter für Dateien in Archiven passt auf keine der APKs in diesem Archiv.</string>
+    <string name="preview_republished">%1$s bietet erneut an, was Entwickler anderswo veröffentlichen. Seine Dateien werden an das Zertifikat des Entwicklers gebunden, sobald Tern es kennt, also hefte eines an oder installiere zuerst vom Entwickler, wenn du kannst.</string>
+    <string name="preview_modified">%1$s bietet Apps an, die jemand anderes als ihr Entwickler verändert hat. Sie sind von demjenigen signiert, der sie verändert hat, und Tern kann nicht erkennen, was verändert wurde.</string>
+    <string name="about_track_tern">Tern selbst aktuell halten</string>
+    <string name="about_track_tern_effect">Fügt die eigenen Releases von Tern der Liste hinzu, geprüft und verifiziert wie jede App.</string>
+    <string name="engine_channel_tracked">Neue Releases verfolgter Apps</string>
+    <string name="engine_channel_checking">Prüfung</string>
+    <string name="engine_notify_tracked_one">Neues Release von %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d verfolgte App hat ein neues Release</item>
+        <item quantity="other">%1$d verfolgte Apps haben neue Releases</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">%1$d App wird geprüft</item>
+        <item quantity="other">%1$d Apps werden geprüft</item>
+    </plurals>
+    <string name="settings_notify_tracked">Wenn eine verfolgte App ein neues Release hat</string>
+    <string name="settings_notify_checking">Während der Prüfung im Hintergrund</string>
+    <string name="settings_notify_checking_effect">Eine stille Benachrichtigung, die verschwindet, wenn die Prüfung fertig ist.</string>
+    <string name="engine_event_removed_uninstalled">Aus der Liste entfernt, da außerhalb von Tern deinstalliert</string>
 </resources>

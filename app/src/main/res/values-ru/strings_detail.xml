@@ -1,3 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">Поделиться</string>
+    <string name="action_release_page">Открыть страницу релиза</string>
+    <string name="action_share_address">Поделиться адресом</string>
+    <string name="action_share_link">Поделиться ссылкой, которая откроет его в Tern</string>
+    <string name="action_app_info">Сведения о приложении в Android</string>
+    <string name="detail_last_checked">Проверено %1$s</string>
+    <string name="state_favorite">В избранном</string>
+    <string name="action_save_file">Сохранить в Загрузки</string>
+    <string name="file_saved">Сохранено как %1$s в %2$s, в том виде, в каком было скачано. Tern проверяет файл, когда устанавливает его.</string>
+    <string name="action_save_files">Сохранить файлы в Загрузки</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="one">%d файл сохранен в Download/Tern</item>
+        <item quantity="few">%d файла сохранены в Download/Tern</item>
+        <item quantity="many">%d файлов сохранено в Download/Tern</item>
+        <item quantity="other">%d файла сохранено в Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d релиз отмечен просмотренным</item>
+        <item quantity="few">%d релиза отмечены просмотренными</item>
+        <item quantity="many">%d релизов отмечено просмотренными</item>
+        <item quantity="other">%d релиза отмечено просмотренными</item>
+    </plurals>
+    <string name="project_page">Страница проекта</string>
+    <string name="project_page_read">Прочитать страницу проекта</string>
+    <string name="project_page_effect">Его README в виде текста. У хостинга кода ничего не запрашивается, пока вы ее не откроете.</string>
+    <string name="project_page_loading">Чтение…</string>
+    <string name="project_page_none">У проекта нет страницы, которую Tern может прочитать.</string>
+    <string name="project_page_failed">Не удалось прочитать страницу. Нажмите, чтобы повторить.</string>
 </resources>

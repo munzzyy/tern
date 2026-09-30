@@ -1,3 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="import_addresses_heading">Aus einer Liste von Adressen</string>
+    <string name="import_addresses_explain">Füge Adressen von Apps ein, eine pro Zeile oder irgendwo im Text, oder lies sie aus einer Datei wie einer OPML-Liste. Jede wird wie ein einzelner Link nachgeschlagen und hinzugefügt.</string>
+    <string name="import_addresses_field">Adressen</string>
+    <string name="import_addresses_show">Anzeigen, was darin ist</string>
+    <string name="import_addresses_file">Eine Datei lesen</string>
+    <string name="import_addresses_none">Darin ist keine https-Adresse.</string>
+    <string name="import_addresses_other">Eine andere Liste</string>
+    <string name="import_addresses_unreadable">Diese Datei konnte nicht gelesen werden.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d Adresse. Wähle ab, was du nicht willst, und füge dann hinzu.</item>
+        <item quantity="other">%1$d Adressen. Wähle ab, was du nicht willst, und füge dann hinzu.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">%1$d App kam mit diesem Link. Sieh sie dir an, um ihre Einstellungen zu sehen, bevor du sie hinzufügst.</item>
+        <item quantity="other">%1$d Apps kamen mit diesem Link. Sieh dir jede an, um ihre Einstellungen zu sehen, bevor du sie hinzufügst.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Für Obtainium exportieren</string>
+    <string name="settings_export_obtainium_effect">Eine Datei, die Obtainium importiert, für eine Liste, die dorthin umzieht. Was Obtainium nicht einstellen kann, bleibt zurück.</string>
+    <string name="settings_export_installed_only">Nur installierte Apps exportieren</string>
+    <string name="settings_export_settings">Einstellungen in Exporte aufnehmen</string>
+    <string name="settings_export_settings_effect">Das Aussehen, die Liste, Benachrichtigungen und Prüfungen. Nie ein Token, der Proxy oder der Installer.</string>
+    <string name="settings_kept_export">Einen Export aktuell halten</string>
+    <string name="settings_kept_export_effect">Kurz nachdem sich etwas in der Liste ändert, schreibt Tern den Export neu.</string>
+    <string name="settings_kept_export_written">Geschrieben um %1$s</string>
+    <string name="settings_kept_export_folder">Wo er aufbewahrt wird</string>
+    <string name="import_settings_taken">Die Einstellungen in der Datei wurden ebenfalls übernommen.</string>
 </resources>

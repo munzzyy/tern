@@ -1,3 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_categories">Категории</string>
+    <string name="settings_categories_effect">Дайте им названия и цвета, переименовывайте и удаляйте их сразу для всех приложений.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d категория</item>
+        <item quantity="few">%d категории</item>
+        <item quantity="many">%d категорий</item>
+        <item quantity="other">%d категории</item>
+    </plurals>
+    <string name="categories_none">Пока нет. Создайте категорию здесь или добавьте в категорию приложения из списка.</string>
+    <string name="categories_new">Новая категория</string>
+    <string name="category_edit">Изменить категорию</string>
+    <string name="category_name">Название</string>
+    <string name="category_color">Цвет</string>
+    <string name="category_color_spoken">Цвет %1$d из %2$d</string>
+    <string name="category_exists">Категория с таким названием уже есть.</string>
+    <string name="category_delete">Удалить</string>
+    <string name="category_delete_effect">Приложения из нее остаются в списке, они просто больше не относятся к этой категории.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d приложение</item>
+        <item quantity="few">%d приложения</item>
+        <item quantity="many">%d приложений</item>
+        <item quantity="other">%d приложения</item>
+    </plurals>
+    <string name="action_close">Закрыть</string>
+    <string name="categories_new_short">Новая…</string>
+    <string name="app_notes_title">Заметки</string>
+    <string name="app_notes_help">Работает Markdown: **жирный**, *курсив*, списки и ссылки.</string>
+    <string name="app_notes_add">Добавить заметку</string>
+    <string name="app_notes_add_effect">Все, что стоит запомнить об этом приложении. Заметка попадает в экспорт.</string>
+    <string name="app_notes_edit">Изменить заметку</string>
 </resources>

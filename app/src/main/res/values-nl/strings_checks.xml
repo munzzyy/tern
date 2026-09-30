@@ -1,3 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Elke %d minuut</item>
+        <item quantity="other">Elke %d minuten</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Elke %d dag</item>
+        <item quantity="other">Elke %d dagen</item>
+    </plurals>
+    <string name="settings_check_now">Achtergrondcontrole nu uitvoeren</string>
+    <string name="settings_check_now_effect">Controleert elke app en installeert wat is ingesteld om zelf te updaten, zoals de achtergrondcontrole doet.</string>
+    <string name="settings_check_now_running">Controleren…</string>
+    <string name="settings_check_on_start">Controleren wanneer Tern opent</string>
+    <string name="settings_check_on_open">Een app controleren wanneer zijn pagina opent</string>
+    <string name="settings_check_on_open_effect">Niet opnieuw binnen vijf minuten na de laatste controle.</string>
+    <string name="settings_only_installed">Alleen geïnstalleerde apps controleren</string>
+    <string name="settings_only_installed_effect">Apps die alleen worden gevolgd, worden ook gecontroleerd. Een app die je opent, wordt altijd gecontroleerd.</string>
+    <string name="settings_remove_uninstalled">Elders gede-installeerde apps verwijderen</string>
+    <string name="settings_remove_uninstalled_effect">Een app die je buiten Tern de-installeert, verdwijnt ook uit de lijst.</string>
+    <string name="settings_file_filter">Filter voor bestanden</string>
+    <string name="settings_file_filter_effect">Een patroon waarmee elke app zonder eigen filter zijn bestand kiest.</string>
+    <string name="settings_file_filter_none">Geen</string>
+    <string name="settings_file_filter_invalid">Dit patroon kan niet worden gelezen.</string>
+    <string name="settings_allow_downgrades">Oudere versies toestaan</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade is geïnstalleerd, dus Android mag een oudere versie over een nieuwere installeren.</string>
+    <string name="settings_collapse_groups">Beginnen met ingeklapte groepen</string>
+    <string name="settings_haptics">Haptische feedback</string>
+    <string name="settings_haptics_effect">Een lichte trilling wanneer vegen of lang indrukken iets doet.</string>
+    <string name="settings_phone_layout">Altijd de telefoonindeling gebruiken</string>
+    <string name="settings_phone_layout_effect">Eén paneel en een balk onderaan, hoe breed het scherm ook is.</string>
+    <string name="density_minimal">Minimaal</string>
+    <string name="search_in">Zoeken in</string>
+    <string name="activity_share">Activiteit delen</string>
+    <string name="sources_title">Wat Tern kan lezen</string>
+    <string name="sources_effect">Codeplatforms, repositories, stores en webpagina\'s, en welke daarvan doorzocht kunnen worden.</string>
+    <string name="sources_forges">Codeplatforms</string>
+    <string name="sources_repositories">Repositories</string>
+    <string name="sources_stores">Stores</string>
+    <string name="sources_mirrors">Stores die apps opnieuw publiceren</string>
+    <string name="sources_modified">Sites met aangepaste apps</string>
+    <string name="sources_other">Andere plekken</string>
+    <string name="sources_web_page">Een webpagina met links naar bestanden</string>
+    <string name="sources_direct">Een directe link naar een bestand</string>
+    <string name="sources_searchable">doorzoekbaar</string>
+    <string name="sources_track_only">alleen volgen</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea en Jenkins op een eigen server worden herkend aan hun adres.</string>
+    <string name="shared_configs_title">Configuraties gedeeld door gebruikers van Obtainium</string>
+    <string name="shared_configs_effect">Een site met kant-en-klare instellingen voor apps. De links openen in Tern wanneer Obtainium links openen aan staat in Instellingen.</string>
+    <string name="engine_archive_compression_unsupported">Dit archief is gecomprimeerd met bzip2, xz of zstd, wat Android niet kan openen. Kies een .zip-, .tar- of .tar.gz-bestand van deze release.</string>
+    <string name="engine_inner_filter_nothing">Het filter voor bestanden in archieven komt met geen enkele APK in dit archief overeen.</string>
+    <string name="preview_republished">%1$s biedt opnieuw aan wat ontwikkelaars elders publiceren. De bestanden worden aan het certificaat van de ontwikkelaar gehouden zodra Tern het kent, dus zet er een vast of installeer eerst van de ontwikkelaar als dat kan.</string>
+    <string name="preview_modified">%1$s biedt apps aan die zijn aangepast door iemand anders dan hun ontwikkelaar. Ze zijn ondertekend door wie ze heeft aangepast, en Tern kan niet zien wat er is veranderd.</string>
+    <string name="about_track_tern">Tern zelf up-to-date houden</string>
+    <string name="about_track_tern_effect">Voegt de eigen releases van Tern toe aan de lijst, gecontroleerd en geverifieerd zoals elke app.</string>
+    <string name="engine_channel_tracked">Nieuwe releases van gevolgde apps</string>
+    <string name="engine_channel_checking">Controleren</string>
+    <string name="engine_notify_tracked_one">Nieuwe release van %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d gevolgde app heeft een nieuwe release</item>
+        <item quantity="other">%1$d gevolgde apps hebben nieuwe releases</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">%1$d app controleren</item>
+        <item quantity="other">%1$d apps controleren</item>
+    </plurals>
+    <string name="settings_notify_tracked">Als een gevolgde app een nieuwe release heeft</string>
+    <string name="settings_notify_checking">Tijdens het controleren op de achtergrond</string>
+    <string name="settings_notify_checking_effect">Een stille melding die verdwijnt als de controle klaar is.</string>
+    <string name="engine_event_removed_uninstalled">Uit de lijst verwijderd, omdat de app buiten Tern is gede-installeerd</string>
 </resources>

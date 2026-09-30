@@ -1,3 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="list_arrange">Упорядочить список</string>
+    <string name="list_options_title">Упорядочить список</string>
+    <string name="list_reverse">Обратный порядок</string>
+    <string name="list_updates_first">Обновления вверху</string>
+    <string name="list_bury_not_installed">Неустановленные приложения внизу</string>
+    <string name="sort_author">По разработчику</string>
+    <string name="sort_added">По дате добавления</string>
+    <string name="sort_released">По дате релиза</string>
+    <string name="group_title">Группировка</string>
+    <string name="group_none">Нет</string>
+    <string name="group_category">Категория</string>
+    <string name="group_source">Источник</string>
+    <string name="group_category_effect">Приложение из нескольких категорий появляется в каждой из них.</string>
+    <string name="group_other">Все остальное</string>
+    <string name="group_folded">Свернута</string>
+    <string name="group_open">Развернута</string>
+    <string name="filter_favorites">Избранное</string>
+    <string name="filter_track_only">Только отслеживание</string>
+    <string name="filter_problems">Проблемы</string>
+    <string name="action_done">Готово</string>
+    <string name="settings_swipe">Действия свайпом по строкам</string>
+    <string name="settings_swipe_effect">Смахните приложение к концу строки, чтобы обновить его, или к началу, чтобы удалить.</string>
+    <string name="action_favorite">Добавить в избранное</string>
+    <string name="action_unfavorite">Удалить из избранного</string>
+    <string name="action_set_mode">Когда найдены обновления</string>
+    <string name="action_share_addresses">Поделиться адресами</string>
+    <string name="action_share_export">Поделиться файлом</string>
+    <string name="action_uninstall">Удалить с устройства</string>
+    <string name="export_format_tern">Файл Tern</string>
+    <string name="export_format_obtainium">Файл для Obtainium</string>
+    <string name="bulk_uninstall_text">Android спросит о каждом приложении по очереди. Tern продолжит следить за ними, пока вы не удалите их здесь.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d приложение теперь в избранном</item>
+        <item quantity="few">%1$d приложения теперь в избранном</item>
+        <item quantity="many">%1$d приложений теперь в избранном</item>
+        <item quantity="other">%1$d приложения теперь в избранном</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d приложение больше не в избранном</item>
+        <item quantity="few">%1$d приложения больше не в избранном</item>
+        <item quantity="many">%1$d приложений больше не в избранном</item>
+        <item quantity="other">%1$d приложения больше не в избранном</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">Когда найдено обновление %1$d приложения</item>
+        <item quantity="few">Когда найдены обновления %1$d приложений</item>
+        <item quantity="many">Когда найдены обновления %1$d приложений</item>
+        <item quantity="other">Когда найдены обновления %1$d приложения</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">Удалить %1$d приложение с устройства?</item>
+        <item quantity="few">Удалить %1$d приложения с устройства?</item>
+        <item quantity="many">Удалить %1$d приложений с устройства?</item>
+        <item quantity="other">Удалить %1$d приложения с устройства?</item>
+    </plurals>
 </resources>

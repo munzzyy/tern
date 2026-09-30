@@ -1,3 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">Delen</string>
+    <string name="action_release_page">De releasepagina openen</string>
+    <string name="action_share_address">Het adres delen</string>
+    <string name="action_share_link">Een link delen die de app in Tern opent</string>
+    <string name="action_app_info">App-info in Android</string>
+    <string name="detail_last_checked">Laatst gecontroleerd: %1$s</string>
+    <string name="state_favorite">Favoriet</string>
+    <string name="action_save_file">Opslaan in de map Download</string>
+    <string name="file_saved">Opgeslagen als %1$s in %2$s, zoals het is gedownload. Tern controleert een bestand wanneer het dit installeert.</string>
+    <string name="action_save_files">Bestanden opslaan in de map Download</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="one">%d bestand opgeslagen in Download/Tern</item>
+        <item quantity="other">%d bestanden opgeslagen in Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d release gemarkeerd als gezien</item>
+        <item quantity="other">%d releases gemarkeerd als gezien</item>
+    </plurals>
+    <string name="project_page">Projectpagina</string>
+    <string name="project_page_read">De projectpagina lezen</string>
+    <string name="project_page_effect">De README ervan, als tekst getoond. Er wordt niets aan het codeplatform gevraagd totdat je de pagina opent.</string>
+    <string name="project_page_loading">Lezen…</string>
+    <string name="project_page_none">Het project heeft geen pagina die Tern kan lezen.</string>
+    <string name="project_page_failed">De pagina kon niet worden gelezen. Tik om het opnieuw te proberen.</string>
 </resources>

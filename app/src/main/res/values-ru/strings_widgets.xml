@@ -1,3 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">Проверить</string>
+    <string name="shortcut_check_long">Проверить обновления</string>
+    <string name="shortcut_update_all_long">Обновить все приложения</string>
+    <string name="shortcut_add_short">Добавить</string>
+    <string name="shortcut_add_long">Добавить приложение</string>
+    <string name="tile_check">Проверить обновления</string>
+    <string name="tile_checking">Проверка…</string>
+    <string name="tile_up_to_date">Обновлено</string>
+    <string name="widget_label">Обновления</string>
+    <string name="widget_description">Сколько приложений имеют обновление, с кнопкой для проверки и кнопкой, чтобы обновить все.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d обновление</item>
+        <item quantity="few">%d обновления</item>
+        <item quantity="many">%d обновлений</item>
+        <item quantity="other">%d обновления</item>
+    </plurals>
+    <string name="widget_up_to_date">Все обновлено</string>
+    <string name="widget_checked">Проверено в %1$s</string>
+    <string name="widget_never_checked">Еще не проверялось</string>
+    <string name="widget_check">Проверить</string>
 </resources>

@@ -1,3 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_categories">Kategorien</string>
+    <string name="settings_categories_effect">Benenne sie, gib jeder eine Farbe, und benenne sie für alle Apps auf einmal um oder lösche sie.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d Kategorie</item>
+        <item quantity="other">%d Kategorien</item>
+    </plurals>
+    <string name="categories_none">Noch keine. Erstelle hier eine, oder lege Apps aus der Liste unter einer ab.</string>
+    <string name="categories_new">Neue Kategorie</string>
+    <string name="category_edit">Kategorie bearbeiten</string>
+    <string name="category_name">Name</string>
+    <string name="category_color">Farbe</string>
+    <string name="category_color_spoken">Farbe %1$d von %2$d</string>
+    <string name="category_exists">Eine Kategorie mit diesem Namen gibt es bereits.</string>
+    <string name="category_delete">Löschen</string>
+    <string name="category_delete_effect">Die Apps darin bleiben in der Liste; sie sind nur nicht mehr unter ihr abgelegt.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d App</item>
+        <item quantity="other">%d Apps</item>
+    </plurals>
+    <string name="action_close">Schließen</string>
+    <string name="categories_new_short">Neu…</string>
+    <string name="app_notes_title">Notizen</string>
+    <string name="app_notes_help">Markdown funktioniert: **fett**, *kursiv*, Listen und Links.</string>
+    <string name="app_notes_add">Notiz hinzufügen</string>
+    <string name="app_notes_add_effect">Alles, was du dir zu dieser App merken möchtest. Die Notiz wird mit exportiert.</string>
+    <string name="app_notes_edit">Notiz bearbeiten</string>
 </resources>

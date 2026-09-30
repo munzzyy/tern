@@ -31,7 +31,7 @@ leaves the device.
 - An Obtainium export brings your list and your settings along, and Tern can
   write one for Obtainium too.
 
-[<img src="site/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/?url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Ftern)
+[<img src="site/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/#url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Ftern)
 
 Or download `tern.apk` from the [latest release](https://github.com/munzzyy/tern/releases/latest).
 It runs on Android 10 and later, on phones, tablets and TVs. Once it is
@@ -185,7 +185,7 @@ If you publish an Android app on GitHub or anywhere else Tern reads, a badge in
 your README lets people add it to Tern with one tap:
 
 ```markdown
-[<img src="https://tern.munzzyy.dev/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/?url=https%3A%2F%2Fgithub.com%2FYOU%2FYOUR-APP)
+[<img src="https://tern.munzzyy.dev/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/#url=https%3A%2F%2Fgithub.com%2FYOU%2FYOUR-APP)
 ```
 
 The [site](https://tern.munzzyy.dev/) writes this line for you from your

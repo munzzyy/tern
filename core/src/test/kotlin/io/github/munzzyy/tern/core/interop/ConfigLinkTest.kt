@@ -117,10 +117,31 @@ class ConfigLinkTest {
     }
 
     @Test
+    fun ternsOwnLinkKeepsTheSettingsAfterTheHashWhereNoServerSeesThem() {
+        val link = ConfigLink.tern(app)!!
+        assertTrue(link.startsWith("https://tern.munzzyy.dev/add/#app="))
+        assertFalse("nothing before the hash but the page", link.substringBefore('#').contains("github"))
+        assertEquals(readBack(ConfigLink.of(app)!!), readBack(link))
+        assertEquals("the page's tern:// link reads the same", readBack(ConfigLink.of(app)!!), readBack("tern://app/" + link.substringAfter("#app=")))
+    }
+
+    @Test
+    fun ternsLinkForAnAddressKeepsItAfterTheHashAndOlderLinksStillRead() {
+        val address = "https://github.com/example/app?tab=releases"
+        val link = ConfigLink.ternAddress(address)
+        assertEquals("https://tern.munzzyy.dev/add/#url=https%3A%2F%2Fgithub.com%2Fexample%2Fapp%3Ftab%3Dreleases", link)
+        assertEquals(ObtainiumLink.Add(address), ObtainiumLink.parse(link))
+        assertEquals(ObtainiumLink.Add(address), ObtainiumLink.parse("https://tern.munzzyy.dev/add/?url=https%3A%2F%2Fgithub.com%2Fexample%2Fapp%3Ftab%3Dreleases"))
+        assertEquals(ObtainiumLink.Add(address), ObtainiumLink.parse("tern://add?url=https%3A%2F%2Fgithub.com%2Fexample%2Fapp%3Ftab%3Dreleases"))
+        assertNull("the page without an app carries nothing", ObtainiumLink.parse("https://tern.munzzyy.dev/add/"))
+    }
+
+    @Test
     fun aSourceObtainiumCannotFollowHasNoLink() {
         val actions = AppConfig("ci", SourceSpec(SourceTypes.GITHUB_ACTIONS, "https://github.com/example/app"), "Nightly")
         assertNull(ConfigLink.of(actions))
         assertNull(ConfigLink.web(actions))
+        assertNull(ConfigLink.tern(actions))
     }
 
     @Test
@@ -128,6 +149,7 @@ class ConfigLinkTest {
         val long = app.copy(releases = ReleasePolicy(titleFilter = "release ".repeat(1_000)))
         assertNull(ConfigLink.of(long))
         assertNull(ConfigLink.web(long))
+        assertNull(ConfigLink.tern(long))
         assertTrue(ConfigLink.web(app)!!.length <= ConfigLink.MAX_LENGTH)
     }
 }

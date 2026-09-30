@@ -30,4 +30,7 @@
     <string name="stores_import_from_stores">These come from third-party stores, which serve their own copies of apps. Until an app is pinned to a certificate, the first file Tern installs from its store decides which certificate its updates must carry.</string>
     <string name="stores_import_paused">Third-party stores are off, so these apps are paused. Tern asks those stores nothing until you turn them on.</string>
     <string name="stores_import_names">From third-party stores</string>
+    <!-- The link goes through Obtainium's web page, which is sent all of the app's settings. -->
+    <string name="share_obtainium_link">Share as an Obtainium link</string>
+    <string name="share_obtainium_links">Share as Obtainium links</string>
 </resources>

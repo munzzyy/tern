@@ -10,9 +10,6 @@
     <string name="action_save_file">Lưu vào Tải xuống</string>
     <string name="file_saved">Đã lưu thành %1$s trong %2$s, đúng như khi tải xuống. Tern kiểm tra tệp khi cài đặt tệp đó.</string>
     <string name="action_save_files">Lưu tệp vào Tải xuống</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="other">Đã lưu %d tệp vào Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="other">Đã đánh dấu đã xem %d bản phát hành</item>
     </plurals>

@@ -25,6 +25,7 @@ class StateJsonTest {
             Asset("build.zip", "https://example.org/build.zip", holdsApps = true),
             Asset("app.apks", "https://example.org/base.zip", 9, parts = listOf("https://example.org/config.arm64_v8a.zip", "https://example.org/config.xxhdpi.zip")),
         ),
+        sourceArchives = listOf(Asset("app-v2.tar.gz", "https://example.org/app/archive/v2.tar.gz", needsAuth = true)),
     )
 
     @Test

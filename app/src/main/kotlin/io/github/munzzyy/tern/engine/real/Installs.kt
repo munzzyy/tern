@@ -4,6 +4,7 @@ import android.app.ActivityManager
 import android.content.Intent
 import android.content.pm.PackageInstaller
 import android.util.Log
+import androidx.core.content.FileProvider
 import io.github.munzzyy.tern.core.engine.InstallRecord
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.Asset
@@ -33,7 +34,10 @@ import io.github.munzzyy.tern.install.ObbOutcome
 import io.github.munzzyy.tern.install.OtherAppInstaller
 import io.github.munzzyy.tern.install.PartsZip
 import io.github.munzzyy.tern.install.StepFailure
+import io.github.munzzyy.tern.install.VerifiedApps
+import io.github.munzzyy.tern.work.Installed
 import io.github.munzzyy.tern.work.TransferService
+import io.github.munzzyy.tern.work.Trouble
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.ConcurrentHashMap
@@ -223,6 +227,9 @@ internal class Installs(private val e: RealEngine) {
             val facts = pass.facts.copy(checksumMatchedFrom = expected?.second, fileSha256 = download.sha256)
             e.inspector.remember(chosenAsset, chosenRelease.id, facts)
             e.event(appId, EventKind.VERIFIED, e.texts.eventVerified(facts.packageName, facts.versionCode, facts.signers.firstOrNull()?.take(16) ?: "?"))
+            val update = e.readInstalled(facts.packageName) != null
+            updating[appId] = update
+            if (!update) handToVerifier(appId, pass.apks.first(), facts.packageName)
 
             e.setProgress(appId, Progress(Phase.INSTALLING))
             val sessionId = try {
@@ -264,6 +271,40 @@ internal class Installs(private val e: RealEngine) {
             null
         }
     }
+
+    /**
+     * Before the first install of an app, where the setting asks and Verified Apps is on the
+     * device, hands it a copy of the checked file, read-only, and waits for the person to come back
+     * to Tern, as Obtainium does. The installer then gets the file the gate passed, whatever
+     * happened there.
+     */
+    private suspend fun handToVerifier(appId: String, apk: File, packageName: String) {
+        val send = { pkg: String -> Intent(Intent.ACTION_SEND).setPackage(pkg).setType(APK_MIME) }
+        val verifier = VerifiedApps.first { send(it).resolveActivity(e.context.packageManager) != null }
+        if (!VerifiedApps.handsOver(e.settings.value.shareToVerifier, firstInstall = true, there = appId in e.userTransfers && inForeground(), verifier = verifier)) return
+        val copy = runInterruptible {
+            val folder = File(e.context.cacheDir, "${OtherAppInstaller.FOLDER}/$VERIFY_FOLDER").apply {
+                deleteRecursively()
+                mkdirs()
+            }
+            apk.copyTo(File(folder, "$packageName.apk"), overwrite = true)
+        }
+        val uri = FileProvider.getUriForFile(e.context, OtherAppInstaller.authority(e.context), copy)
+        val intent = send(verifier ?: return).putExtra(Intent.EXTRA_STREAM, uri)
+            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            e.context.startActivity(intent)
+        } catch (ex: RuntimeException) {
+            Log.w(TAG, "Could not hand the file to $verifier: ${ex.javaClass.simpleName}")
+            return
+        }
+        // Tern leaves the screen while the person is there, and the install goes on once they are back.
+        withTimeoutOrNull(VERIFIER_OPENS_MS) { while (inForeground()) delay(POLL_MS) } ?: return
+        withTimeoutOrNull(VERIFIER_WAIT_MS) { while (!inForeground()) delay(POLL_MS) }
+    }
+
+    /** Whether each install under way replaces an app on the device, kept for the notification that says it is done. */
+    private val updating = ConcurrentHashMap<String, Boolean>()
 
     /** Hands a prepared session to the installer; the pending install is stored first so no answer can outrun it. */
     internal suspend fun commit(appId: String, pending: PendingInstall) {
@@ -390,6 +431,7 @@ internal class Installs(private val e: RealEngine) {
             PackageInstaller.STATUS_FAILURE_ABORTED -> cancelled(appId)
             else -> failed(appId, problemFor(status, message))
         }
+        updating.remove(appId)
         e.notifier.cancelConfirm(appId)
         confirmations.remove(appId)
         outcomes.remove(appId)?.complete(status)
@@ -429,7 +471,17 @@ internal class Installs(private val e: RealEngine) {
         if (!e.settings.value.keepInstallers) {
             for (url in listOf(pending.assetUrl) + pending.partUrls) e.downloader.discard(appId, Downloader.key(pending.releaseId, url))
         }
-        if (notify && e.settings.value.notifyInstalled) e.notifier.installed(listOfNotNull(e.stored[appId]?.config?.shownName))
+        val update = updating.remove(appId) ?: true
+        if (notify && e.settings.value.notifyInstalled) {
+            e.stored[appId]?.config?.shownName?.let { e.notifier.installed(listOf(Installed(appId, it, pending.version, update))) }
+        }
+    }
+
+    /** The apps that could not be checked or updated among [ids], each with the words its row shows for why. */
+    private fun troubles(ids: List<String>): List<Trouble> = ids.distinct().mapNotNull { id ->
+        val stored = e.stored[id] ?: return@mapNotNull null
+        val reason = e.evaluations[id]?.problem?.message ?: stored.state.installProblem?.message ?: stored.state.checkProblem?.message
+        Trouble(id, stored.config.shownName, reason ?: e.texts.installFailed(null))
     }
 
     /** Nothing went wrong: the row goes back to what it was, and the file stays for the next try. */
@@ -532,7 +584,7 @@ internal class Installs(private val e: RealEngine) {
         } finally {
             e.notifier.doneChecking()
         }
-        val installed = ArrayList<String>()
+        val installed = ArrayList<Installed>()
         val failed = ArrayList<String>()
         // Without the permission Android would ask from a notification and then call the install cancelled.
         val allowed = e.mayInstallUnattended()
@@ -549,15 +601,14 @@ internal class Installs(private val e: RealEngine) {
                 val session = run(id, null, null)
                 val status = if (session != null) awaitOutcome(id, INSTALL_WAIT_MS) else null
                 when (status) {
-                    PackageInstaller.STATUS_SUCCESS -> installed += config.shownName
+                    PackageInstaller.STATUS_SUCCESS -> installed += Installed(id, config.shownName, e.stored[id]?.state?.record?.version)
                     PackageInstaller.STATUS_PENDING_USER_ACTION -> Unit
-                    else -> failed += config.shownName
+                    else -> failed += id
                 }
             } finally {
                 batch -= id
             }
         }
-        val names = { ids: List<String> -> ids.mapNotNull { e.stored[it]?.config?.shownName } }
         val named = { ids: List<String> -> ids.mapNotNull { id -> e.stored[id]?.config?.shownName?.let { id to it } } }
         // A muted app is still checked and shown; it only makes no sound.
         val heard = checked.filter { it.newRelease && e.stored[it.id]?.config?.muted != true }
@@ -566,7 +617,7 @@ internal class Installs(private val e: RealEngine) {
         if (settings.notifyUpdates) e.notifier.updates(named(fresh))
         if (settings.notifyTracked) e.notifier.tracked(named(tracked))
         if (settings.notifyInstalled) e.notifier.installed(installed)
-        if (settings.notifyFailures) e.notifier.failures(names(checked.filter { it.failed }.map { it.id }) + failed)
+        if (settings.notifyFailures) e.notifier.failures(troubles(checked.filter { it.failed }.map { it.id } + failed))
         return ScheduledRun(waited, checked.filter { it.failed }.map { it.id })
     }
 
@@ -592,6 +643,10 @@ internal class Installs(private val e: RealEngine) {
         private const val SETTLE_MS = 1000L
         private const val SELF_WAIT_MS = 10 * 60 * 1000L
         private const val POLL_MS = 1000L
+        private const val VERIFIER_OPENS_MS = 5000L
+        private const val VERIFIER_WAIT_MS = 10 * 60 * 1000L
+        private const val VERIFY_FOLDER = "verify"
+        private const val APK_MIME = "application/vnd.android.package-archive"
 
         private const val TAG = "TernInstalls"
         private const val CONFIRM_INSTALL = "android.content.pm.action.CONFIRM_INSTALL"

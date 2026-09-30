@@ -56,6 +56,17 @@ class ForgejoSourceTest {
     }
 
     @Test
+    fun theSourceOfEachReleaseComesFromTheForgeItself() {
+        val body = """[{"tag_name": "v1.0", "name": "", "draft": false, "prerelease": false, "assets": [],
+            "tarball_url": "https://codeberg.org/example/app/archive/v1.0.tar.gz",
+            "zipball_url": "https://mirror.example/example/app/archive/v1.0.zip"}]"""
+        val release = listing(FakeHttp().text(releasesUrl, body), spec()).releases.single()
+        assertTrue(release.assets.isEmpty())
+        assertEquals(listOf("app-v1.0.tar.gz"), release.sourceArchives.map { it.name })
+        assertEquals("https://codeberg.org/example/app/archive/v1.0.tar.gz", release.sourceArchives.single().url)
+    }
+
+    @Test
     fun probeReturnsNullForCodebergItself() {
         assertNull(source.probe("https://codeberg.org/example/app", context(FakeHttp())))
     }

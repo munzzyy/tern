@@ -10,10 +10,6 @@
     <string name="action_save_file">Opslaan in de map Download</string>
     <string name="file_saved">Opgeslagen als %1$s in %2$s, zoals het is gedownload. Tern controleert een bestand wanneer het dit installeert.</string>
     <string name="action_save_files">Bestanden opslaan in de map Download</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d bestand opgeslagen in Download/Tern</item>
-        <item quantity="other">%d bestanden opgeslagen in Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d release gemarkeerd als gezien</item>
         <item quantity="other">%d releases gemarkeerd als gezien</item>

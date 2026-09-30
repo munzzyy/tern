@@ -164,9 +164,11 @@ class AppListTest {
     fun bulkActionsTouchOnlyTheAppsTheyCanChange() {
         val tracked = testRow(id = "t", status = AppStatus.NEW_RELEASE, trackOnly = true)
         val installed = testRow(id = "i", status = AppStatus.UP_TO_DATE)
-        val noFile = testRow(id = "n", withFile = false)
+        val noRelease = testRow(id = "n", offered = null)
+        val noneRanked = testRow(id = "u", withFile = false)
         assertEquals(listOf("t"), touched(BulkAction.MARK_SEEN, listOf(tracked, installed)).map { it.id })
-        assertEquals(listOf("t", "i"), touched(BulkAction.SAVE_FILES, listOf(tracked, installed, noFile)).map { it.id })
+        // Any file of a release can be saved, also where none is one Tern would install.
+        assertEquals(listOf("t", "i", "u"), touched(BulkAction.SAVE_FILES, listOf(tracked, installed, noRelease, noneRanked)).map { it.id })
     }
 
     @Test

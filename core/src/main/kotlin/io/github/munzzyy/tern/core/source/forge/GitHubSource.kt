@@ -157,7 +157,7 @@ class GitHubSource : Source {
             val assetDate = spec.flag(SourceOptions.ASSET_DATE)
             val listed = json.objects().asSequence()
                 .filterNot { obj -> obj.bool("draft") == true }
-                .mapNotNull { obj -> mapRelease(obj, assetDate, home, used != null) }
+                .mapNotNull { obj -> mapRelease(obj, assetDate, home, repo, used != null) }
                 .take(MAX_RELEASES)
                 .toList()
             val releases = if (spec.flag(SourceOptions.VERIFY_LATEST)) withLatest(listed, latest(owner, repo, spec, context, used, assetDate), MAX_RELEASES) else listed
@@ -222,7 +222,7 @@ class GitHubSource : Source {
             } catch (e: Exception) {
                 throw SourceException(SourceErrorKind.PARSE, "Malformed GitHub latest release JSON for $owner/$repo", cause = e)
             }
-            return if (obj.bool("draft") == true) null else mapRelease(obj, assetDate, Urls.authority(spec.url), token != null)
+            return if (obj.bool("draft") == true) null else mapRelease(obj, assetDate, Urls.authority(spec.url), repo, token != null)
         }
     }
 
@@ -269,9 +269,10 @@ class GitHubSource : Source {
      * With [assetDate], the release is dated by its newest file, or by its own date when no file
      * says. [authenticated] says the listing was read with the token; the files of a project on
      * github.com are then fetched through the API, which also serves them for a private project.
-     * Another GitHub's files come from its own host.
+     * Another GitHub's files come from its own host. The archives of the project's source come
+     * from the API of the GitHub that holds it, with the token where the listing was read with it.
      */
-    private fun mapRelease(obj: JsonObject, assetDate: Boolean, home: String, authenticated: Boolean): Release? {
+    private fun mapRelease(obj: JsonObject, assetDate: Boolean, home: String, repo: String, authenticated: Boolean): Release? {
         val tag = obj.string("tag_name") ?: return null
         val files = obj.array("assets")?.objects().orEmpty().mapNotNull { asset ->
             val name = asset.string("name") ?: return@mapNotNull null
@@ -294,6 +295,12 @@ class GitHubSource : Source {
             prerelease = obj.bool("prerelease") ?: false,
             pageUrl = obj.string("html_url")?.let(GitHubProxy::unwrap),
             assets = files.map { it.second },
+            sourceArchives = SourceArchives.of(
+                repo, tag,
+                tarball = obj.string("tarball_url")?.let(GitHubProxy::unwrap),
+                zipball = obj.string("zipball_url")?.let(GitHubProxy::unwrap),
+                needsAuth = authenticated,
+            ) { Urls.host(it) == Urls.host(apiBase("https://$home")) },
         )
     }
 

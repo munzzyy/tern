@@ -10,12 +10,6 @@
     <string name="action_save_file">Zapisz w Pobranych</string>
     <string name="file_saved">Zapisano jako %1$s w %2$s, w takiej postaci, w jakiej plik został pobrany. Tern sprawdza plik podczas jego instalacji.</string>
     <string name="action_save_files">Zapisz pliki w Pobranych</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">Zapisano %d plik w Download/Tern</item>
-        <item quantity="few">Zapisano %d pliki w Download/Tern</item>
-        <item quantity="many">Zapisano %d plików w Download/Tern</item>
-        <item quantity="other">Zapisano %d pliku w Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">Oznaczono %d wydanie jako widziane</item>
         <item quantity="few">Oznaczono %d wydania jako widziane</item>

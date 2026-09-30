@@ -276,6 +276,30 @@ class GitHubSourceTest {
     }
 
     @Test
+    fun theSourceOfEachReleaseIsOfferedToSaveAndNeverAsAFileToInstall() {
+        val body = """[{"tag_name": "v2.0", "name": "", "draft": false, "prerelease": false, "assets": [],
+            "tarball_url": "https://api.github.com/repos/example/app/tarball/v2.0",
+            "zipball_url": "https://api.github.com/repos/example/app/zipball/v2.0"}]"""
+        val release = listing(FakeHttp().text(apiUrl, body), spec()).releases.single()
+        assertTrue(release.assets.isEmpty())
+        assertEquals(listOf("app-v2.0.tar.gz", "app-v2.0.zip"), release.sourceArchives.map { it.name })
+        assertEquals("https://api.github.com/repos/example/app/zipball/v2.0", release.sourceArchives[1].url)
+        // Read with the token, so the token may go to the API for the archive of a private project, and nowhere else.
+        assertTrue(release.sourceArchives.all { it.needsAuth })
+
+        val anonymous = (source.check(spec(), context(FakeHttp().text(feedUrl, "<feed/>").text(apiUrl, body))) as CheckResult.Listing).listing
+        assertTrue(anonymous.releases.single().sourceArchives.none { it.needsAuth })
+    }
+
+    @Test
+    fun anArchiveAddressOffTheApiOfTheProjectsGitHubIsLeftOut() {
+        val body = """[{"tag_name": "v2.0", "name": "", "draft": false, "prerelease": false, "assets": [],
+            "tarball_url": "https://elsewhere.example/tarball/v2.0",
+            "zipball_url": "http://api.github.com/repos/example/app/zipball/v2.0"}]"""
+        assertTrue(listing(FakeHttp().text(apiUrl, body), spec()).releases.single().sourceArchives.isEmpty())
+    }
+
+    @Test
     fun aRefusedTokenIsTriedOnceWithout() {
         val http = FakeHttp().on(apiUrl) { request ->
             if (request.authorization != null) HttpResponse.of(401, """{"message": "Bad credentials"}""", url = apiUrl) else HttpResponse.of(200, Fixtures.text("forge/github_releases.json"), url = apiUrl)

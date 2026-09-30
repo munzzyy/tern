@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -16,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -24,10 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.engine.ReleaseSelector
 import io.github.munzzyy.tern.core.model.AppConfig
+import io.github.munzzyy.tern.core.model.Asset
+import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.ReleaseOrder
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.model.VersionFrom
@@ -40,6 +46,7 @@ import io.github.munzzyy.tern.ui.apps.rememberRemove
 import io.github.munzzyy.tern.ui.common.ActionRow
 import io.github.munzzyy.tern.ui.common.ChoiceRow
 import io.github.munzzyy.tern.ui.common.FileChoiceView
+import io.github.munzzyy.tern.ui.common.FileWords
 import io.github.munzzyy.tern.ui.common.GlyphButton
 import io.github.munzzyy.tern.ui.common.QuietButton
 import io.github.munzzyy.tern.ui.common.SwitchRow
@@ -235,7 +242,7 @@ private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
     DetailCard(stringResource(R.string.group_files)) {
         val ranked = listOfNotNull(row.file) + row.otherFiles
         Padded {
-            if (ranked.isEmpty()) {
+            if (ranked.isEmpty() && row.latest?.savable.isNullOrEmpty()) {
                 Text(stringResource(R.string.files_none), style = MaterialTheme.typography.bodyMedium)
             }
             ranked.forEachIndexed { index, choice ->
@@ -249,7 +256,7 @@ private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
                         style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.primary,
                     )
-                    FileChoiceView(choice)
+                    FileChoiceView(choice, size = row.latest?.let { rememberServerSize(vm, it.id, choice.asset) })
                     Row(horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2)) {
                         if (index > 0 && canPickInstall(row)) {
                             // The file picked is kept for the updates that follow, by the shape of its name.
@@ -258,9 +265,13 @@ private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
                                 engine.install(row.id, assetUrl = choice.asset.url)
                             })
                         }
-                        row.latest?.let { release -> SaveFileButton(vm, release.id, choice.asset.url) }
+                        row.latest?.let { release -> SaveFileButton(vm, release.id, choice.asset) }
                     }
                 }
+            }
+            row.latest?.let { release ->
+                val others = release.savable.filter { file -> ranked.none { it.asset.url == file.url } }
+                if (others.isNotEmpty()) OtherFiles(vm, release, others, divided = ranked.isNotEmpty())
             }
         }
         config.preferredFile?.let { picked ->
@@ -490,13 +501,58 @@ private fun RemoveGroup(row: AppRow, onRemoved: () -> Unit) {
 
 /** Puts a copy of the file in Download/Tern, as it came; only an install checks a file. */
 @Composable
-private fun SaveFileButton(vm: DetailViewModel, releaseId: String, assetUrl: String) {
-    val actions = rememberActions()
-    val online = LocalOnline.current
-    val saved = stringResource(R.string.file_saved)
+private fun SaveFileButton(vm: DetailViewModel, releaseId: String, file: Asset, modifier: Modifier = Modifier) {
+    val saveFile = rememberFileSaver(vm)
+    val spoken = stringResource(R.string.files_save_spoken, file.name)
     QuietButton(
         stringResource(R.string.action_save_file),
-        onClick = { vm.saveFile(releaseId, assetUrl) { file, problem -> actions.say(if (file != null) saved.format(file.name, file.place) else problem.orEmpty()) } },
-        enabled = online,
+        onClick = { saveFile(releaseId, file.url) },
+        enabled = LocalOnline.current,
+        modifier = modifier.semantics { contentDescription = spoken },
     )
+}
+
+/**
+ * Saves a file of a release, given the release and the file's address, and says in a snackbar
+ * where it went or why not, while the page is there. The save goes on when the page is left.
+ */
+@Composable
+fun rememberFileSaver(vm: DetailViewModel): (String, String) -> Unit {
+    val actions = rememberActions()
+    val saved = stringResource(R.string.file_saved)
+    return { releaseId, url -> vm.saveFile(releaseId, url) { file, problem -> actions.say(if (file != null) saved.format(file.name, file.place) else problem.orEmpty()) } }
+}
+
+/** The size the server gives for [file] where its source names none, asked once while online. */
+@Composable
+private fun rememberServerSize(vm: DetailViewModel, releaseId: String, file: Asset): Long? {
+    val online = LocalOnline.current
+    val size by produceState<Long?>(null, releaseId, file.url, online) {
+        if (file.size == null && online) value = vm.fileSize(releaseId, file.url)
+    }
+    return size
+}
+
+private const val FOLDED_FILES = 3
+
+/** The files of the release that Tern would not install, and the archives of its source, each to save. */
+@Composable
+private fun OtherFiles(vm: DetailViewModel, release: Release, files: List<Asset>, divided: Boolean) {
+    val look = LocalLook.current
+    var all by rememberSaveable(release.id) { mutableStateOf(false) }
+    if (divided) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+    Text(stringResource(R.string.files_other_title), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+    for (file in if (all) files else files.take(FOLDED_FILES)) {
+        Column(verticalArrangement = Arrangement.spacedBy(look.gapSmall / 4)) {
+            FileWords(file, source = file in release.sourceArchives)
+            SaveFileButton(vm, release.id, file, Modifier.offset(x = -quietInset()))
+        }
+    }
+    if (files.size > FOLDED_FILES) {
+        QuietButton(
+            if (all) stringResource(R.string.versions_fewer) else stringResource(R.string.versions_all, files.size),
+            onClick = { all = !all },
+            modifier = Modifier.offset(x = -quietInset()),
+        )
+    }
 }

@@ -10,10 +10,6 @@
     <string name="action_save_file">Spara i mappen Nedladdningar</string>
     <string name="file_saved">Sparades som %1$s i %2$s, som den laddades ned. Tern kontrollerar en fil när den installerar den.</string>
     <string name="action_save_files">Spara filer i mappen Nedladdningar</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d fil sparad i Download/Tern</item>
-        <item quantity="other">%d filer sparade i Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d utgåva markerad som sedd</item>
         <item quantity="other">%d utgåvor markerade som sedda</item>

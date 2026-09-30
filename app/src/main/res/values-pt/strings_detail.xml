@@ -10,11 +10,6 @@
     <string name="action_save_file">Guardar em Transferências</string>
     <string name="file_saved">Guardado como %1$s em %2$s, tal como foi transferido. O Tern verifica um ficheiro quando o instala.</string>
     <string name="action_save_files">Guardar ficheiros em Transferências</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d ficheiro guardado em Download/Tern</item>
-        <item quantity="many">%d ficheiros guardados em Download/Tern</item>
-        <item quantity="other">%d ficheiros guardados em Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d lançamento marcado como visto</item>
         <item quantity="many">%d lançamentos marcados como vistos</item>

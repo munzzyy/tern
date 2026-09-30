@@ -10,10 +10,6 @@
     <string name="action_save_file">Konservi en la dosierujo Download</string>
     <string name="file_saved">Konservita kiel %1$s en %2$s, tia kia ĝi estis elŝutita. Tern kontrolas dosieron kiam ĝi instalas ĝin.</string>
     <string name="action_save_files">Konservi dosierojn en la dosierujo Download</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d dosiero konservita en Download/Tern</item>
-        <item quantity="other">%d dosieroj konservitaj en Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d eldono markita kiel vidita</item>
         <item quantity="other">%d eldonoj markitaj kiel viditaj</item>

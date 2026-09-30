@@ -10,11 +10,6 @@
     <string name="action_save_file">Sačuvaj u Preuzimanja</string>
     <string name="file_saved">Sačuvano kao %1$s u %2$s, onako kako je preuzeto. Tern provjerava datoteku kada je instalira.</string>
     <string name="action_save_files">Sačuvaj datoteke u Preuzimanja</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d datoteka sačuvana u Download/Tern</item>
-        <item quantity="few">%d datoteke sačuvane u Download/Tern</item>
-        <item quantity="other">%d datoteka sačuvano u Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d izdanje označeno kao viđeno</item>
         <item quantity="few">%d izdanja označena kao viđena</item>

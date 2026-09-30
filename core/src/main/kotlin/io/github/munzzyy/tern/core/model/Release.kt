@@ -62,9 +62,14 @@ data class Release(
     val latest: Boolean = false,
     /** The size of the release's file as a source that lists no file states it, such as a store that is only followed. */
     val fileSize: Long? = null,
+    /** The project's source at this release, as the forge packs it. Offered to save and never installed, so kept apart from [assets]. */
+    val sourceArchives: List<Asset> = emptyList(),
 ) {
     /** Files that can be installed as they are, and archives the source knows to hold the app. */
     val installable: List<Asset> get() = assets.filter { it.kind == AssetKind.APK || it.kind == AssetKind.BUNDLE || (it.kind == AssetKind.ARCHIVE && it.holdsApps) }
+
+    /** Every file a person may save: the release's own files, then the archives of its source. */
+    val savable: List<Asset> get() = assets + sourceArchives
 
     /** True when the source marks it as a pre-release, and when its version says so: 17.9.6-RC-1 is one whatever the source marks. */
     val countsAsPrerelease: Boolean get() = prerelease || Version.parse(version).isPrerelease

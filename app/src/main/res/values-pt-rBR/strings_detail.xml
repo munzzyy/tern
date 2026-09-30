@@ -10,11 +10,6 @@
     <string name="action_save_file">Salvar em Downloads</string>
     <string name="file_saved">Salvo como %1$s em %2$s, do jeito que foi baixado. O Tern verifica um arquivo quando o instala.</string>
     <string name="action_save_files">Salvar arquivos em Downloads</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d arquivo salvo em Download/Tern</item>
-        <item quantity="many">%d arquivos salvos em Download/Tern</item>
-        <item quantity="other">%d arquivos salvos em Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d lançamento marcado como visto</item>
         <item quantity="many">%d lançamentos marcados como vistos</item>

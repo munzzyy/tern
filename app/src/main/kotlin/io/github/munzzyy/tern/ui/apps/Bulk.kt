@@ -16,7 +16,7 @@ fun touched(action: BulkAction, rows: List<AppRow>): List<AppRow> = when (action
     BulkAction.UPDATE -> rows.filter(::canUpdateNow)
     BulkAction.UNINSTALL -> rows.filter { it.installed != null }
     BulkAction.MARK_SEEN -> rows.filter { it.config.trackOnly && it.status == AppStatus.NEW_RELEASE }
-    BulkAction.SAVE_FILES -> rows.filter { it.file != null && it.latest != null }
+    BulkAction.SAVE_FILES -> rows.filter { it.latest?.savable?.isNotEmpty() == true }
     BulkAction.INSTALL -> rows.filter(::canInstallNow)
     else -> rows
 }

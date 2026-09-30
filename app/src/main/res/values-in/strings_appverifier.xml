@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="appverifier_title">Pemeriksaan kedua</string>
-    <string name="appverifier_effect">AppVerifier adalah aplikasi terpisah. Ini membandingkan aplikasi ini dengan sertifikat yang disimpan Tern untuknya, dan dengan daftar aplikasi yang dikenalnya sendiri.</string>
-    <string name="appverifier_action">Periksa dengan AppVerifier</string>
 </resources>

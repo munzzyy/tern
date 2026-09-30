@@ -10,11 +10,6 @@
     <string name="action_save_file">Enregistrer dans Téléchargements</string>
     <string name="file_saved">Enregistré sous %1$s dans %2$s, tel qu\'il a été téléchargé. Tern vérifie un fichier au moment de l\'installer.</string>
     <string name="action_save_files">Enregistrer les fichiers dans Téléchargements</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d fichier enregistré dans Download/Tern</item>
-        <item quantity="many">%d fichiers enregistrés dans Download/Tern</item>
-        <item quantity="other">%d fichiers enregistrés dans Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d version marquée comme vue</item>
         <item quantity="many">%d versions marquées comme vues</item>

@@ -10,10 +10,6 @@
     <string name="action_save_file">ഡൗൺലോഡുകളിലേക്ക് സേവ് ചെയ്യുക</string>
     <string name="file_saved">ഡൗൺലോഡ് ചെയ്തതുപോലെ തന്നെ %2$s-ൽ %1$s ആയി സേവ് ചെയ്തു. ഒരു ഫയൽ ഇൻസ്റ്റാൾ ചെയ്യുമ്പോഴാണ് Tern അത് പരിശോധിക്കുന്നത്.</string>
     <string name="action_save_files">ഫയലുകൾ ഡൗൺലോഡുകളിലേക്ക് സേവ് ചെയ്യുക</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d ഫയൽ Download/Tern-ൽ സേവ് ചെയ്തു</item>
-        <item quantity="other">%d ഫയലുകൾ Download/Tern-ൽ സേവ് ചെയ്തു</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d റിലീസ് കണ്ടതായി അടയാളപ്പെടുത്തി</item>
         <item quantity="other">%d റിലീസുകൾ കണ്ടതായി അടയാളപ്പെടുത്തി</item>

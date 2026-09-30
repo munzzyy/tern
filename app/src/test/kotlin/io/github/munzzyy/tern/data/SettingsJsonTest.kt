@@ -44,9 +44,11 @@ class SettingsJsonTest {
             otherInstaller = "com.example.installer",
             exportFolder = "content://com.android.externalstorage.documents/tree/primary%3ABackups",
             autoExport = true,
+            otherInstallerActivity = "com.example.installer.InstallActivity",
+            shareToVerifier = false,
         )
         val keys = SettingsJson.encode(guarded).fields.keys
-        for (key in listOf("proxy", "proxyHost", "installer", "otherInstaller", "exportFolder", "autoExport", "openObtainiumLinks")) {
+        for (key in listOf("proxy", "proxyHost", "installer", "otherInstaller", "exportFolder", "autoExport", "openObtainiumLinks", "otherInstallerActivity", "shareToVerifier")) {
             assertFalse("$key must not travel", key in keys)
         }
         val file = Json.parseObject("""{"installer":"ROOT","proxy":"ORBOT","exportFolder":"content://x/tree/y","theme":"DARK"}""")

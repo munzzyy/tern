@@ -10,14 +10,6 @@
     <string name="action_save_file">حفظ في التنزيلات</string>
     <string name="file_saved">تم الحفظ باسم %1$s في %2$s، كما تم تنزيله. يفحص Tern الملف عندما يثبّته.</string>
     <string name="action_save_files">حفظ الملفات في التنزيلات</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="zero">تم حفظ %d ملف في Download/Tern</item>
-        <item quantity="one">تم حفظ ملف واحد (%d) في Download/Tern</item>
-        <item quantity="two">تم حفظ ملفين (%d) في Download/Tern</item>
-        <item quantity="few">تم حفظ %d ملفات في Download/Tern</item>
-        <item quantity="many">تم حفظ %d ملفًا في Download/Tern</item>
-        <item quantity="other">تم حفظ %d ملف في Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="zero">تم تحديد %d إصدار كمقروء</item>
         <item quantity="one">تم تحديد إصدار واحد (%d) كمقروء</item>

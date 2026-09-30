@@ -408,6 +408,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     override fun installerChoices(): List<InstallerChoice> =
         listOf(InstallerChoice("org.example.installer", "Example Installer"))
 
+    override suspend fun installerIcon(choice: InstallerChoice, sizePx: Int): Bitmap? = null
+
     override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
         edit(appId) { it.copy(config = change(it.config).copy(id = appId)) }
     }
@@ -627,6 +629,8 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile =
         SavedFile(assetUrl.substringAfterLast('/'), "Download/Tern", "/storage/emulated/0/Download/Tern/" + assetUrl.substringAfterLast('/'), System.currentTimeMillis(), 0)
+
+    override suspend fun fileSize(appId: String, releaseId: String, assetUrl: String): Long? = null
 
     override val searchOrigins: List<String> = listOf("GitHub", "Codeberg", "GitLab", "F-Droid", "Aptoide", "Uptodown")
 

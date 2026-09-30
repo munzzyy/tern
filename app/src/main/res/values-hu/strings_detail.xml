@@ -10,10 +10,6 @@
     <string name="action_save_file">Mentés a Letöltések mappába</string>
     <string name="file_saved">Mentve %1$s néven ide: %2$s, ahogy le lett töltve. A Tern akkor ellenőriz egy fájlt, amikor telepíti.</string>
     <string name="action_save_files">Fájlok mentése a Letöltések mappába</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d fájl mentve ide: Download/Tern</item>
-        <item quantity="other">%d fájl mentve ide: Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d kiadás megjelölve látottként</item>
         <item quantity="other">%d kiadás megjelölve látottként</item>

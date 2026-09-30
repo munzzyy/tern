@@ -98,8 +98,11 @@ interface Engine {
     /** Asks Shizuku to let Tern use it; the answer arrives through [installerReadiness]. False when Shizuku cannot be asked. */
     fun askShizuku(): Boolean
 
-    /** Apps on this device that take an APK to install, for [InstallerMode.OTHER_APP]. */
+    /** Apps on this device that take an APK to install, for [InstallerMode.OTHER_APP]; an app with several ways in has a choice for each. */
     fun installerChoices(): List<InstallerChoice>
+
+    /** The icon of [choice], as the installer app shows it. Null when it has none. */
+    suspend fun installerIcon(choice: InstallerChoice, sizePx: Int): Bitmap?
 
     fun installAllUpdates()
 
@@ -244,10 +247,18 @@ interface Engine {
     suspend fun writeKeptExport()
 
     /**
-     * Downloads [assetUrl] of the release [releaseId] of the app and puts a copy in Download/Tern,
-     * as it came. Nothing is checked or installed. Throws [ProblemException] when it cannot.
+     * Downloads [assetUrl] of the release [releaseId] of the app, any of its files or of its
+     * [Release.sourceArchives], and puts a copy in Download/Tern, as it came. Nothing is checked or
+     * installed. The save goes on when the caller stops waiting, and notifications say how far it
+     * is and when it is done. Throws [ProblemException] when it cannot.
      */
     suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile
+
+    /**
+     * The size of a file of the app whose source names none, asked of the server once, or null
+     * when the server does not say. The token goes only where it would go for the download.
+     */
+    suspend fun fileSize(appId: String, releaseId: String, assetUrl: String): Long?
 
     /** Runs the background check now, installs of apps set to update by themselves included. */
     suspend fun runBackgroundCheck()

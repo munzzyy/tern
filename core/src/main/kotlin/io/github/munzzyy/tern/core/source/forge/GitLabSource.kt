@@ -199,6 +199,12 @@ class GitLabSource : Source {
         }
         val description = obj.string("description")
         val uploadAssets = description?.let { extractUploadLinks(it, projectUrl) }.orEmpty().map { it.copy(needsAuth = true) }
+        // The archives of the project's source that GitLab packs for the release, named as its own page names them.
+        val sources = obj.obj("assets")?.array("sources")?.objects().orEmpty().mapNotNull { source ->
+            val url = source.string("url") ?: return@mapNotNull null
+            val name = Urls.segments(url).lastOrNull()?.takeIf { it.isNotBlank() } ?: return@mapNotNull null
+            SourceArchives.archive(name, url, needsAuth = true) { Urls.authority(it) == host }
+        }
 
         return Release(
             id = tag,
@@ -210,6 +216,7 @@ class GitLabSource : Source {
             prerelease = false,
             pageUrl = obj.obj("_links")?.string("self")?.takeIf(Urls::isHttps) ?: "$projectUrl/-/releases/${Urls.encodeSegment(tag)}",
             assets = linkAssets + uploadAssets,
+            sourceArchives = sources,
         )
     }
 

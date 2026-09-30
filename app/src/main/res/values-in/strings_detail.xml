@@ -10,9 +10,6 @@
     <string name="action_save_file">Simpan ke Unduhan</string>
     <string name="file_saved">Disimpan sebagai %1$s di %2$s, persis seperti yang diunduh. Tern memeriksa file saat menginstalnya.</string>
     <string name="action_save_files">Simpan file ke Unduhan</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="other">%d file disimpan di Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="other">%d rilis ditandai sudah dilihat</item>
     </plurals>

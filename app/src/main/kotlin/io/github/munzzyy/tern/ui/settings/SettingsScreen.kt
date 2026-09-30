@@ -57,7 +57,6 @@ import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.data.AppLanguage
 import io.github.munzzyy.tern.engine.ExportFormat
-import io.github.munzzyy.tern.engine.InstallerChoice
 import io.github.munzzyy.tern.engine.InstallerMode
 import io.github.munzzyy.tern.engine.InstallerReadiness
 import io.github.munzzyy.tern.engine.OrbotState
@@ -321,6 +320,7 @@ private fun InstallingSection(s: Settings, vm: SettingsViewModel, update: Update
             checked = s.oneDownloadAtATime,
             onChange = { v -> update { it.copy(oneDownloadAtATime = v) } },
         )
+        VerifierRows(s.shareToVerifier) { v -> update { it.copy(shareToVerifier = v) } }
         if (ownershipSupported()) {
             SwitchRow(
                 title = stringResource(R.string.settings_ownership),
@@ -431,22 +431,9 @@ private fun InstallerRows(s: Settings, update: Update) {
 
 @Composable
 private fun OtherInstallerRow(s: Settings, update: Update) {
-    val engine = LocalEngine.current
-    val choices = remember(engine) { engine.installerChoices() }
-    if (choices.isEmpty()) {
-        InfoRow(stringResource(R.string.installer_pick_app), stringResource(R.string.installer_no_apps))
-        return
+    OtherInstallerPicker(s.otherInstaller, s.otherInstallerActivity) { choice ->
+        update { it.copy(otherInstaller = choice.packageName, otherInstallerActivity = choice.activity) }
     }
-    val none = InstallerChoice("", "")
-    val picked = choices.firstOrNull { it.packageName == s.otherInstaller } ?: none
-    val noneLabel = stringResource(R.string.installer_pick_app_none)
-    ChoiceRow(
-        title = stringResource(R.string.installer_pick_app),
-        options = choices,
-        selected = picked,
-        label = { if (it === none) noneLabel else it.label },
-        onSelect = { choice -> update { it.copy(otherInstaller = choice.packageName) } },
-    )
 }
 
 /** Says whether Android lets Tern install apps, and leads to the switch: the settings page where it can be opened, the way to it in words where not. */

@@ -10,11 +10,6 @@
     <string name="action_save_file">Desa a Baixades</string>
     <string name="file_saved">Desat com a %1$s a %2$s, tal com s\'ha baixat. Tern comprova un fitxer quan l\'instal·la.</string>
     <string name="action_save_files">Desa els fitxers a Baixades</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">S\'ha desat %d fitxer a Download/Tern</item>
-        <item quantity="many">S\'han desat %d fitxers a Download/Tern</item>
-        <item quantity="other">S\'han desat %d fitxers a Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">S\'ha marcat %d llançament com a vist</item>
         <item quantity="many">S\'han marcat %d llançaments com a vistos</item>

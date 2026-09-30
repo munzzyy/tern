@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="appverifier_title">یک بررسی دوم</string>
-    <string name="appverifier_effect">AppVerifier یک برنامه جداگانه است. این برنامه را با گواهی‌ای که Tern برای آن در نظر گرفته است، و با لیست برنامه‌های شناخته‌شده خودش مقایسه می‌کند.</string>
-    <string name="appverifier_action">بررسی با AppVerifier</string>
 </resources>

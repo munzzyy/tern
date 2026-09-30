@@ -10,9 +10,6 @@
     <string name="action_save_file">ダウンロードフォルダに保存</string>
     <string name="file_saved">ダウンロードしたままの状態で、%2$s に %1$s として保存しました。Ternはファイルをインストールするときに確認します。</string>
     <string name="action_save_files">ファイルをダウンロードフォルダに保存</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="other">%d 個のファイルを Download/Tern に保存しました</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="other">%d 件のリリースを既読にしました</item>
     </plurals>

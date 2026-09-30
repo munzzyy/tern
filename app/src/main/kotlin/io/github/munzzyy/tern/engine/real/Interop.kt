@@ -12,7 +12,10 @@ import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonException
 import io.github.munzzyy.tern.core.json.JsonObject
 import io.github.munzzyy.tern.core.model.AppConfig
+import io.github.munzzyy.tern.core.model.Asset
+import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.UpdateMode
+import io.github.munzzyy.tern.core.net.RemoteSize
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.data.AppState
@@ -29,10 +32,12 @@ import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.install.Downloader
 import io.github.munzzyy.tern.install.OtherAppInstaller
 import io.github.munzzyy.tern.install.StepFailure
+import io.github.munzzyy.tern.work.TransferService
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
+import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runInterruptible
@@ -145,31 +150,86 @@ internal class Interop(private val e: RealEngine) {
     suspend fun importableFiles(): List<SavedFile> = runInterruptible(Dispatchers.IO) { files.list() }
 
     /**
-     * Downloads one file of one release and puts a copy in Download/Tern, as it came. Nothing is
-     * checked or installed: the file is for the person to keep or pass on.
+     * Downloads one file of one release, or one archive of its source, and puts a copy in
+     * Download/Tern, as it came. Nothing is checked or installed: the file is for the person to keep
+     * or pass on. The notification of downloads counts it, and one of its own says when it is saved.
      */
     suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile {
-        val t = e.texts
-        val stored = e.stored[appId] ?: throw ProblemException(Problem(ProblemKind.NOT_FOUND, t.noRelease()))
-        val release = stored.state.releases.firstOrNull { it.id == releaseId } ?: throw ProblemException(Problem(ProblemKind.NOT_FOUND, t.noRelease()))
-        val asset = release.assets.firstOrNull { it.url == assetUrl } ?: throw ProblemException(Problem(ProblemKind.NOT_FOUND, t.noFileForDevice(null)))
+        val (stored, release, asset) = fileOf(appId, releaseId, assetUrl)
+        val name = savedName(asset.name)
         val key = Downloader.key(release.id, asset.url)
+        val counted = e.saves.begin(name, asset.size)
+        e.publish()
+        TransferService.start(e.context)
         var fresh = false
         try {
             val from = runInterruptible(Dispatchers.IO) { e.registry.resolve(stored.config.source, asset, e.sourceContext()) }
-            val sameHost = Urls.host(from.url) == Urls.host(asset.url)
-            val authorization = if (asset.needsAuth && sameHost) e.tokens.tokenFor(Urls.host(asset.url))?.let { "Bearer $it" } else null
-            val download = e.installs.inTurn { e.downloader.fetch(appId, key, from.url, authorization, from.headers) { _, _ -> } }
+            val download = e.installs.inTurn {
+                e.downloader.fetch(appId, key, from.url, authorizationFor(asset, from.url), from.headers) { done, total ->
+                    e.saves.progress(counted, done, total ?: asset.size)
+                    e.publish()
+                }
+            }
             fresh = !download.reused
-            return runInterruptible(Dispatchers.IO) { files.saveCopy(download.file, savedName(asset.name), mimeOf(asset.name)) }
+            val saved = runInterruptible(Dispatchers.IO) { files.saveCopy(download.file, name, mimeOf(asset.name)) }
+            e.notifier.saved(saved)
+            return saved
         } catch (ex: SourceException) {
-            throw ProblemException(e.checks.problemOf(ex))
+            throw notSaved(name, e.checks.problemOf(ex))
         } catch (ex: StepFailure) {
-            throw ProblemException(ex.problem)
+            throw notSaved(name, ex.problem)
+        } catch (ex: ProblemException) {
+            throw notSaved(name, ex.problem)
+        } catch (ex: IOException) {
+            throw notSaved(name, Problem(ProblemKind.NETWORK, e.texts.downloadFailed(ex)))
         } finally {
+            e.saves.end(counted)
+            e.publish()
             // A file kept for an install that is to be tried again stays; one fetched only to be saved goes.
             if (fresh && !e.settings.value.keepInstallers) e.downloader.discard(appId, key)
         }
+    }
+
+    /** Says in a notification that the file [name] was not saved, for a person who left the page, and hands the problem on. */
+    private fun notSaved(name: String, problem: Problem): ProblemException {
+        e.notifier.notSaved(name, problem.message)
+        return ProblemException(problem)
+    }
+
+    private val sizes = ConcurrentHashMap<String, Long>()
+
+    /** The size of a file whose source names none, asked of its server once in a run; [NO_SIZE] keeps an answer that said nothing. */
+    suspend fun fileSize(appId: String, releaseId: String, assetUrl: String): Long? {
+        val (stored, _, asset) = fileOf(appId, releaseId, assetUrl)
+        asset.size?.let { return it }
+        sizes[asset.url]?.let { return it.takeIf { size -> size != NO_SIZE } }
+        val size = try {
+            runInterruptible(Dispatchers.IO) {
+                val from = e.registry.resolve(stored.config.source, asset, e.sourceContext())
+                RemoteSize.of(e.http, from.url, authorizationFor(asset, from.url), from.headers)
+            }
+        } catch (_: IOException) {
+            null
+        } catch (_: SourceException) {
+            null
+        }
+        sizes[asset.url] = size ?: NO_SIZE
+        return size
+    }
+
+    /** A token only for a file that needs it, and only to the host it was stored for, never to where a source sends the download. */
+    private fun authorizationFor(asset: Asset, fetchedFrom: String): String? {
+        if (!asset.needsAuth || Urls.host(fetchedFrom) != Urls.host(asset.url)) return null
+        return e.tokens.tokenFor(Urls.host(asset.url))?.let { "Bearer $it" }
+    }
+
+    /** The app, the release and the file [assetUrl] names in it: one of its files or one of the archives of its source. */
+    private fun fileOf(appId: String, releaseId: String, assetUrl: String): Triple<StoredApp, Release, Asset> {
+        val t = e.texts
+        val stored = e.stored[appId] ?: throw ProblemException(Problem(ProblemKind.NOT_FOUND, t.noRelease()))
+        val release = stored.state.releases.firstOrNull { it.id == releaseId } ?: throw ProblemException(Problem(ProblemKind.NOT_FOUND, t.noRelease()))
+        val asset = release.savable.firstOrNull { it.url == assetUrl } ?: throw ProblemException(Problem(ProblemKind.NOT_FOUND, t.noFileForDevice(null)))
+        return Triple(stored, release, asset)
     }
 
     private suspend fun bring(door: () -> Decoded): ImportSummary {
@@ -389,6 +449,7 @@ internal class Interop(private val e: RealEngine) {
         const val MAX_APPS = 2000
         const val SHARE_FOLDER = "share"
         const val MAX_OFFERS = 8
+        const val NO_SIZE = -1L
     }
 }
 

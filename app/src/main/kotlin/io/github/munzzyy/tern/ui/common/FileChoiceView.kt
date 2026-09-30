@@ -22,15 +22,16 @@ import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.figures
 import io.github.munzzyy.tern.ui.theme.status
 
+/** [size] is the size the server gave for a file whose source names none. */
 @Composable
-fun FileChoiceView(choice: FileChoice, modifier: Modifier = Modifier) {
+fun FileChoiceView(choice: FileChoice, modifier: Modifier = Modifier, size: Long? = null) {
     val look = LocalLook.current
     val quiet = MaterialTheme.colorScheme.onSurfaceVariant
     Column(modifier, verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
         SelectionContainer {
             Text(ltr(choice.asset.name), style = MaterialTheme.typography.bodyLarge)
         }
-        choice.asset.size?.let {
+        (choice.asset.size ?: size)?.let {
             Text(isolate(formatBytes(it)), style = MaterialTheme.typography.bodySmall.figures(), color = quiet)
         }
         choice.foreignHost?.let { host ->

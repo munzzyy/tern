@@ -261,8 +261,11 @@ enum class InstallerReadiness {
     NO_OTHER_APP,
 }
 
-/** An app on this device that takes an APK to install. */
-data class InstallerChoice(val packageName: String, val label: String)
+/**
+ * An app on this device that takes an APK to install. [activity] names one way into it, for an app
+ * that has several, with the name the app gives that way; null leaves it to the app.
+ */
+data class InstallerChoice(val packageName: String, val label: String, val activity: String? = null, val activityLabel: String? = null)
 
 enum class ProxyMode { NONE, ORBOT, CUSTOM }
 
@@ -372,6 +375,10 @@ data class Settings(
     val githubProxy: String? = null,
     /** Downloads wait for each other instead of running side by side. */
     val oneDownloadAtATime: Boolean = false,
+    /** The activity of [otherInstaller] the file goes to, for an installer app with several; null leaves it to the app. */
+    val otherInstallerActivity: String? = null,
+    /** Before the first install of an app, its checked file goes to Verified Apps or AppVerifier, where one is installed. */
+    val shareToVerifier: Boolean = true,
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */

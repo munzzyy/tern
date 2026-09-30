@@ -118,16 +118,30 @@ object StateJson {
         "pageUrl" to r.pageUrl,
         "latest" to r.latest,
         "fileSize" to r.fileSize,
-        "assets" to JsonArray(
-            r.assets.map { a ->
-                Json.obj(
-                    "name" to a.name, "url" to a.url, "size" to a.size, "sha256" to a.sha256,
-                    "kind" to a.kind.name, "needsAuth" to a.needsAuth, "signers" to a.signers, "holdsApps" to a.holdsApps,
-                    "parts" to a.parts,
-                )
-            },
-        ),
+        "assets" to JsonArray(r.assets.map(::asset)),
+        "sourceArchives" to JsonArray(r.sourceArchives.map(::asset)),
     )
+
+    private fun asset(a: Asset): JsonObject = Json.obj(
+        "name" to a.name, "url" to a.url, "size" to a.size, "sha256" to a.sha256,
+        "kind" to a.kind.name, "needsAuth" to a.needsAuth, "signers" to a.signers, "holdsApps" to a.holdsApps,
+        "parts" to a.parts,
+    )
+
+    private fun asset(a: JsonObject): Asset? {
+        val name = a.string("name") ?: return null
+        return Asset(
+            name = name,
+            url = a.string("url") ?: return null,
+            size = a.long("size"),
+            sha256 = a.string("sha256"),
+            kind = enumOr(a.string("kind"), Asset.kindOf(name)),
+            needsAuth = a.bool("needsAuth") ?: false,
+            signers = a.array("signers")?.strings().orEmpty(),
+            holdsApps = a.bool("holdsApps") ?: false,
+            parts = a.array("parts")?.strings().orEmpty().take(Asset.MAX_PARTS),
+        )
+    }
 
     private fun release(obj: JsonObject): Release? = Release(
         id = obj.string("id") ?: return null,
@@ -141,20 +155,8 @@ object StateJson {
         pageUrl = obj.string("pageUrl"),
         latest = obj.bool("latest") ?: false,
         fileSize = obj.long("fileSize")?.takeIf { it > 0 },
-        assets = obj.array("assets")?.objects().orEmpty().mapNotNull { a ->
-            val name = a.string("name") ?: return@mapNotNull null
-            Asset(
-                name = name,
-                url = a.string("url") ?: return@mapNotNull null,
-                size = a.long("size"),
-                sha256 = a.string("sha256"),
-                kind = enumOr(a.string("kind"), Asset.kindOf(name)),
-                needsAuth = a.bool("needsAuth") ?: false,
-                signers = a.array("signers")?.strings().orEmpty(),
-                holdsApps = a.bool("holdsApps") ?: false,
-                parts = a.array("parts")?.strings().orEmpty().take(Asset.MAX_PARTS),
-            )
-        },
+        assets = obj.array("assets")?.objects().orEmpty().mapNotNull(::asset),
+        sourceArchives = obj.array("sourceArchives")?.objects().orEmpty().mapNotNull(::asset),
     )
 
     private fun problem(p: Problem): JsonObject = Json.obj("kind" to p.kind.name, "message" to p.message, "retryAtMs" to p.retryAtMs)

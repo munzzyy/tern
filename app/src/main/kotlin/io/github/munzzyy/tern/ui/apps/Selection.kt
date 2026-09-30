@@ -24,6 +24,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -55,6 +56,7 @@ import io.github.munzzyy.tern.ui.common.Actions
 import io.github.munzzyy.tern.ui.common.ChoiceDialog
 import io.github.munzzyy.tern.ui.common.ColorDot
 import io.github.munzzyy.tern.ui.common.ConfirmDialog
+import io.github.munzzyy.tern.ui.common.SaveFileDialog
 import io.github.munzzyy.tern.ui.common.shareFile
 import io.github.munzzyy.tern.ui.common.shareText
 import io.github.munzzyy.tern.ui.detail.updateModeLabel
@@ -278,21 +280,7 @@ fun BulkDialog(action: BulkAction, picked: List<AppRow>, engine: Engine, actions
                 onDone()
             }
         }
-        BulkAction.SAVE_FILES -> {
-            val done = pluralStringResource(R.plurals.bulk_saved_files, touched.size, touched.size)
-            LaunchedEffect(Unit) {
-                actions.run {
-                    for (row in touched) {
-                        val release = row.latest ?: continue
-                        val file = row.file ?: continue
-                        engine.saveFile(row.id, release.id, file.asset.url)
-                    }
-                    actions.say(done)
-                }
-                onDismiss()
-                onDone()
-            }
-        }
+        BulkAction.SAVE_FILES -> SaveFiles(touched, engine, actions, onDismiss, onDone)
         BulkAction.INSTALL -> {
             val left = picked.size - n
             val text = stringResource(R.string.bulk_install_text) +
@@ -333,6 +321,40 @@ fun BulkDialog(action: BulkAction, picked: List<AppRow>, engine: Engine, actions
             onDismiss = onDismiss,
         )
     }
+}
+
+/**
+ * One app after the other, a picker of every file of its offered release, with the file Tern would
+ * install picked at first, as Obtainium asks. Each file picked is saved by the engine, which says
+ * in a notification when it is done; Skip passes over an app, and leaving the picker stops.
+ */
+@Composable
+private fun SaveFiles(rows: List<AppRow>, engine: Engine, actions: Actions, onDismiss: () -> Unit, onDone: () -> Unit) {
+    var at by rememberSaveable { mutableIntStateOf(0) }
+    var started by rememberSaveable { mutableIntStateOf(0) }
+    val row = rows.getOrNull(at)
+    val release = row?.latest
+    if (row == null || release == null) {
+        val words = pluralStringResource(R.plurals.files_bulk_saving, started, started)
+        LaunchedEffect(Unit) {
+            if (started > 0) actions.say(words)
+            onDismiss()
+            onDone()
+        }
+        return
+    }
+    SaveFileDialog(
+        title = stringResource(R.string.files_pick_title_app, row.config.shownName),
+        release = release,
+        preselected = row.file?.asset?.url,
+        onSave = { file ->
+            actions.run { engine.saveFile(row.id, release.id, file.url) }
+            started++
+            at++
+        },
+        onSkip = { at++ },
+        onDismiss = { at = rows.size },
+    )
 }
 
 /**

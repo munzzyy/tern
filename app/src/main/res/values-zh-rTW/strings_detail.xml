@@ -10,9 +10,6 @@
     <string name="action_save_file">儲存至下載資料夾</string>
     <string name="file_saved">已依下載時的原樣在 %2$s 中儲存為 %1$s。Tern 會在安裝檔案時進行檢查。</string>
     <string name="action_save_files">將檔案儲存至下載資料夾</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="other">已將 %d 個檔案儲存至 Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="other">已將 %d 個發行版本標示為已讀</item>
     </plurals>

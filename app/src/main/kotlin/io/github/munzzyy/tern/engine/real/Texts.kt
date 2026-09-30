@@ -193,4 +193,12 @@ class Texts(context: Context) : ImportTexts {
         s(R.string.parts_obb_not_placed, ltr(folder), ltr(archive.take(300)), ltr(names.take(1000)))
     fun obbFailed(folder: String, detail: String?, archive: String, names: String) =
         s(R.string.parts_obb_failed, ltr(folder), detail.orEmpty().take(300), ltr(archive.take(300)), ltr(names.take(1000)))
+    fun channelSaved() = s(R.string.files_channel_saved)
+    fun notifySaved(name: String) = s(R.string.files_notify_saved, ltr(name))
+    fun notifySavedPlain() = s(R.string.files_notify_saved_plain)
+    fun notifyNotSaved(name: String) = s(R.string.files_notify_not_saved, ltr(name))
+    fun notifyNotSavedPlain() = s(R.string.files_notify_not_saved_plain)
+    fun notifyUpdatedTo(name: String, version: String) = s(R.string.files_notify_updated_to, name, ltr(version))
+    fun notifyInstalledAt(name: String, version: String) = s(R.string.files_notify_installed_at, name, ltr(version))
+    fun notifyProblemLine(names: String, reason: String) = s(R.string.files_notify_problem_line, names, reason)
 }

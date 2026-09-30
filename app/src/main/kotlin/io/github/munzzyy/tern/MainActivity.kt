@@ -27,6 +27,7 @@ import io.github.munzzyy.tern.ui.SCENARIO_FIRST_RUN
 import io.github.munzzyy.tern.ui.Scenarios
 import io.github.munzzyy.tern.ui.TernApp
 import io.github.munzzyy.tern.ui.common.CrashDialog
+import io.github.munzzyy.tern.ui.common.ProblemsDialog
 import io.github.munzzyy.tern.ui.incomingAddInput
 import io.github.munzzyy.tern.ui.refreshLink
 import io.github.munzzyy.tern.ui.settings.VerificationNote
@@ -42,6 +43,7 @@ private const val KEY_FIRST_RUN_DONE = "first_run_done"
 private const val KEY_VERIFICATION_NOTE_SHOWN = "verification_note_shown"
 private const val TAG = "TernMain"
 private const val MAX_APP_ID = 64
+private const val MAX_PROBLEMS = 50
 
 private data class Incoming(val text: String, val nonce: Long)
 
@@ -50,6 +52,9 @@ class MainActivity : ComponentActivity() {
 
     /** The app a notification asked to show. */
     private var openApp by mutableStateOf<String?>(null)
+
+    /** The apps whose problems a notification asked to show, by their ids. */
+    private var problems by mutableStateOf<List<String>?>(null)
     private var firstRunDone by mutableStateOf(true)
 
     /** Shown once, on the first start after the first run, so it never stands in the way of that run. */
@@ -102,6 +107,7 @@ class MainActivity : ComponentActivity() {
                     onFirstRunDone = ::finishFirstRun,
                     reducedMotion = animationsOff(),
                 )
+                problems?.let { ids -> ProblemsDialog(engine, ids, onOpen = { openApp = it }, onDismiss = { problems = null }) }
                 crash?.let { report -> CrashDialog(report, onDismiss = ::sawCrash) }
                 if (crash == null && verificationNote) VerificationNote(onDismiss = ::sawVerificationNote)
             }
@@ -132,6 +138,10 @@ class MainActivity : ComponentActivity() {
         intent.getStringExtra(Surfaces.EXTRA_SHORTCUT)?.let { Surfaces.used(this, it.take(MAX_APP_ID)) }
         intent.getStringExtra(Notifier.EXTRA_OPEN_APP)?.let { id ->
             openApp = id.take(MAX_APP_ID)
+            return
+        }
+        intent.getStringArrayExtra(Notifier.EXTRA_PROBLEMS)?.let { ids ->
+            problems = ids.take(MAX_PROBLEMS).map { it.take(MAX_APP_ID) }
             return
         }
         when (intent.action) {

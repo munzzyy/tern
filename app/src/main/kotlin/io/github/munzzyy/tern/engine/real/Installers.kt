@@ -35,7 +35,7 @@ internal class Installers(private val e: RealEngine) {
         others = mapOf(
             InstallerMode.SHIZUKU to ShellInstaller.of(e.context, ShizukuShell(), ::recordedInstaller),
             InstallerMode.ROOT to ShellInstaller.of(e.context, RootShell(), ::recordedInstaller),
-            InstallerMode.OTHER_APP to OtherAppInstaller(e.context, ::otherApp),
+            InstallerMode.OTHER_APP to OtherAppInstaller(e.context, ::otherApp) { e.settings.value.otherInstallerActivity },
         ),
         mode = ::effective,
     )

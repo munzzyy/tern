@@ -10,10 +10,6 @@
     <string name="action_save_file">Im Download-Ordner speichern</string>
     <string name="file_saved">Als %1$s in %2$s gespeichert, so wie die Datei heruntergeladen wurde. Tern prüft eine Datei, wenn es sie installiert.</string>
     <string name="action_save_files">Dateien im Download-Ordner speichern</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d Datei in Download/Tern gespeichert</item>
-        <item quantity="other">%d Dateien in Download/Tern gespeichert</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d Release als gesehen markiert</item>
         <item quantity="other">%d Releases als gesehen markiert</item>

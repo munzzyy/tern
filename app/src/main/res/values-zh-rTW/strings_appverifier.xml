@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="appverifier_title">第二次檢查</string>
-    <string name="appverifier_effect">AppVerifier 是一個獨立的應用程式。它會將此應用程式與 Tern 為其釘選的憑證，以及它自己已知的應用程式清單進行比對。</string>
-    <string name="appverifier_action">使用 AppVerifier 檢查</string>
 </resources>

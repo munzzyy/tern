@@ -79,6 +79,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             searchMinStars = prefs.getInt("searchMinStars", d.searchMinStars).coerceIn(0, MAX_STARS),
             githubProxy = GitHubProxy.cleanHost(prefs.getString("githubProxy", null)),
             oneDownloadAtATime = prefs.getBoolean("oneDownloadAtATime", d.oneDownloadAtATime),
+            otherInstallerActivity = prefs.getString("otherInstallerActivity", null)?.takeIf { CLASS.matches(it) },
+            shareToVerifier = prefs.getBoolean("shareToVerifier", d.shareToVerifier),
         )
     }
 
@@ -157,6 +159,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putInt("searchMinStars", s.searchMinStars.coerceIn(0, MAX_STARS))
             .putString("githubProxy", GitHubProxy.cleanHost(s.githubProxy))
             .putBoolean("oneDownloadAtATime", s.oneDownloadAtATime)
+            .putString("otherInstallerActivity", s.otherInstallerActivity?.takeIf { CLASS.matches(it) })
+            .putBoolean("shareToVerifier", s.shareToVerifier)
             .commit()
     }
 
@@ -187,6 +191,9 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
 
         /** A package name, so what goes into an Intent as one can be nothing else. */
         private val PACKAGE = Regex("^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)+$")
+
+        /** The name of a class, which an activity's is, with the dollar sign of a nested one. */
+        private val CLASS = Regex("^[A-Za-z_][A-Za-z0-9_$]*(\\.[A-Za-z_][A-Za-z0-9_$]*)+$")
 
         /** The most stars a search may ask a project to have. */
         const val MAX_STARS = 1_000_000

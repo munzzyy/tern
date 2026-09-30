@@ -10,12 +10,6 @@
     <string name="action_save_file">Зберегти в Завантаження</string>
     <string name="file_saved">Збережено як %1$s у %2$s, у тому вигляді, у якому файл завантажено. Tern перевіряє файл, коли встановлює його.</string>
     <string name="action_save_files">Зберегти файли в Завантаження</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d файл збережено в Download/Tern</item>
-        <item quantity="few">%d файли збережено в Download/Tern</item>
-        <item quantity="many">%d файлів збережено в Download/Tern</item>
-        <item quantity="other">%d файлу збережено в Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d випуск позначено переглянутим</item>
         <item quantity="few">%d випуски позначено переглянутими</item>

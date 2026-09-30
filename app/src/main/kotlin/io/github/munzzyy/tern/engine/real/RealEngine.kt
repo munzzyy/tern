@@ -78,6 +78,7 @@ import io.github.munzzyy.tern.install.Downloader
 import io.github.munzzyy.tern.install.Gate
 import io.github.munzzyy.tern.install.InstallGate
 import io.github.munzzyy.tern.install.Installer
+import io.github.munzzyy.tern.install.OtherAppInstaller
 import io.github.munzzyy.tern.install.PackageManagerArchiveReader
 import io.github.munzzyy.tern.net.Orbot
 import io.github.munzzyy.tern.net.ProxyChoice
@@ -97,6 +98,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -153,6 +155,7 @@ class RealEngine(
     internal val checking: MutableSet<String> = ConcurrentHashMap.newKeySet()
     internal val deviceApps = ConcurrentHashMap<String, DeviceSlot>()
     internal val userTransfers: MutableSet<String> = ConcurrentHashMap.newKeySet()
+    internal val saves = Saves()
 
     private val _apps = MutableStateFlow<List<AppRow>>(emptyList())
     private val _events = MutableStateFlow<List<Event>>(emptyList())
@@ -278,7 +281,7 @@ class RealEngine(
                 .thenBy { it.config.shownName.lowercase() }
                 .thenBy { it.id },
         )
-        _transfers.value = progress.filterKeys { it in userTransfers }
+        _transfers.value = progress.filterKeys { it in userTransfers } + saves.all()
     }
 
     @Synchronized
@@ -469,6 +472,7 @@ class RealEngine(
         for (id in userTransfers.toList()) {
             if (progress[id]?.phase in CANCELLABLE) cancel(id)
         }
+        saves.cancelAll()
     }
 
     override suspend fun remove(appId: String) {
@@ -530,6 +534,11 @@ class RealEngine(
     override fun askShizuku(): Boolean = installers.askShizuku()
 
     override fun installerChoices(): List<InstallerChoice> = installers.choices()
+
+    override suspend fun installerIcon(choice: InstallerChoice, sizePx: Int): Bitmap? = withContext(Dispatchers.IO) {
+        val size = sizePx.coerceIn(1, 1024)
+        OtherAppInstaller.icon(context, choice)?.toBitmap(size, size)
+    }
 
     override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
         ready()
@@ -699,7 +708,15 @@ class RealEngine(
 
     override suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile {
         ready()
-        return interop.saveFile(appId, releaseId, assetUrl)
+        // In the engine's own scope: a page that is left stops waiting, and the file is saved all the same.
+        val saving = scope.async { interop.saveFile(appId, releaseId, assetUrl) }
+        saves.track(saving)
+        return saving.await()
+    }
+
+    override suspend fun fileSize(appId: String, releaseId: String, assetUrl: String): Long? {
+        ready()
+        return interop.fileSize(appId, releaseId, assetUrl)
     }
 
     override val searchOrigins: List<String> get() = detector.searchOrigins

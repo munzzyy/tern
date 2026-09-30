@@ -143,6 +143,7 @@ class SourceRegistry(val sources: List<Source>) {
                     version = Shown.line(release.version, MAX_VERSION),
                     title = Shown.lineOrNull(release.title, MAX_TITLE),
                     assets = release.assets.map { it.copy(name = Shown.line(it.name, MAX_NAME)) },
+                    sourceArchives = release.sourceArchives.map { it.copy(name = Shown.line(it.name, MAX_NAME)) },
                 )
             },
         )

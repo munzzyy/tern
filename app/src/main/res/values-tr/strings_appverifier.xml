@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="appverifier_title">İkinci bir denetim</string>
-    <string name="appverifier_effect">AppVerifier ayrı bir uygulamadır. Bu uygulamayı, Tern\'ın onun için tuttuğu sertifikayla ve bildiği kendi uygulama listesiyle karşılaştırır.</string>
-    <string name="appverifier_action">AppVerifier ile denetle</string>
 </resources>

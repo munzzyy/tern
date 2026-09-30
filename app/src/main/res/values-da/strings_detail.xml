@@ -10,10 +10,6 @@
     <string name="action_save_file">Gem i mappen Download</string>
     <string name="file_saved">Gemt som %1$s i %2$s, som den blev hentet. Tern tjekker en fil, når den installerer den.</string>
     <string name="action_save_files">Gem filer i mappen Download</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d fil gemt i Download/Tern</item>
-        <item quantity="other">%d filer gemt i Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d udgivelse markeret som set</item>
         <item quantity="other">%d udgivelser markeret som set</item>

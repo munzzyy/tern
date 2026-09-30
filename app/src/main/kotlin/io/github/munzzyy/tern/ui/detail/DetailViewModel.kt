@@ -139,7 +139,19 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
         save({ d.applyTo(it) }, onFailed)
     }
 
-    /** Hands back the copy that was saved, or else why not. */
+    /** The size of a file whose source names none, as its server says; null when it does not say or cannot be asked. */
+    suspend fun fileSize(releaseId: String, assetUrl: String): Long? = try {
+        engine.fileSize(appId, releaseId, assetUrl)
+    } catch (e: CancellationException) {
+        throw e
+    } catch (_: Exception) {
+        null
+    }
+
+    /**
+     * Hands back the copy that was saved, or else why not, while the page is there to say so.
+     * The save itself runs in the engine and goes on when the page is left.
+     */
     fun saveFile(releaseId: String, assetUrl: String, onDone: (SavedFile?, String?) -> Unit) {
         viewModelScope.launch {
             val (file, problem) = try {

@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="appverifier_title">Kiểm tra lần hai</string>
-    <string name="appverifier_effect">AppVerifier là một ứng dụng riêng biệt. Nó so sánh ứng dụng này với chứng chỉ mà Tern đang giữ cho nó, và với danh sách các ứng dụng mà nó biết.</string>
-    <string name="appverifier_action">Kiểm tra bằng AppVerifier</string>
 </resources>

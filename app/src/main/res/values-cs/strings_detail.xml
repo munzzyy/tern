@@ -10,12 +10,6 @@
     <string name="action_save_file">Uložit do složky Download</string>
     <string name="file_saved">Uloženo jako %1$s v %2$s, tak jak byl soubor stažen. Tern soubor kontroluje, až když ho instaluje.</string>
     <string name="action_save_files">Uložit soubory do složky Download</string>
-    <plurals name="bulk_saved_files">
-        <item quantity="one">%d soubor uložen do Download/Tern</item>
-        <item quantity="few">%d soubory uloženy do Download/Tern</item>
-        <item quantity="many">%d souborů uloženo do Download/Tern</item>
-        <item quantity="other">%d souborů uloženo do Download/Tern</item>
-    </plurals>
     <plurals name="bulk_marked_seen">
         <item quantity="one">%d vydání označeno jako přečtené</item>
         <item quantity="few">%d vydání označena jako přečtená</item>

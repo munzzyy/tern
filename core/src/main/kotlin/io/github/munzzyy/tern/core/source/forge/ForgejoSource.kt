@@ -110,7 +110,7 @@ class ForgejoSource : Source {
             val assetDate = spec.flag(SourceOptions.ASSET_DATE)
             val listed = json.objects().asSequence()
                 .filterNot { obj -> obj.bool("draft") == true }
-                .mapNotNull { obj -> mapRelease(obj, assetDate) }
+                .mapNotNull { obj -> mapRelease(obj, assetDate, at, repo) }
                 .take(MAX_RELEASES)
                 .toList()
             val releases = if (spec.flag(SourceOptions.VERIFY_LATEST)) withLatest(listed, latest(at, owner, repo, context, token, assetDate), MAX_RELEASES) else listed
@@ -185,7 +185,7 @@ class ForgejoSource : Source {
             } catch (e: Exception) {
                 throw SourceException(SourceErrorKind.PARSE, "Malformed Forgejo latest release JSON for $owner/$repo", cause = e)
             }
-            return if (obj.bool("draft") == true) null else mapRelease(obj, assetDate)
+            return if (obj.bool("draft") == true) null else mapRelease(obj, assetDate, at, repo)
         }
     }
 
@@ -198,8 +198,11 @@ class ForgejoSource : Source {
         return SourceSpec(type, "https://$at/$owner/$repo")
     }
 
-    /** With [assetDate], the release is dated by its newest file, or by its own date when no file says. */
-    private fun mapRelease(obj: JsonObject, assetDate: Boolean): Release? {
+    /**
+     * With [assetDate], the release is dated by its newest file, or by its own date when no file
+     * says. The archives of the project's source come from the forge at [at] itself.
+     */
+    private fun mapRelease(obj: JsonObject, assetDate: Boolean, at: String, repo: String): Release? {
         val tag = obj.string("tag_name") ?: return null
         val files = obj.array("assets")?.objects().orEmpty().mapNotNull { asset ->
             val name = asset.string("name") ?: return@mapNotNull null
@@ -218,6 +221,7 @@ class ForgejoSource : Source {
             prerelease = obj.bool("prerelease") ?: false,
             pageUrl = obj.string("html_url"),
             assets = files.map { it.second },
+            sourceArchives = SourceArchives.of(repo, tag, obj.string("tarball_url"), obj.string("zipball_url"), needsAuth = false) { Urls.authority(it) == at },
         )
     }
 

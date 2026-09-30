@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_package_effect">يجب أن يكون كل ملف من هذه الحزمة، وينظر Tern إلى التطبيق المثبت بهذا الاسم. إذا تُرك الحقل فارغًا، يقرأ Tern الاسم من ملف التطبيق.</string>
+</resources>

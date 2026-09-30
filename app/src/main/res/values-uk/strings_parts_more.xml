@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">Цей архів містить файл OBB, назва якого може вивести його за межі папки OBB програми, або два файли OBB з однаковою назвою. Нічого не було встановлено.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">Розміщено %1$d файл OBB у %2$s.</item>
+        <item quantity="few">Розміщено %1$d файли OBB у %2$s.</item>
+        <item quantity="many">Розміщено %1$d файлів OBB у %2$s.</item>
+        <item quantity="other">Розміщено %1$d файлу OBB у %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">Файли OBB не було розміщено в %1$s, оскільки записувати туди можуть лише інсталятори Shizuku і root. Вони перебувають у %2$s, файлі цього випуску: %3$s.</string>
+    <string name="parts_obb_failed">Не вдалося розмістити файли OBB у %1$s: %2$s. Вони перебувають у %3$s, файлі цього випуску: %4$s.</string>
+</resources>

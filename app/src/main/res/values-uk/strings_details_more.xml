@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_package_effect">Кожен файл має належати до цього пакета, а Tern дивиться на програму, встановлену під цією назвою. Якщо залишити поле порожнім, Tern візьме назву з файлу програми.</string>
+</resources>

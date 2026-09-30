@@ -1,2 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="files_other_title">Inne pliki tego wydania</string>
+    <string name="files_source_code">Kod źródłowy</string>
+    <string name="files_save_spoken">Zapisz %1$s w Pobranych</string>
+    <string name="files_save_a_file">Zapisz plik</string>
+    <string name="files_pick_title_version">Zapisz plik wersji %1$s</string>
+    <string name="files_pick_title_app">Zapisz plik aplikacji %1$s</string>
+    <string name="files_skip">Pomiń</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">Zapisywanie %1$d pliku. O zakończeniu poinformuje powiadomienie.</item>
+        <item quantity="few">Zapisywanie %1$d plików. O zakończeniu zapisywania każdego pliku poinformuje powiadomienie.</item>
+        <item quantity="many">Zapisywanie %1$d plików. O zakończeniu zapisywania każdego pliku poinformuje powiadomienie.</item>
+        <item quantity="other">Zapisywanie %1$d pliku. O zakończeniu zapisywania każdego pliku poinformuje powiadomienie.</item>
+    </plurals>
+    <string name="files_channel_saved">Zapisane pliki</string>
+    <string name="files_notify_saved">Zapisano %1$s</string>
+    <string name="files_notify_saved_plain">Plik zapisano w Pobranych</string>
+    <string name="files_notify_not_saved">Nie udało się zapisać %1$s</string>
+    <string name="files_notify_not_saved_plain">Nie udało się zapisać pliku</string>
+    <string name="files_notify_updated_to">Aplikacja %1$s została zaktualizowana do %2$s</string>
+    <string name="files_notify_installed_at">Aplikacja %1$s %2$s została zainstalowana</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Co poszło nie tak</string>
+    <string name="files_problems_none">Żadna z tych aplikacji nie ma teraz problemu.</string>
+    <string name="files_setting_verifier">Najpierw pokazuj nowe aplikacje w Verified Apps</string>
+    <string name="files_setting_verifier_effect">Przed pierwszą instalacją aplikacji jej sprawdzony plik trafia na drugie sprawdzenie do Verified Apps lub AppVerifier, jeśli któraś z nich jest zainstalowana. Instalacja będzie kontynuowana, gdy wrócisz do Tern.</string>
+    <string name="files_verifier_about">O Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s to osobna aplikacja. Porównuje tę aplikację z certyfikatem, który Tern przechowuje dla niej, oraz z własną listą znanych jej aplikacji.</string>
+    <string name="files_verifier_card_action">Sprawdź za pomocą %1$s</string>
+</resources>

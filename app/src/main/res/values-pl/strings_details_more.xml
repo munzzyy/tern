@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_package_effect">Każdy plik musi należeć do tego pakietu, a Tern patrzy na aplikację zainstalowaną pod tą nazwą. Jeśli pole zostanie puste, Tern odczyta nazwę z pliku aplikacji.</string>
+</resources>

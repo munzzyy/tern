@@ -1,2 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="files_other_title">Другие файлы этого релиза</string>
+    <string name="files_source_code">Исходный код</string>
+    <string name="files_save_spoken">Сохранить %1$s в Загрузки</string>
+    <string name="files_save_a_file">Сохранить файл</string>
+    <string name="files_pick_title_version">Сохранить файл версии %1$s</string>
+    <string name="files_pick_title_app">Сохранить файл приложения %1$s</string>
+    <string name="files_skip">Пропустить</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">Сохранение %1$d файла. Об окончании сообщит уведомление.</item>
+        <item quantity="few">Сохранение %1$d файлов. Об окончании сохранения каждого файла сообщит уведомление.</item>
+        <item quantity="many">Сохранение %1$d файлов. Об окончании сохранения каждого файла сообщит уведомление.</item>
+        <item quantity="other">Сохранение %1$d файла. Об окончании сохранения каждого файла сообщит уведомление.</item>
+    </plurals>
+    <string name="files_channel_saved">Сохраненные файлы</string>
+    <string name="files_notify_saved">Сохранено %1$s</string>
+    <string name="files_notify_saved_plain">Файл сохранен в Загрузки</string>
+    <string name="files_notify_not_saved">Не удалось сохранить %1$s</string>
+    <string name="files_notify_not_saved_plain">Не удалось сохранить файл</string>
+    <string name="files_notify_updated_to">Приложение %1$s обновлено до %2$s</string>
+    <string name="files_notify_installed_at">Приложение %1$s %2$s установлено</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Что пошло не так</string>
+    <string name="files_problems_none">Ни у одного из этих приложений сейчас нет проблем.</string>
+    <string name="files_setting_verifier">Сначала показывать новые приложения в Verified Apps</string>
+    <string name="files_setting_verifier_effect">Перед первой установкой приложения его проверенный файл отправляется в Verified Apps или AppVerifier, если одно из них установлено, для второй проверки. Установка продолжится, когда вы вернетесь в Tern.</string>
+    <string name="files_verifier_about">О Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s является отдельным приложением. Оно сравнивает это приложение с сертификатом, который Tern хранит для него, и со своим списком известных ему приложений.</string>
+    <string name="files_verifier_card_action">Проверить через %1$s</string>
+</resources>

@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">Tento archiv obsahuje soubor OBB, jehož název by mohl vést mimo složku OBB aplikace, nebo dva soubory OBB se stejným názvem. Nic nebylo nainstalováno.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">%1$d soubor OBB byl umístěn do %2$s.</item>
+        <item quantity="few">%1$d soubory OBB byly umístěny do %2$s.</item>
+        <item quantity="many">%1$d souborů OBB bylo umístěno do %2$s.</item>
+        <item quantity="other">%1$d souborů OBB bylo umístěno do %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">Soubory OBB nebyly umístěny do %1$s, protože tam mohou zapisovat jen instalátory Shizuku a root. Jsou v %2$s, souboru tohoto vydání: %3$s.</string>
+    <string name="parts_obb_failed">Soubory OBB se nepodařilo umístit do %1$s: %2$s. Jsou v %3$s, souboru tohoto vydání: %4$s.</string>
+</resources>

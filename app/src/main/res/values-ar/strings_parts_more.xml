@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">يحتوي هذا الأرشيف على ملف OBB قد يُخرجه اسمه من مجلد OBB الخاص بالتطبيق، أو على ملفي OBB يحملان الاسم نفسه. لم يتم تثبيت أي شيء.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="zero">تم وضع %1$d ملف OBB في %2$s.</item>
+        <item quantity="one">تم وضع ملف OBB واحد (%1$d) في %2$s.</item>
+        <item quantity="two">تم وضع ملفي OBB (%1$d) في %2$s.</item>
+        <item quantity="few">تم وضع %1$d ملفات OBB في %2$s.</item>
+        <item quantity="many">تم وضع %1$d ملفًا من نوع OBB في %2$s.</item>
+        <item quantity="other">تم وضع %1$d ملف OBB في %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">لم يتم وضع ملفات OBB في %1$s، لأن الكتابة هناك ممكنة فقط عبر أداتي التثبيت Shizuku وroot. توجد في %2$s، وهو ملف هذا الإصدار: %3$s.</string>
+    <string name="parts_obb_failed">تعذر وضع ملفات OBB في %1$s: %2$s. توجد في %3$s، وهو ملف هذا الإصدار: %4$s.</string>
+</resources>

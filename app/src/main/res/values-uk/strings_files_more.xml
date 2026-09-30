@@ -1,2 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="files_other_title">Інші файли цього випуску</string>
+    <string name="files_source_code">Вихідний код</string>
+    <string name="files_save_spoken">Зберегти %1$s в Завантаження</string>
+    <string name="files_save_a_file">Зберегти файл</string>
+    <string name="files_pick_title_version">Зберегти файл версії %1$s</string>
+    <string name="files_pick_title_app">Зберегти файл програми %1$s</string>
+    <string name="files_skip">Пропустити</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">Збереження %1$d файлу. Про завершення повідомить сповіщення.</item>
+        <item quantity="few">Збереження %1$d файлів. Про завершення збереження кожного файлу повідомить сповіщення.</item>
+        <item quantity="many">Збереження %1$d файлів. Про завершення збереження кожного файлу повідомить сповіщення.</item>
+        <item quantity="other">Збереження %1$d файлу. Про завершення збереження кожного файлу повідомить сповіщення.</item>
+    </plurals>
+    <string name="files_channel_saved">Збережені файли</string>
+    <string name="files_notify_saved">Збережено %1$s</string>
+    <string name="files_notify_saved_plain">Файл збережено в Завантаження</string>
+    <string name="files_notify_not_saved">Не вдалося зберегти %1$s</string>
+    <string name="files_notify_not_saved_plain">Не вдалося зберегти файл</string>
+    <string name="files_notify_updated_to">%1$s оновлено до %2$s</string>
+    <string name="files_notify_installed_at">%1$s %2$s встановлено</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Що пішло не так</string>
+    <string name="files_problems_none">Жодна з цих програм зараз не має проблем.</string>
+    <string name="files_setting_verifier">Спершу показувати нові програми в Verified Apps</string>
+    <string name="files_setting_verifier_effect">Перед першим встановленням програми її перевірений файл надсилається до Verified Apps або AppVerifier, якщо одна з них встановлена, для другої перевірки. Встановлення продовжиться, коли ви повернетеся до Tern.</string>
+    <string name="files_verifier_about">Про Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s є окремою програмою. Вона порівнює цю програму із сертифікатом, який Tern зберігає для неї, і зі своїм списком відомих їй програм.</string>
+    <string name="files_verifier_card_action">Перевірити через %1$s</string>
+</resources>

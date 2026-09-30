@@ -107,10 +107,11 @@ class MainActivity : ComponentActivity() {
                     firstRunDone = firstRunDone,
                     onFirstRunDone = ::finishFirstRun,
                     reducedMotion = animationsOff(),
-                )
-                problems?.let { ids -> ProblemsDialog(engine, ids, onOpen = { openApp = it }, onDismiss = { problems = null }) }
-                crash?.let { report -> CrashDialog(report, onDismiss = ::sawCrash) }
-                if (crash == null && verificationNote) VerificationNote(onDismiss = ::sawVerificationNote)
+                ) {
+                    problems?.let { ids -> ProblemsDialog(engine, ids, onOpen = { openApp = it }, onDismiss = { problems = null }) }
+                    crash?.let { report -> CrashDialog(report, onDismiss = ::sawCrash) }
+                    if (crash == null && verificationNote) VerificationNote(onDismiss = ::sawVerificationNote)
+                }
             }
         }
     }

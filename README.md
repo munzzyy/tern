@@ -215,9 +215,10 @@ under Settings, Appearance, on any Android version; from Android 13 on,
 Android's own app language setting shows the same choice.
 
 Text at twice the normal size keeps each screen's main action on screen, on a
-phone and on a TV. The look is yours to change under Settings, Look: the theme,
-colours from the wallpaper, a palette or a colour of your own, contrast,
-density, corners and the shape of app icons.
+phone and on a TV. From one and a half times the size, a TV shows the list and
+an app's page one at a time, as a phone does. The look is yours to change under
+Settings, Look: the theme, colours from the wallpaper, a palette or a colour of
+your own, contrast, density, corners and the shape of app icons.
 
 ## How it compares
 

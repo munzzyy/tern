@@ -5,7 +5,7 @@
     <string name="filter_name">Название</string>
     <string name="filter_author">Разработчик</string>
     <string name="filter_package">Имя пакета</string>
-    <string name="filter_show_up_to_date">Обновленные приложения</string>
+    <string name="filter_show_up_to_date">Приложения с актуальной версией</string>
     <string name="filter_show_not_installed">Неустановленные приложения</string>
     <string name="filter_show_tracked">Приложения, которые только отслеживаются</string>
     <string name="filter_categories">В любой из этих категорий</string>
@@ -74,7 +74,7 @@
     </plurals>
     <string name="action_share_config_link">Поделиться ссылкой с настройками</string>
     <string name="action_share_config_links">Поделиться ссылками с настройками</string>
-    <string name="share_link_none">Настройки этого приложения не поместятся ни в одну ссылку. Поделитесь им как файлом.</string>
+    <string name="share_link_none">Настройки этого приложения не поместятся ни в одну ссылку. Поделитесь вместо этого файлом.</string>
     <plurals name="share_links_left">
         <item quantity="one">%d приложение пропущено, так как его настройки не поместятся ни в одну ссылку.</item>
         <item quantity="few">%d приложения пропущены, так как их настройки не поместятся ни в одну ссылку.</item>

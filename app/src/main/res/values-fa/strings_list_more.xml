@@ -60,7 +60,7 @@
     </plurals>
     <string name="action_share_config_link">اشتراک‌گذاری پیوند همراه با تنظیمات آن</string>
     <string name="action_share_config_links">اشتراک‌گذاری پیوندها همراه با تنظیمات آن‌ها</string>
-    <string name="share_link_none">هیچ پیوندی نمی‌تواند تنظیمات این برنامه را در خود جای دهد. به‌جای آن، آن را به‌صورت فایل به اشتراک بگذارید.</string>
+    <string name="share_link_none">هیچ پیوندی نمی‌تواند تنظیمات این برنامه را در خود جای دهد. در عوض، آن را به‌صورت فایل به اشتراک بگذارید.</string>
     <plurals name="share_links_left">
         <item quantity="one">%d برنامه کنار گذاشته شد، چون هیچ پیوندی نمی‌تواند تنظیماتش را در خود جای دهد.</item>
         <item quantity="other">%d برنامه کنار گذاشته شدند، چون هیچ پیوندی نمی‌تواند تنظیمات آن‌ها را در خود جای دهد.</item>

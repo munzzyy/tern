@@ -2,7 +2,7 @@
 <resources>
     <string name="add_link_unknown">Tern tento druh odkazu nezná.</string>
     <string name="add_not_readable_as">Tuto adresu nelze číst jako %1$s.</string>
-    <string name="add_event_replaced">Nastavení bylo nahrazeno tím, které pro ni obsahoval soubor nebo odkaz.</string>
+    <string name="add_event_replaced">Nastavení bylo nahrazeno nastavením, které pro ni obsahoval soubor nebo odkaz.</string>
     <string name="search_miss_unreachable">%1$s se nepodařilo prohledat: zdroj neodpověděl.</string>
     <string name="search_miss_wait">%1$s se nepodařilo prohledat: zdroj žádá Tern, aby chvíli počkal.</string>
     <string name="search_miss_wait_until">%1$s se nepodařilo prohledat: zdroj žádá Tern, aby počkal do %2$s.</string>
@@ -17,12 +17,12 @@
     <string name="add_read_as_forgejo">Forgejo nebo Gitea</string>
     <string name="add_read_as_help">Pro zdroj, který Tern sám nepozná, například na vlastním serveru.</string>
     <string name="add_package_label">Název balíčku</string>
-    <string name="add_package_help">Každý soubor musí patřit k tomuto balíčku. Když pole zůstane prázdné, Tern ho přečte ze souboru aplikace.</string>
+    <string name="add_package_help">Každý soubor musí patřit k tomuto balíčku. Když pole zůstane prázdné, Tern název přečte ze souboru aplikace.</string>
     <string name="add_package_invalid">To není název balíčku. Vypadá takto: org.example.app.</string>
     <string name="add_set_options">Nastavit možnosti</string>
     <string name="add_failed_options">Možnosti mohou Tern napovědět, kde hledat. Nastavte je výše a Tern zkontroluje znovu.</string>
     <string name="add_replace">Nahradit nastavení</string>
-    <string name="add_replace_explain">Odkaz obsahuje pro tuto aplikaci vlastní nastavení. Nahrazení zachová certifikáty, kterým důvěřuje, a název jejího balíčku a nezapne samostatné instalování aktualizací.</string>
+    <string name="add_replace_explain">Odkaz obsahuje pro tuto aplikaci vlastní nastavení. Nahrazení zachová certifikáty, kterým aplikace důvěřuje, i název jejího balíčku a nezapne samostatné instalování aktualizací.</string>
     <string name="results_filter">Filtr</string>
     <string name="results_filter_help">Slova nebo vzor</string>
     <string name="results_filter_none">V seznamu nic neodpovídá „%1$s“.</string>

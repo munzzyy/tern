@@ -5,7 +5,7 @@
     <string name="filter_name">Назва</string>
     <string name="filter_author">Розробник</string>
     <string name="filter_package">Назва пакета</string>
-    <string name="filter_show_up_to_date">Оновлені програми</string>
+    <string name="filter_show_up_to_date">Програми з актуальною версією</string>
     <string name="filter_show_not_installed">Не встановлені програми</string>
     <string name="filter_show_tracked">Програми, які лише відстежуються</string>
     <string name="filter_categories">У будь-якій із цих категорій</string>

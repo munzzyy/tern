@@ -22,7 +22,7 @@
     <string name="add_set_options">تنظیم گزینه‌های آن</string>
     <string name="add_failed_options">گزینه‌های آن ممکن است به Tern بگویند کجا را بگردد. آن‌ها را در بالا تنظیم کنید، سپس Tern دوباره بررسی می‌کند.</string>
     <string name="add_replace">جایگزین کردن تنظیمات آن</string>
-    <string name="add_replace_explain">پیوند تنظیمات مخصوص خودش را برای این برنامه دارد. جایگزین کردن، گواهی‌هایی را که برنامه به آن‌ها اعتماد دارد و نام بسته‌اش را حفظ می‌کند و باعث نمی‌شود برنامه به‌روزرسانی‌ها را خودش نصب کند.</string>
+    <string name="add_replace_explain">پیوند تنظیمات مخصوص خودش را برای این برنامه دارد. جایگزین کردن، گواهی‌هایی را که برنامه به آن‌ها اعتماد دارد و نام بسته‌اش را حفظ می‌کند، اما باعث نمی‌شود برنامه به‌روزرسانی‌ها را خودش نصب کند.</string>
     <string name="results_filter">فیلتر</string>
     <string name="results_filter_help">کلمه‌ها یا یک الگو</string>
     <string name="results_filter_none">هیچ‌چیز در لیست با «%1$s» مطابقت ندارد.</string>

@@ -17,7 +17,7 @@
     <string name="add_read_as_forgejo">Forgejo أو Gitea</string>
     <string name="add_read_as_help">لمصدر لا يتعرف عليه Tern بنفسه، مثل مصدر على خادم خاص به.</string>
     <string name="add_package_label">اسم الحزمة</string>
-    <string name="add_package_help">يجب أن يكون كل ملف من هذه الحزمة. إذا تُرك فارغًا، يقرأه Tern من ملف التطبيق.</string>
+    <string name="add_package_help">يجب أن يكون كل ملف من هذه الحزمة. إذا تُرك الحقل فارغًا، يقرأ Tern الاسم من ملف التطبيق.</string>
     <string name="add_package_invalid">هذا ليس اسم حزمة. يبدو اسم الحزمة هكذا: org.example.app.</string>
     <string name="add_set_options">ضبط خياراته</string>
     <string name="add_failed_options">قد تدل خياراته Tern على مكان البحث. اضبطها أعلاه، ثم يفحص Tern مرة أخرى.</string>

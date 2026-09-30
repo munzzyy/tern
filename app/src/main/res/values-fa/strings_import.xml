@@ -1,3 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="import_addresses_heading">از لیست آدرس‌ها</string>
+    <string name="import_addresses_explain">آدرس برنامه‌ها را جای‌گذاری کنید، هر کدام در یک خط یا هر جای متن، یا آن‌ها را از فایلی مانند یک لیست OPML بخوانید. هر آدرس مانند یک پیوند تکی بررسی و اضافه می‌شود.</string>
+    <string name="import_addresses_field">آدرس‌ها</string>
+    <string name="import_addresses_show">نمایش محتوای آن</string>
+    <string name="import_addresses_file">خواندن فایل</string>
+    <string name="import_addresses_none">هیچ آدرس https در آن نیست.</string>
+    <string name="import_addresses_other">لیستی دیگر</string>
+    <string name="import_addresses_unreadable">آن فایل قابل خواندن نبود.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d آدرس. تیک مواردی را که نمی‌خواهید بردارید، سپس اضافه کنید.</item>
+        <item quantity="other">%1$d آدرس. تیک مواردی را که نمی‌خواهید بردارید، سپس اضافه کنید.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">%1$d برنامه در این پیوند آمده است. پیش از افزودن، آن را ببینید تا تنظیماتش را بدانید.</item>
+        <item quantity="other">%1$d برنامه در این پیوند آمده‌اند. پیش از افزودن، هر کدام را ببینید تا تنظیماتش را بدانید.</item>
+    </plurals>
+    <string name="settings_export_obtainium">برون‌ریزی برای Obtainium</string>
+    <string name="settings_export_obtainium_effect">فایلی که Obtainium درون‌ریزی می‌کند، برای لیستی که به آنجا منتقل می‌شود. آنچه Obtainium تنظیمی برایش ندارد، جا می‌ماند.</string>
+    <string name="settings_export_installed_only">فقط برنامه‌های نصب‌شده برون‌ریزی شوند</string>
+    <string name="settings_export_settings">قرار دادن تنظیمات در برون‌ریزی‌ها</string>
+    <string name="settings_export_settings_effect">ظاهر، لیست، اعلان‌ها و بررسی‌ها. توکن، پروکسی و نصب‌کننده هرگز در آن قرار نمی‌گیرند.</string>
+    <string name="settings_kept_export">به‌روز نگه داشتن یک برون‌ریزی</string>
+    <string name="settings_kept_export_effect">کمی پس از هر تغییری در لیست، Tern برون‌ریزی را دوباره می‌نویسد.</string>
+    <string name="settings_kept_export_written">نوشته‌شده در %1$s</string>
+    <string name="settings_kept_export_folder">محل نگهداری</string>
+    <string name="import_settings_taken">تنظیمات موجود در فایل هم اعمال شد.</string>
 </resources>

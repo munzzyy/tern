@@ -10,7 +10,7 @@
     <string name="installer_root_effect">يثبّت ويحدّث دون مطالبة، عبر su. يجتاز كل ملف الفحوصات نفسها أولًا.</string>
     <string name="installer_other_app_effect">يسلّم كل ملف مفحوص إلى تطبيق التثبيت الذي تختاره. ذلك التطبيق يسأل دائمًا، لذا لا يُثبَّت شيء في الخلفية.</string>
     <string name="installer_ready">جاهز</string>
-    <string name="installer_not_ready">غير جاهز، تُستخدم أداة التثبيت في Android في الأثناء</string>
+    <string name="installer_not_ready">غير جاهز، تُستخدم أداة التثبيت في Android في هذه الأثناء</string>
     <string name="installer_shizuku_not_running">Shizuku لا يعمل. شغّله من تطبيق Shizuku، ثم عُد.</string>
     <string name="installer_shizuku_too_old">هذا الإصدار من Shizuku قديم جدًا بالنسبة لـ Tern. حدّث Shizuku.</string>
     <string name="installer_shizuku_not_allowed">لا يُسمح لـ Tern باستخدام Shizuku بعد. اضغط هنا لطلب الإذن.</string>

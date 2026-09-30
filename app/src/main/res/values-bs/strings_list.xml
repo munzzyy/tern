@@ -8,8 +8,8 @@
     <string name="sort_author">Po programeru</string>
     <string name="sort_added">Po datumu dodavanja</string>
     <string name="sort_released">Po datumu izdanja</string>
-    <string name="group_title">Grupiši po</string>
-    <string name="group_none">Ništa</string>
+    <string name="group_title">Grupisanje</string>
+    <string name="group_none">Nema</string>
     <string name="group_category">Kategorija</string>
     <string name="group_source">Izvor</string>
     <string name="group_category_effect">Aplikacija u više kategorija pojavljuje se u svakoj od njih.</string>

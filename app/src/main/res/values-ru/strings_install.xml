@@ -10,7 +10,7 @@
     <string name="installer_root_effect">Устанавливает и обновляет без подтверждения, через su. Каждый файл сначала проходит те же проверки.</string>
     <string name="installer_other_app_effect">Передает каждый проверенный файл выбранному вами приложению-установщику. Оно всегда спрашивает, поэтому ничего не устанавливается в фоне.</string>
     <string name="installer_ready">Готово</string>
-    <string name="installer_not_ready">Не готово, пока используется установщик Android</string>
+    <string name="installer_not_ready">Не готово, временно используется установщик Android</string>
     <string name="installer_shizuku_not_running">Shizuku не запущен. Запустите его в приложении Shizuku и вернитесь.</string>
     <string name="installer_shizuku_too_old">Эта версия Shizuku слишком старая для Tern. Обновите Shizuku.</string>
     <string name="installer_shizuku_not_allowed">Tern пока не может использовать Shizuku. Нажмите здесь, чтобы запросить разрешение.</string>

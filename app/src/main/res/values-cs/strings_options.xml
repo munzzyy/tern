@@ -33,7 +33,7 @@
     <string name="setting_version_filter">Filtr verze</string>
     <string name="setting_version_filter_help">Vydání, jejichž verze neodpovídá, se přeskočí.</string>
     <string name="setting_match_group">Část shody k použití</string>
-    <string name="setting_match_group_help">Číslo skupiny, například 1, nebo šablona, například $1.$2. Prázdné pole vezme první skupinu.</string>
+    <string name="setting_match_group_help">Číslo skupiny, například 1, nebo šablona, například $1.$2. Prázdné pole znamená první skupinu.</string>
     <string name="setting_match_group_invalid">Číslo skupiny nebo šablona ze skupin, například $1.$2.</string>
     <string name="setting_archives">Hledat uvnitř archivů</string>
     <string name="setting_archives_effect">Nabízejí se i soubory zip, tar a tar.gz, které aplikaci obsahují, pod obyčejným APK.</string>

@@ -1,3 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">اشتراک‌گذاری</string>
+    <string name="action_release_page">باز کردن صفحه انتشار</string>
+    <string name="action_share_address">اشتراک‌گذاری آدرس</string>
+    <string name="action_share_link">اشتراک‌گذاری پیوندی که آن را در Tern باز می‌کند</string>
+    <string name="action_app_info">اطلاعات برنامه در Android</string>
+    <string name="detail_last_checked">بررسی‌شده %1$s</string>
+    <string name="state_favorite">مورد علاقه</string>
+    <string name="action_save_file">ذخیره در پوشه دانلود</string>
+    <string name="file_saved">به نام %1$s در %2$s ذخیره شد، همان‌طور که دانلود شده بود. Tern فایل را هنگام نصب بررسی می‌کند.</string>
+    <string name="action_save_files">ذخیره فایل‌ها در پوشه دانلود</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="one">%d فایل در Download/Tern ذخیره شد</item>
+        <item quantity="other">%d فایل در Download/Tern ذخیره شد</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d انتشار به‌عنوان دیده‌شده علامت خورد</item>
+        <item quantity="other">%d انتشار به‌عنوان دیده‌شده علامت خورد</item>
+    </plurals>
+    <string name="project_page">صفحه پروژه</string>
+    <string name="project_page_read">خواندن صفحه پروژه</string>
+    <string name="project_page_effect">فایل README آن، به‌صورت متن. تا وقتی آن را باز نکنید، چیزی از میزبان کد درخواست نمی‌شود.</string>
+    <string name="project_page_loading">در حال خواندن…</string>
+    <string name="project_page_none">این پروژه صفحه‌ای ندارد که Tern بتواند بخواند.</string>
+    <string name="project_page_failed">صفحه خوانده نشد. برای تلاش دوباره ضربه بزنید.</string>
 </resources>

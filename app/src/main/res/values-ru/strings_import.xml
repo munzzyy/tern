@@ -24,7 +24,7 @@
     <string name="settings_export_obtainium_effect">Файл, который импортирует Obtainium, чтобы перенести туда список. То, для чего в Obtainium нет настройки, не переносится.</string>
     <string name="settings_export_installed_only">Экспортировать только установленные приложения</string>
     <string name="settings_export_settings">Включать настройки в экспорт</string>
-    <string name="settings_export_settings_effect">Внешний вид, список, уведомления и проверки. Никогда не токены, прокси или установщик.</string>
+    <string name="settings_export_settings_effect">Внешний вид, список, уведомления и проверки. Токены, прокси и установщик не включаются никогда.</string>
     <string name="settings_kept_export">Поддерживать экспорт актуальным</string>
     <string name="settings_kept_export_effect">Вскоре после любого изменения в списке Tern заново записывает экспорт.</string>
     <string name="settings_kept_export_written">Записано в %1$s</string>

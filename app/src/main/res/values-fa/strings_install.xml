@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_installer">نصب با</string>
+    <string name="installer_system">نصب‌کننده Android</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">برنامه‌ای دیگر</string>
+    <string name="installer_system_effect">Android پیش از اولین نصب، و پیش از به‌روزرسانی هر جا که بخواهد، سؤال می‌کند.</string>
+    <string name="installer_shizuku_effect">بدون پرسش، از طریق Shizuku یا Sui نصب و به‌روزرسانی می‌کند. هر فایل ابتدا از همان بررسی‌ها عبور می‌کند.</string>
+    <string name="installer_root_effect">بدون پرسش، از طریق su نصب و به‌روزرسانی می‌کند. هر فایل ابتدا از همان بررسی‌ها عبور می‌کند.</string>
+    <string name="installer_other_app_effect">هر فایل بررسی‌شده را به برنامه نصب‌کننده‌ای که انتخاب می‌کنید می‌سپارد. آن برنامه همیشه سؤال می‌کند، پس چیزی در پس‌زمینه نصب نمی‌شود.</string>
+    <string name="installer_ready">آماده</string>
+    <string name="installer_not_ready">آماده نیست، فعلاً از نصب‌کننده Android استفاده می‌شود</string>
+    <string name="installer_shizuku_not_running">Shizuku در حال اجرا نیست. آن را در برنامه Shizuku اجرا کنید و برگردید.</string>
+    <string name="installer_shizuku_too_old">این نسخه Shizuku برای Tern خیلی قدیمی است. Shizuku را به‌روزرسانی کنید.</string>
+    <string name="installer_shizuku_not_allowed">Tern هنوز اجازه استفاده از Shizuku را ندارد. برای درخواست، اینجا را فشار دهید.</string>
+    <string name="installer_no_root">Tern دسترسی root ندارد. برای درخواست دوباره، اینجا را فشار دهید.</string>
+    <string name="installer_no_other_app">هیچ برنامه نصب‌کننده‌ای انتخاب نشده، یا برنامه انتخاب‌شده دیگر وجود ندارد.</string>
+    <string name="installer_pick_app">برنامه نصب‌کننده</string>
+    <string name="installer_pick_app_none">انتخاب نشده</string>
+    <string name="installer_no_apps">هیچ برنامه نصب‌کننده دیگری روی این دستگاه نیست.</string>
+    <string name="installer_play">اعلام اینکه Google Play برنامه‌ها را نصب کرده است</string>
+    <string name="installer_play_effect">برخی برنامه‌ها فقط وقتی کار می‌کنند که گمان کنند Google Play آن‌ها را نصب کرده است. در این صورت Tern دیگر به‌عنوان نصب‌کننده آن‌ها نشان داده نمی‌شود.</string>
+    <string name="install_other_app_signer">برنامه نصب‌کننده چیزی را نصب کرد که شخصی غیر از امضاکننده فایلی که Tern بررسی کرده بود امضا کرده است، بنابراین این نصب حساب نمی‌شود.</string>
 </resources>

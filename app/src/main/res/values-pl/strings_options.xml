@@ -33,7 +33,7 @@
     <string name="setting_version_filter">Filtr wersji</string>
     <string name="setting_version_filter_help">Wydania, których wersja nie pasuje, są pomijane.</string>
     <string name="setting_match_group">Część dopasowania do użycia</string>
-    <string name="setting_match_group_help">Numer grupy, na przykład 1, lub szablon, na przykład $1.$2. Puste pole bierze pierwszą grupę.</string>
+    <string name="setting_match_group_help">Numer grupy, na przykład 1, lub szablon, na przykład $1.$2. Puste pole oznacza pierwszą grupę.</string>
     <string name="setting_match_group_invalid">Numer grupy lub szablon z grup, na przykład $1.$2.</string>
     <string name="setting_archives">Zaglądaj do archiwów</string>
     <string name="setting_archives_effect">Pliki zip, tar i tar.gz zawierające aplikację też są oferowane, poniżej zwykłego APK.</string>

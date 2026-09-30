@@ -1,3 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="list_arrange">مرتب کردن لیست</string>
+    <string name="list_options_title">مرتب کردن لیست</string>
+    <string name="list_reverse">معکوس کردن ترتیب</string>
+    <string name="list_updates_first">به‌روزرسانی‌ها در بالا</string>
+    <string name="list_bury_not_installed">برنامه‌های نصب‌نشده در پایین</string>
+    <string name="sort_author">بر اساس توسعه‌دهنده</string>
+    <string name="sort_added">بر اساس تاریخ افزودن</string>
+    <string name="sort_released">بر اساس تاریخ انتشار</string>
+    <string name="group_title">گروه‌بندی بر اساس</string>
+    <string name="group_none">هیچ</string>
+    <string name="group_category">دسته</string>
+    <string name="group_source">منبع</string>
+    <string name="group_category_effect">برنامه‌ای که در چند دسته است، در هر کدام از آن‌ها نشان داده می‌شود.</string>
+    <string name="group_other">سایر موارد</string>
+    <string name="group_folded">جمع‌شده</string>
+    <string name="group_open">باز</string>
+    <string name="filter_favorites">علاقه‌مندی‌ها</string>
+    <string name="filter_track_only">فقط دنبال کردن</string>
+    <string name="filter_problems">مشکلات</string>
+    <string name="action_done">تمام</string>
+    <string name="settings_swipe">کشیدن ردیف‌ها برای انجام کار</string>
+    <string name="settings_swipe_effect">برنامه را به سمت انتها بکشید تا به‌روزرسانی شود، و به سمت ابتدا تا حذف شود.</string>
+    <string name="action_favorite">افزودن به علاقه‌مندی‌ها</string>
+    <string name="action_unfavorite">حذف از علاقه‌مندی‌ها</string>
+    <string name="action_set_mode">وقتی به‌روزرسانی یافت شد</string>
+    <string name="action_share_addresses">اشتراک‌گذاری آدرس‌ها</string>
+    <string name="action_share_export">اشتراک‌گذاری به‌صورت فایل</string>
+    <string name="action_uninstall">حذف نصب</string>
+    <string name="export_format_tern">یک فایل Tern</string>
+    <string name="export_format_obtainium">یک فایل برای Obtainium</string>
+    <string name="bulk_uninstall_text">Android درباره هر برنامه به‌نوبت سؤال می‌کند. Tern دنبال کردن آن‌ها را ادامه می‌دهد تا وقتی که اینجا حذفشان کنید.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d برنامه اکنون در علاقه‌مندی‌هاست</item>
+        <item quantity="other">%1$d برنامه اکنون در علاقه‌مندی‌ها هستند</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d برنامه دیگر در علاقه‌مندی‌ها نیست</item>
+        <item quantity="other">%1$d برنامه دیگر در علاقه‌مندی‌ها نیستند</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">وقتی به‌روزرسانی %1$d برنامه یافت شد</item>
+        <item quantity="other">وقتی به‌روزرسانی‌های %1$d برنامه یافت شد</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">%1$d برنامه حذف نصب شود؟</item>
+        <item quantity="other">%1$d برنامه حذف نصب شوند؟</item>
+    </plurals>
 </resources>

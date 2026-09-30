@@ -142,10 +142,18 @@ other installer the OBB files stay in the release's file, and the activity log
 says where.
 
 With another installer app, the checked file is copied, read-only, to a folder
-of Tern's own and offered to that app alone through a content address. That app
-may do anything with it, so the install counts only when the package manager
-then shows the app signed by exactly the certificate the gate verified. Anything
-else is reported and not counted.
+of Tern's own and offered to that app alone through a content address, at the
+way in the person picked for it, whether that app takes an install as a file to
+view or as a package to install. That app may do anything with it, so the
+install counts only when the package manager then shows the app signed by
+exactly the certificate the gate verified. Anything else is reported and not
+counted.
+
+Before the first install of an app, when the setting asks for it and Verified
+Apps or AppVerifier is on the phone, a read-only copy of the checked file goes
+to that app alone, for a second look by code that shares nothing with Tern's.
+This happens only for an install the person started while Tern is on the
+screen. The installer then gets the file the gate passed, never the copy.
 
 ## Stores and mirrors
 
@@ -190,6 +198,17 @@ requests, to show what an update is before fetching it and to decide by version
 code. What it reads there is what the file claims. No signature is verified at
 that point, and the screens say "claims" until Android has read the downloaded
 file.
+
+Where a source lists no size for a file, the app's page asks the server for
+one byte of it and reads the total from the answer. A token goes with that
+request only when the file needs one and the address is on the host the token
+was stored for, and it is dropped at a redirect like any other.
+
+A release's source archives, which GitHub, GitLab and Forgejo offer with every
+release, can be saved and never installed: they are kept apart from the files
+the gate ranks. GitHub's archives come from the API host of that GitHub, with
+the token only when the release list was read with it; Forgejo's and GitLab's
+must be on the project's own host.
 
 ## Repositories in F-Droid's format
 
@@ -298,6 +317,13 @@ The Update and Update all buttons on a notification about updates start the
 same install as the buttons in Tern, through every check above. So do the
 widget's Update all button and the launcher shortcut of that name. The tile and
 the widget's Check button only check.
+
+A notification about problems gives each app's reason only in the version that
+names apps. A tap on it carries the ids of the apps and nothing else, and the
+screen it opens shows what Tern holds now, so another app cannot make Tern show
+words of its choosing. A tap on "Saved" opens Android's Downloads, never the
+saved file: a saved file has not been through the gate, and opening it would
+hand it to an installer under Tern's permission.
 
 ## Links, shares and imports
 

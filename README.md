@@ -214,8 +214,8 @@ Obtainium does that Tern does not.
 
 - Without Shizuku or root, a first install always asks, and silent updates
   need Android 12, as Android decides.
-- An archive compressed with bzip2, xz or zstd is not opened; zip, tar and
-  tar.gz are.
+- An archive compressed with zstd is not opened; zip, tar, and tar compressed
+  with gzip, bzip2 or xz are.
 - The translations are machine-made. Details of an error that come from a
   server or a parser stay in English, and an entry in the activity log stays in
   the language it was written in.

@@ -42,8 +42,15 @@ Everything Obtainium does, and more.
   and writes a file Obtainium can import.
 - A home-screen widget with the number of updates and Check and Update all
   buttons, a Quick Settings tile, and launcher shortcuts.
-- Saves any file a release offers to Downloads. Many tracked releases can be
-  marked as seen at once.
+- Saves any file a release offers to Downloads, and the source code of GitHub,
+  GitLab and Forgejo releases, from an app's page, one of its versions or many
+  apps at once. Saving goes on after the page is left and says when each file
+  is saved; sizes are asked of the server where a source lists none. Many
+  tracked releases can be marked as seen at once.
+- The notification after an install names the version, and one about problems
+  names each app with its reason, a tap away from what went wrong.
+- New apps can be shown to Verified Apps first, as in Obtainium. The installer
+  app is picked from a list with icons, with the way in it takes.
 - Notes of your own and category chips on an app's page, and the project's
   README, read from the forge when you ask for it.
 - The activity log can be shared as text, and Tern offers to keep itself up to

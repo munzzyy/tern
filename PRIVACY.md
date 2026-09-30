@@ -29,6 +29,9 @@ For an app from APKMirror it reads the pages of the newest releases on
 www.apkmirror.com, for what changed and the size of the file. None of these
 carries a token or a cookie.
 
+Where a source lists no size for a file, opening the app's page asks the file's
+host for one byte of it, to learn the size.
+
 The list of well known apps is part of Tern. Showing it asks nobody
 anything. A request goes out when you press Look on one of them, to that app's
 own address, the same as for a link you typed.
@@ -60,9 +63,12 @@ under your browser's rules. "Read the project's page" on an app's page asks
 the forge's API for the project's README, with the token stored for that host
 if there is one, and only when you press it.
 
-"Check with AppVerifier" hands the package name of an app and the certificate
-Tern holds it to to AppVerifier, another app on this device, and only when you
-press it. Nothing goes over the network for that.
+"Check with Verified Apps" hands the package name of an app and the certificate
+Tern holds it to to Verified Apps or AppVerifier, another app on this device,
+and only when you press it. With "Show new apps to Verified Apps first" on,
+which it is at first as in Obtainium, the checked file of an app's first install
+goes to that app too, read-only, before the installer gets it. Nothing goes
+over the network for that.
 
 With another app chosen as the installer, Tern hands that app each file once
 the file has passed its checks, and that app alone may read it. With Shizuku

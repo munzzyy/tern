@@ -151,7 +151,8 @@ run against answers recorded from the real services.
 |---|---|
 | Background checks from 15 minutes to 30 days on a slider, Wi-Fi and charging only, retries of failed checks | All of them, through Android's job scheduler rather than a task that decides by itself whether it is due. As in Obtainium, Wi-Fi and charging hold back installs, not checks, and a rate limit is waited out |
 | Check on start, check on opening an app, only installed and tracked apps, remove apps uninstalled elsewhere, a global APK filter | All of them |
-| Installers: system, Shizuku, root, another app | All four; the other app is held to the same checks, and the signer of what it installed is compared afterwards |
+| Installers: system, Shizuku, root, another app picked from a list with icons and its way in | All four; the other app is held to the same checks, and the signer of what it installed is compared afterwards |
+| New apps shown to Verified Apps first, and its About link | Yes, on at first as in Obtainium, for an install started with Tern on the screen. The installer still gets the checked file |
 | OBB files of an XAPK put in `Android/obb`, through Android's folder picker | Through Shizuku or root, under the package the checks verified and with plain file names only. With another installer they stay in the release's file, and the log says where |
 | Parallel downloads, retries of a failed download, Obtainium installed last | All three: one download at a time if wanted, three more tries resuming where the server allows, and Tern's own update last |
 | An APK from another host than its source is pointed out | Yes, on the file, without holding it back |
@@ -176,9 +177,9 @@ run against answers recorded from the real services.
 | On each app: release date, changes, a dimmed icon when not installed, Mark updated for tracked apps, a moved repository first | All of them |
 | Install, categorize and share many apps at once, a determinate check | All of them; categories can be set, cleared or left for each |
 | Cancel a download from its tile or notification | Both, with how much has come |
-| Notifications for updates, errors, track-only releases | Yes, with Update and Update all buttons, and a quiet one while checking if wanted |
+| Notifications for updates, errors, track-only releases, the version an app was updated to, each app's problem with its reason | Yes, with Update and Update all buttons, and a quiet one while checking if wanted. A tap on problems opens what went wrong |
 | Logs page with a filter of the last days, sharing, and copying on a TV; a screen for an unexpected error | The activity log, cut to its last one to seven days, shared as text or copied where nothing takes a share. After an unexpected stop, the next start shows what Tern was doing |
-| Save a release's files | Any file a release offers, saved to Downloads |
+| Save a release's files and its source code, from an app, one of its versions or many apps at once, with a notification when each is saved, and sizes asked of the server | All of it. Saving goes on after the page is left, and a tap on the notification opens Downloads rather than a file the checks have not seen |
 | Keeps itself up to date | Offered in Settings |
 
 ### What Tern has that Obtainium has not

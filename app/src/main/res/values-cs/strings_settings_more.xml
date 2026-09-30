@@ -1,2 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="language_system">Podle systému</string>
+    <string name="interval_more_often">Kontrolovat častěji</string>
+    <string name="interval_less_often">Kontrolovat méně často</string>
+    <string name="about_help">Jak Tern funguje</string>
+    <string name="about_help_effect">Co Tern kontroluje a jak přidávat, aktualizovat a přesouvat aplikace, na stránce projektu.</string>
+    <string name="about_security">Jak vás Tern chrání</string>
+    <string name="about_privacy">Soukromí</string>
+    <string name="verification_title">Ověřování vývojářů v Androidu</string>
+    <string name="verification_text">Společnost Google oznámila, že certifikovaná zařízení s Androidem budou instalovat jen aplikace od vývojářů, kteří se u ní zaregistrovali: od září 2026 v několika zemích a později ve více zemích.\n\nTam, kde to platí, může Android odmítnout aplikaci od vývojáře, který se nezaregistroval, nebo si před její instalací vyžádat od vás víc, ať už vlastní kontroly Tern dopadnou jakkoli. Tern to nemůže změnit a řekne vám, když Android aplikaci odmítne.\n\nZařízení bez certifikace Google se to netýká.</string>
+    <string name="verification_more">Stránka Googlu o tom</string>
+    <string name="kept_export_format">Formát</string>
+    <string name="kept_export_format_tern">Formát Tern, který obsahuje vše</string>
+    <string name="kept_export_format_obtainium">Formát Obtainium, který umí přečíst i Obtainium</string>
+    <string name="kept_export_name">Název souboru</string>
+    <string name="kept_export_name_usual">Nechte prázdné pro %1$s.</string>
+    <string name="look_style">Styl</string>
+    <string name="style_standard">Standardní</string>
+    <string name="style_vibrant">Živý</string>
+    <string name="style_expressive">Expresivní</string>
+    <string name="look_style_effect">Živý je barevnější v celé paletě. Expresivní odsouvá druhou a třetí barvu dál od první.</string>
+    <string name="look_color_code">Kód barvy</string>
+    <string name="look_color_code_effect">Tern vezme odstín a sytost této barvy a vybere z ní tóny, které zůstanou snadno čitelné.</string>
+    <string name="look_color_code_invalid">Šest šestnáctkových číslic, například #3D5A80.</string>
+    <string name="crash_title">Tern se neočekávaně zastavil</string>
+    <string name="crash_text">Toto dělal Tern, když se zastavil. Záznam zůstává v tomto zařízení; sdílejte ho s vývojářem, pokud chcete, aby se na něj někdo podíval.</string>
+    <string name="crash_share">Sdílet</string>
+    <string name="crash_copied">Zkopírováno</string>
+    <string name="activity_range">Zobrazit</string>
+    <string name="activity_range_all">Všechny dny</string>
+    <plurals name="activity_range_days">
+        <item quantity="one">Poslední %d den</item>
+        <item quantity="few">Poslední %d dny</item>
+        <item quantity="many">Posledních %d dne</item>
+        <item quantity="other">Posledních %d dní</item>
+    </plurals>
+    <string name="activity_copied">Protokol byl zkopírován</string>
+    <string name="settings_auto_installs">Aktualizace se instalují samostatně</string>
+    <string name="settings_auto_installs_effect">Aplikace nastavené na samostatnou aktualizaci ji provedou po kontrole na pozadí. Pokud je to vypnuto, jen oznámí, že aktualizace je k dispozici, a každá si ponechá vlastní volbu pro později.</string>
+    <string name="settings_unmetered_installs">Instalovat jen přes Wi-Fi</string>
+    <string name="settings_unmetered_installs_effect">Kontroly probíhají v jakékoli síti. Aktualizace, která by se nainstalovala sama, počká na Wi-Fi nebo kabel, jako v Obtainium.</string>
+    <string name="settings_charging_installs">Instalovat jen při nabíjení</string>
+    <string name="settings_charging_installs_effect">Kontroly probíhají i na baterii. Aktualizace, která by se nainstalovala sama, počká, až se zařízení začne nabíjet.</string>
+    <string name="engine_unreadable_app">Uloženou aplikaci %1$s se nepodařilo přečíst, proto je ze seznamu vynechána. Nic nebylo smazáno: novější verze Tern ji může přečíst.</string>
+    <string name="settings_pin_certificates">Připínat certifikáty hostingů kódu</string>
+    <string name="settings_pin_certificates_effect">Stejně jako v Obtainium musí GitHub, GitLab a Codeberg předložit certifikát od certifikační autority, o které je známo, že ji každý z nich používá. Certifikát vydaný pod nátlakem jinou autoritou se pak odmítne. Pokud hosting kódu změní svou autoritu, kontroly tam selhávají, dokud toto nastavení nevypnete.</string>
+</resources>

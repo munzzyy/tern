@@ -1,2 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="language_system">Igual ao sistema</string>
+    <string name="interval_more_often">Verificar com mais frequência</string>
+    <string name="interval_less_often">Verificar com menos frequência</string>
+    <string name="about_help">Como o Tern funciona</string>
+    <string name="about_help_effect">O que o Tern verifica e como adicionar, atualizar e mover aplicações, na página do projeto.</string>
+    <string name="about_security">Como o Tern o protege</string>
+    <string name="about_privacy">Privacidade</string>
+    <string name="verification_title">Verificação de programadores do Android</string>
+    <string name="verification_text">A Google anunciou que os dispositivos Android certificados só instalarão aplicações de programadores que se tenham registado na Google, começando em alguns países a partir de setembro de 2026 e em mais países depois disso.\n\nOnde isto se aplicar, o Android pode recusar uma aplicação de um programador que não se tenha registado, ou pedir-lhe mais antes de a instalar, sejam quais forem os resultados das verificações do próprio Tern. O Tern não pode alterar isso, e avisa-o quando o Android recusa.\n\nOs dispositivos sem certificação da Google não são afetados.</string>
+    <string name="verification_more">A página da Google sobre isto</string>
+    <string name="kept_export_format">Formato</string>
+    <string name="kept_export_format_tern">O do Tern, que contém tudo</string>
+    <string name="kept_export_format_obtainium">O do Obtainium, que o Obtainium também consegue ler</string>
+    <string name="kept_export_name">Nome do ficheiro</string>
+    <string name="kept_export_name_usual">Deixe vazio para %1$s.</string>
+    <string name="look_style">Estilo</string>
+    <string name="style_standard">Padrão</string>
+    <string name="style_vibrant">Vibrante</string>
+    <string name="style_expressive">Expressivo</string>
+    <string name="look_style_effect">Vibrante é mais colorido em todo o lado. Expressivo afasta mais a segunda e a terceira cor da primeira.</string>
+    <string name="look_color_code">Código de cor</string>
+    <string name="look_color_code_effect">O Tern toma o matiz e a intensidade desta cor e escolhe as tonalidades dela que continuam fáceis de ler.</string>
+    <string name="look_color_code_invalid">Seis dígitos hexadecimais, como #3D5A80.</string>
+    <string name="crash_title">O Tern parou inesperadamente</string>
+    <string name="crash_text">Isto é o que estava a fazer quando parou. Fica neste dispositivo; partilhe-o com o programador se quiser que o analise.</string>
+    <string name="crash_share">Partilhar</string>
+    <string name="crash_copied">Copiado</string>
+    <string name="activity_range">Mostrar</string>
+    <string name="activity_range_all">Todos os dias</string>
+    <plurals name="activity_range_days">
+        <item quantity="one">Último dia (%d)</item>
+        <item quantity="many">Últimos %d dias</item>
+        <item quantity="other">Últimos %d dias</item>
+    </plurals>
+    <string name="activity_copied">O registo foi copiado</string>
+    <string name="settings_auto_installs">As atualizações instalam-se sozinhas</string>
+    <string name="settings_auto_installs_effect">As aplicações definidas para se atualizarem sozinhas fazem-no depois de uma verificação em segundo plano. Desligado, apenas indicam que existe uma atualização, e cada uma mantém a sua própria escolha para mais tarde.</string>
+    <string name="settings_unmetered_installs">Instalar apenas com Wi-Fi</string>
+    <string name="settings_unmetered_installs_effect">As verificações são feitas em qualquer rede. Uma atualização que se instalaria sozinha aguarda pelo Wi-Fi ou por um cabo, como no Obtainium.</string>
+    <string name="settings_charging_installs">Instalar apenas durante o carregamento</string>
+    <string name="settings_charging_installs_effect">As verificações são feitas também com a bateria. Uma atualização que se instalaria sozinha aguarda até o dispositivo estar a carregar.</string>
+    <string name="engine_unreadable_app">A aplicação guardada %1$s não pôde ser lida, por isso fica fora da lista. Nada foi apagado: uma versão mais recente do Tern pode lê-la.</string>
+    <string name="settings_pin_certificates">Fixar os certificados das forjas</string>
+    <string name="settings_pin_certificates_effect">O GitHub, o GitLab e o Codeberg têm de apresentar um certificado da autoridade que cada um é conhecido por usar, como no Obtainium. Um certificado que outra autoridade tenha sido obrigada a emitir é então recusado. Se uma forja mudar de autoridade, as verificações aí falham até isto ser desligado.</string>
+</resources>

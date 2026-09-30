@@ -4,9 +4,10 @@ set -euo pipefail
 APK="${1:?usage: check-apk.sh <apk>}"
 SDK="${ANDROID_HOME:-$HOME/Android/Sdk}"
 AAPT=$(ls "$SDK"/build-tools/*/aapt2 | sort -V | tail -1)
-# 6 MiB: every source Obtainium reads, the Shizuku and root installers and the widget took the
-# app past 5 MiB. It is still about a fifth of Obtainium's APK for one architecture.
-MAX_BYTES=$((6 * 1024 * 1024))
+# 7 MiB: every source Obtainium reads, the Shizuku and root installers and the widget took the
+# app past 5 MiB, and the rest of Obtainium's features, Tern's own bzip2 and xz readers and their
+# words in 29 languages past 6. It is still about a quarter of Obtainium's APK for one architecture.
+MAX_BYTES=$((7 * 1024 * 1024))
 fail=0
 
 expected=$(sort <<'LIST'

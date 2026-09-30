@@ -14,7 +14,7 @@ what it was handed: who signed the file, whether it is the app you asked for, an
 whether it matches the checksum the publisher gave. Only then does Android's
 installer see it.
 
-It is a native app of about 5 MB, with no analytics and no account. It talks to
+It is a native app of about 6 MB, with no analytics and no account. It talks to
 the sources you add and to nobody else. [PRIVACY.md](PRIVACY.md) says what
 leaves the device.
 
@@ -277,7 +277,7 @@ clones in different places and compares the files byte for byte.
 
 `tools/check-apk.sh` reads the built APK and fails if its permissions differ from
 the list in the script, if cleartext traffic is allowed anywhere, if it is
-debuggable, if it is over 6 MiB, or if test code reached it.
+debuggable, if it is over 7 MiB, or if test code reached it.
 
 `python3 tools/strings.py check app/src/main/res` compares every translation
 with the English: the same placeholders, the plural forms the language needs,

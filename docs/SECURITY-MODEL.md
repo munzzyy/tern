@@ -223,6 +223,32 @@ no more and change nothing without a certificate the device trusts. Every app
 that uses Orbot's port shares this limit. Tern does not check who signed the
 app that holds Orbot's package name.
 
+### Which certificates are trusted
+
+Android's own trust store decides, with certificate transparency asked for on
+Android 16. Certificates a user or an administrator added are not trusted.
+
+Two exceptions, both narrow:
+
+- Pinning, off by default as in Obtainium. With it on, a connection to
+  `github.com`, GitHub's two hosts for release files, `gitlab.com` or
+  `codeberg.org` (and their subdomains) is taken only when the chain Android
+  verified runs through the root each is known to use: Sectigo's R46 and E46 for
+  GitHub and GitLab, and ISRG's X1, X2, YE and YR for GitHub and Codeberg.
+  Android checks the chain first, as always; the pin adds a condition and never
+  lifts one. The keys are in `net/Pinning.kt`, and `PinsTest` checks each one
+  against the root certificate it names. A forge that moves to another
+  authority fails there until the setting is off or Tern is updated.
+- RuStore serves part of its addresses with a certificate of the Russian
+  Trusted Root CA, which Android does not trust. That root is trusted for
+  `rustore.ru` and its subdomains and for nothing else, as Obtainium does; its
+  SHA-256 fingerprint is
+  `D2:6D:2D:02:31:B7:C3:9F:92:CC:73:85:12:BA:54:10:35:19:E4:40:5D:68:B5:BD:70:3E:97:88:CA:8E:CF:31`.
+  Certificates under it are in no transparency log, so Android 16 does not ask
+  for one there. Whoever holds that root could read and change Tern's requests
+  to RuStore, and only those. A file from RuStore still has to pass every
+  check, including the certificate of the app itself.
+
 ## Notifications
 
 A notification can be read on a locked screen. Every notification Tern posts

@@ -144,14 +144,16 @@ run against answers recorded from the real services.
 
 | Obtainium | Tern |
 |---|---|
-| Background checks from 15 minutes to 30 days, Wi-Fi and charging only | Yes, through Android's job scheduler rather than a task that decides by itself whether it is due |
+| Background checks from 15 minutes to 30 days on a slider, Wi-Fi and charging only, retries of failed checks | All of them, through Android's job scheduler rather than a task that decides by itself whether it is due. As in Obtainium, Wi-Fi and charging hold back installs, not checks, and a rate limit is waited out |
 | Check on start, check on opening an app, only installed and tracked apps, remove apps uninstalled elsewhere, a global APK filter | All of them |
 | Installers: system, Shizuku, root, another app | All four; the other app is held to the same checks, and the signer of what it installed is compared afterwards |
 | Downgrades with Let Me Downgrade | Yes |
-| Theme, pure black, colours, Material You, language | All of them, with palettes, contrast levels, corner and icon shapes. The language is Android's own choice for the app, from Android 13 on |
+| Pause background installs for every app at once | Yes, and each app keeps its own choice |
+| Certificate pinning for GitHub, GitLab and Codeberg | Yes, off by default as in Obtainium, and on top of Android's own checks |
+| Theme, pure black, colours, Material You, a colour code, standard, vibrant and expressive schemes, language | All of them, with palettes, contrast levels, corner and icon shapes, and every scheme measured for contrast. The language can be chosen on every Android version |
 | Sort, order, pin updates, bury apps that are not installed, group by category or source, collapse groups at start, swipe actions, haptics, phone layout, list density | All of them |
 | Category colours | Yes, sixteen, and every category takes one of them by itself until one is picked |
-| Automatic export to a folder, installed apps only, settings in the export | All three; tokens never go into a file |
+| Automatic export to a folder under a name of your own, installed apps only, settings in the export | All of them, in Tern's format or Obtainium's; tokens never go into a file |
 | Import Obtainium exports, lists of addresses, GitHub stars | All three, with the settings in an Obtainium export read under Tern's names |
 | Export in Obtainium's format | Yes |
 
@@ -161,7 +163,7 @@ run against answers recorded from the real services.
 |---|---|
 | `obtainium://add`, `app`, `apps`, `refresh` links | All four, and `tern://` links of the same kinds |
 | Notifications for updates, errors, track-only releases | Yes, with Update and Update all buttons, and a quiet one while checking if wanted |
-| Logs page with sharing | The activity log, shared as text |
+| Logs page with a filter of the last days, sharing, and copying on a TV; a screen for an unexpected error | The activity log, cut to its last one to seven days, shared as text or copied where nothing takes a share. After an unexpected stop, the next start shows what Tern was doing |
 | Save a release's files | Any file a release offers, saved to Downloads |
 | Keeps itself up to date | Offered in Settings |
 
@@ -202,15 +204,18 @@ such a review has something to disagree with.
 
 ## What Obtainium does that Tern does not
 
-- More sources. Obtainium reads app stores and mirror sites: APKPure, Aptoide,
-  Uptodown, APKCombo, APKMirror (tracking only), Huawei AppGallery, Samsung
-  Galaxy Store, RuStore, the vivo and Tencent stores, CoolApk, itch.io and
-  others. Tern reads the developer's own channels and leaves mirrors out.
-- Shizuku and root installers, which make first installs silent and bring silent
-  updates to Android 10 and 11.
 - Translations made by people. Obtainium has 29 languages from its users.
   Tern has 28 made by a machine and checked by a second one, which no native
   speaker has reviewed.
 - Years of use on real phones, a wiki, a video guide, and a directory of
   crowdsourced app configurations.
-- A web view of the app's page inside the app.
+- A web view of the app's page inside the app. Tern shows the project's README
+  instead, read from the forge's API, with no script running.
+- Dhizuku as an installer. Tern installs through Android, Shizuku or Sui,
+  root, or another installer app.
+- Settings that lower a check: accepting any certificate or plain HTTP for an
+  app, installing over a different signing certificate, and "Hide downgrades"
+  turned off. With downgrades allowed, Tern's version history installs any
+  older release instead.
+- A log of the app's own debug messages. Tern's activity log records what
+  happened to each app, in words; its own messages stay in Android's log.

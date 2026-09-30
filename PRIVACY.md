@@ -103,6 +103,14 @@ the folder you picked whenever the list changes.
 The widget and the Quick Settings tile show how many updates there are, and
 the widget names none of the apps.
 
+If Tern stops unexpectedly, it writes what it was doing, a technical report
+with the version of Tern and of Android, into a file of its own. The next
+start shows it once, to read, copy or share; closing it deletes the file.
+Nothing is sent unless you share it.
+
+On Android 10 to 12, the language chosen in Tern's settings is kept by Tern.
+From Android 13 on, Android keeps it.
+
 ## Permissions
 
 | Permission | Why |

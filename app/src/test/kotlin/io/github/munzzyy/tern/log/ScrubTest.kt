@@ -128,6 +128,26 @@ class ScrubTest {
     }
 
     @Test
+    fun aSessionOrACookieGoes() {
+        assertEquals("Cookie: …", scrubbed("Cookie: sessionid=abc; csrftoken=Zx9; theme=dark"))
+        assertEquals("Set-Cookie: …\nnext line", scrubbed("Set-Cookie: sid=a1; Path=/; HttpOnly\nnext line"))
+        assertEquals("session_id=…", scrubbed("session_id=5f4dcc3b5aa765d6"))
+        assertEquals("JSESSIONID: …", scrubbed("JSESSIONID: q8ne1bc7vd0d2k1p"))
+        assertEquals("sid=… sent", scrubbed("sid=Zm9vYmFyYmF6 sent"))
+        assertEquals("cookie=…", scrubbed("cookie=x1"))
+    }
+
+    @Test
+    fun aShortPasswordGoesOnceItIsSet() {
+        assertEquals("password: …", scrubbed("password: hunter2"))
+        assertEquals("login failed, pwd=…", scrubbed("login failed, pwd=abc"))
+        assertEquals("{\"passphrase\":\"…\"}", scrubbed("{\"passphrase\":\"tern\"}"))
+        unchanged("Wrong password for user")
+        unchanged("The password was not accepted")
+        unchanged("Considered 12 apps")
+    }
+
+    @Test
     fun aCodeOfLettersAloneGoesWhenItIsLongOrMixed() {
         assertEquals("token …", scrubbed("token abcdefghijklmnopqrstuvwxyz"))
         assertEquals("key …", scrubbed("key AbCdEfGhIjKl"))
@@ -182,6 +202,8 @@ class ScrubTest {
             "Authorization: Bearer abc and ghp_0123456789abcdef",
             "key=0123456789abcdef, mail me@example.org",
             "obtainium://add/https%3A%2F%2Fme%3Asecret%40github.com%2Fo%2Fr",
+            "Cookie: sid=abc; pass=1",
+            "pwd=pass1",
         )
         for (sample in samples) {
             val once = scrubbed(sample)

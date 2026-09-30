@@ -17,13 +17,11 @@
     <string name="settings_only_installed">Alleen geïnstalleerde apps controleren</string>
     <string name="settings_only_installed_effect">Apps die alleen worden gevolgd, worden ook gecontroleerd. Een app die je opent, wordt altijd gecontroleerd.</string>
     <string name="settings_remove_uninstalled">Elders gede-installeerde apps verwijderen</string>
-    <string name="settings_remove_uninstalled_effect">Een app die je buiten Tern de-installeert, verdwijnt ook uit de lijst.</string>
     <string name="settings_file_filter">Filter voor bestanden</string>
     <string name="settings_file_filter_effect">Een patroon waarmee elke app zonder eigen filter zijn bestand kiest.</string>
     <string name="settings_file_filter_none">Geen</string>
     <string name="settings_file_filter_invalid">Dit patroon kan niet worden gelezen.</string>
     <string name="settings_allow_downgrades">Oudere versies toestaan</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade is geïnstalleerd, dus Android mag een oudere versie over een nieuwere installeren.</string>
     <string name="settings_collapse_groups">Beginnen met ingeklapte groepen</string>
     <string name="settings_haptics">Haptische feedback</string>
     <string name="settings_haptics_effect">Een lichte trilling wanneer vegen of lang indrukken iets doet.</string>

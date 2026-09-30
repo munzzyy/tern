@@ -138,4 +138,24 @@ class EvaluatorTest {
         }
         assertTrue(chosen.asset.name != bestByNameAlone.asset.name)
     }
+
+    @Test
+    fun aDigestThatCameThroughAHubproxyIsCreditedToIt() {
+        val github = io.github.munzzyy.tern.core.model.SourceSpec("github", "https://github.com/example/app")
+        assertEquals("gh-proxy.example", Evaluator.digestProxy(github, "gh-proxy.example"))
+        assertEquals("gh-proxy.example", Evaluator.digestProxy(github.copy(type = "github-actions"), "gh-proxy.example"))
+        assertNull(Evaluator.digestProxy(github, null))
+        // A GitHub of its own host and other sources never go through it.
+        assertNull(Evaluator.digestProxy(github.copy(url = "https://git.example.org/example/app"), "gh-proxy.example"))
+        assertNull(Evaluator.digestProxy(io.github.munzzyy.tern.core.model.SourceSpec("fdroid", "https://f-droid.org/packages/org.example"), "gh-proxy.example"))
+    }
+
+    @Test
+    fun theHubproxySettingSaysItCanChangeWhatGitHubSeemsToPublish() {
+        val text = java.io.File("src/main/res/values/strings_safety.xml").readText()
+        val effect = Regex("""name="github_proxy_effect_trust">([^<]*)<""").find(text)!!.groupValues[1]
+        assertTrue(effect, "can change what comes back" in effect)
+        assertTrue(effect, "first install through it trusts the hubproxy" in effect)
+        assertTrue(effect, "pinning does not reach it" in effect)
+    }
 }

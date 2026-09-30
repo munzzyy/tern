@@ -369,7 +369,6 @@
     <string name="settings_import_effect">Fra en eksport fra Tern eller Obtainium</string>
     <string name="settings_export">Eksporter apps</string>
     <string name="settings_exporting">Eksporterer</string>
-    <string name="settings_export_effect">Gemmer din liste og indstillinger i en fil. Tokens inkluderes aldrig.</string>
     <plurals name="exported">
         <item quantity="one">Eksporterede %d app</item>
         <item quantity="other">Eksporterede %d apps</item>

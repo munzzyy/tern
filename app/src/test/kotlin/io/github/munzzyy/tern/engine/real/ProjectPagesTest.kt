@@ -32,6 +32,24 @@ class ProjectPagesTest {
     }
 
     @Test
+    fun aForgejoReadmeGoesWithTheTokenForItsHostAsAuthorization() {
+        val forgejo = object : HttpClient {
+            override fun execute(request: HttpRequest): HttpResponse {
+                asked += request
+                val body = "{\"content\":\"${java.util.Base64.getEncoder().encodeToString("# Maps".toByteArray())}\"}"
+                return HttpResponse(200, Headers.of(emptyMap()), ByteArrayInputStream(body.toByteArray()), request.url)
+            }
+        }
+        val tokens = TokenProvider { host -> if (host == "codeberg.org") "T" else null }
+        val blocks = ProjectPages(forgejo, tokens).read(SourceSpec(SourceTypes.FORGEJO, "https://codeberg.org/example/maps"))!!
+        assertTrue(blocks.first() is NoteBlock.Heading)
+        val request = asked.single()
+        assertEquals("https://codeberg.org/api/v1/repos/example/maps/contents/README.md", request.url)
+        assertEquals("token T", request.authorization)
+        assertTrue(request.headers.keys.none { it.equals("Authorization", ignoreCase = true) })
+    }
+
+    @Test
     fun aSourceWithoutAProjectPageAsksNothing() {
         assertNull(ProjectPages(http, TokenProvider.NONE).read(SourceSpec(SourceTypes.APKPURE, "https://apkpure.com/maps/org.example.maps")))
         assertTrue(asked.isEmpty())

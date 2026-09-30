@@ -384,7 +384,6 @@
     <string name="settings_import_effect">Iz Tern ili Obtainium izvoza</string>
     <string name="settings_export">Izvezi aplikacije</string>
     <string name="settings_exporting">Izvozi se</string>
-    <string name="settings_export_effect">Sprema vaš spisak i postavke u datoteku. Tokeni se nikada ne uključuju.</string>
     <plurals name="exported">
         <item quantity="one">Izvezena %d aplikacija</item>
         <item quantity="few">Izvezene %d aplikacije</item>

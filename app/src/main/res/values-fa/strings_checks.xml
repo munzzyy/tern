@@ -17,13 +17,11 @@
     <string name="settings_only_installed">فقط برنامه‌های نصب‌شده بررسی شوند</string>
     <string name="settings_only_installed_effect">برنامه‌هایی که فقط دنبال می‌شوند هم بررسی می‌شوند. برنامه‌ای که باز می‌کنید همیشه بررسی می‌شود.</string>
     <string name="settings_remove_uninstalled">حذف برنامه‌هایی که جای دیگری حذف نصب شده‌اند</string>
-    <string name="settings_remove_uninstalled_effect">برنامه‌ای که بیرون از Tern حذف نصب کنید، از لیست هم خارج می‌شود.</string>
     <string name="settings_file_filter">فیلتر فایل‌ها</string>
     <string name="settings_file_filter_effect">الگویی که هر برنامه بدون فیلتر اختصاصی، فایلش را با آن انتخاب می‌کند.</string>
     <string name="settings_file_filter_none">هیچ</string>
     <string name="settings_file_filter_invalid">این الگو قابل خواندن نیست.</string>
     <string name="settings_allow_downgrades">اجازه نسخه‌های قدیمی‌تر</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade نصب است، بنابراین Android می‌تواند نسخه قدیمی‌تر را روی نسخه جدیدتر نصب کند.</string>
     <string name="settings_collapse_groups">شروع با گروه‌های جمع‌شده</string>
     <string name="settings_haptics">بازخورد لمسی</string>
     <string name="settings_haptics_effect">لرزشی سبک وقتی کشیدن انگشت یا فشار طولانی کاری انجام می‌دهد.</string>

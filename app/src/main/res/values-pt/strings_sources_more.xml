@@ -21,7 +21,6 @@
     <string name="option_file_version">Usar o nome do ficheiro como versão</string>
     <string name="option_file_version_effect">Cada ficheiro conta então como um lançamento próprio.</string>
     <string name="github_proxy_title">GitHub através de um hubproxy</string>
-    <string name="github_proxy_effect">Cada pedido ao GitHub vai para este anfitrião, que vê cada um deles. Nenhum token é enviado por ele, por isso os projetos privados e o GitHub Actions não podem ser seguidos desta forma.</string>
     <string name="github_proxy_host">Anfitrião do hubproxy</string>
     <string name="github_proxy_help">Apenas um nome de anfitrião, como gh-proxy.com. O Tern liga-se a ele por HTTPS.</string>
     <string name="github_proxy_invalid">Isso não é um nome de anfitrião que o Tern possa usar</string>

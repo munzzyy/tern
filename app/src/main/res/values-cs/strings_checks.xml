@@ -21,13 +21,11 @@
     <string name="settings_only_installed">Kontrolovat jen nainstalované aplikace</string>
     <string name="settings_only_installed_effect">Aplikace, které se jen sledují, se kontrolují také. Aplikace, kterou otevřete, se kontroluje vždy.</string>
     <string name="settings_remove_uninstalled">Odebírat aplikace odinstalované jinde</string>
-    <string name="settings_remove_uninstalled_effect">Aplikace, kterou odinstalujete mimo Tern, zmizí i ze seznamu.</string>
     <string name="settings_file_filter">Filtr souborů</string>
     <string name="settings_file_filter_effect">Vzor, podle kterého si soubor vybírá každá aplikace bez vlastního filtru.</string>
     <string name="settings_file_filter_none">Žádný</string>
     <string name="settings_file_filter_invalid">Tento vzor nelze přečíst.</string>
     <string name="settings_allow_downgrades">Povolit starší verze</string>
-    <string name="settings_allow_downgrades_effect">Je nainstalován Let Me Downgrade, takže Android může nainstalovat starší verzi přes novější.</string>
     <string name="settings_collapse_groups">Začínat se sbalenými skupinami</string>
     <string name="settings_haptics">Hmatová odezva</string>
     <string name="settings_haptics_effect">Jemné zavibrování, když přejetí nebo dlouhé stisknutí něco provede.</string>

@@ -353,7 +353,7 @@ internal class Interop(private val e: RealEngine) {
                 continue
             }
             val config = try {
-                e.validated(Arrivals.stored(imported, if (e.stored.containsKey(imported.id)) e.newId() else imported.id, e.builtIn))
+                e.validated(e.keptPins.restore(Arrivals.stored(imported, if (e.stored.containsKey(imported.id)) e.newId() else imported.id, e.builtIn)))
             } catch (ex: IllegalArgumentException) {
                 skipped += imported.name to (ex.message ?: "")
                 continue

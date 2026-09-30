@@ -365,7 +365,6 @@
     <string name="settings_import_effect">Bir Tern veya Obtainium dışa aktarımından</string>
     <string name="settings_export">Uygulamaları dışa aktar</string>
     <string name="settings_exporting">Dışa aktarılıyor</string>
-    <string name="settings_export_effect">Listenizi ve ayarlarınızı bir dosyaya kaydeder. Belirteçler asla dahil edilmez.</string>
     <plurals name="exported">
         <item quantity="one">%d uygulama dışa aktarıldı</item>
         <item quantity="other">%d uygulama dışa aktarıldı</item>

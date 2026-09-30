@@ -12,14 +12,20 @@ import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.model.VersionFrom
 import io.github.munzzyy.tern.core.apk.BinaryManifest
 import io.github.munzzyy.tern.core.net.Urls
+import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
+import io.github.munzzyy.tern.core.source.web.HtmlStep
 import io.github.munzzyy.tern.core.text.Shown
 import io.github.munzzyy.tern.core.verify.Fingerprints
 
 class AppConfigJsonException(message: String) : Exception(message)
 
 object AppConfigJson {
-    const val SCHEMA = 1
+    /**
+     * 2 since web page apps read their pages the way Obtainium does. A row of 1 that names no
+     * release order was written by Tern 0.1.0 and is read as that version meant it: see [fromV010].
+     */
+    const val SCHEMA = 2
 
     fun encode(config: AppConfig): JsonObject = Json.obj(
         "schema" to SCHEMA,
@@ -65,6 +71,33 @@ object AppConfigJson {
     )
 
     fun decode(obj: JsonObject): AppConfig {
+        val config = decodeAsWritten(obj)
+        val v010 = (obj.long("schema") ?: 1L) < 2L && obj.obj("releases")?.fields?.containsKey("order") != true
+        return if (v010) fromV010(config) else config
+    }
+
+    /**
+     * What an app saved by Tern 0.1.0 meant, in the terms of this one. 0.1.0 always wrote a wait
+     * of 0 days, which was no choice of the person's, so it follows the setting now. A web page app
+     * took the first link that matched each step in the order of the page, and on the last page the
+     * highest version, with its version pattern run over the version it guessed.
+     */
+    internal fun fromV010(config: AppConfig): AppConfig {
+        var releases = config.releases
+        if (releases.minAgeDays == 0) releases = releases.copy(minAgeDays = null)
+        var source = config.source
+        if (source.type == SourceTypes.HTML) {
+            val steps = HtmlStep.parse(source.option(SourceOptions.STEPS))
+                ?.map { it.copy(pageOrder = true, firstLink = true) }
+                ?.let(HtmlStep::write)
+            var options = source.options + (SourceOptions.HIGHEST_VERSION to "true")
+            if (steps != null) options = options + (SourceOptions.STEPS to steps)
+            source = source.copy(options = options)
+        }
+        return config.copy(releases = releases, source = source)
+    }
+
+    private fun decodeAsWritten(obj: JsonObject): AppConfig {
         val id = short(obj.string("id"), "id") ?: throw AppConfigJsonException("Missing id")
         val sourceObj = obj.obj("source") ?: throw AppConfigJsonException("Missing source")
         val type = sourceObj.string("type") ?: throw AppConfigJsonException("Missing source.type")

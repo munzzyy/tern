@@ -17,13 +17,11 @@
     <string name="settings_only_installed">Kontrollera endast installerade appar</string>
     <string name="settings_only_installed_effect">Appar som endast följs kontrolleras också. En app du öppnar kontrolleras alltid.</string>
     <string name="settings_remove_uninstalled">Ta bort appar som avinstallerats någon annanstans</string>
-    <string name="settings_remove_uninstalled_effect">En app du avinstallerar utanför Tern försvinner också från listan.</string>
     <string name="settings_file_filter">Filter för filer</string>
     <string name="settings_file_filter_effect">Ett mönster som varje app utan eget filter väljer sin fil efter.</string>
     <string name="settings_file_filter_none">Inget</string>
     <string name="settings_file_filter_invalid">Detta mönster kan inte läsas.</string>
     <string name="settings_allow_downgrades">Tillåt äldre versioner</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade är installerad, så Android får installera en äldre version över en nyare.</string>
     <string name="settings_collapse_groups">Börja med grupperna hopfällda</string>
     <string name="settings_haptics">Haptisk återkoppling</string>
     <string name="settings_haptics_effect">En lätt vibration när en svepning eller ett långt tryck gör något.</string>

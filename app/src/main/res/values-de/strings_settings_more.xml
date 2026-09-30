@@ -37,9 +37,7 @@
     <string name="settings_auto_installs">Updates werden selbstständig installiert</string>
     <string name="settings_auto_installs_effect">Apps, die so eingestellt sind, dass sie sich selbstständig aktualisieren, tun das nach einer Hintergrundprüfung. Wenn aus, melden sie nur, dass ein Update da ist, und jede behält ihre eigene Wahl für später.</string>
     <string name="settings_unmetered_installs">Nur über WLAN installieren</string>
-    <string name="settings_unmetered_installs_effect">Prüfungen laufen in jedem Netzwerk. Ein Update, das sich selbstständig installieren würde, wartet auf WLAN oder ein Netzwerkkabel, wie in Obtainium.</string>
     <string name="settings_charging_installs">Nur beim Aufladen installieren</string>
-    <string name="settings_charging_installs_effect">Prüfungen laufen auch im Akkubetrieb. Ein Update, das sich selbstständig installieren würde, wartet, bis das Gerät aufgeladen wird.</string>
     <string name="engine_unreadable_app">Die gespeicherte App %1$s konnte nicht gelesen werden, daher wird sie in der Liste ausgelassen. Nichts wurde gelöscht: Eine neuere Version von Tern kann sie vielleicht lesen.</string>
     <string name="settings_pin_certificates">Zertifikate der Code-Plattformen anheften</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab und Codeberg müssen ein Zertifikat der Zertifizierungsstelle vorweisen, die jeder von ihnen bekanntermaßen nutzt, wie in Obtainium. Ein Zertifikat, zu dessen Ausstellung eine andere Zertifizierungsstelle gebracht wurde, wird dann abgelehnt. Wechselt eine Code-Plattform ihre Zertifizierungsstelle, schlagen Prüfungen dort fehl, bis dies ausgeschaltet ist.</string>

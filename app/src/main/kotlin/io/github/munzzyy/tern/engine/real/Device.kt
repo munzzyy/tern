@@ -68,6 +68,16 @@ class Device(context: Context) {
         )
     }
 
+    /** Whether [packageName] is archived: Android 15 took its code out and kept its data and its icon. */
+    fun archived(packageName: String): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) return false
+        return try {
+            pm.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(PackageManager.MATCH_ARCHIVED_PACKAGES)).applicationInfo?.isArchived == true
+        } catch (_: PackageManager.NameNotFoundException) {
+            false
+        }
+    }
+
     private fun installSource(packageName: String): Pair<String?, String?> = try {
         if (Build.VERSION.SDK_INT >= 30) {
             val source = pm.getInstallSourceInfo(packageName)

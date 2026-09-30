@@ -21,13 +21,11 @@
     <string name="settings_only_installed">Sprawdzaj tylko zainstalowane aplikacje</string>
     <string name="settings_only_installed_effect">Aplikacje, które są tylko śledzone, też są sprawdzane. Aplikacja, którą otworzysz, jest zawsze sprawdzana.</string>
     <string name="settings_remove_uninstalled">Usuwaj aplikacje odinstalowane gdzie indziej</string>
-    <string name="settings_remove_uninstalled_effect">Aplikacja odinstalowana poza Tern również znika z listy.</string>
     <string name="settings_file_filter">Filtr plików</string>
     <string name="settings_file_filter_effect">Wzorzec, według którego plik wybiera każda aplikacja bez własnego filtra.</string>
     <string name="settings_file_filter_none">Brak</string>
     <string name="settings_file_filter_invalid">Nie można odczytać tego wzorca.</string>
     <string name="settings_allow_downgrades">Zezwalaj na starsze wersje</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade jest zainstalowany, więc Android może zainstalować starszą wersję na nowszą.</string>
     <string name="settings_collapse_groups">Zaczynaj ze zwiniętymi grupami</string>
     <string name="settings_haptics">Reakcja haptyczna</string>
     <string name="settings_haptics_effect">Lekka wibracja, gdy przesunięcie lub długie naciśnięcie coś wykonuje.</string>

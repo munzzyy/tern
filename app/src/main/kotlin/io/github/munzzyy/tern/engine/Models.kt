@@ -289,8 +289,14 @@ enum class ProxyMode { NONE, ORBOT, CUSTOM }
 data class Settings(
     /** Minutes between background checks; 0 turns them off. Android runs them 15 minutes apart at the least. */
     val checkEveryMinutes: Int = 360,
+    /** Updates that would install by themselves wait for Wi-Fi or a cable. */
     val onlyOnUnmetered: Boolean = false,
+    /** Updates that would install by themselves wait for the charger. */
     val onlyWhileCharging: Boolean = false,
+    /** Background checks wait for Wi-Fi or a cable, as every check did in v0.1.0 with its one switch on. */
+    val checkOnlyOnUnmetered: Boolean = false,
+    /** Background checks wait for the charger. */
+    val checkOnlyWhileCharging: Boolean = false,
     val defaultUpdateMode: UpdateMode = UpdateMode.NOTIFY,
     val includePrereleasesByDefault: Boolean = false,
     val minAgeDaysByDefault: Int = 0,
@@ -394,8 +400,8 @@ data class Settings(
     val oneDownloadAtATime: Boolean = false,
     /** The activity of [otherInstaller] the file goes to, for an installer app with several; null leaves it to the app. */
     val otherInstallerActivity: String? = null,
-    /** Before the first install of an app, its checked file goes to Verified Apps or AppVerifier, where one is installed. */
-    val shareToVerifier: Boolean = true,
+    /** Before the first install of an app, its checked file goes to Verified Apps or AppVerifier, where a genuine one is installed. Off until the person turns it on. */
+    val shareToVerifier: Boolean = false,
     /** The activity log keeps Tern's own warnings and errors too, and when each check starts and ends, with nothing secret in them. */
     val keepOwnMessages: Boolean = false,
 ) {

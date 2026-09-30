@@ -4,9 +4,10 @@ package io.github.munzzyy.tern.log
  * Text made fit to keep in the log, which may be shared: nothing in it may open an account or
  * name a person. Every address loses its query, its fragment and any name and password in front
  * of its host, also an address inside another. What looks like a token becomes [GONE]: GitHub's
- * and GitLab's by their prefix, a JSON web token, what follows Bearer or an Authorization header,
- * and a code after a word such as key, token, secret or password. So do an email address and
- * the device's own address in a connection that failed.
+ * and GitLab's by their prefix, a JSON web token, what follows Bearer or an Authorization or
+ * Cookie header, a code after a word such as key, token, secret or session, and anything set as
+ * a password, however short. So do an email address and the device's own address in a
+ * connection that failed.
  *
  * It leaves out too much rather than too little: a fingerprint after the word key goes too.
  */
@@ -36,11 +37,16 @@ object Scrub {
 
     private val AUTHORIZATION = Regex("""(?i)(authorization["']?\s?[:=]\s?["']?)(?:(bearer|basic|token|digest)(\s++))?[^\s"',;]++""")
 
+    private val COOKIE = Regex("""(?i)((?:set-)?cookie["']?\s?:\s?["']?)[^\r\n"']++""")
+
     private val BEARER = Regex("""(?i)\b(bearer\s++)[A-Za-z0-9._~+/=%\-]++""")
 
     private val BASIC = Regex("""\b(Basic\s++)([A-Za-z0-9+/]++={0,2})""")
 
-    private val NAMED = Regex("""(?i)(token|secret|passw(?:or)?d|pwd|credentials?|key|auth)(\s?["']?\s?[:=]\s?["']?\s?|\s)([A-Za-z0-9._~+/=%\-]++)""")
+    private val NAMED = Regex("""(?i)(token|secret|passw(?:or)?d|pwd|passphrase|credentials?|key|auth|session(?:[_-]?id)?|(?<![a-z])sid|cookie)(\s?["']?\s?[:=]\s?["']?\s?|\s)([A-Za-z0-9._~+/=%\-]++)""")
+
+    /** Words whose value goes at any length once it is set with = or :, since a password or a cookie can be short. */
+    private val ALWAYS_SECRET = Regex("""(?i)passw(?:or)?d|pwd|passphrase|cookie""")
 
     /** The device's own address, as Android names it when a connection fails: "from /192.168.1.23 (port 43210)". */
     private val OWN_ADDRESS = Regex("""(?i)(\bfrom )[\w.\-]*/[0-9a-f:.]++(?:%[\w.\-]++)?(?= \(port \d)""")
@@ -54,6 +60,7 @@ object Scrub {
         s = KNOWN_TOKEN.replace(s, GONE)
         s = JSON_WEB_TOKEN.replace(s, GONE)
         s = AUTHORIZATION.replace(s) { it.groupValues[1] + it.groupValues[2] + it.groupValues[3] + GONE }
+        s = COOKIE.replace(s) { it.groupValues[1] + GONE }
         s = BEARER.replace(s) { it.groupValues[1] + GONE }
         s = BASIC.replace(s) { if (isBase64(it.groupValues[2])) it.groupValues[1] + GONE else it.value }
         s = named(s)
@@ -80,7 +87,8 @@ object Scrub {
         while (true) {
             val found = NAMED.find(text, from) ?: break
             val value = found.groups[3]!!
-            if (looksSecret(value.value)) {
+            val set = found.groupValues[2].any { it == ':' || it == '=' }
+            if (looksSecret(value.value) || set && ALWAYS_SECRET.matches(found.groupValues[1])) {
                 out.append(text, copied, value.range.first).append(GONE)
                 copied = value.range.last + 1
                 from = copied

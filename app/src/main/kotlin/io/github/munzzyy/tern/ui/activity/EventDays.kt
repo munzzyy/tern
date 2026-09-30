@@ -3,6 +3,7 @@ package io.github.munzzyy.tern.ui.activity
 import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.isOwn
+import io.github.munzzyy.tern.log.Scrub
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -39,7 +40,7 @@ fun dayName(date: LocalDate, today: LocalDate): DayName = when (date) {
  * "2026-09-30 14:03 · App · what happened". The time is written the same in every language, so
  * that whoever reads it can tell the order. [own] takes in Tern's own messages: each is timed to
  * the second and named by its [marks] where an app's name would be, and the lines of an error
- * follow it, indented.
+ * follow it, indented. Every message goes through [Scrub] on its way out, whatever wrote it.
  */
 fun activityText(events: List<Event>, zone: ZoneId, problemsOnly: Boolean, own: Boolean = true, marks: Map<EventKind, String> = emptyMap()): String {
     val stamp = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.ROOT)
@@ -51,7 +52,7 @@ fun activityText(events: List<Event>, zone: ZoneId, problemsOnly: Boolean, own: 
         .joinToString("\n") { e ->
             val at = (if (e.kind.isOwn) second else stamp).format(Instant.ofEpochMilli(e.atMs).atZone(zone))
             val who = if (e.kind.isOwn) marks[e.kind] else e.appName
-            listOfNotNull(at, who?.takeIf { it.isNotBlank() }, e.message.takeIf { it.isNotBlank() }?.replace("\n", "\n  ") ?: e.kind.name.lowercase(Locale.ROOT))
+            listOfNotNull(at, who?.takeIf { it.isNotBlank() }, e.message.takeIf { it.isNotBlank() }?.let(Scrub::text)?.replace("\n", "\n  ") ?: e.kind.name.lowercase(Locale.ROOT))
                 .joinToString(" \u00b7 ")
         }
 }

@@ -37,9 +37,7 @@
     <string name="settings_auto_installs">Opdateringer installeres af sig selv</string>
     <string name="settings_auto_installs_effect">Apps, der er sat til at opdatere sig selv, gør det efter et baggrundstjek. Når det er slået fra, giver de kun besked om, at der er en opdatering, og hver enkelt beholder sit eget valg til senere.</string>
     <string name="settings_unmetered_installs">Installer kun på Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">Tjek kører på ethvert netværk. En opdatering, der ellers ville installere sig selv, venter på Wi-Fi eller et netværkskabel, som i Obtainium.</string>
     <string name="settings_charging_installs">Installer kun under opladning</string>
-    <string name="settings_charging_installs_effect">Tjek kører også på batteri. En opdatering, der ellers ville installere sig selv, venter, til enheden lader op.</string>
     <string name="engine_unreadable_app">Den gemte app %1$s kunne ikke læses, så den er udeladt fra listen. Intet blev slettet: en nyere version af Tern kan måske læse den.</string>
     <string name="settings_pin_certificates">Fastgør kodeplatformenes certifikater</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab og Codeberg skal vise et certifikat fra den certificeringsmyndighed, som hver af dem er kendt for at bruge, som i Obtainium. Et certifikat, som en anden myndighed er blevet bragt til at udstede, afvises så. Hvis en kodeplatform skifter myndighed, mislykkes tjek der, indtil dette er slået fra.</string>

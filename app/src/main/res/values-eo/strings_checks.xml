@@ -17,13 +17,11 @@
     <string name="settings_only_installed">Kontroli nur instalitajn aplikaĵojn</string>
     <string name="settings_only_installed_effect">Aplikaĵoj kiuj estas nur sekvataj ankaŭ estas kontrolataj. Aplikaĵo kiun vi malfermas ĉiam estas kontrolata.</string>
     <string name="settings_remove_uninstalled">Forigi aplikaĵojn malinstalitajn aliloke</string>
-    <string name="settings_remove_uninstalled_effect">Aplikaĵo kiun vi malinstalas ekster Tern ankaŭ forlasas la liston.</string>
     <string name="settings_file_filter">Filtrilo por dosieroj</string>
     <string name="settings_file_filter_effect">Ŝablono laŭ kiu ĉiu aplikaĵo sen propra filtrilo elektas sian dosieron.</string>
     <string name="settings_file_filter_none">Neniu</string>
     <string name="settings_file_filter_invalid">Ĉi tiu ŝablono ne povas esti legita.</string>
     <string name="settings_allow_downgrades">Permesi pli malnovajn versiojn</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade estas instalita, do Android rajtas meti pli malnovan version super pli nova.</string>
     <string name="settings_collapse_groups">Komenci kun falditaj grupoj</string>
     <string name="settings_haptics">Haptika reago</string>
     <string name="settings_haptics_effect">Malpeza vibro kiam ŝovo aŭ longa premo faras ion.</string>

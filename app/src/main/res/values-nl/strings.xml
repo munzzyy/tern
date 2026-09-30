@@ -369,7 +369,6 @@
     <string name="settings_import_effect">Van een Tern of Obtainium export</string>
     <string name="settings_export">Apps exporteren</string>
     <string name="settings_exporting">Exporteren</string>
-    <string name="settings_export_effect">Slaat je lijst en instellingen op in een bestand. Tokens worden nooit meegenomen.</string>
     <plurals name="exported">
         <item quantity="one">%d app geëxporteerd</item>
         <item quantity="other">%d apps geëxporteerd</item>

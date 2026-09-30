@@ -4,8 +4,8 @@ package io.github.munzzyy.tern.core.compress
  * The data of one xz block: LZMA2 chunks up to the one that ends it. A chunk is stored as it is, or
  * packed with LZMA; either way it goes through the same dictionary.
  */
-internal class Lzma2(private val input: Counted, dictionary: Int) {
-    private val window = Window(maxOf(MIN_DICTIONARY, (dictionary + 15) and 15.inv()))
+internal class Lzma2(private val input: Counted, dictionary: Int, firstWindow: Int = XzInputStream.FIRST_WINDOW) {
+    private val window = Window(maxOf(MIN_DICTIONARY, (dictionary + 15) and 15.inv()), firstWindow)
     private val range = RangeDecoder()
     private var lzma: Lzma? = null
     private var left = 0
@@ -92,10 +92,12 @@ internal class Lzma2(private val input: Counted, dictionary: Int) {
 /**
  * The last [size] bytes given out, which matches copy from. What was decoded but not yet handed on
  * lies between start and pos; a match cut short by the end of what was asked for is finished first
- * the next time.
+ * the next time. The buffer starts at [first] bytes and grows as the data fills it, and it wraps
+ * only once it is [size] long, so no distance within [size] is ever lost to a smaller one.
+ * [allocate] makes each buffer; running out of memory for one refuses the data.
  */
-internal class Window(size: Int) {
-    private val buf = ByteArray(size)
+internal class Window(private val size: Int, first: Int = size, private val allocate: (Int) -> ByteArray = ::ByteArray) {
+    private var buf = make(minOf(size, maxOf(MIN_FIRST, (first + 15) and 15.inv())))
     private var start = 0
     var pos = 0
         private set
@@ -103,6 +105,9 @@ internal class Window(size: Int) {
     private var limit = 0
     private var pendingLength = 0
     private var pendingDistance = 0
+
+    /** How much memory the dictionary holds now. */
+    val capacity: Int get() = buf.size
 
     fun reset() {
         start = 0
@@ -114,6 +119,7 @@ internal class Window(size: Int) {
     }
 
     fun limit(most: Int) {
+        room(most)
         limit = if (buf.size - pos <= most) buf.size else pos + most
     }
 
@@ -153,6 +159,7 @@ internal class Window(size: Int) {
     }
 
     fun copy(input: Counted, length: Int) {
+        room(length)
         val size = minOf(buf.size - pos, length)
         input.fully(buf, pos, size)
         pos += size
@@ -161,10 +168,32 @@ internal class Window(size: Int) {
 
     fun flush(out: ByteArray, off: Int): Int {
         val size = pos - start
-        if (pos == buf.size) pos = 0
         System.arraycopy(buf, start, out, off, size)
+        if (pos == buf.size) {
+            if (buf.size < this.size) grow(buf.size + 1) else pos = 0
+        }
         start = pos
         return size
+    }
+
+    /** Grows the buffer, while it has not wrapped yet, so that [length] more bytes fit after pos. */
+    private fun room(length: Int) {
+        if (buf.size < size && full == pos && buf.size - pos < length) grow(pos + length)
+    }
+
+    private fun grow(need: Int) {
+        val next = minOf(size.toLong(), (maxOf(need.toLong(), buf.size * 2L) + 15) and 15L.inv()).toInt()
+        buf = make(next).also { System.arraycopy(buf, 0, it, 0, pos) }
+    }
+
+    private fun make(length: Int): ByteArray = try {
+        allocate(length)
+    } catch (_: OutOfMemoryError) {
+        throw CompressedDataException("This xz data needs a dictionary of ${size / (1024 * 1024)} MiB, more memory than this device gives Tern")
+    }
+
+    private companion object {
+        const val MIN_FIRST = 4096
     }
 }
 

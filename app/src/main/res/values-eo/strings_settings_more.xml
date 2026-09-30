@@ -37,9 +37,7 @@
     <string name="settings_auto_installs">Ĝisdatigoj instaliĝas memstare</string>
     <string name="settings_auto_installs_effect">Aplikaĵoj agorditaj ĝisdatiĝi memstare faras tion post fona kontrolo. Malŝaltite, ili nur diras, ke ĝisdatigo estas disponebla, kaj ĉiu konservas sian propran elekton por poste.</string>
     <string name="settings_unmetered_installs">Instali nur per Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">Kontroloj funkcias en iu ajn reto. Ĝisdatigo, kiu instaliĝus memstare, atendas Wi-Fi aŭ retkablon, kiel en Obtainium.</string>
     <string name="settings_charging_installs">Instali nur dum ŝargado</string>
-    <string name="settings_charging_installs_effect">Kontroloj funkcias ankaŭ per baterio. Ĝisdatigo, kiu instaliĝus memstare, atendas ĝis la aparato ŝargiĝas.</string>
     <string name="engine_unreadable_app">La konservita aplikaĵo %1$s ne povis esti legita, do ĝi estas preterlasita el la listo. Nenio estis forigita: pli nova versio de Tern eble legos ĝin.</string>
     <string name="settings_pin_certificates">Alpingli la atestilojn de la kodgastigejoj</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab kaj Codeberg devas montri atestilon de la atestila aŭtoritato, pri kiu oni scias, ke ĉiu el ili uzas ĝin, kiel en Obtainium. Atestilo, kiun alia atestila aŭtoritato estis igita eldoni, estas tiam rifuzita. Se kodgastigejo ŝanĝas sian atestilan aŭtoritaton, kontroloj tie malsukcesas ĝis tio estas malŝaltita.</string>

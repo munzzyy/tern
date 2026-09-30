@@ -399,7 +399,6 @@
     <string name="settings_import_effect">Из файла экспорта Tern или Obtainium</string>
     <string name="settings_export">Экспорт приложений</string>
     <string name="settings_exporting">Экспорт</string>
-    <string name="settings_export_effect">Сохраняет ваш список и настройки в файл. Токены никогда не включаются.</string>
     <plurals name="exported">
         <item quantity="one">Экспортировано %d приложение</item>
         <item quantity="few">Экспортировано %d приложения</item>

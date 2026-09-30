@@ -21,7 +21,6 @@
     <string name="option_file_version">ഫയലിൻ്റെ പേര് പതിപ്പായി ഉപയോഗിക്കുക</string>
     <string name="option_file_version_effect">അപ്പോൾ ഓരോ ഫയലും സ്വന്തമായ ഒരു റിലീസായി കണക്കാക്കും.</string>
     <string name="github_proxy_title">hubproxy വഴി GitHub</string>
-    <string name="github_proxy_effect">GitHub-ലേക്കുള്ള ഓരോ അഭ്യർത്ഥനയും ഈ ഹോസ്റ്റിലേക്ക് പോകുന്നു, ഇത് ഓരോന്നും കാണുന്നു. ഇതിലൂടെ ടോക്കൺ അയയ്ക്കില്ല, അതിനാൽ ഈ രീതിയിൽ സ്വകാര്യ പ്രോജക്റ്റുകൾ, GitHub Actions എന്നിവ പിന്തുടരാനാകില്ല.</string>
     <string name="github_proxy_host">hubproxy ഹോസ്റ്റ്</string>
     <string name="github_proxy_help">gh-proxy.com പോലെ ഒരു ഹോസ്റ്റ് നാമം മാത്രം. Tern HTTPS വഴി അതിലേക്ക് എത്തുന്നു.</string>
     <string name="github_proxy_invalid">അത് Tern-ന് ഉപയോഗിക്കാനാകുന്ന ഹോസ്റ്റ് നാമമല്ല</string>

@@ -10,12 +10,16 @@ import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.AssetKind
 import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.model.Release
+import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.net.GitHubProxy
 import io.github.munzzyy.tern.core.select.AssetPicker
 import io.github.munzzyy.tern.core.select.AssetPolicyException
 import io.github.munzzyy.tern.core.select.FileOrigin
 import io.github.munzzyy.tern.core.select.Pick
 import io.github.munzzyy.tern.core.select.PreferredFile
+import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
+import io.github.munzzyy.tern.core.source.forge.GitHubSource
 import io.github.munzzyy.tern.core.text.PatternException
 import io.github.munzzyy.tern.core.verify.Checksums
 import io.github.munzzyy.tern.core.verify.Fingerprints
@@ -52,6 +56,8 @@ class Evaluator(
     private val globalFilter: () -> String? = { null },
     /** The wait of the settings, for apps that have none of their own. */
     private val globalMinAgeDays: () -> Int = { 0 },
+    /** The hubproxy GitHub is read through, or null. */
+    private val githubProxy: () -> String? = { null },
 ) {
     constructor(texts: Texts, device: DeviceProfile, nowMs: () -> Long) : this(texts, device, BuiltInPins(), nowMs)
 
@@ -63,7 +69,9 @@ class Evaluator(
     fun effective(given: AppConfig): AppConfig {
         var releases = given.releases
         if (releases.minAgeDays == null) releases = releases.copy(minAgeDays = globalMinAgeDays())
-        if (given.source.type in SourceTypes.READS_OWN_VERSIONS) releases = releases.copy(versionExtract = null, matchGroup = null)
+        if (given.source.type in SourceTypes.READS_OWN_VERSIONS && !given.source.flag(SourceOptions.HIGHEST_VERSION)) {
+            releases = releases.copy(versionExtract = null, matchGroup = null)
+        }
         val assets = given.assets
         val global = globalFilter()
         val files = if (assets.include != null || assets.exclude != null || global == null) assets else assets.copy(include = global)
@@ -210,7 +218,7 @@ class Evaluator(
 
     /** Where the checksum will come from, judged without fetching anything. */
     fun expectedSourceLocally(config: AppConfig, release: Release, asset: Asset): String? {
-        if (asset.sha256 != null) return digestLabel(config.source.type)
+        if (asset.sha256 != null) return digestLabel(config.source)
         val siblings = setOf("${asset.name}.sha256", "${asset.name}.sha256sum")
         release.assets.firstOrNull { it.kind == AssetKind.CHECKSUM && it.name in siblings }?.let { return texts.checksumFile(it.name) }
         release.assets.firstOrNull { it.kind == AssetKind.CHECKSUM && it.name.lowercase() in SHARED_SUMS }?.let { return texts.checksumFile(it.name) }
@@ -218,10 +226,14 @@ class Evaluator(
         return if (Checksums.parse(notes).keys.any { it == asset.name || it.substringAfterLast('/') == asset.name }) texts.checksumNotes() else null
     }
 
-    fun digestLabel(type: String): String = when (type) {
-        SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS -> texts.checksumGitHub()
-        SourceTypes.FDROID, SourceTypes.FDROID_REPO -> texts.checksumIndex()
-        else -> texts.checksumSource()
+    /** Who gave the digest of a file from [spec]: a hubproxy is named, since it could have changed it. */
+    fun digestLabel(spec: SourceSpec): String {
+        digestProxy(spec, githubProxy())?.let { return texts.checksumGitHubProxy(it) }
+        return when (spec.type) {
+            SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS -> texts.checksumGitHub()
+            SourceTypes.FDROID, SourceTypes.FDROID_REPO -> texts.checksumIndex()
+            else -> texts.checksumSource()
+        }
     }
 
     private fun noCandidate(reasons: List<Rejection>, state: AppState): Problem = when {
@@ -246,6 +258,10 @@ class Evaluator(
     }
 
     companion object {
+        /** The hubproxy that stood between [spec] and GitHub when [proxy] is set, or null when the source answered itself. */
+        internal fun digestProxy(spec: SourceSpec, proxy: String?): String? =
+            proxy?.takeIf { spec.type in setOf(SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS) && GitHubProxy.through(GitHubSource.apiBase(spec.url), it) != null }
+
         const val MAX_CANDIDATES = 4
         private val SIGNER_BLOCKS = setOf(Block.SIGNER_MISMATCH, Block.PIN_MISMATCH)
         private val SHARED_SUMS = setOf("sha256sums", "sha256sums.txt", "checksums.txt", "checksums-sha256.txt")

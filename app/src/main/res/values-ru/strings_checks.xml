@@ -21,13 +21,11 @@
     <string name="settings_only_installed">Проверять только установленные приложения</string>
     <string name="settings_only_installed_effect">Приложения, которые только отслеживаются, тоже проверяются. Открытое вами приложение проверяется всегда.</string>
     <string name="settings_remove_uninstalled">Убирать приложения, удаленные в другом месте</string>
-    <string name="settings_remove_uninstalled_effect">Приложение, которое вы удалили не через Tern, тоже исчезает из списка.</string>
     <string name="settings_file_filter">Фильтр файлов</string>
     <string name="settings_file_filter_effect">Шаблон, по которому выбирают файл все приложения без собственного фильтра.</string>
     <string name="settings_file_filter_none">Нет</string>
     <string name="settings_file_filter_invalid">Этот шаблон невозможно прочитать.</string>
     <string name="settings_allow_downgrades">Разрешить старые версии</string>
-    <string name="settings_allow_downgrades_effect">Установлен Let Me Downgrade, поэтому Android может установить старую версию поверх более новой.</string>
     <string name="settings_collapse_groups">Изначально сворачивать группы</string>
     <string name="settings_haptics">Тактильный отклик</string>
     <string name="settings_haptics_effect">Легкая вибрация, когда свайп или долгое нажатие что-то делает.</string>

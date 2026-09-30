@@ -369,7 +369,6 @@
     <string name="settings_import_effect">El Tern aŭ Obtainium eksporto</string>
     <string name="settings_export">Eksporti aplikaĵojn</string>
     <string name="settings_exporting">Eksportas</string>
-    <string name="settings_export_effect">Konservas vian liston kaj agordojn en dosieron. Ĵetonoj neniam estas inkluzivitaj.</string>
     <plurals name="exported">
         <item quantity="one">Eksportis %d aplikaĵon</item>
         <item quantity="other">Eksportis %d aplikaĵojn</item>

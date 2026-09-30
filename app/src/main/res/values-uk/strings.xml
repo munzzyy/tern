@@ -399,7 +399,6 @@
     <string name="settings_import_effect">З файлу експорту Tern або Obtainium</string>
     <string name="settings_export">Експортувати програми</string>
     <string name="settings_exporting">Експортування</string>
-    <string name="settings_export_effect">Зберігає ваш список і налаштування у файл. Маркери ніколи не включаються.</string>
     <plurals name="exported">
         <item quantity="one">Експортовано %d програму</item>
         <item quantity="few">Експортовано %d програми</item>

@@ -7,9 +7,16 @@ import io.github.munzzyy.tern.data.AppLanguage
 import io.github.munzzyy.tern.data.CrashReport
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.widget.Surfaces
+import rikka.shizuku.ShizukuProvider
 
 class App : Application() {
     val engine: Engine by lazy { createEngine(this).also { Surfaces.start(this, it) } }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        // Runs before any provider starts. Sui is reached only once Shizuku is the chosen installer.
+        ShizukuProvider.disableAutomaticSuiInitialization()
+    }
 
     override fun onCreate() {
         super.onCreate()

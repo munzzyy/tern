@@ -37,9 +37,7 @@
     <string name="settings_auto_installs">Güncellemeler kendiliğinden yüklenir</string>
     <string name="settings_auto_installs_effect">Kendiliğinden güncellenecek şekilde ayarlanan uygulamalar bunu bir arka plan denetiminden sonra yapar. Kapalıyken yalnızca bir güncelleme olduğunu bildirirler ve her biri kendi seçimini sonrası için korur.</string>
     <string name="settings_unmetered_installs">Yalnızca Wi-Fi bağlantısında yükle</string>
-    <string name="settings_unmetered_installs_effect">Denetimler her ağda çalışır. Kendiliğinden yüklenecek bir güncelleme, Obtainium\'daki gibi Wi-Fi bağlantısını veya bir ağ kablosunu bekler.</string>
     <string name="settings_charging_installs">Yalnızca şarj olurken yükle</string>
-    <string name="settings_charging_installs_effect">Denetimler pilde de çalışır. Kendiliğinden yüklenecek bir güncelleme, cihaz şarj olana kadar bekler.</string>
     <string name="engine_unreadable_app">Kaydedilen %1$s uygulaması okunamadı, bu yüzden listenin dışında bırakıldı. Hiçbir şey silinmedi: Tern\'in daha yeni bir sürümü onu okuyabilir.</string>
     <string name="settings_pin_certificates">Kod platformlarının sertifikalarını sabitle</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab ve Codeberg, her birinin kullandığı bilinen sertifika yetkilisinden bir sertifika göstermelidir; Obtainium\'da olduğu gibi. Başka bir sertifika yetkilisinin vermeye zorlandığı bir sertifika ise reddedilir. Bir kod platformu sertifika yetkilisini değiştirirse, bu ayar kapatılana kadar oradaki denetimler başarısız olur.</string>

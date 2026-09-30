@@ -25,13 +25,11 @@
     <string name="settings_only_installed">فحص التطبيقات المثبتة فقط</string>
     <string name="settings_only_installed_effect">التطبيقات التي تُتابَع فقط تُفحص أيضًا. التطبيق الذي تفتحه يُفحص دائمًا.</string>
     <string name="settings_remove_uninstalled">إزالة التطبيقات التي أُلغي تثبيتها في مكان آخر</string>
-    <string name="settings_remove_uninstalled_effect">التطبيق الذي تلغي تثبيته خارج Tern يخرج من القائمة أيضًا.</string>
     <string name="settings_file_filter">فلتر الملفات</string>
     <string name="settings_file_filter_effect">نمط يختار به كل تطبيق ليس له فلتر خاص به ملفَّه.</string>
     <string name="settings_file_filter_none">لا شيء</string>
     <string name="settings_file_filter_invalid">تتعذر قراءة هذا النمط.</string>
     <string name="settings_allow_downgrades">السماح بالإصدارات الأقدم</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade مثبت، لذا يمكن لـ Android وضع إصدار أقدم فوق إصدار أحدث.</string>
     <string name="settings_collapse_groups">البدء بالمجموعات مطوية</string>
     <string name="settings_haptics">الاستجابة اللمسية</string>
     <string name="settings_haptics_effect">اهتزاز خفيف عندما يؤدي السحب أو الضغط المطوّل إلى إجراء ما.</string>

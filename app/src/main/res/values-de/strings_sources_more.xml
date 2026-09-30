@@ -21,7 +21,6 @@
     <string name="option_file_version">Dateinamen als Version verwenden</string>
     <string name="option_file_version_effect">Jede Datei gilt dann als eigenes Release.</string>
     <string name="github_proxy_title">GitHub über einen hubproxy</string>
-    <string name="github_proxy_effect">Jede Anfrage an GitHub geht an diesen Host, der jede einzelne sieht. Über ihn wird kein Token gesendet, daher können private Projekte und GitHub Actions auf diesem Weg nicht verfolgt werden.</string>
     <string name="github_proxy_host">Hubproxy-Host</string>
     <string name="github_proxy_help">Ein Hostname allein, zum Beispiel gh-proxy.com. Tern erreicht ihn über HTTPS.</string>
     <string name="github_proxy_invalid">Das ist kein Hostname, den Tern verwenden kann</string>

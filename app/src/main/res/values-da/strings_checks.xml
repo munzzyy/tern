@@ -17,13 +17,11 @@
     <string name="settings_only_installed">Tjek kun installerede apps</string>
     <string name="settings_only_installed_effect">Apps, der kun spores, tjekkes også. En app, du åbner, tjekkes altid.</string>
     <string name="settings_remove_uninstalled">Fjern apps, der er afinstalleret andetsteds</string>
-    <string name="settings_remove_uninstalled_effect">En app, du afinstallerer uden for Tern, forsvinder også fra listen.</string>
     <string name="settings_file_filter">Filter for filer</string>
     <string name="settings_file_filter_effect">Et mønster, som enhver app uden sit eget filter vælger sin fil efter.</string>
     <string name="settings_file_filter_none">Intet</string>
     <string name="settings_file_filter_invalid">Dette mønster kan ikke læses.</string>
     <string name="settings_allow_downgrades">Tillad ældre versioner</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade er installeret, så Android må installere en ældre version oven på en nyere.</string>
     <string name="settings_collapse_groups">Start med grupper foldet sammen</string>
     <string name="settings_haptics">Haptisk feedback</string>
     <string name="settings_haptics_effect">En let vibration, når et stryg eller et langt tryk gør noget.</string>

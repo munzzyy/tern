@@ -4,9 +4,7 @@ import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonObject
 import io.github.munzzyy.tern.core.json.JsonValue
 import io.github.munzzyy.tern.core.model.AppConfig
-import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.net.Urls
-import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.web.RequestHeaders
 
 /**
@@ -28,9 +26,6 @@ object ConfigLink {
     /** The keys of Obtainium's own links. The rest of what it stores of an app is how the app stands on one device. */
     private val KEYS = listOf("id", "url", "author", "name", "preferredApkIndex", "additionalSettings", "overrideSource")
 
-    /** Headers that carry no secret. Any other can hold a key, so it stays out of a link. */
-    private val PLAIN_HEADERS = setOf("user-agent", "accept", "accept-language", "referer")
-
     /** The obtainium:// link to [app]; null when Obtainium has no source for it, or when Tern could not read it back. */
     fun of(app: AppConfig): String? {
         // Without a package name the id is one Obtainium replaces at the first install, as the export writes it.
@@ -44,12 +39,5 @@ object ConfigLink {
     fun web(app: AppConfig): String? = of(app)?.let { ObtainiumLink.WEB_REDIRECT + it }?.takeIf { it.length <= MAX_LENGTH }
 
     private fun shared(app: AppConfig): AppConfig =
-        app.copy(notes = null, categories = emptyList(), favorite = false, source = withPlainHeaders(app.source))
-
-    private fun withPlainHeaders(spec: SourceSpec): SourceSpec {
-        val raw = spec.option(SourceOptions.HEADERS) ?: return spec
-        val plain = runCatching { RequestHeaders.parse(raw) }.getOrDefault(emptyMap()).filterKeys { it.lowercase() in PLAIN_HEADERS }
-        val options = if (plain.isEmpty()) spec.options - SourceOptions.HEADERS else spec.options + (SourceOptions.HEADERS to RequestHeaders.write(plain))
-        return spec.copy(options = options)
-    }
+        app.copy(notes = null, categories = emptyList(), favorite = false, source = RequestHeaders.plainOnly(app.source))
 }

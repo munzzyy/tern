@@ -21,13 +21,11 @@
     <string name="settings_only_installed">Перевіряти лише встановлені програми</string>
     <string name="settings_only_installed_effect">Програми, які лише відстежуються, теж перевіряються. Програма, яку ви відкриваєте, перевіряється завжди.</string>
     <string name="settings_remove_uninstalled">Вилучати програми, видалені в іншому місці</string>
-    <string name="settings_remove_uninstalled_effect">Програма, яку ви видаляєте не через Tern, також зникає зі списку.</string>
     <string name="settings_file_filter">Фільтр файлів</string>
     <string name="settings_file_filter_effect">Шаблон, за яким вибирають файл усі програми без власного фільтра.</string>
     <string name="settings_file_filter_none">Немає</string>
     <string name="settings_file_filter_invalid">Цей шаблон неможливо прочитати.</string>
     <string name="settings_allow_downgrades">Дозволити старіші версії</string>
-    <string name="settings_allow_downgrades_effect">Встановлено Let Me Downgrade, тому Android може встановити старішу версію поверх новішої.</string>
     <string name="settings_collapse_groups">Спочатку згортати групи</string>
     <string name="settings_haptics">Тактильний відгук</string>
     <string name="settings_haptics_effect">Легка вібрація, коли свайп або довге натискання щось робить.</string>

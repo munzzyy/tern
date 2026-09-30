@@ -17,13 +17,11 @@
     <string name="settings_only_installed">Only check installed apps</string>
     <string name="settings_only_installed_effect">Apps that are only tracked are checked too. An app you open is always checked.</string>
     <string name="settings_remove_uninstalled">Remove apps uninstalled elsewhere</string>
-    <string name="settings_remove_uninstalled_effect">An app you uninstall outside Tern leaves the list as well.</string>
     <string name="settings_file_filter">Filter for files</string>
     <string name="settings_file_filter_effect">A pattern every app without a filter of its own picks its file by.</string>
     <string name="settings_file_filter_none">None</string>
     <string name="settings_file_filter_invalid">This pattern cannot be read.</string>
     <string name="settings_allow_downgrades">Allow older versions</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade is installed, so Android may put an older version over a newer one.</string>
     <string name="settings_collapse_groups">Start with groups folded</string>
     <string name="settings_haptics">Haptic feedback</string>
     <string name="settings_haptics_effect">A light tap when a swipe or a long press does something.</string>

@@ -354,7 +354,6 @@
     <string name="settings_import_effect">Từ tệp xuất của Tern hoặc Obtainium</string>
     <string name="settings_export">Xuất ứng dụng</string>
     <string name="settings_exporting">Đang xuất</string>
-    <string name="settings_export_effect">Lưu danh sách và cài đặt vào tệp. Không bao gồm mã thông báo.</string>
     <plurals name="exported">
         <item quantity="other">Đã xuất %d ứng dụng</item>
     </plurals>

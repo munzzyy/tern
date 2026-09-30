@@ -4,6 +4,7 @@ import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonArray
 import io.github.munzzyy.tern.core.json.JsonObject
 import io.github.munzzyy.tern.core.model.AppConfig
+import io.github.munzzyy.tern.core.source.web.RequestHeaders
 
 class TernExportException(message: String) : Exception(message)
 
@@ -14,14 +15,17 @@ object TernExport {
     const val SCHEMA = 1
     private const val FORMAT = "tern-export"
 
-    /** [settings] go in only when given; the file never holds a token, whatever they are. */
+    /**
+     * [settings] go in only when given. The file never holds a token, whatever they are, nor a
+     * request header that could hold a key.
+     */
     fun write(apps: List<AppConfig>, exportedAtMs: Long, appVersion: String, settings: JsonObject? = null): String {
         val fields = mutableListOf<Pair<String, Any?>>(
             "format" to FORMAT,
             "schema" to SCHEMA,
             "exportedAt" to exportedAtMs,
             "appVersion" to appVersion,
-            "apps" to JsonArray(apps.map { AppConfigJson.encode(it) }),
+            "apps" to JsonArray(apps.map { AppConfigJson.encode(it.copy(source = RequestHeaders.plainOnly(it.source))) }),
         )
         if (settings != null) fields += "settings" to settings
         return Json.write(Json.obj(*fields.toTypedArray()), indent = true)

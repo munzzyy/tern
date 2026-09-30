@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Saves your list and settings to a file. Tokens never go in, and neither does a request header that could hold a key.</string>
+    <string name="engine_checksum_github_proxy">GitHub release digest, as the hubproxy %1$s passed it on</string>
+    <string name="github_proxy_effect_trust">Every request to GitHub goes to this host. It sees each one and can change what comes back: the releases, their digests and the files. Apps you have stay held to their certificate, but a first install through it trusts the hubproxy as much as GitHub, and certificate pinning does not reach it. No token is sent through it, so private projects and GitHub Actions cannot be followed this way.</string>
+    <string name="settings_unmetered_checks">Check only on Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">Background checks wait for Wi-Fi or a cable, so they use no mobile data.</string>
+    <string name="settings_charging_checks">Check only while charging</string>
+    <string name="settings_charging_checks_effect">Background checks wait until the device is charging.</string>
+    <string name="settings_unmetered_installs_wait">An update that would install by itself waits for Wi-Fi or a cable, as in Obtainium.</string>
+    <string name="settings_charging_installs_wait">An update that would install by itself waits until the device is charging.</string>
+    <string name="engine_downgrade_not_as_named">The source named version code %2$d, but this file is %1$d, older than the one installed. It is not put over the newer one.</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgrade is installed, so Android may put an older version over a newer one. Tern does it only for a release you pick from an app\'s history, never in the background or with Update all.</string>
+    <string name="option_highest_version">Take the highest version, as Tern 0.1.0 did</string>
+    <string name="option_highest_version_effect">Offers the link with the highest version on the page, whatever its place, and runs the version pattern over the version read from each link. Off reads the page the way Obtainium does: the last link in order is the latest.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">An app you uninstall outside Tern leaves the list as well. An archived app stays. Added again from the same place, an app is held to the certificate it had; removing it in Tern forgets that.</string>
+    <string name="link_check_title">Check for updates now?</string>
+    <string name="link_check_one">A link asked Tern to check %1$s for updates. Its source is asked, and nothing is installed.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">A link asked Tern to check the app in your list for updates. Its source is asked, and nothing is installed.</item>
+        <item quantity="other">A link asked Tern to check the %d apps in your list for updates. Their sources are asked, and nothing is installed.</item>
+    </plurals>
+    <string name="link_check_confirm">Check</string>
+    <string name="link_check_not_now">Not now</string>
+    <string name="engine_installer_fell_back">%1$s was not ready, so Android\'s installer was used for this one.</string>
+    <string name="about_track_tern_fdroid_effect">F-Droid installed this copy, so Tern follows its entry there: updates are the builds F-Droid made and checked, as the F-Droid app gets them.</string>
+    <string name="about_track_tern_github">Follow GitHub releases instead</string>
+    <string name="about_track_tern_github_effect">Updates come from GitHub as soon as they are published, before F-Droid has built and checked them. This skips F-Droid\'s checks. Tern still checks each file and holds it to its own certificate.</string>
+</resources>

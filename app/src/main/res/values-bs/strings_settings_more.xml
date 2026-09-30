@@ -38,9 +38,7 @@
     <string name="settings_auto_installs">Ažuriranja se instaliraju sama</string>
     <string name="settings_auto_installs_effect">Aplikacije postavljene da se same ažuriraju to rade nakon provjere u pozadini. Isključeno, samo javljaju da ažuriranje postoji, a svaka zadržava svoj izbor za kasnije.</string>
     <string name="settings_unmetered_installs">Instaliraj samo na Wi-Fi mreži</string>
-    <string name="settings_unmetered_installs_effect">Provjere rade na bilo kojoj mreži. Ažuriranje koje bi se instaliralo samo čeka Wi-Fi ili kabl, kao u Obtainiumu.</string>
     <string name="settings_charging_installs">Instaliraj samo dok se puni</string>
-    <string name="settings_charging_installs_effect">Provjere rade i na bateriji. Ažuriranje koje bi se instaliralo samo čeka dok se uređaj ne počne puniti.</string>
     <string name="engine_unreadable_app">Sačuvana aplikacija %1$s nije se mogla pročitati, pa je izostavljena sa spiska. Ništa nije izbrisano: novija verzija Terna može je pročitati.</string>
     <string name="settings_pin_certificates">Prikvači certifikate platformi za kod</string>
     <string name="settings_pin_certificates_effect">Kao u Obtainiumu, GitHub, GitLab i Codeberg moraju pokazati certifikat izdavača za kojeg se zna da ga svaki od njih koristi. Certifikat koji je drugi izdavač bio primoran izdati tada se odbija. Ako platforma za kod promijeni izdavača, provjere tamo ne uspijevaju dok se ovo ne isključi.</string>

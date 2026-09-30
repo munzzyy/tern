@@ -19,13 +19,11 @@
     <string name="settings_only_installed">Provjeravaj samo instalirane aplikacije</string>
     <string name="settings_only_installed_effect">Aplikacije koje se samo prate također se provjeravaju. Aplikacija koju otvorite uvijek se provjerava.</string>
     <string name="settings_remove_uninstalled">Ukloni aplikacije deinstalirane negdje drugo</string>
-    <string name="settings_remove_uninstalled_effect">Aplikacija koju deinstalirate izvan Terna također napušta spisak.</string>
     <string name="settings_file_filter">Filter za datoteke</string>
     <string name="settings_file_filter_effect">Obrazac po kojem svaka aplikacija bez vlastitog filtera bira svoju datoteku.</string>
     <string name="settings_file_filter_none">Nijedan</string>
     <string name="settings_file_filter_invalid">Ovaj obrazac se ne može pročitati.</string>
     <string name="settings_allow_downgrades">Dozvoli starije verzije</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade je instaliran, pa Android može staviti stariju verziju preko novije.</string>
     <string name="settings_collapse_groups">Počni sa sklopljenim grupama</string>
     <string name="settings_haptics">Haptički odziv</string>
     <string name="settings_haptics_effect">Lagana vibracija kada prevlačenje ili dugi pritisak nešto uradi.</string>

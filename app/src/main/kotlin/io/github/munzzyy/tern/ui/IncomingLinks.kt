@@ -40,6 +40,44 @@ fun refreshLink(raw: String?): RefreshLink? {
     return if (id.isNullOrBlank()) RefreshLink.All else RefreshLink.One(id.take(255))
 }
 
+/**
+ * What an intent that reached Tern's window asks for that goes beyond showing something. [ours]
+ * is true only for Tern's own launcher shortcuts, which come through a component no other app
+ * can start. Anything else may ask for a check and gets a question first; Update all and Add
+ * from anyone else are not done at all.
+ */
+sealed interface Asked {
+    data object UpdateAll : Asked
+    data object Add : Asked
+
+    /** A check to run at once: Tern's own shortcut asked for it. */
+    data class Check(val link: RefreshLink) : Asked
+
+    /** A check a web page or another app asked for, run only once the person says yes. */
+    data class Confirm(val link: RefreshLink) : Asked
+}
+
+fun asked(action: String?, data: String?, ours: Boolean): Asked? = when (action) {
+    ACTION_UPDATE_ALL -> Asked.UpdateAll.takeIf { ours }
+    ACTION_ADD -> Asked.Add.takeIf { ours }
+    ACTION_CHECK -> Asked.Check(RefreshLink.All).takeIf { ours }
+    ACTION_VIEW -> refreshLink(data)?.let { if (ours) Asked.Check(it) else Asked.Confirm(it) }
+    else -> null
+}
+
+/** A check a link asked for waits this long after the last one, so a page cannot keep Tern checking. */
+const val LINK_CHECK_GAP_MS = 60_000L
+
+fun linkCheckAllowed(lastAtMs: Long?, nowMs: Long): Boolean = lastAtMs == null || nowMs - lastAtMs !in 0 until LINK_CHECK_GAP_MS
+
+/** What Tern's own shortcuts ask for. They reach Tern only through [SHORTCUTS], which no other app can start. */
+const val ACTION_ADD = "io.github.munzzyy.tern.action.ADD"
+const val ACTION_UPDATE_ALL = "io.github.munzzyy.tern.action.UPDATE_ALL"
+const val ACTION_CHECK = "io.github.munzzyy.tern.action.CHECK"
+
+/** The activity alias the shortcuts start, declared not exported in the manifest. */
+const val SHORTCUTS = "io.github.munzzyy.tern.Shortcuts"
+
 const val ACTION_SEND = "android.intent.action.SEND"
 const val ACTION_VIEW = "android.intent.action.VIEW"
 

@@ -9,12 +9,16 @@ import java.util.zip.CRC32
  * otherwise: one stream, or several one after the other. Every header, block, index and footer is
  * held to its CRC, and what each block holds to the check the stream names (CRC32, CRC64 or
  * SHA-256). The dictionary is nearly all the memory this takes, and one larger than
- * [maxDictionary] is refused. No more than [maxOutput] bytes come out.
+ * [maxDictionary] is refused. It is made [firstWindow] bytes long and grows only as far as the
+ * data fills it, so a small file names 64 MiB and takes little; where the device has no memory
+ * for the rest, the data is refused like any other it cannot read. No more than [maxOutput]
+ * bytes come out.
  */
 class XzInputStream(
     input: InputStream,
     private val maxOutput: Long = Long.MAX_VALUE,
     private val maxDictionary: Int = MAX_DICTIONARY,
+    private val firstWindow: Int = FIRST_WINDOW,
 ) : InputStream() {
     private val raw = Counted(input)
     private var streams = 0
@@ -134,7 +138,7 @@ class XzInputStream(
         }
         reader.zeros()
         check.reset()
-        block = Block(size, compressedSize, uncompressedSize, raw.count, Lzma2(raw, dictionary))
+        block = Block(size, compressedSize, uncompressedSize, raw.count, Lzma2(raw, dictionary, firstWindow))
     }
 
     private fun endBlock(ended: Block) {
@@ -254,6 +258,8 @@ class XzInputStream(
     companion object {
         /** What xz -9 uses. */
         const val MAX_DICTIONARY = 64 * 1024 * 1024
+
+        const val FIRST_WINDOW = 1024 * 1024
 
         private const val STREAM_HEADER = 12
         private const val MAX_NUMBER_BYTES = 9

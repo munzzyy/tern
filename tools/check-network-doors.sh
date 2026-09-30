@@ -5,7 +5,10 @@
 # proxy the user chose and hands the name of the host to that proxy unresolved. A second place that
 # opens a connection, makes a socket or resolves a name would go round the proxy, and nothing else
 # would notice. The handoff in core/handoff listens on the local network, and net/ProxyProbe.kt asks
-# the proxy on this device whether it is there. No other place makes a socket.
+# the proxy on this device whether it is there. No other place makes a socket, and nothing else that
+# fetches by itself is used: java.net.URL outside the door, DownloadManager, HttpEngine or Cronet,
+# a web view, DnsResolver or an HTTP library. tools/tests/network-doors holds a file for each way,
+# and tools/tests/network-doors/run.sh proves each one fails this script.
 #
 #   tools/check-network-doors.sh [root of the source tree]
 set -euo pipefail
@@ -68,6 +71,15 @@ if [ -f "$PROBE" ]; then
   fi
 fi
 check "a name resolved on this device" 'getByName\(|getAllByName\(' "-"
+check "java.net.URL or a URLConnection outside $DOOR, which opens a connection round the proxy" \
+  '(^|[^A-Za-z0-9_.])java\.net\.(URL|URLConnection|HttpURLConnection)([^A-Za-z0-9_]|$)|javax\.net\.ssl\.HttpsURLConnection|(^|[^A-Za-z0-9_])(Https?)?URLConnection([^A-Za-z0-9_]|$)|import java\.net\.\*' "$DOOR:"
+check "a URL made from a URI outside $DOOR" '\.toURL\(' "$DOOR:"
+check "what an address holds read straight from it" '\.getContent\(|URL\([^)]*\)\.(content|readText|readBytes)' "-"
+check "Android's download service, which fetches outside Tern" 'DownloadManager\.(Request|Query)|\.enqueue\(' "-"
+check "a second HTTP stack: HttpEngine, Cronet, java.net.http, OkHttp, Ktor or Retrofit" \
+  'HttpEngine|org\.chromium\.net|(^|[^A-Za-z0-9_])UrlRequest|BidirectionalStream|java\.net\.http\.|okhttp3|io\.ktor|retrofit2' "-"
+check "a web view, which loads what a page asks for by itself" 'android\.webkit\.|(^|[^A-Za-z0-9_])WebView|loadUrl\(' "-"
+check "Android's name resolver" 'DnsResolver' "-"
 
 [ "$fail" -eq 0 ] && echo "ok   the network has one door"
 exit "$fail"

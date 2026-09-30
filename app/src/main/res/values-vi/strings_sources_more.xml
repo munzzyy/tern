@@ -21,7 +21,6 @@
     <string name="option_file_version">Dùng tên tệp làm phiên bản</string>
     <string name="option_file_version_effect">Khi đó mỗi tệp được tính là một bản phát hành riêng.</string>
     <string name="github_proxy_title">GitHub qua hubproxy</string>
-    <string name="github_proxy_effect">Mọi yêu cầu đến GitHub đều đi tới máy chủ này, và máy chủ thấy từng yêu cầu. Không có mã thông báo nào được gửi qua nó, nên không thể theo dõi dự án riêng tư và GitHub Actions theo cách này.</string>
     <string name="github_proxy_host">Máy chủ hubproxy</string>
     <string name="github_proxy_help">Chỉ tên máy chủ, ví dụ gh-proxy.com. Tern kết nối tới nó qua HTTPS.</string>
     <string name="github_proxy_invalid">Đây không phải tên máy chủ mà Tern có thể dùng</string>

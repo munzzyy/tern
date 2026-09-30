@@ -38,9 +38,7 @@
     <string name="settings_auto_installs">Gli aggiornamenti si installano da soli</string>
     <string name="settings_auto_installs_effect">Le app impostate per aggiornarsi da sole lo fanno dopo un controllo in background. Se disattivato, segnalano solo che c\'è un aggiornamento, e ciascuna mantiene la propria scelta per dopo.</string>
     <string name="settings_unmetered_installs">Installa solo con il Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">I controlli vengono eseguiti su qualsiasi rete. Un aggiornamento che si installerebbe da solo attende il Wi-Fi o un cavo, come in Obtainium.</string>
     <string name="settings_charging_installs">Installa solo durante la ricarica</string>
-    <string name="settings_charging_installs_effect">I controlli vengono eseguiti anche a batteria. Un aggiornamento che si installerebbe da solo attende che il dispositivo sia in carica.</string>
     <string name="engine_unreadable_app">Impossibile leggere l\'app salvata %1$s, quindi viene esclusa dalla lista. Non è stato eliminato nulla: una versione più recente di Tern potrebbe leggerla.</string>
     <string name="settings_pin_certificates">Fissa i certificati delle forge</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab e Codeberg devono presentare un certificato dell\'autorità che ciascuno usa notoriamente, come in Obtainium. Un certificato che un\'altra autorità è stata costretta a emettere viene quindi rifiutato. Se una forge cambia autorità, i controlli lì falliscono finché questa opzione non viene disattivata.</string>

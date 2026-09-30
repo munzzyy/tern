@@ -23,6 +23,8 @@ object SettingsJson {
         Field.flag("removeUninstalled", { it.removeUninstalled }) { s, v -> s.copy(removeUninstalled = v) },
         Field.flag("onlyOnUnmetered", { it.onlyOnUnmetered }) { s, v -> s.copy(onlyOnUnmetered = v) },
         Field.flag("onlyWhileCharging", { it.onlyWhileCharging }) { s, v -> s.copy(onlyWhileCharging = v) },
+        Field.flag("checkOnlyOnUnmetered", { it.checkOnlyOnUnmetered }) { s, v -> s.copy(checkOnlyOnUnmetered = v) },
+        Field.flag("checkOnlyWhileCharging", { it.checkOnlyWhileCharging }) { s, v -> s.copy(checkOnlyWhileCharging = v) },
         Field.choice("defaultUpdateMode", { it.defaultUpdateMode }) { s, v -> s.copy(defaultUpdateMode = v) },
         Field.flag("includePrereleasesByDefault", { it.includePrereleasesByDefault }) { s, v -> s.copy(includePrereleasesByDefault = v) },
         Field.number("minAgeDaysByDefault", { it.minAgeDaysByDefault }, 0..365) { s, v -> s.copy(minAgeDaysByDefault = v) },

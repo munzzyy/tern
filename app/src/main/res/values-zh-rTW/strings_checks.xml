@@ -15,13 +15,11 @@
     <string name="settings_only_installed">只檢查已安裝的應用程式</string>
     <string name="settings_only_installed_effect">僅追蹤的應用程式也會檢查。您開啟的應用程式一律會檢查。</string>
     <string name="settings_remove_uninstalled">移除在其他地方解除安裝的應用程式</string>
-    <string name="settings_remove_uninstalled_effect">在 Tern 以外解除安裝的應用程式也會從清單中移除。</string>
     <string name="settings_file_filter">檔案篩選器</string>
     <string name="settings_file_filter_effect">所有沒有自己篩選器的應用程式用來挑選檔案的模式。</string>
     <string name="settings_file_filter_none">無</string>
     <string name="settings_file_filter_invalid">無法讀取這個模式。</string>
     <string name="settings_allow_downgrades">允許較舊的版本</string>
-    <string name="settings_allow_downgrades_effect">已安裝 Let Me Downgrade，因此 Android 可以用較舊的版本覆蓋較新的版本。</string>
     <string name="settings_collapse_groups">群組預設為摺疊</string>
     <string name="settings_haptics">觸覺回饋</string>
     <string name="settings_haptics_effect">滑動或長按觸發動作時輕微震動。</string>

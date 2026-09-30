@@ -22,6 +22,7 @@ import io.github.munzzyy.tern.core.text.MatchTemplate
 import io.github.munzzyy.tern.core.text.NaturalOrder
 import io.github.munzzyy.tern.core.text.PatternException
 import io.github.munzzyy.tern.core.text.SafePattern
+import io.github.munzzyy.tern.core.version.Version
 
 /**
  * Any web page with links to an app's files, read the way Obtainium's HTML source reads one. On
@@ -98,7 +99,8 @@ class HtmlSource : Source {
         // The link Obtainium takes is the last in order. Here it comes first, and the others follow it.
         val preferred = ordered.asReversed().distinctBy { it.url }.take(MAX_LINKS)
 
-        val reading = reading(spec, context)
+        val highest = spec.flag(SourceOptions.HIGHEST_VERSION)
+        val reading = reading(spec, context, highest)
         val versions = watched("The version pattern") { versionsOf(preferred, html, reading) }
         val versioned = LinkedHashMap<String, MutableList<Link>>()
         val unversioned = ArrayList<Link>()
@@ -107,16 +109,24 @@ class HtmlSource : Source {
             if (version == null) unversioned.add(link) else versioned.getOrPut(version) { ArrayList() }.add(link)
         }
 
-        val releases = versioned.entries.take(MAX_RELEASES).map { (version, links) ->
+        // Tern 0.1.0 listed the highest versions, or with the page's order its first ones, whatever else the page held.
+        val listed = if (!highest) {
+            versioned.entries
+        } else if (choice.pageOrder) {
+            versioned.entries.sortedBy { entry -> entry.value.minOf { link -> ordered.indexOfFirst { it.url == link.url } } }
+        } else {
+            versioned.entries.sortedWith(compareByDescending { Version.parse(it.key) })
+        }
+        val releases = listed.take(MAX_RELEASES).map { (version, links) ->
             Release(id = version, version = version, pageUrl = finalUrl, assets = links.map { Asset(fileName(it.url), it.url) })
         }.toMutableList()
         val taken = unversioned.take(MAX_UNVERSIONED)
         if (taken.isNotEmpty()) {
             val release = followedByContent(taken, finalUrl, pseudo, headers, context)
-            if (versions[preferred.first().url] == null) releases.add(0, release) else releases.add(release)
+            if (versions[preferred.first().url] == null && !highest) releases.add(0, release) else releases.add(release)
         }
         if (unversioned.isEmpty() || pseudo == PseudoVersion.LINK) context.validators.put(key, pageValidator)
-        releases[0] = releases[0].copy(latest = true)
+        if (!highest) releases[0] = releases[0].copy(latest = true)
         return CheckResult.Listing(SourceListing(releases = releases.take(MAX_RELEASES), name = LinkScanner.title(html)))
     }
 
@@ -149,9 +159,10 @@ class HtmlSource : Source {
     /** The part after the last slash, query included, as Obtainium's "last link segment" reads it. */
     private fun lastSegmentOf(url: String): String = url.split('/').lastOrNull { it.isNotEmpty() } ?: url
 
-    private fun reading(spec: SourceSpec, context: CheckContext): Reading {
+    /** With [highest] the pattern is left to the release filters, which run it over the guessed version as 0.1.0 did. */
+    private fun reading(spec: SourceSpec, context: CheckContext, highest: Boolean): Reading {
         val from = spec.option(SourceOptions.VERSION_FROM) ?: "link"
-        val raw = context.app?.releases?.versionExtract?.takeIf { it.isNotBlank() }
+        val raw = context.app?.releases?.versionExtract?.takeIf { it.isNotBlank() && !highest }
         val pattern = try {
             raw?.let { if (from == "page") SafePattern.compileForPages(it) else SafePattern.compile(it) }
         } catch (e: PatternException) {

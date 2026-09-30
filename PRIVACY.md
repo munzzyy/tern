@@ -58,6 +58,9 @@ older Orbot to start. That stays on the device.
 
 A stored access token is sent to the host it was stored for and to no other.
 
+With a hubproxy set for GitHub, that host sees every request Tern makes to
+GitHub and can change what comes back. It is never sent a token or a cookie.
+
 Links to VirusTotal, a release page or a project page open in your browser,
 under your browser's rules. "Read the project's page" on an app's page asks
 the forge's API for the project's README, with the token stored for that host
@@ -66,9 +69,10 @@ if there is one, and only when you press it.
 "Check with Verified Apps" hands the package name of an app and the certificate
 Tern holds it to to Verified Apps or AppVerifier, another app on this device,
 and only when you press it. With "Show new apps to Verified Apps first" on,
-which it is at first as in Obtainium, the checked file of an app's first install
-goes to that app too, read-only, before the installer gets it. Nothing goes
-over the network for that.
+which it is not at first, the checked file of an app's first install goes to
+that app too, read-only, before the installer gets it. Either one goes only to
+an app signed with the certificate its makers publish, never to another app
+that took the same name. Nothing goes over the network for that.
 
 With another app chosen as the installer, Tern hands that app each file once
 the file has passed its checks, and that app alone may read it. With Shizuku

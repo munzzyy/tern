@@ -127,7 +127,8 @@ what it installed with the file it checked.
 Checks run every six hours by default, and anywhere from every 15 minutes to
 every 30 days, through Android's own job scheduler. The schedule is put back
 after a reboot and after Tern itself is updated. You can limit them to unmetered
-networks or to charging, check when Tern opens or when an app's page opens, and
+networks or to charging, and hold updates that install by themselves for Wi-Fi
+or a charger on their own. You can check when Tern opens or when an app's page opens, and
 choose per app between being told, updating automatically, and never checking
 in the background. If you force stop Tern, Android drops the schedule until you
 open the app again.
@@ -272,7 +273,9 @@ real Chromium to a live handoff and checks that the page broke no rule of its
 Content-Security-Policy.
 
 `bash tools/check-network-doors.sh` fails if any code other than the one HTTP
-client opens a connection or resolves a name on the device.
+client opens a connection or resolves a name on the device, or uses anything
+else that fetches by itself. `bash tools/tests/network-doors/run.sh` proves it
+catches each of those ways.
 
 `bash tools/check-reproducible.sh <folder>` builds the release twice from two
 clones in different places and compares the files byte for byte.

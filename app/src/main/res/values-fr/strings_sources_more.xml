@@ -21,7 +21,6 @@
     <string name="option_file_version">Utiliser le nom du fichier comme version</string>
     <string name="option_file_version_effect">Chaque fichier compte alors comme une version à part.</string>
     <string name="github_proxy_title">GitHub via un hubproxy</string>
-    <string name="github_proxy_effect">Chaque requête vers GitHub est envoyée à cet hôte, qui les voit toutes. Aucun jeton n\'est envoyé par ce biais, donc les projets privés et GitHub Actions ne peuvent pas être suivis ainsi.</string>
     <string name="github_proxy_host">Hôte du hubproxy</string>
     <string name="github_proxy_help">Un nom d\'hôte seul, comme gh-proxy.com. Tern s\'y connecte en HTTPS.</string>
     <string name="github_proxy_invalid">Ce n\'est pas un nom d\'hôte que Tern peut utiliser</string>

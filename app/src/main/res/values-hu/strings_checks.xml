@@ -17,13 +17,11 @@
     <string name="settings_only_installed">Csak a telepített alkalmazások ellenőrzése</string>
     <string name="settings_only_installed_effect">A csak követett alkalmazások is ellenőrzésre kerülnek. A megnyitott alkalmazás mindig ellenőrzésre kerül.</string>
     <string name="settings_remove_uninstalled">Máshol eltávolított alkalmazások törlése a listáról</string>
-    <string name="settings_remove_uninstalled_effect">Ha a Ternen kívül eltávolít egy alkalmazást, az a listáról is lekerül.</string>
     <string name="settings_file_filter">Fájlszűrő</string>
     <string name="settings_file_filter_effect">Minta, amely alapján minden saját szűrő nélküli alkalmazás kiválasztja a fájlját.</string>
     <string name="settings_file_filter_none">Nincs</string>
     <string name="settings_file_filter_invalid">Ez a minta nem olvasható.</string>
     <string name="settings_allow_downgrades">Régebbi verziók engedélyezése</string>
-    <string name="settings_allow_downgrades_effect">A Let Me Downgrade telepítve van, így az Android egy újabb verzióra régebbit is telepíthet.</string>
     <string name="settings_collapse_groups">Kezdés összecsukott csoportokkal</string>
     <string name="settings_haptics">Haptikus visszajelzés</string>
     <string name="settings_haptics_effect">Enyhe rezgés, amikor egy elhúzás vagy hosszú nyomás hatására történik valami.</string>

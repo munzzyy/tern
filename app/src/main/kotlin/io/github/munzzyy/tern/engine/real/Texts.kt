@@ -9,6 +9,7 @@ import android.text.format.Formatter
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.select.PickReason
 import io.github.munzzyy.tern.engine.CheckCause
+import io.github.munzzyy.tern.engine.InstallerMode
 import io.github.munzzyy.tern.net.isProxySilent
 import java.io.IOException
 import java.util.Date
@@ -60,6 +61,7 @@ class Texts(context: Context) : ImportTexts {
     fun partNotSigned() = s(R.string.engine4_part_not_signed)
     fun otherAppSigner() = s(R.string.install_other_app_signer)
     fun downgrade(installed: String?, offered: String?) = s(R.string.engine_downgrade, installed ?: "?", offered ?: "?")
+    fun downgradeNotAsNamed(file: Long, named: Long) = s(R.string.engine_downgrade_not_as_named, file, named)
     fun testOnly() = s(R.string.engine_test_only)
     fun needsNewerAndroid(minSdk: Int) = s(R.string.engine_needs_newer_android, minSdk)
 
@@ -137,7 +139,19 @@ class Texts(context: Context) : ImportTexts {
     fun eventVerified(packageName: String, versionCode: Long, signer: String) = s(R.string.engine_event_verified, ltr(packageName), versionCode, ltr(signer))
     fun eventInstalled(version: String, versionCode: Long) = s(R.string.engine_event_installed, version, versionCode)
 
+    fun installerFellBack(chosen: InstallerMode) = s(
+        R.string.engine_installer_fell_back,
+        s(
+            when (chosen) {
+                InstallerMode.SHIZUKU -> R.string.installer_shizuku
+                InstallerMode.ROOT -> R.string.installer_root
+                else -> R.string.installer_other_app
+            },
+        ),
+    )
+
     fun checksumGitHub() = s(R.string.engine_checksum_github)
+    fun checksumGitHubProxy(host: String) = s(R.string.engine_checksum_github_proxy, ltr(host))
     fun checksumIndex() = s(R.string.engine_checksum_index)
     fun checksumSource() = s(R.string.engine_checksum_source)
     fun checksumFile(name: String) = s(R.string.engine_checksum_file, ltr(name.take(120)))

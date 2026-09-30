@@ -37,9 +37,7 @@
     <string name="settings_auto_installs">Updates worden vanzelf geïnstalleerd</string>
     <string name="settings_auto_installs_effect">Apps die zijn ingesteld om zichzelf te updaten, doen dat na een controle op de achtergrond. Staat dit uit, dan melden ze alleen dat er een update is, en elke app houdt zijn eigen keuze voor later.</string>
     <string name="settings_unmetered_installs">Alleen installeren via wifi</string>
-    <string name="settings_unmetered_installs_effect">Controles draaien op elk netwerk. Een update die zichzelf zou installeren, wacht op wifi of een netwerkkabel, zoals in Obtainium.</string>
     <string name="settings_charging_installs">Alleen installeren tijdens het opladen</string>
-    <string name="settings_charging_installs_effect">Controles draaien ook op de batterij. Een update die zichzelf zou installeren, wacht tot het apparaat oplaadt.</string>
     <string name="engine_unreadable_app">De opgeslagen app %1$s kon niet worden gelezen, dus hij is weggelaten uit de lijst. Er is niets verwijderd: een nieuwere versie van Tern kan hem misschien lezen.</string>
     <string name="settings_pin_certificates">De certificaten van de codeplatforms vastzetten</string>
     <string name="settings_pin_certificates_effect">GitHub, GitLab en Codeberg moeten een certificaat tonen van de certificeringsinstantie waarvan bekend is dat elk van hen die gebruikt, zoals in Obtainium. Een certificaat dat een andere instantie ertoe is gebracht uit te geven, wordt dan geweigerd. Als een codeplatform van instantie verandert, mislukken controles daar totdat dit is uitgezet.</string>

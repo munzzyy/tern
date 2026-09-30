@@ -77,7 +77,7 @@ internal class Installs(private val e: RealEngine) {
         val self = e.stored[appId]?.config?.let(e::isSelf) == true
         val job = e.scope.launch {
             if (self) untilOthersDone(appId)
-            run(appId, releaseId, assetUrl)
+            run(appId, releaseId, assetUrl, picked = userStarted && releaseId != null)
         }
         jobs[appId] = job
         job.invokeOnCompletion {
@@ -145,22 +145,25 @@ internal class Installs(private val e: RealEngine) {
         return false
     }
 
-    /** Returns the session handed to the installer, or null when the pipeline stopped before that. */
-    suspend fun run(appId: String, releaseId: String?, assetUrl: String?): Int? = withContext(Dispatchers.IO) {
+    /**
+     * Returns the session handed to the installer, or null when the pipeline stopped before that.
+     * [picked] is a release the person chose by hand, the only install that may go to an older version.
+     */
+    suspend fun run(appId: String, releaseId: String?, assetUrl: String?, picked: Boolean = false): Int? = withContext(Dispatchers.IO) {
         e.ready()
         if (!busy.add(appId)) return@withContext null
         val staging = File(e.staging, e.downloader.folder(appId).name)
         try {
             // A source whose file addresses do not last is asked again first, unless a particular file was picked.
             if (releaseId == null && assetUrl == null && e.stored[appId]?.config?.refreshFirst == true) e.checks.run(listOf(appId), CheckCause.INSTALL)
-            pipeline(appId, releaseId, assetUrl, staging)
+            pipeline(appId, releaseId, assetUrl, staging, picked)
         } finally {
             staging.deleteRecursively()
             busy.remove(appId)
         }
     }
 
-    private suspend fun pipeline(appId: String, releaseId: String?, assetUrl: String?, staging: File): Int? {
+    private suspend fun pipeline(appId: String, releaseId: String?, assetUrl: String?, staging: File, picked: Boolean): Int? {
         val stored = e.stored[appId] ?: return null
         val waiting = stored.state.pending
         if (waiting != null && waiting.sessionId in e.installer.liveSessionIds()) {
@@ -219,7 +222,8 @@ internal class Installs(private val e: RealEngine) {
                 device = e.device.profile,
                 staging = staging,
                 builtInPin = e.builtIn.hold(config),
-                allowDowngrade = e.settings.value.allowDowngrades && e.canDowngrade(),
+                allowDowngrade = allowsDowngrade(picked, e.settings.value.allowDowngrades, e::canDowngrade),
+                claimedVersionCode = chosenRelease.versionCode,
                 installsInside = { name -> AssetPicker.installsInside(config.assets, name) },
                 parts = files.drop(1).zip(downloads.drop(1)) { file, got -> FetchedPart(file.name, got.file) },
                 unpacksObb = e.installer.placesObb,
@@ -227,7 +231,10 @@ internal class Installs(private val e: RealEngine) {
             val pass = runInterruptible { e.gate.check(request) }
             val facts = pass.facts.copy(checksumMatchedFrom = expected?.second, fileSha256 = download.sha256)
             e.inspector.remember(chosenAsset, chosenRelease.id, facts)
-            e.event(appId, EventKind.VERIFIED, e.texts.eventVerified(facts.packageName, facts.versionCode, facts.signers.firstOrNull()?.take(16) ?: "?"))
+            val verified = e.texts.eventVerified(facts.packageName, facts.versionCode, facts.signers.firstOrNull()?.take(16) ?: "?")
+            // Installing through another installer than the one chosen is never silent.
+            val fellBack = e.installers.fellBack()?.let { " " + e.texts.installerFellBack(it) }.orEmpty()
+            e.event(appId, EventKind.VERIFIED, verified + fellBack)
             val update = e.readInstalled(facts.packageName) != null
             updating[appId] = update
             if (!update) handToVerifier(appId, pass.apks.first(), facts.packageName)
@@ -281,7 +288,8 @@ internal class Installs(private val e: RealEngine) {
      */
     private suspend fun handToVerifier(appId: String, apk: File, packageName: String) {
         val send = { pkg: String -> Intent(Intent.ACTION_SEND).setPackage(pkg).setType(APK_MIME) }
-        val verifier = VerifiedApps.first { send(it).resolveActivity(e.context.packageManager) != null }
+        val pm = e.context.packageManager
+        val verifier = VerifiedApps.first({ VerifiedApps.signers(pm, it) }) { send(it).resolveActivity(pm) != null }
         if (!VerifiedApps.handsOver(e.settings.value.shareToVerifier, firstInstall = true, there = appId in e.userTransfers && inForeground(), verifier = verifier)) return
         val copy = runInterruptible {
             val folder = File(e.context.cacheDir, "${OtherAppInstaller.FOLDER}/$VERIFY_FOLDER").apply {
@@ -348,7 +356,7 @@ internal class Installs(private val e: RealEngine) {
     }
 
     private fun expectedChecksum(config: AppConfig, release: Release, asset: Asset): Pair<String, String>? {
-        asset.sha256?.let { sha -> return normalized(sha) to e.evaluator.digestLabel(config.source.type) }
+        asset.sha256?.let { sha -> return normalized(sha) to e.evaluator.digestLabel(config.source) }
         var fetched: Asset? = null
         val sha = try {
             Checksums.expectedFor(release, asset) { sums ->
@@ -573,15 +581,26 @@ internal class Installs(private val e: RealEngine) {
      * Checks [only] or every app the background looks at, and installs what may install by itself.
      * With [installsNow] false such updates wait, and the run says so. [cause] is what the log says started it.
      */
-    suspend fun runScheduled(settings: Settings, installsNow: Boolean = true, only: Set<String>? = null, cause: CheckCause = CheckCause.SCHEDULE): ScheduledRun {
+    /** [check] false installs from what the last check found, as the waiting job does. */
+    suspend fun runScheduled(
+        settings: Settings,
+        installsNow: Boolean = true,
+        only: Set<String>? = null,
+        cause: CheckCause = CheckCause.SCHEDULE,
+        check: Boolean = true,
+    ): ScheduledRun {
         val targets = e.stored.values
             .filter { checkedInTheBackground(it.config) && e.inWholeListCheck(it.config) && (only == null || it.config.id in only) }
             .map { it.config.id }
-        if (settings.notifyChecking && targets.isNotEmpty()) e.notifier.checking(targets.size)
-        val checked = try {
-            e.checks.run(targets, cause)
-        } finally {
-            e.notifier.doneChecking()
+        val checked: List<CheckOutcome> = if (!check) {
+            emptyList()
+        } else {
+            if (settings.notifyChecking && targets.isNotEmpty()) e.notifier.checking(targets.size)
+            try {
+                e.checks.run(targets, cause)
+            } finally {
+                e.notifier.doneChecking()
+            }
         }
         val installed = ArrayList<Installed>()
         val failed = ArrayList<String>()
@@ -632,6 +651,13 @@ internal class Installs(private val e: RealEngine) {
         fun installsByItself(config: AppConfig, mayInstall: Boolean, evaluation: Evaluation?, busy: Boolean): Boolean =
             mayInstall && config.updates == UpdateMode.AUTO && !config.trackOnly && !busy && evaluation != null &&
                 evaluation.status == AppStatus.UPDATE_AVAILABLE && evaluation.certain && evaluation.problem == null
+
+        /**
+         * Whether an install may put an older version over a newer one: only a release the person
+         * [picked] by hand, with the setting on and something there that lets Android do it.
+         * Background installs, Update all and Install latest never go back.
+         */
+        fun allowsDowngrade(picked: Boolean, setting: Boolean, canDowngrade: () -> Boolean): Boolean = picked && setting && canDowngrade()
 
         /** Which apps the background check looks at: all but those the user set to be left alone. */
         fun checkedInTheBackground(config: AppConfig): Boolean = config.updates != UpdateMode.MANUAL

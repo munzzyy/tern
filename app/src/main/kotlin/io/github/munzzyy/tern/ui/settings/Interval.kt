@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -27,6 +28,7 @@ import androidx.compose.ui.semantics.stateDescription
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.ui.common.LocalNoTouch
 import io.github.munzzyy.tern.ui.common.focusLook
+import io.github.munzzyy.tern.ui.common.verticalKeysLeave
 import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.icons.Minus
 import io.github.munzzyy.tern.ui.icons.Plus
@@ -73,6 +75,9 @@ fun IntervalRow(minutes: Int, onChange: (Int) -> Unit) {
                 steps = (stops.size - 2).coerceAtLeast(0),
                 modifier = Modifier
                     .weight(1f)
+                    // The slider takes all four arrows; without touch the buttons step it, and up and down have to leave.
+                    .focusProperties { canFocus = !buttons }
+                    .verticalKeysLeave()
                     .focusLook(CircleShape)
                     .semantics {
                         contentDescription = title

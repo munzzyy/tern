@@ -9,6 +9,7 @@ import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -233,7 +234,7 @@ class RemoteDoorsTest {
             runBlocking { fake.saveSettings(fake.settings.value.copy(proxy = ProxyMode.ORBOT)) }
             compose.assertFocusOn(row, "the list opens with focus on its first app")
             compose.openTab("Settings")
-            compose.assertFocusOn(hasText("How often", substring = true), "Settings opens on its first setting")
+            compose.assertFocusOn(hasContentDescription("Check more often"), "Settings opens on its first setting, the button that steps how often")
             val last = hasText("Source code", substring = true)
             val stops = mutableListOf<String>()
             repeat(60) {

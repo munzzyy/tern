@@ -14,7 +14,24 @@ data class HttpRequest(
     val authorization: String? = null,
     /** False answers a redirect with the redirect itself, so a source can read where it points without going there. */
     val followRedirects: Boolean = true,
-)
+    /** Sent as the request body, with the Content-Type given in [headers]. Only for methods that take one, such as POST. */
+    val body: ByteArray? = null,
+) {
+    /** Without the body, which may be long and is not worth a log line. */
+    override fun toString(): String = "HttpRequest(method=$method, url=$url, headers=${headers.keys}, body=${body?.size ?: 0} bytes)"
+
+    override fun equals(other: Any?): Boolean = other is HttpRequest && other.url == url && other.method == method &&
+        other.headers == headers && other.authorization == authorization && other.followRedirects == followRedirects &&
+        (other.body contentEquals body)
+
+    override fun hashCode(): Int = listOf(url, method, headers, authorization, followRedirects).hashCode() * 31 + (body?.contentHashCode() ?: 0)
+
+    companion object {
+        /** A POST of [text], encoded as UTF-8, with [contentType]. */
+        fun post(url: String, text: String, contentType: String, headers: Map<String, String> = emptyMap()): HttpRequest =
+            HttpRequest(url, method = "POST", headers = headers + ("Content-Type" to contentType), body = text.toByteArray(Charsets.UTF_8))
+    }
+}
 
 class HttpResponse(
     val status: Int,

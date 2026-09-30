@@ -38,8 +38,19 @@ class UrlConnectionHttp(
         val originalHost = url.host.lowercase()
         var authorization = request.authorization
         var method = request.method
+        var body = request.body
         repeat(MAX_REDIRECTS + 1) {
             val connection = open(url, method, request.headers, authorization)
+            if (body != null) {
+                try {
+                    connection.doOutput = true
+                    connection.setFixedLengthStreamingMode(body.size)
+                    connection.outputStream.use { it.write(body) }
+                } catch (e: IOException) {
+                    connection.disconnect()
+                    throw silentProxy(e)
+                }
+            }
             val status = try {
                 connection.responseCode
             } catch (e: IOException) {
@@ -58,7 +69,11 @@ class UrlConnectionHttp(
                 url = checked(next.toString(), request.url)
                 if (isLocal(url.host) && !isLocal(originalHost)) throw LocalRedirectException(request.url)
                 if (!url.host.equals(originalHost, ignoreCase = true)) authorization = null
-                if (status == 303 && method != "HEAD") method = "GET"
+                // 307 and 308 repeat the request as it was; the others turn it into a GET without a body.
+                if (status in 301..303 && method != "HEAD" && method != "GET") {
+                    method = "GET"
+                    body = null
+                }
                 return@repeat
             }
             return respond(connection, status, url)

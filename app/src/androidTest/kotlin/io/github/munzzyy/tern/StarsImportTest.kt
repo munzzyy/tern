@@ -8,6 +8,8 @@ import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isToggleable
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
+import androidx.compose.ui.test.performSemanticsAction
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -40,7 +42,8 @@ class StarsImportTest {
 
     private fun tick(name: String) {
         compose.onNodeWithTag(IMPORT_LIST_TAG).performScrollToNode(hasText(name))
-        compose.onNodeWithText(name).performClick()
+        // A tap in the middle of a narrow row lands on its link, which asks before it opens; the row itself ticks.
+        compose.onNode(isToggleable() and hasText(name)).performSemanticsAction(SemanticsActions.OnClick)
     }
 
     @Test

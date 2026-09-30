@@ -201,9 +201,9 @@ internal class Interop(private val e: RealEngine) {
             e.event(config.id, EventKind.IMPORTED, e.texts.eventImported())
             fresh += config.id
             added++
-            if (imported.pinnedSigners.isNotEmpty()) withPins += config.name
-            if (hasFilters(config)) withFilters += config.name
-            if (imported.updates == UpdateMode.AUTO) askedForMore += config.name
+            if (imported.pinnedSigners.isNotEmpty()) withPins += config.shownName
+            if (hasFilters(config)) withFilters += config.shownName
+            if (imported.updates == UpdateMode.AUTO) askedForMore += config.shownName
         }
         e.publish()
         if (fresh.isNotEmpty()) e.scope.launch { e.checks.checkMany(fresh) }
@@ -215,6 +215,7 @@ internal class Interop(private val e: RealEngine) {
     private fun hasFilters(config: AppConfig): Boolean = listOf(
         config.releases.tagFilter, config.releases.titleFilter, config.releases.notesFilter,
         config.releases.versionExtract, config.assets.include, config.assets.exclude,
+        config.releases.versionFilter, config.assets.innerFilter,
     ).any { !it.isNullOrBlank() }
 
     suspend fun exportTo(uri: Uri, format: ExportFormat = ExportFormat.TERN): Int = withContext(Dispatchers.IO) {

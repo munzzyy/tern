@@ -24,10 +24,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
+import io.github.munzzyy.tern.core.engine.ReleaseSelector
 import io.github.munzzyy.tern.core.model.AppConfig
+import io.github.munzzyy.tern.core.model.ReleaseOrder
 import io.github.munzzyy.tern.core.model.UpdateMode
+import io.github.munzzyy.tern.core.model.VersionFrom
 import io.github.munzzyy.tern.engine.AppRow
+import io.github.munzzyy.tern.engine.InstallerMode
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.LocalOnline
 import io.github.munzzyy.tern.ui.apps.rememberRemove
@@ -48,6 +53,7 @@ import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.text.breakableFingerprint
 import io.github.munzzyy.tern.ui.text.canPickInstall
 import io.github.munzzyy.tern.ui.text.formatFingerprint
+import io.github.munzzyy.tern.ui.text.isolate
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.fingerprint
 
@@ -56,8 +62,56 @@ private val MIN_AGE_CHOICES = listOf(0, 1, 3, 7, 14, 30)
 fun LazyListScope.settings(vm: DetailViewModel, row: AppRow, onRemoved: () -> Unit) {
     item(key = "s-files") { FilesGroup(vm, row) }
     item(key = "s-updates") { UpdatesGroup(vm, row.config) }
+    item(key = "s-name") { NameGroup(vm, row.config) }
     item(key = "s-advanced") { AdvancedGroup(vm, row.config) }
     item(key = "s-remove") { RemoveGroup(row, onRemoved) }
+}
+
+@Composable
+fun versionFromLabel(from: VersionFrom): String = stringResource(
+    when (from) {
+        VersionFrom.TAG -> R.string.version_from_tag
+        VersionFrom.TITLE -> R.string.version_from_title
+        VersionFrom.DATE -> R.string.version_from_date
+    },
+)
+
+@Composable
+fun orderLabel(order: ReleaseOrder): String = stringResource(
+    when (order) {
+        ReleaseOrder.VERSION -> R.string.order_version
+        ReleaseOrder.DATE -> R.string.order_date
+        ReleaseOrder.SOURCE -> R.string.order_source
+        ReleaseOrder.NAME -> R.string.order_name
+    },
+)
+
+/** The name and author the person gives the app, in place of what the source says. */
+@Composable
+private fun NameGroup(vm: DetailViewModel, config: AppConfig) {
+    val draft = vm.draftFor(config)
+    DetailCard(stringResource(R.string.group_name)) {
+        Padded {
+            OutlinedTextField(
+                value = draft.customName,
+                onValueChange = { v -> vm.editDraft(config) { it.copy(customName = v.take(MAX_SHOWN_NAME)) } },
+                label = { Text(stringResource(R.string.setting_custom_name)) },
+                placeholder = { Text(config.name) },
+                supportingText = { Text(stringResource(R.string.setting_custom_name_help)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth().textFieldKeys(),
+            )
+            OutlinedTextField(
+                value = draft.customAuthor,
+                onValueChange = { v -> vm.editDraft(config) { it.copy(customAuthor = v.take(MAX_SHOWN_NAME)) } },
+                label = { Text(stringResource(R.string.setting_custom_author)) },
+                placeholder = config.author?.let { author -> { Text(author) } },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth().textFieldKeys(),
+            )
+            SaveDraft(vm, config)
+        }
+    }
 }
 
 @Composable
@@ -115,6 +169,42 @@ private fun UpdatesGroup(vm: DetailViewModel, config: AppConfig) {
             summary = stringResource(R.string.setting_min_age_effect),
             onSelect = { days -> save { it.copy(releases = it.releases.copy(minAgeDays = days)) } },
         )
+        ChoiceRow(
+            title = stringResource(R.string.setting_stay_behind),
+            options = (0..ReleaseSelector.MAX_STAY_BEHIND).toList(),
+            selected = config.releases.stayBehind,
+            label = { if (it == 0) stringResource(R.string.stay_behind_none) else pluralStringResource(R.plurals.stay_behind_releases, it, it) },
+            summary = stringResource(R.string.setting_stay_behind_effect),
+            onSelect = { n -> save { it.copy(releases = it.releases.copy(stayBehind = n)) } },
+        )
+        config.releases.skippedReleaseId?.let { skipped ->
+            ActionRow(
+                title = stringResource(R.string.setting_unskip),
+                summary = stringResource(R.string.setting_unskip_effect, isolate(skipped)),
+                onClick = { save { it.copy(releases = it.releases.copy(skippedReleaseId = null)) } },
+            )
+        }
+        SwitchRow(
+            title = stringResource(R.string.setting_muted),
+            summary = stringResource(R.string.setting_muted_effect),
+            checked = config.muted,
+            onChange = { on -> save { it.copy(muted = on) } },
+        )
+        SwitchRow(
+            title = stringResource(R.string.setting_refresh_first),
+            summary = stringResource(R.string.setting_refresh_first_effect),
+            checked = config.refreshFirst,
+            onChange = { on -> save { it.copy(refreshFirst = on) } },
+        )
+        val installer = LocalEngine.current.settings.collectAsStateWithLifecycle().value.installer
+        if (installer == InstallerMode.SHIZUKU || installer == InstallerMode.ROOT || config.playInstaller) {
+            SwitchRow(
+                title = stringResource(R.string.setting_play_installer),
+                summary = stringResource(R.string.setting_play_installer_effect),
+                checked = config.playInstaller,
+                onChange = { on -> save { it.copy(playInstaller = on) } },
+            )
+        }
     }
 }
 
@@ -168,12 +258,23 @@ private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
             checked = config.assets.matchDevice,
             onChange = { on -> save { it.copy(assets = it.assets.copy(matchDevice = on)) } },
         )
+        SwitchRow(
+            title = stringResource(R.string.setting_archives),
+            summary = stringResource(R.string.setting_archives_effect),
+            checked = config.assets.archives,
+            onChange = { on -> save { it.copy(assets = it.assets.copy(archives = on)) } },
+        )
         Padded {
             PatternField(R.string.setting_include, R.string.setting_include_help, draft.include, "include" in invalid) { v ->
                 vm.editDraft(config) { it.copy(include = v) }
             }
             PatternField(R.string.setting_exclude, R.string.setting_exclude_help, draft.exclude, "exclude" in invalid) { v ->
                 vm.editDraft(config) { it.copy(exclude = v) }
+            }
+            if (config.assets.archives || draft.innerFilter.isNotEmpty()) {
+                PatternField(R.string.setting_inner_filter, R.string.setting_inner_filter_help, draft.innerFilter, "innerFilter" in invalid) { v ->
+                    vm.editDraft(config) { it.copy(innerFilter = v) }
+                }
             }
             SaveDraft(vm, config)
         }
@@ -233,8 +334,39 @@ private fun AdvancedGroup(vm: DetailViewModel, config: AppConfig) {
             PatternField(R.string.setting_version_pattern, R.string.setting_version_pattern_help, draft.version, "version" in invalid) { v ->
                 vm.editDraft(config) { it.copy(version = v) }
             }
+            if (draft.version.isNotBlank() || draft.matchGroup.isNotEmpty()) {
+                OutlinedTextField(
+                    value = draft.matchGroup,
+                    onValueChange = { v -> vm.editDraft(config) { it.copy(matchGroup = v.take(40)) } },
+                    label = { Text(stringResource(R.string.setting_match_group)) },
+                    supportingText = {
+                        Text(stringResource(if ("matchGroup" in invalid) R.string.setting_match_group_invalid else R.string.setting_match_group_help))
+                    },
+                    isError = "matchGroup" in invalid,
+                    singleLine = true,
+                    textStyle = MaterialTheme.typography.bodyLarge.fingerprint(),
+                    modifier = Modifier.fillMaxWidth().textFieldKeys(),
+                )
+            }
+            PatternField(R.string.setting_version_filter, R.string.setting_version_filter_help, draft.versionFilter, "versionFilter" in invalid) { v ->
+                vm.editDraft(config) { it.copy(versionFilter = v) }
+            }
             SaveDraft(vm, config)
         }
+        ChoiceRow(
+            title = stringResource(R.string.setting_version_from),
+            options = VersionFrom.entries,
+            selected = config.releases.versionFrom,
+            label = { versionFromLabel(it) },
+            onSelect = { from -> save { it.copy(releases = it.releases.copy(versionFrom = from)) } },
+        )
+        ChoiceRow(
+            title = stringResource(R.string.setting_order),
+            options = ReleaseOrder.entries,
+            selected = config.releases.order,
+            label = { orderLabel(it) },
+            onSelect = { order -> save { it.copy(releases = it.releases.copy(order = order)) } },
+        )
         SwitchRow(
             title = stringResource(R.string.setting_fallback),
             summary = stringResource(R.string.setting_fallback_effect),

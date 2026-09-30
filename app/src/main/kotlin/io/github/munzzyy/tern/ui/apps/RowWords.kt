@@ -48,7 +48,7 @@ fun progressText(progress: Progress): String? {
 @Composable
 fun rowDescription(row: AppRow): String {
     val online = LocalOnline.current
-    val parts = mutableListOf(row.config.name)
+    val parts = mutableListOf(row.config.shownName)
     if (row.config.favorite) parts += stringResource(R.string.state_favorite)
     parts += stringResource(statusLabel(row, online).text)
     versionChange(row)?.let { parts += spokenVersion(it) }

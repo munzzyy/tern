@@ -194,6 +194,8 @@ class Evaluator(
     private fun noCandidate(reasons: List<Rejection>, state: AppState): Problem = when {
         reasons.isNotEmpty() && reasons.all { it == Rejection.PRERELEASE } -> Problem(ProblemKind.NO_RELEASES, texts.onlyPrereleases())
         reasons.isNotEmpty() && reasons.all { it == Rejection.WRONG_PACKAGE } -> Problem(ProblemKind.PACKAGE_MISMATCH, texts.onlyOtherPackage())
+        reasons.isNotEmpty() && reasons.all { it == Rejection.VERSION_FILTER } -> Problem(ProblemKind.NO_RELEASES, texts.onlyFilteredVersions())
+        reasons.isNotEmpty() && reasons.all { it == Rejection.STAY_BEHIND || it == Rejection.VERSION_FILTER } -> Problem(ProblemKind.NO_RELEASES, texts.stayingBehind())
         Rejection.NO_USABLE_FILE in reasons -> Problem(ProblemKind.NO_FILE_FOR_DEVICE, texts.noFileForDevice(null))
         state.checkProblem != null -> state.checkProblem
         else -> Problem(ProblemKind.NO_RELEASES, texts.noReleasePasses())
@@ -218,6 +220,7 @@ class Evaluator(
         fun filtersKey(config: AppConfig): String = listOf(
             config.releases.tagFilter, config.releases.titleFilter, config.releases.notesFilter,
             config.releases.versionExtract, config.assets.include, config.assets.exclude,
+            config.releases.versionFilter, config.releases.matchGroup, config.assets.innerFilter,
         ).joinToString("\u0000") { it.orEmpty() }
 
         /**

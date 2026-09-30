@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="group_name">Name and author</string>
+    <string name="setting_custom_name">Name</string>
+    <string name="setting_custom_name_help">Shown instead of the one the source gives. Empty keeps the source\'s.</string>
+    <string name="setting_custom_author">Author</string>
+    <string name="setting_muted">Mute this app</string>
+    <string name="setting_muted_effect">No notification when it has an update. It is still checked and shown in the list.</string>
+    <string name="setting_refresh_first">Check again before downloading</string>
+    <string name="setting_refresh_first_effect">For sources whose file addresses do not last.</string>
+    <string name="setting_play_installer">Name Google Play as its installer</string>
+    <string name="setting_play_installer_effect">Only with Shizuku or root. Some apps need it to work.</string>
+    <string name="setting_stay_behind">Stay behind the newest</string>
+    <string name="setting_stay_behind_effect">Offer a release only once newer ones have come out after it.</string>
+    <string name="stay_behind_none">No</string>
+    <plurals name="stay_behind_releases">
+        <item quantity="one">%d release behind</item>
+        <item quantity="other">%d releases behind</item>
+    </plurals>
+    <string name="setting_unskip">Offer the skipped version again</string>
+    <string name="setting_unskip_effect">You skipped %1$s.</string>
+    <string name="setting_version_from">Read the version from</string>
+    <string name="version_from_tag">The tag</string>
+    <string name="version_from_title">The release title</string>
+    <string name="version_from_date">The release date</string>
+    <string name="setting_order">Which release is newest</string>
+    <string name="order_version">Highest version</string>
+    <string name="order_date">Latest date</string>
+    <string name="order_source">As the source lists them</string>
+    <string name="order_name">By name, numbers as numbers</string>
+    <string name="setting_version_filter">Filter on the version</string>
+    <string name="setting_version_filter_help">Releases whose version does not match are passed over.</string>
+    <string name="setting_match_group">Part of the match to use</string>
+    <string name="setting_match_group_help">A group number, such as 1, or a template such as $1.$2. Empty takes the first group.</string>
+    <string name="setting_match_group_invalid">A group number or a template of groups, such as $1.$2.</string>
+    <string name="setting_archives">Look inside archives</string>
+    <string name="setting_archives_effect">Zip, tar and tar.gz files that hold the app are offered too, below a plain APK.</string>
+    <string name="setting_inner_filter">Filter for files inside archives</string>
+    <string name="setting_inner_filter_help">Only the files inside whose names match are installed.</string>
+    <string name="engine_only_filtered_versions">No release has a version that the version filter lets through.</string>
+    <string name="engine_staying_behind">Staying behind the newest: no release is old enough yet.</string>
+    <string name="carried_custom_name">Named %1$s instead of what the source says</string>
+    <string name="carried_custom_author">By %1$s instead of what the source says</string>
+    <string name="carried_version_filter">Versions must match %1$s</string>
+    <string name="carried_match_group">Takes %1$s of the version pattern</string>
+    <string name="carried_inner_filter">Files inside archives must match %1$s</string>
+    <string name="carried_archives">Looks inside archives</string>
+    <plurals name="carried_stay_behind">
+        <item quantity="one">Stays %d release behind</item>
+        <item quantity="other">Stays %d releases behind</item>
+    </plurals>
+    <string name="carried_version_from">Reads the version from: %1$s</string>
+    <string name="carried_order">Newest release: %1$s</string>
+    <string name="carried_muted">Muted</string>
+    <string name="carried_play_installer">Names Google Play as its installer</string>
+    <string name="carried_refresh_first">Checks again before downloading</string>
+</resources>

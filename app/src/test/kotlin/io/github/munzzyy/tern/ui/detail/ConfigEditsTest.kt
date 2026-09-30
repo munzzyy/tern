@@ -36,6 +36,28 @@ class ConfigEditsTest {
     }
 
     @Test
+    fun aMatchGroupIsANumberOrATemplateOfGroups() {
+        assertTrue(isValidMatchGroup(""))
+        assertTrue(isValidMatchGroup("2"))
+        assertTrue(isValidMatchGroup("$1.$2"))
+        assertFalse(isValidMatchGroup("first"))
+        assertEquals(setOf("matchGroup", "versionFilter"), PatternDraft(matchGroup = "x", versionFilter = "(").invalid)
+    }
+
+    @Test
+    fun theNewFieldsGoIntoTheAppAndBlankOnesStayUnset() {
+        val config = AppConfig("id", SourceSpec("github", "https://github.com/example/app"), "App")
+        val saved = PatternDraft.of(config).copy(customName = "  Mine ", customAuthor = " ", matchGroup = "1", versionFilter = "^2", innerFilter = "arm").applyTo(config)
+        assertEquals("Mine", saved.customName)
+        assertNull(saved.customAuthor)
+        assertEquals("Mine", saved.shownName)
+        assertEquals("1", saved.releases.matchGroup)
+        assertEquals("^2", saved.releases.versionFilter)
+        assertEquals("arm", saved.assets.innerFilter)
+        assertEquals(PatternDraft.of(saved), PatternDraft.of(saved.copy()))
+    }
+
+    @Test
     fun categoriesAreTrimmedAndCapped() {
         assertEquals("Maps", cleanCategory("  Maps "))
         assertEquals(40, cleanCategory("x".repeat(100))?.length)

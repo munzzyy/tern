@@ -35,6 +35,8 @@ class Texts(context: Context) : ImportTexts {
 
     fun checksumMismatch() = s(R.string.engine_checksum_mismatch)
     fun archiveCompressionUnsupported() = s(R.string.engine_archive_compression_unsupported)
+    fun onlyFilteredVersions() = s(R.string.engine_only_filtered_versions)
+    fun stayingBehind() = s(R.string.engine_staying_behind)
     fun innerFilterMatchesNothing() = s(R.string.engine_inner_filter_nothing)
     fun notAnApk(detail: String?) = s(R.string.engine_not_an_apk, detail.orEmpty().take(200))
     fun archiveHasNoApk() = s(R.string.engine_archive_no_apk)

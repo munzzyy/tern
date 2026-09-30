@@ -15,7 +15,9 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.ui.common.TrustLine
+import io.github.munzzyy.tern.ui.detail.orderLabel
 import io.github.munzzyy.tern.ui.detail.updateModeLabel
+import io.github.munzzyy.tern.ui.detail.versionFromLabel
 import io.github.munzzyy.tern.ui.text.Trust
 import io.github.munzzyy.tern.ui.text.breakableFingerprint
 import io.github.munzzyy.tern.ui.text.formatFingerprint
@@ -72,4 +74,16 @@ private fun sentence(s: CarriedSetting): String = when (s) {
     is CarriedSetting.FallBack -> stringResource(if (s.on) R.string.carried_fallback_on else R.string.carried_fallback_off)
     is CarriedSetting.TrackOnly -> stringResource(if (s.on) R.string.carried_track_on else R.string.carried_track_off)
     is CarriedSetting.Pin -> formatFingerprint(s.sha256)
+    is CarriedSetting.CustomName -> stringResource(R.string.carried_custom_name, isolate(s.name))
+    is CarriedSetting.CustomAuthor -> stringResource(R.string.carried_custom_author, isolate(s.author))
+    is CarriedSetting.VersionFilter -> stringResource(R.string.carried_version_filter, pattern(s.pattern))
+    is CarriedSetting.MatchGroup -> stringResource(R.string.carried_match_group, pattern(s.group))
+    is CarriedSetting.InnerFilter -> stringResource(R.string.carried_inner_filter, pattern(s.pattern))
+    CarriedSetting.Archives -> stringResource(R.string.carried_archives)
+    is CarriedSetting.StayBehind -> pluralStringResource(R.plurals.carried_stay_behind, s.releases, s.releases)
+    is CarriedSetting.ReadVersionFrom -> stringResource(R.string.carried_version_from, versionFromLabel(s.from))
+    is CarriedSetting.Order -> stringResource(R.string.carried_order, orderLabel(s.order))
+    CarriedSetting.Muted -> stringResource(R.string.carried_muted)
+    CarriedSetting.PlayInstaller -> stringResource(R.string.carried_play_installer)
+    CarriedSetting.RefreshFirst -> stringResource(R.string.carried_refresh_first)
 }

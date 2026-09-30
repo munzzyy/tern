@@ -215,7 +215,7 @@ private fun RowText(row: AppRow, highlighted: Boolean, large: Boolean, modifier:
     Column(verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2), modifier = modifier) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
             Text(
-                row.config.name,
+                row.config.shownName,
                 style = MaterialTheme.typography.titleMedium.heavier(),
                 color = if (highlighted) scheme.onSecondaryContainer else scheme.onSurface,
                 maxLines = if (large) 3 else 2,

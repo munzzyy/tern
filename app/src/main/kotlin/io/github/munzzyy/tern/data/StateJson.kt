@@ -116,11 +116,12 @@ object StateJson {
         "publishedAtMs" to r.publishedAtMs,
         "prerelease" to r.prerelease,
         "pageUrl" to r.pageUrl,
+        "latest" to r.latest,
         "assets" to JsonArray(
             r.assets.map { a ->
                 Json.obj(
                     "name" to a.name, "url" to a.url, "size" to a.size, "sha256" to a.sha256,
-                    "kind" to a.kind.name, "needsAuth" to a.needsAuth, "signers" to a.signers,
+                    "kind" to a.kind.name, "needsAuth" to a.needsAuth, "signers" to a.signers, "holdsApps" to a.holdsApps,
                 )
             },
         ),
@@ -136,6 +137,7 @@ object StateJson {
         publishedAtMs = obj.long("publishedAtMs"),
         prerelease = obj.bool("prerelease") ?: false,
         pageUrl = obj.string("pageUrl"),
+        latest = obj.bool("latest") ?: false,
         assets = obj.array("assets")?.objects().orEmpty().mapNotNull { a ->
             val name = a.string("name") ?: return@mapNotNull null
             Asset(
@@ -146,6 +148,7 @@ object StateJson {
                 kind = enumOr(a.string("kind"), Asset.kindOf(name)),
                 needsAuth = a.bool("needsAuth") ?: false,
                 signers = a.array("signers")?.strings().orEmpty(),
+                holdsApps = a.bool("holdsApps") ?: false,
             )
         },
     )

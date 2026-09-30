@@ -92,7 +92,7 @@ fun AppIcon(row: AppRow, size: Dp = LocalLook.current.iconList, modifier: Modifi
     if (image != null) {
         Image(image.asImageBitmap(), contentDescription = null, modifier = shaped)
     } else {
-        LetterAvatar(row.id, row.config.name, size, shaped)
+        LetterAvatar(row.id, row.config.shownName, size, shaped)
     }
 }
 

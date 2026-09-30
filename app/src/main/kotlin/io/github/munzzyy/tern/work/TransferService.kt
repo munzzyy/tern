@@ -29,7 +29,7 @@ class TransferService : Service() {
         if (watcher?.isActive == true) return START_NOT_STICKY
         watcher = engine.scope.launch {
             engine.transfers.takeWhile { it.isNotEmpty() }.collect { transfers ->
-                val names = transfers.keys.mapNotNull { id -> engine.apps.value.firstOrNull { it.id == id }?.config?.name }
+                val names = transfers.keys.mapNotNull { id -> engine.apps.value.firstOrNull { it.id == id }?.config?.shownName }
                 val done = transfers.values.sumOf { it.bytesDone }
                 val total = transfers.values.takeIf { v -> v.all { it.bytesTotal != null } }?.sumOf { it.bytesTotal ?: 0 }
                 notifier.show(Notifier.ID_TRANSFER, notifier.transfer(names, done, total))

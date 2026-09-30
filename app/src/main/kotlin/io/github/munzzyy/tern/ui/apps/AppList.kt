@@ -83,7 +83,7 @@ fun matches(row: AppRow, text: String): Boolean {
     val words = text.trim().split(WHITESPACE).filter { it.isNotEmpty() }
     if (words.isEmpty()) return true
     val c = row.config
-    val fields = listOfNotNull(c.name, c.author, c.packageName, row.installed?.packageName, c.source.url, sourceLabel(c.source.type))
+    val fields = listOfNotNull(c.shownName, c.name, c.shownAuthor, c.author, c.packageName, row.installed?.packageName, c.source.url, sourceLabel(c.source.type))
     return words.all { word -> fields.any { it.contains(word, ignoreCase = true) } }
 }
 
@@ -102,10 +102,10 @@ fun passes(row: AppRow, filter: AppFilter): Boolean = when (filter) {
 /** The order of [query.sort], with ties broken by name, and each direction a true reversal of the other. */
 fun order(query: ListQuery, locale: Locale = Locale.getDefault()): Comparator<AppRow> {
     val collator = Collator.getInstance(locale)
-    val byName = compareBy<AppRow, String>(collator) { it.config.name }
+    val byName = compareBy<AppRow, String>(collator) { it.config.shownName }
     val primary: Comparator<AppRow> = when (query.sort) {
         AppSort.NAME -> byName
-        AppSort.AUTHOR -> compareBy<AppRow, String>(collator) { it.config.author.orEmpty() }
+        AppSort.AUTHOR -> compareBy<AppRow, String>(collator) { it.config.shownAuthor.orEmpty() }
         AppSort.ADDED -> compareBy { it.addedAtMs ?: Long.MIN_VALUE }
         AppSort.RELEASED -> compareBy { it.latest?.publishedAtMs ?: Long.MIN_VALUE }
         // Newest first reads as the natural order here, so ascending means most recent first.

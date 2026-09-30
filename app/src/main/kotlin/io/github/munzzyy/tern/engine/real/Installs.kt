@@ -11,6 +11,7 @@ import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.net.HttpRequest
 import io.github.munzzyy.tern.core.net.Urls
+import io.github.munzzyy.tern.core.select.AssetPicker
 import io.github.munzzyy.tern.core.source.Download
 import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.core.verify.Checksums
@@ -117,6 +118,8 @@ internal class Installs(private val e: RealEngine) {
         if (!busy.add(appId)) return@withContext null
         val staging = File(e.staging, e.downloader.folder(appId).name)
         try {
+            // A source whose file addresses do not last is asked again first, unless a particular file was picked.
+            if (releaseId == null && assetUrl == null && e.stored[appId]?.config?.refreshFirst == true) e.checks.checkOne(appId)
             pipeline(appId, releaseId, assetUrl, staging)
         } finally {
             staging.deleteRecursively()
@@ -175,6 +178,7 @@ internal class Installs(private val e: RealEngine) {
                 staging = staging,
                 builtInPin = e.builtIn.hold(config),
                 allowDowngrade = e.settings.value.allowDowngrades && e.canDowngrade(),
+                installsInside = { name -> AssetPicker.installsInside(config.assets, name) },
             )
             val pass = runInterruptible { e.gate.check(request) }
             val facts = pass.facts.copy(checksumMatchedFrom = expected?.second, fileSha256 = download.sha256)
@@ -301,7 +305,7 @@ internal class Installs(private val e: RealEngine) {
                 val shown = confirm?.takeIf { it.action == CONFIRM_INSTALL || OtherAppInstaller.isHandoff(e.context, it) }
                 if (shown != null) {
                     confirmations[appId] = shown
-                    askUser(appId, stored.config.name, shown)
+                    askUser(appId, stored.config.shownName, shown)
                 }
                 if (!inForeground()) outcomes[appId]?.complete(status)
                 return@withContext
@@ -346,7 +350,7 @@ internal class Installs(private val e: RealEngine) {
         }
         e.event(appId, EventKind.INSTALLED, e.texts.eventInstalled(pending.version, now.app.versionCode))
         if (!e.settings.value.keepInstallers) e.downloader.discard(appId, Downloader.key(pending.releaseId, pending.assetUrl))
-        if (notify && e.settings.value.notifyInstalled) e.notifier.installed(listOfNotNull(e.stored[appId]?.config?.name))
+        if (notify && e.settings.value.notifyInstalled) e.notifier.installed(listOfNotNull(e.stored[appId]?.config?.shownName))
     }
 
     /** Nothing went wrong: the row goes back to what it was, and the file stays for the next try. */
@@ -455,18 +459,20 @@ internal class Installs(private val e: RealEngine) {
                 val session = run(id, null, null)
                 val status = if (session != null) awaitOutcome(id, INSTALL_WAIT_MS) else null
                 when (status) {
-                    PackageInstaller.STATUS_SUCCESS -> installed += config.name
+                    PackageInstaller.STATUS_SUCCESS -> installed += config.shownName
                     PackageInstaller.STATUS_PENDING_USER_ACTION -> Unit
-                    else -> failed += config.name
+                    else -> failed += config.shownName
                 }
             } finally {
                 batch -= id
             }
         }
-        val names = { ids: List<String> -> ids.mapNotNull { e.stored[it]?.config?.name } }
-        val named = { ids: List<String> -> ids.mapNotNull { id -> e.stored[id]?.config?.name?.let { id to it } } }
-        val fresh = checked.filter { it.newRelease && e.evaluations[it.id]?.status == AppStatus.UPDATE_AVAILABLE }.map { it.id }
-        val tracked = checked.filter { it.newRelease && e.evaluations[it.id]?.status == AppStatus.NEW_RELEASE }.map { it.id }
+        val names = { ids: List<String> -> ids.mapNotNull { e.stored[it]?.config?.shownName } }
+        val named = { ids: List<String> -> ids.mapNotNull { id -> e.stored[id]?.config?.shownName?.let { id to it } } }
+        // A muted app is still checked and shown; it only makes no sound.
+        val heard = checked.filter { it.newRelease && e.stored[it.id]?.config?.muted != true }
+        val fresh = heard.filter { e.evaluations[it.id]?.status == AppStatus.UPDATE_AVAILABLE }.map { it.id }
+        val tracked = heard.filter { e.evaluations[it.id]?.status == AppStatus.NEW_RELEASE }.map { it.id }
         if (settings.notifyUpdates) e.notifier.updates(named(fresh))
         if (settings.notifyTracked) e.notifier.tracked(named(tracked))
         if (settings.notifyInstalled) e.notifier.installed(installed)

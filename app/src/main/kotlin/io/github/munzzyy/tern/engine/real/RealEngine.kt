@@ -263,7 +263,7 @@ class RealEngine(
         val rows = stored.values.map(::row)
         _apps.value = rows.sortedWith(
             compareBy<AppRow> { if (it.status == AppStatus.UPDATE_AVAILABLE || it.status == AppStatus.NEW_RELEASE) 0 else 1 }
-                .thenBy { it.config.name.lowercase() }
+                .thenBy { it.config.shownName.lowercase() }
                 .thenBy { it.id },
         )
         _transfers.value = progress.filterKeys { it in userTransfers }
@@ -328,7 +328,7 @@ class RealEngine(
     }
 
     internal fun event(appId: String?, kind: EventKind, message: String) {
-        val name = appId?.let { stored[it]?.config?.name }
+        val name = appId?.let { stored[it]?.config?.shownName }
         store.addEvent(nowMs(), appId, name, kind, message)
         publishEvents()
     }

@@ -130,8 +130,8 @@ internal class Installers(private val e: RealEngine) {
 
     /** Google Play when the person asked for that, globally or for the app being installed; Tern otherwise. */
     private fun recordedInstaller(packageName: String): String {
-        val asked = e.settings.value.playInstaller
-        return if (asked) PLAY else e.context.packageName
+        val forApp = e.stored.values.any { it.config.playInstaller && e.packageOf(it.config) == packageName }
+        return if (e.settings.value.playInstaller || forApp) PLAY else e.context.packageName
     }
 
     private companion object {

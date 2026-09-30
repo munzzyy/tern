@@ -30,7 +30,7 @@ import io.github.munzzyy.tern.ui.theme.LocalLook
 fun linkNames(names: List<String>, rows: List<AppRow>, fits: (AppRow) -> Boolean): List<Pair<String, String?>> {
     val used = HashSet<String>()
     return names.map { name ->
-        val free = rows.filter { it.config.name == name && it.id !in used }
+        val free = rows.filter { it.config.shownName == name && it.id !in used }
         val row = free.firstOrNull(fits) ?: free.firstOrNull()
         row?.let { used += it.id }
         name to row?.id
@@ -40,6 +40,7 @@ fun linkNames(names: List<String>, rows: List<AppRow>, fits: (AppRow) -> Boolean
 private fun AppRow.hasFilters(): Boolean = listOf(
     config.releases.tagFilter, config.releases.titleFilter, config.releases.notesFilter,
     config.releases.versionExtract, config.assets.include, config.assets.exclude,
+    config.releases.versionFilter, config.assets.innerFilter,
 ).any { !it.isNullOrBlank() }
 
 /**

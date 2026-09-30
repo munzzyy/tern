@@ -18,10 +18,11 @@ import org.junit.Test
 class StateJsonTest {
     private val release = Release(
         id = "v2", version = "2.0", versionCode = 2, title = "Two", notes = "n", notesFormat = NotesFormat.HTML,
-        publishedAtMs = 10, prerelease = true, pageUrl = "https://example.org/r",
+        publishedAtMs = 10, prerelease = true, pageUrl = "https://example.org/r", latest = true,
         assets = listOf(
             Asset("app.apk", "https://example.org/app.apk", 5, "ab".repeat(32), needsAuth = true, signers = listOf("cd".repeat(32))),
             Asset("SHA256SUMS", "https://example.org/SHA256SUMS", kind = AssetKind.CHECKSUM),
+            Asset("build.zip", "https://example.org/build.zip", holdsApps = true),
         ),
     )
 

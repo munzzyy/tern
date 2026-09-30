@@ -244,7 +244,7 @@ private class Search(val text: String, val grab: Boolean, val onText: (String) -
 private fun WaitingBanner(waiting: List<AppRow>, onGone: () -> Unit, onConfirm: (AppRow) -> Unit) {
     val first = waiting.firstOrNull() ?: return
     val words = if (waiting.size == 1) {
-        stringResource(R.string.waiting_banner_one, first.config.name)
+        stringResource(R.string.waiting_banner_one, first.config.shownName)
     } else {
         pluralStringResource(R.plurals.waiting_banner_several, waiting.size, waiting.size)
     }

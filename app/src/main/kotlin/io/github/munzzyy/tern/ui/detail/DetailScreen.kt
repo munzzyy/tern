@@ -113,7 +113,7 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit, fo
 
     Scaffold(
         topBar = {
-            if (onBack != null) ScreenTop(if (headerGone) current?.config?.name.orEmpty() else "", onBack = onBack, oneLine = true)
+            if (onBack != null) ScreenTop(if (headerGone) current?.config?.shownName.orEmpty() else "", onBack = onBack, oneLine = true)
         },
         snackbarHost = { if (onBack != null) TernSnackbarHost() },
     ) { padding ->
@@ -206,8 +206,8 @@ private fun Header(row: AppRow, focus: Modifier) {
     var link by rememberSaveable { mutableStateOf<String?>(null) }
     val words: @Composable (Modifier) -> Unit = { place ->
         Column(place) {
-            Text(row.config.name, style = MaterialTheme.typography.headlineSmall, modifier = Modifier.semantics { heading() })
-            row.config.author?.let {
+            Text(row.config.shownName, style = MaterialTheme.typography.headlineSmall, modifier = Modifier.semantics { heading() })
+            row.config.shownAuthor?.let {
                 Text(stringResource(R.string.by_author, it), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             LinkText(sourceText(row.config.source), onClick = { link = row.config.source.url }, modifier = Modifier.focusLook())

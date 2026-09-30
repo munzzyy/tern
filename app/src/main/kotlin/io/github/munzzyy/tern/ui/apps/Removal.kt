@@ -79,7 +79,7 @@ fun rememberRemove(): (AppRow) -> Unit {
             actions.run {
                 removals.remove(
                     appId = row.id,
-                    offerUndo = { offerUndo(snackbar, resources.getString(R.string.removed_notice, row.config.name), resources.getString(R.string.removed_undo)) },
+                    offerUndo = { offerUndo(snackbar, resources.getString(R.string.removed_notice, row.config.shownName), resources.getString(R.string.removed_undo)) },
                     remove = { engine.remove(row.id) },
                 )
             }

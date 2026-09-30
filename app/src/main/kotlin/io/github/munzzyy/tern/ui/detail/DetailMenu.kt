@@ -70,7 +70,8 @@ fun DetailMenu(row: AppRow) {
     val shareTitle = stringResource(R.string.action_share)
     val noScreen = stringResource(R.string.action_failed)
     val page = row.latest?.pageUrl
-    val settingsLink = remember(row.config) { ConfigLink.web(row.config) }
+    val settingsLink = remember(row.config) { ConfigLink.tern(row.config) }
+    val obtainiumLink = remember(row.config) { ConfigLink.web(row.config) }
     val noLink = stringResource(R.string.share_link_none)
     Box {
         GlyphButton(Glyphs.More, stringResource(R.string.action_more), onClick = { open = true }, modifier = Modifier.testTag(DETAIL_MENU_TAG))
@@ -82,8 +83,9 @@ fun DetailMenu(row: AppRow) {
             if (page != null) item(R.string.action_release_page, true) { link = page }
             HorizontalDivider()
             item(R.string.action_share_address, true) { shareText(context, shareTitle, row.config.source.url) }
-            item(R.string.action_share_link, true) { shareText(context, shareTitle, ternLink(row.config.source.url)) }
+            item(R.string.action_share_link, true) { shareText(context, shareTitle, ConfigLink.ternAddress(row.config.source.url)) }
             item(R.string.action_share_config_link, true) { settingsLink?.let { shareText(context, shareTitle, it) } ?: actions.say(noLink) }
+            item(R.string.share_obtainium_link, true) { obtainiumLink?.let { shareText(context, shareTitle, it) } ?: actions.say(noLink) }
             item(R.string.action_share_export, true) { exporting = true }
             if (row.installed != null) {
                 HorizontalDivider()
@@ -106,9 +108,6 @@ fun DetailMenu(row: AppRow) {
         }
     }
 }
-
-/** The page of Tern's site that opens an address in Tern, or offers Tern to whoever does not have it yet. */
-fun ternLink(sourceUrl: String): String = "https://tern.munzzyy.dev/add/?url=" + Uri.encode(sourceUrl)
 
 private fun openAppInfo(context: android.content.Context, packageName: String): Boolean = try {
     context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))

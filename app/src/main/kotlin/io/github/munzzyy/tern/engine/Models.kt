@@ -43,6 +43,9 @@ enum class ProblemKind {
     INSTALL_FAILED,
     STORAGE,
     UNSUPPORTED,
+
+    /** The app comes from a third-party store while those are off, so nothing of it is asked for. */
+    STORES_OFF,
 }
 
 data class Problem(
@@ -91,6 +94,8 @@ data class Verification(
     val newPermissions: List<String>,
     /** SHA-256 of the file, lowercase hex: the publisher's digest before download, the measured hash after. */
     val fileSha256: String? = null,
+    /** The checksum is one a third-party store gives, which shows the file arrived as the store has it and says nothing of the developer. */
+    val checksumFromStore: Boolean = false,
 )
 
 enum class Phase { QUEUED, DOWNLOADING, VERIFYING, INSTALLING, WAITING_FOR_USER }
@@ -219,6 +224,9 @@ sealed interface Detection {
 
     /** [spec] is the source that was read, when Tern got as far as knowing it, so that its options can be set and it can be read again. */
     data class Failed(val problem: Problem, val spec: SourceSpec? = null) : Detection
+
+    /** The address belongs to the third-party store [type], and those are off. Nothing was asked of it. */
+    data class StoresOff(val type: String) : Detection
 }
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
@@ -404,6 +412,12 @@ data class Settings(
     val shareToVerifier: Boolean = false,
     /** The activity log keeps Tern's own warnings and errors too, and when each check starts and ends, with nothing secret in them. */
     val keepOwnMessages: Boolean = false,
+    /**
+     * APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, the Galaxy Store and vivo
+     * are read. Off, none of their hosts is asked: an address of theirs is not added, a search
+     * leaves them out, and their apps are paused. Only the person turns it on; no file or link does.
+     */
+    val thirdPartyStores: Boolean = false,
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */
@@ -438,6 +452,8 @@ data class ImportSummary(
     val settingsOffered: Boolean = false,
     /** What [Engine.finishImport] is given to do what the file only offered; null when it offered nothing. */
     val offer: String? = null,
+    /** Names of added apps from third-party stores, whose first install decides the certificate unless they are pinned. */
+    val fromStores: List<String> = emptyList(),
 )
 
 /** Where the colours come from. [WALLPAPER] needs Android 12 and falls back to [PALETTE] before that. */

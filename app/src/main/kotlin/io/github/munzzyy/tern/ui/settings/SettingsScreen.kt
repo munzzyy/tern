@@ -701,8 +701,17 @@ private fun NetworkSection(s: Settings, update: Update, onGetOrbot: () -> Unit, 
             checked = s.pinCertificates,
             onChange = { v -> update { it.copy(pinCertificates = v) } },
         )
+        SwitchRow(
+            title = stringResource(R.string.stores_setting),
+            summary = stringResource(R.string.stores_setting_effect),
+            checked = s.thirdPartyStores,
+            onChange = { v -> update { it.copy(thirdPartyStores = v) } },
+            modifier = Modifier.testTag(STORES_SETTING_TAG),
+        )
     }
 }
+
+const val STORES_SETTING_TAG = "settings_third_party_stores"
 
 /** What there is to say about each state of Orbot: the sentence, and the action when there is one. */
 data class OrbotWords(val sentence: Int, val action: Int?)

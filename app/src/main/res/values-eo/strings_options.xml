@@ -62,10 +62,6 @@
     <string name="option_workflow">Laborflua dosiero</string>
     <string name="option_workflow_help">Ekzemple build.yml.</string>
     <string name="option_branch">Branĉo</string>
-    <string name="option_device_model">Aparata modelo</string>
-    <string name="option_device_model_help">La Galaxy Store donas al ĉiu modelo sian propran konstruon, ekzemple SM-S948B.</string>
-    <string name="option_csc">Regiona kodo (CSC)</string>
-    <string name="option_csc_help">Tri literoj, ekzemple DBT.</string>
     <string name="option_link_filter">Filtrilo por elŝutaj ligiloj</string>
     <string name="option_link_filter_help">Nur kongruantaj ligiloj validas kiel elŝutoj.</string>
     <string name="option_page_order">Konservi la ordon de la paĝo</string>
@@ -76,7 +72,6 @@
     <string name="version_from_text">La teksto de la ligilo</string>
     <string name="version_from_page">La tuta paĝo</string>
     <string name="option_headers">Petaj kapoj</string>
-    <string name="option_headers_help">Po unu en linio, kiel Name: value. Neniam pasvorto aŭ kuketo.</string>
     <string name="option_pseudo">Kiam ne estas versio</string>
     <string name="pseudo_default">Distingi dosierojn kiel la servilo faras</string>
     <string name="pseudo_hash">Laŭ haketaĵo de la komenco de la dosiero</string>

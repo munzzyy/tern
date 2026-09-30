@@ -45,6 +45,14 @@ class IncomingLinksTest {
     }
 
     @Test
+    fun ternAppLinksFromTheAddPageReachTheAddScreenWhole() {
+        val link = "tern://app/%7B%22id%22%3A%22org.example.app%22%2C%22url%22%3A%22https%3A%2F%2Fgithub.com%2Fexample%2Fapp%22%7D"
+        assertEquals(link, fromLink(link))
+        assertEquals(link, incomingAddInput(ACTION_VIEW, link, null))
+        assertNull(fromLink("tern://app/"))
+    }
+
+    @Test
     fun ternLinkRefusesAnythingButHttps() {
         assertNull(fromLink("tern://add?url=http%3A%2F%2Fexample.org"))
         assertNull(fromLink("tern://add?url=javascript%3Aalert(1)"))

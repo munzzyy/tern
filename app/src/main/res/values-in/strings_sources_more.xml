@@ -18,8 +18,6 @@
     <string name="step_arch">Utamakan prosesor perangkat ini</string>
     <string name="step_add">Tambah halaman</string>
     <string name="step_remove">Hapus halaman ini</string>
-    <string name="option_file_version">Pakai nama file sebagai versi</string>
-    <string name="option_file_version_effect">Setiap file lalu dihitung sebagai rilis tersendiri.</string>
     <string name="github_proxy_title">GitHub melalui hubproxy</string>
     <string name="github_proxy_host">Host hubproxy</string>
     <string name="github_proxy_help">Nama host saja, misalnya gh-proxy.com. Tern terhubung ke sana melalui HTTPS.</string>

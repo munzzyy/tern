@@ -18,8 +18,6 @@
     <string name="step_arch">Prefereix el processador d\'aquest dispositiu</string>
     <string name="step_add">Afegeix una pàgina</string>
     <string name="step_remove">Suprimeix aquesta pàgina</string>
-    <string name="option_file_version">Usa el nom del fitxer com a versió</string>
-    <string name="option_file_version_effect">Aleshores cada fitxer compta com un llançament propi.</string>
     <string name="github_proxy_title">GitHub a través d\'un hubproxy</string>
     <string name="github_proxy_host">Amfitrió del hubproxy</string>
     <string name="github_proxy_help">Només un nom d\'amfitrió, com ara gh-proxy.com. Tern s\'hi connecta per HTTPS.</string>

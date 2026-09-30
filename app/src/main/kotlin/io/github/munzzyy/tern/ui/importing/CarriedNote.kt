@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.model.UpdateMode
+import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.ImportSummary
 import io.github.munzzyy.tern.ui.LocalEngine
@@ -57,7 +58,34 @@ fun CarriedNote(summary: ImportSummary, onOpenApp: (String) -> Unit) {
     if (summary.settingsTaken) TrustLine(Trust.NOTE, stringResource(R.string.import_settings_taken))
     summary.offer?.let { ImportOffer(summary, it, onOpenApp) }
     CarriedGroups(summary, onOpenApp)
+    FromStores(summary.fromStores, onOpenApp)
 }
+
+/**
+ * The imported apps that come from third-party stores, each linked to its page: what their first
+ * install decides, and while those stores are off, that the apps wait, with the switch that turns them on.
+ */
+@Composable
+private fun FromStores(names: List<String>, onOpenApp: (String) -> Unit) {
+    if (names.isEmpty()) return
+    val engine = LocalEngine.current
+    val actions = rememberActions()
+    val rows by engine.apps.collectAsStateWithLifecycle()
+    val settings by engine.settings.collectAsStateWithLifecycle()
+    val linked = remember(names, rows) { linkNames(names, rows) { it.config.source.type in SourceTypes.THIRD_PARTY_STORES } }
+    TrustLine(Trust.NOTE, stringResource(R.string.stores_import_from_stores))
+    if (!settings.thirdPartyStores) {
+        TrustLine(Trust.NOTE, stringResource(R.string.stores_import_paused))
+        TonalButton(
+            stringResource(R.string.stores_turn_on),
+            onClick = { actions.run { engine.saveSettings(engine.settings.value.copy(thirdPartyStores = true)) } },
+            modifier = Modifier.testTag(IMPORT_STORES_ON_TAG),
+        )
+    }
+    Group(stringResource(R.string.stores_import_names), linked, onOpenApp)
+}
+
+const val IMPORT_STORES_ON_TAG = "import_stores_on"
 
 const val REPLACE_TAG = "import_replace"
 const val TAKE_SETTINGS_TAG = "import_take_settings"

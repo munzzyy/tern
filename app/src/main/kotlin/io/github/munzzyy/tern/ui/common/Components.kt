@@ -132,6 +132,7 @@ private fun StatusLabel.glyph(): ImageVector = when (this) {
     StatusLabel.ERROR, StatusLabel.INSTALL_FAILED -> Glyphs.Failed
     StatusLabel.RATE_LIMITED, StatusLabel.WAITING -> Glyphs.Waiting
     StatusLabel.OFFLINE -> Glyphs.Offline
+    StatusLabel.PAUSED -> Glyphs.Waiting
     StatusLabel.CHECKING -> Glyphs.Busy
     StatusLabel.QUEUED -> Glyphs.Queued
     StatusLabel.DOWNLOADING -> Glyphs.Download

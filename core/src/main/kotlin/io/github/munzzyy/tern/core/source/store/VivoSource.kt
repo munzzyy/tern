@@ -36,6 +36,8 @@ class VivoSource : Source, Searchable {
 
     override val origin: String = "vivo App Store"
 
+    override val domains: Set<String> get() = setOf(FILE_HOST)
+
     override fun match(url: String): SourceSpec? {
         // The mobile site routes by hash, as in h5.appstore.vivo.com.cn/#/details?appId=123.
         val uri = Urls.parseHttps(url.replaceFirst("/#", "")) ?: return null

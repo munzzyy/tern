@@ -62,10 +62,6 @@
     <string name="option_workflow">Munkafolyamat-fájl</string>
     <string name="option_workflow_help">Például build.yml.</string>
     <string name="option_branch">Ág</string>
-    <string name="option_device_model">Eszközmodell</string>
-    <string name="option_device_model_help">A Galaxy Store minden modellnek saját változatot ad, például SM-S948B.</string>
-    <string name="option_csc">Régiókód (CSC)</string>
-    <string name="option_csc_help">Három betű, például DBT.</string>
     <string name="option_link_filter">Szűrő a letöltési linkekre</string>
     <string name="option_link_filter_help">Csak az egyező linkek számítanak letöltésnek.</string>
     <string name="option_page_order">Az oldal sorrendjének megtartása</string>
@@ -76,7 +72,6 @@
     <string name="version_from_text">A link szövege</string>
     <string name="version_from_page">Az egész oldal</string>
     <string name="option_headers">Kérésfejlécek</string>
-    <string name="option_headers_help">Soronként egy, Name: value formában. Soha ne legyen benne jelszó vagy süti.</string>
     <string name="option_pseudo">Ha nincs verzió</string>
     <string name="pseudo_default">Fájlok megkülönböztetése a szerver módján</string>
     <string name="pseudo_hash">A fájl elejének hash-e alapján</string>

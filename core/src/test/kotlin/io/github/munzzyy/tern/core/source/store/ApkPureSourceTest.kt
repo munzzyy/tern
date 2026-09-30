@@ -1,9 +1,7 @@
 package io.github.munzzyy.tern.core.source.store
 
-import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.AssetKind
 import io.github.munzzyy.tern.core.model.DeviceProfile
-import io.github.munzzyy.tern.core.model.NotesFormat
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.net.InMemoryValidatorStore
 import io.github.munzzyy.tern.core.source.CheckContext
@@ -25,9 +23,12 @@ import java.time.Instant
 class ApkPureSourceTest {
     private val source = ApkPureSource()
     private val page = "https://apkpure.com/example-app/org.example.app"
-    private val history = "https://tapi.pureapk.com/v3/get_app_his_version?package_name=org.example.app&hl=en"
+    private val versions = "$page/versions"
+    private val download = "$page/download/2.1.0"
 
     private fun spec() = source.match(page)!!
+
+    private fun site() = FakeHttp().resource(versions, "store/apkpure_versions.html").resource(download, "store/apkpure_download.html")
 
     private fun check(http: FakeHttp, device: DeviceProfile? = null): SourceListing =
         (source.check(spec(), CheckContext(http, InMemoryValidatorStore(), device = device)) as CheckResult.Listing).listing
@@ -46,7 +47,7 @@ class ApkPureSourceTest {
         assertEquals(page, source.match("apkpure.com/example-app/org.example.app/download")?.url)
         assertEquals(page, source.match("https://m.apkpure.com/de/example-app/org.example.app/versions")?.url)
         assertEquals(page, source.match("https://www.apkpure.com/example-app/org.example.app")?.url)
-        assertEquals("https://apkpure.net/example-app/org.example.app", source.match("https://apkpure.net/example-app/org.example.app")?.url)
+        assertEquals(page, source.match("https://apkpure.net/example-app/org.example.app")?.url)
         assertEquals("https://apkpure.com/xy/org.example.app", source.match("https://apkpure.com/xy/org.example.app/download")?.url)
     }
 
@@ -61,118 +62,84 @@ class ApkPureSourceTest {
     }
 
     @Test
-    fun readsEachVersionWithItsVariants() {
-        val http = FakeHttp().resource(history, "store/apkpure_history.json")
-        val listing = check(http)
+    fun readsEachVersionWithItsBuildsFromTheSite() {
+        val listing = check(site())
 
         assertEquals("Example App", listing.name)
         assertEquals("Example Labs", listing.author)
         assertEquals("org.example.app", listing.packageName)
-        assertEquals("An invented app for tests.", listing.description)
-        assertEquals(listOf("2.1.0", "2.0.0", "1.9.0", "1.8.0"), listing.releases.map { it.version })
+        assertEquals("An invented app for tests & nothing else.", listing.description)
+        assertEquals("https://image.winudf.com/v2/image1/ZXhhbXBsZQ/icon.png?w=160&fakeurl=1", listing.iconUrl)
+        assertEquals(listOf("2.1.0", "2.0.0", "1.9.0", "1.4.0"), listing.releases.map { it.version })
 
         val newest = listing.releases[0]
         assertEquals("2.1.0", newest.id)
         assertEquals(210L, newest.versionCode)
-        assertEquals("• Faster start.<br>• Fewer crashes.", newest.notes)
-        assertEquals(NotesFormat.HTML, newest.notesFormat)
-        assertEquals(Instant.parse("2026-09-28T05:00:31Z").toEpochMilli(), newest.publishedAtMs)
+        assertEquals(Instant.parse("2026-09-28T00:00:00Z").toEpochMilli(), newest.publishedAtMs)
         assertEquals(page, newest.pageUrl)
-        assertEquals(
-            listOf("org.example.app-210-arm64-v8a.xapk", "org.example.app-210-arm64-v8a,armeabi-v7a,x86,x86_64.apk"),
-            newest.assets.map { it.name },
-        )
-        val bundle = newest.assets[0]
-        assertEquals("https://data.winudf.com/XAPK/b3JnLmV4YW1wbGUuYXBwXzIxMF9hYQ", bundle.url)
-        assertEquals(AssetKind.BUNDLE, bundle.kind)
-        assertEquals(51200000L, bundle.size)
-        assertEquals("abcdef01".repeat(8), bundle.sha256)
-        assertEquals(AssetKind.APK, newest.assets[1].kind)
+        assertEquals(listOf("org.example.app-211-arm64-v8a.xapk", "org.example.app-210-armeabi-v7a.xapk"), newest.assets.map { it.name })
+        assertEquals("https://d.apkpure.com/b/XAPK/org.example.app?versionCode=211", newest.assets[0].url)
+        assertEquals(AssetKind.BUNDLE, newest.assets[0].kind)
+        assertNull("one size is given for several builds, so none is taken", newest.assets[0].size)
 
-        val headers = http.requestsTo(history).single().headers
-        assertEquals("projecta", headers["Ual-Access-Businessid"])
-        assertEquals("""{"device_info":{"os_ver":"35"}}""", headers["Ual-Access-ProjectA"])
-    }
-
-    @Test
-    fun aVersionWhoseVariantsCarryDifferentCodesTakesTheLowest() {
-        val listing = check(FakeHttp().resource(history, "store/apkpure_history.json"))
-        val older = listing.releases.first { it.version == "2.0.0" }
-        assertEquals(200L, older.versionCode)
-        assertEquals("First release with sync.", older.notes)
-        assertEquals(2, older.assets.size)
-    }
-
-    @Test
-    fun onAKnownDeviceVariantsForOtherProcessorsAreLeftOut() {
-        val http = FakeHttp().resource(history, "store/apkpure_history.json")
-        val listing = check(http, DeviceProfile(listOf("arm64-v8a"), sdk = 34, densityDpi = 420))
-
-        assertEquals(listOf("2.1.0", "2.0.0", "1.8.0"), listing.releases.map { it.version })
         val older = listing.releases[1]
-        assertEquals(listOf("org.example.app-201-arm64-v8a.xapk"), older.assets.map { it.name })
-        assertEquals(201L, older.versionCode)
-        assertEquals(listOf("org.example.app-180-universal.apk"), listing.releases[2].assets.map { it.name })
-        assertEquals("""{"device_info":{"os_ver":"34"}}""", http.requestsTo(history).single().headers["Ual-Access-ProjectA"])
+        assertEquals(listOf("org.example.app-200.apk"), older.assets.map { it.name })
+        assertEquals("https://d.apkpure.com/b/APK/org.example.app?versionCode=200", older.assets[0].url)
+        assertEquals(AssetKind.APK, older.assets[0].kind)
+        assertEquals(50000000L, older.assets[0].size)
     }
 
     @Test
-    fun aFileOnAnotherHostIsLeftOut() {
-        val listing = check(FakeHttp().resource(history, "store/apkpure_history.json"))
-        val addresses = listing.releases.flatMap { release -> release.assets.map { it.url } }
-        assertTrue(addresses.all { it.startsWith("https://data.winudf.com/") })
-        assertTrue(listing.releases[0].assets.none { it.name.contains("210-armeabi-v7a") })
+    fun aBuildOfAnotherPackageOrWithoutAnIdIsLeftOut() {
+        val listing = check(site())
+        assertTrue(listing.releases.none { it.version == "1.8.0" || it.version == "1.7.0" })
+        assertTrue(listing.releases.flatMap { it.assets }.all { it.url.startsWith("https://d.apkpure.com/b/") && "org.example.app?" in it.url })
+    }
+
+    @Test
+    fun onAKnownDeviceBuildsForOtherProcessorsAreLeftOut() {
+        val listing = check(site(), DeviceProfile(listOf("arm64-v8a"), sdk = 34, densityDpi = 420))
+        val newest = listing.releases[0]
+        assertEquals(listOf("org.example.app-211-arm64-v8a.xapk"), newest.assets.map { it.name })
+        assertEquals(211L, newest.versionCode)
+    }
+
+    @Test
+    fun asksAsItselfAndOnlyForPages() {
+        val http = site()
+        check(http)
+        assertEquals(listOf(versions, download), http.requests.map { it.url })
+        assertTrue(http.requests.all { it.headers.isEmpty() && it.method == "GET" })
+    }
+
+    @Test
+    fun theDownloadPageIsReadOnlyWhenTheNewestVersionHasSeveralBuilds() {
+        val single = """<div class="ver_download_link" data-dt-version="3.0.0" data-dt-apkid="b/APK/b3JnLmV4YW1wbGUuYXBwXzMwMF8wMGFi" data-dt-filesize="7"></div>"""
+        val http = FakeHttp().text(versions, single)
+        val listing = check(http)
+        assertEquals(listOf(versions), http.requests.map { it.url })
+        assertEquals(300L, listing.releases.single().versionCode)
+        assertEquals(7L, listing.releases.single().assets.single().size)
     }
 
     @Test
     fun anAppTheStoreDoesNotHaveIsNotFound() {
-        assertEquals(SourceErrorKind.NOT_FOUND, failure(FakeHttp().text(history, """{"retcode":0,"errmsg":"success","version_list":[]}""")))
-        assertEquals(SourceErrorKind.NOT_FOUND, failure(FakeHttp().text(history, "", status = 404)))
+        assertEquals(SourceErrorKind.NOT_FOUND, failure(FakeHttp().text(versions, "", status = 404)))
+        assertEquals(SourceErrorKind.NOT_FOUND, failure(FakeHttp().text(versions, "<html><body>Nothing here</body></html>")))
     }
 
     @Test
     fun failuresOfTheStoreAreReported() {
-        assertEquals(SourceErrorKind.NETWORK, failure(FakeHttp().text(history, "", status = 503)))
-        assertEquals(SourceErrorKind.NETWORK, failure(FakeHttp().text(history, """{"retcode":403,"errmsg":"denied"}""")))
-        assertEquals(SourceErrorKind.PARSE, failure(FakeHttp().text(history, "<html>")))
+        assertEquals(SourceErrorKind.NETWORK, failure(FakeHttp().text(versions, "", status = 503)))
+        assertEquals(SourceErrorKind.NETWORK, failure(FakeHttp().text(versions, "", status = 403)))
     }
 
     @Test
-    fun noVersionWithAFileForTheDeviceIsNoRelease() {
-        val body = """{"retcode":0,"version_list":[{"package_name":"org.example.app","version_code":"5","version_name":"0.5",
-            "native_code":["x86"],"asset":{"type":"APK","url":"https://data.winudf.com/APK/eA?token=1"}}]}"""
-        val http = FakeHttp().text(history, body)
-        try {
-            source.check(spec(), CheckContext(http, InMemoryValidatorStore(), device = DeviceProfile.ARM64_PHONE))
-            fail("expected SourceException")
-        } catch (e: SourceException) {
-            assertEquals(SourceErrorKind.NO_RELEASES, e.kind)
-        }
-    }
-
-    @Test
-    fun aDownloadIsResolvedToTheAddressTheStoreHandsOutNow() {
-        val http = FakeHttp().resource(history, "store/apkpure_history.json")
-        val context = CheckContext(http, InMemoryValidatorStore())
+    fun aDownloadIsFetchedFromTheAddressItIsListedAt() {
+        val http = site()
         val asset = check(http).releases[0].assets[0]
-
-        val download = SourceRegistry(listOf(source)).resolve(spec(), asset, context)
-        assertEquals(
-            "https://data.winudf.com/XAPK/b3JnLmV4YW1wbGUuYXBwXzIxMF9hYQ?filename=Example.xapk&k=0a1b&package_name=org.example.app&token=1790729950-aa-0-bb",
-            download.url,
-        )
-        assertTrue(download.headers.isEmpty())
-    }
-
-    @Test
-    fun aFileTheStoreNoLongerOffersCannotBeResolved() {
-        val http = FakeHttp().resource(history, "store/apkpure_history.json")
-        val gone = Asset("org.example.app-100.apk", "https://data.winudf.com/APK/b3JnLmV4YW1wbGUuYXBwXzEwMA")
-        try {
-            source.resolve(spec(), gone, CheckContext(http, InMemoryValidatorStore()))
-            fail("expected SourceException")
-        } catch (e: SourceException) {
-            assertEquals(SourceErrorKind.NOT_FOUND, e.kind)
-        }
+        val resolved = SourceRegistry(listOf(source)).resolve(spec(), asset, CheckContext(http, InMemoryValidatorStore()))
+        assertEquals(asset.url, resolved.url)
+        assertTrue(resolved.headers.isEmpty())
     }
 }

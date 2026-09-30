@@ -26,4 +26,8 @@ Obtainium user? Import your export file and your apps come along, with every opt
 
 Sort, group and filter your list, give categories colours, and see what is waiting on a home-screen widget or a Quick Settings tile.
 
-Reads: GitHub releases and Actions builds, GitLab, Forgejo, Gitea, Codeberg, F-Droid, IzzyOnDroid, any F-Droid format repository (signature checked), web pages, direct links, Jenkins, SourceHut, SourceForge, APKPure, Aptoide, Uptodown, APKCombo, APKMirror (tracking only), Farsroid, Huawei AppGallery, Samsung Galaxy Store, vivo, Tencent, CoolApk, RuStore, itch.io, Telegram, NeutronCode, LiteAPKs, Apk4Free and RockMods (tracking only).
+Reads: GitHub releases and Actions builds, GitLab, Forgejo, Gitea, Codeberg, F-Droid, IzzyOnDroid, any F-Droid format repository (signature checked), web pages, direct links, Jenkins, SourceHut, SourceForge, itch.io, Telegram and Neutron Code.
+
+Off until you turn them on in Settings: the third-party stores APKPure, Aptoide, APKCombo, APKMirror (tracking only), Tencent, Huawei AppGallery, Samsung Galaxy Store and vivo. A store serves its own copies of apps, not files from the developer's own site, and Tern says so. The first install from a store decides which certificate later updates must carry, unless Tern already knows the developer's. Tern does not read sites that offer modified apps, or stores that answer only their own app.
+
+Who Tern talks to: the forges, repositories, instances and sites of the apps you add; for an F-Droid app also F-Droid's data on gitlab.com and the changelog it names; the icon hosts of those sources, such as raw.githubusercontent.com; a third-party store's own hosts only when stores are on and you add an app from it; and the places you tick when you search, which are GitHub, Codeberg, GitLab and search.f-droid.org at first. Every request says it comes from Tern. PRIVACY.md lists every host.

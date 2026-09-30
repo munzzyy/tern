@@ -12,9 +12,9 @@ import java.net.URI
 import java.util.zip.GZIPInputStream
 
 /**
- * Plain HTTPS for the live tests: redirects followed by hand, credentials dropped when the host
- * changes, gzip negotiated the way Android's own client does it. [bytesReceived] counts what
- * crossed the wire, before decompression.
+ * Plain HTTPS for the live tests: redirects followed by hand unless the request says not to,
+ * credentials dropped when the host changes, a request body sent, gzip negotiated the way
+ * Android's own client does it. [bytesReceived] counts what crossed the wire, before decompression.
  */
 class JvmHttp : HttpClient {
     val requests = ArrayList<HttpRequest>()
@@ -37,8 +37,13 @@ class JvmHttp : HttpClient {
             val negotiate = request.headers.keys.none { it.equals("Accept-Encoding", ignoreCase = true) }
             if (negotiate) connection.setRequestProperty("Accept-Encoding", "gzip")
             authorization?.let { connection.setRequestProperty("Authorization", it) }
+            request.body?.let { body ->
+                connection.doOutput = true
+                connection.setFixedLengthStreamingMode(body.size)
+                connection.outputStream.use { it.write(body) }
+            }
             val status = connection.responseCode
-            if (status in 300..399 && status != 304) {
+            if (status in 300..399 && status != 304 && request.followRedirects) {
                 val location = connection.getHeaderField("Location") ?: error("Redirect without a Location")
                 connection.disconnect()
                 url = URI(url).resolve(location).toString()

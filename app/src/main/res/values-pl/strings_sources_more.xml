@@ -18,8 +18,6 @@
     <string name="step_arch">Preferuj procesor tego urządzenia</string>
     <string name="step_add">Dodaj stronę</string>
     <string name="step_remove">Usuń tę stronę</string>
-    <string name="option_file_version">Używaj nazwy pliku jako wersji</string>
-    <string name="option_file_version_effect">Każdy plik jest wtedy liczony jako osobne wydanie.</string>
     <string name="github_proxy_title">GitHub przez hubproxy</string>
     <string name="github_proxy_host">Host hubproxy</string>
     <string name="github_proxy_help">Sama nazwa hosta, na przykład gh-proxy.com. Tern łączy się z nim przez HTTPS.</string>

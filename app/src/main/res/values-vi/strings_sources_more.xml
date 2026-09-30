@@ -18,8 +18,6 @@
     <string name="step_arch">Ưu tiên bộ xử lý của thiết bị này</string>
     <string name="step_add">Thêm trang</string>
     <string name="step_remove">Xóa trang này</string>
-    <string name="option_file_version">Dùng tên tệp làm phiên bản</string>
-    <string name="option_file_version_effect">Khi đó mỗi tệp được tính là một bản phát hành riêng.</string>
     <string name="github_proxy_title">GitHub qua hubproxy</string>
     <string name="github_proxy_host">Máy chủ hubproxy</string>
     <string name="github_proxy_help">Chỉ tên máy chủ, ví dụ gh-proxy.com. Tern kết nối tới nó qua HTTPS.</string>

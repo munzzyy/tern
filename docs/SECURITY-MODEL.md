@@ -29,6 +29,15 @@ the same one as the developer's own file. `docs/SUGGESTIONS.md` has the list,
 the second place for each, and the ten entries for which none was found. A pin
 that arrives with a link or an import does not take the place of a carried one.
 
+A carried certificate is found by the app's address, and for an app from a
+third-party store, a web page or a direct link also by its package: Aegis added
+from APKPure is held to the developer's certificate at its first install, as it
+is from GitHub. A package can ship from several channels, so it is held to every
+certificate the list carries for it. The package is taken from the listing, or
+from the file once a check reads it. Forges are matched by address only,
+because a fork may keep the package, and so are F-Droid repositories, whose
+signed index names the signer.
+
 ## Every install after that
 
 The checks run in this order, and the first one that fails ends it.
@@ -203,11 +212,30 @@ screen. The installer then gets the file the gate passed, never the copy.
 
 ## Stores and mirrors
 
-Some sources are stores that offer again what developers published elsewhere,
-and three are sites that offer apps someone else changed. The Add screen says so
-before an app from one is stored. Their files are held to the same pin as any
-other, so once the developer's certificate is known a file signed by someone
-else is refused as an update.
+Eight sources are third-party stores: APKPure, Aptoide, APKCombo, APKMirror and
+Tencent, which offer again what others published, and Huawei AppGallery, the
+Galaxy Store and vivo, where developers upload their own. They are off until
+the person turns on Settings, Network, Third-party stores, and no file or link
+can turn that on. While it is off, no host of theirs is asked, an address on
+one is not read even as a web page, and an app from one that arrived with an
+import stays in the list, paused.
+
+Tern asks each store as itself, with its own User-Agent, and borrows nothing
+from the store's own app: no package name, no key, no signature, no made-up
+phone. Only the Galaxy Store needs a device model, and every copy of Tern asks
+for the same one. `HonestIdentityTest` fails when a source sets its own
+User-Agent, signs a request or names a store's app, and a person cannot set a
+User-Agent header either. Stores that answer only their own app, as RuStore,
+Uptodown and CoolApk do, are not read at all, and neither are sites that offer
+modified apps, such as LiteAPKs, Apk4Free, RockMods and Farsroid. An import
+that names them keeps the rest and says why these were left out.
+
+The Add screen, an app's page and the summary of an import say where a store's
+files come from. Until an app is pinned, the certificate of the first file
+installed from a store is the one its updates must carry, unless Tern carries
+the developer's for that package. A checksum a store gives is called the
+store's, and matching it says the file arrived as the store has it, not that
+the developer made it.
 
 Some stores hand out a link that expires, or a file only to a request with the
 right headers. Such a link is asked for right before the download, has to be an
@@ -218,9 +246,9 @@ or `If-Range`. A token still goes only to the host it was given for.
 
 ## Parts named one by one
 
-A store that serves an app as a base and its splits at separate addresses, as
-RuStore does, gets each part downloaded from its own address, with the rule for
-tokens applied to each. The parts are packed into one zip in the staging folder
+A source that serves an app as a base and its splits at separate addresses gets
+each part downloaded from its own address, with the rule for tokens applied to
+each. No source Tern reads today does this. The parts are packed into one zip in the staging folder
 and go through exactly the checks of a bundle: every part held to the base's
 signer, one install session. Every part must be an HTTPS address on the store's
 own hosts, or the bundle is left out.
@@ -345,10 +373,14 @@ app that holds Orbot's package name.
 
 ### Which certificates are trusted
 
-Android's own trust store decides, with certificate transparency asked for on
-Android 16. Certificates a user or an administrator added are not trusted.
+Android's own trust store decides, for every host, with certificate
+transparency asked for on Android 16 and never turned off. Certificates a user
+or an administrator added are not trusted, and Tern ships no certificate of its
+own. `NetworkSecurityConfigTest` parses both network security configs and fails
+on any other trust anchor, on a host with rules of its own, on transparency
+turned off and on a certificate file anywhere in the app's resources.
 
-Two exceptions, both narrow:
+One exception, and it only adds a condition:
 
 - Pinning, off by default as in Obtainium. With it on, a connection to
   `github.com`, GitHub's two hosts for release files, `gitlab.com` or
@@ -359,15 +391,6 @@ Two exceptions, both narrow:
   lifts one. The keys are in `net/Pinning.kt`, and `PinsTest` checks each one
   against the root certificate it names. A forge that moves to another
   authority fails there until the setting is off or Tern is updated.
-- RuStore serves part of its addresses with a certificate of the Russian
-  Trusted Root CA, which Android does not trust. That root is trusted for
-  `rustore.ru` and its subdomains and for nothing else, as Obtainium does; its
-  SHA-256 fingerprint is
-  `D2:6D:2D:02:31:B7:C3:9F:92:CC:73:85:12:BA:54:10:35:19:E4:40:5D:68:B5:BD:70:3E:97:88:CA:8E:CF:31`.
-  Certificates under it are in no transparency log, so Android 16 does not ask
-  for one there. Whoever holds that root could read and change Tern's requests
-  to RuStore, and only those. A file from RuStore still has to pass every
-  check, including the certificate of the app itself.
 
 ## Notifications
 

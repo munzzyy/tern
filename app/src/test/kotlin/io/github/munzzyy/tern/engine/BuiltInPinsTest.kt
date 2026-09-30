@@ -8,10 +8,12 @@ import io.github.munzzyy.tern.core.engine.UpdateDecision
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.suggest.Catalog
 import io.github.munzzyy.tern.core.suggest.ConfirmedBy
 import io.github.munzzyy.tern.core.suggest.SuggestedApp
 import io.github.munzzyy.tern.core.suggest.SuggestedKind
+import io.github.munzzyy.tern.engine.real.Arrivals
 import io.github.munzzyy.tern.engine.real.BuiltInPins
 import io.github.munzzyy.tern.engine.real.Suggestions
 import org.junit.Assert.assertEquals
@@ -40,7 +42,7 @@ class BuiltInPinsTest {
     private fun fileSignedBy(signer: String, lineage: List<String> = emptyList()) = Inspection("org.example.app", 1, "1.0", listOf(signer), lineage)
 
     private fun firstInstall(url: String, signer: String, lineage: List<String> = emptyList(), carriedWithALink: List<String> = emptyList()): Decision {
-        val held = pins.orElse(url, carriedWithALink)
+        val held = pins.orElse(SourceSpec("forgejo", url), "org.example.app", carriedWithALink)
         return UpdateDecision.decide(release, installed = null, record = null, inspection = fileSignedBy(signer, lineage), expectedPackage = "org.example.app", pinnedSigners = held)
     }
 
@@ -67,7 +69,7 @@ class BuiltInPinsTest {
     fun whatCameWithALinkCannotTakeTheCarriedCertificatesPlace() {
         val decision = firstInstall(address, stranger, carriedWithALink = listOf(stranger))
         assertEquals(Block.PIN_MISMATCH, (decision as Decision.Blocked).block)
-        assertEquals(listOf(developer, later), pins.orElse(address, listOf(stranger)))
+        assertEquals(listOf(developer, later), pins.orElse(SourceSpec("forgejo", address), "org.example.app", listOf(stranger)))
     }
 
     @Test
@@ -75,8 +77,55 @@ class BuiltInPinsTest {
         for (url in listOf(plain.url, "https://forge.example.org/example/other", "https://forge.example.org/example/app-fork", "")) {
             assertEquals(url, emptyList<String>(), pins.of(url))
             assertTrue(url, firstInstall(url, stranger) is Decision.NotInstalled)
-            assertEquals(url, listOf(stranger), pins.orElse(url, listOf(stranger)))
+            assertEquals(url, listOf(stranger), pins.orElse(SourceSpec("forgejo", url), "org.example.app", listOf(stranger)))
         }
+    }
+
+    private val store = SourceSpec(SourceTypes.APKPURE, "https://apkpure.com/example/org.example.app")
+
+    private fun firstInstallFrom(spec: SourceSpec, signer: String, packageName: String? = "org.example.app"): Decision =
+        UpdateDecision.decide(
+            release, installed = null, record = null, inspection = fileSignedBy(signer), expectedPackage = packageName,
+            pinnedSigners = pins.orElse(spec, packageName, emptyList()),
+        )
+
+    @Test
+    fun aCarriedAppAddedFromAStoreIsHeldToTheDevelopersCertificateByItsPackage() {
+        assertEquals(listOf(developer, later), pins.forApp(store, "org.example.app"))
+        assertEquals(Block.PIN_MISMATCH, (firstInstallFrom(store, stranger) as Decision.Blocked).block)
+        assertTrue(firstInstallFrom(store, developer) is Decision.NotInstalled)
+        for (type in SourceTypes.THIRD_PARTY_STORES + listOf(SourceTypes.HTML, SourceTypes.DIRECT)) {
+            val elsewhere = SourceSpec(type, "https://mirror.example.net/org.example.app")
+            assertEquals(type, Block.PIN_MISMATCH, (firstInstallFrom(elsewhere, stranger) as Decision.Blocked).block)
+        }
+        assertTrue(pins.hold(AppConfig(id = "s", source = store, name = "Example", packageName = "org.example.app", pinnedSigners = listOf(developer))))
+    }
+
+    @Test
+    fun aPackageFromSeveralEntriesIsHeldToAllOfTheirCertificates() {
+        val other = carried.copy(name = "Example Nightly", url = "https://forge.example.org/example/nightly", signers = listOf(stranger.uppercase()))
+        val both = BuiltInPins(listOf(carried, other, plain))
+        assertEquals(listOf(developer, later, stranger), both.ofPackage("org.example.app"))
+        assertEquals(emptyList<String>(), both.ofPackage("org.example.unknown"))
+        assertEquals(emptyList<String>(), both.ofPackage(null))
+    }
+
+    @Test
+    fun aForkOnAForgeAndAnFDroidRepositoryAreNotHeldByPackage() {
+        for (type in listOf(SourceTypes.GITHUB, SourceTypes.GITLAB, SourceTypes.FORGEJO, SourceTypes.FDROID, SourceTypes.FDROID_REPO, SourceTypes.ITCHIO)) {
+            val spec = SourceSpec(type, "https://elsewhere.example.org/fork/app")
+            assertEquals(type, emptyList<String>(), pins.forApp(spec, "org.example.app"))
+            assertTrue(type, firstInstallFrom(spec, stranger) is Decision.NotInstalled)
+        }
+        assertEquals("an app of an unknown package is held to nothing new", emptyList<String>(), pins.forApp(store, "org.example.other"))
+    }
+
+    @Test
+    fun anImportedAppFromAStoreIsStoredWithTheCarriedCertificate() {
+        val imported = AppConfig(id = "x", source = store, name = "Example", packageName = "org.example.app")
+        assertEquals(listOf(developer, later), Arrivals.stored(imported, "x", pins).pinnedSigners)
+        val unknown = imported.copy(packageName = null)
+        assertEquals(emptyList<String>(), Arrivals.stored(unknown, "x", pins).pinnedSigners)
     }
 
     @Test

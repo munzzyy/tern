@@ -26,7 +26,7 @@ class SearchPlacesMissedTest {
             answer(request)
         },
         tokens,
-        stores,
+        { stores },
         log = {},
     )
 

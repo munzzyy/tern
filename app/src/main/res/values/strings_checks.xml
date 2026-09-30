@@ -36,7 +36,6 @@
     <string name="sources_repositories">Repositories</string>
     <string name="sources_stores">Stores</string>
     <string name="sources_mirrors">Stores that republish apps</string>
-    <string name="sources_modified">Sites with changed apps</string>
     <string name="sources_other">Other places</string>
     <string name="sources_web_page">A web page with links to files</string>
     <string name="sources_direct">A direct link to a file</string>
@@ -46,8 +45,6 @@
     <string name="shared_configs_title">Configurations shared by Obtainium\'s users</string>
     <string name="shared_configs_effect">A site of ready-made settings for apps. Its links open in Tern when Open Obtainium links is on in Settings.</string>
     <string name="engine_inner_filter_nothing">The filter for files inside archives matches none of the APKs in this one.</string>
-    <string name="preview_republished">%1$s offers again what developers publish elsewhere. Its files are held to the developer\'s certificate once Tern knows it, so pin one or install from the developer first when you can.</string>
-    <string name="preview_modified">%1$s offers apps changed by someone other than their developer. They are signed by whoever changed them, and Tern cannot tell what was changed.</string>
     <string name="about_track_tern">Keep Tern itself up to date</string>
     <string name="about_track_tern_effect">Adds Tern\'s own releases to the list, checked and verified like any app.</string>
     <string name="engine_channel_tracked">New releases of tracked apps</string>

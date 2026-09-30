@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">One a line, as Name: value. Never a password, a cookie or a User-Agent: Tern tells every site that it is Tern.</string>
+    <!-- %1$s is a store, such as APKPure. Shown on the Add preview, an app's page and after an import. -->
+    <string name="origin_republished_first">%1$s offers again what developers publish elsewhere, and is not the developer. Until the app is pinned to a certificate, the first file Tern installs from it decides which certificate every later update must carry.</string>
+    <!-- %1$s is a store, such as APKPure. -->
+    <string name="origin_republished_pinned">%1$s offers again what developers publish elsewhere, and is not the developer. Its files must carry the certificate this app is held to.</string>
+    <!-- %1$s is a store, such as Galaxy Store. -->
+    <string name="origin_store_first">%1$s is a store, not the developer\'s own site. Until the app is pinned to a certificate, the first file Tern installs from it decides which certificate every later update must carry.</string>
+    <!-- %1$s is a store, such as Galaxy Store. -->
+    <string name="origin_store_pinned">%1$s is a store, not the developer\'s own site. Its files must carry the certificate this app is held to.</string>
+    <string name="stores_paused">Paused. Third-party stores are off, so Tern asks this store nothing. Turn them on in Settings to check it again.</string>
+    <string name="stores_refused_modified">Tern does not read sites that offer modified apps. Their files are changed by someone other than the developer and signed by whoever changed them.</string>
+    <string name="stores_refused_impersonation">Tern cannot read this store without pretending to be its app, so it does not read it.</string>
+    <!-- %1$s is a store, such as APKPure. Said of a checksum, after "From:". -->
+    <string name="stores_checksum_source">%1$s, which is not the developer</string>
+    <!-- %1$s is a store, such as APKPure. -->
+    <string name="stores_off_title">%1$s is a third-party store</string>
+    <string name="stores_off_body">Third-party stores are off. A store serves its own copies of apps, not files from the developer\'s own site, and Tern reads it through the interface the store made for its own app or website. With them on, Tern asks a store only for the apps you add from it, and until an app is pinned to a certificate, the first file Tern installs from a store decides which certificate its updates must carry.</string>
+    <string name="stores_turn_on">Turn on third-party stores</string>
+    <string name="stores_advice">Turn on Third-party stores in Settings to check this app again.</string>
+    <string name="stores_status_paused">Paused</string>
+    <string name="stores_row_paused">Third-party stores are off</string>
+    <string name="stores_setting">Third-party stores</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, the Galaxy Store and vivo. They serve their own copies of apps, not files from the developer\'s own site, and Tern reads them through the interfaces they made for their own apps and websites. Off, Tern asks none of them anything, a search leaves them out and apps from them are paused.</string>
+    <!-- Put after a store's name in the list of sources, next to "search" and "track only", while third-party stores are off. -->
+    <string name="stores_off_tag">off in Settings</string>
+    <string name="stores_checksum_matched">The file matches the store\'s checksum</string>
+    <string name="stores_explain_checksum_matched">A checksum is a fingerprint of the file itself. The store gave one, and the file Tern downloaded has the same, so it arrived as the store has it. The store is not the developer, so this says nothing about who made the file. The certificate does.</string>
+    <string name="stores_import_from_stores">These come from third-party stores, which serve their own copies of apps. Until an app is pinned to a certificate, the first file Tern installs from its store decides which certificate its updates must carry.</string>
+    <string name="stores_import_paused">Third-party stores are off, so these apps are paused. Tern asks those stores nothing until you turn them on.</string>
+    <string name="stores_import_names">From third-party stores</string>
+    <!-- The link goes through Obtainium's web page, which is sent all of the app's settings. -->
+    <string name="share_obtainium_link">Share as an Obtainium link</string>
+    <string name="share_obtainium_links">Share as Obtainium links</string>
+</resources>

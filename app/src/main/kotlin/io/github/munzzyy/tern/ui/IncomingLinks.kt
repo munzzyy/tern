@@ -131,7 +131,10 @@ private fun unknownLink(raw: String, action: String): String? = raw.takeUnless {
 private val KNOWN_ACTIONS = setOf("add", "app", "apps", "refresh")
 
 private fun ternLink(raw: String, rest: String): String? {
-    if (actionOf(rest) != "add") return unknownLink(raw, actionOf(rest))
+    val action = actionOf(rest)
+    // An app's settings, as Tern's add page hands them on; the Add screen reads them as it reads Obtainium's.
+    if (action == "app" || action == "apps") return raw.takeIf { rest.substringAfter('/', "").isNotEmpty() }
+    if (action != "add") return unknownLink(raw, action)
     val query = rest.substringAfter('?', "").substringBefore('#')
     val encoded = query.split('&').firstOrNull { it.startsWith("url=") }?.removePrefix("url=") ?: return null
     return decode(encoded)?.takeIf(::isHttps)

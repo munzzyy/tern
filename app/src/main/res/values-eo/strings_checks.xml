@@ -36,7 +36,6 @@
     <string name="sources_repositories">Deponejoj</string>
     <string name="sources_stores">Vendejoj</string>
     <string name="sources_mirrors">Vendejoj kiuj reeldonas aplikaĵojn</string>
-    <string name="sources_modified">Retejoj kun ŝanĝitaj aplikaĵoj</string>
     <string name="sources_other">Aliaj lokoj</string>
     <string name="sources_web_page">Retpaĝo kun ligiloj al dosieroj</string>
     <string name="sources_direct">Rekta ligilo al dosiero</string>
@@ -46,8 +45,6 @@
     <string name="shared_configs_title">Agordaroj kunhavigitaj de la uzantoj de Obtainium</string>
     <string name="shared_configs_effect">Retejo kun pretaj agordoj por aplikaĵoj. Ĝiaj ligiloj malfermiĝas en Tern kiam Malfermi Obtainium-ligilojn estas ŝaltita en Agordoj.</string>
     <string name="engine_inner_filter_nothing">La filtrilo por dosieroj en arkivoj kongruas kun neniu el la APK-oj en ĉi tiu arkivo.</string>
-    <string name="preview_republished">%1$s reofertas tion, kion programistoj eldonas aliloke. Ĝiaj dosieroj estas tenataj al la atestilo de la programisto tuj kiam Tern konas ĝin, do alpinglu unu aŭ unue instalu de la programisto kiam vi povas.</string>
-    <string name="preview_modified">%1$s ofertas aplikaĵojn ŝanĝitajn de iu alia ol ilia programisto. Ili estas subskribitaj de tiu, kiu ŝanĝis ilin, kaj Tern ne povas diri, kio estis ŝanĝita.</string>
     <string name="about_track_tern">Teni Tern mem ĝisdata</string>
     <string name="about_track_tern_effect">Aldonas la proprajn eldonojn de Tern al la listo, kontrolitajn kaj konfirmitajn kiel iu ajn aplikaĵo.</string>
     <string name="engine_channel_tracked">Novaj eldonoj de sekvataj aplikaĵoj</string>

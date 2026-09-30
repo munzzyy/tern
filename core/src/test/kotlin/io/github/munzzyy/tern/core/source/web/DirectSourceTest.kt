@@ -164,15 +164,15 @@ class DirectSourceTest {
 
     @Test
     fun theHeadersGoWithEveryQuestionAndWithTheDownload() {
-        val headers = SourceOptions.HEADERS to """{"User-Agent": "Example/1.0"}"""
+        val headers = SourceOptions.HEADERS to """{"Referer": "https://example.com/"}"""
         val http = FakeHttp().on(file) { request ->
             if (request.method == "HEAD") HttpResponse.of(405, "", Headers.EMPTY, file) else HttpResponse.of(206, "x", Headers.of("ETag" to "\"v1\""), file)
         }
         release(http, headers)
         assertEquals(listOf("HEAD", "GET"), http.requests.map { it.method })
-        assertTrue(http.requests.all { it.headers["User-Agent"] == "Example/1.0" })
+        assertTrue(http.requests.all { it.headers["Referer"] == "https://example.com/" })
         val spec = SourceSpec(source.type, file, mapOf(headers))
-        assertEquals(Download(file, mapOf("User-Agent" to "Example/1.0")), source.resolve(spec, Asset("app.apk", file), context(http)))
+        assertEquals(Download(file, mapOf("Referer" to "https://example.com/")), source.resolve(spec, Asset("app.apk", file), context(http)))
         assertEquals(Download(file), source.resolve(SourceSpec(source.type, file), Asset("app.apk", file), context(http)))
     }
 

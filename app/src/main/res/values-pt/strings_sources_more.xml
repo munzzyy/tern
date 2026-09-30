@@ -18,8 +18,6 @@
     <string name="step_arch">Preferir o processador deste dispositivo</string>
     <string name="step_add">Adicionar uma página</string>
     <string name="step_remove">Remover esta página</string>
-    <string name="option_file_version">Usar o nome do ficheiro como versão</string>
-    <string name="option_file_version_effect">Cada ficheiro conta então como um lançamento próprio.</string>
     <string name="github_proxy_title">GitHub através de um hubproxy</string>
     <string name="github_proxy_host">Anfitrião do hubproxy</string>
     <string name="github_proxy_help">Apenas um nome de anfitrião, como gh-proxy.com. O Tern liga-se a ele por HTTPS.</string>

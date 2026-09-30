@@ -18,8 +18,6 @@
     <string name="step_arch">優先使用此裝置的處理器</string>
     <string name="step_add">新增頁面</string>
     <string name="step_remove">移除此頁面</string>
-    <string name="option_file_version">使用檔案名稱作為版本</string>
-    <string name="option_file_version_effect">這樣每個檔案都會視為獨立的發行版本。</string>
     <string name="github_proxy_title">透過 hubproxy 存取 GitHub</string>
     <string name="github_proxy_host">hubproxy 主機</string>
     <string name="github_proxy_help">只填主機名稱，例如 gh-proxy.com。Tern 會透過 HTTPS 連線。</string>

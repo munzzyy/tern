@@ -29,15 +29,19 @@ import java.time.format.DateTimeParseException
 import java.util.Random
 
 /**
- * Huawei AppGallery. Reads the API the AppGallery app uses (a form POST to /hwmarket/api/clientApi):
- * a client.front2 handshake gives a sign and the service zone, which picks the store's host, and
- * client.appDetailById describes the app. The handshake is kept in this object's memory for a day,
- * so most checks make one request, and it is made again when the store stops answering to it.
+ * Huawei AppGallery, read through its store API (a form POST to /hwmarket/api/clientApi) as Tern,
+ * with Tern's own User-Agent and nothing said about the device: a client.front2 handshake gives a
+ * sign and the service zone, which picks the store's host, and client.appDetailById describes the
+ * app. The API wants a device id; each handshake makes up a random one, which names nothing. The
+ * handshake is kept in this object's memory for a day, so most checks make one request, and it
+ * is made again when the store stops answering to it.
  */
 class HuaweiSource(private val random: Random = SecureRandom()) : Source, Searchable {
     override val type: String = SourceTypes.HUAWEI
 
     override val origin: String = "Huawei AppGallery"
+
+    override val domains: Set<String> get() = DOMAINS
 
     private class Session(val host: String, val sign: String, val deviceId: String, val madeAtMs: Long)
 
@@ -158,14 +162,6 @@ class HuaweiSource(private val random: Random = SecureRandom()) : Source, Search
 
     private fun front2(deviceId: String, context: CheckContext, needServiceZone: Boolean): Map<String, String> = common(deviceId, context) + mapOf(
         "method" to "client.front2",
-        "version" to "16.5.1",
-        "versionCode" to "160501301",
-        "packageName" to "com.huawei.appmarket",
-        "zone" to "1",
-        "phoneType" to "Pixel 8 Pro",
-        "firmwareVersion" to "16",
-        "isFirstLaunch" to "1",
-        "oobe" to "0",
         "needServiceZone" to if (needServiceZone) "1" else "0",
     )
 
@@ -174,18 +170,14 @@ class HuaweiSource(private val random: Random = SecureRandom()) : Source, Search
         "locale" to "en_US",
         "serviceType" to "0",
         "ts" to context.nowMs().toString(),
-        "net" to "1",
-        "brand" to "google",
-        "manufacturer" to "Google",
-        "subBrand" to "0",
         "deviceId" to deviceId,
         "deviceIdType" to "9",
     )
 
-    /** A form with its fields in the order of their names, as the AppGallery app sends it. */
+    /** A form with its fields in the order of their names. */
     private fun post(context: CheckContext, host: String, params: Map<String, String>): JsonObject {
         val form = params.toSortedMap().entries.joinToString("&") { (key, value) -> "${formPart(key)}=${formPart(value)}" }
-        val request = HttpRequest.post("https://$host$API_PATH", form, "application/x-www-form-urlencoded", mapOf("User-Agent" to USER_AGENT, "Accept" to "application/json"))
+        val request = HttpRequest.post("https://$host$API_PATH", form, "application/x-www-form-urlencoded", mapOf("Accept" to "application/json"))
         context.http.execute(request).use { response ->
             if (!response.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Huawei AppGallery answered ${response.status} at $host")
             return Json.parseObject(response.text(MAX_BODY))
@@ -216,7 +208,6 @@ class HuaweiSource(private val random: Random = SecureRandom()) : Source, Search
 
     private companion object {
         const val API_PATH = "/hwmarket/api/clientApi"
-        const val USER_AGENT = "HiSpace##16.5.1.301##google##Pixel 8 Pro"
         const val MAX_BODY = 2 * 1024 * 1024
         const val MAX_HITS = 25
         const val SESSION_MS = 24 * 60 * 60 * 1000L
@@ -231,6 +222,9 @@ class HuaweiSource(private val random: Random = SecureRandom()) : Source, Search
 
         /** Where the store keeps its files, such as appdlc-dre.hispace.dbankcloud.com. */
         val FILE_HOSTS = listOf("dbankcloud.com", "dbankcloud.ru")
+
+        /** The store's pages, its API, its files and the CDN its file addresses send on to, such as appdl-12-drcn.dbankcdn.com. */
+        val DOMAINS = HOSTS + FILE_HOSTS + "dbankcdn.com"
 
         val APP_ID = Regex("^C[0-9]{1,20}$")
         val SHA256 = Regex("^[0-9a-f]{64}$")

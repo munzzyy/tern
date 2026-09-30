@@ -64,10 +64,6 @@
     <string name="option_workflow">Fichier de workflow</string>
     <string name="option_workflow_help">Comme build.yml.</string>
     <string name="option_branch">Branche</string>
-    <string name="option_device_model">Modèle d\'appareil</string>
-    <string name="option_device_model_help">Le Galaxy Store fournit à chaque modèle sa propre version, comme SM-S948B.</string>
-    <string name="option_csc">Code de région (CSC)</string>
-    <string name="option_csc_help">Trois lettres, comme DBT.</string>
     <string name="option_link_filter">Filtre des liens de téléchargement</string>
     <string name="option_link_filter_help">Seuls les liens qui correspondent comptent comme téléchargements.</string>
     <string name="option_page_order">Garder l\'ordre de la page</string>
@@ -78,7 +74,6 @@
     <string name="version_from_text">Le texte du lien</string>
     <string name="version_from_page">Toute la page</string>
     <string name="option_headers">En-têtes de requête</string>
-    <string name="option_headers_help">Un par ligne, sous la forme Name: value. Jamais un mot de passe ou un cookie.</string>
     <string name="option_pseudo">Quand il n\'y a pas de version</string>
     <string name="pseudo_default">Distinguer les fichiers comme le fait le serveur</string>
     <string name="pseudo_hash">Par un hachage du début du fichier</string>

@@ -36,7 +36,6 @@
     <string name="sources_repositories">مخزن‌ها</string>
     <string name="sources_stores">فروشگاه‌ها</string>
     <string name="sources_mirrors">فروشگاه‌هایی که برنامه‌ها را بازنشر می‌کنند</string>
-    <string name="sources_modified">سایت‌های برنامه‌های تغییریافته</string>
     <string name="sources_other">جاهای دیگر</string>
     <string name="sources_web_page">یک صفحه وب با پیوند به فایل‌ها</string>
     <string name="sources_direct">یک پیوند مستقیم به فایل</string>
@@ -46,8 +45,6 @@
     <string name="shared_configs_title">پیکربندی‌های به‌اشتراک‌گذاشته کاربران Obtainium</string>
     <string name="shared_configs_effect">سایتی از تنظیمات آماده برای برنامه‌ها. وقتی «باز کردن پیوندهای Obtainium» در تنظیمات روشن باشد، پیوندهای آن در Tern باز می‌شوند.</string>
     <string name="engine_inner_filter_nothing">فیلتر فایل‌های درون آرشیوها با هیچ‌کدام از APKهای این آرشیو مطابقت ندارد.</string>
-    <string name="preview_republished">%1$s آنچه را توسعه‌دهندگان در جای دیگری منتشر می‌کنند دوباره ارائه می‌دهد. فایل‌های آن به‌محض اینکه Tern گواهی توسعه‌دهنده را بشناسد، ملزم به همان گواهی می‌شوند، پس هر وقت توانستید یک گواهی پین کنید یا ابتدا از خود توسعه‌دهنده نصب کنید.</string>
-    <string name="preview_modified">%1$s برنامه‌هایی را ارائه می‌دهد که شخصی غیر از توسعه‌دهنده‌شان تغییر داده است. این برنامه‌ها توسط کسی که آن‌ها را تغییر داده امضا شده‌اند، و Tern نمی‌تواند بگوید چه چیزی تغییر کرده است.</string>
     <string name="about_track_tern">به‌روز نگه داشتن خود Tern</string>
     <string name="about_track_tern_effect">انتشارهای خود Tern را به لیست اضافه می‌کند، که مانند هر برنامه‌ای بررسی و تأیید می‌شوند.</string>
     <string name="engine_channel_tracked">انتشارهای جدید برنامه‌های دنبال‌شده</string>

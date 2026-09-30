@@ -34,7 +34,6 @@
     <string name="sources_repositories">リポジトリ</string>
     <string name="sources_stores">ストア</string>
     <string name="sources_mirrors">アプリを再配布するストア</string>
-    <string name="sources_modified">改変されたアプリのサイト</string>
     <string name="sources_other">その他の場所</string>
     <string name="sources_web_page">ファイルへのリンクがあるウェブページ</string>
     <string name="sources_direct">ファイルへの直接リンク</string>
@@ -44,8 +43,6 @@
     <string name="shared_configs_title">Obtainiumのユーザーが共有する設定</string>
     <string name="shared_configs_effect">アプリ用の既成の設定を集めたサイトです。［設定］で「Obtainiumのリンクを開く」がオンのとき、そのリンクはTernで開きます。</string>
     <string name="engine_inner_filter_nothing">アーカイブ内のファイルのフィルターが、このアーカイブ内のどのAPKにも一致しません。</string>
-    <string name="preview_republished">%1$s は、開発者が別の場所で公開しているものを再配布しています。Ternが開発者の証明書を把握すると、ここのファイルにもその証明書が求められます。可能であれば証明書をピン留めするか、先に開発者からインストールしてください。</string>
-    <string name="preview_modified">%1$s は、開発者以外の人が改変したアプリを提供しています。それらは改変した人によって署名されており、Ternには何が変更されたか判断できません。</string>
     <string name="about_track_tern">Tern自体を最新の状態に保つ</string>
     <string name="about_track_tern_effect">Tern自身のリリースをリストに追加し、他のアプリと同じように確認・検証します。</string>
     <string name="engine_channel_tracked">追跡中のアプリの新しいリリース</string>

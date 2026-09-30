@@ -66,10 +66,6 @@
     <string name="option_workflow">Soubor pracovního postupu</string>
     <string name="option_workflow_help">Například build.yml.</string>
     <string name="option_branch">Větev</string>
-    <string name="option_device_model">Model zařízení</string>
-    <string name="option_device_model_help">Galaxy Store dává každému modelu vlastní sestavení, například SM-S948B.</string>
-    <string name="option_csc">Kód regionu (CSC)</string>
-    <string name="option_csc_help">Tři písmena, například DBT.</string>
     <string name="option_link_filter">Filtr odkazů ke stažení</string>
     <string name="option_link_filter_help">Jako stažení se počítají jen odpovídající odkazy.</string>
     <string name="option_page_order">Zachovat pořadí stránky</string>
@@ -80,7 +76,6 @@
     <string name="version_from_text">Text odkazu</string>
     <string name="version_from_page">Celá stránka</string>
     <string name="option_headers">Hlavičky požadavku</string>
-    <string name="option_headers_help">Jedna na řádek, ve tvaru Name: value. Nikdy heslo ani cookie.</string>
     <string name="option_pseudo">Když chybí verze</string>
     <string name="pseudo_default">Rozlišovat soubory jako server</string>
     <string name="pseudo_hash">Podle hashe začátku souboru</string>

@@ -60,10 +60,6 @@
     <string name="option_workflow">워크플로 파일</string>
     <string name="option_workflow_help">예: build.yml</string>
     <string name="option_branch">브랜치</string>
-    <string name="option_device_model">기기 모델</string>
-    <string name="option_device_model_help">Galaxy Store는 모델마다 별도의 빌드를 제공합니다(예: SM-S948B).</string>
-    <string name="option_csc">지역 코드(CSC)</string>
-    <string name="option_csc_help">세 글자입니다(예: DBT).</string>
     <string name="option_link_filter">다운로드 링크 필터</string>
     <string name="option_link_filter_help">일치하는 링크만 다운로드로 간주합니다.</string>
     <string name="option_page_order">페이지의 순서 유지</string>
@@ -74,7 +70,6 @@
     <string name="version_from_text">링크 텍스트</string>
     <string name="version_from_page">전체 페이지</string>
     <string name="option_headers">요청 헤더</string>
-    <string name="option_headers_help">한 줄에 하나씩, Name: value 형식으로 입력합니다. 비밀번호나 쿠키는 절대 넣지 마세요.</string>
     <string name="option_pseudo">버전이 없을 때</string>
     <string name="pseudo_default">서버 방식대로 파일 구분</string>
     <string name="pseudo_hash">파일 앞부분의 해시로 구분</string>

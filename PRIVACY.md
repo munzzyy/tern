@@ -5,50 +5,82 @@ sends no crash reports, because there is nobody for it to report to.
 
 ## What leaves the device
 
-Requests go to the sources you add, to check for releases and to download
-files: GitHub, GitLab, Codeberg, F-Droid, a repository, a developer's site, or
-a store such as APKPure or the Galaxy Store. Each of those sees what any web
-server sees, which is your address, the time, and the project you asked about.
-A search on the Add screen asks the places ticked under "Search in" for the
-words you typed: GitHub, Codeberg, gitlab.com and F-Droid until you choose
-others, and Aptoide, Uptodown, AppGallery, the vivo store or RuStore only when
-you tick them.
+Tern asks a host only for something you set up: an app you added, a search
+you started, a page you pressed. Every request says it comes from Tern, with
+the User-Agent `Tern/` and the version, and none pretends to be a browser or
+another app. Each host sees what any web server sees: your address, the time,
+and what was asked. This is every host, by what makes Tern ask it.
 
-A store serves a different file to different phones, so a few of them are told
-what the file has to run on. APKPure, RuStore and the Galaxy Store are told
-the Android version; RuStore also the processors, the screen density and
-whether this is a TV; the Galaxy Store and Tencent whether the phone runs
-64-bit code. None of them is told the phone's model, its name or any
-identifier of it. The Galaxy Store is asked as a fixed model, which you can
-change for an app, and RuStore as a made-up phone with an id drawn at random.
+| What | Hosts |
+|---|---|
+| An app from GitHub | api.github.com, and github.com and hosts under githubusercontent.com for its files |
+| An app from GitLab, Codeberg or another Forgejo, Gitea, GitLab or Jenkins server | The server you added |
+| An app from SourceHut or SourceForge | git.sr.ht; sourceforge.net and the download mirror it sends you to |
+| An app from F-Droid or IzzyOnDroid | f-droid.org or apt.izzysoft.de. When a check of an F-Droid app finds something new, also gitlab.com/fdroid/fdroiddata for its author and changes, and the changelog file on GitHub or GitLab that the entry names |
+| An app from another repository in F-Droid's format | The repository you added |
+| An app from a web page or a direct link | The site you gave, and the hosts its links lead to over HTTPS |
+| An app from itch.io | The game's page on itch.io, and itchio-mirror.cb031a832f44726753d6267436f3b414.r2.cloudflarestorage.com for its file, only when you download it or open its size |
+| Telegram | telegram.org, t.me, and cdn1 to cdn5.telesco.pe for the file |
+| An app from Neutron Code | neutroncode.com |
+| A search on the Add screen | The places ticked under "Search in": api.github.com, codeberg.org (or the Forgejo you chose), gitlab.com and search.f-droid.org until you choose others |
+| Icons of apps not installed yet | For GitHub, raw.githubusercontent.com and avatars.githubusercontent.com; for a store, the one host it keeps its pictures on, named below; for every other source, the host the app comes from |
+| "Read the project's page" on an app's page | The forge's API, only when you press it |
+| An import from a link | The one address you typed |
 
-For an app from F-Droid's own repository, a check that finds a new answer also
-reads the app's entry in F-Droid's data on gitlab.com, for its author and
-changes, and the changelog file on GitHub or GitLab when that entry names one.
-For an app from APKMirror it reads the pages of the newest releases on
-www.apkmirror.com, for what changed and the size of the file. None of these
-carries a token or a cookie.
+The eight third-party stores are off until you turn on Settings, Network,
+Third-party stores. While that is off Tern asks none of their hosts, a
+search leaves them out, and an app from one waits in the list. With it on,
+Tern asks a store only for the apps you add from it, and only searches the
+three that can be searched when you tick them.
+
+| Store | Hosts |
+|---|---|
+| APKPure | apkpure.com for the page of the app's versions, d.apkpure.com for the download, which sends you to data.winudf.com for the file, and image.winudf.com for the icon |
+| Aptoide | The app's page on aptoide.com, ws2.aptoide.com for the app and for a search, pool.apk.aptoide.com for the file, pool.img.aptoide.com for the icon |
+| APKCombo | apkcombo.com, and apks.39b7cb94d40914bac590886981b0ed6e.r2.cloudflarestorage.com for the file |
+| APKMirror | www.apkmirror.com for the feed and the pages of the newest releases, downloadr2.apkmirror.com for the icon. APKMirror offers no file to Tern |
+| Tencent App Store | a.app.qq.com for the app, imtt.dd.qq.com or dd.myapp.com for the file, pp.myapp.com for the icon |
+| Huawei AppGallery | store-dre.hispace.dbankcloud.com first for every app, whatever the region, then the host it names for yours: store-drcn or store-dra.hispace.dbankcloud.com, or store-drru.hispace.dbankcloud.ru; appdlc-*.hispace.dbankcloud.com and appdl-*.dbankcdn.com for the file; appimg-dra.dbankcdn.com or appimg-drcn.dbankcdn.com for the icon |
+| Galaxy Store | vas.samsungapps.com, and a host under samsungapps.com for the file |
+| vivo App Store | h5-api.appstore.vivo.com.cn for the app and for a search, appstore.vivo.com.cn for the download, which sends you to a host under vivo.com.cn for the file, imgwsdl.vivo.com.cn or appstoreimg-ipv6.vivo.com.cn for the icon |
+
+A store serves a different file to different phones, so two of them are told
+something about the device. The Galaxy Store is told the Android version and
+whether the phone runs 64-bit code, and it is asked for the model SM-S948B
+and the region DBT, MCC 425 and MNC 01. That model and region are the same for
+every copy of Tern and say nothing about your phone. Huawei AppGallery wants a
+device id: Tern makes up a random one for each day's session, which names
+nothing. No store is told the phone's real model, its name or any identifier
+of it. Tencent offers a 64-bit and a 32-bit file, and Tern picks one itself.
 
 Where a source lists no size for a file, opening the app's page asks the file's
 host for one byte of it, to learn the size.
+
+With a hubproxy set for GitHub, the requests for GitHub go to that host
+instead, with no token.
+
+While the stores are off, an address under any of these domains is not read
+at all, not even as a web page: apkpure.com, apkpure.net, winudf.com,
+aptoide.com, apkcombo.com, apkmirror.com, sj.qq.com, a.app.qq.com, dd.qq.com,
+myapp.com, appgallery.huawei.com, appgallery.cloud.huawei.com,
+appgallery.huawei.ru, dbankcloud.com, dbankcloud.ru, dbankcdn.com,
+galaxystore.samsung.com, apps.samsung.com, apps.samsung.cn,
+galaxyappstore.com, samsungapps.com and vivo.com.cn.
+
+Two tests keep these lists true. `PrivacyHostsTest` fails when the code gives
+a store or an icon a host this page does not name, and `StoresLiveTest` fails
+when a store, asked for a real app, reaches a host outside its domains.
 
 The list of well known apps is part of Tern. Showing it asks nobody
 anything. A request goes out when you press Look on one of them, to that app's
 own address, the same as for a link you typed.
 
-Until an app is installed, its row shows the icon its source offers. For an app
-from GitHub that is a request to raw.githubusercontent.com, for the icon the
-project keeps with its store listing, and where there is none a second one to
-avatars.githubusercontent.com. For an app from GitLab, Codeberg, another
-Forgejo or Gitea server, F-Droid, IzzyOnDroid or a repository in F-Droid's
-format, the request goes to the host the app comes from, and follows a redirect
-from there only over HTTPS. For an app from a store it goes to the store, or to
-the one server the store keeps its pictures on, such as image.winudf.com for
-APKPure; `core/.../icon/IconAddresses.kt` lists each of them. It carries no token and no cookie, and an icon that
-was fetched is kept for seven days before it is asked for again. The setting
-for icons from the source turns all of this off, and rows then show a letter.
-
-An import from a link fetches the one address you typed, without a token.
+Until an app is installed, its row shows the icon its source offers, from the
+hosts in the tables above; `core/.../icon/IconAddresses.kt` lists them. A
+request for an icon follows a redirect only over HTTPS and carries no token
+and no cookie, and an icon that was fetched is kept for seven days before it
+is asked for again. The setting for icons from the source turns all of this
+off, and rows then show a letter.
 
 With a proxy set, every request goes through it, and host names are resolved
 by the proxy. While the proxy cannot be reached, Tern reaches nothing. It

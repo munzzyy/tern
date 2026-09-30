@@ -21,9 +21,8 @@ class SamsungSourceTest {
     private val source = SamsungSource()
     private val canonical = "https://apps.galaxyappstore.com/detail/org.example.app"
 
-    private fun stubUrl(pkg: String = "org.example.app", model: String = "SM-S948B", csc: String = "DBT", sdk: Int = 36, abiType: String = "64") =
-        "https://vas.samsungapps.com/stub/stubDownload.as?appId=$pkg&deviceId=$model&mcc=425&mnc=01&csc=$csc&sdkVer=$sdk" +
-            "&systemId=1608665720954&abiType=$abiType&extuk=0191d6627f38685f"
+    private fun stubUrl(pkg: String = "org.example.app", sdk: Int = 36, abiType: String = "64") =
+        "https://vas.samsungapps.com/stub/stubDownload.as?appId=$pkg&deviceId=SM-S948B&mcc=425&mnc=01&csc=DBT&sdkVer=$sdk&abiType=$abiType&extuk=0"
 
     private fun context(http: FakeHttp, device: DeviceProfile? = DeviceProfile.ARM64_PHONE) = CheckContext(http, InMemoryValidatorStore(), device = device)
 
@@ -75,12 +74,13 @@ class SamsungSourceTest {
     }
 
     @Test
-    fun asksForTheModelRegionAndDeviceOfTheApp() {
-        val spec = SourceSpec(source.type, canonical, mapOf(SourceOptions.PACKAGE to "org.example.app", SourceOptions.DEVICE_MODEL to "SM-A556B", SourceOptions.CSC to "EUX"))
+    fun everyCopyAsksForTheSameModelAndRegionAndSaysOnlyTheAndroidVersionAndBitness() {
+        val spec = SourceSpec(source.type, canonical, mapOf(SourceOptions.PACKAGE to "org.example.app", "deviceModel" to "SM-A556B", "csc" to "EUX"))
         val phone32 = DeviceProfile(listOf("armeabi-v7a", "armeabi"), sdk = 30, densityDpi = 320)
-        val http = FakeHttp().resource(stubUrl(model = "SM-A556B", csc = "EUX", sdk = 30, abiType = "32"), "store/samsung-stub.xml")
+        val http = FakeHttp().resource(stubUrl(sdk = 30, abiType = "32"), "store/samsung-stub.xml")
         val result = source.check(spec, context(http, phone32)) as CheckResult.Listing
         assertEquals("2.4.1", result.listing.releases.single().version)
+        assertTrue(http.requests.single().headers.isEmpty())
     }
 
     @Test

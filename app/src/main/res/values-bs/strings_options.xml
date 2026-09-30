@@ -64,10 +64,6 @@
     <string name="option_workflow">Datoteka radnog toka</string>
     <string name="option_workflow_help">Na primjer build.yml.</string>
     <string name="option_branch">Grana</string>
-    <string name="option_device_model">Model uređaja</string>
-    <string name="option_device_model_help">Galaxy Store daje svakom modelu vlastitu verziju, na primjer SM-S948B.</string>
-    <string name="option_csc">Kod regije (CSC)</string>
-    <string name="option_csc_help">Tri slova, na primjer DBT.</string>
     <string name="option_link_filter">Filter za linkove za preuzimanje</string>
     <string name="option_link_filter_help">Samo linkovi koji se podudaraju računaju se kao preuzimanja.</string>
     <string name="option_page_order">Zadrži redoslijed stranice</string>
@@ -78,7 +74,6 @@
     <string name="version_from_text">Tekst linka</string>
     <string name="version_from_page">Cijela stranica</string>
     <string name="option_headers">Zaglavlja zahtjeva</string>
-    <string name="option_headers_help">Jedno po redu, kao Name: value. Nikada lozinka ili kolačić.</string>
     <string name="option_pseudo">Kada nema verzije</string>
     <string name="pseudo_default">Razlikuj datoteke kao što to radi server</string>
     <string name="pseudo_hash">Po hešu početka datoteke</string>

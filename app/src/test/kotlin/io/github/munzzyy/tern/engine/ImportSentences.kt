@@ -3,6 +3,7 @@ package io.github.munzzyy.tern.engine
 import io.github.munzzyy.tern.core.interop.TernExport
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.source.Refusal
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.engine.real.ImportTexts
 import org.junit.Assert.assertEquals
@@ -25,6 +26,7 @@ object ImportSentences : ImportTexts {
     override fun linkNotAnExport() = "linkNotAnExport"
     override fun serverStatus(code: Int) = "serverStatus($code)"
     override fun checkRateLimited(untilMs: Long?) = "checkRateLimited($untilMs)"
+    override fun importRefused(refusal: Refusal) = "importRefused($refusal)"
 }
 
 fun exportOf(vararg names: String): String = TernExport.write(

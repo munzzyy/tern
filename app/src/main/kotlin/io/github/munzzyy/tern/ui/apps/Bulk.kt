@@ -7,7 +7,7 @@ import io.github.munzzyy.tern.ui.detail.toggledCategory
 import io.github.munzzyy.tern.ui.text.canInstallNow
 import io.github.munzzyy.tern.ui.text.canUpdateNow
 
-enum class BulkAction { CATEGORY, CHECK, UPDATE, REMOVE, FAVORITE, MODE, SHARE_ADDRESSES, SHARE_EXPORT, UNINSTALL, MARK_SEEN, SAVE_FILES, INSTALL, SHARE_LINKS }
+enum class BulkAction { CATEGORY, CHECK, UPDATE, REMOVE, FAVORITE, MODE, SHARE_ADDRESSES, SHARE_EXPORT, UNINSTALL, MARK_SEEN, SAVE_FILES, INSTALL, SHARE_LINKS, SHARE_OBTAINIUM_LINKS }
 
 const val MAX_CATEGORY = 40
 

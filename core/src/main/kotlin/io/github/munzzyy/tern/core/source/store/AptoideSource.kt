@@ -33,6 +33,8 @@ class AptoideSource : Source, Searchable {
 
     override val origin: String = "Aptoide"
 
+    override val domains: Set<String> get() = setOf("aptoide.com")
+
     override fun match(url: String): SourceSpec? {
         val uri = Urls.parseHttps(url) ?: return null
         val name = APP_HOST.matchEntire(uri.host?.lowercase() ?: return null)?.groupValues?.get(1) ?: return null

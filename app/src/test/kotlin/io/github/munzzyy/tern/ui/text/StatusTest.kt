@@ -6,6 +6,7 @@ import io.github.munzzyy.tern.engine.Phase
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.Progress
+import io.github.munzzyy.tern.engine.real.Checks
 import io.github.munzzyy.tern.ui.testRow
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -32,6 +33,21 @@ class StatusTest {
         val row = testRow(status = AppStatus.UPDATE_AVAILABLE, progress = Progress(Phase.WAITING_FOR_USER))
         assertEquals(StatusLabel.WAITING, statusLabel(row))
         assertEquals(StatusLabel.DOWNLOADING, statusLabel(row.copy(progress = Progress(Phase.DOWNLOADING, 1, 2))))
+    }
+
+    @Test
+    fun anAppPausedWhileStoresAreOffOffersNothingButTurningThemOn() {
+        val paused = Checks.paused("paused")
+        val row = testRow(status = paused.status, problem = paused.problem, offered = "2.0")
+        assertEquals(StatusLabel.PAUSED, statusLabel(row))
+        assertEquals(Tone.NEUTRAL, statusLabel(row).tone)
+        assertTrue(isPaused(row))
+        assertNull(primaryAction(row))
+        assertNull(inlineAction(row))
+        assertFalse(canPickInstall(row))
+        assertFalse(canInstallNow(row))
+        assertFalse(canUpdateNow(row))
+        assertEquals(R.string.stores_advice, problemAdvice(ProblemKind.STORES_OFF))
     }
 
     @Test

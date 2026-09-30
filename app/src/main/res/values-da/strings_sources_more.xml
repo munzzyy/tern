@@ -18,8 +18,6 @@
     <string name="step_arch">Foretræk denne enheds processor</string>
     <string name="step_add">Tilføj en side</string>
     <string name="step_remove">Fjern denne side</string>
-    <string name="option_file_version">Brug filnavnet som version</string>
-    <string name="option_file_version_effect">Hver fil tæller så som en udgivelse for sig.</string>
     <string name="github_proxy_title">GitHub gennem en hubproxy</string>
     <string name="github_proxy_host">Hubproxy-vært</string>
     <string name="github_proxy_help">Kun et værtsnavn, f.eks. gh-proxy.com. Tern når den via HTTPS.</string>

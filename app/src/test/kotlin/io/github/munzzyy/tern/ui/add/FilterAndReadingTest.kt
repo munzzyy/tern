@@ -58,13 +58,20 @@ class FilterAndReadingTest {
     }
 
     @Test
-    fun everyKindAPersonMayPickIsOfferedAndVivoAndCoolApkAreNot() {
+    fun everyKindAPersonMayPickIsOfferedAndVivoIsNot() {
         assertEquals(null, READ_AS_CHOICES.first())
         for (type in listOf(SourceTypes.HTML, SourceTypes.DIRECT, SourceTypes.GITHUB, SourceTypes.GITLAB, SourceTypes.FORGEJO, SourceTypes.FDROID_REPO, SourceTypes.JENKINS)) {
             assertTrue(type, type in READ_AS_CHOICES)
         }
         assertFalse(SourceTypes.VIVO in READ_AS_CHOICES)
-        assertFalse(SourceTypes.COOLAPK in READ_AS_CHOICES)
+    }
+
+    @Test
+    fun withStoresOffNoStoreIsOfferedToReadAnAddressAs() {
+        assertTrue(SourceTypes.APKPURE in readAsChoices(storesOn = true))
+        val off = readAsChoices(storesOn = false)
+        assertTrue(off.none { it in SourceTypes.THIRD_PARTY_STORES })
+        assertTrue(SourceTypes.ITCHIO in off && SourceTypes.HTML in off && null in off)
     }
 
     @Test

@@ -18,8 +18,6 @@
     <string name="step_arch">تفضيل معالج هذا الجهاز</string>
     <string name="step_add">إضافة صفحة</string>
     <string name="step_remove">إزالة هذه الصفحة</string>
-    <string name="option_file_version">استخدام اسم الملف كرقم الإصدار</string>
-    <string name="option_file_version_effect">عندها يُحتسب كل ملف إصدارًا مستقلًا.</string>
     <string name="github_proxy_title">GitHub عبر hubproxy</string>
     <string name="github_proxy_host">مضيف hubproxy</string>
     <string name="github_proxy_help">اسم المضيف وحده، مثل gh-proxy.com. يتصل Tern به عبر HTTPS.</string>

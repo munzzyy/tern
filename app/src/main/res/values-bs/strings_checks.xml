@@ -38,7 +38,6 @@
     <string name="sources_repositories">Repozitoriji</string>
     <string name="sources_stores">Trgovine</string>
     <string name="sources_mirrors">Trgovine koje ponovo objavljuju aplikacije</string>
-    <string name="sources_modified">Stranice s izmijenjenim aplikacijama</string>
     <string name="sources_other">Druga mjesta</string>
     <string name="sources_web_page">Web stranica s linkovima na datoteke</string>
     <string name="sources_direct">Direktan link na datoteku</string>
@@ -48,8 +47,6 @@
     <string name="shared_configs_title">Konfiguracije koje dijele korisnici Obtainiuma</string>
     <string name="shared_configs_effect">Stranica s gotovim postavkama za aplikacije. Njeni linkovi se otvaraju u Ternu kada je u Postavkama uključeno \"Otvori Obtainium linkove\".</string>
     <string name="engine_inner_filter_nothing">Filter za datoteke unutar arhiva ne odgovara nijednom APK-u u ovoj arhivi.</string>
-    <string name="preview_republished">%1$s ponovo nudi ono što programeri objavljuju negdje drugo. Njegove datoteke se provjeravaju prema certifikatu programera čim ga Tern sazna, zato prikvačite certifikat ili prvo instalirajte od programera kada možete.</string>
-    <string name="preview_modified">%1$s nudi aplikacije koje je izmijenio neko drugi, a ne njihov programer. Potpisao ih je onaj ko ih je izmijenio, i Tern ne može znati šta je izmijenjeno.</string>
     <string name="about_track_tern">Održavaj i sam Tern ažurnim</string>
     <string name="about_track_tern_effect">Dodaje Ternova izdanja na spisak, provjerena i verificirana kao i kod svake aplikacije.</string>
     <string name="engine_channel_tracked">Nova izdanja praćenih aplikacija</string>

@@ -40,7 +40,6 @@
     <string name="sources_repositories">Repozitáře</string>
     <string name="sources_stores">Obchody</string>
     <string name="sources_mirrors">Obchody, které znovu vydávají aplikace</string>
-    <string name="sources_modified">Weby s upravenými aplikacemi</string>
     <string name="sources_other">Jiná místa</string>
     <string name="sources_web_page">Webová stránka s odkazy na soubory</string>
     <string name="sources_direct">Přímý odkaz na soubor</string>
@@ -50,8 +49,6 @@
     <string name="shared_configs_title">Konfigurace sdílené uživateli Obtainium</string>
     <string name="shared_configs_effect">Web s hotovými nastaveními pro aplikace. Jeho odkazy se otevřou v Tern, když je v Nastavení zapnuto „Otevírat odkazy Obtainium“.</string>
     <string name="engine_inner_filter_nothing">Filtr souborů uvnitř archivů neodpovídá žádnému APK v tomto archivu.</string>
-    <string name="preview_republished">%1$s znovu nabízí to, co vývojáři vydávají jinde. Jeho soubory se porovnávají s certifikátem vývojáře, jakmile ho Tern zná, takže pokud můžete, připněte certifikát nebo nejprve nainstalujte aplikaci od vývojáře.</string>
-    <string name="preview_modified">%1$s nabízí aplikace upravené někým jiným než jejich vývojářem. Jsou podepsané tím, kdo je upravil, a Tern nedokáže zjistit, co bylo změněno.</string>
     <string name="about_track_tern">Udržovat aktuální i samotný Tern</string>
     <string name="about_track_tern_effect">Přidá do seznamu vydání samotného Tern, kontrolovaná a ověřovaná jako u každé aplikace.</string>
     <string name="engine_channel_tracked">Nová vydání sledovaných aplikací</string>

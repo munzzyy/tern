@@ -60,10 +60,6 @@
     <string name="option_workflow">File workflow</string>
     <string name="option_workflow_help">Seperti build.yml.</string>
     <string name="option_branch">Cabang</string>
-    <string name="option_device_model">Model perangkat</string>
-    <string name="option_device_model_help">Galaxy Store memberi setiap model build sendiri, seperti SM-S948B.</string>
-    <string name="option_csc">Kode wilayah (CSC)</string>
-    <string name="option_csc_help">Tiga huruf, seperti DBT.</string>
     <string name="option_link_filter">Filter untuk tautan unduhan</string>
     <string name="option_link_filter_help">Hanya tautan yang cocok yang dihitung sebagai unduhan.</string>
     <string name="option_page_order">Pertahankan urutan halaman</string>
@@ -74,7 +70,6 @@
     <string name="version_from_text">Teks tautan</string>
     <string name="version_from_page">Seluruh halaman</string>
     <string name="option_headers">Header permintaan</string>
-    <string name="option_headers_help">Satu per baris, sebagai Name: value. Jangan pernah kata sandi atau cookie.</string>
     <string name="option_pseudo">Bila tidak ada versi</string>
     <string name="pseudo_default">Bedakan file seperti yang dilakukan server</string>
     <string name="pseudo_hash">Dengan hash dari awal file</string>

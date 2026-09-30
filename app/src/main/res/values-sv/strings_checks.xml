@@ -36,7 +36,6 @@
     <string name="sources_repositories">Lagringsplatser</string>
     <string name="sources_stores">Butiker</string>
     <string name="sources_mirrors">Butiker som återpublicerar appar</string>
-    <string name="sources_modified">Webbplatser med ändrade appar</string>
     <string name="sources_other">Andra platser</string>
     <string name="sources_web_page">En webbsida med länkar till filer</string>
     <string name="sources_direct">En direktlänk till en fil</string>
@@ -46,8 +45,6 @@
     <string name="shared_configs_title">Konfigurationer som delas av Obtainiums användare</string>
     <string name="shared_configs_effect">En webbplats med färdiga inställningar för appar. Dess länkar öppnas i Tern när Öppna Obtainium-länkar är på i Inställningar.</string>
     <string name="engine_inner_filter_nothing">Filtret för filer i arkiv matchar ingen av APK-filerna i detta arkiv.</string>
-    <string name="preview_republished">%1$s erbjuder på nytt det som utvecklare publicerar på annat håll. Tern kräver utvecklarens certifikat för dess filer när det är känt, så fäst ett eller installera från utvecklaren först när du kan.</string>
-    <string name="preview_modified">%1$s erbjuder appar som ändrats av någon annan än deras utvecklare. De är signerade av den som ändrade dem, och Tern kan inte avgöra vad som ändrades.</string>
     <string name="about_track_tern">Håll Tern själv uppdaterad</string>
     <string name="about_track_tern_effect">Lägger till Terns egna utgåvor i listan, kontrollerade och verifierade som vilken app som helst.</string>
     <string name="engine_channel_tracked">Nya utgåvor av följda appar</string>

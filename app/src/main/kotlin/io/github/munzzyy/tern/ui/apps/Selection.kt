@@ -110,6 +110,7 @@ private fun BulkMenu(picked: List<AppRow>, onAction: (BulkAction) -> Unit) {
                 BulkAction.MODE to R.string.action_set_mode,
                 BulkAction.SHARE_ADDRESSES to R.string.action_share_addresses,
                 BulkAction.SHARE_LINKS to R.string.action_share_config_links,
+                BulkAction.SHARE_OBTAINIUM_LINKS to R.string.share_obtainium_links,
                 BulkAction.SHARE_EXPORT to R.string.action_share_export,
                 BulkAction.MARK_SEEN to R.string.action_mark_seen,
                 BulkAction.SAVE_FILES to R.string.action_save_files,
@@ -296,10 +297,12 @@ fun BulkDialog(action: BulkAction, picked: List<AppRow>, engine: Engine, actions
                 onDismiss = onDismiss,
             )
         }
-        BulkAction.SHARE_LINKS -> {
+        BulkAction.SHARE_LINKS, BulkAction.SHARE_OBTAINIUM_LINKS -> {
             val context = LocalContext.current
-            val title = stringResource(R.string.action_share_config_links)
-            val links = remember(touched) { touched.mapNotNull { ConfigLink.web(it.config) } }
+            val title = stringResource(if (action == BulkAction.SHARE_LINKS) R.string.action_share_config_links else R.string.share_obtainium_links)
+            val links = remember(touched, action) {
+                touched.mapNotNull { if (action == BulkAction.SHARE_LINKS) ConfigLink.tern(it.config) else ConfigLink.web(it.config) }
+            }
             val left = n - links.size
             val leftOut = if (left > 0) pluralStringResource(R.plurals.share_links_left, left, left) else null
             LaunchedEffect(Unit) {

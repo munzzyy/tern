@@ -7,13 +7,13 @@ import io.github.munzzyy.tern.core.source.SourceOptions
 /** What is stored of an app that arrived in a file, where nobody looks at each app before it is stored. */
 internal object Arrivals {
     /**
-     * [imported] as it is stored under [id]. It is held to the certificates Tern carries for its
-     * address. And it is never set to install by itself: a file can come from anyone, and that an
+     * [imported] as it is stored under [id]. It is held to the certificates Tern carries for it,
+     * by its address or, from a store, by its package. And it is never set to install by itself: a file can come from anyone, and that an
      * app updates without being asked is for the user of this device to switch on.
      */
     fun stored(imported: AppConfig, id: String, builtIn: BuiltInPins): AppConfig = imported.copy(
         id = id,
-        pinnedSigners = builtIn.orElse(imported.source.url, imported.pinnedSigners),
+        pinnedSigners = builtIn.orElse(imported.source, imported.packageName, imported.pinnedSigners),
         updates = if (imported.updates == UpdateMode.AUTO) UpdateMode.NOTIFY else imported.updates,
     )
 
@@ -34,7 +34,7 @@ internal object Arrivals {
             name = existing.name,
             author = existing.author,
             packageName = existing.packageName ?: imported.packageName,
-            pinnedSigners = builtIn.orElse(existing.source.url, existing.pinnedSigners.ifEmpty { imported.pinnedSigners }),
+            pinnedSigners = builtIn.orElse(existing.source, existing.packageName ?: imported.packageName, existing.pinnedSigners.ifEmpty { imported.pinnedSigners }),
             updates = if (imported.updates == UpdateMode.AUTO && existing.updates != UpdateMode.AUTO) existing.updates else imported.updates,
             releases = imported.releases.copy(skippedReleaseId = existing.releases.skippedReleaseId),
         )

@@ -8,6 +8,7 @@ import android.text.format.DateFormat
 import android.text.format.Formatter
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.select.PickReason
+import io.github.munzzyy.tern.core.source.Refusal
 import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.InstallerMode
 import io.github.munzzyy.tern.net.isProxySilent
@@ -128,6 +129,10 @@ class Texts(context: Context) : ImportTexts {
     fun warnPrerelease() = s(R.string.engine_warn_prerelease)
     fun warnMoved(url: String) = s(R.string.engine_warn_moved, url)
     fun notASource() = s(R.string.engine_not_a_source)
+    fun storesOffPaused() = s(R.string.stores_paused)
+    fun refused(refusal: Refusal) = s(if (refusal == Refusal.MODIFIED_APPS) R.string.stores_refused_modified else R.string.stores_refused_impersonation)
+    override fun importRefused(refusal: Refusal) = refused(refusal)
+    fun checksumStore(store: String) = s(R.string.stores_checksum_source, ltr(store))
     fun nothingToSearch() = s(R.string.engine_nothing_to_search)
 
     fun eventAdded(from: String) = s(R.string.engine_event_added, ltr(from))

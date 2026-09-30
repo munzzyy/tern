@@ -117,11 +117,7 @@ fun PreviewCard(found: Detection.Found, carried: List<CarriedSetting>, onAdd: (i
             val origin = originNote(found.spec.type)
             if (found.warnings.isNotEmpty() || origin != null) {
                 Column(verticalArrangement = Arrangement.spacedBy(look.gapSmall)) {
-                    when (origin) {
-                        OriginNote.MODIFIED -> TrustLine(Trust.BAD, stringResource(R.string.preview_modified, sourceName(found.spec)))
-                        OriginNote.REPUBLISHED -> TrustLine(Trust.NOTE, stringResource(R.string.preview_republished, sourceName(found.spec)))
-                        null -> Unit
-                    }
+                    OriginLine(found.spec, pinned = previewPinned(found))
                     for (w in found.warnings.take(MAX_WARNINGS)) TrustLine(Trust.BAD, w)
                 }
             }
@@ -203,14 +199,4 @@ fun FoundIcon(found: Detection.Found, size: Dp, modifier: Modifier = Modifier) {
     }
 }
 
-/** What an app's page says about where a file comes from, when it is not from the developer's own channels. */
-enum class OriginNote { REPUBLISHED, MODIFIED }
 
-fun originNote(type: String): OriginNote? = when (type) {
-    in SourceTypes.MODIFIED -> OriginNote.MODIFIED
-    in SourceTypes.REPUBLISHING -> OriginNote.REPUBLISHED
-    else -> null
-}
-
-/** The store's own name, or its host where it has none. */
-fun sourceName(spec: SourceSpec): String = SourceTypes.displayName(spec.type) ?: hostOf(spec.url)

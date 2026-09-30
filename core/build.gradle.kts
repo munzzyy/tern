@@ -26,6 +26,8 @@ tasks.test {
     // CatalogTest reads these from disk, so a change to one of them has to run the tests again.
     inputs.files("../docs/SUGGESTIONS.md", "../app/src/main/res/values/strings_suggest.xml")
         .withPropertyName("catalogFiles").withPathSensitivity(PathSensitivity.RELATIVE)
+    // PrivacyHostsTest reads PRIVACY.md.
+    inputs.files("../PRIVACY.md").withPropertyName("privacyPolicy").withPathSensitivity(PathSensitivity.RELATIVE)
     systemProperty("tern.live", System.getProperty("tern.live") ?: "false")
     systemProperty("tern.index", System.getProperty("tern.index") ?: "")
     testLogging.showStandardStreams = System.getProperty("tern.live") == "true" || System.getProperty("tern.index") != null

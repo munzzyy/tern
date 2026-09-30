@@ -24,13 +24,17 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 /**
- * Galaxy Store. Reads the download stub the store's own app asks (vas.samsungapps.com), which names
- * the newest version for one device model and region and a file address that holds a token for a
- * short while. The file is listed at that address without the token, so it stays the same from one
- * check to the next, and [resolve] asks the stub again for a fresh one.
+ * Galaxy Store. Reads the download stub at vas.samsungapps.com, which names the newest version for
+ * a device model and region and a file address that holds a token for a short while. Every copy
+ * of Tern asks for the same model and region, the ones in the companion, and says nothing else
+ * about the device but its Android version and whether it runs 64-bit code. The file is listed at
+ * its address without the token, so it stays the same from one check to the next, and [resolve]
+ * asks the stub again for a fresh one.
  */
 class SamsungSource : Source {
     override val type: String = SourceTypes.SAMSUNG
+
+    override val domains: Set<String> get() = DOMAINS
 
     override fun match(url: String): SourceSpec? {
         val uri = Urls.parseHttps(url) ?: return null
@@ -72,15 +76,12 @@ class SamsungSource : Source {
     private class Stub(val versionName: String, val versionCode: Long?, val name: String?, val fileUrl: String?, val size: Long?)
 
     private fun stub(spec: SourceSpec, pkg: String, context: CheckContext): Stub {
-        val model = spec.option(SourceOptions.DEVICE_MODEL) ?: DEFAULT_MODEL
-        val csc = spec.option(SourceOptions.CSC) ?: DEFAULT_CSC
         val device = context.device
         val sdk = device?.sdk ?: DEFAULT_SDK
         // The store serves a separate build to phones that run only 32-bit code.
         val abiType = if (device != null && device.abis.none { it in ABIS_64 }) "32" else "64"
         val url = "https://vas.samsungapps.com/stub/stubDownload.as?appId=$pkg" +
-            "&deviceId=${Urls.encodeSegment(model)}&mcc=425&mnc=01&csc=${Urls.encodeSegment(csc)}&sdkVer=$sdk" +
-            "&systemId=1608665720954&abiType=$abiType&extuk=0191d6627f38685f"
+            "&deviceId=$MODEL&mcc=$MCC&mnc=$MNC&csc=$CSC&sdkVer=$sdk&abiType=$abiType&extuk=0"
         context.http.execute(HttpRequest(url)).use { response ->
             if (response.status == 404) throw SourceException(SourceErrorKind.NOT_FOUND, "The Galaxy Store has no app $pkg")
             if (!response.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "The Galaxy Store answered ${response.status} for $pkg")
@@ -126,13 +127,16 @@ class SamsungSource : Source {
     }
 
     companion object {
-        /** Asked for when the app names no model: the model and region Obtainium asks for too. */
-        const val DEFAULT_MODEL = "SM-S948B"
-        const val DEFAULT_CSC = "DBT"
+        /** The model and region every copy of Tern asks for, the ones Obtainium asks for too. PRIVACY.md names them. */
+        const val MODEL = "SM-S948B"
+        const val CSC = "DBT"
+        const val MCC = "425"
+        const val MNC = "01"
         private const val DEFAULT_SDK = 36
         private const val MAX_BODY = 256 * 1024
 
         private val HOSTS = setOf("galaxystore.samsung.com", "apps.samsung.com", "apps.samsung.cn", "galaxyappstore.com", "apps.galaxyappstore.com")
+        private val DOMAINS = setOf("galaxystore.samsung.com", "apps.samsung.com", "apps.samsung.cn", "galaxyappstore.com", "samsungapps.com")
 
         /** The store's file hosts, such as cflare-dn.gw.samsungapps.com, and the Chinese store's. */
         private val FILE_HOSTS = listOf("samsungapps.com", "galaxyappstore.com")

@@ -76,14 +76,14 @@ class ConfigLinkTest {
 
     @Test
     fun aHeaderThatCouldHoldAKeyNeverGoesIntoALink() {
-        val headers = RequestHeaders.write(mapOf("User-Agent" to "Mozilla/5.0", "X-Api-Key" to "hunter2secret", "PRIVATE-TOKEN" to "glpat-abc"))
+        val headers = RequestHeaders.write(mapOf("Referer" to "https://example.com/", "X-Api-Key" to "hunter2secret", "PRIVATE-TOKEN" to "glpat-abc"))
         val direct = AppConfig("direct", SourceSpec(SourceTypes.DIRECT, "https://example.org/app.apk", mapOf(SourceOptions.HEADERS to headers)), "Direct")
         val link = ConfigLink.web(direct)!!
         assertFalse(link.contains("hunter2secret"))
         assertFalse(link.contains("glpat"))
         assertFalse(link.contains("creds"))
         val back = readBack(link)
-        assertEquals(mapOf("User-Agent" to "Mozilla/5.0"), RequestHeaders.of(back.source))
+        assertEquals(mapOf("Referer" to "https://example.com/"), RequestHeaders.of(back.source))
 
         val onlySecret = direct.copy(source = direct.source.copy(options = mapOf(SourceOptions.HEADERS to RequestHeaders.write(mapOf("X-Api-Key" to "hunter2secret")))))
         assertNull(readBack(ConfigLink.of(onlySecret)!!).source.option(SourceOptions.HEADERS))
@@ -117,10 +117,31 @@ class ConfigLinkTest {
     }
 
     @Test
+    fun ternsOwnLinkKeepsTheSettingsAfterTheHashWhereNoServerSeesThem() {
+        val link = ConfigLink.tern(app)!!
+        assertTrue(link.startsWith("https://tern.munzzyy.dev/add/#app="))
+        assertFalse("nothing before the hash but the page", link.substringBefore('#').contains("github"))
+        assertEquals(readBack(ConfigLink.of(app)!!), readBack(link))
+        assertEquals("the page's tern:// link reads the same", readBack(ConfigLink.of(app)!!), readBack("tern://app/" + link.substringAfter("#app=")))
+    }
+
+    @Test
+    fun ternsLinkForAnAddressKeepsItAfterTheHashAndOlderLinksStillRead() {
+        val address = "https://github.com/example/app?tab=releases"
+        val link = ConfigLink.ternAddress(address)
+        assertEquals("https://tern.munzzyy.dev/add/#url=https%3A%2F%2Fgithub.com%2Fexample%2Fapp%3Ftab%3Dreleases", link)
+        assertEquals(ObtainiumLink.Add(address), ObtainiumLink.parse(link))
+        assertEquals(ObtainiumLink.Add(address), ObtainiumLink.parse("https://tern.munzzyy.dev/add/?url=https%3A%2F%2Fgithub.com%2Fexample%2Fapp%3Ftab%3Dreleases"))
+        assertEquals(ObtainiumLink.Add(address), ObtainiumLink.parse("tern://add?url=https%3A%2F%2Fgithub.com%2Fexample%2Fapp%3Ftab%3Dreleases"))
+        assertNull("the page without an app carries nothing", ObtainiumLink.parse("https://tern.munzzyy.dev/add/"))
+    }
+
+    @Test
     fun aSourceObtainiumCannotFollowHasNoLink() {
         val actions = AppConfig("ci", SourceSpec(SourceTypes.GITHUB_ACTIONS, "https://github.com/example/app"), "Nightly")
         assertNull(ConfigLink.of(actions))
         assertNull(ConfigLink.web(actions))
+        assertNull(ConfigLink.tern(actions))
     }
 
     @Test
@@ -128,6 +149,7 @@ class ConfigLinkTest {
         val long = app.copy(releases = ReleasePolicy(titleFilter = "release ".repeat(1_000)))
         assertNull(ConfigLink.of(long))
         assertNull(ConfigLink.web(long))
+        assertNull(ConfigLink.tern(long))
         assertTrue(ConfigLink.web(app)!!.length <= ConfigLink.MAX_LENGTH)
     }
 }

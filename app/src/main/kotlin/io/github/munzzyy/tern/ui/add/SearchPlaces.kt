@@ -56,7 +56,7 @@ fun SearchPlaces(modifier: Modifier = Modifier) {
     val look = LocalLook.current
     val actions = rememberActions()
     val settings by engine.settings.collectAsStateWithLifecycle()
-    val places = remember(engine) { engine.searchOrigins }
+    val places = remember(engine, settings.thirdPartyStores) { engine.searchOrigins }
     Column(modifier, verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
         Text(
             stringResource(R.string.search_in),

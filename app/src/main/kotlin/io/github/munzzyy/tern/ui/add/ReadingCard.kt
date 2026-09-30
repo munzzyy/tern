@@ -10,14 +10,17 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.source.SourceTypes
+import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.common.ActionRow
 import io.github.munzzyy.tern.ui.common.ChoiceRow
 import io.github.munzzyy.tern.ui.common.SectionCard
@@ -35,6 +38,9 @@ const val ADD_PACKAGE_TAG = "add_package"
 
 /** What an address may be read as, Automatic first, as Obtainium's "override source" offers it. */
 val READ_AS_CHOICES: List<String?> = listOf<String?>(null) + SourceTypes.OVERRIDABLE
+
+/** [READ_AS_CHOICES] without the third-party stores while those are off. */
+fun readAsChoices(storesOn: Boolean): List<String?> = if (storesOn) READ_AS_CHOICES else READ_AS_CHOICES.filter { it !in SourceTypes.THIRD_PARTY_STORES }
 
 /** A kind of source as the choice names it. */
 @Composable
@@ -63,9 +69,10 @@ fun ReadingCard(vm: AddViewModel, answered: Boolean) {
             modifier = Modifier.testTag(ADD_OPTIONS_TAG),
         )
         if (!vm.optionsOpen) return@SectionCard
+        val settings by LocalEngine.current.settings.collectAsStateWithLifecycle()
         ChoiceRow(
             title = stringResource(R.string.add_read_as),
-            options = READ_AS_CHOICES,
+            options = readAsChoices(settings.thirdPartyStores),
             selected = vm.readAs,
             label = { readAsLabel(it) },
             onSelect = vm::pickReadAs,

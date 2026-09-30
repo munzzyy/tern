@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.core.source.store
 
 import io.github.munzzyy.tern.core.model.Asset
+import io.github.munzzyy.tern.core.model.AssetKind
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.net.Headers
 import io.github.munzzyy.tern.core.net.HttpRequest
@@ -108,21 +109,27 @@ class ItchIoSourceTest {
         assertEquals(base, release.pageUrl)
         assertEquals(
             listOf(
-                Asset("ExampleQuest-2.3.0.apk", "$base/download/1002", size = 12345678L),
+                Asset("Example Quest for Android", "$base/download/1002", kind = AssetKind.APK),
+                Asset("Example Quest (mirror)", "$base/download/1003", kind = AssetKind.APK),
                 Asset("example-quest-arm64.apk", "$base/download/1004"),
             ),
             release.assets,
         )
 
-        val posts = http.requests.filter { it.method == "POST" }
-        assertEquals(listOf("$base/download_url", fileEndpoint(1002), fileEndpoint(1003), fileEndpoint(1004)), posts.map { it.url })
-        for (post in posts) {
-            assertEquals("""{"csrf_token":"$token"}""", String(post.body!!, Charsets.UTF_8))
-            assertEquals("application/json", post.headers["Content-Type"])
-            assertEquals("XMLHttpRequest", post.headers["X-Requested-With"])
-        }
-        assertEquals("$base/download/1002", posts[1].headers["Referer"])
+        val post = http.requests.single { it.method == "POST" }
+        assertEquals("$base/download_url", post.url)
+        assertEquals("""{"csrf_token":"$token"}""", String(post.body!!, Charsets.UTF_8))
+        assertEquals("application/json", post.headers["Content-Type"])
+        assertEquals("XMLHttpRequest", post.headers["X-Requested-With"])
         assertTrue("no cookie is ever sent", http.requests.none { request -> request.headers.keys.any { it.equals("Cookie", ignoreCase = true) } })
+    }
+
+    @Test
+    fun aCheckAsksForNoFile() {
+        val http = game()
+        listing(http)
+        assertEquals(listOf("GET $base", "POST $base/download_url", "GET $downloadPage"), http.requests.map { "${it.method} ${it.url}" })
+        assertTrue(http.requests.none { "/file/" in it.url || it.url.startsWith(fileStore) })
     }
 
     @Test
@@ -164,20 +171,6 @@ class ItchIoSourceTest {
             <span class="icon icon-android"></span></body></html>
         """.trimIndent()
         assertEquals(SourceErrorKind.NO_RELEASES, failure(FakeHttp().text(base, page)).kind)
-    }
-
-    @Test
-    fun anAndroidFileKeptOnAnotherSiteIsLeftOut() {
-        val page = """
-            <html><head><meta name="csrf_token" value="$token"/></head><body><div class="page_widget">
-            <div class="upload"><a class="download_btn" data-upload_id="1003">Download</a>
-            <strong class="name" title="Example Quest (mirror)">Example Quest (mirror)</strong>
-            <span class="download_platforms"><span class="icon icon-android"></span></span></div></div></body></html>
-        """.trimIndent()
-        val http = FakeHttp().text(base, page)
-            .on(fileEndpoint(1003), json(fileEndpoint(1003), """{"external":true,"url":"https://files.example.org/ExampleQuest.apk"}"""))
-        assertEquals(SourceErrorKind.NO_RELEASES, failure(http).kind)
-        assertTrue(http.requests.none { it.url.startsWith("https://files.example.org") })
     }
 
     @Test

@@ -42,7 +42,7 @@ class ReadAsTest {
         assertNull(registry.readAs("https://example.org", SourceTypes.GITHUB, context()))
         assertNull(registry.readAs("https://github.com/settings/profile", SourceTypes.GITHUB, context()))
         assertNull(registry.readAs("https://example.org/owner/app", SourceTypes.VIVO, context()))
-        assertNull(registry.readAs("https://example.org/owner/app", SourceTypes.COOLAPK, context()))
+        assertNull(registry.readAs("https://example.org/owner/app", "coolapk", context()))
         assertNull(registry.readAs("https://example.org/owner/app", "nonsense", context()))
     }
 

@@ -82,6 +82,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             otherInstallerActivity = prefs.getString("otherInstallerActivity", null)?.takeIf { CLASS.matches(it) },
             shareToVerifier = prefs.getBoolean("shareToVerifier", d.shareToVerifier),
             keepOwnMessages = prefs.getBoolean("keepOwnMessages", d.keepOwnMessages),
+            thirdPartyStores = prefs.getBoolean("thirdPartyStores", d.thirdPartyStores),
         )
     }
 
@@ -163,6 +164,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putString("otherInstallerActivity", s.otherInstallerActivity?.takeIf { CLASS.matches(it) })
             .putBoolean("shareToVerifier", s.shareToVerifier)
             .putBoolean("keepOwnMessages", s.keepOwnMessages)
+            .putBoolean("thirdPartyStores", s.thirdPartyStores)
             .commit()
     }
 

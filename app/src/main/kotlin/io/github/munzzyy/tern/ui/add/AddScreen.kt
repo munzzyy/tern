@@ -250,6 +250,7 @@ fun AddScreen(
                                 onReplace = { vm.replace(d) },
                             )
                             is Detection.Results -> ResultsList(d, onPick = { vm.look(it.url, it.type) }, onSearchRepository = { vm.detect(words = it) })
+                            is Detection.StoresOff -> StoresOffCard(d.type, onTurnOn = vm::turnOnStores)
                             is Detection.Failed -> {
                                 val settable = optionsMayHelp(d)
                                 ProblemBox(

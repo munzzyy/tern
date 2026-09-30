@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.ui.LocalEngine
@@ -75,7 +76,9 @@ fun SourcesCard(modifier: Modifier = Modifier) {
 private fun SourcesDialog(onDismiss: () -> Unit) {
     val look = LocalLook.current
     val engine = LocalEngine.current
-    val searchable = remember(engine) { engine.searchOrigins.toSet() }
+    val settings by engine.settings.collectAsStateWithLifecycle()
+    val searchable = remember(engine, settings.thirdPartyStores) { engine.searchOrigins.toSet() }
+    val offWord = stringResource(R.string.stores_off_tag)
     val searchWord = stringResource(R.string.sources_searchable)
     val trackWord = stringResource(R.string.sources_track_only)
     val general = mapOf(
@@ -96,6 +99,7 @@ private fun SourcesDialog(onDismiss: () -> Unit) {
                             val tags = listOfNotNull(
                                 searchWord.takeIf { name in searchable || (type == SourceTypes.FORGEJO && "Codeberg" in searchable) },
                                 trackWord.takeIf { type in SourceTypes.TRACK_ONLY },
+                                offWord.takeIf { type in SourceTypes.THIRD_PARTY_STORES && !settings.thirdPartyStores },
                             )
                             if (tags.isEmpty()) name else "$name (${tags.joinToString()})"
                         },

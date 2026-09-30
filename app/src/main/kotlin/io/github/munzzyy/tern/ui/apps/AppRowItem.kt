@@ -75,6 +75,7 @@ import io.github.munzzyy.tern.ui.text.isWaitingForUser
 import io.github.munzzyy.tern.ui.text.isolate
 import io.github.munzzyy.tern.ui.text.ltr
 import io.github.munzzyy.tern.ui.text.shortUrl
+import io.github.munzzyy.tern.ui.text.isPaused
 import io.github.munzzyy.tern.ui.text.statusLabel
 import io.github.munzzyy.tern.ui.text.versionChange
 import io.github.munzzyy.tern.ui.theme.LocalLook
@@ -254,6 +255,7 @@ private fun RowText(row: AppRow, highlighted: Boolean, large: Boolean, onChanges
         val moved = row.movedTo
         when {
             row.progress != null -> Unit
+            isPaused(row) -> PausedLine(quiet)
             moved != null -> MovedLine(moved, quiet)
             else -> ReleaseLine(row, quiet, onChanges)
         }
@@ -266,6 +268,16 @@ private fun RowText(row: AppRow, highlighted: Boolean, large: Boolean, onChanges
                 LinearProgressIndicator(modifier = bar)
             }
         }
+    }
+}
+
+/** Why an app of a third-party store is neither checked nor installed now. */
+@Composable
+private fun PausedLine(ink: Color) {
+    val look = LocalLook.current
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
+        Icon(Glyphs.Info, contentDescription = null, tint = MaterialTheme.colorScheme.tertiary, modifier = Modifier.size(look.glyphSmall))
+        Text(stringResource(R.string.stores_row_paused), style = MaterialTheme.typography.bodySmall, color = ink, maxLines = 2, overflow = TextOverflow.Ellipsis)
     }
 }
 

@@ -67,6 +67,14 @@ class FilterAndReadingTest {
     }
 
     @Test
+    fun withStoresOffNoStoreIsOfferedToReadAnAddressAs() {
+        assertTrue(SourceTypes.APKPURE in readAsChoices(storesOn = true))
+        val off = readAsChoices(storesOn = false)
+        assertTrue(off.none { it in SourceTypes.THIRD_PARTY_STORES })
+        assertTrue(SourceTypes.ITCHIO in off && SourceTypes.HTML in off && null in off)
+    }
+
+    @Test
     fun aPackageNameIsOneAndroidTakesOrNone() {
         assertTrue(isPackageName(""))
         assertTrue(isPackageName("org.example.app"))

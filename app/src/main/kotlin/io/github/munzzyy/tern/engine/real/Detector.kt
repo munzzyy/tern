@@ -15,7 +15,9 @@ import io.github.munzzyy.tern.core.source.CheckContext
 import io.github.munzzyy.tern.core.source.CheckResult
 import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.core.source.SourceListing
+import io.github.munzzyy.tern.core.source.Refusal
 import io.github.munzzyy.tern.core.source.SourceOptions
+import io.github.munzzyy.tern.core.source.SourceRegistry
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.fdroid.FDroidRepoSource
 import io.github.munzzyy.tern.core.text.Shown
@@ -34,7 +36,7 @@ import kotlinx.coroutines.withContext
 
 /** Turns what the user typed, pasted or shared into a source to add, or into search results. */
 internal class Detector(private val e: RealEngine) {
-    private val search = Search(e.http, e.tokens, e.registry.searchable) { e.sourceContext() }
+    private val search = Search(e.http, e.tokens, { e.registry.searchable }) { e.sourceContext() }
 
     /** Every place a search can look. */
     val searchOrigins: List<String> get() = search.origins
@@ -79,6 +81,7 @@ internal class Detector(private val e: RealEngine) {
 
     private suspend fun resolve(target: Target, reading: Reading): Detection {
         val normalized = Urls.normalize(target.url) ?: return Detection.Failed(Problem(ProblemKind.NOT_FOUND, e.texts.notASource()))
+        closed(target)?.let { return it }
         val context = e.checkContext(target.config)
         val forced = reading.type?.takeIf { it in SourceTypes.OVERRIDABLE && it != target.spec?.type }
         val known = if (forced != null) {
@@ -108,6 +111,17 @@ internal class Detector(private val e: RealEngine) {
             return Detection.Failed(Problem(ProblemKind.PARSE, e.texts.checkParse(ex.message)), spec)
         }
         return found(learnedSpec, listing, carried, reading.packageName?.takeIf { BinaryManifest.isValidName(it) })
+    }
+
+    /** What is said instead of reading [target] at all: a site Tern refuses, or a store while those are off. Nothing is asked of the network. */
+    private fun closed(target: Target): Detection? {
+        val spec = target.spec
+        spec?.type?.let(Refusal::ofType)?.let { return Detection.Failed(Problem(ProblemKind.UNSUPPORTED, e.texts.refused(it))) }
+        return when (val closed = e.registry.closed(target.url)) {
+            is SourceRegistry.Closed.Refused -> Detection.Failed(Problem(ProblemKind.UNSUPPORTED, e.texts.refused(closed.refusal)))
+            is SourceRegistry.Closed.StoresOff -> Detection.StoresOff(closed.type)
+            null -> if (spec != null && e.registry.paused(spec)) Detection.StoresOff(spec.type) else null
+        }
     }
 
     /** A repository address with no app of its own: what it carries, or what of it has [words], as picks for the Add screen. */

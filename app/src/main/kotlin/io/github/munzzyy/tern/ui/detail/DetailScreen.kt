@@ -48,6 +48,7 @@ import io.github.munzzyy.tern.engine.Phase
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.LocalOnline
+import io.github.munzzyy.tern.ui.add.OriginLine
 import io.github.munzzyy.tern.ui.apps.TernSnackbarHost
 import io.github.munzzyy.tern.ui.apps.progressText
 import io.github.munzzyy.tern.ui.apps.rememberRemovals
@@ -262,6 +263,19 @@ private fun Header(row: AppRow, focus: Modifier, top: Dp) {
     link?.let { LinkDialog(it, onDismiss = { link = null }) }
 }
 
+/** An app of a third-party store while those are off, and the switch that turns them on, which checks it again. */
+@Composable
+private fun StoresPaused(message: String) {
+    val engine = LocalEngine.current
+    val actions = rememberActions()
+    ProblemBox(
+        title = message,
+        body = null,
+        action = stringResource(R.string.stores_turn_on),
+        onAction = { actions.run { engine.saveSettings(engine.settings.value.copy(thirdPartyStores = true)) } },
+    )
+}
+
 /** What the source says the app is. Long ones open on a press, so the actions stay near the top. */
 @Composable
 private fun Description(text: String) {
@@ -308,12 +322,17 @@ private fun ActionArea(row: AppRow, focus: Modifier) {
         }
         promptLine(row, Build.VERSION.SDK_INT)?.let { Prompt(it) }
         row.problem?.let { p ->
-            val body = buildString {
-                append(stringResource(problemAdvice(p.kind, installed = row.installed != null)))
-                if (p.kind == ProblemKind.RATE_LIMITED) p.retryAtMs?.let { append(" ").append(retryText(it)) }
+            if (p.kind == ProblemKind.STORES_OFF) {
+                StoresPaused(p.message)
+            } else {
+                val body = buildString {
+                    append(stringResource(problemAdvice(p.kind, installed = row.installed != null)))
+                    if (p.kind == ProblemKind.RATE_LIMITED) p.retryAtMs?.let { append(" ").append(retryText(it)) }
+                }
+                ProblemBox(title = p.message, body = body)
             }
-            ProblemBox(title = p.message, body = body)
         }
+        OriginLine(row.config.source, pinned = row.config.pinnedSigners.isNotEmpty() || row.installed != null)
         row.progress?.let { progress ->
             Column(
                 verticalArrangement = Arrangement.spacedBy(look.gapSmall),

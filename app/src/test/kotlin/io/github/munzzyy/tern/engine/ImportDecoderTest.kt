@@ -25,6 +25,25 @@ class ImportDecoderTest {
     }
 
     @Test
+    fun anAppOfASiteTernRefusesIsLeftOutWithTheReasonInEitherFormat() {
+        val obtainium = decode(
+            """[{"url":"https://github.com/example/wren","name":"Wren"},
+               {"url":"https://liteapks.com/wren.html","name":"Unlocked","overrideSource":"LiteAPKs"},
+               {"url":"https://www.rustore.ru/catalog/app/org.example.wren","name":"Copy","overrideSource":"RuStore"}]""",
+        )
+        assertEquals(listOf("Wren"), obtainium.apps.map { it.name })
+        assertEquals(listOf("Unlocked" to "importRefused(MODIFIED_APPS)", "Copy" to "importRefused(IMPERSONATION)"), obtainium.skipped)
+
+        val stored = exportOf("Wren").replace(
+            "\"apps\": [",
+            "\"apps\": [{\"id\": \"x\", \"name\": \"Copy\", \"source\": {\"type\": \"uptodown\", \"url\": \"https://wren.en.uptodown.com/android/download\"}},",
+        )
+        val tern = decode(stored)
+        assertEquals(listOf("Wren"), tern.apps.map { it.name })
+        assertEquals(listOf("Copy" to "importRefused(IMPERSONATION)"), tern.skipped)
+    }
+
+    @Test
     fun anAppOnALocalNetworkIsLeftOutAndNamed() {
         val decoded = decode(
             """[{"url":"https://github.com/example/wren","name":"Wren"},

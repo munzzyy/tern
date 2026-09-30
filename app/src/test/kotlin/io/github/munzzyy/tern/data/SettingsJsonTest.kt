@@ -37,6 +37,17 @@ class SettingsJsonTest {
     }
 
     @Test
+    fun noFileOrLinkTurnsThirdPartyStoresOn() {
+        assertFalse(Settings().thirdPartyStores)
+        assertFalse("thirdPartyStores" in SettingsJson.encode(Settings().copy(thirdPartyStores = true)).fields.keys)
+        val file = Json.parseObject("""{"thirdPartyStores":true,"theme":"DARK"}""")
+        assertFalse(SettingsJson.apply(file, Settings()).thirdPartyStores)
+        val obtainium = ObtainiumSettings.toTern(Json.parseObject("""{"thirdPartyStores":true,"enableThirdPartyStores":true}"""))
+        assertFalse(SettingsJson.apply(obtainium, Settings()).thirdPartyStores)
+        assertTrue("one who has them on keeps them on", SettingsJson.apply(file, Settings().copy(thirdPartyStores = true)).thirdPartyStores)
+    }
+
+    @Test
     fun whatReachesPastThePhoneNeverTravels() {
         val guarded = Settings().copy(
             proxy = ProxyMode.ORBOT,

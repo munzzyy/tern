@@ -74,6 +74,10 @@ internal class Checks(private val e: RealEngine) {
 
     suspend fun checkOne(id: String): CheckOutcome? {
         val stored = e.stored[id] ?: return null
+        if (e.registry.paused(stored.config.source)) {
+            reevaluate(id, network = false)
+            return CheckOutcome(id, newRelease = false, failed = false)
+        }
         e.checking += id
         e.publish()
         try {
@@ -156,7 +160,7 @@ internal class Checks(private val e: RealEngine) {
      * the main thread, so that reading happens before the turn and only fills the cache.
      */
     fun reevaluate(id: String, network: Boolean) {
-        if (network) readFilesFor(id)
+        if (network && e.stored[id]?.let { e.registry.paused(it.config.source) } == false) readFilesFor(id)
         synchronized(evaluating.getOrPut(id) { Any() }) { evaluate(id) }
     }
 
@@ -169,6 +173,10 @@ internal class Checks(private val e: RealEngine) {
 
     private fun evaluate(id: String) {
         val stored = e.stored[id] ?: return
+        if (e.registry.paused(stored.config.source)) {
+            e.evaluations[id] = paused(e.texts.storesOffPaused())
+            return
+        }
         val inspect: (Asset, String) -> FileFacts? = e.inspector::cached
         var config = stored.config
         var installed = e.readInstalled(config.packageName)
@@ -217,12 +225,15 @@ internal class Checks(private val e: RealEngine) {
         }
     }
 
-    private companion object {
-        const val MAX_PARALLEL = 4
-        const val PER_HOST = 2
-        const val MAX_ADDRESS = 2048
-        const val MAX_DETAIL = 200
-        const val MAX_VERSION = 100
-        const val TAG = "TernChecks"
+    companion object {
+        /** An app of a third-party store while those are off: kept as it is, and neither checked nor installed. */
+        fun paused(message: String) = Evaluation(AppStatus.ERROR, problem = Problem(ProblemKind.STORES_OFF, message))
+
+        private const val MAX_PARALLEL = 4
+        private const val PER_HOST = 2
+        private const val MAX_ADDRESS = 2048
+        private const val MAX_DETAIL = 200
+        private const val MAX_VERSION = 100
+        private const val TAG = "TernChecks"
     }
 }

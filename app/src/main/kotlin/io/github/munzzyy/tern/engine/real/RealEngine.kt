@@ -136,7 +136,7 @@ class RealEngine(
     /** No token for GitHub while its requests go through a hubproxy, which must never see one. */
     internal val tokens = TokenProvider { host -> if (_settings.value.githubProxy != null && GitHubProxy.isGitHubHost(host)) null else vault.tokenFor(host) }
     internal val http: HttpClient = PoliteHttp(GitHubProxyHttp(transport) { _settings.value.githubProxy }, RateLimiter(nowMs), "Tern/${BuildConfig.VERSION_NAME}")
-    internal val registry = SourceRegistry.standard(::trackedInRepository)
+    internal val registry = SourceRegistry.standard(::trackedInRepository) { _settings.value.thirdPartyStores }
     internal val inspector = FileInspector(http, store, tokens, device.sdk)
     internal val builtIn = BuiltInPins(catalog)
     internal val evaluator = Evaluator(texts, device.profile, builtIn, nowMs, { _settings.value.globalFileFilter }) { _settings.value.minAgeDaysByDefault }
@@ -621,11 +621,17 @@ class RealEngine(
             val before = _settings.value
             settingsStore.save(settings)
             val loaded = settingsStore.load()
+            val wasPaused = stored.values.filter { registry.paused(it.config.source) }.map { it.config.id }
             _settings.value = loaded
             Scheduler.apply(context, loaded)
             setObtainiumLinks(loaded.openObtainiumLinks)
             if (loaded.proxy == ProxyMode.ORBOT && before.proxy != ProxyMode.ORBOT) orbotLink.ask()
             if (loaded.installer != before.installer || loaded.otherInstaller != before.otherInstaller) installers.recheck()
+            if (loaded.thirdPartyStores != before.thirdPartyStores) {
+                for (id in stored.keys) checks.reevaluate(id, network = false)
+                publish()
+                if (wasPaused.isNotEmpty() && loaded.thirdPartyStores) scope.launch { checks.run(wasPaused, CheckCause.CHANGED) }
+            }
             if (loaded.globalFileFilter != before.globalFileFilter || loaded.minAgeDaysByDefault != before.minAgeDaysByDefault) {
                 for (id in stored.keys) checks.reevaluate(id, network = false)
                 publish()
@@ -803,7 +809,7 @@ class RealEngine(
                 }
             }
         }
-        if (pkg == null && kept == null) sourceIcons.forRow(row, size) else drawable?.toBitmap(size, size)
+        if (pkg == null && kept == null) sourceIcons.forRow(row, size).takeUnless { registry.paused(row.config.source) } else drawable?.toBitmap(size, size)
     }
 
     /** The background check: every app not set to manual, then automatic installs where Android allows them. */

@@ -43,6 +43,9 @@ enum class ProblemKind {
     INSTALL_FAILED,
     STORAGE,
     UNSUPPORTED,
+
+    /** The app comes from a third-party store while those are off, so nothing of it is asked for. */
+    STORES_OFF,
 }
 
 data class Problem(
@@ -219,6 +222,9 @@ sealed interface Detection {
 
     /** [spec] is the source that was read, when Tern got as far as knowing it, so that its options can be set and it can be read again. */
     data class Failed(val problem: Problem, val spec: SourceSpec? = null) : Detection
+
+    /** The address belongs to the third-party store [type], and those are off. Nothing was asked of it. */
+    data class StoresOff(val type: String) : Detection
 }
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
@@ -398,6 +404,12 @@ data class Settings(
     val shareToVerifier: Boolean = true,
     /** The activity log keeps Tern's own warnings and errors too, and when each check starts and ends, with nothing secret in them. */
     val keepOwnMessages: Boolean = false,
+    /**
+     * APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, the Galaxy Store and vivo
+     * are read. Off, none of their hosts is asked: an address of theirs is not added, a search
+     * leaves them out, and their apps are paused. Only the person turns it on; no file or link does.
+     */
+    val thirdPartyStores: Boolean = false,
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */

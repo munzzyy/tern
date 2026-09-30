@@ -21,6 +21,7 @@ import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.data.AppState
 import io.github.munzzyy.tern.data.SettingsJson
 import io.github.munzzyy.tern.data.StoredApp
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.engine.ImportSummary
@@ -368,7 +369,7 @@ internal class Interop(private val e: RealEngine) {
             if (imported.updates == UpdateMode.AUTO) askedForMore += config.shownName
         }
         e.publish()
-        if (fresh.isNotEmpty()) e.scope.launch { e.checks.checkMany(fresh) }
+        if (fresh.isNotEmpty()) e.scope.launch { e.checks.run(fresh, CheckCause.IMPORTED) }
         // Neither the apps already in the list nor the settings change before the person says so.
         val settings = decoded.settings?.takeIf { taken(it, e.settings.value) != e.settings.value }
         val offer = if (others.isEmpty() && settings == null) null else hold(Offer(others.toList(), settings))

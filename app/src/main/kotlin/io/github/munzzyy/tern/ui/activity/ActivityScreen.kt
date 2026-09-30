@@ -4,6 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,6 +45,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.Event
+import io.github.munzzyy.tern.engine.isOwn
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.apps.TernSnackbarHost
 import io.github.munzzyy.tern.ui.common.ChoiceChip
@@ -89,19 +92,23 @@ private const val STACK_FONT_SCALE = 1.5f
 private fun rangeName(days: Int?): String =
     if (days == null) stringResource(R.string.activity_range_all) else pluralStringResource(R.plurals.activity_range_days, days, days)
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ActivityScreen(onOpenApp: (String) -> Unit) {
     val engine = LocalEngine.current
     val look = LocalLook.current
     val events by engine.events.collectAsStateWithLifecycle()
     var problemsOnly by rememberSaveable { mutableStateOf(false) }
+    var ownShown by rememberSaveable { mutableStateOf(true) }
     var lastDays by rememberSaveable { mutableStateOf<Int?>(null) }
     var pickingDays by remember { mutableStateOf(false) }
     var confirmClear by remember { mutableStateOf(false) }
     val actions = rememberActions()
     val zone = remember { ZoneId.systemDefault() }
     val recent = remember(events, lastDays) { within(events, lastDays, System.currentTimeMillis()) }
-    val days = remember(recent, problemsOnly) { entriesByDay(recent, zone, problemsOnly) }
+    val days = remember(recent, problemsOnly, ownShown) { entriesByDay(recent, zone, problemsOnly, ownShown) }
+    val hasOwn = remember(events) { events.any { it.kind.isOwn } }
+    val marks = ownMarks()
     val today = LocalDate.now(zone)
     val screen = rememberScreenFocus()
     val context = LocalContext.current
@@ -111,7 +118,7 @@ fun ActivityScreen(onOpenApp: (String) -> Unit) {
     Scaffold(
         topBar = {
             ScreenTop(stringResource(R.string.tab_activity)) {
-                val shared = remember(recent, problemsOnly) { activityText(recent, zone, problemsOnly) }
+                val shared = remember(recent, problemsOnly, ownShown, marks) { activityText(recent, zone, problemsOnly, ownShown, marks) }
                 GlyphButton(
                     Glyphs.Share,
                     stringResource(R.string.activity_share),
@@ -138,8 +145,10 @@ fun ActivityScreen(onOpenApp: (String) -> Unit) {
                 .testTag(ACTIVITY_LIST_TAG),
         ) {
             item(key = "filter") {
-                Row(
+                // Three chips do not fit one line of a phone with large text, so they wrap, as ChoiceChips do.
+                FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(look.gapSmall),
+                    verticalArrangement = Arrangement.spacedBy(look.focusRoom + (look.touchTarget - look.choiceHeight)),
                     modifier = Modifier.padding(horizontal = look.screenPadding, vertical = look.gapSmall / 2 + look.focusRoom / 2),
                 ) {
                     ChoiceChip(
@@ -155,6 +164,14 @@ fun ActivityScreen(onOpenApp: (String) -> Unit) {
                         onClick = { pickingDays = true },
                         role = Role.Button,
                     )
+                    if (hasOwn) {
+                        ChoiceChip(
+                            stringResource(R.string.journal_filter_own),
+                            selected = ownShown,
+                            onClick = { ownShown = !ownShown },
+                            role = Role.Checkbox,
+                        )
+                    }
                 }
             }
             if (days.isEmpty()) {
@@ -231,6 +248,7 @@ private fun headlineText(entry: Entry, spoken: Boolean = false): String {
         Headline.REMOVED -> R.string.activity_removed
         Headline.CHECK_FAILED -> R.string.activity_check_failed
         Headline.PLAIN -> return entry.outcome.message
+        Headline.OWN -> return ownHeadline(entry.outcome.message)
     }
     return if (version == null) stringResource(id) else stringResource(id, version)
 }
@@ -238,6 +256,7 @@ private fun headlineText(entry: Entry, spoken: Boolean = false): String {
 /** What the engine wrote, where it says more than the headline does: why something went wrong, or where an app came from. */
 private fun detailOf(entry: Entry): String? = when (entry.headline) {
     Headline.NOT_INSTALLED, Headline.BLOCKED, Headline.CHECK_FAILED, Headline.ADDED -> entry.outcome.message.takeIf { it.isNotBlank() }
+    Headline.OWN -> ownDetail(entry.outcome.message)
     else -> null
 }
 
@@ -255,6 +274,7 @@ private fun mark(entry: Entry): Pair<ImageVector, Color> {
         Headline.ADDED -> Glyphs.Plus to scheme.onSurfaceVariant
         Headline.REMOVED -> Glyphs.Bin to scheme.onSurfaceVariant
         Headline.PLAIN -> Glyphs.Info to scheme.onSurfaceVariant
+        Headline.OWN -> ownLook(entry.outcome.kind)
     }
 }
 
@@ -265,8 +285,9 @@ private fun EntryRow(entry: Entry, onOpenApp: (String) -> Unit, focus: Modifier)
     var open by rememberSaveable(entry.id) { mutableStateOf(false) }
     val headline = headlineText(entry)
     val detail = detailOf(entry)?.takeUnless { it.trimEnd('.') == headline.trimEnd('.') }
-    val time = formatTime(entry.atMs)
-    val name = entry.outcome.appName
+    val own = entry.headline == Headline.OWN
+    val time = if (own) formatSecond(entry.atMs) else formatTime(entry.atMs)
+    val name = if (own) ownMark(entry.outcome.kind) else entry.outcome.appName
     val sentence = listOfNotNull(time, name, headlineText(entry, spoken = true), detail).joinToString(". ") { it.trimEnd('.') } + "."
     val appId = entry.outcome.appId
     val (glyph, tint) = mark(entry)
@@ -304,10 +325,10 @@ private fun EntryRow(entry: Entry, onOpenApp: (String) -> Unit, focus: Modifier)
                 if (name == null) {
                     Text(headline, style = MaterialTheme.typography.bodyLarge)
                 } else if (stacked) {
-                    Text(name, style = MaterialTheme.typography.titleSmall.heavier())
+                    Text(name, style = MaterialTheme.typography.titleSmall.heavier(), color = if (own) tint else Color.Unspecified)
                 } else {
                     Row(horizontalArrangement = Arrangement.spacedBy(look.gapSmall), verticalAlignment = Alignment.CenterVertically) {
-                        Text(name, style = MaterialTheme.typography.titleSmall.heavier(), modifier = Modifier.weight(1f))
+                        Text(name, style = MaterialTheme.typography.titleSmall.heavier(), color = if (own) tint else Color.Unspecified, modifier = Modifier.weight(1f))
                         clock()
                     }
                 }

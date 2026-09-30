@@ -3,11 +3,11 @@ package io.github.munzzyy.tern.engine.real
 import android.content.Intent
 import android.net.Uri
 import android.provider.DocumentsContract
-import android.util.Log
 import io.github.munzzyy.tern.data.KeptExportName
 import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.engine.ExportStatus
 import io.github.munzzyy.tern.engine.ProblemException
+import io.github.munzzyy.tern.log.TernLog
 import java.io.IOException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -60,7 +60,7 @@ internal class AutoExport(private val e: RealEngine, private val files: Files, p
         } catch (ex: IOException) {
             ExportStatus(_status.value?.writtenAtMs, e.texts.exportFailed(ex.message))
         } catch (ex: RuntimeException) {
-            Log.w(TAG, "The kept export could not be written: ${ex.javaClass.simpleName}")
+            TernLog.w(TAG, "The kept export could not be written: ${ex.javaClass.simpleName}")
             ExportStatus(_status.value?.writtenAtMs, e.texts.exportFailed(ex.message))
         }
     }

@@ -5,8 +5,8 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import io.github.munzzyy.tern.engine.real.RealEngine
+import io.github.munzzyy.tern.log.TernLog
 import kotlinx.coroutines.launch
 
 /**
@@ -40,7 +40,7 @@ class NotificationActions : BroadcastReceiver() {
                 engine.ready()
                 if (action == ACTION_UPDATE && appId != null) engine.install(appId) else engine.installAllUpdates()
             } catch (e: RuntimeException) {
-                Log.w(TAG, "The update asked for from a notification did not start: ${e.javaClass.simpleName}")
+                TernLog.w(TAG, "The update asked for from a notification did not start: ${e.javaClass.simpleName}")
             } finally {
                 done.finish()
             }

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.AppRow
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.NoteBlock
 import io.github.munzzyy.tern.engine.Problem
@@ -55,7 +56,7 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
         if (checksOnOpen(engine.settings.value.checkOnOpen, row.value, System.currentTimeMillis())) {
             viewModelScope.launch {
                 try {
-                    engine.check(appId)
+                    engine.check(appId, CheckCause.PAGE)
                 } catch (e: CancellationException) {
                     throw e
                 } catch (_: Exception) {

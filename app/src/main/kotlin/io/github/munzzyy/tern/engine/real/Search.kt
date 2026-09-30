@@ -1,6 +1,5 @@
 package io.github.munzzyy.tern.engine.real
 
-import android.util.Log
 import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonException
 import io.github.munzzyy.tern.core.json.JsonObject
@@ -21,6 +20,7 @@ import io.github.munzzyy.tern.core.text.Shown
 import io.github.munzzyy.tern.data.SettingsStore
 import io.github.munzzyy.tern.engine.SearchHit
 import io.github.munzzyy.tern.engine.Settings
+import io.github.munzzyy.tern.log.TernLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -36,7 +36,7 @@ class Search(
     private val tokens: TokenProvider,
     private val stores: List<Searchable> = emptyList(),
     private val context: () -> CheckContext = { CheckContext(http, InMemoryValidatorStore(), tokens) },
-    private val log: (String) -> Unit = { Log.i(TAG, it) },
+    private val log: (String) -> Unit = { TernLog.i(TAG, it) },
 ) {
     /** Every place a search can look, in the order their hits are shown. */
     val origins: List<String> = FORGES + stores.map { it.origin }

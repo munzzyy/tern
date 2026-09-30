@@ -7,8 +7,8 @@ import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
-import android.util.Log
 import io.github.munzzyy.tern.engine.real.RealEngine
+import io.github.munzzyy.tern.log.TernLog
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
@@ -55,7 +55,7 @@ class TransferService : Service() {
                 context.startForegroundService(Intent(context, TransferService::class.java))
             } catch (e: IllegalStateException) {
                 if (Build.VERSION.SDK_INT >= 31 && e is ForegroundServiceStartNotAllowedException) {
-                    Log.w(TAG, "Not allowed to start the transfer service now: ${e.message}")
+                    TernLog.w(TAG, "Not allowed to start the transfer service now: ${e.message}")
                 } else {
                     throw e
                 }

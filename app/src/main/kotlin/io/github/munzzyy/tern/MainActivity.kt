@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.Settings.Global
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -20,6 +19,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import io.github.munzzyy.tern.data.AppLanguage
 import io.github.munzzyy.tern.data.CrashReport
+import io.github.munzzyy.tern.engine.CheckCause
+import io.github.munzzyy.tern.log.TernLog
 import io.github.munzzyy.tern.ui.BackStack
 import io.github.munzzyy.tern.ui.EXTRA_SCENARIO
 import io.github.munzzyy.tern.ui.RefreshLink
@@ -125,17 +126,18 @@ class MainActivity : ComponentActivity() {
     private fun checkOnStart() {
         lifecycleScope.launch {
             try {
-                engine.check(null)
+                engine.check(null, CheckCause.OPENING)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                Log.w(TAG, "The check on opening could not run: ${e.javaClass.simpleName}")
+                TernLog.w(TAG, "The check on opening could not run: ${e.javaClass.simpleName}")
             }
         }
     }
 
     private fun receive(intent: Intent) {
-        intent.getStringExtra(Surfaces.EXTRA_SHORTCUT)?.let { Surfaces.used(this, it.take(MAX_APP_ID)) }
+        val shortcut = intent.getStringExtra(Surfaces.EXTRA_SHORTCUT)
+        shortcut?.let { Surfaces.used(this, it.take(MAX_APP_ID)) }
         intent.getStringExtra(Notifier.EXTRA_OPEN_APP)?.let { id ->
             openApp = id.take(MAX_APP_ID)
             return
@@ -169,7 +171,7 @@ class MainActivity : ComponentActivity() {
                             it.config.packageName == refresh.packageName || it.installed?.packageName == refresh.packageName
                         }?.id ?: return@launch
                     }
-                    engine.check(id)
+                    engine.check(id, if (shortcut != null) CheckCause.SHORTCUT else CheckCause.LINK)
                 }
                 return
             }

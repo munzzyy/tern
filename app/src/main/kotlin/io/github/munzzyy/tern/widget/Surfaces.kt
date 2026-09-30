@@ -7,10 +7,10 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.net.Uri
-import android.util.Log
 import io.github.munzzyy.tern.MainActivity
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.Engine
+import io.github.munzzyy.tern.log.TernLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -49,7 +49,7 @@ object Surfaces {
         try {
             context.getSystemService(ShortcutManager::class.java)?.reportShortcutUsed(id)
         } catch (e: IllegalStateException) {
-            Log.i(TAG, "The launcher took no report: ${e.message}")
+            TernLog.i(TAG, "The launcher took no report: ${e.message}")
         }
     }
 
@@ -70,9 +70,9 @@ object Surfaces {
         try {
             manager.dynamicShortcuts = list
         } catch (e: IllegalStateException) {
-            Log.i(TAG, "The launcher took no shortcuts: ${e.message}")
+            TernLog.i(TAG, "The launcher took no shortcuts: ${e.message}")
         } catch (e: IllegalArgumentException) {
-            Log.i(TAG, "The launcher took no shortcuts: ${e.message}")
+            TernLog.i(TAG, "The launcher took no shortcuts: ${e.message}")
         }
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
-import android.util.Log
+import io.github.munzzyy.tern.log.TernLog
 import java.security.GeneralSecurityException
 import java.security.KeyStore
 import javax.crypto.Cipher
@@ -47,10 +47,10 @@ class TokenVault(context: Context, name: String = DEFAULT_NAME, private val alia
             cipher.updateAAD(key.toByteArray(Charsets.UTF_8))
             String(cipher.doFinal(sealed, IV_BYTES, sealed.size - IV_BYTES), Charsets.UTF_8)
         } catch (e: GeneralSecurityException) {
-            Log.w(TAG, "A stored token for $key could not be opened (${e.javaClass.simpleName})")
+            TernLog.w(TAG, "A stored token for $key could not be opened (${e.javaClass.simpleName})")
             null
         } catch (e: IllegalArgumentException) {
-            Log.w(TAG, "A stored token for $key is malformed")
+            TernLog.w(TAG, "A stored token for $key is malformed")
             null
         }
     }

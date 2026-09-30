@@ -135,7 +135,8 @@ data class AppRow(
     val id: String get() = config.id
 }
 
-enum class EventKind { ADDED, REMOVED, IMPORTED, UPDATE_FOUND, DOWNLOADED, VERIFIED, INSTALLED, BLOCKED, FAILED, CHECK_FAILED, MOVED, CANCELLED }
+/** The last three are Tern's own messages, kept only while [Settings.keepOwnMessages] is on: see [isOwn]. */
+enum class EventKind { ADDED, REMOVED, IMPORTED, UPDATE_FOUND, DOWNLOADED, VERIFIED, INSTALLED, BLOCKED, FAILED, CHECK_FAILED, MOVED, CANCELLED, OWN_NOTE, OWN_WARNING, OWN_ERROR }
 
 data class Event(
     val id: Long,
@@ -379,6 +380,8 @@ data class Settings(
     val otherInstallerActivity: String? = null,
     /** Before the first install of an app, its checked file goes to Verified Apps or AppVerifier, where one is installed. */
     val shareToVerifier: Boolean = true,
+    /** The activity log keeps Tern's own warnings and errors too, and when each check starts and ends, with nothing secret in them. */
+    val keepOwnMessages: Boolean = false,
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */

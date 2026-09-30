@@ -13,12 +13,14 @@ import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.CheckCount
 import io.github.munzzyy.tern.engine.ChecksumState
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.engine.EventKind
+import io.github.munzzyy.tern.engine.EventLimits
 import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.engine.ExportStatus
 import io.github.munzzyy.tern.engine.ImportSummary
@@ -196,7 +198,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     private fun log(row: AppRow?, kind: EventKind, message: String) {
         val e = Event(eventIds.incrementAndGet(), System.currentTimeMillis(), row?.id, row?.config?.name, kind, message)
-        _events.update { (listOf(e) + it).take(500) }
+        _events.update { EventLimits.kept(listOf(e) + it) }
     }
 
     override suspend fun detect(input: String): Detection {
@@ -273,9 +275,12 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         return id
     }
 
-    override suspend fun check(appId: String?) {
+    override suspend fun check(appId: String?, cause: CheckCause) {
         if (!_online.value) return
         val ids = appId?.let { listOf(it) } ?: _apps.value.map { it.id }
+        // Tern's own messages about the check, as the real engine keeps them while the setting is on.
+        val keep = _settings.value.keepOwnMessages
+        if (keep) log(null, EventKind.OWN_NOTE, "A check of ${ids.size} apps started. It was asked for in Tern.")
         if (appId == null) {
             _checkCount.value = CheckCount(0, ids.size)
             _checkingAll.value = true
@@ -299,6 +304,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
             }
             if (appId == null) _checkCount.update { it?.copy(done = it.done + 1) }
         }
+        if (keep) log(null, EventKind.OWN_NOTE, "The check of ${ids.size} apps ended.")
         if (appId == null) {
             _checkingAll.value = false
             _checkCount.value = null

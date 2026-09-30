@@ -9,10 +9,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Icon
 import android.os.Bundle
-import android.util.Log
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.SavedFile
 import io.github.munzzyy.tern.engine.real.Texts
+import io.github.munzzyy.tern.log.TernLog
 
 /** An app that was installed: [version] as it was installed, and [update] when it was on the device before. */
 data class Installed(val id: String, val name: String, val version: String?, val update: Boolean = true)
@@ -73,7 +73,7 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
         val shown = try {
             manager.activeNotifications.firstOrNull { it.id == ID_UPDATES }?.notification
         } catch (e: RuntimeException) {
-            Log.i(TAG, "Could not read the notifications shown: ${e.message}")
+            TernLog.i(TAG, "Could not read the notifications shown: ${e.message}")
             null
         } ?: return
         val named = shown.extras.getStringArray(EXTRA_APPS)?.toList().orEmpty()
@@ -238,7 +238,7 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
         try {
             manager.notify(id, notification)
         } catch (e: SecurityException) {
-            Log.i(TAG, "Notification not allowed: ${e.message}")
+            TernLog.i(TAG, "Notification not allowed: ${e.message}")
         }
     }
 

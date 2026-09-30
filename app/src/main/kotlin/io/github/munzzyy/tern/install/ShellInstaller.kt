@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInstaller
 import android.os.Process
-import android.util.Log
 import io.github.munzzyy.tern.core.apk.BinaryManifest
+import io.github.munzzyy.tern.log.TernLog
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.ConcurrentHashMap
@@ -102,7 +102,7 @@ class ShellInstaller(
         try {
             shell.run(listOf("pm", "install-abandon", sessionId.toString()))
         } catch (e: IOException) {
-            Log.w(TAG, "Session $sessionId could not be abandoned: ${e.message}")
+            TernLog.w(TAG, "Session $sessionId could not be abandoned: ${e.message}")
         }
     }
 

@@ -9,10 +9,10 @@ import io.github.munzzyy.tern.engine.Settings
 
 /**
  * The settings that may travel in an export and come back from one: the look, the list,
- * notifications, background checks and the defaults for new apps. What reaches past this device
- * or decides how it is protected stays out, both ways: no token, no proxy, no installer, no
- * link handling, no export folder, no file filter and no downgrades. A file that names more is
- * read for what it may set, and the rest is ignored.
+ * notifications, background checks, the defaults for new apps and whether the log keeps Tern's
+ * own messages. What reaches past this device or decides how it is protected stays out, both
+ * ways: no token, no proxy, no installer, no link handling, no export folder, no file filter and
+ * no downgrades. A file that names more is read for what it may set, and the rest is ignored.
  */
 object SettingsJson {
     private val PORTABLE: List<Field<*>> = listOf(
@@ -61,6 +61,7 @@ object SettingsJson {
         Field.choice("updateAllMode", { it.updateAllMode }) { s, v -> s.copy(updateAllMode = v) },
         Field.flag("confirmUpdateAll", { it.confirmUpdateAll }) { s, v -> s.copy(confirmUpdateAll = v) },
         Field.flag("oneDownloadAtATime", { it.oneDownloadAtATime }) { s, v -> s.copy(oneDownloadAtATime = v) },
+        Field.flag("keepOwnMessages", { it.keepOwnMessages }) { s, v -> s.copy(keepOwnMessages = v) },
     )
 
     /** The keys a file may carry. */

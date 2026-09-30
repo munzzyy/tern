@@ -14,10 +14,12 @@ import io.github.munzzyy.tern.core.text.Shown
 import io.github.munzzyy.tern.data.FileFacts
 import io.github.munzzyy.tern.data.StateJson
 import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.net.isProxySilent
 import io.github.munzzyy.tern.engine.ProblemKind
+import io.github.munzzyy.tern.log.TernLog
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -35,6 +37,27 @@ internal data class CheckOutcome(val id: String, val newRelease: Boolean, val fa
 internal class Checks(private val e: RealEngine) {
     private val all = Semaphore(MAX_PARALLEL)
     private val perHost = ConcurrentHashMap<String, Semaphore>()
+
+    /**
+     * Checks [ids] as [checkMany] does, and says so in Tern's own messages: what started the
+     * check and how many apps it takes, then how long it took, how many of them have an update
+     * after it and how many could not be checked. The log keeps these while its setting is on.
+     */
+    suspend fun run(ids: List<String>, cause: CheckCause, onEach: () -> Unit = {}): List<CheckOutcome> {
+        val one = ids.singleOrNull()?.let { e.stored[it]?.config?.shownName }
+        TernLog.note(TAG, e.texts.checkStarted(ids.size, one, cause))
+        val started = e.nowMs()
+        var outcomes: List<CheckOutcome>? = null
+        try {
+            return checkMany(ids, onEach).also { outcomes = it }
+        } finally {
+            val took = e.nowMs() - started
+            val done = outcomes
+            TernLog.note(TAG, if (done == null) e.texts.checkStopped(took) else e.texts.checkEnded(ids.size, one, took, done.count { hasUpdate(it.id) }, done.count { it.failed }))
+        }
+    }
+
+    private fun hasUpdate(id: String): Boolean = e.evaluations[id]?.status.let { it == AppStatus.UPDATE_AVAILABLE || it == AppStatus.NEW_RELEASE }
 
     /** [onEach] is called as each check ends, however it ends. */
     suspend fun checkMany(ids: List<String>, onEach: () -> Unit = {}): List<CheckOutcome> = coroutineScope {
@@ -200,5 +223,6 @@ internal class Checks(private val e: RealEngine) {
         const val MAX_ADDRESS = 2048
         const val MAX_DETAIL = 200
         const val MAX_VERSION = 100
+        const val TAG = "TernChecks"
     }
 }

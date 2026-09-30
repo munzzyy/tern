@@ -149,6 +149,7 @@ fun SettingsScreen(onImport: () -> Unit, onLook: () -> Unit, onAdd: (String) -> 
                 NetworkSection(s, update, onGetOrbot = { onAdd(ORBOT_URL) }, orbotFocus = Modifier.returnFocus(screen, "orbot"))
                 AppearanceSection(s, update, onLook, Modifier.returnFocus(screen, "look"))
                 DataSection(s, vm, update, onImport, Modifier.returnFocus(screen, "import"))
+                LogSection(s, update)
                 AboutSection(onAdd)
             }
         }

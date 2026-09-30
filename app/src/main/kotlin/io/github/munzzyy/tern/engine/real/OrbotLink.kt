@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.core.content.ContextCompat
 import io.github.munzzyy.tern.engine.OrbotState
+import io.github.munzzyy.tern.log.TernLog
 import io.github.munzzyy.tern.net.Orbot
 import io.github.munzzyy.tern.net.OrbotWatch
 import io.github.munzzyy.tern.net.ProxyProbe
@@ -38,7 +38,7 @@ internal class OrbotLink(private val context: Context, scope: CoroutineScope, in
                 )
             } catch (e: RuntimeException) {
                 // Extras that cannot be unpacked are thrown at whoever reads the first of them.
-                Log.w(TAG, "An answer could not be read: ${e.javaClass.simpleName}")
+                TernLog.w(TAG, "An answer could not be read: ${e.javaClass.simpleName}")
                 null
             }
             if (answer != null) watch.heard(answer)
@@ -59,7 +59,7 @@ internal class OrbotLink(private val context: Context, scope: CoroutineScope, in
         try {
             context.unregisterReceiver(receiver)
         } catch (e: IllegalArgumentException) {
-            Log.w(TAG, "The receiver was not registered: ${e.message}")
+            TernLog.w(TAG, "The receiver was not registered: ${e.message}")
         }
     }
 

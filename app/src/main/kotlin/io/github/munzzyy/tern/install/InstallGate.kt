@@ -1,6 +1,5 @@
 package io.github.munzzyy.tern.install
 
-import android.util.Log
 import io.github.munzzyy.tern.core.apk.ApkFormatException
 import io.github.munzzyy.tern.core.apk.ApkInfo
 import io.github.munzzyy.tern.core.apk.ApkInspector
@@ -29,6 +28,7 @@ import io.github.munzzyy.tern.core.select.AssetPolicyException
 import io.github.munzzyy.tern.data.FileFacts
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.real.Texts
+import io.github.munzzyy.tern.log.TernLog
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -225,7 +225,7 @@ class InstallGate(
                 throw StepFailure(ProblemKind.PACKAGE_MISMATCH, texts.readsDifferently())
             }
             val own = signatures.read(apk, request.device.sdk)
-            if (own !is SignatureVerdict.Holds) Log.w(TAG, "Own check of ${ours.manifest.split ?: "the base"}: ${own.toString().take(MAX_LOGGED)}")
+            if (own !is SignatureVerdict.Holds) TernLog.w(TAG, "Own check of ${ours.manifest.split ?: "the base"}: ${own.toString().take(MAX_LOGGED)}")
             if (android != null && SignerJudge.readByAndroid(android.signers, own) != SignerFinding.ACCEPTED) {
                 throw StepFailure(ProblemKind.SIGNER_MISMATCH, texts.readsDifferently())
             }

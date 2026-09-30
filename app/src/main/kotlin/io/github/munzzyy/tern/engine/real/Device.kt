@@ -10,11 +10,11 @@ import android.net.Uri
 import android.os.BatteryManager
 import android.os.Build
 import android.provider.Settings
-import android.util.Log
 import io.github.munzzyy.tern.core.engine.InstalledApp
 import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.text.Shown
 import io.github.munzzyy.tern.install.PackageManagerArchiveReader
+import io.github.munzzyy.tern.log.TernLog
 
 /** An installed app as PackageManager reports it, with what silent updates depend on. */
 data class DeviceApp(
@@ -79,10 +79,10 @@ class Device(context: Context) {
             pm.getInstallerPackageName(packageName) to null
         }
     } catch (e: PackageManager.NameNotFoundException) {
-        Log.w(TAG, "No install source for $packageName: ${e.message}")
+        TernLog.w(TAG, "No install source for $packageName: ${e.message}")
         null to null
     } catch (e: IllegalArgumentException) {
-        Log.w(TAG, "No install source for $packageName: ${e.message}")
+        TernLog.w(TAG, "No install source for $packageName: ${e.message}")
         null to null
     }
 

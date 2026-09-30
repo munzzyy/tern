@@ -5,8 +5,8 @@ import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
 import android.os.PersistableBundle
-import android.util.Log
 import io.github.munzzyy.tern.engine.Settings
+import io.github.munzzyy.tern.log.TernLog
 
 /**
  * One persisted periodic job, which checks on any network. Re-applying unchanged settings leaves
@@ -37,7 +37,7 @@ object Scheduler {
         val current = scheduler.getPendingJob(JOB_ID)
         if (current != null && same(current, wanted)) return true
         val result = scheduler.schedule(wanted)
-        if (result != JobScheduler.RESULT_SUCCESS) Log.e(TAG, "JobScheduler refused the periodic check")
+        if (result != JobScheduler.RESULT_SUCCESS) TernLog.e(TAG, "JobScheduler refused the periodic check")
         return result == JobScheduler.RESULT_SUCCESS
     }
 
@@ -51,7 +51,7 @@ object Scheduler {
             .setRequiresCharging(settings.onlyWhileCharging)
             .setRequiresBatteryNotLow(true)
             .build()
-        if (context.getSystemService(JobScheduler::class.java).schedule(job) != JobScheduler.RESULT_SUCCESS) Log.e(TAG, "JobScheduler refused the waiting install")
+        if (context.getSystemService(JobScheduler::class.java).schedule(job) != JobScheduler.RESULT_SUCCESS) TernLog.e(TAG, "JobScheduler refused the waiting install")
     }
 
     /** Checks [apps] again after [delayMs], for the [attempt]th time. */
@@ -66,7 +66,7 @@ object Scheduler {
             .setMinimumLatency(delayMs)
             .setExtras(extras)
             .build()
-        if (context.getSystemService(JobScheduler::class.java).schedule(job) != JobScheduler.RESULT_SUCCESS) Log.e(TAG, "JobScheduler refused the retry")
+        if (context.getSystemService(JobScheduler::class.java).schedule(job) != JobScheduler.RESULT_SUCCESS) TernLog.e(TAG, "JobScheduler refused the retry")
     }
 
     private fun same(a: JobInfo, b: JobInfo): Boolean =

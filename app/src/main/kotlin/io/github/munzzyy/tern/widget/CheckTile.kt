@@ -2,10 +2,11 @@ package io.github.munzzyy.tern.widget
 
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import android.util.Log
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.real.RealEngine
+import io.github.munzzyy.tern.log.TernLog
 import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,11 +43,11 @@ class CheckTile : TileService() {
         CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
             try {
                 (engine as? RealEngine)?.ready()
-                engine.check(null)
+                engine.check(null, CheckCause.TILE)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                Log.w(TAG, "The tile's check did not run: ${e.javaClass.simpleName}")
+                TernLog.w(TAG, "The tile's check did not run: ${e.javaClass.simpleName}")
             }
         }
     }

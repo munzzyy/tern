@@ -1,10 +1,14 @@
 package io.github.munzzyy.tern.engine.real
 
 import android.content.Context
+import android.icu.text.MeasureFormat
+import android.icu.util.Measure
+import android.icu.util.MeasureUnit
 import android.text.format.DateFormat
 import android.text.format.Formatter
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.select.PickReason
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.net.isProxySilent
 import java.io.IOException
 import java.util.Date
@@ -201,4 +205,47 @@ class Texts(context: Context) : ImportTexts {
     fun notifyUpdatedTo(name: String, version: String) = s(R.string.files_notify_updated_to, name, ltr(version))
     fun notifyInstalledAt(name: String, version: String) = s(R.string.files_notify_installed_at, name, ltr(version))
     fun notifyProblemLine(names: String, reason: String) = s(R.string.files_notify_problem_line, names, reason)
+
+    /** How a check began, for the log: of [app] by its name when it is one app, else of [count] apps, and what started it. */
+    fun checkStarted(count: Int, app: String?, cause: CheckCause): String {
+        val began = if (app != null) s(R.string.journal_check_started_one, app) else q(R.plurals.journal_check_started, count)
+        return began + " " + s(causeWords(cause))
+    }
+
+    /** How a check ended, for the log: how long it took, how many of its apps have an update, and how many it could not check. */
+    fun checkEnded(count: Int, app: String?, tookMs: Long, updates: Int, failed: Int): String {
+        val took = took(tookMs)
+        val ended = if (app != null) s(R.string.journal_check_ended_one, app, took) else c.resources.getQuantityString(R.plurals.journal_check_ended, count, count, took)
+        val found = q(R.plurals.journal_check_updates, updates)
+        return if (failed == 0) "$ended $found" else "$ended $found " + q(R.plurals.journal_check_failures, failed)
+    }
+
+    fun checkStopped(tookMs: Long) = s(R.string.journal_check_stopped, took(tookMs))
+
+    private fun causeWords(cause: CheckCause): Int = when (cause) {
+        CheckCause.ASKED -> R.string.journal_cause_asked
+        CheckCause.OPENING -> R.string.journal_cause_opening
+        CheckCause.PAGE -> R.string.journal_cause_page
+        CheckCause.LINK -> R.string.journal_cause_link
+        CheckCause.SHORTCUT -> R.string.journal_cause_shortcut
+        CheckCause.WIDGET -> R.string.journal_cause_widget
+        CheckCause.TILE -> R.string.journal_cause_tile
+        CheckCause.SCHEDULE -> R.string.journal_cause_schedule
+        CheckCause.RETRY -> R.string.journal_cause_retry
+        CheckCause.ADDED -> R.string.journal_cause_added
+        CheckCause.IMPORTED -> R.string.journal_cause_imported
+        CheckCause.CHANGED -> R.string.journal_cause_changed
+        CheckCause.INSTALL -> R.string.journal_cause_install
+    }
+
+    /** A time something took, in the words of the language: tenths of a second under ten seconds, then whole seconds and minutes. */
+    private fun took(ms: Long): String {
+        val format = MeasureFormat.getInstance(c.resources.configuration.locales[0], MeasureFormat.FormatWidth.SHORT)
+        val seconds = ms.coerceAtLeast(0) / 1000.0
+        return when {
+            seconds < 10 -> format.format(Measure(Math.round(seconds * 10) / 10.0, MeasureUnit.SECOND))
+            seconds < 60 -> format.format(Measure(Math.round(seconds), MeasureUnit.SECOND))
+            else -> format.formatMeasures(Measure(ms / 60_000, MeasureUnit.MINUTE), Measure(ms / 1000 % 60, MeasureUnit.SECOND))
+        }
+    }
 }

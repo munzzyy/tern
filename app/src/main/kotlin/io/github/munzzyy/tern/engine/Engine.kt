@@ -14,7 +14,7 @@ interface Engine {
     /** Apps with updates first, then the rest by name. Emits on every change, including progress. */
     val apps: StateFlow<List<AppRow>>
 
-    /** Newest first, at most 500. */
+    /** Newest first: at most 500 of what happened to apps, and at most 500 of Tern's own messages. */
     val events: StateFlow<List<Event>>
 
     val settings: StateFlow<Settings>
@@ -72,8 +72,11 @@ interface Engine {
      */
     suspend fun add(found: Detection.Found, install: Boolean): String
 
-    /** Checks one app, or all of them when [appId] is null. Returns when the check is finished. */
-    suspend fun check(appId: String? = null)
+    /**
+     * Checks one app, or all of them when [appId] is null. Returns when the check is finished.
+     * [cause] is what Tern's own messages in the log say started it.
+     */
+    suspend fun check(appId: String? = null, cause: CheckCause = CheckCause.ASKED)
 
     /**
      * Downloads, verifies and installs. Returns at once; progress and the outcome arrive through

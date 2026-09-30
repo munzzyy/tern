@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
+import io.github.munzzyy.tern.log.TernLog
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
@@ -79,7 +79,7 @@ class SessionInstaller(private val context: Context) : Installer {
         try {
             installer.abandonSession(sessionId)
         } catch (e: SecurityException) {
-            Log.w(TAG, "Session $sessionId was already gone: ${e.message}")
+            TernLog.w(TAG, "Session $sessionId was already gone: ${e.message}")
         }
     }
 

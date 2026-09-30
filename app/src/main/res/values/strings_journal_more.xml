@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings: Tern's own messages in the activity log. -->
+    <string name="journal_section">Activity log</string>
+    <string name="journal_keep_own">Keep Tern\'s own messages in the log</string>
+    <string name="journal_keep_own_effect">Its warnings and errors, and when each check starts and ends. Anything that could be a password or a token is left out, and the log stays on this device unless you share it.</string>
+
+    <!-- Activity: the filter, and the mark of an entry of Tern's own with how much it weighs. -->
+    <string name="journal_filter_own">Tern\'s messages</string>
+    <string name="journal_mark_note">Note from Tern</string>
+    <string name="journal_mark_warning">Warning from Tern</string>
+    <string name="journal_mark_error">Error from Tern</string>
+
+    <!-- How a check began: how many apps it takes, or the name of its one app. A sentence that says what started it follows. -->
+    <plurals name="journal_check_started">
+        <item quantity="one">A check of %1$d app started.</item>
+        <item quantity="other">A check of %1$d apps started.</item>
+    </plurals>
+    <string name="journal_check_started_one">A check of %1$s started.</string>
+    <string name="journal_cause_asked">It was asked for in Tern.</string>
+    <string name="journal_cause_opening">Tern was opened.</string>
+    <string name="journal_cause_page">Its page was opened.</string>
+    <string name="journal_cause_link">A link asked for it.</string>
+    <string name="journal_cause_shortcut">A shortcut asked for it.</string>
+    <string name="journal_cause_widget">The widget asked for it.</string>
+    <string name="journal_cause_tile">The Quick Settings tile asked for it.</string>
+    <string name="journal_cause_schedule">The schedule started it.</string>
+    <string name="journal_cause_retry">It tries again where the last check failed.</string>
+    <string name="journal_cause_added">It was just added.</string>
+    <string name="journal_cause_imported">They were just imported.</string>
+    <string name="journal_cause_changed">Its settings changed.</string>
+    <string name="journal_cause_install">It is about to be installed, and is checked first.</string>
+
+    <!-- How a check ended. %2$s is how long it took, such as 12 sec. Sentences on what it found follow. -->
+    <plurals name="journal_check_ended">
+        <item quantity="one">The check of %1$d app ended after %2$s.</item>
+        <item quantity="other">The check of %1$d apps ended after %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">The check of %1$s ended after %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">It found %1$d update.</item>
+        <item quantity="other">It found %1$d updates.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d app could not be checked.</item>
+        <item quantity="other">%1$d apps could not be checked.</item>
+    </plurals>
+    <string name="journal_check_stopped">The check stopped after %1$s, before it was done.</string>
+</resources>

@@ -3,7 +3,6 @@ package io.github.munzzyy.tern.engine.real
 import android.app.ActivityManager
 import android.content.Intent
 import android.content.pm.PackageInstaller
-import android.util.Log
 import androidx.core.content.FileProvider
 import io.github.munzzyy.tern.core.engine.InstallRecord
 import io.github.munzzyy.tern.core.model.AppConfig
@@ -20,6 +19,7 @@ import io.github.munzzyy.tern.core.verify.Fingerprints
 import io.github.munzzyy.tern.data.GateBlock
 import io.github.munzzyy.tern.data.PendingInstall
 import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.Phase
 import io.github.munzzyy.tern.engine.Problem
@@ -35,6 +35,7 @@ import io.github.munzzyy.tern.install.OtherAppInstaller
 import io.github.munzzyy.tern.install.PartsZip
 import io.github.munzzyy.tern.install.StepFailure
 import io.github.munzzyy.tern.install.VerifiedApps
+import io.github.munzzyy.tern.log.TernLog
 import io.github.munzzyy.tern.work.Installed
 import io.github.munzzyy.tern.work.TransferService
 import io.github.munzzyy.tern.work.Trouble
@@ -128,7 +129,7 @@ internal class Installs(private val e: RealEngine) {
                 e.context.startActivity(Intent(confirm).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                 return true
             } catch (ex: RuntimeException) {
-                Log.w(TAG, "Could not reopen the install confirmation: ${ex.message}")
+                TernLog.w(TAG, "Could not reopen the install confirmation: ${ex.message}")
             }
         }
         if (pending != null) {
@@ -151,7 +152,7 @@ internal class Installs(private val e: RealEngine) {
         val staging = File(e.staging, e.downloader.folder(appId).name)
         try {
             // A source whose file addresses do not last is asked again first, unless a particular file was picked.
-            if (releaseId == null && assetUrl == null && e.stored[appId]?.config?.refreshFirst == true) e.checks.checkOne(appId)
+            if (releaseId == null && assetUrl == null && e.stored[appId]?.config?.refreshFirst == true) e.checks.run(listOf(appId), CheckCause.INSTALL)
             pipeline(appId, releaseId, assetUrl, staging)
         } finally {
             staging.deleteRecursively()
@@ -262,11 +263,11 @@ internal class Installs(private val e: RealEngine) {
             e.setProgress(appId, null)
             throw cancel
         } catch (io: IOException) {
-            Log.w(TAG, "Install of $appId stopped: ${io.javaClass.simpleName}: ${io.message}")
+            TernLog.w(TAG, "Install of $appId stopped: ${io.javaClass.simpleName}: ${io.message}")
             fail(appId, release, asset, Problem(ProblemKind.STORAGE, e.texts.downloadFailed(io)))
             null
         } catch (bug: RuntimeException) {
-            Log.e(TAG, "Install of $appId failed unexpectedly", bug)
+            TernLog.e(TAG, "Install of $appId failed unexpectedly", bug)
             fail(appId, release, asset, Problem(ProblemKind.INSTALL_FAILED, e.texts.installFailed(bug.javaClass.simpleName)))
             null
         }
@@ -295,7 +296,7 @@ internal class Installs(private val e: RealEngine) {
         try {
             e.context.startActivity(intent)
         } catch (ex: RuntimeException) {
-            Log.w(TAG, "Could not hand the file to $verifier: ${ex.javaClass.simpleName}")
+            TernLog.w(TAG, "Could not hand the file to $verifier: ${ex.javaClass.simpleName}")
             return
         }
         // Tern leaves the screen while the person is there, and the install goes on once they are back.
@@ -340,7 +341,7 @@ internal class Installs(private val e: RealEngine) {
                 ObbOutcome.NOT_INSTALLED -> return
             }
         } catch (ex: IOException) {
-            Log.w(TAG, "OBB files of $appId were not put in place: ${ex.message}")
+            TernLog.w(TAG, "OBB files of $appId were not put in place: ${ex.message}")
             e.texts.obbFailed(folder, ex.message, asset.name, names)
         }
         e.event(appId, EventKind.MOVED, message)
@@ -412,7 +413,7 @@ internal class Installs(private val e: RealEngine) {
         val stored = e.stored[appId] ?: return@withContext
         val pending = stored.state.pending
         if (pending == null || pending.sessionId != sessionId) {
-            Log.w(TAG, "Result for session $sessionId of $appId, which is not the pending install")
+            TernLog.w(TAG, "Result for session $sessionId of $appId, which is not the pending install")
             return@withContext
         }
         when (status) {
@@ -533,7 +534,7 @@ internal class Installs(private val e: RealEngine) {
                 e.context.startActivity(Intent(confirm).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
                 return
             } catch (ex: RuntimeException) {
-                Log.w(TAG, "Could not open the install confirmation: ${ex.message}")
+                TernLog.w(TAG, "Could not open the install confirmation: ${ex.message}")
             }
         }
         e.notifier.confirm(appId, name, confirm)
@@ -572,15 +573,15 @@ internal class Installs(private val e: RealEngine) {
 
     /**
      * Checks [only] or every app the background looks at, and installs what may install by itself.
-     * With [installsNow] false such updates wait, and the run says so.
+     * With [installsNow] false such updates wait, and the run says so. [cause] is what the log says started it.
      */
-    suspend fun runScheduled(settings: Settings, installsNow: Boolean = true, only: Set<String>? = null): ScheduledRun {
+    suspend fun runScheduled(settings: Settings, installsNow: Boolean = true, only: Set<String>? = null, cause: CheckCause = CheckCause.SCHEDULE): ScheduledRun {
         val targets = e.stored.values
             .filter { checkedInTheBackground(it.config) && e.inWholeListCheck(it.config) && (only == null || it.config.id in only) }
             .map { it.config.id }
         if (settings.notifyChecking && targets.isNotEmpty()) e.notifier.checking(targets.size)
         val checked = try {
-            e.checks.checkMany(targets)
+            e.checks.run(targets, cause)
         } finally {
             e.notifier.doneChecking()
         }

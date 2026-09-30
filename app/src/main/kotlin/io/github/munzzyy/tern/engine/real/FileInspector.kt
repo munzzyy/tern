@@ -1,6 +1,5 @@
 package io.github.munzzyy.tern.engine.real
 
-import android.util.Log
 import io.github.munzzyy.tern.core.apk.ApkInspector
 import io.github.munzzyy.tern.core.apk.HttpRangeSource
 import io.github.munzzyy.tern.core.model.Asset
@@ -12,6 +11,7 @@ import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.core.source.TokenProvider
 import io.github.munzzyy.tern.data.FileFacts
 import io.github.munzzyy.tern.data.Store
+import io.github.munzzyy.tern.log.TernLog
 import java.io.IOException
 
 /** What a remote inspection cost, for measurement. */
@@ -57,10 +57,10 @@ class FileInspector(
             store.putFacts(key(asset, releaseId), asset.url, asset.size, asset.sha256, facts)
             facts
         } catch (e: IOException) {
-            Log.i(TAG, "Could not inspect ${asset.name} remotely: ${e.javaClass.simpleName}: ${e.message}")
+            TernLog.i(TAG, "Could not inspect ${asset.name} remotely: ${e.javaClass.simpleName}: ${e.message}")
             null
         } catch (e: SourceException) {
-            Log.i(TAG, "The source could not say where ${asset.name} is: ${e.message}")
+            TernLog.i(TAG, "The source could not say where ${asset.name} is: ${e.message}")
             null
         }
     }

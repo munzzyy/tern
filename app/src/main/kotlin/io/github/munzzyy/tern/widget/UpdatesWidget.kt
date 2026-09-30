@@ -6,13 +6,14 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine
 import io.github.munzzyy.tern.engine.AppRow
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.real.RealEngine
+import io.github.munzzyy.tern.log.TernLog
 import io.github.munzzyy.tern.ui.text.canUpdateNow
 import io.github.munzzyy.tern.ui.text.isUpdate
 import java.text.DateFormat
@@ -59,14 +60,14 @@ class UpdatesWidget : AppWidgetProvider() {
                 (engine as? RealEngine)?.ready()
                 if (action == ACTION_CHECK) {
                     refresh(context, checking = true)
-                    engine.check(null)
+                    engine.check(null, CheckCause.WIDGET)
                 } else {
                     engine.installAllUpdates()
                 }
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                Log.w(TAG, "The widget's button did nothing: ${e.javaClass.simpleName}")
+                TernLog.w(TAG, "The widget's button did nothing: ${e.javaClass.simpleName}")
             } finally {
                 refresh(context)
                 done.finish()

@@ -121,6 +121,26 @@ class StorageTest {
     }
 
     @Test
+    fun ternsOwnMessagesAreCountedApartFromWhatHappenedToApps() {
+        freshStore("storage-own.db").use { store ->
+            repeat(20) { store.addEvent(it.toLong(), "a1", "Fixture", EventKind.UPDATE_FOUND, "event $it") }
+            repeat(520) { store.addEvent(100L + it, null, null, EventKind.OWN_WARNING, "own $it") }
+            var events = store.events()
+            assertEquals("a flood of Tern's own pushes out no app's history", 20, events.count { it.kind == EventKind.UPDATE_FOUND })
+            assertEquals(500, events.count { it.kind == EventKind.OWN_WARNING })
+            assertEquals("own 519", events.first().message)
+            assertEquals("own 20", events.last { it.kind == EventKind.OWN_WARNING }.message)
+            repeat(510) { store.addEvent(1000L + it, "a1", "Fixture", EventKind.INSTALLED, "app $it") }
+            events = store.events()
+            assertEquals(500, events.count { it.kind != EventKind.OWN_WARNING })
+            assertEquals(500, events.count { it.kind == EventKind.OWN_WARNING })
+            store.clearEvents()
+            assertEquals(0, store.events().size)
+        }
+        targetContext.deleteDatabase("storage-own.db")
+    }
+
+    @Test
     fun aTokenOpensOnlyForItsOwnHost() {
         val prefs = "storage-tokens"
         targetContext.deleteSharedPreferences(prefs)

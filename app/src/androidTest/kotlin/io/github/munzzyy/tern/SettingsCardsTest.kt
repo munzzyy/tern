@@ -135,7 +135,7 @@ class SettingsRowsScreenTest {
     @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
 
     private val notificationRows = listOf("Notifications", "When updates are found", "When an update is installed", "When a check fails", "Name the apps in notifications", "Android notification settings")
-    private val sections = listOf("Background checks", "Defaults for new apps", "Installing", "Access tokens", "Network", "Appearance", "Import and export", "About")
+    private val sections = listOf("Background checks", "Defaults for new apps", "Installing", "Access tokens", "Network", "Appearance", "Import and export", "Activity log", "About")
 
     private fun show(television: Boolean) {
         fake.loadScenario("default")
@@ -154,7 +154,7 @@ class SettingsRowsScreenTest {
     fun aPhoneShowsThemInTheOrderTheSectionsAlwaysHad() {
         show(television = false)
         for (row in notificationRows) compose.onNodeWithText(row).performScrollTo().assertIsDisplayed()
-        val order = listOf("Background checks", "Defaults for new apps", "Notifications", "Installing", "Access tokens", "Network", "Appearance", "Import and export", "About")
+        val order = listOf("Background checks", "Defaults for new apps", "Notifications", "Installing", "Access tokens", "Network", "Appearance", "Import and export", "Activity log", "About")
         val tops = order.map { compose.onNodeWithText(it).fetchSemanticsNode().positionInRoot.y }
         assertEquals("the sections stand in this order: $order", tops.sorted(), tops)
         assertEquals(order.size, tops.distinct().size)

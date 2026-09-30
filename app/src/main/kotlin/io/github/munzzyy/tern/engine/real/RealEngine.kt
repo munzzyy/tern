@@ -11,7 +11,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.Uri
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import io.github.munzzyy.tern.BuildConfig
@@ -47,6 +46,7 @@ import io.github.munzzyy.tern.data.StoredApp
 import io.github.munzzyy.tern.data.TokenVault
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.CheckCount
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.Engine
@@ -80,6 +80,8 @@ import io.github.munzzyy.tern.install.InstallGate
 import io.github.munzzyy.tern.install.Installer
 import io.github.munzzyy.tern.install.OtherAppInstaller
 import io.github.munzzyy.tern.install.PackageManagerArchiveReader
+import io.github.munzzyy.tern.log.Journal
+import io.github.munzzyy.tern.log.TernLog
 import io.github.munzzyy.tern.net.Orbot
 import io.github.munzzyy.tern.net.ProxyChoice
 import io.github.munzzyy.tern.net.PinChoice
@@ -146,7 +148,7 @@ class RealEngine(
     internal val staging = File(this.context.cacheDir, "staging")
 
     internal val scope = CoroutineScope(
-        SupervisorJob() + Dispatchers.Default + CoroutineExceptionHandler { _, e -> Log.e(TAG, "Engine task failed", e) },
+        SupervisorJob() + Dispatchers.Default + CoroutineExceptionHandler { _, e -> TernLog.e(TAG, "Engine task failed", e) },
     )
 
     internal val stored = ConcurrentHashMap<String, StoredApp>()
@@ -163,6 +165,22 @@ class RealEngine(
     private val _checkingAll = MutableStateFlow(false)
     private val _checkCount = MutableStateFlow<CheckCount?>(null)
     private val _transfers = MutableStateFlow<Map<String, Progress>>(emptyMap())
+
+    /**
+     * Keeps Tern's own messages in the log while the setting says so, one after another on the
+     * store's thread. What goes wrong there is said to Android's log alone, and kept nowhere.
+     */
+    private val journal = Journal({ _settings.value.keepOwnMessages }) { kind, text ->
+        val at = nowMs()
+        scope.launch(store.dispatcher) {
+            try {
+                store.addEvent(at, null, null, kind, text)
+                publishEvents()
+            } catch (e: RuntimeException) {
+                TernLog.i(TAG, "A message of Tern's own could not be kept: ${e.javaClass.simpleName}")
+            }
+        }
+    }.also { TernLog.journal = it }
 
     override val apps get() = _apps.asStateFlow()
     override val events: StateFlow<List<Event>> get() = _events.asStateFlow()
@@ -421,12 +439,12 @@ class RealEngine(
             stored[config.id] = StoredApp(config, state)
             event(config.id, EventKind.ADDED, texts.eventAdded(found.spec.url))
         }
-        checks.checkOne(config.id)
+        checks.run(listOf(config.id), CheckCause.ADDED)
         if (install) install(config.id)
         return config.id
     }
 
-    override suspend fun check(appId: String?) {
+    override suspend fun check(appId: String?, cause: CheckCause) {
         ready()
         if (!_online.value) {
             offline(appId)
@@ -434,14 +452,14 @@ class RealEngine(
         }
         _lastRunProblem.value = null
         if (appId != null) {
-            checks.checkOne(appId)
+            checks.run(listOf(appId), cause)
             return
         }
         val ids = stored.values.filter { inWholeListCheck(it.config) }.map { it.config.id }
         _checkCount.value = CheckCount(0, ids.size)
         _checkingAll.value = true
         try {
-            checks.checkMany(ids) { _checkCount.update { it?.copy(done = it.done + 1) } }
+            checks.run(ids, cause) { _checkCount.update { it?.copy(done = it.done + 1) } }
         } finally {
             _checkingAll.value = false
             _checkCount.value = null
@@ -557,7 +575,7 @@ class RealEngine(
             // source, so what the server said before is not reused.
             if (before != null && (before.options != saved.config.source.options || asksAnew(previous, saved.config))) {
                 store.removeValidators("${before.type}|${before.url}|")
-                if (_online.value) scope.launch { checks.checkOne(appId) }
+                if (_online.value) scope.launch { checks.run(listOf(appId), CheckCause.CHANGED) }
             }
         }
     }
@@ -704,7 +722,7 @@ class RealEngine(
 
     override suspend fun takeExportFolder(folder: Uri) = interop.kept.choose(folder)
 
-    override suspend fun runBackgroundCheck() = runScheduledCheck()
+    override suspend fun runBackgroundCheck() = runScheduledCheck(cause = CheckCause.ASKED)
 
     override suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile {
         ready()
@@ -792,8 +810,9 @@ class RealEngine(
      * themselves wait while the settings hold them back, and a job installs them once the network
      * and the charger allow it. Apps that could not be checked for a passing reason are checked
      * again a few times, each time later, and a rate limit is waited out, as in Obtainium.
+     * [cause] is what Tern's own messages in the log say started it.
      */
-    suspend fun runScheduledCheck(attempt: Int = 0, only: Set<String>? = null) {
+    suspend fun runScheduledCheck(attempt: Int = 0, only: Set<String>? = null, cause: CheckCause = if (only == null) CheckCause.SCHEDULE else CheckCause.RETRY) {
         ready()
         if (!_online.value) {
             offline(null)
@@ -804,7 +823,7 @@ class RealEngine(
         val installsNow = settings.autoInstalls &&
             (!settings.onlyOnUnmetered || device.onUnmeteredNetwork()) &&
             (!settings.onlyWhileCharging || device.isCharging())
-        val run = installs.runScheduled(settings, installsNow, only)
+        val run = installs.runScheduled(settings, installsNow, only, cause)
         if (run.waited && settings.autoInstalls) Scheduler.waitForInstalls(context, settings)
         retryDelay(run.failed, attempt, nowMs())?.let { (again, delay) -> Scheduler.retry(context, again, attempt + 1, delay) }
     }
@@ -863,11 +882,12 @@ class RealEngine(
         try {
             context.packageManager.setComponentEnabledSetting(component, state, PackageManager.DONT_KILL_APP)
         } catch (e: IllegalArgumentException) {
-            Log.w(TAG, "Could not switch Obtainium links: ${e.message}")
+            TernLog.w(TAG, "Could not switch Obtainium links: ${e.message}")
         }
     }
 
     override fun close() {
+        if (TernLog.journal === journal) TernLog.journal = null
         scope.cancel()
         handoffs.shutDown()
         orbotLink.close()
@@ -875,12 +895,12 @@ class RealEngine(
         try {
             connectivity.unregisterNetworkCallback(networkCallback)
         } catch (e: IllegalArgumentException) {
-            Log.w(TAG, "Network callback was not registered: ${e.message}")
+            TernLog.w(TAG, "Network callback was not registered: ${e.message}")
         }
         try {
             context.unregisterReceiver(packageReceiver)
         } catch (e: IllegalArgumentException) {
-            Log.w(TAG, "Package receiver was not registered: ${e.message}")
+            TernLog.w(TAG, "Package receiver was not registered: ${e.message}")
         }
         store.close()
         if (current === this) current = null

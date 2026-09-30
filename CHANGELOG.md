@@ -67,6 +67,29 @@ Everything Obtainium does, and more.
   takes a share.
 - About links to how Tern works, how it keeps you safe and its privacy page,
   with a note on Android's developer verification.
+- The list's filters combine: name, developer, package, sources, several
+  categories, up to date, not installed, tracked only. Each row shows when its
+  release came out with its changes a tap away, dims the icon of an app not
+  installed, marks a tracked release as seen, and says when a project moved.
+- Many apps can be installed, filed under categories or shared at once. Update
+  all can take first installs too, or be hidden, and can ask first. A check of
+  the whole list shows how far it got.
+- An app's settings can be shared as a link that Obtainium opens too, and Tern
+  reads such links back; they never carry a token.
+- Read as: the Add screen can force how an address is read, with the source's
+  options and a package name set before adding. Search names what failed,
+  searches any Forgejo, takes a fewest-stars limit, filters its results and
+  searches a repository by words. Imports offer to replace apps already there
+  and never change them unasked.
+- Releases are picked as Obtainium picks them: web pages in its link order with
+  up to ten steps, the version from a link or the whole page, last matches,
+  tags for tracked projects without releases, a minimum age that can follow the
+  setting for all apps. Private GitHub projects download with their token, and
+  GitHub can be reached through a hubproxy.
+- Tar archives compressed with bzip2 or xz are opened. Downloads can be
+  cancelled from the list and the notification, are tried again on a network
+  failure, and can go one at a time. The file picked to install is kept for
+  later updates. Tern updates itself last.
 
 ## 0.1.0, 2026-09-29
 

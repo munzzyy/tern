@@ -122,23 +122,27 @@ run against answers recorded from the real services.
 | Huawei AppGallery, Samsung Galaxy Store (device model and CSC), vivo, Tencent, RuStore, CoolApk, itch.io | All of them |
 | Telegram, NeutronCode | Both |
 | LiteAPKs, Apk4Free, RockMods (tracking only) | All three, with a warning on the Add screen that they offer apps changed by someone else |
-| Search in GitHub, GitLab, Codeberg, F-Droid, a third-party F-Droid repository, Uptodown, AppGallery, vivo and RuStore, with a picker of where to look | GitHub, GitLab, Codeberg, F-Droid, Uptodown, AppGallery, vivo, RuStore and Aptoide, with the picker kept between searches |
-| Override source, for self-hosted instances | Self-hosted GitLab, Forgejo and Gitea are recognised by asking them; a hash route such as `appgallery.huawei.com/#/app/…` is read as typed |
+| Search in GitHub, GitLab, Codeberg or another Forgejo, F-Droid, a third-party F-Droid repository, Uptodown, AppGallery, vivo and RuStore, with a picker of where to look, a fewest-stars limit and a filter over the results | All of them, and Aptoide. The picker is kept between searches, each place that fails is named with its reason, and a repository is searched by words |
+| Override source, for self-hosted instances | "Read as" on the Add screen, for every source Obtainium lets be overridden and GitHub Actions; GitHub on another host uses the API that kind of GitHub documents. Self-hosted GitLab, Forgejo and Gitea are also recognised by asking them, and an F-Droid repository by its site's address |
+| Tags for a project without releases | For apps that are only tracked, on GitHub, GitLab and Forgejo |
+| Private repositories | With a token, GitHub's files come through its API, and a refused token is tried once without |
 
 ### Per-app options
 
 | Obtainium | Tern |
 |---|---|
-| Pre-releases, fallback to older releases, minimum age, title and notes filters, version extraction with a match group, version from the release date | All of them, with the version also read from the title, and a filter on the extracted version |
+| Pre-releases, fallback to older releases, minimum age, title and notes filters, version extraction with a match group, version from the release date | All of them, with the version also read from the title, and a filter on the extracted version. A pattern takes its last match, as Obtainium's does, and the minimum age can follow the setting for all apps |
 | APK filter, inverted filter, filter by architecture | Include and exclude filters, and the device's own processors |
 | Sort releases by date or by name, verify the latest tag, use the asset's date | Order by version, date, the source's own order or name; the release the forge marks as latest comes first |
-| Zip and tar archives, a filter inside them | Both |
+| Zip and tar archives, gzip, bzip2 and xz, a filter inside them | All of them, with Tern's own bzip2 and xz readers |
+| The file picked to install is kept for later updates | Yes, by the shape of its name, so a new version's file is found again |
+| An app ID of your own | A package name field when adding |
 | Track only, exempt from background updates, pinned certificate hashes | All three; the pin is set by itself at first install |
 | Custom name and author, notes, categories, pinned to top | All of them |
 | Google Play as the installer (Shizuku or root) | For one app or for all |
 | Skip update notifications | Muted apps |
 | Refresh before download | Yes |
-| Headers, steps through intermediate pages and other options of the HTML source | All of them, set on the app's page; a header that carries credentials is refused |
+| Headers, steps through intermediate pages and other options of the HTML source | All of them: links in natural order and the last one taken, by address, text or last segment, up to ten steps with their own options, and the version read from the link, its text or the whole page. Set on the app's page or before adding; a header that carries credentials is refused |
 
 ### Settings
 
@@ -147,21 +151,29 @@ run against answers recorded from the real services.
 | Background checks from 15 minutes to 30 days on a slider, Wi-Fi and charging only, retries of failed checks | All of them, through Android's job scheduler rather than a task that decides by itself whether it is due. As in Obtainium, Wi-Fi and charging hold back installs, not checks, and a rate limit is waited out |
 | Check on start, check on opening an app, only installed and tracked apps, remove apps uninstalled elsewhere, a global APK filter | All of them |
 | Installers: system, Shizuku, root, another app | All four; the other app is held to the same checks, and the signer of what it installed is compared afterwards |
+| Parallel downloads, retries of a failed download, Obtainium installed last | All three: one download at a time if wanted, three more tries resuming where the server allows, and Tern's own update last |
+| An APK from another host than its source is pointed out | Yes, on the file, without holding it back |
+| GitHub through a hubproxy instance | Yes, and never with a token |
 | Downgrades with Let Me Downgrade | Yes |
 | Pause background installs for every app at once | Yes, and each app keeps its own choice |
 | Certificate pinning for GitHub, GitLab and Codeberg | Yes, off by default as in Obtainium, and on top of Android's own checks |
 | Theme, pure black, colours, Material You, a colour code, standard, vibrant and expressive schemes, language | All of them, with palettes, contrast levels, corner and icon shapes, and every scheme measured for contrast. The language can be chosen on every Android version |
 | Sort, order, pin updates, bury apps that are not installed, group by category or source, collapse groups at start, swipe actions, haptics, phone layout, list density | All of them |
+| Filter by name, author, app ID, source, several categories, up to date, not installed, track only | All of them together, with the number shown and one button to clear them |
+| The banner's Update all, first installs too, or none, and skipping its confirmation | All three, with the confirmation off by default as in Obtainium |
 | Category colours | Yes, sixteen, and every category takes one of them by itself until one is picked |
 | Automatic export to a folder under a name of your own, installed apps only, settings in the export | All of them, in Tern's format or Obtainium's; tokens never go into a file |
-| Import Obtainium exports, lists of addresses, GitHub stars | All three, with the settings in an Obtainium export read under Tern's names |
+| Import Obtainium exports, lists of addresses, GitHub stars, over apps already there | All of it, with a filter and select all or none for stars and lists. Apps already there and the settings in a file are replaced only when the person says so |
 | Export in Obtainium's format | Yes |
 
 ### Everything else
 
 | Obtainium | Tern |
 |---|---|
-| `obtainium://add`, `app`, `apps`, `refresh` links | All four, and `tern://` links of the same kinds |
+| `obtainium://add`, `app`, `apps`, `refresh` links, sharing an app's settings as a link | All of it, and `tern://` links of the same kinds; a link made by Tern opens in Obtainium too |
+| On each app: release date, changes, a dimmed icon when not installed, Mark updated for tracked apps, a moved repository first | All of them |
+| Install, categorize and share many apps at once, a determinate check | All of them; categories can be set, cleared or left for each |
+| Cancel a download from its tile or notification | Both, with how much has come |
 | Notifications for updates, errors, track-only releases | Yes, with Update and Update all buttons, and a quiet one while checking if wanted |
 | Logs page with a filter of the last days, sharing, and copying on a TV; a screen for an unexpected error | The activity log, cut to its last one to seven days, shared as text or copied where nothing takes a share. After an unexpected stop, the next start shows what Tern was doing |
 | Save a release's files | Any file a release offers, saved to Downloads |

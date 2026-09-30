@@ -153,8 +153,12 @@ or `If-Range`. A token still goes only to the host it was given for.
 
 ## Archives
 
-A release that is a zip, tar or tar.gz archive is opened in Tern's own staging
-folder. The names of the files inside are data and never paths. Only the APKs
+A release that is a zip or tar archive, plain or compressed with gzip, bzip2
+or xz, is opened in Tern's own staging folder. The bzip2 and xz readers are
+Tern's own: every block, stream, index and footer is checked against its
+checksum, what comes out is held to the same cap as a download, and an xz
+dictionary may not ask for more than 64 MiB, what `xz -9` uses. zstd is
+refused. The names of the files inside are data and never paths. Only the APKs
 are taken, only those the app's filter for files inside archives lets through,
 never more bytes than a download may hold and never more than 512 of them. They
 then go through the same checks as the APKs of any bundle.
@@ -191,6 +195,18 @@ A token is stored for one exact host, encrypted under a key in the Android
 Keystore that cannot be exported. It is sent to that host only. When a redirect
 changes the host, the token is dropped for the rest of the chain. Tokens are not
 part of exports and are never written to the log.
+
+With a GitHub token, a release's files are fetched through GitHub's API, which
+serves them for a private project too; the token goes to `api.github.com` and
+is dropped at the redirect to the file's host. A token GitHub refuses is tried
+once without, so a public project is still followed. A GitLab token goes with
+downloads from the same GitLab host, as a header and never in the address. A
+search of a Forgejo or Gitea sends the token stored for exactly that host.
+
+A hubproxy, set by hand for places where GitHub cannot be reached, sees every
+request Tern makes to GitHub. It is never sent a token or a cookie, and while
+one is set Tern holds back the tokens of GitHub's hosts altogether, so private
+projects and GitHub Actions cannot be followed through it.
 
 With a SOCKS proxy set, host names are resolved by the proxy. This was checked
 with a logging proxy and a packet capture, and with a real Orbot on an emulator:
@@ -278,9 +294,26 @@ app by app.
 An export may carry settings, and an import may set them, from a list kept in
 one place: the look of the list, notifications, when to check, and the defaults
 for new apps. What reaches past the device or decides how it is protected is not
-on that list, either way: tokens, the proxy, the installer, the folder of the
-kept export, the file filter for every app, and older versions over newer ones.
-Obtainium's settings are read through the same list, under Tern's names.
+on that list, either way: tokens, the proxy, the hubproxy, the installer, the
+folder of the kept export, the file filter for every app, and older versions
+over newer ones. Obtainium's settings are read through the same list, under
+Tern's names.
+
+An import changes nothing that is already there until the person asks: apps
+already in the list whose settings in the file differ, and any settings the
+file carries, are offered, not taken. A replaced app keeps its certificate
+pins, a package name it already knew, its repository's signing key and a
+release the person skipped, and it never starts installing by itself. Taking a
+file's settings never makes new apps install by themselves either.
+
+A link that carries an app's settings is Obtainium's `obtainium://app/` form,
+or the same link behind Obtainium's web page for opening it from a browser.
+Tern makes such links without a token, which an app's settings never hold,
+and with no request header but User-Agent, Accept, Accept-Language and
+Referer, since any other could hold a key. Whoever opens the web form in a
+browser shows the settings in it to Obtainium's page; Tern reads that form on
+the device and never asks the page. A link of a kind Tern does not know is
+named on the Add screen and goes no further.
 
 ## Text from servers
 

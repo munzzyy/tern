@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_package_effect">Setiap file harus berasal dari paket ini, dan aplikasi yang diinstal dengan paket ini adalah yang dilihat Tern. Jika dikosongkan, Tern membacanya dari file aplikasi.</string>
+</resources>

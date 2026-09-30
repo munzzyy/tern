@@ -1,2 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="files_other_title">ഈ റിലീസിലെ മറ്റ് ഫയലുകൾ</string>
+    <string name="files_source_code">സോഴ്സ് കോഡ്</string>
+    <string name="files_save_spoken">%1$s ഡൗൺലോഡുകളിലേക്ക് സേവ് ചെയ്യുക</string>
+    <string name="files_save_a_file">ഒരു ഫയൽ സേവ് ചെയ്യുക</string>
+    <string name="files_pick_title_version">%1$s പതിപ്പിലെ ഒരു ഫയൽ സേവ് ചെയ്യുക</string>
+    <string name="files_pick_title_app">%1$s-ലെ ഒരു ഫയൽ സേവ് ചെയ്യുക</string>
+    <string name="files_skip">ഒഴിവാക്കുക</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">%1$d ഫയൽ സേവ് ചെയ്യുന്നു. പൂർത്തിയാകുമ്പോൾ ഒരു നോട്ടിഫിക്കേഷൻ അറിയിക്കും.</item>
+        <item quantity="other">%1$d ഫയലുകൾ സേവ് ചെയ്യുന്നു. ഓരോന്നും പൂർത്തിയാകുമ്പോൾ ഒരു നോട്ടിഫിക്കേഷൻ അറിയിക്കും.</item>
+    </plurals>
+    <string name="files_channel_saved">സേവ് ചെയ്ത ഫയലുകൾ</string>
+    <string name="files_notify_saved">%1$s സേവ് ചെയ്തു</string>
+    <string name="files_notify_saved_plain">ഒരു ഫയൽ ഡൗൺലോഡുകളിലേക്ക് സേവ് ചെയ്തു</string>
+    <string name="files_notify_not_saved">%1$s സേവ് ചെയ്യാനായില്ല</string>
+    <string name="files_notify_not_saved_plain">ഒരു ഫയൽ സേവ് ചെയ്യാനായില്ല</string>
+    <string name="files_notify_updated_to">%1$s %2$s-ലേക്ക് അപ്ഡേറ്റ് ചെയ്തു</string>
+    <string name="files_notify_installed_at">%1$s %2$s ഇൻസ്റ്റാൾ ചെയ്തു</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">എന്താണ് തെറ്റിയത്</string>
+    <string name="files_problems_none">ഈ ആപ്പുകളിൽ ഒന്നിനും ഇപ്പോൾ പ്രശ്നമില്ല.</string>
+    <string name="files_setting_verifier">പുതിയ ആപ്പുകൾ ആദ്യം Verified Apps-ന് കാണിക്കുക</string>
+    <string name="files_setting_verifier_effect">ഒരു ആപ്പ് ആദ്യമായി ഇൻസ്റ്റാൾ ചെയ്യുന്നതിന് മുമ്പ്, പരിശോധിച്ച അതിൻ്റെ ഫയൽ രണ്ടാമതൊരു പരിശോധനയ്ക്കായി Verified Apps-ലേക്കോ AppVerifier-ലേക്കോ (അവയിൽ ഏതെങ്കിലും ഒന്ന് ഇൻസ്റ്റാൾ ചെയ്തിട്ടുണ്ടെങ്കിൽ) പോകുന്നു. നിങ്ങൾ Tern-ലേക്ക് തിരിച്ചെത്തിയാൽ ഇൻസ്റ്റാൾ തുടരും.</string>
+    <string name="files_verifier_about">Verified Apps-നെക്കുറിച്ച്</string>
+    <string name="files_verifier_card_effect">%1$s ഒരു പ്രത്യേക ആപ്പാണ്. ഇത് ഈ ആപ്പിനെ, ഈ ആപ്പിനായി Tern കൈവശം വച്ചിരിക്കുന്ന സർട്ടിഫിക്കറ്റുമായും അതിന് അറിയാവുന്ന ആപ്പുകളുടെ സ്വന്തം ലിസ്റ്റുമായും താരതമ്യം ചെയ്യുന്നു.</string>
+    <string name="files_verifier_card_action">%1$s ഉപയോഗിച്ച് പരിശോധിക്കുക</string>
+</resources>

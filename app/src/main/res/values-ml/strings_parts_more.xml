@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">ഈ ആർക്കൈവിൽ ആപ്പിൻ്റെ OBB ഫോൾഡറിന് പുറത്തേക്ക് പോകാൻ സാധ്യതയുള്ള പേരുള്ള ഒരു OBB ഫയലോ, ഒരേ പേരുള്ള രണ്ട് OBB ഫയലുകളോ ഉണ്ട്. ഒന്നും ഇൻസ്റ്റാൾ ചെയ്തില്ല.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">%2$s-ൽ %1$d OBB ഫയൽ ഇട്ടു.</item>
+        <item quantity="other">%2$s-ൽ %1$d OBB ഫയലുകൾ ഇട്ടു.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">%1$s-ൽ OBB ഫയലുകൾ ഇട്ടില്ല, കാരണം അവിടെ എഴുതാൻ Shizuku, റൂട്ട് എന്നീ ഇൻസ്റ്റാളറുകൾക്ക് മാത്രമേ കഴിയൂ. അവ ഈ റിലീസിൻ്റെ ഫയലായ %2$s-ൽ ഉണ്ട്: %3$s.</string>
+    <string name="parts_obb_failed">%1$s-ൽ OBB ഫയലുകൾ ഇടാനായില്ല: %2$s. അവ ഈ റിലീസിൻ്റെ ഫയലായ %3$s-ൽ ഉണ്ട്: %4$s.</string>
+</resources>

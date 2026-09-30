@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_package_effect">每个文件都必须属于此包，而以此包名安装的应用就是 Tern 要查看的应用。留空时，Tern 会从应用的文件中读取。</string>
+</resources>

@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_package_effect">ഓരോ ഫയലും ഈ പാക്കേജിൻ്റേതായിരിക്കണം, ഈ പാക്കേജിൽ ഇൻസ്റ്റാൾ ചെയ്ത ആപ്പിനെയാണ് Tern നോക്കുന്നത്. ഒഴിച്ചിട്ടാൽ, ആപ്പിൻ്റെ ഫയലിൽ നിന്ന് Tern അത് വായിക്കും.</string>
+</resources>

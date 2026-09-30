@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">이 아카이브에는 이름이 앱의 OBB 폴더를 벗어날 수 있는 OBB 파일이 있거나, 같은 이름의 OBB 파일이 두 개 있습니다. 아무것도 설치되지 않았습니다.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="other">OBB 파일 %1$d개를 %2$s에 넣었습니다.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">OBB 파일을 %1$s에 넣지 않았습니다. 그곳에는 Shizuku와 루트 설치 프로그램만 쓸 수 있기 때문입니다. OBB 파일은 이 릴리스의 파일인 %2$s 안에 있습니다: %3$s.</string>
+    <string name="parts_obb_failed">OBB 파일을 %1$s에 넣을 수 없었습니다: %2$s. OBB 파일은 이 릴리스의 파일인 %3$s 안에 있습니다: %4$s.</string>
+</resources>

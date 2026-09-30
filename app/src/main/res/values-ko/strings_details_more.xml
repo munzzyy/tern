@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_package_effect">모든 파일이 이 패키지여야 하며, 이 패키지로 설치된 앱이 Tern이 살펴보는 앱입니다. 비워 두면 Tern이 앱 파일에서 읽어 옵니다.</string>
+</resources>

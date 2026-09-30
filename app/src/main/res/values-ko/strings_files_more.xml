@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="files_other_title">이 릴리스의 다른 파일</string>
+    <string name="files_source_code">소스 코드</string>
+    <string name="files_save_spoken">%1$s을(를) 다운로드 폴더에 저장</string>
+    <string name="files_save_a_file">파일 저장</string>
+    <string name="files_pick_title_version">버전 %1$s의 파일 저장</string>
+    <string name="files_pick_title_app">%1$s의 파일 저장</string>
+    <string name="files_skip">건너뛰기</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="other">파일 %1$d개를 저장하는 중입니다. 완료될 때마다 알림으로 알려줍니다.</item>
+    </plurals>
+    <string name="files_channel_saved">저장된 파일</string>
+    <string name="files_notify_saved">%1$s 저장됨</string>
+    <string name="files_notify_saved_plain">파일이 다운로드 폴더에 저장됨</string>
+    <string name="files_notify_not_saved">%1$s을(를) 저장할 수 없음</string>
+    <string name="files_notify_not_saved_plain">파일을 저장할 수 없음</string>
+    <string name="files_notify_updated_to">%1$s이(가) %2$s(으)로 업데이트됨</string>
+    <string name="files_notify_installed_at">%1$s %2$s 설치됨</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">문제 내용</string>
+    <string name="files_problems_none">이 앱들에는 지금 문제가 없습니다.</string>
+    <string name="files_setting_verifier">새 앱을 먼저 Verified Apps에 보여 주기</string>
+    <string name="files_setting_verifier_effect">앱을 처음 설치하기 전에, 확인을 마친 파일을 Verified Apps 또는 AppVerifier(설치되어 있는 쪽)로 보내 두 번째 확인을 받습니다. Tern으로 돌아오면 설치가 계속됩니다.</string>
+    <string name="files_verifier_about">Verified Apps 정보</string>
+    <string name="files_verifier_card_effect">%1$s은(는) 별도의 앱입니다. 이 앱을, Tern이 이 앱에 대해 보관하는 인증서 및 자체적으로 알고 있는 앱 목록과 비교합니다.</string>
+    <string name="files_verifier_card_action">%1$s(으)로 확인</string>
+</resources>

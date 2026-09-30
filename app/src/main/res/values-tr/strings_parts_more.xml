@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">Bu arşiv, adı uygulamanın OBB klasörünün dışına çıkabilecek bir OBB dosyası veya aynı ada sahip iki OBB dosyası içeriyor. Hiçbir şey yüklenmedi.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">%1$d OBB dosyası %2$s içine yerleştirildi.</item>
+        <item quantity="other">%1$d OBB dosyası %2$s içine yerleştirildi.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">OBB dosyaları %1$s içine yerleştirilmedi, çünkü orada yalnızca Shizuku ve root yükleyicileri yazabilir. Bunlar, bu sürümün dosyası olan %2$s içinde: %3$s.</string>
+    <string name="parts_obb_failed">OBB dosyaları %1$s içine yerleştirilemedi: %2$s. Bunlar, bu sürümün dosyası olan %3$s içinde: %4$s.</string>
+</resources>

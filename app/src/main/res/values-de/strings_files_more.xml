@@ -24,6 +24,6 @@
     <string name="files_setting_verifier">Neue Apps zuerst Verified Apps zeigen</string>
     <string name="files_setting_verifier_effect">Bevor eine App zum ersten Mal installiert wird, geht ihre geprüfte Datei für einen zweiten Blick an Verified Apps oder AppVerifier, sofern eine der beiden installiert ist. Die Installation läuft weiter, sobald du wieder in Tern bist.</string>
     <string name="files_verifier_about">Über Verified Apps</string>
-    <string name="files_verifier_card_effect">%1$s ist eine eigene App. Sie vergleicht diese App mit dem Zertifikat, an das Tern sie bindet, und mit ihrer eigenen Liste bekannter Apps.</string>
+    <string name="files_verifier_card_effect">%1$s ist eine eigenständige App. Sie vergleicht diese App mit dem Zertifikat, an das Tern sie bindet, und mit ihrer eigenen Liste bekannter Apps.</string>
     <string name="files_verifier_card_action">Mit %1$s prüfen</string>
 </resources>

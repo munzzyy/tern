@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">此压缩包包含名称可能指向应用 OBB 文件夹之外的 OBB 文件，或包含两个同名的 OBB 文件。未安装任何内容。</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="other">已将 %1$d 个 OBB 文件放入 %2$s。</item>
+    </plurals>
+    <string name="parts_obb_not_placed">OBB 文件未放入 %1$s，因为只有 Shizuku 和 root 安装程序才能写入该位置。它们位于此发布的文件 %2$s 中：%3$s。</string>
+    <string name="parts_obb_failed">无法将 OBB 文件放入 %1$s：%2$s。它们位于此发布的文件 %3$s 中：%4$s。</string>
+</resources>

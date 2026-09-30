@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">Tệp lưu trữ này chứa một tệp OBB có tên có thể dẫn ra ngoài thư mục OBB của ứng dụng, hoặc hai tệp OBB trùng tên. Không có gì được cài đặt.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="other">Đã đặt %1$d tệp OBB vào %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">Các tệp OBB chưa được đặt vào %1$s, vì chỉ trình cài đặt Shizuku và root mới ghi được vào đó. Chúng nằm trong %2$s, tệp của bản phát hành này: %3$s.</string>
+    <string name="parts_obb_failed">Không thể đặt các tệp OBB vào %1$s: %2$s. Chúng nằm trong %3$s, tệp của bản phát hành này: %4$s.</string>
+</resources>

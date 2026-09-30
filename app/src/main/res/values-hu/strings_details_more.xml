@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="setting_package_effect">Minden fájlnak ehhez a csomaghoz kell tartoznia, és a Tern az alatta telepített alkalmazást vizsgálja. Üresen hagyva a Tern az alkalmazás fájljából olvassa ki.</string>
+    <string name="setting_package_effect">Minden fájlnak ehhez a csomaghoz kell tartoznia, és a Tern az ezen a néven telepített alkalmazást vizsgálja. Üresen hagyva a Tern az alkalmazás fájljából olvassa ki.</string>
 </resources>

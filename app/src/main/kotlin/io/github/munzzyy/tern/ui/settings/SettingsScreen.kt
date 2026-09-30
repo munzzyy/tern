@@ -702,6 +702,7 @@ private fun AppearanceSection(s: Settings, update: Update, onLook: () -> Unit, l
                 onChange = { v -> update { it.copy(haptics = v) } },
             )
         }
+        CategoriesRow(s, update)
         SwitchRow(
             title = stringResource(R.string.settings_collapse_groups),
             checked = s.collapseGroups,

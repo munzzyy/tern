@@ -2,6 +2,7 @@ package io.github.munzzyy.tern.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.engine.Settings
 
 class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
@@ -58,6 +59,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             haptics = prefs.getBoolean("haptics", d.haptics),
             phoneLayout = prefs.getBoolean("phoneLayout", d.phoneLayout),
             allowDowngrades = prefs.getBoolean("allowDowngrades", d.allowDowngrades),
+            categoryColors = prefs.getString("categoryColors", null)
+                ?.let { runCatching { CategoryColors.decode(Json.parseObject(it)) }.getOrNull() } ?: d.categoryColors,
             searchIn = prefs.getStringSet("searchIn", null)?.filterTo(LinkedHashSet()) { it.length <= MAX_ORIGIN }?.take(MAX_ORIGINS)?.toSet() ?: d.searchIn,
         )
     }
@@ -121,6 +124,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putBoolean("phoneLayout", s.phoneLayout)
             .putBoolean("allowDowngrades", s.allowDowngrades)
             .putStringSet("searchIn", s.searchIn.filterTo(LinkedHashSet()) { it.length <= MAX_ORIGIN })
+            .putString("categoryColors", Json.write(CategoryColors.encode(s.categoryColors)))
             .commit()
     }
 

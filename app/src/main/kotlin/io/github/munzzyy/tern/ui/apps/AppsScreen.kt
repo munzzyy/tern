@@ -68,6 +68,7 @@ import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.LocalOnline
 import io.github.munzzyy.tern.ui.common.BannerRow
 import io.github.munzzyy.tern.ui.common.ChoiceChip
+import io.github.munzzyy.tern.ui.common.ColorDot
 import io.github.munzzyy.tern.ui.common.EmptyState
 import io.github.munzzyy.tern.ui.common.GlyphButton
 import io.github.munzzyy.tern.ui.common.LocalNoTouch
@@ -94,6 +95,7 @@ import io.github.munzzyy.tern.ui.icons.More
 import io.github.munzzyy.tern.ui.icons.Search
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.LocalOutlines
+import io.github.munzzyy.tern.ui.theme.categoryColor
 
 const val APP_LIST_TAG = "app_list"
 const val APP_SEARCH_TAG = "app_search"
@@ -289,6 +291,7 @@ private fun AppList(
 ) {
     val look = LocalLook.current
     val sections = state.sections
+    val categoryColors = LocalEngine.current.settings.collectAsStateWithLifecycle().value.categoryColors
     val firstId = (sections.updates.firstOrNull() ?: sections.others.firstOrNull())?.id
     val rowFocus: (String) -> Modifier = { id ->
         Modifier.returnFocus(screen, id).then(if (id == firstId) Modifier.firstFocus(screen) else Modifier)
@@ -322,7 +325,8 @@ private fun AppList(
             for (group in sections.groups) {
                 val folded = group.key in collapsed
                 item(key = "g-${group.key}", contentType = "group") {
-                    GroupHeader(group.title ?: stringResource(R.string.group_other), group.rows.size, folded) { onToggleGroup(group.key) }
+                    val dot = group.title?.takeIf { group.key.startsWith(CATEGORY_GROUP) }?.let { categoryColor(it, categoryColors) }
+                    GroupHeader(group.title ?: stringResource(R.string.group_other), group.rows.size, folded, dot) { onToggleGroup(group.key) }
                 }
                 if (!folded) rows(group.rows, selectedId, onOpen, onRemove, selection, onSelect, rowFocus, place, swipe, keyPrefix = group.key)
             }
@@ -369,7 +373,7 @@ private fun LazyListScope.rows(
 
 /** The name of a group, how many apps it holds, and a press to fold it away or open it again. */
 @Composable
-private fun GroupHeader(title: String, count: Int, folded: Boolean, onToggle: () -> Unit) {
+private fun GroupHeader(title: String, count: Int, folded: Boolean, dot: Color?, onToggle: () -> Unit) {
     val look = LocalLook.current
     val spoken = stringResource(if (folded) R.string.group_folded else R.string.group_open)
     Row(
@@ -387,6 +391,7 @@ private fun GroupHeader(title: String, count: Int, folded: Boolean, onToggle: ()
             }
             .padding(horizontal = look.rowPaddingHorizontal - look.focusRoom, vertical = look.gapSmall),
     ) {
+        if (dot != null) ColorDot(dot)
         Text(
             title,
             style = MaterialTheme.typography.titleSmall,
@@ -516,6 +521,7 @@ private fun filterLabel(filter: AppFilter): String = when (filter) {
 
 @Composable
 private fun FilterChips(filters: List<AppFilter>, current: AppFilter, onFilter: (AppFilter) -> Unit) {
+    val colors = LocalEngine.current.settings.collectAsStateWithLifecycle().value.categoryColors
     val look = LocalLook.current
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2),
@@ -526,7 +532,12 @@ private fun FilterChips(filters: List<AppFilter>, current: AppFilter, onFilter: 
             .testTag(APP_FILTERS_TAG),
     ) {
         items(filters, key = { it.toString() }) { filter ->
-            ChoiceChip(filterLabel(filter), selected = filter == current, onClick = { onFilter(filter) })
+            ChoiceChip(
+                filterLabel(filter),
+                selected = filter == current,
+                onClick = { onFilter(filter) },
+                dot = (filter as? AppFilter.Category)?.let { categoryColor(it.name, colors) },
+            )
         }
     }
 }

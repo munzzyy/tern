@@ -309,6 +309,8 @@ data class Settings(
     val allowDowngrades: Boolean = false,
     /** Where a search looks, by the name each place goes by. */
     val searchIn: Set<String> = DEFAULT_SEARCH,
+    /** The colour picked for each category, as ARGB; a category without one takes a colour its name falls on. */
+    val categoryColors: Map<String, Int> = emptyMap(),
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */

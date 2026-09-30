@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">Categories</string>
+    <string name="settings_categories_effect">Name them, give each a colour, and rename or delete them for every app at once.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d category</item>
+        <item quantity="other">%d categories</item>
+    </plurals>
+    <string name="categories_none">None yet. Make one here, or file apps under one from the list.</string>
+    <string name="categories_new">New category</string>
+    <string name="category_edit">Edit category</string>
+    <string name="category_name">Name</string>
+    <string name="category_color">Colour</string>
+    <string name="category_color_spoken">Colour %1$d of %2$d</string>
+    <string name="category_exists">A category with this name already exists.</string>
+    <string name="category_delete">Delete</string>
+    <string name="category_delete_effect">The apps in it stay in the list; they are only no longer filed under it.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d app</item>
+        <item quantity="other">%d apps</item>
+    </plurals>
+    <string name="action_close">Close</string>
+</resources>

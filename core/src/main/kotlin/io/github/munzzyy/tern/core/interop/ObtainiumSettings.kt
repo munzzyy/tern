@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.core.interop
 
+import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonBool
 import io.github.munzzyy.tern.core.json.JsonNumber
 import io.github.munzzyy.tern.core.json.JsonObject
@@ -76,6 +77,17 @@ object ObtainiumSettings {
         flag("tactileFeedbackEnabled", "haptics"),
         flag("collapseGroupsOnStartup", "collapseGroups"),
         choice("appListDensity", "density", byIndex = false, listOf("standard" to "COMFORTABLE", "compact" to "COMPACT", "dense" to "MINIMAL")),
+        // Obtainium keeps its categories as a map of name to colour written into a string.
+        Link(
+            "categories", "categoryColors",
+            { v -> (v as? JsonString)?.value?.let { runCatching { Json.parseObject(it) }.getOrNull() } },
+            { v ->
+                (v as? JsonObject)?.let { colors ->
+                    val unsigned = colors.fields.mapValues { (_, argb) -> (argb as? JsonNumber)?.toLongOrNull()?.let { JsonNumber((it and 0xFFFFFFFFL).toString()) } ?: argb }
+                    JsonString(Json.write(JsonObject(unsigned)))
+                }
+            },
+        ),
     )
 
     /** What [obtainium] sets that Tern has a setting for, under Tern's names. */

@@ -50,6 +50,9 @@ object SettingsJson {
         Field.flag("collapseGroups", { it.collapseGroups }) { s, v -> s.copy(collapseGroups = v) },
         Field.flag("haptics", { it.haptics }) { s, v -> s.copy(haptics = v) },
         Field.flag("phoneLayout", { it.phoneLayout }) { s, v -> s.copy(phoneLayout = v) },
+        Field("categoryColors", { it.categoryColors }, CategoryColors::encode, { v -> (v as? JsonObject)?.let(CategoryColors::decode) }) { s, v ->
+            s.copy(categoryColors = v)
+        },
     )
 
     /** The keys a file may carry. */

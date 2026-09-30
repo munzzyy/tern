@@ -54,6 +54,14 @@ class ObtainiumSettingsTest {
     }
 
     @Test
+    fun categoryColoursComeOutOfTheirStringAndGoBackIntoOne() {
+        val tern = ObtainiumSettings.toTern(Json.parseObject("""{"categories":"{\"Work\":4294198070}"}"""))
+        assertEquals(Json.parseObject("""{"Work":4294198070}"""), tern["categoryColors"])
+        val back = ObtainiumSettings.toObtainium(Json.parseObject("""{"categoryColors":{"Work":-769226}}"""))
+        assertEquals(JsonString("{\"Work\":4294198070}"), back["categories"])
+    }
+
+    @Test
     fun whatObtainiumHasNoWordForStaysBehind() {
         val tern = Json.parseObject("""{"listSort":"SOURCE","checkEveryMinutes":45,"theme":"PURPLE"}""")
         val out = ObtainiumSettings.toObtainium(tern)

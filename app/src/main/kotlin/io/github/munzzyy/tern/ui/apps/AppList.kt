@@ -52,6 +52,9 @@ data class ListQuery(
 /** A group of the list. [title] is null for the apps that belong to none, such as those without a category. */
 data class RowGroup(val key: String, val title: String?, val rows: List<AppRow>)
 
+/** What the key of a group of one category starts with. */
+const val CATEGORY_GROUP = "c:"
+
 /**
  * The list as it is drawn: [updates] on top, then [others]. When the list is grouped, [groups]
  * holds [others] again, divided.
@@ -128,10 +131,10 @@ fun group(rows: List<AppRow>, grouping: AppGrouping, locale: Locale = Locale.get
     AppGrouping.NONE -> emptyList()
     AppGrouping.CATEGORY -> {
         val named = categoriesOf(rows, locale).map { name ->
-            RowGroup("c:$name", name, rows.filter { row -> name in row.config.categories.map { it.trim() } })
+            RowGroup("$CATEGORY_GROUP$name", name, rows.filter { row -> name in row.config.categories.map { it.trim() } })
         }
         val none = rows.filter { row -> row.config.categories.none { it.isNotBlank() } }
-        named + listOfNotNull(none.takeIf { it.isNotEmpty() }?.let { RowGroup("c:", null, it) })
+        named + listOfNotNull(none.takeIf { it.isNotEmpty() }?.let { RowGroup(CATEGORY_GROUP, null, it) })
     }
     AppGrouping.SOURCE -> sourcesOf(rows, locale).map { type ->
         RowGroup("s:$type", sourceLabel(type), rows.filter { it.config.source.type == type })

@@ -32,6 +32,17 @@ secret-tool store --label "Tern upload keystore" service tern-keystore key uploa
 5. Install `dist/tern-<version>.apk` on an emulator over the previous
    release and walk through adding, installing and updating an app.
 6. Tag, push, and create the release with both APK files and both checksum files.
+7. Until fdroiddata merge request
+   [!50599](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/50599) is
+   merged, bring it up to the release. In `metadata/io.github.munzzyy.tern.yml`
+   on its branch, add a build for the new `versionName` and `versionCode`
+   whose `commit:` is the full 40-character hash of the tagged commit
+   (`git rev-parse <tag>^{commit}`), not the tag and not a short hash. Set
+   `CurrentVersion` and `CurrentVersionCode` to the same two values. Run
+   `fdroid rewritemeta io.github.munzzyy.tern` and `fdroid lint
+   io.github.munzzyy.tern`, push the branch, and wait for the pipeline of the
+   merge request to pass. F-Droid's build has to reproduce the APK signed in
+   step 4, so this commit and that file must match.
 
 apksigner comes from build-tools 34.0.0 on purpose. F-Droid copies the
 developer's signature onto its own reproducible build, and its tool rejects

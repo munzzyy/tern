@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s vuelve a ofrecer lo que los desarrolladores publican en otros lugares, y no es el desarrollador. Sus archivos deben llevar el certificado que se le exige a esta aplicación.</string>
     <string name="origin_store_first">%1$s es una tienda, no el propio sitio del desarrollador. Hasta que la aplicación se fije a un certificado, el primer archivo que Tern instale desde allí decide qué certificado debe llevar cada actualización posterior.</string>
     <string name="origin_store_pinned">%1$s es una tienda, no el propio sitio del desarrollador. Sus archivos deben llevar el certificado que se le exige a esta aplicación.</string>
-    <string name="stores_paused">En pausa. Las tiendas de terceros están desactivadas, así que Tern no le pregunta nada a esta tienda. Actívalas en Ajustes para volver a comprobarla.</string>
     <string name="stores_refused_modified">Tern no lee sitios que ofrecen aplicaciones modificadas. Sus archivos están cambiados por alguien distinto del desarrollador y firmados por quien los cambió.</string>
     <string name="stores_refused_impersonation">Tern no puede leer esta tienda sin fingir ser su aplicación, así que no la lee.</string>
     <string name="stores_checksum_source">%1$s, que no es el desarrollador</string>

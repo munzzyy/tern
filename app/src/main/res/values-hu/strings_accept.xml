@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">A harmadik féltől származó áruházak ki vannak kapcsolva, így a Tern semmit sem kérdez ettől az áruháztól. Kapcsolja be őket a Beállításokban az ismételt ellenőrzéshez.</string>
+</resources>

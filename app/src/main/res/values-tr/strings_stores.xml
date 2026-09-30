@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s, geliştiricilerin başka bir yerde yayınladıklarını tekrar sunar ve geliştirici değildir. Dosyaları bu uygulamanın tabi olduğu sertifikayı taşımalıdır.</string>
     <string name="origin_store_first">%1$s bir mağazadır, geliştiricinin kendi sitesi değildir. Uygulama bir sertifikaya sabitlenene kadar, Tern\'in ondan yüklediği ilk dosya her sonraki güncellemenin taşıması gereken sertifikayı belirler.</string>
     <string name="origin_store_pinned">%1$s bir mağazadır, geliştiricinin kendi sitesi değildir. Dosyaları bu uygulamanın tabi olduğu sertifikayı taşımalıdır.</string>
-    <string name="stores_paused">Duraklatıldı. Üçüncü taraf mağazalar kapalı, bu yüzden Tern bu mağazaya hiçbir şey sormaz. Tekrar denetlemek için onları Ayarlar\'dan açın.</string>
     <string name="stores_refused_modified">Tern, değiştirilmiş uygulamalar sunan siteleri okumaz. Dosyaları geliştirici dışında biri tarafından değiştirilmiş ve kim değiştirdiyse onun tarafından imzalanmıştır.</string>
     <string name="stores_refused_impersonation">Tern bu mağazayı onun uygulamasıymış gibi davranmadan okuyamaz, bu yüzden onu okumaz.</string>
     <string name="stores_checksum_source">Geliştirici olmayan %1$s</string>

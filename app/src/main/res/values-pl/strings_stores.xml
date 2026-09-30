@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s oferuje ponownie to, co twórcy publikują gdzie indziej, i nie jest twórcą. Jego pliki muszą mieć certyfikat, do którego przypisana jest ta aplikacja.</string>
     <string name="origin_store_first">%1$s to sklep, a nie własna strona twórcy. Dopóki aplikacja nie jest przypięta do certyfikatu, pierwszy plik zainstalowany z niego przez Tern decyduje, jaki certyfikat musi mieć każda późniejsza aktualizacja.</string>
     <string name="origin_store_pinned">%1$s to sklep, a nie własna strona twórcy. Jego pliki muszą mieć certyfikat, do którego przypisana jest ta aplikacja.</string>
-    <string name="stores_paused">Wstrzymano. Sklepy innych firm są wyłączone, więc Tern o nic nie pyta tego sklepu. Włącz je w Ustawieniach, aby ponownie go sprawdzić.</string>
     <string name="stores_refused_modified">Tern nie czyta witryn oferujących zmodyfikowane aplikacje. Ich pliki są zmieniane przez kogoś innego niż twórca i podpisane przez tego, kto je zmienił.</string>
     <string name="stores_refused_impersonation">Tern nie może odczytać tego sklepu bez podszywania się pod jego aplikację, więc go nie czyta.</string>
     <string name="stores_checksum_source">%1$s, a nie twórca</string>

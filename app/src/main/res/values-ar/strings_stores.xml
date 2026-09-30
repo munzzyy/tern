@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">يقدم %1$s مرة أخرى ما ينشره المطورون في مكان آخر، وليس هو المطور. يجب أن تحمل ملفاته الشهادة التي يُلزم بها هذا التطبيق.</string>
     <string name="origin_store_first">%1$s هو متجر، وليس موقع المطور الخاص. حتى يُثبَّت التطبيق على شهادة، يقرر أول ملف يثبته Tern منه أي شهادة يجب أن يحملها كل تحديث لاحق.</string>
     <string name="origin_store_pinned">%1$s هو متجر، وليس موقع المطور الخاص. يجب أن تحمل ملفاته الشهادة التي يُلزم بها هذا التطبيق.</string>
-    <string name="stores_paused">متوقف مؤقتًا. المتاجر الخارجية متوقفة، لذلك لا يسأل Tern هذا المتجر عن أي شيء. شغّلها في الإعدادات لفحصه مرة أخرى.</string>
     <string name="stores_refused_modified">لا يقرأ Tern المواقع التي تقدم تطبيقات معدلة. يتم تغيير ملفاتها من قبل شخص آخر غير المطور ويتم توقيعها من قبل من غيّرها.</string>
     <string name="stores_refused_impersonation">لا يستطيع Tern قراءة هذا المتجر دون التظاهر بأنه تطبيقه، لذلك لا يقرؤه.</string>
     <string name="stores_checksum_source">%1$s، وهو ليس المطور</string>

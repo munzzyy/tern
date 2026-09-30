@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Toko pihak ketiga dimatikan, jadi Tern tidak menanyakan apa pun pada toko ini. Nyalakan di Setelan untuk memeriksanya lagi.</string>
+</resources>

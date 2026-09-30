@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">第三方商店已關閉，因此 Tern 不會向此商店查詢任何資訊。在「設定」中將其開啟以再次檢查。</string>
+</resources>

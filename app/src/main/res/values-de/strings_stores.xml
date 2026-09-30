@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s bietet erneut an, was Entwickler woanders veröffentlichen, und ist nicht der Entwickler. Seine Dateien müssen das Zertifikat tragen, an das diese App gebunden ist.</string>
     <string name="origin_store_first">%1$s ist ein Store, nicht die eigene Seite des Entwicklers. Bis die App an ein Zertifikat angeheftet ist, entscheidet die erste Datei, die Tern daraus installiert, welches Zertifikat jedes spätere Update tragen muss.</string>
     <string name="origin_store_pinned">%1$s ist ein Store, nicht die eigene Seite des Entwicklers. Seine Dateien müssen das Zertifikat tragen, an das diese App gebunden ist.</string>
-    <string name="stores_paused">Pausiert. Drittanbieter-Stores sind aus, daher fragt Tern diesen Store nichts. Schalte sie in den Einstellungen ein, um ihn erneut zu prüfen.</string>
     <string name="stores_refused_modified">Tern liest keine Seiten, die modifizierte Apps anbieten. Deren Dateien werden von jemand anderem als dem Entwickler geändert und von demjenigen signiert, der sie geändert hat.</string>
     <string name="stores_refused_impersonation">Tern kann diesen Store nicht lesen, ohne vorzugeben, seine App zu sein, daher liest es ihn nicht.</string>
     <string name="stores_checksum_source">%1$s, was nicht der Entwickler ist</string>

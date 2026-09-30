@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s は開発者が別の場所で公開したものを再提供しているだけで、開発者ではありません。そのファイルは、このアプリが保持している証明書を持っていなければなりません。</string>
     <string name="origin_store_first">%1$s はストアであり、開発者自身のサイトではありません。アプリが証明書にピン留めされるまで、Ternがそこからインストールする最初のファイルによって、以降のすべての更新で必要となる証明書が決定されます。</string>
     <string name="origin_store_pinned">%1$s はストアであり、開発者自身のサイトではありません。そのファイルは、このアプリが保持している証明書を持っていなければなりません。</string>
-    <string name="stores_paused">一時停止中。サードパーティストアがオフになっているため、Ternはこのストアには何も問い合わせません。もう一度確認するには、設定でオンにしてください。</string>
     <string name="stores_refused_modified">Ternは変更されたアプリを提供するサイトを読み取りません。それらのファイルは開発者以外によって変更され、変更した者によって署名されています。</string>
     <string name="stores_refused_impersonation">Ternはそのストアのアプリを偽装しないと読み取れないため、読み取りを行いません。</string>
     <string name="stores_checksum_source">%1$s（開発者ではありません）</string>

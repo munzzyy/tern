@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s 再次提供开发者在别处发布的内容，而它本身不是开发者。其文件必须携带此应用所固定的证书。</string>
     <string name="origin_store_first">%1$s 是一个商店，不是开发者自己的网站。在该应用固定证书之前，Tern 从此处安装的第一个文件将决定其后每次更新必须携带的证书。</string>
     <string name="origin_store_pinned">%1$s 是一个商店，不是开发者自己的网站。其文件必须携带此应用所固定的证书。</string>
-    <string name="stores_paused">已暂停。第三方商店已关闭，因此 Tern 不会向此商店发出任何请求。请在设置中将其打开以再次检查。</string>
     <string name="stores_refused_modified">Tern 不会读取提供修改版应用的网站。这些文件被开发者以外的人修改过，并由修改者签名。</string>
     <string name="stores_refused_impersonation">Tern 必须伪装成该商店的应用才能读取它，因此 Tern 不会读取它。</string>
     <string name="stores_checksum_source">%1$s，并非开发者</string>

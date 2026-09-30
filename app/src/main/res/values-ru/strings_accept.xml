@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Сторонние магазины выключены, поэтому Tern ничего не спрашивает у этого магазина. Включите их в Настройках, чтобы проверить его снова.</string>
+</resources>

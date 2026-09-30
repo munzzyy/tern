@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s volta a oferecer o que os programadores publicam noutros locais, e não é o programador. Os seus ficheiros têm de ter o certificado a que esta aplicação está fixada.</string>
     <string name="origin_store_first">%1$s é uma loja, não o site do próprio programador. Até que a aplicação seja fixada a um certificado, o primeiro ficheiro que o Tern instalar a partir dela decide que certificado cada atualização posterior tem de ter.</string>
     <string name="origin_store_pinned">%1$s é uma loja, não o site do próprio programador. Os seus ficheiros têm de ter o certificado a que esta aplicação está fixada.</string>
-    <string name="stores_paused">Em pausa. As lojas de terceiros estão desligadas, por isso o Tern não pergunta nada a esta loja. Ligue-as nas Definições para a verificar novamente.</string>
     <string name="stores_refused_modified">O Tern não lê sites que oferecem aplicações modificadas. Os seus ficheiros são alterados por outra pessoa que não o programador e assinados por quem os alterou.</string>
     <string name="stores_refused_impersonation">O Tern não consegue ler esta loja sem fingir ser a sua aplicação, por isso não a lê.</string>
     <string name="stores_checksum_source">%1$s, que não é o programador</string>

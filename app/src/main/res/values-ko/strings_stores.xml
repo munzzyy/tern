@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s은(는) 개발자가 다른 곳에 게시한 항목을 다시 제공할 뿐, 개발자가 아닙니다. 이 소스의 파일은 이 앱에 고정된 인증서를 포함해야 합니다.</string>
     <string name="origin_store_first">%1$s은(는) 개발자 자체 사이트가 아닌 스토어입니다. 앱이 인증서에 고정될 때까지 Tern이 이곳에서 설치하는 첫 파일이 이후 모든 업데이트에 포함되어야 할 인증서를 결정합니다.</string>
     <string name="origin_store_pinned">%1$s은(는) 개발자 자체 사이트가 아닌 스토어입니다. 이 스토어의 파일은 이 앱에 고정된 인증서를 포함해야 합니다.</string>
-    <string name="stores_paused">일시중지됨. 서드파티 스토어가 꺼져 있어 Tern이 이 스토어에 아무것도 요청하지 않습니다. 다시 확인하려면 설정에서 서드파티 스토어를 켜세요.</string>
     <string name="stores_refused_modified">Tern은 수정된 앱을 제공하는 사이트를 읽지 않습니다. 이러한 파일은 개발자가 아닌 다른 사람이 변경했으며 변경한 사람이 서명했습니다.</string>
     <string name="stores_refused_impersonation">Tern은 이 스토어의 앱인 척하지 않고는 스토어를 읽을 수 없으므로 읽지 않습니다.</string>
     <string name="stores_checksum_source">개발자가 아닌 %1$s</string>

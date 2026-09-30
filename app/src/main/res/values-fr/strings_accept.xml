@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Les boutiques tierces sont désactivées, donc Tern ne demande rien à cette boutique. Activez-les dans les paramètres pour la vérifier à nouveau.</string>
+</resources>

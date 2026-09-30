@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s znovu nabízí to, co vývojáři publikují jinde, a není vývojářem. Jeho soubory musí nést certifikát, ke kterému je tato aplikace vázána.</string>
     <string name="origin_store_first">%1$s je obchod, ne vlastní web vývojáře. Dokud není aplikace připnuta k certifikátu, první soubor, který z něj Tern nainstaluje, určí, jaký certifikát musí nést každá další aktualizace.</string>
     <string name="origin_store_pinned">%1$s je obchod, ne vlastní web vývojáře. Jeho soubory musí nést certifikát, ke kterému je tato aplikace vázána.</string>
-    <string name="stores_paused">Pozastaveno. Obchody třetích stran jsou vypnuté, takže se Tern tohoto obchodu na nic neptá. Zapněte je v Nastavení a zkontrolujte to znovu.</string>
     <string name="stores_refused_modified">Tern nečte weby, které nabízejí upravené aplikace. Jejich soubory jsou změněny někým jiným než vývojářem a podepsány tím, kdo je změnil.</string>
     <string name="stores_refused_impersonation">Tern nemůže číst tento obchod bez toho, aby předstíral, že je jeho aplikací, takže ho nečte.</string>
     <string name="stores_checksum_source">%1$s, což není vývojář</string>

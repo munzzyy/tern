@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Prodavnice trećih strana su isključene, pa Tern ništa ne pita ovu prodavnicu. Uključite ih u postavkama da biste je ponovo provjerili.</string>
+</resources>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Obchody třetích stran jsou vypnuté, takže se Tern tohoto obchodu na nic neptá. Zapněte je v Nastavení a zkontrolujte ho znovu.</string>
+</resources>

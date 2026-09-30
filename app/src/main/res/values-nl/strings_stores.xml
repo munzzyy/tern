@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s biedt opnieuw aan wat ontwikkelaars elders publiceren, en is niet de ontwikkelaar. De bestanden ervan moeten het certificaat dragen waaraan deze app is gehouden.</string>
     <string name="origin_store_first">%1$s is een store, niet de eigen site van de ontwikkelaar. Totdat de app aan een certificaat is vastgepind, bepaalt het eerste bestand dat Tern ervan installeert welk certificaat elke latere update moet dragen.</string>
     <string name="origin_store_pinned">%1$s is een store, niet de eigen site van de ontwikkelaar. De bestanden ervan moeten het certificaat dragen waaraan deze app is gehouden.</string>
-    <string name="stores_paused">Gepauzeerd. Stores van derden staan uit, dus Tern vraagt deze store niets. Zet ze aan in Instellingen om deze weer te controleren.</string>
     <string name="stores_refused_modified">Tern leest geen sites die gemodificeerde apps aanbieden. Hun bestanden zijn gewijzigd door iemand anders dan de ontwikkelaar en ondertekend door degene die ze heeft gewijzigd.</string>
     <string name="stores_refused_impersonation">Tern kan deze store niet lezen zonder zich voor te doen als de app van de store, dus leest hij deze niet.</string>
     <string name="stores_checksum_source">%1$s, wat niet de ontwikkelaar is</string>

@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s kembali menawarkan apa yang diterbitkan pengembang di tempat lain, dan bukan pengembangnya. File-filenya harus membawa sertifikat yang telah disematkan pada aplikasi ini.</string>
     <string name="origin_store_first">%1$s adalah toko, bukan situs milik pengembang. Hingga aplikasi disematkan ke sertifikat, file pertama yang diinstal Tern darinya menentukan sertifikat mana yang harus dibawa oleh setiap pembaruan berikutnya.</string>
     <string name="origin_store_pinned">%1$s adalah toko, bukan situs milik pengembang. File-filenya harus membawa sertifikat yang telah disematkan pada aplikasi ini.</string>
-    <string name="stores_paused">Dijeda. Toko pihak ketiga nonaktif, jadi Tern tidak menanyakan apa pun ke toko ini. Aktifkan di Setelan untuk memeriksanya lagi.</string>
     <string name="stores_refused_modified">Tern tidak membaca situs yang menawarkan aplikasi yang dimodifikasi. File mereka diubah oleh pihak selain pengembang dan ditandatangani oleh siapa pun yang mengubahnya.</string>
     <string name="stores_refused_impersonation">Tern tidak dapat membaca toko ini tanpa berpura-pura menjadi aplikasinya, jadi Tern tidak membacanya.</string>
     <string name="stores_checksum_source">%1$s, yang bukan pengembangnya</string>

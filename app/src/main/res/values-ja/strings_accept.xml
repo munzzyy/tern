@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">サードパーティストアがオフになっているため、Ternはこのストアに何も問い合わせません。再度確認するには、設定でオンにしてください。</string>
+</resources>

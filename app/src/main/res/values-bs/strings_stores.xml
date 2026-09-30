@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s ponovo nudi ono što programeri objavljuju negdje drugo, i nije programer. Njegove datoteke moraju nositi certifikat za koji je ova aplikacija prikačena.</string>
     <string name="origin_store_first">%1$s je prodavnica, a ne vlastita web lokacija programera. Dok se aplikacija ne prikači za certifikat, prva datoteka koju Tern instalira iz nje odlučuje koji certifikat mora nositi svako kasnije ažuriranje.</string>
     <string name="origin_store_pinned">%1$s je prodavnica, a ne vlastita web lokacija programera. Njene datoteke moraju nositi certifikat za koji je ova aplikacija prikačena.</string>
-    <string name="stores_paused">Pauzirano. Prodavnice trećih strana su isključene, tako da Tern ne pita ništa ovu prodavnicu. Uključite ih u postavkama da biste je ponovo provjerili.</string>
     <string name="stores_refused_modified">Tern ne čita lokacije koje nude modificirane aplikacije. Njihove datoteke mijenja neko drugi, a ne programer, i potpisane su od strane onoga ko ih je promijenio.</string>
     <string name="stores_refused_impersonation">Tern ne može čitati ovu prodavnicu bez pretvaranja da je njena aplikacija, pa je ne čita.</string>
     <string name="stores_checksum_source">%1$s, koji nije programer</string>

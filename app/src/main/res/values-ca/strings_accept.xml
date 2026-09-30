@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Les botigues de tercers estan desactivades, així que Tern no demana res a aquesta botiga. Activa-les a Configuració per tornar-ho a comprovar.</string>
+</resources>

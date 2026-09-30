@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Сторонні магазини вимкнено, тому Tern нічого не запитує в цього магазину. Увімкніть їх у Налаштуваннях, щоб перевірити його знову.</string>
+</resources>

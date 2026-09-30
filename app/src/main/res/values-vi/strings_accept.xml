@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Cửa hàng bên thứ ba đang tắt, nên Tern không yêu cầu gì từ cửa hàng này. Bật chúng trong Cài đặt để kiểm tra lại.</string>
+</resources>

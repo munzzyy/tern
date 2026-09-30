@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s đề xuất lại những gì nhà phát triển xuất bản ở nơi khác, và không phải là nhà phát triển. Các tệp của nó phải mang chứng chỉ mà ứng dụng này đang giữ.</string>
     <string name="origin_store_first">%1$s là một cửa hàng, không phải trang web riêng của nhà phát triển. Cho đến khi ứng dụng được ghim vào một chứng chỉ, tệp đầu tiên Tern cài đặt từ cửa hàng này sẽ quyết định chứng chỉ mà mọi bản cập nhật sau này phải mang.</string>
     <string name="origin_store_pinned">%1$s là một cửa hàng, không phải trang web riêng của nhà phát triển. Các tệp của nó phải mang chứng chỉ mà ứng dụng này đang giữ.</string>
-    <string name="stores_paused">Đã tạm dừng. Các cửa hàng của bên thứ ba đang tắt, nên Tern không hỏi cửa hàng này điều gì. Hãy bật chúng trong Cài đặt để kiểm tra lại.</string>
     <string name="stores_refused_modified">Tern không đọc các trang web cung cấp ứng dụng đã sửa đổi. Tệp của chúng bị người khác không phải nhà phát triển thay đổi và được ký bởi người đã thay đổi chúng.</string>
     <string name="stores_refused_impersonation">Tern không thể đọc cửa hàng này mà không giả làm ứng dụng của nó, nên nó không đọc cửa hàng này.</string>
     <string name="stores_checksum_source">%1$s, không phải là nhà phát triển</string>

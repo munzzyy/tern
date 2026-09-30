@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Sklepy innych firm są wyłączone, więc Tern o nic nie pyta tego sklepu. Włącz je w Ustawieniach, aby sprawdzić ponownie.</string>
+</resources>

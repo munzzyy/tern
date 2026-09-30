@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">فروشگاه‌های شخص ثالث خاموش هستند، بنابراین Tern چیزی از این فروشگاه نمی‌پرسد. برای بررسی دوباره، آن‌ها را در تنظیمات روشن کنید.</string>
+</resources>

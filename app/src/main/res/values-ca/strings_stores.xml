@@ -5,7 +5,6 @@
     <string name="origin_republished_pinned">%1$s torna a oferir el que els desenvolupadors publiquen en un altre lloc, i no és el desenvolupador. Els seus fitxers han de portar el certificat al qual aquesta aplicació està fixada.</string>
     <string name="origin_store_first">%1$s és una botiga, no el lloc del desenvolupador. Fins que l\'aplicació no es fixi a un certificat, el primer fitxer que Tern hi instal·li decideix quin certificat ha de portar cada actualització posterior.</string>
     <string name="origin_store_pinned">%1$s és una botiga, no el lloc del desenvolupador. Els seus fitxers han de portar el certificat al qual aquesta aplicació està fixada.</string>
-    <string name="stores_paused">Pausat. Les botigues de tercers estan desactivades, així que Tern no pregunta res a aquesta botiga. Activa-les a la Configuració per tornar-ho a comprovar.</string>
     <string name="stores_refused_modified">Tern no llegeix llocs que ofereixen aplicacions modificades. Els seus fitxers han estat canviats per algú que no és el desenvolupador i signats per qui els hagi canviat.</string>
     <string name="stores_refused_impersonation">Tern no pot llegir aquesta botiga sense fer-se passar per la seva aplicació, de manera que no la llegeix.</string>
     <string name="stores_checksum_source">%1$s, que no és el desenvolupador</string>

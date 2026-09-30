@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stores_paused_reason">Drittanbieter-Stores sind ausgeschaltet, daher fragt Tern diesen Store nichts. Schalte sie in den Einstellungen ein, um ihn erneut zu prüfen.</string>
+</resources>

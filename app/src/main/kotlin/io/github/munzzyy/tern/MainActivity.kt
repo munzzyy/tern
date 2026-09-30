@@ -16,14 +16,18 @@ import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import io.github.munzzyy.tern.ui.BackStack
 import io.github.munzzyy.tern.ui.EXTRA_SCENARIO
-import io.github.munzzyy.tern.ui.TernApp
+import io.github.munzzyy.tern.ui.RefreshLink
 import io.github.munzzyy.tern.ui.SCENARIO_FIRST_RUN
 import io.github.munzzyy.tern.ui.Scenarios
+import io.github.munzzyy.tern.ui.TernApp
 import io.github.munzzyy.tern.ui.incomingAddInput
+import io.github.munzzyy.tern.ui.refreshLink
 import io.github.munzzyy.tern.ui.theme.TernTheme
 import io.github.munzzyy.tern.ui.theme.isDark
+import kotlinx.coroutines.launch
 
 private const val PREFS = "ui"
 private const val KEY_FIRST_RUN_DONE = "first_run_done"
@@ -77,6 +81,25 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun receive(intent: Intent) {
+        if (intent.action == Intent.ACTION_VIEW) {
+            val refresh = try {
+                refreshLink(intent.dataString)
+            } catch (_: RuntimeException) {
+                null
+            }
+            if (refresh != null) {
+                lifecycleScope.launch {
+                    val id = when (refresh) {
+                        RefreshLink.All -> null
+                        is RefreshLink.One -> engine.apps.value.firstOrNull {
+                            it.config.packageName == refresh.packageName || it.installed?.packageName == refresh.packageName
+                        }?.id ?: return@launch
+                    }
+                    engine.check(id)
+                }
+                return
+            }
+        }
         val text = try {
             incomingAddInput(intent.action, intent.dataString, intent.getCharSequenceExtra(Intent.EXTRA_TEXT)?.toString())
         } catch (_: RuntimeException) {

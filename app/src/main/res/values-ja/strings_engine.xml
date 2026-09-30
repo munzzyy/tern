@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">このリリースにはこの端末に合うファイルがありません。</string>
     <string name="engine_warn_prerelease">プレリリースのみ公開されています。</string>
     <string name="engine_warn_moved">プロジェクトは %1$s に移動したようです。</string>
-    <string name="engine_several_apps">このリンクには複数のアプリが含まれています。設定からインポートしてください。</string>
     <string name="engine_not_a_source">Ternはこのアドレスにリリースを見つけられませんでした。</string>
     <string name="engine_move_gone">このアプリはもうリストにありません。</string>
     <string name="engine_move_nothing">追跡する新しいアドレスはありません。</string>

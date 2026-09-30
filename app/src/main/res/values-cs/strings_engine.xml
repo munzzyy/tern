@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Žádný soubor z tohoto vydání se nehodí pro toto zařízení.</string>
     <string name="engine_warn_prerelease">Zveřejněno je jen předběžné vydání.</string>
     <string name="engine_warn_moved">Zdá se, že projekt byl přesunut na %1$s.</string>
-    <string name="engine_several_apps">Tento odkaz obsahuje více aplikací. Importujte jej raději z nastavení.</string>
     <string name="engine_not_a_source">Tern na této adrese nenašel žádná vydání.</string>
     <string name="engine_move_gone">Tato aplikace už není ve vašem seznamu.</string>
     <string name="engine_move_nothing">Neexistuje žádná nová adresa ke sledování.</string>

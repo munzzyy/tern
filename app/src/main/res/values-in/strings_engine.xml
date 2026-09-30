@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Tidak ada file di rilis ini yang cocok untuk perangkat ini.</string>
     <string name="engine_warn_prerelease">Hanya pra-rilis yang diterbitkan.</string>
     <string name="engine_warn_moved">Proyek tampaknya telah dipindahkan ke %1$s.</string>
-    <string name="engine_several_apps">Tautan ini menyimpan beberapa aplikasi. Impor dari setelan saja.</string>
     <string name="engine_not_a_source">Tern tidak menemukan rilis di alamat ini.</string>
     <string name="engine_move_gone">Aplikasi ini tidak lagi ada di daftar.</string>
     <string name="engine_move_nothing">Tidak ada alamat baru untuk diikuti.</string>

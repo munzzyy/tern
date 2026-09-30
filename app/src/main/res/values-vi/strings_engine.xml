@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Bản phát hành này không có tệp phù hợp với thiết bị.</string>
     <string name="engine_warn_prerelease">Chỉ có một bản tiền phát hành được xuất bản.</string>
     <string name="engine_warn_moved">Dự án dường như đã dời đến %1$s.</string>
-    <string name="engine_several_apps">Liên kết này chứa nhiều ứng dụng. Vui lòng nhập từ trong cài đặt.</string>
     <string name="engine_not_a_source">Tern không tìm thấy bản phát hành nào tại địa chỉ này.</string>
     <string name="engine_move_gone">Ứng dụng này không còn trong danh sách.</string>
     <string name="engine_move_nothing">Không có địa chỉ mới để theo dõi.</string>

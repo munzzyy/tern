@@ -117,7 +117,6 @@ class Texts(context: Context) : ImportTexts {
     fun warnNoFile() = s(R.string.engine_warn_no_file)
     fun warnPrerelease() = s(R.string.engine_warn_prerelease)
     fun warnMoved(url: String) = s(R.string.engine_warn_moved, url)
-    fun severalApps() = s(R.string.engine_several_apps)
     fun notASource() = s(R.string.engine_not_a_source)
     fun nothingToSearch() = s(R.string.engine_nothing_to_search)
 

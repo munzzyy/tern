@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Neniu dosiero en ĉi tiu eldono taŭgas por ĉi tiu aparato.</string>
     <string name="engine_warn_prerelease">Nur antaŭeldono estas publikigita.</string>
     <string name="engine_warn_moved">La projekto ŝajnas esti movita al %1$s.</string>
-    <string name="engine_several_apps">Ĉi tiu ligilo tenas plurajn aplikaĵojn. Importu ĝin el agordoj anstataŭe.</string>
     <string name="engine_not_a_source">Tern trovis neniujn eldonojn je ĉi tiu adreso.</string>
     <string name="engine_move_gone">Ĉi tiu aplikaĵo ne plu estas en la listo.</string>
     <string name="engine_move_nothing">Ekzistas neniu nova adreso por sekvi.</string>

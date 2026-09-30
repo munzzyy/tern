@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">這個發行版本中沒有適合此裝置的檔案。</string>
     <string name="engine_warn_prerelease">只有提供預先發行版本。</string>
     <string name="engine_warn_moved">該專案似乎已經移至 %1$s。</string>
-    <string name="engine_several_apps">這個連結包含多個應用程式。請改從「設定」匯入。</string>
     <string name="engine_not_a_source">Tern 在此網址找不到任何發行版本。</string>
     <string name="engine_move_gone">這個應用程式已經不在您的清單中。</string>
     <string name="engine_move_nothing">沒有要追蹤的新網址。</string>

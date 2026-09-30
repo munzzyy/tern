@@ -32,6 +32,9 @@ const val MAX_RESULTS = 200
 /** A list that came from an address is a repository's own list of apps. One that came from words is what a search found. */
 fun isRepository(results: Detection.Results): Boolean = results.query.trim().startsWith("https://", ignoreCase = true)
 
+/** A list of apps that came in one link, each with the settings the link gave it. */
+fun isCarriedList(results: Detection.Results): Boolean = results.query == Detection.Results.CARRIED
+
 /** The repository's own name, which the engine puts on every app it lists, or else its host. */
 fun repositoryName(results: Detection.Results): String =
     results.hits.firstOrNull()?.origin?.trim()?.takeIf { it.isNotEmpty() } ?: hostOf(results.query)
@@ -58,6 +61,7 @@ fun ResultsList(results: Detection.Results, onPick: (SearchHit) -> Unit, modifie
     Column(modifier.testTag(RESULTS_TAG), verticalArrangement = Arrangement.spacedBy(look.gapSmall)) {
         Text(
             when {
+                isCarriedList(results) -> pluralStringResource(R.plurals.link_apps_heading, hits.size, hits.size)
                 hits.isEmpty() -> stringResource(R.string.search_none, results.query)
                 repository -> stringResource(R.string.repo_heading, isolate(repositoryName(results)))
                 else -> pluralStringResource(R.plurals.search_count, hits.size, hits.size, results.query)

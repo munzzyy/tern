@@ -179,7 +179,12 @@ sealed interface Detection {
      * A list to pick from: what a search found, or the apps of a repository that was given by its
      * address. [more] says the list was cut and the rest is not shown.
      */
-    data class Results(val query: String, val hits: List<SearchHit>, val more: Boolean = false) : Detection
+    data class Results(val query: String, val hits: List<SearchHit>, val more: Boolean = false) : Detection {
+        companion object {
+            /** The query of a list of apps that came in one link, which the Add screen heads apart from a search. */
+            const val CARRIED = "obtainium://apps"
+        }
+    }
 
     data class Failed(val problem: Problem) : Detection
 }

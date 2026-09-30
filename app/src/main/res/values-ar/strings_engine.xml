@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">لا يوجد ملف في هذا الإصدار يناسب هذا الجهاز.</string>
     <string name="engine_warn_prerelease">تم نشر إصدار مسبق فقط.</string>
     <string name="engine_warn_moved">يبدو أن المشروع قد انتقل إلى %1$s.</string>
-    <string name="engine_several_apps">يحتوي هذا الرابط على عدة تطبيقات. قم باستيراده من الإعدادات بدلاً من ذلك.</string>
     <string name="engine_not_a_source">لم يعثر Tern على أي إصدارات في هذا العنوان.</string>
     <string name="engine_move_gone">لم يعد هذا التطبيق في القائمة.</string>
     <string name="engine_move_nothing">لا يوجد عنوان جديد لمتابعته.</string>

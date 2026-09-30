@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Bu sürümdeki hiçbir dosya bu cihaza uymuyor.</string>
     <string name="engine_warn_prerelease">Yalnızca bir ön sürüm yayınlanmış.</string>
     <string name="engine_warn_moved">Proje görünüşe göre %1$s adresine taşınmış.</string>
-    <string name="engine_several_apps">Bu bağlantı birkaç uygulama içeriyor. Bunun yerine ayarlardan içe aktarın.</string>
     <string name="engine_not_a_source">Tern bu adreste hiçbir sürüm bulamadı.</string>
     <string name="engine_move_gone">Bu uygulama artık listenizde değil.</string>
     <string name="engine_move_nothing">İzlenecek yeni adres yok.</string>

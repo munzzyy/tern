@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Жоден файл у цьому випуску не підходить для цього пристрою.</string>
     <string name="engine_warn_prerelease">Опубліковано лише попередній випуск.</string>
     <string name="engine_warn_moved">Здається, проєкт переміщено до %1$s.</string>
-    <string name="engine_several_apps">Це посилання містить кілька програм. Натомість імпортуйте його з налаштувань.</string>
     <string name="engine_not_a_source">Tern не знайшов випусків за цією адресою.</string>
     <string name="engine_move_gone">Цієї програми більше немає в списку.</string>
     <string name="engine_move_nothing">Немає нової адреси для відстеження.</string>

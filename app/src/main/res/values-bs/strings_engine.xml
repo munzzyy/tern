@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Nijedna datoteka u ovom izdanju ne odgovara ovom uređaju.</string>
     <string name="engine_warn_prerelease">Objavljeno je samo predizdanje.</string>
     <string name="engine_warn_moved">Čini se da se projekt premjestio na %1$s.</string>
-    <string name="engine_several_apps">Ovaj link sadrži nekoliko aplikacija. Uvezite ga iz postavki umjesto toga.</string>
     <string name="engine_not_a_source">Tern nije pronašao izdanja na ovoj adresi.</string>
     <string name="engine_move_gone">Ova aplikacija više nije na spisku.</string>
     <string name="engine_move_nothing">Nema nove adrese za praćenje.</string>

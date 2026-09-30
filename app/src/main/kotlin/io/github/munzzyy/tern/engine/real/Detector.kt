@@ -5,6 +5,8 @@ import io.github.munzzyy.tern.core.icon.IconAddresses
 import io.github.munzzyy.tern.core.interop.ObtainiumImport
 import io.github.munzzyy.tern.core.interop.ObtainiumImportException
 import io.github.munzzyy.tern.core.interop.ObtainiumLink
+import io.github.munzzyy.tern.core.json.Json
+import io.github.munzzyy.tern.core.json.JsonException
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.SourceSpec
@@ -17,12 +19,14 @@ import io.github.munzzyy.tern.core.source.SourceListing
 import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.fdroid.FDroidRepoSource
+import io.github.munzzyy.tern.core.text.Shown
 import io.github.munzzyy.tern.data.AppState
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.SearchHit
 import io.github.munzzyy.tern.engine.SignerState
+import java.net.URLEncoder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withContext
@@ -37,13 +41,15 @@ internal class Detector(private val e: RealEngine) {
         val target: Target = when (val link = ObtainiumLink.parse(text)) {
             is ObtainiumLink.Add -> Target(link.url, null, null)
             is ObtainiumLink.App -> fromObtainiumApp(link.json) ?: return Detection.Failed(Problem(ProblemKind.UNSUPPORTED, e.texts.notASource()))
-            is ObtainiumLink.Apps -> return Detection.Failed(Problem(ProblemKind.UNSUPPORTED, e.texts.severalApps()))
+            is ObtainiumLink.Apps -> return several(link.json) ?: Detection.Failed(Problem(ProblemKind.UNSUPPORTED, e.texts.notASource()))
             null -> if (looksLikeLink(text)) Target(text, null, null) else return Detection.Results(text, search.search(text))
         }
         return withContext(Dispatchers.IO) { resolve(target) }
     }
 
     private class Target(val url: String, val spec: SourceSpec?, val config: AppConfig?)
+
+    private fun several(json: String): Detection.Results? = carriedPicks(json)
 
     private fun fromObtainiumApp(json: String): Target? {
         val app = try {
@@ -166,8 +172,35 @@ internal class Detector(private val e: RealEngine) {
         return BARE_HOST.matches(text)
     }
 
-    private companion object {
-        const val MAX_INPUT = 4096
-        val BARE_HOST = Regex("^[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,}(:\\d{1,5})?(/\\S*)?$")
+    companion object {
+        /**
+         * A link that carries several apps, as Obtainium shares a list: each becomes a pick of its
+         * own, a link to that one app, so its settings are shown before it is added, one at a time.
+         * Null when the link carries nothing that can be added.
+         */
+        internal fun carriedPicks(json: String): Detection.Results? {
+            val entries = try {
+                Json.parseArray(json).objects()
+            } catch (_: JsonException) {
+                return null
+            }
+            val hits = entries.take(MAX_CARRIED).mapNotNull { entry ->
+                val url = entry.string("url")?.let(Urls::normalize)?.takeIf(Urls::isHttps) ?: return@mapNotNull null
+                SearchHit(
+                    name = Shown.lineOrNull(entry.string("name"), 200) ?: Urls.host(url),
+                    owner = Shown.lineOrNull(entry.string("author"), 200),
+                    description = url,
+                    url = "obtainium://app/" + URLEncoder.encode(Json.write(entry), "UTF-8").replace("+", "%20"),
+                    origin = CARRIED_ORIGIN,
+                )
+            }
+            if (hits.isEmpty()) return null
+            return Detection.Results(Detection.Results.CARRIED, hits, more = entries.size > MAX_CARRIED)
+        }
+
+        private const val CARRIED_ORIGIN = "Obtainium"
+        private const val MAX_CARRIED = 200
+        private const val MAX_INPUT = 4096
+        private val BARE_HOST = Regex("^[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,}(:\\d{1,5})?(/\\S*)?$")
     }
 }

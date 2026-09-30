@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">هیچ فایلی در این انتشار مناسب این دستگاه نیست.</string>
     <string name="engine_warn_prerelease">فقط یک پیش‌انتشار منتشر شده است.</string>
     <string name="engine_warn_moved">به نظر می‌رسد پروژه به %1$s منتقل شده است.</string>
-    <string name="engine_several_apps">این پیوند حاوی چندین برنامه است. به‌جای آن، آن را از تنظیمات درون‌ریزی کنید.</string>
     <string name="engine_not_a_source">Tern هیچ انتشاری در این آدرس پیدا نکرد.</string>
     <string name="engine_move_gone">این برنامه دیگر در لیست نیست.</string>
     <string name="engine_move_nothing">هیچ آدرس جدیدی برای دنبال کردن وجود ندارد.</string>

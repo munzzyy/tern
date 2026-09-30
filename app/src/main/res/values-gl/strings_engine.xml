@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Ningún ficheiro deste lanzamento serve para este dispositivo.</string>
     <string name="engine_warn_prerelease">Só se publicou unha versión preliminar.</string>
     <string name="engine_warn_moved">Semella que o proxecto se moveu a %1$s.</string>
-    <string name="engine_several_apps">Esta ligazón contén varias aplicacións. Impórtaa desde os axustes.</string>
     <string name="engine_not_a_source">Tern non atopou lanzamentos neste enderezo.</string>
     <string name="engine_move_gone">Esta aplicación xa non está na lista.</string>
     <string name="engine_move_nothing">Non hai ningún novo enderezo que seguir.</string>

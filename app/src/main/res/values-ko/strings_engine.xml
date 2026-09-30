@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">이 릴리스에는 이 기기에 맞는 파일이 없습니다.</string>
     <string name="engine_warn_prerelease">사전 릴리스만 게시되어 있습니다.</string>
     <string name="engine_warn_moved">프로젝트가 %1$s(으)로 이동된 것 같습니다.</string>
-    <string name="engine_several_apps">이 링크는 여러 앱을 포함합니다. 설정에서 가져오기를 사용하세요.</string>
     <string name="engine_not_a_source">Tern가 이 주소에서 릴리스를 찾지 못했습니다.</string>
     <string name="engine_move_gone">이 앱은 더 이상 목록에 없습니다.</string>
     <string name="engine_move_nothing">추적할 새 주소가 없습니다.</string>

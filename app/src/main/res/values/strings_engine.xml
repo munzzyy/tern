@@ -62,7 +62,6 @@
     <string name="engine_warn_no_file">No file in this release fits this device.</string>
     <string name="engine_warn_prerelease">Only a pre-release is published.</string>
     <string name="engine_warn_moved">The project seems to have moved to %1$s.</string>
-    <string name="engine_several_apps">This link holds several apps. Import it from settings instead.</string>
     <string name="engine_not_a_source">Tern found no releases at this address.</string>
     <string name="engine_move_gone">This app is no longer in the list.</string>
     <string name="engine_move_nothing">There is no new address to follow.</string>

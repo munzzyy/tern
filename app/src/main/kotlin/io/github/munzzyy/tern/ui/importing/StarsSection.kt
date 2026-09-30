@@ -125,7 +125,7 @@ private fun AskUser(onLook: (String) -> Unit, problem: StarsState.Failed?) {
 }
 
 @Composable
-private fun StarRow(hit: SearchHit, picked: Boolean, onToggle: () -> Unit) {
+internal fun StarRow(hit: SearchHit, picked: Boolean, onToggle: () -> Unit) {
     val look = LocalLook.current
     val scheme = MaterialTheme.colorScheme
     Row(

@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Cap fitxer d\'aquest llançament és adequat per a aquest dispositiu.</string>
     <string name="engine_warn_prerelease">Només s\'ha publicat un prellançament.</string>
     <string name="engine_warn_moved">Sembla que el projecte s\'ha mogut a %1$s.</string>
-    <string name="engine_several_apps">Aquest enllaç conté diverses aplicacions. Importa\'l des de la configuració en el seu lloc.</string>
     <string name="engine_not_a_source">Tern no ha trobat cap llançament en aquesta adreça.</string>
     <string name="engine_move_gone">Aquesta aplicació ja no és a la llista.</string>
     <string name="engine_move_nothing">No hi ha cap nova adreça a seguir.</string>

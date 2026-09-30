@@ -18,6 +18,28 @@ fun incomingAddInput(action: String?, data: String?, sharedText: String?): Strin
     else -> null
 }
 
+/**
+ * A link that asks for a check: tern://refresh for every app, and Obtainium's
+ * obtainium://refresh or obtainium://refresh?id=<package> for every app or one. Null for any
+ * other link. A check only reads the sources; it adds, installs and removes nothing.
+ */
+sealed interface RefreshLink {
+    data object All : RefreshLink
+
+    /** Obtainium names an app by its package. */
+    data class One(val packageName: String) : RefreshLink
+}
+
+fun refreshLink(raw: String?): RefreshLink? {
+    if (raw == null || raw.length > MAX_INCOMING_CHARS) return null
+    val scheme = raw.substringBefore(':', "").lowercase()
+    if (scheme != "tern" && scheme != "obtainium") return null
+    val rest = raw.substringAfter(':', "").removePrefix("//")
+    if (!rest.substringBefore('?').trimEnd('/').equals("refresh", ignoreCase = true)) return null
+    val id = rest.substringAfter('?', "").split('&').firstOrNull { it.startsWith("id=") }?.removePrefix("id=")?.let(::decode)
+    return if (id.isNullOrBlank()) RefreshLink.All else RefreshLink.One(id.take(255))
+}
+
 const val ACTION_SEND = "android.intent.action.SEND"
 const val ACTION_VIEW = "android.intent.action.VIEW"
 

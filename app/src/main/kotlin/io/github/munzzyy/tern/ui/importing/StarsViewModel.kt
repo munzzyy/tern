@@ -5,7 +5,10 @@ import androidx.lifecycle.viewModelScope
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemException
+import io.github.munzzyy.tern.core.interop.AddressList
 import io.github.munzzyy.tern.engine.SearchHit
+import io.github.munzzyy.tern.ui.text.hostOf
+import io.github.munzzyy.tern.ui.text.shortUrl
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,6 +45,18 @@ class StarsViewModel(private val engine: Engine) : ViewModel() {
                 StarsState.Failed(null)
             }
         }
+    }
+
+    /**
+     * The https addresses in [text], all of them picked, for the same one-by-one add as starred
+     * repositories get. A list with none shows as empty; nothing is fetched until Add.
+     */
+    fun showAddresses(text: String) {
+        job?.cancel()
+        val hits = AddressList.read(text).map { url ->
+            SearchHit(name = shortUrl(url), owner = null, description = null, url = url, origin = hostOf(url))
+        }
+        _state.value = StarsState.Listed(user = "", hits = hits, picked = hits.mapTo(HashSet()) { it.url })
     }
 
     fun toggle(url: String) {

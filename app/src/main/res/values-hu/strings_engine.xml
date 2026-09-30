@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Ebben a kiadásban nincs olyan fájl, amely megfelelne ennek az eszköznek.</string>
     <string name="engine_warn_prerelease">Csak előzetes kiadás lett közzétéve.</string>
     <string name="engine_warn_moved">Úgy tűnik, hogy a projekt ide költözött: %1$s.</string>
-    <string name="engine_several_apps">Ez a link több alkalmazást tartalmaz. Importálja inkább a beállításokból.</string>
     <string name="engine_not_a_source">A Tern nem talált kiadásokat ezen a címen.</string>
     <string name="engine_move_gone">Ez az alkalmazás már nincs a listán.</string>
     <string name="engine_move_nothing">Nincs követhető új cím.</string>

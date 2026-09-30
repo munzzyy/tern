@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Żaden plik w tym wydaniu nie pasuje do tego urządzenia.</string>
     <string name="engine_warn_prerelease">Opublikowano tylko wydanie przedpremierowe.</string>
     <string name="engine_warn_moved">Wydaje się, że projekt został przeniesiony do %1$s.</string>
-    <string name="engine_several_apps">Ten link zawiera kilka aplikacji. Zamiast tego zaimportuj go z ustawień.</string>
     <string name="engine_not_a_source">Tern nie znalazł żadnych wydań pod tym adresem.</string>
     <string name="engine_move_gone">Tej aplikacji nie ma już na liście.</string>
     <string name="engine_move_nothing">Nie ma nowego adresu do śledzenia.</string>

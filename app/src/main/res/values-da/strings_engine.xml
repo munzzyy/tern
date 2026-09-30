@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">Ingen fil i denne udgivelse passer til denne enhed.</string>
     <string name="engine_warn_prerelease">Kun en forhåndsudgivelse er udgivet.</string>
     <string name="engine_warn_moved">Projektet ser ud til at være flyttet til %1$s.</string>
-    <string name="engine_several_apps">Dette link indeholder flere apps. Importer det fra indstillinger i stedet.</string>
     <string name="engine_not_a_source">Tern fandt ingen udgivelser på denne adresse.</string>
     <string name="engine_move_gone">Denne app er ikke længere på listen.</string>
     <string name="engine_move_nothing">Der er ingen ny adresse at følge.</string>

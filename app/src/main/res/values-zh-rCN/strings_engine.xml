@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">此发布版中没有适合此设备的文件。</string>
     <string name="engine_warn_prerelease">仅提供了预发布版。</string>
     <string name="engine_warn_moved">项目似乎已移至 %1$s。</string>
-    <string name="engine_several_apps">此链接包含多个应用。请改为在设置中导入。</string>
     <string name="engine_not_a_source">Tern 在此地址未找到发布。</string>
     <string name="engine_move_gone">此应用已不在列表中。</string>
     <string name="engine_move_nothing">没有可跟踪的新地址。</string>

@@ -57,7 +57,6 @@
     <string name="engine_warn_no_file">ഈ റിലീസിലെ ഫയലുകളൊന്നും ഈ ഉപകരണത്തിന് അനുയോജ്യമല്ല.</string>
     <string name="engine_warn_prerelease">ഒരു പ്രീ-റിലീസ് മാത്രമാണ് പ്രസിദ്ധീകരിക്കുന്നത്.</string>
     <string name="engine_warn_moved">പ്രോജക്റ്റ് %1$s ലേക്ക് മാറിയതായി തോന്നുന്നു.</string>
-    <string name="engine_several_apps">ഈ ലിങ്കിൽ നിരവധി ആപ്പുകളുണ്ട്. പകരം സെറ്റിംഗ്‌സിൽ നിന്ന് ഇത് ഇംപോർട്ട് ചെയ്യുക.</string>
     <string name="engine_not_a_source">ഈ വിലാസത്തിൽ Tern റിലീസുകളൊന്നും കണ്ടെത്തിയില്ല.</string>
     <string name="engine_move_gone">ഈ ആപ്പ് ഇപ്പോൾ ലിസ്റ്റിലില്ല.</string>
     <string name="engine_move_nothing">പിന്തുടരാൻ പുതിയ വിലാസമില്ല.</string>

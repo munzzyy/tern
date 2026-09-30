@@ -2,7 +2,9 @@ package io.github.munzzyy.tern.ui.settings
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -156,9 +158,39 @@ fun SettingsScreen(onImport: () -> Unit, onLook: () -> Unit, onAdd: (String) -> 
     }
 }
 
+/** Tern's entry in F-Droid, which a copy F-Droid installed follows. */
+const val FDROID_URL = "https://f-droid.org/packages/io.github.munzzyy.tern/"
+
+/** Apps that install from F-Droid's repository: F-Droid itself, its privileged extension, and the clients built on its index. */
+val FDROID_CLIENTS = setOf(
+    "org.fdroid.fdroid", "org.fdroid.basic", "org.fdroid.fdroid.privileged",
+    "com.looker.droidify", "com.machiav3lli.fdroid", "eu.bubu1.fdroidclassic",
+)
+
+/**
+ * Where Tern follows its own updates. A copy an F-Droid client installed follows F-Droid, so its
+ * updates stay builds F-Droid made and checked. Any other copy, or one whose installer is not
+ * known, follows the releases on GitHub.
+ */
+fun selfSource(installer: String?): String = if (installer in FDROID_CLIENTS) FDROID_URL else SOURCE_URL
+
 /** Whether Tern is in its own list already, by its address or by its package. */
 fun tracksItself(apps: List<Pair<String, String?>>, ownPackage: String): Boolean =
-    apps.any { (url, pkg) -> pkg == ownPackage || url.trimEnd('/').equals(SOURCE_URL, ignoreCase = true) }
+    apps.any { (url, pkg) -> pkg == ownPackage || url.trimEnd('/').let { it.equals(SOURCE_URL, ignoreCase = true) || it.equals(FDROID_URL.trimEnd('/'), ignoreCase = true) } }
+
+/** The app that installed Tern, as Android recorded it; null when it cannot say. */
+private fun ownInstaller(context: Context): String? = try {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        context.packageManager.getInstallSourceInfo(context.packageName).installingPackageName
+    } else {
+        @Suppress("DEPRECATION")
+        context.packageManager.getInstallerPackageName(context.packageName)
+    }
+} catch (_: PackageManager.NameNotFoundException) {
+    null
+} catch (_: IllegalArgumentException) {
+    null
+}
 
 /** A television posts notifications and shows none of them, so the rows about them would do nothing there. */
 fun showsNotifications(television: Boolean): Boolean = !television
@@ -1005,11 +1037,19 @@ private fun AboutSection(onAdd: (String) -> Unit) {
     SectionCard(title = stringResource(R.string.settings_about)) {
         InfoRow(title = stringResource(R.string.about_version), value = BuildConfig.VERSION_NAME)
         if (!tracked) {
+            val self = remember { selfSource(ownInstaller(context)) }
             ActionRow(
                 title = stringResource(R.string.about_track_tern),
-                summary = stringResource(R.string.about_track_tern_effect),
-                onClick = { onAdd(SOURCE_URL) },
+                summary = stringResource(if (self == FDROID_URL) R.string.about_track_tern_fdroid_effect else R.string.about_track_tern_effect),
+                onClick = { onAdd(self) },
             )
+            if (self == FDROID_URL) {
+                ActionRow(
+                    title = stringResource(R.string.about_track_tern_github),
+                    summary = stringResource(R.string.about_track_tern_github_effect),
+                    onClick = { onAdd(SOURCE_URL) },
+                )
+            }
         }
         ActionRow(
             title = stringResource(R.string.about_help),

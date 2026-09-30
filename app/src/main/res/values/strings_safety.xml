@@ -23,4 +23,7 @@
     <string name="link_check_confirm">Check</string>
     <string name="link_check_not_now">Not now</string>
     <string name="engine_installer_fell_back">%1$s was not ready, so Android\'s installer was used for this one.</string>
+    <string name="about_track_tern_fdroid_effect">F-Droid installed this copy, so Tern follows its entry there: updates are the builds F-Droid made and checked, as the F-Droid app gets them.</string>
+    <string name="about_track_tern_github">Follow GitHub releases instead</string>
+    <string name="about_track_tern_github_effect">Updates come from GitHub as soon as they are published, before F-Droid has built and checked them. This skips F-Droid\'s checks. Tern still checks each file and holds it to its own certificate.</string>
 </resources>

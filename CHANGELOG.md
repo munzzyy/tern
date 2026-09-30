@@ -32,6 +32,8 @@ Sources
 Installing
 - Installs through Shizuku, Dhizuku, root or another installer app, and the
   log says when Android's installer stood in for one that was not ready.
+  Shizuku and Dhizuku installed and updated apps without a prompt on an
+  Android 13 emulator; root has not been tried on a device yet.
   Every install, whichever installer made it, counts only when the installed
   app carries the certificate the checks verified. Shizuku's library asks Sui
   for anything only once Shizuku is the chosen installer.

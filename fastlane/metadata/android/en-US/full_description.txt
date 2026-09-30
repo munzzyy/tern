@@ -10,7 +10,7 @@ The file has to be the app you asked for, and not an older version of it.
 
 Tern reads the version and the signer out of a file while it is still on the server, a few kilobytes of it, so an update is only offered when there really is one.
 
-On Android 12 and newer, updates go in without asking once Tern has installed the app. With Shizuku or root they go in without asking on any version, first installs too. If Android does want a confirmation, you get a notification you can update from. Background checks use Android's own scheduler, as often as every 15 minutes, and you choose whether they run on mobile data or only while charging.
+On Android 12 and newer, updates go in without asking once Tern has installed the app. With Shizuku or Dhizuku they go in without asking, first installs too. If Android does want a confirmation, you get a notification you can update from. Background checks use Android's own scheduler, as often as every 15 minutes, and you choose whether they run on mobile data or only while charging.
 
 No account. Nothing is reported to anyone. HTTPS only.
 

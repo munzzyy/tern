@@ -1,7 +1,7 @@
 'use strict';
 
 var TERN_PACKAGE = 'io.github.munzzyy.tern';
-var HOME = 'https://munzzyy.github.io/tern/';
+var HOME = 'https://tern.munzzyy.dev/';
 var BADGE = HOME + 'badge.png';
 
 /** The app address in a page's query, when it is one Tern will take: https, no login, no spaces. */

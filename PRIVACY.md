@@ -48,10 +48,11 @@ A store serves a different file to different phones, so two of them are told
 something about the device. The Galaxy Store is told the Android version and
 whether the phone runs 64-bit code, and it is asked for the model SM-S948B
 and the region DBT, MCC 425 and MNC 01. That model and region are the same for
-every copy of Tern and say nothing about your phone. Huawei AppGallery wants a
-device id: Tern makes up a random one for each day's session, which names
-nothing. No store is told the phone's real model, its name or any identifier
-of it. Tencent offers a 64-bit and a 32-bit file, and Tern picks one itself.
+every copy of Tern and say nothing about your phone, unless you type another
+model or region into an app's page because the store only serves that app to
+your model. Huawei AppGallery wants a device id: Tern makes up a random one for
+each day's session, which names nothing. Tern never reads the phone's model,
+its name or any identifier of it to tell a store. Tencent offers a 64-bit and a 32-bit file, and Tern picks one itself.
 
 Where a source lists no size for a file, opening the app's page asks the file's
 host for one byte of it, to learn the size.

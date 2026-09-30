@@ -78,4 +78,8 @@
     <string name="pseudo_link">Dosyanın adresiyle</string>
     <string name="pseudo_etag">Sunucunun ETag değeriyle</string>
     <string name="option_invalid">Bu, olduğu haliyle kullanılamaz.</string>
+    <string name="option_device_model">Cihaz modeli</string>
+    <string name="option_device_model_help">Galaxy Store her modele kendi derlemesini verir, örneğin SM-S948B.</string>
+    <string name="option_csc">Bölge kodu (CSC)</string>
+    <string name="option_csc_help">Üç harf, örneğin DBT.</string>
 </resources>

@@ -86,4 +86,8 @@
     <string name="pseudo_link">بعنوان الملف</string>
     <string name="pseudo_etag">بقيمة ETag من الخادم</string>
     <string name="option_invalid">لا يمكن استخدام هذا كما هو.</string>
+    <string name="option_device_model">طراز الجهاز</string>
+    <string name="option_device_model_help">يقدم Galaxy Store لكل طراز نسخته الخاصة، مثل SM-S948B.</string>
+    <string name="option_csc">رمز المنطقة (CSC)</string>
+    <string name="option_csc_help">ثلاثة أحرف، مثل DBT.</string>
 </resources>

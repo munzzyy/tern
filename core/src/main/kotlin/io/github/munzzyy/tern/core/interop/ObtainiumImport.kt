@@ -143,7 +143,7 @@ object ObtainiumImport {
 
     private fun mapSource(url: String, overrideSource: String?, settings: JsonObject): SourceSpec? {
         val address = Urls.normalize(url) ?: return null
-        STORE_SOURCES[overrideSource]?.let { type -> return store(type, Urls.hashRouted(url) ?: address) ?: store(type, address) }
+        STORE_SOURCES[overrideSource]?.let { type -> return store(type, Urls.hashRouted(url) ?: address, settings) ?: store(type, address, settings) }
         return when (overrideSource) {
             "GitHub" -> GitHubSource().match(address)
             "GitLab" -> GitLabSource().match(address) ?: repository(SourceTypes.GITLAB, address, minSegments = 2, maxSegments = 12)
@@ -155,7 +155,7 @@ object ObtainiumImport {
             "Jenkins" -> JenkinsSource().match(address)
             "SourceHut" -> SourceHutSource().match(address)
             "SourceForge" -> SourceForgeSource().match(address)
-            null -> Urls.hashRouted(url)?.let { routed -> STORE_SOURCES.values.firstNotNullOfOrNull { store(it, routed) } } ?: matchByUrl(address, settings)
+            null -> Urls.hashRouted(url)?.let { routed -> STORE_SOURCES.values.firstNotNullOfOrNull { store(it, routed, settings) } } ?: matchByUrl(address, settings)
             else -> null
         }
     }
@@ -273,7 +273,7 @@ object ObtainiumImport {
     }
 
     private fun matchByUrl(address: String, settings: JsonObject): SourceSpec? {
-        for (type in STORE_SOURCES.values) store(type, address)?.let { return it }
+        for (type in STORE_SOURCES.values) store(type, address, settings)?.let { return it }
         GitHubSource().match(address)?.let { return it }
         GitLabSource().match(address)?.let { return it }
         ForgejoSource().match(address)?.let { return it }
@@ -293,7 +293,15 @@ object ObtainiumImport {
     }
 
     /** A store source by its type. The Galaxy Store's device and region settings are not read: Tern asks every store as itself. */
-    private fun store(type: String, address: String): SourceSpec? = REGISTRY.get(type)?.match(address)
+    /** A store source by its type, with the Galaxy Store model and region Obtainium keeps for it. */
+    private fun store(type: String, address: String, settings: JsonObject): SourceSpec? {
+        val spec = REGISTRY.get(type)?.match(address) ?: return null
+        if (type != SourceTypes.SAMSUNG) return spec
+        val options = LinkedHashMap(spec.options)
+        settingString(settings, "deviceId")?.let { options[SourceOptions.DEVICE_MODEL] = it.take(40) }
+        settingString(settings, "csc")?.let { options[SourceOptions.CSC] = it.take(10) }
+        return if (options == spec.options) spec else spec.copy(options = options)
+    }
 
     private fun settingString(settings: JsonObject, key: String): String? = when (val v = settings[key]) {
         is JsonString -> v.value.takeIf { it.isNotEmpty() }

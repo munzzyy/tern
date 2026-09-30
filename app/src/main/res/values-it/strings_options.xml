@@ -80,4 +80,8 @@
     <string name="pseudo_link">Con l\'indirizzo del file</string>
     <string name="pseudo_etag">Con l\'ETag del server</string>
     <string name="option_invalid">Questo non può essere usato così com\'è.</string>
+    <string name="option_device_model">Modello del dispositivo</string>
+    <string name="option_device_model_help">Il Galaxy Store dà a ogni modello la sua build, come SM-S948B.</string>
+    <string name="option_csc">Codice regione (CSC)</string>
+    <string name="option_csc_help">Tre lettere, come DBT.</string>
 </resources>

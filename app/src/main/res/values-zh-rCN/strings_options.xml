@@ -76,4 +76,8 @@
     <string name="pseudo_link">按文件的地址</string>
     <string name="pseudo_etag">按服务器的 ETag</string>
     <string name="option_invalid">此内容无法直接使用。</string>
+    <string name="option_device_model">设备型号</string>
+    <string name="option_device_model_help">Galaxy Store 为每个型号提供单独的版本，例如 SM-S948B。</string>
+    <string name="option_csc">地区代码 (CSC)</string>
+    <string name="option_csc_help">三个字母，例如 DBT。</string>
 </resources>

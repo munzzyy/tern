@@ -25,9 +25,9 @@ import java.time.ZoneOffset
 
 /**
  * Galaxy Store. Reads the download stub at vas.samsungapps.com, which names the newest version for
- * a device model and region and a file address that holds a token for a short while. Every copy
- * of Tern asks for the same model and region, the ones in the companion, and says nothing else
- * about the device but its Android version and whether it runs 64-bit code. The file is listed at
+ * a device model and region and a file address that holds a token for a short while. Tern asks
+ * for the model and region in the companion unless the person set their own on the app's page, and
+ * says nothing else about the device but its Android version and whether it runs 64-bit code. The file is listed at
  * its address without the token, so it stays the same from one check to the next, and [resolve]
  * asks the stub again for a fresh one.
  */
@@ -76,12 +76,14 @@ class SamsungSource : Source {
     private class Stub(val versionName: String, val versionCode: Long?, val name: String?, val fileUrl: String?, val size: Long?)
 
     private fun stub(spec: SourceSpec, pkg: String, context: CheckContext): Stub {
+        val model = spec.option(SourceOptions.DEVICE_MODEL) ?: MODEL
+        val csc = spec.option(SourceOptions.CSC) ?: CSC
         val device = context.device
         val sdk = device?.sdk ?: DEFAULT_SDK
         // The store serves a separate build to phones that run only 32-bit code.
         val abiType = if (device != null && device.abis.none { it in ABIS_64 }) "32" else "64"
         val url = "https://vas.samsungapps.com/stub/stubDownload.as?appId=$pkg" +
-            "&deviceId=$MODEL&mcc=$MCC&mnc=$MNC&csc=$CSC&sdkVer=$sdk&abiType=$abiType&extuk=0"
+            "&deviceId=${Urls.encodeSegment(model)}&mcc=$MCC&mnc=$MNC&csc=${Urls.encodeSegment(csc)}&sdkVer=$sdk&abiType=$abiType&extuk=0"
         context.http.execute(HttpRequest(url)).use { response ->
             if (response.status == 404) throw SourceException(SourceErrorKind.NOT_FOUND, "The Galaxy Store has no app $pkg")
             if (!response.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "The Galaxy Store answered ${response.status} for $pkg")
@@ -127,7 +129,7 @@ class SamsungSource : Source {
     }
 
     companion object {
-        /** The model and region every copy of Tern asks for, the ones Obtainium asks for too. PRIVACY.md names them. */
+        /** The model and region asked for unless the app names its own, the ones Obtainium asks for too. PRIVACY.md names them. */
         const val MODEL = "SM-S948B"
         const val CSC = "DBT"
         const val MCC = "425"

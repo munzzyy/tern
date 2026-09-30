@@ -108,6 +108,16 @@ class ObtainiumImportTest {
     }
 
     @Test
+    fun aGalaxyStoreAppKeepsTheModelAndRegionItWasFollowedWith() {
+        val settings = """{\"deviceId\": \"SM-A556B\", \"csc\": \"EUX\"}"""
+        val text = """{"apps":[{"id":"org.example.app","url":"https://galaxystore.samsung.com/detail/org.example.app","author":"","name":"Galaxy","overrideSource":"SamsungGalaxyStore","additionalSettings":"$settings"}]}"""
+        val source = ObtainiumImport.read(text).apps.single().source
+        assertEquals(SourceTypes.SAMSUNG, source.type)
+        assertEquals("SM-A556B", source.option(SourceOptions.DEVICE_MODEL))
+        assertEquals("EUX", source.option(SourceOptions.CSC))
+    }
+
+    @Test
     fun onlyValidPackageLikeIdsBecomePackageName() {
         val byName = result().apps.associateBy { it.name }
         assertEquals("dev.example.one", byName.getValue("One").packageName)

@@ -82,4 +82,8 @@
     <string name="pseudo_link">За адресою файлу</string>
     <string name="pseudo_etag">За ETag сервера</string>
     <string name="option_invalid">Це не можна використати в такому вигляді.</string>
+    <string name="option_device_model">Модель пристрою</string>
+    <string name="option_device_model_help">Galaxy Store має для кожної моделі власну збірку, наприклад SM-S948B.</string>
+    <string name="option_csc">Код регіону (CSC)</string>
+    <string name="option_csc_help">Три літери, наприклад DBT.</string>
 </resources>

@@ -78,4 +78,8 @@
     <string name="pseudo_link">ഫയലിൻ്റെ വിലാസം വഴി</string>
     <string name="pseudo_etag">സെർവറിൻ്റെ ETag വഴി</string>
     <string name="option_invalid">ഇത് ഇതേപടി ഉപയോഗിക്കാനാകില്ല.</string>
+    <string name="option_device_model">ഉപകരണ മോഡൽ</string>
+    <string name="option_device_model_help">Galaxy Store ഓരോ മോഡലിനും അതിൻ്റേതായ ബിൽഡ് നൽകുന്നു, SM-S948B പോലെ.</string>
+    <string name="option_csc">പ്രദേശ കോഡ് (CSC)</string>
+    <string name="option_csc_help">മൂന്ന് അക്ഷരങ്ങൾ, DBT പോലെ.</string>
 </resources>

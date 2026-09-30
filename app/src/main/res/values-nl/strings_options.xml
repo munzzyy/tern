@@ -78,4 +78,8 @@
     <string name="pseudo_link">Met het adres van het bestand</string>
     <string name="pseudo_etag">Met de ETag van de server</string>
     <string name="option_invalid">Dit kan zo niet worden gebruikt.</string>
+    <string name="option_device_model">Apparaatmodel</string>
+    <string name="option_device_model_help">De Galaxy Store geeft elk model een eigen build, zoals SM-S948B.</string>
+    <string name="option_csc">Regiocode (CSC)</string>
+    <string name="option_csc_help">Drie letters, zoals DBT.</string>
 </resources>

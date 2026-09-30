@@ -82,4 +82,8 @@
     <string name="pseudo_link">Podle adresy souboru</string>
     <string name="pseudo_etag">Podle ETag serveru</string>
     <string name="option_invalid">Takto to nelze použít.</string>
+    <string name="option_device_model">Model zařízení</string>
+    <string name="option_device_model_help">Galaxy Store dává každému modelu vlastní sestavení, například SM-S948B.</string>
+    <string name="option_csc">Kód regionu (CSC)</string>
+    <string name="option_csc_help">Tři písmena, například DBT.</string>
 </resources>

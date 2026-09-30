@@ -78,4 +78,8 @@
     <string name="pseudo_link">A fájl címe alapján</string>
     <string name="pseudo_etag">A szerver ETag-je alapján</string>
     <string name="option_invalid">Ez így nem használható.</string>
+    <string name="option_device_model">Eszközmodell</string>
+    <string name="option_device_model_help">A Galaxy Store minden modellnek saját változatot ad, például SM-S948B.</string>
+    <string name="option_csc">Régiókód (CSC)</string>
+    <string name="option_csc_help">Három betű, például DBT.</string>
 </resources>

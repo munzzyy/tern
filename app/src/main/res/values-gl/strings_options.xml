@@ -78,4 +78,8 @@
     <string name="pseudo_link">Polo enderezo do ficheiro</string>
     <string name="pseudo_etag">Polo ETag do servidor</string>
     <string name="option_invalid">Isto non se pode usar tal e como está.</string>
+    <string name="option_device_model">Modelo do dispositivo</string>
+    <string name="option_device_model_help">Galaxy Store dálle a cada modelo a súa propia compilación, como SM-S948B.</string>
+    <string name="option_csc">Código de rexión (CSC)</string>
+    <string name="option_csc_help">Tres letras, como DBT.</string>
 </resources>

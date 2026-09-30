@@ -76,4 +76,8 @@
     <string name="pseudo_link">Theo địa chỉ của tệp</string>
     <string name="pseudo_etag">Theo ETag của máy chủ</string>
     <string name="option_invalid">Không thể dùng nguyên trạng như vậy.</string>
+    <string name="option_device_model">Mẫu thiết bị</string>
+    <string name="option_device_model_help">Galaxy Store cung cấp bản dựng riêng cho từng mẫu máy, chẳng hạn SM-S948B.</string>
+    <string name="option_csc">Mã vùng (CSC)</string>
+    <string name="option_csc_help">Ba chữ cái, chẳng hạn DBT.</string>
 </resources>

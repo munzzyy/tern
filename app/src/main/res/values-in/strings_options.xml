@@ -76,4 +76,8 @@
     <string name="pseudo_link">Dengan alamat file</string>
     <string name="pseudo_etag">Dengan ETag dari server</string>
     <string name="option_invalid">Ini tidak dapat digunakan apa adanya.</string>
+    <string name="option_device_model">Model perangkat</string>
+    <string name="option_device_model_help">Galaxy Store memberi setiap model build sendiri, seperti SM-S948B.</string>
+    <string name="option_csc">Kode wilayah (CSC)</string>
+    <string name="option_csc_help">Tiga huruf, seperti DBT.</string>
 </resources>

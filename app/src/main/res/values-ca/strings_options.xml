@@ -80,4 +80,8 @@
     <string name="pseudo_link">Per l\'adreça del fitxer</string>
     <string name="pseudo_etag">Per l\'ETag del servidor</string>
     <string name="option_invalid">Això no es pot usar tal com està.</string>
+    <string name="option_device_model">Model del dispositiu</string>
+    <string name="option_device_model_help">Galaxy Store dona a cada model la seva pròpia compilació, com ara SM-S948B.</string>
+    <string name="option_csc">Codi de regió (CSC)</string>
+    <string name="option_csc_help">Tres lletres, com ara DBT.</string>
 </resources>

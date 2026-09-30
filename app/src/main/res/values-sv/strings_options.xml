@@ -78,4 +78,8 @@
     <string name="pseudo_link">Efter filens adress</string>
     <string name="pseudo_etag">Efter serverns ETag</string>
     <string name="option_invalid">Detta kan inte användas som det är.</string>
+    <string name="option_device_model">Enhetsmodell</string>
+    <string name="option_device_model_help">Galaxy Store ger varje modell ett eget bygge, till exempel SM-S948B.</string>
+    <string name="option_csc">Regionkod (CSC)</string>
+    <string name="option_csc_help">Tre bokstäver, till exempel DBT.</string>
 </resources>

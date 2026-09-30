@@ -80,4 +80,8 @@
     <string name="pseudo_link">Po adresi datoteke</string>
     <string name="pseudo_etag">Po ETag-u servera</string>
     <string name="option_invalid">Ovo se ne može koristiti ovakvo kakvo je.</string>
+    <string name="option_device_model">Model uređaja</string>
+    <string name="option_device_model_help">Galaxy Store daje svakom modelu vlastitu verziju, na primjer SM-S948B.</string>
+    <string name="option_csc">Kod regije (CSC)</string>
+    <string name="option_csc_help">Tri slova, na primjer DBT.</string>
 </resources>

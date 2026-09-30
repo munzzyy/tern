@@ -76,4 +76,8 @@
     <string name="pseudo_link">ファイルのアドレスで区別</string>
     <string name="pseudo_etag">サーバーのETagで区別</string>
     <string name="option_invalid">このままでは使用できません。</string>
+    <string name="option_device_model">端末のモデル</string>
+    <string name="option_device_model_help">Galaxy Storeはモデルごとに別のビルドを提供します（例: SM-S948B）。</string>
+    <string name="option_csc">地域コード (CSC)</string>
+    <string name="option_csc_help">3文字（例: DBT）。</string>
 </resources>

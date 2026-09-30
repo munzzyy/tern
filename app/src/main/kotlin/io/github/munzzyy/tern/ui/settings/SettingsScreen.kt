@@ -144,11 +144,15 @@ fun SettingsScreen(onImport: () -> Unit, onLook: () -> Unit, onAdd: (String) -> 
                 NetworkSection(s, update, onGetOrbot = { onAdd(ORBOT_URL) }, orbotFocus = Modifier.returnFocus(screen, "orbot"))
                 AppearanceSection(s, update, onLook, Modifier.returnFocus(screen, "look"))
                 DataSection(s, vm, update, onImport, Modifier.returnFocus(screen, "import"))
-                AboutSection()
+                AboutSection(onAdd)
             }
         }
     }
 }
+
+/** Whether Tern is in its own list already, by its address or by its package. */
+fun tracksItself(apps: List<Pair<String, String?>>, ownPackage: String): Boolean =
+    apps.any { (url, pkg) -> pkg == ownPackage || url.trimEnd('/').equals(SOURCE_URL, ignoreCase = true) }
 
 /** A television posts notifications and shows none of them, so the rows about them would do nothing there. */
 fun showsNotifications(television: Boolean): Boolean = !television
@@ -870,10 +874,20 @@ fun folderName(folder: String?): String? {
 }
 
 @Composable
-private fun AboutSection() {
+private fun AboutSection(onAdd: (String) -> Unit) {
     var link by remember { mutableStateOf<String?>(null) }
+    val rows by LocalEngine.current.apps.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val tracked = remember(rows) { tracksItself(rows.map { it.config.source.url to (it.config.packageName ?: it.installed?.packageName) }, context.packageName) }
     SectionCard(title = stringResource(R.string.settings_about)) {
         InfoRow(title = stringResource(R.string.about_version), value = BuildConfig.VERSION_NAME)
+        if (!tracked) {
+            ActionRow(
+                title = stringResource(R.string.about_track_tern),
+                summary = stringResource(R.string.about_track_tern_effect),
+                onClick = { onAdd(SOURCE_URL) },
+            )
+        }
         InfoRow(title = stringResource(R.string.about_licence), value = stringResource(R.string.about_licence_name))
         ActionRow(
             title = stringResource(R.string.about_source),

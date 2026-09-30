@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -54,6 +55,7 @@ import io.github.munzzyy.tern.ui.common.focusLook
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.common.rememberScreenFocus
 import io.github.munzzyy.tern.ui.common.returnFocus
+import io.github.munzzyy.tern.ui.common.shareText
 import io.github.munzzyy.tern.ui.icons.Bin
 import io.github.munzzyy.tern.ui.icons.Close
 import io.github.munzzyy.tern.ui.icons.Collapse
@@ -61,6 +63,7 @@ import io.github.munzzyy.tern.ui.icons.Expand
 import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.icons.Info
 import io.github.munzzyy.tern.ui.icons.Plus
+import io.github.munzzyy.tern.ui.icons.Share
 import io.github.munzzyy.tern.ui.text.formatDate
 import io.github.munzzyy.tern.ui.text.formatTime
 import io.github.munzzyy.tern.ui.text.isolate
@@ -91,10 +94,20 @@ fun ActivityScreen(onOpenApp: (String) -> Unit) {
     val days = remember(events, problemsOnly) { entriesByDay(events, zone, problemsOnly) }
     val today = LocalDate.now(zone)
     val screen = rememberScreenFocus()
+    val context = LocalContext.current
+    val shareTitle = stringResource(R.string.activity_share)
+    val noApp = stringResource(R.string.action_failed)
 
     Scaffold(
         topBar = {
             ScreenTop(stringResource(R.string.tab_activity)) {
+                val shared = remember(events, problemsOnly) { activityText(events, zone, problemsOnly) }
+                GlyphButton(
+                    Glyphs.Share,
+                    stringResource(R.string.activity_share),
+                    onClick = { if (!shareText(context, shareTitle, shared)) actions.say(noApp) },
+                    enabled = events.isNotEmpty(),
+                )
                 GlyphButton(Glyphs.Bin, stringResource(R.string.activity_clear), onClick = { confirmClear = true }, enabled = events.isNotEmpty())
             }
         },

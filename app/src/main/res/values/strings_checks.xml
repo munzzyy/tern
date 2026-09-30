@@ -31,6 +31,9 @@
     <string name="settings_phone_layout_effect">One pane and a bar at the bottom, however wide the screen.</string>
     <string name="density_minimal">Minimal</string>
     <string name="search_in">Search in</string>
+    <string name="activity_share">Share activity</string>
+    <string name="about_track_tern">Keep Tern itself up to date</string>
+    <string name="about_track_tern_effect">Adds Tern\'s own releases to the list, checked and verified like any app.</string>
     <string name="engine_channel_tracked">New releases of tracked apps</string>
     <string name="engine_channel_checking">Checking</string>
     <string name="engine_notify_tracked_one">New release of %1$s</string>

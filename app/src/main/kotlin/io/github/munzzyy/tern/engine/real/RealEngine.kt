@@ -419,7 +419,7 @@ class RealEngine(
             source = found.spec,
             name = "",
             // No wait of its own: a new app follows the setting for all apps, also when that changes.
-            releases = ReleasePolicy(includePrereleases = s.includePrereleasesByDefault || found.release?.countsAsPrerelease == true),
+            releases = ReleasePolicy(includePrereleases = s.includePrereleasesByDefault || found.prereleases || found.release?.countsAsPrerelease == true),
             updates = s.defaultUpdateMode,
         )
         // An app Tern dropped when it was uninstalled elsewhere comes back held to what it was held to.

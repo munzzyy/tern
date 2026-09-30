@@ -9,7 +9,6 @@
     <string name="origin_store_first">%1$s is a store, not the developer\'s own site. Until the app is pinned to a certificate, the first file Tern installs from it decides which certificate every later update must carry.</string>
     <!-- %1$s is a store, such as Galaxy Store. -->
     <string name="origin_store_pinned">%1$s is a store, not the developer\'s own site. Its files must carry the certificate this app is held to.</string>
-    <string name="stores_paused">Paused. Third-party stores are off, so Tern asks this store nothing. Turn them on in Settings to check it again.</string>
     <string name="stores_refused_modified">Tern does not read sites that offer modified apps. Their files are changed by someone other than the developer and signed by whoever changed them.</string>
     <string name="stores_refused_impersonation">Tern cannot read this store without pretending to be its app, so it does not read it.</string>
     <!-- %1$s is a store, such as APKPure. Said of a checksum, after "From:". -->

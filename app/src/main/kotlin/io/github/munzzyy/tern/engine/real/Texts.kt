@@ -129,7 +129,7 @@ class Texts(context: Context) : ImportTexts {
     fun warnPrerelease() = s(R.string.engine_warn_prerelease)
     fun warnMoved(url: String) = s(R.string.engine_warn_moved, url)
     fun notASource() = s(R.string.engine_not_a_source)
-    fun storesOffPaused() = s(R.string.stores_paused)
+    fun storesOffPaused() = s(R.string.stores_paused_reason)
     fun refused(refusal: Refusal) = s(if (refusal == Refusal.MODIFIED_APPS) R.string.stores_refused_modified else R.string.stores_refused_impersonation)
     override fun importRefused(refusal: Refusal) = refused(refusal)
     fun checksumStore(store: String) = s(R.string.stores_checksum_source, ltr(store))

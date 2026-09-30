@@ -127,9 +127,12 @@ surprise. Android refuses a second silent update of the same app within 30
 seconds of the last one, and that is one of the cases where you are asked.
 
 With Shizuku, Dhizuku or root chosen under Settings, Installing, first installs
-and updates install without a prompt on any Android from 10 on. Android then
-names Dhizuku as the installer, and may show its own notice that an admin
-installed the app. You can also hand
+and updates install without a prompt. Shizuku 13.6 and Dhizuku 2.12 did that on
+an Android 13 emulator, for a first install and for an update. Root has not
+been tried yet: the su of Android's emulator images answers only adb, so Tern
+could not be given root there. With Dhizuku, Android names Dhizuku as the
+installer, and may show its own notice that an admin installed the app. You can
+also hand
 every checked file to another installer app; Tern then compares the signer of
 what it installed with the file it checked.
 
@@ -212,9 +215,10 @@ under Settings, Appearance, on any Android version; from Android 13 on,
 Android's own app language setting shows the same choice.
 
 Text at twice the normal size keeps each screen's main action on screen, on a
-phone and on a TV. The look is yours to change under Settings, Look: the theme,
-colours from the wallpaper, a palette or a colour of your own, contrast,
-density, corners and the shape of app icons.
+phone and on a TV. From one and a half times the size, a TV shows the list and
+an app's page one at a time, as a phone does. The look is yours to change under
+Settings, Look: the theme, colours from the wallpaper, a palette or a colour of
+your own, contrast, density, corners and the shape of app icons.
 
 ## How it compares
 
@@ -232,11 +236,11 @@ Obtainium does that Tern does not.
 - The translations are machine-made. Details of an error that come from a
   server or a parser stay in English, and an entry in the activity log stays in
   the language it was written in.
-- It has run on emulators: Android 10, 13 and 16 phones and Android TV 11 and
-  14. It has not yet run on a shelf of real devices. Vendor installers, Doze over
-  many hours and a reboot are untested. On the television image Play Protect
-  stopped the first install of an app it had not seen and offered "Install
-  anyway"; that answer is yours to give.
+- This version has run on emulators: phones with Android 10, 13 and 16, and a
+  television with Android TV 14. It has not yet run on a shelf of real devices.
+  Vendor installers, Doze over many hours and a reboot are untested. On the
+  television image Play Protect stopped the first install of an app it had not
+  seen and offered "Install anyway"; that answer is yours to give.
 - F-Droid and IzzyOnDroid are read through their per-app listings, which are
   protected by TLS and not by the index signature. Add either as a repository by
   its address if you want the signature checked; the first contact then downloads
@@ -266,6 +270,17 @@ package, version and certificate is `aapt2` and `apksigner` and not Tern.
 `./gradlew :core:test -Dtern.live=true --tests '*LiveSmokeTest*'` runs the
 same code against GitHub, F-Droid, Codeberg and GitLab. It reads public data and
 sends no credentials.
+
+`bash tools/device-suite.sh <serial> -e live true -e class io.github.munzzyy.tern.enginetest.LiveSourcesTest`
+does the same on a device, through the real engine, with one real app from each
+of GitHub, GitLab, Codeberg, F-Droid, IzzyOnDroid, a web page, SourceForge,
+itch.io, Telegram, Neutron Code and the eight stores. It leaves out GitHub
+Actions, which needs a token, Jenkins, SourceHut, direct links and other F-Droid
+format repositories. Every request has to carry Tern's User-Agent, and a refused
+site, or a store while the stores are off, must not be asked anything. On an
+Android 16 phone emulator and an Android TV 14 emulator every source gave a
+listing. Where a store offers only ARM files that the emulator cannot run, Tern
+says there is no file for that device.
 
 `bash tools/device-suite.sh <serial>` runs the device tests on an emulator or a
 phone, after `./gradlew :app:assembleDebug :app:assembleDebugAndroidTest`. They

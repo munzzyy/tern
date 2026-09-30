@@ -710,14 +710,25 @@ fun ScreenTop(
                 .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal))
                 .padding(horizontal = look.focusRoom, vertical = look.gapSmall / 2),
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(look.focusRoom),
-                modifier = Modifier.heightIn(min = look.touchTarget + look.focusRoom),
-            ) {
-                back()
-                if (twoLines) Box(Modifier.weight(1f)) else words(Modifier.weight(1f).padding(horizontal = look.rowPaddingHorizontal - look.focusRoom))
-                actions()
+            if (twoLines) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(look.focusRoom),
+                    modifier = Modifier.heightIn(min = look.touchTarget + look.focusRoom),
+                ) {
+                    back()
+                    Box(Modifier.weight(1f))
+                    actions()
+                }
+            } else {
+                TopLine(
+                    back = back,
+                    title = { words(Modifier.padding(horizontal = look.rowPaddingHorizontal - look.focusRoom)) },
+                    actions = actions,
+                    gap = look.focusRoom,
+                    minHeight = look.touchTarget + look.focusRoom,
+                    below = look.gapSmall,
+                )
             }
             if (twoLines) {
                 words(Modifier.padding(start = look.rowPaddingHorizontal - look.focusRoom, end = look.rowPaddingHorizontal - look.focusRoom, bottom = look.gapSmall))

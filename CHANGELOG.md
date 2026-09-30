@@ -79,6 +79,9 @@ The list and the screens
   row that was opened, rows of chips walk in order, and the buttons beside the
   interval slider say when a press turns checks off. Select all picks only the
   apps the list shows.
+- From one and a half times the text size, a television shows the list and an
+  app's page one at a time, and a screen's title that does not fit beside its
+  buttons goes under them whole.
 - A home-screen widget with the number of updates and Check and Update all
   buttons, a Quick Settings tile, and launcher shortcuts. Only Tern's own
   shortcuts can start Update all, Add or a check. A `tern://refresh` or

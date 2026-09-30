@@ -34,6 +34,15 @@ interface Engine {
     /** [text] written in Markdown, such as an app's notes, as blocks to show. Links go only to web addresses. */
     fun renderNotes(text: String): List<NoteBlock>
 
+    /** Whether the app's source keeps a project page Tern can read: a README on GitHub, GitLab or a Forgejo. */
+    fun hasProjectPage(row: AppRow): Boolean
+
+    /**
+     * The app's project page, its README, as blocks to show; empty when the project keeps none.
+     * Throws [ProblemException] when it cannot be read now.
+     */
+    suspend fun projectPage(appId: String): List<NoteBlock>
+
     /**
      * The configuration [add] would store for [found]. An app that arrives by link or import can
      * carry filters and pinned certificates, and the user has to see them before they are stored.

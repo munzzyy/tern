@@ -18,4 +18,10 @@
         <item quantity="one">%d release marked as seen</item>
         <item quantity="other">%d releases marked as seen</item>
     </plurals>
+    <string name="project_page">Project page</string>
+    <string name="project_page_read">Read the project\'s page</string>
+    <string name="project_page_effect">Its README, shown as text. Nothing is asked of the forge until you open it.</string>
+    <string name="project_page_loading">Reading…</string>
+    <string name="project_page_none">The project keeps no page Tern can read.</string>
+    <string name="project_page_failed">The page could not be read. Tap to try again.</string>
 </resources>

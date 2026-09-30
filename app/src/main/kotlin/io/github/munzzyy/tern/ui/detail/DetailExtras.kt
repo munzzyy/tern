@@ -165,3 +165,63 @@ fun NotesCard(vm: DetailViewModel, row: AppRow) {
         }
     }
 }
+
+/** Where the project page stands: not asked for yet, on its way, there, or not to be had now. */
+sealed interface PageState {
+    data object Closed : PageState
+
+    data object Loading : PageState
+
+    data class Shown(val blocks: List<io.github.munzzyy.tern.engine.NoteBlock>) : PageState
+
+    data class Failed(val message: String?) : PageState
+}
+
+/**
+ * The project's own page, its README, read from the forge only when asked for and shown as text.
+ * It stands where Obtainium can show the source's web page, without a web view or its scripts.
+ */
+@Composable
+fun ProjectPageCard(row: AppRow) {
+    val engine = LocalEngine.current
+    val look = LocalLook.current
+    val online = io.github.munzzyy.tern.ui.LocalOnline.current
+    var state by remember(row.id) { mutableStateOf<PageState>(PageState.Closed) }
+    var asked by remember(row.id) { mutableStateOf(0) }
+    androidx.compose.runtime.LaunchedEffect(row.id, asked) {
+        if (asked == 0) return@LaunchedEffect
+        state = PageState.Loading
+        state = try {
+            PageState.Shown(engine.projectPage(row.id))
+        } catch (e: kotlin.coroutines.cancellation.CancellationException) {
+            throw e
+        } catch (e: io.github.munzzyy.tern.engine.ProblemException) {
+            PageState.Failed(e.problem.message)
+        } catch (e: Exception) {
+            PageState.Failed(null)
+        }
+    }
+    DetailCard(stringResource(R.string.project_page)) {
+        when (val s = state) {
+            PageState.Closed -> ActionRow(
+                title = stringResource(R.string.project_page_read),
+                summary = stringResource(R.string.project_page_effect),
+                onClick = { asked++ },
+            )
+            PageState.Loading -> Text(
+                stringResource(R.string.project_page_loading),
+                modifier = Modifier.padding(horizontal = look.cardPadding, vertical = look.gapSmall),
+            )
+            is PageState.Shown -> if (s.blocks.isEmpty()) {
+                Text(stringResource(R.string.project_page_none), modifier = Modifier.padding(horizontal = look.cardPadding, vertical = look.gapSmall))
+            } else {
+                NotesView(s.blocks, Modifier.fillMaxWidth().padding(horizontal = look.cardPadding, vertical = look.gapSmall / 2))
+            }
+            is PageState.Failed -> ActionRow(
+                title = stringResource(R.string.project_page_failed),
+                summary = s.message,
+                onClick = { if (online) asked++ },
+            )
+        }
+    }
+}

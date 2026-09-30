@@ -95,6 +95,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withContext
 
 /**
@@ -639,6 +640,20 @@ class RealEngine(
 
     override fun renderNotes(text: String): List<NoteBlock> = NotesMapper.markdown(text)
 
+    private val pages = ProjectPages(http, tokens)
+
+    override fun hasProjectPage(row: AppRow): Boolean = row.config.source.type in PROJECT_PAGE_SOURCES
+
+    override suspend fun projectPage(appId: String): List<NoteBlock> {
+        ready()
+        val spec = stored[appId]?.config?.source ?: return emptyList()
+        return try {
+            runInterruptible(Dispatchers.IO) { pages.read(spec) }.orEmpty()
+        } catch (e: IOException) {
+            throw ProblemException(Problem(ProblemKind.NETWORK, texts.checkNetwork(e.message)))
+        }
+    }
+
     override fun canDowngrade(): Boolean = device.read(LET_ME_DOWNGRADE) != null
 
     override suspend fun writeKeptExport() {
@@ -768,6 +783,9 @@ class RealEngine(
 
         /** The module that lets Android put an older version of an app over a newer one. */
         internal const val LET_ME_DOWNGRADE = "com.berdik.letmedowngrade"
+
+        /** The sources whose projects keep a README Tern reads for an app's page. */
+        private val PROJECT_PAGE_SOURCES = setOf(SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS, SourceTypes.GITLAB, SourceTypes.FORGEJO)
 
         @Volatile
         internal var current: RealEngine? = null

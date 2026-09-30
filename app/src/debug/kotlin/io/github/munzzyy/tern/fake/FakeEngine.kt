@@ -598,6 +598,11 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override fun renderNotes(text: String): List<NoteBlock> = io.github.munzzyy.tern.engine.real.NotesMapper.markdown(text)
 
+    override fun hasProjectPage(row: AppRow): Boolean = row.config.source.type == "github"
+
+    override suspend fun projectPage(appId: String): List<NoteBlock> =
+        renderNotes("# About\n\nA stand-in page for trying out the project page.\n\n- It has a list\n- And a [link](https://example.org)")
+
     override fun canDowngrade(): Boolean = false
 
     override suspend fun writeKeptExport() {

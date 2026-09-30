@@ -149,7 +149,7 @@ class RealEngine(
     )
     internal val downloader = Downloader(http, downloadsDir ?: File(this.context.filesDir, "downloads"), texts)
     internal val gate: Gate = gate ?: InstallGate(archiveReader ?: PackageManagerArchiveReader(this.context.packageManager), texts)
-    private val installers = Installers(this)
+    internal val installers = Installers(this)
     internal val installer: Installer = installer ?: installers.routing
     internal val notifier = Notifier(this.context, texts) { _settings.value.notifyNames }
     internal val staging = File(this.context.cacheDir, "staging")

@@ -231,7 +231,10 @@ internal class Installs(private val e: RealEngine) {
             val pass = runInterruptible { e.gate.check(request) }
             val facts = pass.facts.copy(checksumMatchedFrom = expected?.second, fileSha256 = download.sha256)
             e.inspector.remember(chosenAsset, chosenRelease.id, facts)
-            e.event(appId, EventKind.VERIFIED, e.texts.eventVerified(facts.packageName, facts.versionCode, facts.signers.firstOrNull()?.take(16) ?: "?"))
+            val verified = e.texts.eventVerified(facts.packageName, facts.versionCode, facts.signers.firstOrNull()?.take(16) ?: "?")
+            // Installing through another installer than the one chosen is never silent.
+            val fellBack = e.installers.fellBack()?.let { " " + e.texts.installerFellBack(it) }.orEmpty()
+            e.event(appId, EventKind.VERIFIED, verified + fellBack)
             val update = e.readInstalled(facts.packageName) != null
             updating[appId] = update
             if (!update) handToVerifier(appId, pass.apks.first(), facts.packageName)

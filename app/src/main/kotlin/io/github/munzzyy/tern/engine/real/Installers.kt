@@ -86,6 +86,9 @@ internal class Installers(private val e: RealEngine) {
         e.publish()
     }
 
+    /** The installer the person chose, when the next install goes to Android's in its place. */
+    fun fellBack(): InstallerMode? = fellBackFrom(e.settings.value.installer, readinessNow())
+
     /** The installer the next install goes to. Never blocks: root counts as granted only once su said so. */
     fun effective(): InstallerMode = effectiveInstaller(e.settings.value.installer, readinessNow())
 
@@ -182,3 +185,7 @@ internal class Installers(private val e: RealEngine) {
  */
 internal fun effectiveInstaller(chosen: InstallerMode, readiness: InstallerReadiness): InstallerMode =
     if (chosen == InstallerMode.SYSTEM || chosen == InstallerMode.DHIZUKU || readiness == InstallerReadiness.READY) chosen else InstallerMode.SYSTEM
+
+/** [chosen] when an install goes to another installer in its place, which the log then says; null when it goes to [chosen]. */
+internal fun fellBackFrom(chosen: InstallerMode, readiness: InstallerReadiness): InstallerMode? =
+    chosen.takeIf { effectiveInstaller(chosen, readiness) != chosen }

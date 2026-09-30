@@ -143,6 +143,17 @@ class AppListTest {
     }
 
     @Test
+    fun selectAllTakesOnlyWhatIsShownAndAnAppShownTwiceOnce() {
+        val grouped = arrange(rows, ListQuery(grouping = AppGrouping.CATEGORY, updatesFirst = false), Locale.US)
+        assertEquals(listOf("c", "b", "a", "d", "e"), shownIds(grouped, emptySet()))
+        assertEquals(listOf("b", "c", "a", "d", "e"), shownIds(grouped, setOf("c:Maps")))
+        assertEquals(listOf("c"), shownIds(grouped, setOf("c:Tools", "c:")))
+        val updatesOnTop = arrange(rows, ListQuery(grouping = AppGrouping.CATEGORY), Locale.US)
+        assertEquals(listOf("a", "d", "e"), shownIds(updatesOnTop, updatesOnTop.groups.map { it.key }.toSet()))
+        assertEquals(listOf("a", "d", "e", "b", "c"), shownIds(arrange(rows, ListQuery(), Locale.US), emptySet()))
+    }
+
+    @Test
     fun groupsBySourceAreNamedAsPeopleKnowThem() {
         val s = arrange(rows, ListQuery(grouping = AppGrouping.SOURCE, updatesFirst = false), Locale.US)
         assertEquals(listOf("GitHub", "GitLab"), s.groups.map { it.title })

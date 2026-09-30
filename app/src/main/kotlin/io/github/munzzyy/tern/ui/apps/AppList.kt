@@ -111,6 +111,12 @@ fun firstPlace(sections: AppSections, folded: Set<String>): String? {
     return if (group.key in folded || first == null) headerKey(group) else group.key + first.id
 }
 
+/** The apps the list shows: none of those inside a folded group, and an app shown twice only once. */
+fun shownIds(sections: AppSections, folded: Set<String>): List<String> {
+    val others = if (sections.groups.isEmpty()) sections.others else sections.groups.filter { it.key !in folded }.flatMap { it.rows }
+    return (sections.updates + others).map { it.id }.distinct()
+}
+
 fun categoriesOf(rows: List<AppRow>, locale: Locale = Locale.getDefault()): List<String> {
     val collator = Collator.getInstance(locale)
     return rows.flatMap { it.config.categories }.map { it.trim() }.filter { it.isNotEmpty() }

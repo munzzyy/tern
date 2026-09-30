@@ -12,11 +12,15 @@ import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isFocused
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.tern.engine.AppGrouping
 import kotlinx.coroutines.runBlocking
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Before
@@ -75,13 +79,19 @@ class GroupedListRemoteTest {
     }
 
     @Test
-    fun aListWithItsGroupsFoldedOpensOnTheFirstGroup() {
+    fun aListWithItsGroupsFoldedOpensOnTheFirstGroupAndSelectAllTakesOnlyWhatIsShown() {
         launchGrouped(folded = true).use {
             val outdoors = header and hasText("Outdoors", substring = true)
             compose.assertFocusOn(outdoors, "with every group folded the list opens on the first group")
             compose.press(KEYCODE_DPAD_CENTER)
             compose.waitFor(notes)
             compose.assertFocusOn(outdoors, "opening a group leaves focus on its header")
+
+            compose.onNodeWithContentDescription("More options").performSemanticsAction(SemanticsActions.OnClick)
+            compose.onNodeWithText("Select").performSemanticsAction(SemanticsActions.OnClick)
+            compose.onNodeWithText("Select all").performSemanticsAction(SemanticsActions.OnClick)
+            compose.waitForText("selected")
+            assertEquals("only the two apps under Outdoors are picked, none from the folded groups", 1, compose.textCount("2 selected"))
         }
     }
 }

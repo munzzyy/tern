@@ -183,7 +183,7 @@ fun AppsScreen(
                 SelectionTopBar(
                     picked = picked,
                     onClose = vm::stopSelecting,
-                    onSelectAll = { vm.selectAll(state.sections.updates.map { it.id } + state.sections.others.map { it.id }) },
+                    onSelectAll = { vm.selectAll(shownIds(state.sections, collapsed)) },
                     onAction = { pending = it },
                 )
                 return@Scaffold

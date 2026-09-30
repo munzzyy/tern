@@ -139,7 +139,12 @@ class RealEngine(
     internal val registry = SourceRegistry.standard(::trackedInRepository)
     internal val inspector = FileInspector(http, store, tokens, device.sdk)
     internal val builtIn = BuiltInPins(catalog)
-    internal val evaluator = Evaluator(texts, device.profile, builtIn, nowMs, { _settings.value.globalFileFilter }) { _settings.value.minAgeDaysByDefault }
+    internal val evaluator = Evaluator(
+        texts, device.profile, builtIn, nowMs,
+        globalFilter = { _settings.value.globalFileFilter },
+        globalMinAgeDays = { _settings.value.minAgeDaysByDefault },
+        githubProxy = { _settings.value.githubProxy },
+    )
     internal val downloader = Downloader(http, downloadsDir ?: File(this.context.filesDir, "downloads"), texts)
     internal val gate: Gate = gate ?: InstallGate(archiveReader ?: PackageManagerArchiveReader(this.context.packageManager), texts)
     private val installers = Installers(this)

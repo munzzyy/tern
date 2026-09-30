@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings_export_effect_plain">Saves your list and settings to a file. Tokens never go in, and neither does a request header that could hold a key.</string>
+    <string name="engine_checksum_github_proxy">GitHub release digest, as the hubproxy %1$s passed it on</string>
+    <string name="github_proxy_effect_trust">Every request to GitHub goes to this host. It sees each one and can change what comes back: the releases, their digests and the files. Apps you have stay held to their certificate, but a first install through it trusts the hubproxy as much as GitHub, and certificate pinning does not reach it. No token is sent through it, so private projects and GitHub Actions cannot be followed this way.</string>
 </resources>

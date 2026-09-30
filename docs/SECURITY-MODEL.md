@@ -275,6 +275,17 @@ request Tern makes to GitHub. It is never sent a token or a cookie, and while
 one is set Tern holds back the tokens of GitHub's hosts altogether, so private
 projects and GitHub Actions cannot be followed through it.
 
+It can also change every answer. The release list, the digest GitHub gives
+for a file and the file itself all come from the hubproxy. Tern hands them on
+as if GitHub sent them. So the hubproxy decides what GitHub appears to publish.
+An app already installed stays held to its certificate and a built-in pin
+still holds. A changed file cannot replace it. The first install of a GitHub
+app through a hubproxy trusts the hubproxy as much as GitHub, since the
+certificate Tern pins is whatever the hubproxy served. Certificate pinning
+does not reach the hubproxy either, because the connection goes to its host.
+While one is set, a digest from GitHub is shown as passed on by that host. The
+setting says all of this where it is turned on.
+
 With a SOCKS proxy set, host names are resolved by the proxy. This was checked
 with a logging proxy and a packet capture, and with a real Orbot on an emulator:
 Tor Project's own check answered `{"IsTor":true}` for a request Tern sent.

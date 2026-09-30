@@ -138,6 +138,7 @@ class Texts(context: Context) : ImportTexts {
     fun eventInstalled(version: String, versionCode: Long) = s(R.string.engine_event_installed, version, versionCode)
 
     fun checksumGitHub() = s(R.string.engine_checksum_github)
+    fun checksumGitHubProxy(host: String) = s(R.string.engine_checksum_github_proxy, ltr(host))
     fun checksumIndex() = s(R.string.engine_checksum_index)
     fun checksumSource() = s(R.string.engine_checksum_source)
     fun checksumFile(name: String) = s(R.string.engine_checksum_file, ltr(name.take(120)))

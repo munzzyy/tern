@@ -349,7 +349,7 @@ internal class Installs(private val e: RealEngine) {
     }
 
     private fun expectedChecksum(config: AppConfig, release: Release, asset: Asset): Pair<String, String>? {
-        asset.sha256?.let { sha -> return normalized(sha) to e.evaluator.digestLabel(config.source.type) }
+        asset.sha256?.let { sha -> return normalized(sha) to e.evaluator.digestLabel(config.source) }
         var fetched: Asset? = null
         val sha = try {
             Checksums.expectedFor(release, asset) { sums ->

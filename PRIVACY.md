@@ -58,6 +58,9 @@ older Orbot to start. That stays on the device.
 
 A stored access token is sent to the host it was stored for and to no other.
 
+With a hubproxy set for GitHub, that host sees every request Tern makes to
+GitHub and can change what comes back. It is never sent a token or a cookie.
+
 Links to VirusTotal, a release page or a project page open in your browser,
 under your browser's rules. "Read the project's page" on an app's page asks
 the forge's API for the project's README, with the token stored for that host

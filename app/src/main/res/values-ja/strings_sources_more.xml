@@ -21,7 +21,6 @@
     <string name="option_file_version">ファイル名をバージョンとして使用</string>
     <string name="option_file_version_effect">この場合、各ファイルが独立したリリースとして扱われます。</string>
     <string name="github_proxy_title">hubproxy経由のGitHub</string>
-    <string name="github_proxy_effect">GitHubへのすべてのリクエストがこのホストに送られ、ホストはそのすべてを見ることができます。トークンはこのホストを通して送信されないため、この方法では非公開プロジェクトやGitHub Actionsを追跡できません。</string>
     <string name="github_proxy_host">hubproxyのホスト</string>
     <string name="github_proxy_help">ホスト名のみ（例: gh-proxy.com）。TernはHTTPSで接続します。</string>
     <string name="github_proxy_invalid">これはTernが使用できるホスト名ではありません</string>

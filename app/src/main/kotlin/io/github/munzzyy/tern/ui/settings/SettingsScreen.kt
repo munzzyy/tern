@@ -513,7 +513,7 @@ private fun GitHubProxyRow(s: Settings, update: Update) {
             .padding(horizontal = look.cardPadding, vertical = look.gapSmall / 2),
     ) {
         Text(stringResource(R.string.github_proxy_title), style = MaterialTheme.typography.titleSmall)
-        Text(stringResource(R.string.github_proxy_effect), style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
+        Text(stringResource(R.string.github_proxy_effect_trust), style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
         s.githubProxy?.let { Text(stringResource(R.string.github_proxy_in_use, ltr(it)), style = MaterialTheme.typography.bodyMedium) }
         OutlinedTextField(
             value = host,

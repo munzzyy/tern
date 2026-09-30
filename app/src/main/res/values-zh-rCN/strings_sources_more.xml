@@ -21,7 +21,6 @@
     <string name="option_file_version">使用文件名作为版本</string>
     <string name="option_file_version_effect">这样每个文件都算作一个独立的发布。</string>
     <string name="github_proxy_title">通过 hubproxy 访问 GitHub</string>
-    <string name="github_proxy_effect">对 GitHub 的每个请求都会发送到此主机，该主机能看到每一个请求。不会通过它发送令牌，因此无法通过这种方式跟踪私有项目和 GitHub Actions。</string>
     <string name="github_proxy_host">hubproxy 主机</string>
     <string name="github_proxy_help">只填主机名，例如 gh-proxy.com。Tern 通过 HTTPS 连接它。</string>
     <string name="github_proxy_invalid">这不是 Tern 可以使用的主机名</string>

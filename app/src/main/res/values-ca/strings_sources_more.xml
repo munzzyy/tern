@@ -21,7 +21,6 @@
     <string name="option_file_version">Usa el nom del fitxer com a versió</string>
     <string name="option_file_version_effect">Aleshores cada fitxer compta com un llançament propi.</string>
     <string name="github_proxy_title">GitHub a través d\'un hubproxy</string>
-    <string name="github_proxy_effect">Cada petició a GitHub va a aquest amfitrió, que les veu totes. No s\'hi envia cap token, així que els projectes privats i GitHub Actions no es poden seguir d\'aquesta manera.</string>
     <string name="github_proxy_host">Amfitrió del hubproxy</string>
     <string name="github_proxy_help">Només un nom d\'amfitrió, com ara gh-proxy.com. Tern s\'hi connecta per HTTPS.</string>
     <string name="github_proxy_invalid">Aquest no és un nom d\'amfitrió que Tern pugui usar</string>

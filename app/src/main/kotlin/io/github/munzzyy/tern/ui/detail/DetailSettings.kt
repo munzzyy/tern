@@ -61,6 +61,7 @@ private val MIN_AGE_CHOICES = listOf(0, 1, 3, 7, 14, 30)
 
 fun LazyListScope.settings(vm: DetailViewModel, row: AppRow, onRemoved: () -> Unit) {
     item(key = "s-files") { FilesGroup(vm, row) }
+    if (row.config.source.type in SOURCES_WITH_OPTIONS) item(key = "s-source") { SourceOptionsCard(vm, row.config) }
     item(key = "s-updates") { UpdatesGroup(vm, row.config) }
     item(key = "s-name") { NameGroup(vm, row.config) }
     item(key = "s-advanced") { AdvancedGroup(vm, row.config) }

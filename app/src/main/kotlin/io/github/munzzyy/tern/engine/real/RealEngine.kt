@@ -486,9 +486,15 @@ class RealEngine(
     override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
         ready()
         withContext(Dispatchers.IO) {
-            saveApp(appId) { it.copy(config = validated(change(it.config).copy(id = appId))) } ?: return@withContext
+            val before = stored[appId]?.config?.source
+            val saved = saveApp(appId) { it.copy(config = validated(change(it.config).copy(id = appId))) } ?: return@withContext
             checks.reevaluate(appId, network = false)
             publish()
+            // Options of the source change what a page or a listing means, so what the server said before is not reused.
+            if (before != null && before.options != saved.config.source.options) {
+                store.removeValidators("${before.type}|${before.url}|")
+                if (_online.value) scope.launch { checks.checkOne(appId) }
+            }
         }
     }
 

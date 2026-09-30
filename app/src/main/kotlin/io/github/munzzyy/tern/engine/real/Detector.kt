@@ -125,16 +125,16 @@ internal class Detector(private val e: RealEngine) {
         val state = AppState(releases = listing.releases, lastCheckedMs = e.nowMs())
         val warnings = ArrayList<String>()
 
-        var eval = e.evaluator.evaluate(config, state, e.readInstalled(config.packageName), e.inspector::inspect)
+        var eval = e.evaluator.evaluate(config, state, e.readInstalled(config.packageName), e.inspectorFor(config.source))
         if (carried == null && eval.latest == null && eval.problem?.message == e.texts.onlyPrereleases()) {
             config = config.copy(releases = config.releases.copy(includePrereleases = true))
-            eval = e.evaluator.evaluate(config, state, e.readInstalled(config.packageName), e.inspector::inspect)
+            eval = e.evaluator.evaluate(config, state, e.readInstalled(config.packageName), e.inspectorFor(config.source))
             warnings += e.texts.warnPrerelease()
         }
         val learned = eval.facts?.packageName
         if (config.packageName == null && learned != null) {
             config = config.copy(packageName = learned)
-            eval = e.evaluator.evaluate(config, state, e.readInstalled(learned), e.inspector::inspect)
+            eval = e.evaluator.evaluate(config, state, e.readInstalled(learned), e.inspectorFor(config.source))
         }
         val installed = e.readInstalled(config.packageName)
         val tracked = e.findBySpec(spec)

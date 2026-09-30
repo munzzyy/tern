@@ -7,6 +7,8 @@ import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.AssetKind
 import io.github.munzzyy.tern.core.net.HttpClient
 import io.github.munzzyy.tern.core.net.Urls
+import io.github.munzzyy.tern.core.source.Download
+import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.core.source.TokenProvider
 import io.github.munzzyy.tern.data.FileFacts
 import io.github.munzzyy.tern.data.Store
@@ -37,13 +39,18 @@ class FileInspector(
 
     fun cached(asset: Asset, releaseId: String): FileFacts? = store.facts(key(asset, releaseId))
 
-    /** Cached or read remotely; null when the file cannot be inspected before download. */
-    fun inspect(asset: Asset, releaseId: String): FileFacts? {
+    /**
+     * Cached or read remotely; null when the file cannot be inspected before download. [where]
+     * says where the file is to be read from now, which a source whose links expire works out.
+     */
+    fun inspect(asset: Asset, releaseId: String, where: () -> Download = { Download(asset.url) }): FileFacts? {
         cached(asset, releaseId)?.let { return it }
         if (asset.kind != AssetKind.APK) return null
-        val authorization = if (asset.needsAuth) tokens.tokenFor(Urls.host(asset.url))?.let { "Bearer $it" } else null
         return try {
-            val source = HttpRangeSource(http, asset.url, authorization)
+            val from = where()
+            val sameHost = Urls.host(from.url) == Urls.host(asset.url)
+            val authorization = if (asset.needsAuth && sameHost) tokens.tokenFor(Urls.host(asset.url))?.let { "Bearer $it" } else null
+            val source = HttpRangeSource(http, from.url, authorization, extraHeaders = from.headers)
             val info = source.use { ApkInspector.inspect(it) }
             lastCost = InspectionCost(asset.url, source.requestCount, source.bytesFetched)
             val facts = FileFacts.of(info, sdk)
@@ -51,6 +58,9 @@ class FileInspector(
             facts
         } catch (e: IOException) {
             Log.i(TAG, "Could not inspect ${asset.name} remotely: ${e.javaClass.simpleName}: ${e.message}")
+            null
+        } catch (e: SourceException) {
+            Log.i(TAG, "The source could not say where ${asset.name} is: ${e.message}")
             null
         }
     }

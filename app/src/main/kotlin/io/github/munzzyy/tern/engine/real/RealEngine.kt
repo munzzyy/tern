@@ -22,7 +22,11 @@ import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.ReleasePolicy
+import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.net.InMemoryValidatorStore
+import io.github.munzzyy.tern.core.source.CheckContext
+import io.github.munzzyy.tern.data.FileFacts
 import io.github.munzzyy.tern.core.net.HttpClient
 import io.github.munzzyy.tern.core.net.PoliteHttp
 import io.github.munzzyy.tern.core.net.RateLimiter
@@ -291,6 +295,14 @@ class RealEngine(
     }
 
     internal fun packageOf(config: AppConfig, eval: Evaluation? = evaluations[config.id]): String? = config.packageName ?: eval?.facts?.packageName
+
+    /** For asking a source where a file is now; what it learns is not kept. */
+    internal fun sourceContext(): CheckContext = CheckContext(http, InMemoryValidatorStore(), tokens, nowMs, device.profile)
+
+    /** Reads a file of an app of [spec] from the server, fetched from where the source says it is now. */
+    internal fun inspectorFor(spec: SourceSpec): (Asset, String) -> FileFacts? = { asset, releaseId ->
+        inspector.inspect(asset, releaseId) { registry.resolve(spec, asset, sourceContext()) }
+    }
 
     /** Reads the app from PackageManager now; the cache is only for drawing rows. */
     internal fun readInstalled(packageName: String?): DeviceApp? {
@@ -613,7 +625,8 @@ class RealEngine(
         val size = sizePx.coerceIn(1, 1024)
         val pm = context.packageManager
         val pkg = row.installed?.packageName
-        val kept = if (pkg == null) row.file?.asset?.url?.let { downloader.kept(row.id, it) } else null
+        val release = row.latest?.id
+        val kept = if (pkg == null && release != null) row.file?.asset?.url?.let { downloader.kept(row.id, Downloader.key(release, it)) } else null
         val drawable = if (pkg != null) {
             try {
                 pm.getApplicationIcon(pkg)

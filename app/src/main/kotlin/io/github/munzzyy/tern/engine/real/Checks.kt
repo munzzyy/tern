@@ -126,7 +126,7 @@ internal class Checks(private val e: RealEngine) {
 
     private fun readFilesFor(id: String) {
         val stored = e.stored[id] ?: return
-        val eval = e.evaluator.evaluate(stored.config, stored.state, e.readInstalled(stored.config.packageName), e.inspector::inspect)
+        val eval = e.evaluator.evaluate(stored.config, stored.state, e.readInstalled(stored.config.packageName), e.inspectorFor(stored.config.source))
         // Remembered at once, so the evaluation that follows does not run a runaway pattern a second time.
         if (eval.patternProblem != stored.state.patternProblem) e.saveState(id) { it.copy(patternProblem = eval.patternProblem) }
     }

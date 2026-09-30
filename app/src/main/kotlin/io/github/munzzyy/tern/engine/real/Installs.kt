@@ -11,6 +11,8 @@ import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.net.HttpRequest
 import io.github.munzzyy.tern.core.net.Urls
+import io.github.munzzyy.tern.core.source.Download
+import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.core.verify.Checksums
 import io.github.munzzyy.tern.core.verify.Fingerprints
 import io.github.munzzyy.tern.data.GateBlock
@@ -22,6 +24,7 @@ import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.Progress
 import io.github.munzzyy.tern.engine.Settings
+import io.github.munzzyy.tern.install.Downloader
 import io.github.munzzyy.tern.install.GateRequest
 import io.github.munzzyy.tern.install.OtherAppInstaller
 import io.github.munzzyy.tern.install.StepFailure
@@ -149,8 +152,12 @@ internal class Installs(private val e: RealEngine) {
             e.setProgress(appId, Progress(Phase.QUEUED))
             val expected = expectedChecksum(config, chosenRelease, chosenAsset)
             e.setProgress(appId, Progress(Phase.DOWNLOADING, 0, chosenAsset.size))
-            val authorization = if (chosenAsset.needsAuth) e.tokens.tokenFor(Urls.host(chosenAsset.url))?.let { "Bearer $it" } else null
-            val download = e.downloader.fetch(appId, chosenAsset.url, authorization) { done, total ->
+            val from = where(config, chosenAsset)
+            // A token goes only to the host it was given for, never to where a source sends the download.
+            val sameHost = Urls.host(from.url) == Urls.host(chosenAsset.url)
+            val authorization = if (chosenAsset.needsAuth && sameHost) e.tokens.tokenFor(Urls.host(from.url))?.let { "Bearer $it" } else null
+            val key = Downloader.key(chosenRelease.id, chosenAsset.url)
+            val download = e.downloader.fetch(appId, key, from.url, authorization, from.headers) { done, total ->
                 e.setProgress(appId, Progress(Phase.DOWNLOADING, done, total ?: chosenAsset.size))
             }
             if (!download.reused) e.event(appId, EventKind.DOWNLOADED, e.texts.eventDownloaded(download.size))
@@ -250,6 +257,16 @@ internal class Installs(private val e: RealEngine) {
         return normalized(sha) to source
     }
 
+    /** Where the file is to be fetched from now: a source whose links expire is asked for a fresh one. */
+    private suspend fun where(config: AppConfig, asset: Asset): Download = runInterruptible(Dispatchers.IO) {
+        try {
+            e.registry.resolve(config.source, asset, e.sourceContext())
+        } catch (ex: SourceException) {
+            val problem = e.checks.problemOf(ex)
+            throw StepFailure(problem.kind, problem.message)
+        }
+    }
+
     private fun normalized(sha: String): String =
         Fingerprints.normalize(sha) ?: throw StepFailure(ProblemKind.CHECKSUM_MISMATCH, e.texts.checksumMismatch())
 
@@ -257,7 +274,7 @@ internal class Installs(private val e: RealEngine) {
         if (problem.kind in GATE_KINDS && release != null && asset != null) {
             e.saveState(appId) { it.copy(block = GateBlock(release.id, asset.url, problem), installProblem = null) }
             e.event(appId, EventKind.BLOCKED, problem.message)
-            e.downloader.discard(appId, asset.url)
+            e.downloader.discard(appId, Downloader.key(release.id, asset.url))
         } else {
             e.saveState(appId) { it.copy(installProblem = problem) }
             e.event(appId, EventKind.FAILED, problem.message)
@@ -327,7 +344,7 @@ internal class Installs(private val e: RealEngine) {
             )
         }
         e.event(appId, EventKind.INSTALLED, e.texts.eventInstalled(pending.version, now.app.versionCode))
-        if (!e.settings.value.keepInstallers) e.downloader.discard(appId, pending.assetUrl)
+        if (!e.settings.value.keepInstallers) e.downloader.discard(appId, Downloader.key(pending.releaseId, pending.assetUrl))
         if (notify && e.settings.value.notifyInstalled) e.notifier.installed(listOfNotNull(e.stored[appId]?.config?.name))
     }
 

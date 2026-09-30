@@ -25,6 +25,9 @@ object RequestHeaders {
         "connection", "keep-alive", "transfer-encoding", "te", "trailer", "upgrade", "expect", "accept-encoding",
     )
     private val REFUSED_PREFIXES = listOf("if-", "proxy-")
+
+    /** Headers that say how to ask and never who asks. Any other can hold a key. */
+    private val PLAIN = setOf("user-agent", "accept", "accept-language", "referer")
     private const val NAME_MARKS = "!#$%&'*+-.^_`|~"
 
     /** The headers [spec] asks for; a refused one fails the check as an unsupported option. */
@@ -61,6 +64,17 @@ object RequestHeaders {
             value.any { it !in ' '..'~' } -> "The value of $name holds a character a header cannot carry"
             else -> null
         }
+    }
+
+    /**
+     * [spec] with only the headers of [PLAIN] kept, for everything that leaves the phone: an
+     * export, a shared file, a link. Headers that cannot be read go too.
+     */
+    fun plainOnly(spec: SourceSpec): SourceSpec {
+        val raw = spec.option(SourceOptions.HEADERS) ?: return spec
+        val plain = runCatching { parse(raw) }.getOrDefault(emptyMap()).filterKeys { it.lowercase() in PLAIN }
+        val options = if (plain.isEmpty()) spec.options - SourceOptions.HEADERS else spec.options + (SourceOptions.HEADERS to write(plain))
+        return spec.copy(options = options)
     }
 
     /** [headers] as the option stores them. */

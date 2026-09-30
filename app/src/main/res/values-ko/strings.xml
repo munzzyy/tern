@@ -354,7 +354,6 @@
     <string name="settings_import_effect">Tern 또는 Obtainium의 내보내기 파일에서 가져옵니다.</string>
     <string name="settings_export">앱 내보내기</string>
     <string name="settings_exporting">내보내는 중</string>
-    <string name="settings_export_effect">목록과 설정을 파일로 저장합니다. 토큰은 포함되지 않습니다.</string>
     <plurals name="exported">
         <item quantity="other">앱 %d개 내보냄</item>
     </plurals>

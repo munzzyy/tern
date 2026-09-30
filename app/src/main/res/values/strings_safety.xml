@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Saves your list and settings to a file. Tokens never go in, and neither does a request header that could hold a key.</string>
+</resources>

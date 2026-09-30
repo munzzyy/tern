@@ -380,7 +380,10 @@ A link that carries an app's settings is Obtainium's `obtainium://app/` form,
 or the same link behind Obtainium's web page for opening it from a browser.
 Tern makes such links without a token, which an app's settings never hold,
 and with no request header but User-Agent, Accept, Accept-Language and
-Referer, since any other could hold a key. Whoever opens the web form in a
+Referer, since any other could hold a key. The same rule holds for every
+config that leaves the phone: an export in either format, the kept export and
+a file shared with another app. A header such as X-Api-Key stays on the device
+and has to be set again after an import. Whoever opens the web form in a
 browser shows the settings in it to Obtainium's page; Tern reads that form on
 the device and never asks the page. A link of a kind Tern does not know is
 named on the Add screen and goes no further.

@@ -369,7 +369,6 @@
     <string name="settings_import_effect">از فایل برون‌ریزی Tern یا Obtainium</string>
     <string name="settings_export">برون‌ریزی برنامه‌ها</string>
     <string name="settings_exporting">در حال برون‌ریزی</string>
-    <string name="settings_export_effect">لیست و تنظیمات شما را در یک فایل ذخیره می‌کند. توکن‌ها هرگز در آن قرار نمی‌گیرند.</string>
     <plurals name="exported">
         <item quantity="one">%d برنامه برون‌ریزی شد</item>
         <item quantity="other">%d برنامه برون‌ریزی شد</item>

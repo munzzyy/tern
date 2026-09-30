@@ -399,7 +399,6 @@
     <string name="settings_import_effect">Z eksportu aplikacji Tern lub Obtainium</string>
     <string name="settings_export">Eksportuj aplikacje</string>
     <string name="settings_exporting">Eksportowanie</string>
-    <string name="settings_export_effect">Zapisuje Twoją listę i ustawienia do pliku. Tokeny dostępu nie są uwzględniane.</string>
     <plurals name="exported">
         <item quantity="one">Wyeksportowano %d aplikację</item>
         <item quantity="few">Wyeksportowano %d aplikacje</item>

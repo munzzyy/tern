@@ -2,7 +2,6 @@ package io.github.munzzyy.tern.core.interop
 
 import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonObject
-import io.github.munzzyy.tern.core.json.JsonString
 import io.github.munzzyy.tern.core.json.JsonValue
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.ReleaseOrder
@@ -13,6 +12,7 @@ import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.web.HtmlStep
 import io.github.munzzyy.tern.core.source.web.PseudoVersion
+import io.github.munzzyy.tern.core.source.web.RequestHeaders
 import io.github.munzzyy.tern.core.verify.Fingerprints
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -175,12 +175,11 @@ object ObtainiumExport {
         "matchLinksOutsideATags" to step.anyText,
     )
 
-    /** The request headers and the way to tell files apart that the HTML and direct link sources share with Obtainium's. */
+    /** The request headers that hold no key, and the way to tell files apart that the HTML and direct link sources share with Obtainium's. */
     private fun web(app: AppConfig, settings: MutableMap<String, Any?>) {
         val spec = app.source
-        spec.option(SourceOptions.HEADERS)?.let { raw ->
-            val headers = runCatching { Json.parseObject(raw).fields }.getOrDefault(emptyMap())
-                .mapNotNull { (name, value) -> (value as? JsonString)?.value?.let { mapOf("requestHeader" to "$name: $it") } }
+        RequestHeaders.plainOnly(spec).option(SourceOptions.HEADERS)?.let { raw ->
+            val headers = RequestHeaders.parse(raw).map { (name, value) -> mapOf("requestHeader" to "$name: $value") }
             if (headers.isNotEmpty()) settings["requestHeader"] = headers
         }
         when (spec.option(SourceOptions.PSEUDO)) {

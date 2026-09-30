@@ -399,7 +399,6 @@
     <string name="settings_import_effect">Z exportu z aplikace Tern nebo Obtainium</string>
     <string name="settings_export">Exportovat aplikace</string>
     <string name="settings_exporting">Exportuje se</string>
-    <string name="settings_export_effect">Uloží váš seznam a nastavení do souboru. Tokeny se nikdy nezahrnují.</string>
     <plurals name="exported">
         <item quantity="one">Exportována %d aplikace</item>
         <item quantity="few">Exportovány %d aplikace</item>

@@ -868,7 +868,7 @@ private fun DataSection(s: Settings, vm: SettingsViewModel, update: Update, onIm
                     else -> R.string.door_export
                 },
             ),
-            summary = outcome ?: stringResource(R.string.settings_export_effect),
+            summary = outcome ?: stringResource(R.string.settings_export_effect_plain),
             onClick = {
                 when {
                     exporting -> Unit

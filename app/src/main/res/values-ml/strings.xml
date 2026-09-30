@@ -369,7 +369,6 @@
     <string name="settings_import_effect">ഒരു Tern അല്ലെങ്കിൽ Obtainium എക്സ്പോർട്ടിൽ നിന്ന്</string>
     <string name="settings_export">ആപ്പുകൾ എക്സ്പോർട്ട് ചെയ്യുക</string>
     <string name="settings_exporting">എക്സ്പോർട്ട് ചെയ്യുന്നു</string>
-    <string name="settings_export_effect">നിങ്ങളുടെ ലിസ്റ്റും സെറ്റിംഗ്‌സും ഒരു ഫയലിലേക്ക് സേവ് ചെയ്യുന്നു. ടോക്കണുകൾ ഒരിക്കലും ഉൾപ്പെടുത്തില്ല.</string>
     <plurals name="exported">
         <item quantity="one">%d ആപ്പ് എക്സ്പോർട്ട് ചെയ്തു</item>
         <item quantity="other">%d ആപ്പുകൾ എക്സ്പോർട്ട് ചെയ്തു</item>

@@ -369,7 +369,6 @@
     <string name="settings_import_effect">Tern vagy Obtainium exportálásból</string>
     <string name="settings_export">Alkalmazások exportálása</string>
     <string name="settings_exporting">Exportálás</string>
-    <string name="settings_export_effect">Fájlba menti a listát és a beállításokat. A tokeneket sosem tartalmazza.</string>
     <plurals name="exported">
         <item quantity="one">%d alkalmazás exportálva</item>
         <item quantity="other">%d alkalmazás exportálva</item>

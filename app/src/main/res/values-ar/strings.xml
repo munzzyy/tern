@@ -429,7 +429,6 @@
     <string name="settings_import_effect">من تصدير Tern أو Obtainium</string>
     <string name="settings_export">تصدير التطبيقات</string>
     <string name="settings_exporting">جارٍ التصدير</string>
-    <string name="settings_export_effect">يحفظ قائمتك وإعداداتك في ملف. لا يتم تضمين الرموز أبدًا.</string>
     <plurals name="exported">
         <item quantity="zero">تم تصدير %d تطبيق</item>
         <item quantity="one">تم تصدير تطبيق واحد (%d)</item>

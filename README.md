@@ -247,7 +247,7 @@ clones in different places and compares the files byte for byte.
 
 `tools/check-apk.sh` reads the built APK and fails if its permissions differ from
 the list in the script, if cleartext traffic is allowed anywhere, if it is
-debuggable, if it is over 5 MiB, or if test code reached it.
+debuggable, if it is over 6 MiB, or if test code reached it.
 
 `python3 tools/strings.py check app/src/main/res` compares every translation
 with the English: the same placeholders, the plural forms the language needs,

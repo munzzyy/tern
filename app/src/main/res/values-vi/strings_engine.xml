@@ -9,7 +9,6 @@
     <string name="engine_no_space">Không đủ dung lượng trống: cần %1$s nhưng chỉ còn %2$s.</string>
     <string name="engine_download_cut">Tải xuống bị dừng sau %1$s trên %2$s. Hãy thử lại để tiếp tục.</string>
     <string name="engine_checksum_mismatch">Tệp không khớp với tổng kiểm tra của nhà phát hành, nên đã bị xóa. Có thể tệp bị hỏng hoặc bị thay thế.</string>
-    <string name="engine_tar_unsupported">Bản phát hành này là tệp lưu trữ tar, Tern không thể mở. Hãy chọn tệp khác.</string>
     <string name="engine_not_an_apk">Tệp này không phải APK hoặc một dạng lưu trữ mà Tern đọc được (%1$s).</string>
     <string name="engine_archive_no_apk">Tệp lưu trữ không chứa APK.</string>
     <string name="engine_archive_no_base">Tệp lưu trữ chứa các APK chia nhỏ nhưng không có APK cơ sở.</string>

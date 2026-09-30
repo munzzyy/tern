@@ -9,7 +9,6 @@
     <string name="engine_no_space">여유 공간이 부족합니다. %1$s이(가) 필요하며 남은 공간은 %2$s입니다.</string>
     <string name="engine_download_cut">다운로드가 %2$s 중 %1$s에서 중지되었습니다. 다시 시도하여 이어받으세요.</string>
     <string name="engine_checksum_mismatch">파일이 게시자가 제공한 체크섬과 일치하지 않아 삭제되었습니다. 손상되거나 변경되었을 수 있습니다.</string>
-    <string name="engine_tar_unsupported">이 릴리스는 tar 아카이브이므로 Tern가 열 수 없습니다. 다른 파일을 선택해 주세요.</string>
     <string name="engine_not_an_apk">이 파일은 APK가 아니며 Tern가 읽을 수 있는 아카이브도 아닙니다 (%1$s).</string>
     <string name="engine_archive_no_apk">아카이브에 APK가 없습니다.</string>
     <string name="engine_archive_no_base">아카이브에 분할 APK만 있고 기본 APK가 없습니다.</string>

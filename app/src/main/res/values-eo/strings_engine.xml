@@ -9,7 +9,6 @@
     <string name="engine_no_space">Ne estas sufiĉe da libera spaco: ĉi tio bezonas %1$s kaj %2$s estas liberaj.</string>
     <string name="engine_download_cut">La elŝuto haltis post %1$s el %2$s. Provu denove por daŭrigi ĝin.</string>
     <string name="engine_checksum_mismatch">La dosiero ne kongruas kun la kontrolsumo, kiun la eldonisto donis, do ĝi estis forigita. Ĝi eble estis difektita aŭ anstataŭigita.</string>
-    <string name="engine_tar_unsupported">Ĉi tiu eldono estas tar-arkivo, kiun Tern ne malfermas. Elektu alian dosieron.</string>
     <string name="engine_not_an_apk">Ĉi tiu dosiero ne estas APK aŭ arkivo, kiun Tern povas legi (%1$s).</string>
     <string name="engine_archive_no_apk">La arkivo tenas neniun APK.</string>
     <string name="engine_archive_no_base">La arkivo tenas disigitajn APK-ojn sed neniun bazan APK.</string>

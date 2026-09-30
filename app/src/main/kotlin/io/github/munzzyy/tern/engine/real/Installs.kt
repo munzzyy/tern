@@ -147,7 +147,7 @@ internal class Installs(private val e: RealEngine) {
                 ?: throw StepFailure(ProblemKind.NO_FILE_FOR_DEVICE, e.texts.noFileForDevice(null))
             asset = chosenAsset
             val lower = chosenAsset.name.lowercase()
-            if (lower.endsWith(".tar.gz") || lower.endsWith(".tgz") || lower.endsWith(".tar")) throw StepFailure(ProblemKind.UNSUPPORTED, e.texts.tarUnsupported())
+            if (UNOPENED_ARCHIVES.any { lower.endsWith(it) }) throw StepFailure(ProblemKind.UNSUPPORTED, e.texts.archiveCompressionUnsupported())
 
             e.setProgress(appId, Progress(Phase.QUEUED))
             val expected = expectedChecksum(config, chosenRelease, chosenAsset)
@@ -491,6 +491,9 @@ internal class Installs(private val e: RealEngine) {
         private const val DAY_MS = 24L * 60 * 60 * 1000
         private const val SUMS_LIMIT = 1024 * 1024
         private const val INSTALL_WAIT_MS = 3 * 60 * 1000L
+
+        /** Tar archives compressed in a way Android has no reader for; plain and gzipped ones are opened. */
+        private val UNOPENED_ARCHIVES = listOf(".tar.bz2", ".tbz2", ".tbz", ".tar.xz", ".txz", ".tar.zst")
         private val GATE_KINDS = setOf(
             ProblemKind.CHECKSUM_MISMATCH, ProblemKind.SIGNER_MISMATCH, ProblemKind.PIN_MISMATCH, ProblemKind.PACKAGE_MISMATCH,
             ProblemKind.DOWNGRADE, ProblemKind.UNSUPPORTED, ProblemKind.NO_FILE_FOR_DEVICE, ProblemKind.PARSE,

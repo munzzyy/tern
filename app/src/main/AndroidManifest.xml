@@ -82,6 +82,30 @@
             android:name=".work.NotificationActions"
             android:exported="false" />
 
+        <receiver
+            android:name=".widget.UpdatesWidget"
+            android:exported="false"
+            android:label="@string/widget_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/updates_widget_info" />
+        </receiver>
+
+        <!-- Only the system may bind the tile, which only reads the list and starts a check. -->
+        <service
+            android:name=".widget.CheckTile"
+            android:exported="true"
+            android:icon="@drawable/ic_stat_update"
+            android:label="@string/tile_check"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
         <!-- Hands a checked file, read-only, to the installer app the person chose. -->
         <provider
             android:name="androidx.core.content.FileProvider"

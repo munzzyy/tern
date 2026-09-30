@@ -49,6 +49,13 @@ object SourceTypes {
     /** Sites that offer apps changed by someone other than their developer. Said plainly before an app is added from one. */
     val MODIFIED: Set<String> = setOf(LITEAPKS, APK4FREE, ROCKMODS)
 
+    /**
+     * Stores and mirrors that offer again what developers published elsewhere, each source of which
+     * says so through [Source.republishes]. Their files are held to the developer's certificate
+     * like any other, once one is known.
+     */
+    val REPUBLISHING: Set<String> = setOf(APKPURE, APTOIDE, UPTODOWN, APKCOMBO, APKMIRROR, FARSROID) + MODIFIED
+
     /** The name a person knows the source by. Null for the general ones, which are named by their host. */
     fun displayName(type: String): String? = when (type) {
         GITHUB -> "GitHub"

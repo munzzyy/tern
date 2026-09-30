@@ -9,7 +9,6 @@
     <string name="engine_no_space">Недостатньо вільного місця: потрібно %1$s, а вільно %2$s.</string>
     <string name="engine_download_cut">Завантаження зупинилося після %1$s з %2$s. Спробуйте знову, щоб відновити його.</string>
     <string name="engine_checksum_mismatch">Файл не відповідає контрольній сумі, яку надав видавець, тому його видалено. Він міг бути пошкоджений або замінений.</string>
-    <string name="engine_tar_unsupported">Цей випуск є архівом tar, який Tern не відкриває. Виберіть інший файл.</string>
     <string name="engine_not_an_apk">Цей файл не є APK або архівом, який Tern може прочитати (%1$s).</string>
     <string name="engine_archive_no_apk">Архів не містить APK.</string>
     <string name="engine_archive_no_base">Архів містить розділені APK, але не базовий APK.</string>

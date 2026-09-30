@@ -28,6 +28,7 @@ import io.github.munzzyy.tern.ui.incomingAddInput
 import io.github.munzzyy.tern.ui.refreshLink
 import io.github.munzzyy.tern.ui.theme.TernTheme
 import io.github.munzzyy.tern.ui.theme.isDark
+import io.github.munzzyy.tern.widget.Surfaces
 import io.github.munzzyy.tern.work.Notifier
 import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.launch
@@ -109,9 +110,21 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun receive(intent: Intent) {
+        intent.getStringExtra(Surfaces.EXTRA_SHORTCUT)?.let { Surfaces.used(this, it.take(MAX_APP_ID)) }
         intent.getStringExtra(Notifier.EXTRA_OPEN_APP)?.let { id ->
             openApp = id.take(MAX_APP_ID)
             return
+        }
+        when (intent.action) {
+            Surfaces.ACTION_ADD -> {
+                finishFirstRun()
+                incoming = Incoming("", System.nanoTime())
+                return
+            }
+            Surfaces.ACTION_UPDATE_ALL -> {
+                lifecycleScope.launch { engine.installAllUpdates() }
+                return
+            }
         }
         if (intent.action == Intent.ACTION_VIEW) {
             val refresh = try {

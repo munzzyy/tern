@@ -9,7 +9,6 @@
     <string name="engine_no_space">Spazio libero insufficiente: servono %1$s e sono liberi %2$s.</string>
     <string name="engine_download_cut">Il download si è fermato a %1$s su %2$s. Riprova per riprenderlo.</string>
     <string name="engine_checksum_mismatch">Il file non corrisponde al checksum fornito dall\'editore, quindi è stato eliminato. Potrebbe essere stato danneggiato o sostituito.</string>
-    <string name="engine_tar_unsupported">Questa release è un archivio tar, che Tern non apre. Scegli un altro file.</string>
     <string name="engine_not_an_apk">Questo file non è un APK o un archivio che Tern può leggere (%1$s).</string>
     <string name="engine_archive_no_apk">L\'archivio non contiene alcun APK.</string>
     <string name="engine_archive_no_base">L\'archivio contiene APK suddivisi ma nessun APK di base.</string>

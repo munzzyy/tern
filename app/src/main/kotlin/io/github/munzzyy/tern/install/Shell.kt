@@ -176,6 +176,8 @@ private const val MAX_OUTPUT = 64 * 1024
 
 /** What pm prints, read into what PackageInstaller would have said. */
 object PmOutput {
+    /** PackageInstaller.STATUS_FAILURE_TIMEOUT, named from Android 14 on, with the same value before. */
+    private const val STATUS_FAILURE_TIMEOUT = 8
     private val SESSION = Regex("""\[(\d+)]""")
     private val FAILURE = Regex("""Failure \[([A-Z0-9_]+)(?::\s*([^\]]*))?]""")
 
@@ -206,7 +208,7 @@ object PmOutput {
         code in CONFLICT -> PackageInstaller.STATUS_FAILURE_CONFLICT
         code in INCOMPATIBLE -> PackageInstaller.STATUS_FAILURE_INCOMPATIBLE
         code == "INSTALL_FAILED_INSUFFICIENT_STORAGE" || code == "INSTALL_FAILED_MEDIA_UNAVAILABLE" -> PackageInstaller.STATUS_FAILURE_STORAGE
-        code == "INSTALL_FAILED_VERIFICATION_TIMEOUT" -> PackageInstaller.STATUS_FAILURE_TIMEOUT
+        code == "INSTALL_FAILED_VERIFICATION_TIMEOUT" -> STATUS_FAILURE_TIMEOUT
         code.startsWith("INSTALL_PARSE_FAILED") || code in INVALID -> PackageInstaller.STATUS_FAILURE_INVALID
         else -> PackageInstaller.STATUS_FAILURE
     }

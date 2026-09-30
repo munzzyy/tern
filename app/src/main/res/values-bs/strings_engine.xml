@@ -9,7 +9,6 @@
     <string name="engine_no_space">Nema dovoljno slobodnog prostora: ovo zahtijeva %1$s a slobodno je %2$s.</string>
     <string name="engine_download_cut">Preuzimanje je stalo nakon %1$s od %2$s. Pokušajte ponovo da ga nastavite.</string>
     <string name="engine_checksum_mismatch">Datoteka se ne podudara s kontrolnim zbirom koji je dao izdavač, pa je izbrisana. Možda je oštećena ili zamijenjena.</string>
-    <string name="engine_tar_unsupported">Ovo izdanje je tar arhiva, koju Tern ne otvara. Odaberite drugu datoteku.</string>
     <string name="engine_not_an_apk">Ova datoteka nije APK ni arhiva koju Tern može pročitati (%1$s).</string>
     <string name="engine_archive_no_apk">Arhiva ne sadrži APK.</string>
     <string name="engine_archive_no_base">Arhiva sadrži podijeljene APK-ove, ali nema osnovni APK.</string>

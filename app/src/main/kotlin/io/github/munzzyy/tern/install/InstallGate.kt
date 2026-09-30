@@ -11,6 +11,7 @@ import io.github.munzzyy.tern.core.apk.IncompatibleDeviceException
 import io.github.munzzyy.tern.core.apk.ManifestInfo
 import io.github.munzzyy.tern.core.apk.SignatureVerdict
 import io.github.munzzyy.tern.core.apk.SplitSelector
+import io.github.munzzyy.tern.core.apk.TarReader
 import io.github.munzzyy.tern.core.apk.WindowSource
 import io.github.munzzyy.tern.core.apk.ZipEntry
 import io.github.munzzyy.tern.core.apk.ZipIndex
@@ -23,12 +24,17 @@ import io.github.munzzyy.tern.core.model.AssetKind
 import io.github.munzzyy.tern.core.model.AssetPolicy
 import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.select.AssetPicker
+import io.github.munzzyy.tern.core.select.AssetPolicyException
 import io.github.munzzyy.tern.data.FileFacts
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.real.Texts
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.IOException
+import java.util.zip.Deflater
+import java.util.zip.GZIPInputStream
+import java.util.zip.ZipOutputStream
 
 /**
  * What passed the gate: the files to hand to the installer, and what Android itself read from the
@@ -52,6 +58,8 @@ data class GateRequest(
     val builtInPin: Boolean = false,
     /** An older version may replace a newer one: the person allowed it, and something lets Android do it. */
     val allowDowngrade: Boolean = false,
+    /** Which files inside an archive or a bundle may be installed, by their names there. */
+    val installsInside: (String) -> Boolean = { true },
 )
 
 fun interface Gate {
@@ -96,14 +104,18 @@ class InstallGate(
     private class Chosen(val apks: List<File>, val split: Boolean)
 
     private fun choose(request: GateRequest): Chosen {
-        if (isGzip(request.file)) throw StepFailure(ProblemKind.UNSUPPORTED, texts.tarUnsupported())
-        FileSource(request.file).use { source ->
+        val file = when {
+            isGzip(request.file) -> fromTar(request, gzip = true)
+            isTar(request.file) -> fromTar(request, gzip = false)
+            else -> request.file
+        }
+        FileSource(file).use { source ->
             val index = try {
                 ZipIndex.open(source)
             } catch (e: ApkFormatException) {
                 throw StepFailure(ProblemKind.PARSE, texts.notAnApk(e.message))
             }
-            if (index.find("AndroidManifest.xml") != null) return Chosen(listOf(request.file), split = false)
+            if (index.find("AndroidManifest.xml") != null) return Chosen(listOf(file), split = false)
             val bundleDeclared = request.asset.kind == AssetKind.BUNDLE
             if (bundleDeclared) BundleIndex.read(source)
             return fromArchive(index, request)
@@ -111,8 +123,14 @@ class InstallGate(
     }
 
     private fun fromArchive(index: ZipIndex, request: GateRequest): Chosen {
-        val entries = index.entries.filter { !it.isDirectory && it.name.endsWith(".apk", ignoreCase = true) }
-        if (entries.isEmpty()) throw StepFailure(ProblemKind.NO_FILE_FOR_DEVICE, texts.archiveHasNoApk())
+        val apks = index.entries.filter { !it.isDirectory && it.name.endsWith(".apk", ignoreCase = true) }
+        if (apks.isEmpty()) throw StepFailure(ProblemKind.NO_FILE_FOR_DEVICE, texts.archiveHasNoApk())
+        val entries = try {
+            apks.filter { request.installsInside(it.name) }
+        } catch (e: AssetPolicyException) {
+            throw StepFailure(ProblemKind.PARSE, texts.patternProblem(e.message ?: ""))
+        }
+        if (entries.isEmpty()) throw StepFailure(ProblemKind.NO_FILE_FOR_DEVICE, texts.innerFilterMatchesNothing())
         if (entries.size > MAX_APKS) throw StepFailure(ProblemKind.PARSE, texts.unreadableFile("${entries.size} APKs"))
         var budget = Downloader.MAX_BYTES
         val extracted = HashMap<ZipEntry, File>()
@@ -246,9 +264,51 @@ class InstallGate(
         input.read(head) == 2 && head[0] == 0x1f.toByte() && head[1] == 0x8b.toByte()
     }
 
+    /** A ustar or GNU tar archive names itself at the same place of its first header. */
+    private fun isTar(file: File): Boolean = FileInputStream(file).use { input ->
+        val head = ByteArray(TAR_MAGIC_AT + 5)
+        var read = 0
+        while (read < head.size) {
+            val n = input.read(head, read, head.size - read)
+            if (n < 0) break
+            read += n
+        }
+        read == head.size && String(head, TAR_MAGIC_AT, 5, Charsets.US_ASCII) == "ustar"
+    }
+
+    /**
+     * The APKs of a tar archive, plain or gzipped, put into a zip in the staging folder, so that
+     * they are chosen and checked exactly as the APKs of a zip are. Only the files the app's filter
+     * lets through are taken, and never more than a download may hold.
+     */
+    private fun fromTar(request: GateRequest, gzip: Boolean): File {
+        val target = File(request.staging, "archive.zip")
+        var total = 0L
+        var count = 0
+        FileInputStream(request.file).buffered().let { if (gzip) GZIPInputStream(it) else it }.use { input ->
+            ZipOutputStream(FileOutputStream(target)).use { zip ->
+                zip.setLevel(Deflater.NO_COMPRESSION)
+                TarReader.read(input) { entry, body ->
+                    if (!entry.name.endsWith(".apk", ignoreCase = true)) return@read
+                    total += entry.size
+                    if (total > Downloader.MAX_BYTES) throw StepFailure(ProblemKind.STORAGE, texts.fileTooLarge())
+                    if (++count > MAX_APKS) throw StepFailure(ProblemKind.PARSE, texts.unreadableFile("$count APKs"))
+                    // The name inside the zip keeps the one the archive gave, so the filter reads the same name either way.
+                    zip.putNextEntry(java.util.zip.ZipEntry(entry.name.trimStart('/').take(MAX_NAME)))
+                    body.copyTo(zip)
+                    zip.closeEntry()
+                }
+            }
+        }
+        if (count == 0) throw StepFailure(ProblemKind.NO_FILE_FOR_DEVICE, texts.archiveHasNoApk())
+        return target
+    }
+
     companion object {
         private const val TAG = "InstallGate"
         private const val MAX_APKS = 512
+        private const val TAR_MAGIC_AT = 257
+        private const val MAX_NAME = 1024
         private const val MAX_LOGGED = 300
     }
 }

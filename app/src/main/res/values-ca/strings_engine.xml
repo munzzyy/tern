@@ -9,7 +9,6 @@
     <string name="engine_no_space">No hi ha prou espai lliure: això necessita %1$s i n\'hi ha %2$s lliures.</string>
     <string name="engine_download_cut">La baixada s\'ha aturat després de %1$s de %2$s. Torna-ho a provar per reprendre-la.</string>
     <string name="engine_checksum_mismatch">El fitxer no coincideix amb la suma de verificació que ha donat l\'editor, de manera que s\'ha esborrat. Pot ser que s\'hagi malmès o reemplaçat.</string>
-    <string name="engine_tar_unsupported">Aquest llançament és un arxiu tar, que Tern no obre. Tria un altre fitxer.</string>
     <string name="engine_not_an_apk">Aquest fitxer no és un APK ni un arxiu que Tern pugui llegir (%1$s).</string>
     <string name="engine_archive_no_apk">L\'arxiu no conté cap APK.</string>
     <string name="engine_archive_no_base">L\'arxiu conté APKs dividits però cap APK base.</string>

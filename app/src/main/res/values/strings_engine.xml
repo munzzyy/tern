@@ -10,7 +10,6 @@
     <string name="engine_download_cut">The download stopped after %1$s of %2$s. Try again to resume it.</string>
 
     <string name="engine_checksum_mismatch">The file does not match the checksum the publisher gave, so it was deleted. It may have been damaged or replaced.</string>
-    <string name="engine_tar_unsupported">This release is a tar archive, which Tern does not open. Pick another file.</string>
     <string name="engine_not_an_apk">This file is not an APK or an archive Tern can read (%1$s).</string>
     <string name="engine_archive_no_apk">The archive holds no APK.</string>
     <string name="engine_archive_no_base">The archive holds split APKs but no base APK.</string>

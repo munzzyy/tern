@@ -9,7 +9,6 @@
     <string name="engine_no_space">Недостаточно свободного места: требуется %1$s, а свободно %2$s.</string>
     <string name="engine_download_cut">Скачивание прервалось после %1$s из %2$s. Попробуйте снова, чтобы возобновить его.</string>
     <string name="engine_checksum_mismatch">Файл не соответствует контрольной сумме, предоставленной издателем, поэтому он был удален. Возможно, он поврежден или заменен.</string>
-    <string name="engine_tar_unsupported">Этот релиз - архив tar, который Tern не открывает. Выберите другой файл.</string>
     <string name="engine_not_an_apk">Этот файл не является APK или архивом, который Tern может прочитать (%1$s).</string>
     <string name="engine_archive_no_apk">Архив не содержит APK.</string>
     <string name="engine_archive_no_base">Архив содержит разделенные APK, но нет базового APK.</string>

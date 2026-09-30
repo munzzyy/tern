@@ -30,6 +30,8 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import io.github.munzzyy.tern.R
+import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.common.FileChoiceView
@@ -41,6 +43,7 @@ import io.github.munzzyy.tern.ui.common.sourceText
 import io.github.munzzyy.tern.ui.icons.LetterAvatar
 import io.github.munzzyy.tern.ui.text.Trust
 import io.github.munzzyy.tern.ui.text.formatDate
+import io.github.munzzyy.tern.ui.text.hostOf
 import io.github.munzzyy.tern.ui.text.isolate
 import io.github.munzzyy.tern.ui.text.knownVersion
 import io.github.munzzyy.tern.ui.theme.LocalLook
@@ -110,8 +113,14 @@ fun PreviewCard(found: Detection.Found, carried: List<CarriedSetting>, onAdd: (i
                 }
             }
 
-            if (found.warnings.isNotEmpty()) {
+            val origin = originNote(found.spec.type)
+            if (found.warnings.isNotEmpty() || origin != null) {
                 Column(verticalArrangement = Arrangement.spacedBy(look.gapSmall)) {
+                    when (origin) {
+                        OriginNote.MODIFIED -> TrustLine(Trust.BAD, stringResource(R.string.preview_modified, sourceName(found.spec)))
+                        OriginNote.REPUBLISHED -> TrustLine(Trust.NOTE, stringResource(R.string.preview_republished, sourceName(found.spec)))
+                        null -> Unit
+                    }
                     for (w in found.warnings.take(MAX_WARNINGS)) TrustLine(Trust.BAD, w)
                 }
             }
@@ -183,3 +192,15 @@ fun FoundIcon(found: Detection.Found, size: Dp, modifier: Modifier = Modifier) {
         LetterAvatar(found.spec.url, found.name, size, modifier)
     }
 }
+
+/** What an app's page says about where a file comes from, when it is not from the developer's own channels. */
+enum class OriginNote { REPUBLISHED, MODIFIED }
+
+fun originNote(type: String): OriginNote? = when (type) {
+    in SourceTypes.MODIFIED -> OriginNote.MODIFIED
+    in SourceTypes.REPUBLISHING -> OriginNote.REPUBLISHED
+    else -> null
+}
+
+/** The store's own name, or its host where it has none. */
+fun sourceName(spec: SourceSpec): String = SourceTypes.displayName(spec.type) ?: hostOf(spec.url)

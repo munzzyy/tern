@@ -9,7 +9,6 @@
     <string name="engine_no_space">Niet genoeg vrije ruimte: dit heeft %1$s nodig en er is %2$s vrij.</string>
     <string name="engine_download_cut">De download stopte na %1$s van %2$s. Probeer het opnieuw om deze te hervatten.</string>
     <string name="engine_checksum_mismatch">Het bestand komt niet overeen met de checksum die de uitgever gaf, dus is het verwijderd. Het is mogelijk beschadigd of vervangen.</string>
-    <string name="engine_tar_unsupported">Deze release is een tar-archief, wat Tern niet opent. Kies een ander bestand.</string>
     <string name="engine_not_an_apk">Dit bestand is geen APK of een archief dat Tern kan lezen (%1$s).</string>
     <string name="engine_archive_no_apk">Het archief bevat geen APK.</string>
     <string name="engine_archive_no_base">Het archief bevat gesplitste APK\'s maar geen basis-APK.</string>

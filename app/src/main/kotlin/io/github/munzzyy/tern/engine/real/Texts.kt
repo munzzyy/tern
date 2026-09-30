@@ -34,7 +34,8 @@ class Texts(context: Context) : ImportTexts {
     fun downloadCut(got: Long, total: Long) = s(R.string.engine_download_cut, bytes(got), bytes(total))
 
     fun checksumMismatch() = s(R.string.engine_checksum_mismatch)
-    fun tarUnsupported() = s(R.string.engine_tar_unsupported)
+    fun archiveCompressionUnsupported() = s(R.string.engine_archive_compression_unsupported)
+    fun innerFilterMatchesNothing() = s(R.string.engine_inner_filter_nothing)
     fun notAnApk(detail: String?) = s(R.string.engine_not_an_apk, detail.orEmpty().take(200))
     fun archiveHasNoApk() = s(R.string.engine_archive_no_apk)
     fun archiveHasNoBase() = s(R.string.engine_archive_no_base)

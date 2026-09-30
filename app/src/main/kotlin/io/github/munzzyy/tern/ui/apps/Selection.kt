@@ -206,7 +206,7 @@ fun BulkDialog(action: BulkAction, picked: List<AppRow>, categories: List<String
         )
         BulkAction.FAVORITE -> {
             val on = favoriteAfter(touched)
-            val words = LocalContext.current.resources.getQuantityString(if (on) R.plurals.bulk_favorite_done else R.plurals.bulk_unfavorite_done, n, n)
+            val words = pluralStringResource(if (on) R.plurals.bulk_favorite_done else R.plurals.bulk_unfavorite_done, n, n)
             LaunchedEffect(Unit) {
                 actions.run {
                     for (row in touched) engine.configure(row.id) { it.copy(favorite = on) }

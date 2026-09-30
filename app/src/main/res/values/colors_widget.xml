@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The widget draws in Tern's Ink colours; from Android 12 on, in the device's own. -->
+    <color name="widget_surface">#FFF8F9FF</color>
+    <color name="widget_on_surface">#FF1B1B21</color>
+    <color name="widget_muted">#FF46464F</color>
+    <color name="widget_accent">#FF3C35B2</color>
+    <color name="widget_on_accent">#FFFFFFFF</color>
+    <color name="widget_tonal">#FFE3DFFF</color>
+    <color name="widget_on_tonal">#FF1D1765</color>
+</resources>

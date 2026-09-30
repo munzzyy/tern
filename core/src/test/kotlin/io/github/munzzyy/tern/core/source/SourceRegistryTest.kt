@@ -38,6 +38,13 @@ class SourceRegistryTest {
     }
 
     @Test
+    fun theSourcesThatRepublishAreTheOnesTheListNames() {
+        val registry = SourceRegistry.standard()
+        assertEquals(SourceTypes.REPUBLISHING, registry.sources.filter { it.republishes }.map { it.type }.toSet())
+        assertTrue(SourceTypes.REPUBLISHING.containsAll(SourceTypes.MODIFIED))
+    }
+
+    @Test
     fun aStorePageRoutedAfterAHashIsReadAsTyped() {
         val registry = SourceRegistry.standard()
         assertEquals(SourceTypes.HUAWEI, registry.match("appgallery.huawei.com/#/app/C100000000")?.type)

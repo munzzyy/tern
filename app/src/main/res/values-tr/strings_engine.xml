@@ -9,7 +9,6 @@
     <string name="engine_no_space">Yeterli boş yer yok: bu %1$s gerektiriyor ve %2$s boş yer var.</string>
     <string name="engine_download_cut">İndirme, %2$s içinden %1$s inmişken durdu. Devam etmek için tekrar deneyin.</string>
     <string name="engine_checksum_mismatch">Dosya, yayıncının verdiği sağlama toplamıyla eşleşmediği için silindi. Hasar görmüş veya değiştirilmiş olabilir.</string>
-    <string name="engine_tar_unsupported">Bu sürüm, Tern\'ın açmadığı bir tar arşivi. Başka bir dosya seçin.</string>
     <string name="engine_not_an_apk">Bu dosya bir APK veya Tern\'ın okuyabileceği bir arşiv değil (%1$s).</string>
     <string name="engine_archive_no_apk">Arşiv hiçbir APK içermiyor.</string>
     <string name="engine_archive_no_base">Arşivde bölünmüş APK\'ler var ancak temel APK yok.</string>

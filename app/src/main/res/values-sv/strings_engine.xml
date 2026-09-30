@@ -9,7 +9,6 @@
     <string name="engine_no_space">Inte tillräckligt med ledigt utrymme: detta kräver %1$s och %2$s är ledigt.</string>
     <string name="engine_download_cut">Nedladdningen stannade efter %1$s av %2$s. Försök igen för att återuppta den.</string>
     <string name="engine_checksum_mismatch">Filen matchar inte kontrollsumman som utgivaren gav, så den raderades. Den kan ha skadats eller bytts ut.</string>
-    <string name="engine_tar_unsupported">Denna utgåva är ett tar-arkiv, vilket Tern inte öppnar. Välj en annan fil.</string>
     <string name="engine_not_an_apk">Denna fil är inte en APK eller ett arkiv som Tern kan läsa (%1$s).</string>
     <string name="engine_archive_no_apk">Arkivet innehåller ingen APK.</string>
     <string name="engine_archive_no_base">Arkivet innehåller delade APK-filer men ingen bas-APK.</string>

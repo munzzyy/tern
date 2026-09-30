@@ -9,7 +9,6 @@
     <string name="engine_no_space">Nicht genug freier Speicherplatz: Dies benötigt %1$s und %2$s sind frei.</string>
     <string name="engine_download_cut">Der Download wurde nach %1$s von %2$s abgebrochen. Versuche es erneut, um ihn fortzusetzen.</string>
     <string name="engine_checksum_mismatch">Die Datei stimmt nicht mit der vom Herausgeber angegebenen Prüfsumme überein, daher wurde sie gelöscht. Sie könnte beschädigt oder ersetzt worden sein.</string>
-    <string name="engine_tar_unsupported">Dieses Release ist ein tar-Archiv, welches Tern nicht öffnet. Wähle eine andere Datei.</string>
     <string name="engine_not_an_apk">Diese Datei ist keine APK und kein Archiv, das Tern lesen kann (%1$s).</string>
     <string name="engine_archive_no_apk">Das Archiv enthält keine APK.</string>
     <string name="engine_archive_no_base">Das Archiv enthält Split-APKs, aber keine Basis-APK.</string>

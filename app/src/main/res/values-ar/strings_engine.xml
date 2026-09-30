@@ -9,7 +9,6 @@
     <string name="engine_no_space">لا توجد مساحة خالية كافية: هذا يحتاج إلى %1$s والمتاح %2$s.</string>
     <string name="engine_download_cut">توقف التنزيل بعد %1$s من %2$s. حاول مرة أخرى لاستئنافه.</string>
     <string name="engine_checksum_mismatch">لا يتطابق الملف مع المجموع الاختباري الذي قدمه الناشر، لذلك تم حذفه. ربما يكون قد تعرض للتلف أو الاستبدال.</string>
-    <string name="engine_tar_unsupported">هذا الإصدار عبارة عن أرشيف tar، والذي لا يفتحه Tern. اختر ملفًا آخر.</string>
     <string name="engine_not_an_apk">هذا الملف ليس APK أو أرشيفًا يمكن لـ Tern قراءته (%1$s).</string>
     <string name="engine_archive_no_apk">لا يحتوي الأرشيف على APK.</string>
     <string name="engine_archive_no_base">يحتوي الأرشيف على حزم APK مقسمة ولكن لا يحتوي على حزمة APK أساسية.</string>

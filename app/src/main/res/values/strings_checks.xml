@@ -32,6 +32,10 @@
     <string name="density_minimal">Minimal</string>
     <string name="search_in">Search in</string>
     <string name="activity_share">Share activity</string>
+    <string name="engine_archive_compression_unsupported">This archive is compressed with bzip2, xz or zstd, which Android cannot open. Pick a .zip, .tar or .tar.gz file of this release.</string>
+    <string name="engine_inner_filter_nothing">The filter for files inside archives matches none of the APKs in this one.</string>
+    <string name="preview_republished">%1$s offers again what developers publish elsewhere. Its files are held to the developer\'s certificate once Tern knows it, so pin one or install from the developer first when you can.</string>
+    <string name="preview_modified">%1$s offers apps changed by someone other than their developer. They are signed by whoever changed them, and Tern cannot tell what was changed.</string>
     <string name="about_track_tern">Keep Tern itself up to date</string>
     <string name="about_track_tern_effect">Adds Tern\'s own releases to the list, checked and verified like any app.</string>
     <string name="engine_channel_tracked">New releases of tracked apps</string>

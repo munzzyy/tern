@@ -439,8 +439,14 @@ internal class Installs(private val e: RealEngine) {
         }
     }
 
-    suspend fun runScheduled(settings: Settings) {
-        val targets = e.stored.values.filter { checkedInTheBackground(it.config) && e.inWholeListCheck(it.config) }.map { it.config.id }
+    /**
+     * Checks [only] or every app the background looks at, and installs what may install by itself.
+     * With [installsNow] false such updates wait, and the run says so.
+     */
+    suspend fun runScheduled(settings: Settings, installsNow: Boolean = true, only: Set<String>? = null): ScheduledRun {
+        val targets = e.stored.values
+            .filter { checkedInTheBackground(it.config) && e.inWholeListCheck(it.config) && (only == null || it.config.id in only) }
+            .map { it.config.id }
         if (settings.notifyChecking && targets.isNotEmpty()) e.notifier.checking(targets.size)
         val checked = try {
             e.checks.checkMany(targets)
@@ -451,9 +457,14 @@ internal class Installs(private val e: RealEngine) {
         val failed = ArrayList<String>()
         // Without the permission Android would ask from a notification and then call the install cancelled.
         val allowed = e.mayInstallUnattended()
+        var waited = false
         for (id in targets) {
             val config = e.stored[id]?.config ?: continue
             if (!installsByItself(config, allowed, e.evaluations[id], busy = e.progress.containsKey(id))) continue
+            if (!installsNow) {
+                waited = true
+                continue
+            }
             batch += id
             try {
                 val session = run(id, null, null)
@@ -477,7 +488,11 @@ internal class Installs(private val e: RealEngine) {
         if (settings.notifyTracked) e.notifier.tracked(named(tracked))
         if (settings.notifyInstalled) e.notifier.installed(installed)
         if (settings.notifyFailures) e.notifier.failures(names(checked.filter { it.failed }.map { it.id }) + failed)
+        return ScheduledRun(waited, checked.filter { it.failed }.map { it.id })
     }
+
+    /** What a scheduled run left to do: updates that waited for Wi-Fi or charging, and apps that could not be checked. */
+    internal data class ScheduledRun(val waited: Boolean, val failed: List<String>)
 
     internal companion object {
         /**

@@ -48,6 +48,25 @@ class Store(context: Context, name: String = DEFAULT_NAME) : ValidatorStore, Clo
         }
     }
 
+    /**
+     * The stored apps that cannot be read, which [apps] leaves out: each by the address it follows
+     * where that much can be read, or by its id. They are kept as they are.
+     */
+    fun unreadableApps(): List<String> = reader.rawQuery("SELECT id, config, state FROM apps", null).use { c ->
+        buildList {
+            while (c.moveToNext()) {
+                val id = c.getString(0)
+                if (decodeApp(id, c.getString(1), c.getString(2)) == null) add(addressIn(c.getString(1)) ?: id)
+            }
+        }
+    }
+
+    private fun addressIn(config: String): String? = try {
+        Json.parseObject(config).obj("source")?.string("url")?.take(MAX_ADDRESS)
+    } catch (_: JsonException) {
+        null
+    }
+
     fun app(id: String): StoredApp? = reader.rawQuery("SELECT id, config, state FROM apps WHERE id = ?", arrayOf(id)).use { c ->
         if (c.moveToFirst()) decodeApp(c.getString(0), c.getString(1), c.getString(2)) else null
     }
@@ -180,6 +199,7 @@ class Store(context: Context, name: String = DEFAULT_NAME) : ValidatorStore, Clo
         const val MAX_EVENTS = 500
         const val MAX_INSPECTIONS = 2000
         private const val MAX_MESSAGE = 2000
+        private const val MAX_ADDRESS = 300
         private const val TAG = "TernStore"
     }
 }

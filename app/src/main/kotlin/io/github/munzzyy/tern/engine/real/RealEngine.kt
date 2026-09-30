@@ -75,6 +75,7 @@ import io.github.munzzyy.tern.install.Installer
 import io.github.munzzyy.tern.install.PackageManagerArchiveReader
 import io.github.munzzyy.tern.net.Orbot
 import io.github.munzzyy.tern.net.ProxyChoice
+import io.github.munzzyy.tern.net.PinChoice
 import io.github.munzzyy.tern.net.ProxyDoor
 import io.github.munzzyy.tern.net.ProxyProbe
 import io.github.munzzyy.tern.net.UrlConnectionHttp
@@ -211,6 +212,7 @@ class RealEngine(
         if (_settings.value.proxy == ProxyMode.ORBOT) orbotLink.ask()
         store.apps().forEach { stored[it.config.id] = it }
         _events.value = store.events()
+        noteUnreadable()
         installs.reconcile()
         for (id in stored.keys) checks.reevaluate(id, network = false)
         publish()
@@ -325,6 +327,15 @@ class RealEngine(
 
     internal fun saveApp(id: String, change: (StoredApp) -> StoredApp): StoredApp? = synchronized(saving) {
         store.update(id, change)?.also { stored[id] = it }
+    }
+
+    /** An app that cannot be read is said once in the log, and kept: a newer Tern may read it. */
+    private fun noteUnreadable() {
+        val said = _events.value.mapTo(HashSet()) { it.message }
+        for (where in store.unreadableApps()) {
+            val message = texts.unreadableApp(where)
+            if (message !in said) event(null, EventKind.CHECK_FAILED, message)
+        }
     }
 
     internal fun event(appId: String?, kind: EventKind, message: String) {
@@ -710,15 +721,31 @@ class RealEngine(
     }
 
     /** The background check: every app not set to manual, then automatic installs where Android allows them. */
-    suspend fun runScheduledCheck() {
+    /**
+     * The background check: of [only] or of every app it looks at. Updates that install by
+     * themselves wait while the settings hold them back, and a job installs them once the network
+     * and the charger allow it. Apps that could not be checked for a passing reason are checked
+     * again a few times, each time later, and a rate limit is waited out, as in Obtainium.
+     */
+    suspend fun runScheduledCheck(attempt: Int = 0, only: Set<String>? = null) {
         ready()
         if (!_online.value) {
             offline(null)
             return
         }
         _lastRunProblem.value = null
-        installs.runScheduled(_settings.value)
+        val settings = _settings.value
+        val installsNow = settings.autoInstalls &&
+            (!settings.onlyOnUnmetered || device.onUnmeteredNetwork()) &&
+            (!settings.onlyWhileCharging || device.isCharging())
+        val run = installs.runScheduled(settings, installsNow, only)
+        if (run.waited && settings.autoInstalls) Scheduler.waitForInstalls(context, settings)
+        retryDelay(run.failed, attempt, nowMs())?.let { (again, delay) -> Scheduler.retry(context, again, attempt + 1, delay) }
     }
+
+    /** Which of [failed] to check again and how long to wait first, or null for none. */
+    internal fun retryDelay(failed: List<String>, attempt: Int, now: Long): Pair<List<String>, Long>? =
+        Retries.plan(failed.mapNotNull { id -> stored[id]?.state?.checkProblem?.let { id to it } }, attempt, now)
 
     /** Every package the user follows in one repository, so a single index download serves them all. */
     private fun trackedInRepository(repositoryUrl: String): Set<String> = stored.values.asSequence()
@@ -806,8 +833,10 @@ class RealEngine(
         fun shared(context: Context): RealEngine {
             shared?.let { return it }
             val door = ProxyDoor()
-            val engine = RealEngine(context, UrlConnectionHttp(proxy = door::proxy, proxyAnswers = ProxyProbe::answers))
+            val pins = PinChoice()
+            val engine = RealEngine(context, UrlConnectionHttp(proxy = door::proxy, proxyAnswers = ProxyProbe::answers, pinning = pins::on))
             door.follow(engine::proxy)
+            pins.follow { engine.settings.value.pinCertificates }
             shared = engine
             return engine
         }

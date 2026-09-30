@@ -325,6 +325,10 @@ data class Settings(
     val customColor: Int? = null,
     /** How far the colours of a scheme reach from the seed. Android's wallpaper colours are its own. */
     val colorStyle: ColorStyle = ColorStyle.STANDARD,
+    /** GitHub, GitLab and Codeberg must show a certificate from the authority each is known to use. */
+    val pinCertificates: Boolean = false,
+    /** Apps set to update by themselves do; off, they only say so, and each keeps its own choice. */
+    val autoInstalls: Boolean = true,
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */

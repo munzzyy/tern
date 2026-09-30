@@ -172,17 +172,24 @@ private fun BackgroundSection(s: Settings, vm: SettingsViewModel, update: Update
         IntervalRow(s.checkEveryMinutes) { m -> update { it.copy(checkEveryMinutes = m) } }
         val on = s.checkEveryMinutes > 0
         SwitchRow(
-            title = stringResource(R.string.settings_unmetered),
-            summary = stringResource(R.string.settings_unmetered_effect),
-            checked = s.onlyOnUnmetered,
+            title = stringResource(R.string.settings_auto_installs),
+            summary = stringResource(R.string.settings_auto_installs_effect),
+            checked = s.autoInstalls,
             enabled = on,
+            onChange = { v -> update { it.copy(autoInstalls = v) } },
+        )
+        SwitchRow(
+            title = stringResource(R.string.settings_unmetered_installs),
+            summary = stringResource(R.string.settings_unmetered_installs_effect),
+            checked = s.onlyOnUnmetered,
+            enabled = on && s.autoInstalls,
             onChange = { v -> update { it.copy(onlyOnUnmetered = v) } },
         )
         SwitchRow(
-            title = stringResource(R.string.settings_charging),
-            summary = stringResource(R.string.settings_charging_effect),
+            title = stringResource(R.string.settings_charging_installs),
+            summary = stringResource(R.string.settings_charging_installs_effect),
             checked = s.onlyWhileCharging,
-            enabled = on,
+            enabled = on && s.autoInstalls,
             onChange = { v -> update { it.copy(onlyWhileCharging = v) } },
         )
         ActionRow(
@@ -566,6 +573,12 @@ private fun NetworkSection(s: Settings, update: Update, onGetOrbot: () -> Unit, 
         )
         if (s.proxy == ProxyMode.ORBOT) OrbotRow(onGetOrbot, orbotFocus)
         if (s.proxy == ProxyMode.CUSTOM) CustomProxy(s, update)
+        SwitchRow(
+            title = stringResource(R.string.settings_pin_certificates),
+            summary = stringResource(R.string.settings_pin_certificates_effect),
+            checked = s.pinCertificates,
+            onChange = { v -> update { it.copy(pinCertificates = v) } },
+        )
     }
 }
 

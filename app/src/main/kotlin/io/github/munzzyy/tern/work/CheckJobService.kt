@@ -17,7 +17,12 @@ class CheckJobService : JobService() {
             val self = coroutineContext[Job]
             var failed = false
             try {
-                engine.runScheduledCheck()
+                if (params.jobId == Scheduler.RETRY_JOB_ID) {
+                    val apps = params.extras.getStringArray(Scheduler.EXTRA_APPS).orEmpty().toSet()
+                    if (apps.isNotEmpty()) engine.runScheduledCheck(params.extras.getInt(Scheduler.EXTRA_ATTEMPT, 1), apps)
+                } else {
+                    engine.runScheduledCheck()
+                }
             } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) throw e
                 Log.e(TAG, "Background check failed", e)

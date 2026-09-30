@@ -14,6 +14,7 @@ import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.Proxy
 import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 class TooManyRedirectsException(url: String) : IOException("Too many redirects starting at $url")
 
@@ -22,7 +23,8 @@ class LocalRedirectException(url: String) : IOException("Refusing a redirect fro
 
 /**
  * The platform's HttpURLConnection with redirects followed by hand, so every hop is checked for
- * HTTPS and the Authorization header never follows a redirect to another host.
+ * HTTPS and the Authorization header never follows a redirect to another host. While [pinning] is
+ * on, every connection is also held to [Pins].
  * [cleartextHostsForTests] lets tests reach a local server over http; it is empty everywhere else.
  */
 class UrlConnectionHttp(
@@ -32,6 +34,7 @@ class UrlConnectionHttp(
     private val readTimeoutMs: Int = 30_000,
     private val isLocal: (host: String) -> Boolean = Urls::isLocal,
     private val proxyAnswers: (Proxy) -> Boolean = { true },
+    private val pinning: () -> Boolean = { false },
 ) : HttpClient {
     override fun execute(request: HttpRequest): HttpResponse {
         var url = checked(request.url, request.url)
@@ -93,6 +96,7 @@ class UrlConnectionHttp(
 
     private fun open(url: URL, method: String, headers: Map<String, String>, authorization: String?): HttpURLConnection {
         val connection = url.openConnection(proxy()) as HttpURLConnection
+        if (connection is HttpsURLConnection && pinning()) connection.sslSocketFactory = PinningTrustManager.sockets
         connection.instanceFollowRedirects = false
         connection.connectTimeout = connectTimeoutMs
         connection.readTimeout = readTimeoutMs

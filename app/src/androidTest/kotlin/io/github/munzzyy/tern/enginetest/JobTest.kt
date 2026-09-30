@@ -8,6 +8,7 @@ import io.github.munzzyy.tern.work.Scheduler
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -38,8 +39,10 @@ class JobTest {
             assertEquals(6 * 60 * 60 * 1000L, job.intervalMillis)
             assertTrue(job.isPersisted)
             assertTrue(job.isRequireBatteryNotLow)
+            // Wi-Fi only holds back installs; the check itself runs on any network, as in Obtainium.
             @Suppress("DEPRECATION")
-            assertEquals(JobInfo.NETWORK_TYPE_UNMETERED, job.networkType)
+            assertEquals(JobInfo.NETWORK_TYPE_ANY, job.networkType)
+            assertFalse(job.isRequireCharging)
 
             val listingsBefore = h.forge.requests.count { it.url.contains("/releases") }
             val out = shell("cmd jobscheduler run -f -u 0 ${targetContext.packageName} ${Scheduler.JOB_ID}")

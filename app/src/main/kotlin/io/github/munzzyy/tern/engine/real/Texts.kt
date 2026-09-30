@@ -24,6 +24,7 @@ class Texts(context: Context) : ImportTexts {
 
 
     fun cannotWrite() = s(R.string.engine_cannot_write)
+    fun unreadableApp(where: String) = s(R.string.engine_unreadable_app, ltr(where))
     fun proxySilent() = s(R.string.engine_proxy_silent)
     fun downloadFailed(e: IOException) = if (e.isProxySilent()) proxySilent() else downloadFailed(e.message)
     fun downloadFailed(detail: String?) = if (detail.isNullOrBlank()) s(R.string.engine_download_failed_plain) else s(R.string.engine_download_failed, detail)

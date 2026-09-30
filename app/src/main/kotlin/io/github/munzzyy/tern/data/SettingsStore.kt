@@ -69,6 +69,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             customStrength = prefs.getInt("customStrength", d.customStrength).coerceIn(0, 100),
             customColor = if (prefs.contains("customColor")) prefs.getInt("customColor", 0) or OPAQUE else null,
             colorStyle = enumOr(prefs.getString("colorStyle", null), d.colorStyle),
+            pinCertificates = prefs.getBoolean("pinCertificates", d.pinCertificates),
+            autoInstalls = prefs.getBoolean("autoInstalls", d.autoInstalls),
         )
     }
 
@@ -139,6 +141,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putInt("customStrength", s.customStrength.coerceIn(0, 100))
             .also { if (s.customColor == null) it.remove("customColor") else it.putInt("customColor", s.customColor or OPAQUE) }
             .putString("colorStyle", s.colorStyle.name)
+            .putBoolean("pinCertificates", s.pinCertificates)
+            .putBoolean("autoInstalls", s.autoInstalls)
             .commit()
     }
 

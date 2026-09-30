@@ -1,5 +1,6 @@
 # Tern
 
+[![release](https://img.shields.io/github/v/release/munzzyy/tern)](https://github.com/munzzyy/tern/releases/latest)
 [![ci](https://github.com/munzzyy/tern/actions/workflows/ci.yml/badge.svg)](https://github.com/munzzyy/tern/actions/workflows/ci.yml)
 [![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
 

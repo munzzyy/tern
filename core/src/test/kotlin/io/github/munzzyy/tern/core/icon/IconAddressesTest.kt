@@ -74,9 +74,24 @@ class IconAddressesTest {
                 "sj.qq.com" to setOf("pp.myapp.com"),
                 "www.coolapk.com" to setOf("pp.myapp.com"),
                 "www.rustore.ru" to setOf("static.rustore.ru"),
+                "apkpure.com" to setOf("image.winudf.com"),
+                "apkpure.net" to setOf("image.winudf.com"),
+                "www.apkmirror.com" to setOf("downloadr2.apkmirror.com"),
             ),
             IconAddresses.OTHER_HOSTS,
         )
+        assertEquals(
+            mapOf("aptoide.com" to setOf("pool.img.aptoide.com"), "uptodown.com" to setOf("img.utdstc.com")),
+            IconAddresses.OTHER_HOSTS_UNDER,
+        )
+    }
+
+    @Test
+    fun aStoreThatGivesEachAppAHostOfItsOwnKeepsItsImageHost() {
+        val page = "https://signal.en.aptoide.com/app"
+        assertEquals(listOf("https://pool.img.aptoide.com/icon.png"), IconAddresses.accepted(page, listOf("https://pool.img.aptoide.com/icon.png", "https://evil.example/icon.png")))
+        // Only under the store's host: a host that merely ends with its name is not it.
+        assertEquals(emptyList<String>(), IconAddresses.accepted("https://notaptoide.com/app", listOf("https://pool.img.aptoide.com/icon.png")))
     }
 
     @Test

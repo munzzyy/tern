@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">將您的清單和設定儲存到檔案中。權杖絕對不會包含在內，可能包含金鑰的請求標頭也不會。</string>
+    <string name="engine_checksum_github_proxy">GitHub 發行版本摘要，由 hubproxy %1$s 所傳遞</string>
+    <string name="github_proxy_effect_trust">每個前往 GitHub 的請求都會傳送至此主機。它會看到每個請求，並可能更改傳回的內容：發行版本、其摘要與檔案。您擁有的應用程式會保留其憑證限制，但透過它進行的首次安裝會信任 hubproxy 就像信任 GitHub 一樣，且憑證釘選無法觸及它。不會有權杖透過它傳送，因此無法以這種方式追蹤私人專案與 GitHub Actions。</string>
+    <string name="settings_unmetered_checks">僅在 Wi-Fi 下檢查</string>
+    <string name="settings_unmetered_checks_effect">背景檢查會等待 Wi-Fi 或有線網路連線，因此不會使用行動數據。</string>
+    <string name="settings_charging_checks">僅在充電時檢查</string>
+    <string name="settings_charging_checks_effect">背景檢查會等到裝置充電時才進行。</string>
+    <string name="settings_unmetered_installs_wait">將會自行安裝的更新會等待 Wi-Fi 或有線網路連線，與 Obtainium 一樣。</string>
+    <string name="settings_charging_installs_wait">將會自行安裝的更新會等到裝置充電時才進行。</string>
+    <string name="engine_downgrade_not_as_named">來源標示的版本代碼為 %2$d，但此檔案為 %1$d，比已安裝的版本舊。它不會覆寫較新的版本。</string>
+    <string name="settings_allow_downgrades_picked">已經安裝 Let Me Downgrade，因此 Android 可能會將較舊的版本覆寫到較新的版本上。Tern 僅針對您從應用程式歷史紀錄中挑選的發行版本執行此操作，絕不會在背景中或使用「全部更新」時執行。</string>
+    <string name="option_highest_version">採用最高版本，如 Tern 0.1.0 的做法</string>
+    <string name="option_highest_version_effect">提供頁面上版本最高的連結，無論其位置為何，並對從每個連結讀取的版本執行版本模式比對。關閉時會以 Obtainium 的方式讀取頁面：排序後的最後一個連結就是最新版本。</string>
+    <string name="settings_remove_uninstalled_keeps_pins">您在 Tern 之外解除安裝的應用程式也會從清單中移除。已封存的應用程式則會保留。從相同位置再次新增時，應用程式會受到其原有憑證的限制；在 Tern 中將其移除則會忘記該憑證。</string>
+    <string name="link_check_title">現在檢查更新？</string>
+    <string name="link_check_one">一個連結要求 Tern 檢查 %1$s 的更新。會向其來源提出要求，且不會安裝任何東西。</string>
+    <plurals name="link_check_all">
+        <item quantity="other">一個連結要求 Tern 檢查您清單中的 %d 個應用程式是否有更新。會向它們的來源提出要求，且不會安裝任何東西。</item>
+    </plurals>
+    <string name="link_check_confirm">檢查</string>
+    <string name="link_check_not_now">暫不</string>
+    <string name="engine_installer_fell_back">%1$s 尚未準備就緒，因此這次使用了 Android 的安裝程式。</string>
+    <string name="about_track_tern_fdroid_effect">F-Droid 安裝了這個副本，所以 Tern 會追蹤它在那裡的項目：更新是由 F-Droid 建置並檢查的版本，就像 F-Droid 應用程式取得它們一樣。</string>
+    <string name="about_track_tern_github">改為追蹤 GitHub 發行版本</string>
+    <string name="about_track_tern_github_effect">更新在發佈後會立即從 GitHub 取得，早於 F-Droid 建置並檢查它們之前。這會跳過 F-Droid 的檢查。Tern 仍然會檢查每個檔案，並限制它必須帶有其專屬的憑證。</string>
+</resources>

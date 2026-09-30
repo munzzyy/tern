@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Slaat je lijst en instellingen op in een bestand. Tokens gaan er nooit in, en evenmin een request-header die een sleutel zou kunnen bevatten.</string>
+    <string name="engine_checksum_github_proxy">GitHub release-digest, zoals de hubproxy %1$s deze doorgaf</string>
+    <string name="github_proxy_effect_trust">Elk verzoek aan GitHub gaat naar deze host. Deze ziet elk verzoek en kan wijzigen wat er terugkomt: de releases, hun digests en de bestanden. Apps die je hebt blijven gehouden aan hun certificaat, maar een eerste installatie erdoor vertrouwt de hubproxy net zoveel als GitHub, en het vastpinnen van certificaten bereikt deze niet. Er wordt geen token doorheen gestuurd, dus privéprojecten en GitHub Actions kunnen op deze manier niet worden gevolgd.</string>
+    <string name="settings_unmetered_checks">Alleen op wifi controleren</string>
+    <string name="settings_unmetered_checks_effect">Achtergrondcontroles wachten op wifi of een kabel, dus ze gebruiken geen mobiele data.</string>
+    <string name="settings_charging_checks">Alleen controleren tijdens opladen</string>
+    <string name="settings_charging_checks_effect">Achtergrondcontroles wachten totdat het apparaat wordt opgeladen.</string>
+    <string name="settings_unmetered_installs_wait">Een update die vanzelf zou installeren wacht op wifi of een kabel, net als in Obtainium.</string>
+    <string name="settings_charging_installs_wait">Een update die vanzelf zou installeren wacht totdat het apparaat wordt opgeladen.</string>
+    <string name="engine_downgrade_not_as_named">De bron noemde versiecode %2$d, maar dit bestand is %1$d, ouder dan degene die is geïnstalleerd. Het wordt niet over de nieuwere gezet.</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgrade is geïnstalleerd, dus Android kan een oudere versie over een nieuwere zetten. Tern doet dit alleen voor een release die je kiest uit de geschiedenis van een app, nooit op de achtergrond of met Alles updaten.</string>
+    <string name="option_highest_version">De hoogste versie nemen, zoals Tern 0.1.0 deed</string>
+    <string name="option_highest_version_effect">Biedt de link met de hoogste versie op de pagina aan, ongeacht zijn plaats, en voert het versiepatroon uit over de versie die uit elke link wordt gelezen. Uit leest de pagina op de manier zoals Obtainium dat doet: de laatste link in de volgorde is de nieuwste.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Een app die je buiten Tern om verwijdert, verdwijnt ook uit de lijst. Een gearchiveerde app blijft staan. Als een app opnieuw vanaf dezelfde plek wordt toegevoegd, wordt deze gehouden aan het certificaat dat hij had; door hem in Tern te verwijderen, wordt dat vergeten.</string>
+    <string name="link_check_title">Nu op updates controleren?</string>
+    <string name="link_check_one">Een link vroeg Tern om %1$s op updates te controleren. De bron ervan wordt gevraagd, en er wordt niets geïnstalleerd.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">Een link vroeg Tern om de %d app in je lijst op updates te controleren. De bron ervan wordt gevraagd, en er wordt niets geïnstalleerd.</item>
+        <item quantity="other">Een link vroeg Tern om de %d apps in je lijst op updates te controleren. De bronnen ervan worden gevraagd, en er wordt niets geïnstalleerd.</item>
+    </plurals>
+    <string name="link_check_confirm">Controleren</string>
+    <string name="link_check_not_now">Nu niet</string>
+    <string name="engine_installer_fell_back">%1$s was niet klaar, dus het installatieprogramma van Android is voor deze gebruikt.</string>
+    <string name="about_track_tern_fdroid_effect">F-Droid heeft deze kopie geïnstalleerd, dus Tern volgt de vermelding daar: updates zijn de builds die F-Droid heeft gemaakt en gecontroleerd, zoals de F-Droid-app ze krijgt.</string>
+    <string name="about_track_tern_github">In plaats daarvan GitHub-releases volgen</string>
+    <string name="about_track_tern_github_effect">Updates komen van GitHub zodra ze zijn gepubliceerd, voordat F-Droid ze heeft gebouwd en gecontroleerd. Dit slaat de controles van F-Droid over. Tern controleert nog steeds elk bestand en houdt het aan zijn eigen certificaat.</string>
+</resources>

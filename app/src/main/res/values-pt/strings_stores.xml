@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Um por linha, como Nome: valor. Nunca uma palavra-passe, um cookie ou um User-Agent: o Tern diz a todos os sites que é o Tern.</string>
+    <string name="origin_republished_first">%1$s volta a oferecer o que os programadores publicam noutros locais, e não é o programador. Até que a aplicação seja fixada a um certificado, o primeiro ficheiro que o Tern instalar a partir dela decide que certificado cada atualização posterior tem de ter.</string>
+    <string name="origin_republished_pinned">%1$s volta a oferecer o que os programadores publicam noutros locais, e não é o programador. Os seus ficheiros têm de ter o certificado a que esta aplicação está fixada.</string>
+    <string name="origin_store_first">%1$s é uma loja, não o site do próprio programador. Até que a aplicação seja fixada a um certificado, o primeiro ficheiro que o Tern instalar a partir dela decide que certificado cada atualização posterior tem de ter.</string>
+    <string name="origin_store_pinned">%1$s é uma loja, não o site do próprio programador. Os seus ficheiros têm de ter o certificado a que esta aplicação está fixada.</string>
+    <string name="stores_paused">Em pausa. As lojas de terceiros estão desligadas, por isso o Tern não pergunta nada a esta loja. Ligue-as nas Definições para a verificar novamente.</string>
+    <string name="stores_refused_modified">O Tern não lê sites que oferecem aplicações modificadas. Os seus ficheiros são alterados por outra pessoa que não o programador e assinados por quem os alterou.</string>
+    <string name="stores_refused_impersonation">O Tern não consegue ler esta loja sem fingir ser a sua aplicação, por isso não a lê.</string>
+    <string name="stores_checksum_source">%1$s, que não é o programador</string>
+    <string name="stores_off_title">%1$s é uma loja de terceiros</string>
+    <string name="stores_off_body">As lojas de terceiros estão desligadas. Uma loja serve as suas próprias cópias de aplicações, não ficheiros do site do próprio programador, e o Tern lê-a através da interface que a loja fez para a sua própria aplicação ou site. Com elas ligadas, o Tern pergunta a uma loja apenas pelas aplicações que adicionar a partir dela, e até que uma aplicação seja fixada a um certificado, o primeiro ficheiro que o Tern instalar de uma loja decide que certificado as suas atualizações têm de ter.</string>
+    <string name="stores_turn_on">Ligar lojas de terceiros</string>
+    <string name="stores_advice">Ligue as Lojas de terceiros nas Definições para verificar esta aplicação novamente.</string>
+    <string name="stores_status_paused">Em pausa</string>
+    <string name="stores_row_paused">Lojas de terceiros desligadas</string>
+    <string name="stores_setting">Lojas de terceiros</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store e vivo. Servem as suas próprias cópias de aplicações, não ficheiros do site do próprio programador, e o Tern lê-as através das interfaces que fizeram para as suas próprias aplicações e sites. Desligadas, o Tern não pergunta nada a nenhuma delas, uma pesquisa deixa-as de fora e as aplicações delas ficam em pausa.</string>
+    <string name="stores_off_tag">desligadas nas Definições</string>
+    <string name="stores_checksum_matched">O ficheiro corresponde à soma de verificação da loja</string>
+    <string name="stores_explain_checksum_matched">Uma soma de verificação é uma impressão digital do próprio ficheiro. A loja deu uma, e o ficheiro que o Tern transferiu tem a mesma, por isso chegou como a loja o tem. A loja não é o programador, por isso isto não diz nada sobre quem fez o ficheiro. O certificado diz.</string>
+    <string name="stores_import_from_stores">Estas vêm de lojas de terceiros, que servem as suas próprias cópias de aplicações. Até que uma aplicação seja fixada a um certificado, o primeiro ficheiro que o Tern instalar da sua loja decide que certificado as suas atualizações têm de ter.</string>
+    <string name="stores_import_paused">As lojas de terceiros estão desligadas, por isso estas aplicações estão em pausa. O Tern não pergunta nada a essas lojas até que as ligue.</string>
+    <string name="stores_import_names">De lojas de terceiros</string>
+    <string name="share_obtainium_link">Partilhar como ligação do Obtainium</string>
+    <string name="share_obtainium_links">Partilhar como ligações do Obtainium</string>
+</resources>

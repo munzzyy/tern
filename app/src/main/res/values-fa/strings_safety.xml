@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">لیست و تنظیمات شما را در یک فایل ذخیره میکند. توکنها هرگز وارد نمیشوند، و همینطور سرآیند درخواستی که بتواند کلیدی را در خود نگه دارد.</string>
+    <string name="engine_checksum_github_proxy">دایجست انتشار GitHub، همان‌طور که پروکسی %1$s آن را منتقل کرد</string>
+    <string name="github_proxy_effect_trust">هر درخواست به GitHub به این میزبان می‌رود. میزبان هر کدام را می‌بیند و می‌تواند آنچه را که برمی‌گردد تغییر دهد: انتشارها، دایجست‌های آن‌ها و فایل‌ها. برنامه‌هایی که دارید به گواهی خود مقید می‌مانند، اما اولین نصب از طریق آن به اندازه GitHub به پروکسی اعتماد می‌کند، و پین کردن گواهی به آن نمی‌رسد. هیچ توکنی از طریق آن ارسال نمی‌شود، بنابراین پروژه‌های خصوصی و GitHub Actions را نمی‌توان به این روش دنبال کرد.</string>
+    <string name="settings_unmetered_checks">بررسی فقط با Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">بررسیهای پسزمینه منتظر Wi-Fi یا کابل میمانند، بنابراین هیچ داده تلفن همراهی استفاده نمیکنند.</string>
+    <string name="settings_charging_checks">بررسی فقط هنگام شارژ</string>
+    <string name="settings_charging_checks_effect">بررسیهای پسزمینه تا زمانی که دستگاه در حال شارژ است منتظر میمانند.</string>
+    <string name="settings_unmetered_installs_wait">بهروزرسانیای که خودش نصب میشود منتظر Wi-Fi یا کابل میماند، مانند Obtainium.</string>
+    <string name="settings_charging_installs_wait">بهروزرسانیای که خودش نصب میشود تا زمانی که دستگاه در حال شارژ است منتظر میماند.</string>
+    <string name="engine_downgrade_not_as_named">منبع، کد نسخه را %2$d نامید، اما این فایل %1$d است، قدیمیتر از نسخه نصبشده. این فایل روی نسخه جدیدتر نصب نمیشود.</string>
+    <string name="settings_allow_downgrades_picked">برنامه Let Me Downgrade نصب است، بنابراین Android ممکن است یک نسخه قدیمیتر را روی نسخه جدیدتر قرار دهد. Tern این کار را فقط برای انتشاری انجام میدهد که شما از تاریخچه یک برنامه انتخاب میکنید، هرگز در پسزمینه یا با «بهروزرسانی همه» انجام نمیدهد.</string>
+    <string name="option_highest_version">دریافت بالاترین نسخه، همانطور که Tern 0.1.0 انجام میداد</string>
+    <string name="option_highest_version_effect">پیوند دارای بالاترین نسخه در صفحه را ارائه میدهد، در هر کجای صفحه که باشد، و الگوی نسخه را روی نسخه خواندهشده از هر پیوند اجرا میکند. حالت خاموش، صفحه را همانطور که Obtainium میخواند، بررسی میکند: آخرین پیوند به ترتیب، جدیدترین است.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">برنامهای که بیرون از Tern حذف میکنید، از لیست هم خارج میشود. برنامه بایگانیشده باقی میماند. اگر برنامه دوباره از همان مکان اضافه شود، به گواهیای که داشته مقید میماند؛ حذف آن در Tern باعث فراموشی این موضوع میشود.</string>
+    <string name="link_check_title">اکنون بهروزرسانی‌ها بررسی شوند؟</string>
+    <string name="link_check_one">پیوندی از Tern خواست تا بهروزرسانیهای %1$s را بررسی کند. از منبع آن پرسیده میشود، و هیچ چیزی نصب نمیشود.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">پیوندی از Tern خواست تا بهروزرسانیهای %d برنامه در لیست شما را بررسی کند. از منبع آن پرسیده میشود، و هیچ چیزی نصب نمیشود.</item>
+        <item quantity="other">پیوندی از Tern خواست تا بهروزرسانیهای %d برنامه در لیست شما را بررسی کند. از منابع آنها پرسیده میشود، و هیچ چیزی نصب نمیشود.</item>
+    </plurals>
+    <string name="link_check_confirm">بررسی</string>
+    <string name="link_check_not_now">فعلاً نه</string>
+    <string name="engine_installer_fell_back">%1$s آماده نبود، بنابراین از نصبکننده Android برای این مورد استفاده شد.</string>
+    <string name="about_track_tern_fdroid_effect">این نسخه را F-Droid نصب کرده است، بنابراین Tern مدخل آن را در آنجا دنبال میکند: بهروزرسانیها همان نسخههایی هستند که F-Droid ساخته و بررسی کرده است، همانطور که برنامه F-Droid آنها را دریافت میکند.</string>
+    <string name="about_track_tern_github">در عوض، انتشارهای GitHub را دنبال کن</string>
+    <string name="about_track_tern_github_effect">بهروزرسانیها به محض انتشار از GitHub میآیند، پیش از آنکه F-Droid آنها را بسازد و بررسی کند. این کار بررسیهای F-Droid را نادیده میگیرد. Tern همچنان هر فایل را بررسی کرده و آن را به گواهی خودش مقید نگه میدارد.</string>
+</resources>

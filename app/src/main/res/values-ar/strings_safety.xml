@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">يحفظ قائمتك وإعداداتك في ملف. لا تُدرج الرموز أبدًا، ولا ترويسة الطلب التي قد تحمل مفتاحًا.</string>
+    <string name="engine_checksum_github_proxy">خلاصة إصدار GitHub، كما مررها hubproxy %1$s</string>
+    <string name="github_proxy_effect_trust">يذهب كل طلب إلى GitHub إلى هذا المضيف. إنه يرى كل طلب ويمكنه تغيير ما يعود: الإصدارات وخلاصاتها والملفات. تبقى التطبيقات التي لديك ملزمة بشهادتها، لكن أول تثبيت من خلاله يثق في hubproxy بقدر ما يثق في GitHub، ولا يصله تثبيت الشهادة. لا يُرسل أي رمز عبره، لذلك لا يمكن متابعة المشاريع الخاصة و GitHub Actions بهذه الطريقة.</string>
+    <string name="settings_unmetered_checks">الفحص على Wi-Fi فقط</string>
+    <string name="settings_unmetered_checks_effect">تنتظر الفحوصات في الخلفية اتصال Wi-Fi أو كابلًا، لذلك لا تستخدم أي بيانات جوال.</string>
+    <string name="settings_charging_checks">الفحص أثناء الشحن فقط</string>
+    <string name="settings_charging_checks_effect">تنتظر الفحوصات في الخلفية حتى يتم شحن الجهاز.</string>
+    <string name="settings_unmetered_installs_wait">ينتظر التحديث الذي من شأنه أن يثبّت نفسه اتصال Wi-Fi أو كابلًا، كما هو الحال في Obtainium.</string>
+    <string name="settings_charging_installs_wait">ينتظر التحديث الذي من شأنه أن يثبّت نفسه حتى يتم شحن الجهاز.</string>
+    <string name="engine_downgrade_not_as_named">سمى المصدر رمز الإصدار %2$d، لكن هذا الملف هو %1$d، أقدم من المثبت. لا يُوضع فوق الإصدار الأحدث.</string>
+    <string name="settings_allow_downgrades_picked">تطبيق Let Me Downgrade مثبت، لذلك قد يضع Android إصدارًا أقدم فوق إصدار أحدث. يفعل Tern ذلك فقط لإصدار تختاره من سجل التطبيق، أبدًا ليس في الخلفية أو مع خيار تحديث الكل.</string>
+    <string name="option_highest_version">أخذ أعلى إصدار، كما فعل Tern 0.1.0</string>
+    <string name="option_highest_version_effect">يعرض الرابط الذي يحمل أعلى إصدار في الصفحة، أيًا كان مكانه، ويُجري نمط الإصدار على الإصدار المقروء من كل رابط. عند الإيقاف يقرأ Tern الصفحة كما يفعل Obtainium: الرابط الأخير بالترتيب هو الأحدث.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">التطبيق الذي تلغي تثبيته خارج Tern يغادر القائمة أيضًا. يبقى التطبيق المؤرشف. عند إضافته مرة أخرى من نفس المكان، يُلزم التطبيق بالشهادة التي كانت لديه؛ إزالته في Tern ينسى ذلك.</string>
+    <string name="link_check_title">فحص التحديثات الآن؟</string>
+    <string name="link_check_one">طلب رابط من Tern فحص التحديثات لتطبيق %1$s. يُسأل مصدره، ولا يتم تثبيت أي شيء.</string>
+    <plurals name="link_check_all">
+        <item quantity="zero">طلب رابط من Tern فحص التحديثات لـ %d تطبيق في قائمتك. تُسأل مصادرها، ولا يتم تثبيت أي شيء.</item>
+        <item quantity="one">طلب رابط من Tern فحص التحديثات لـ %d تطبيق في قائمتك. يُسأل مصدره، ولا يتم تثبيت أي شيء.</item>
+        <item quantity="two">طلب رابط من Tern فحص التحديثات لـ %d تطبيق في قائمتك. تُسأل مصادرهما، ولا يتم تثبيت أي شيء.</item>
+        <item quantity="few">طلب رابط من Tern فحص التحديثات لـ %d تطبيقات في قائمتك. تُسأل مصادرها، ولا يتم تثبيت أي شيء.</item>
+        <item quantity="many">طلب رابط من Tern فحص التحديثات لـ %d تطبيقًا في قائمتك. تُسأل مصادرها، ولا يتم تثبيت أي شيء.</item>
+        <item quantity="other">طلب رابط من Tern فحص التحديثات لـ %d تطبيق في قائمتك. تُسأل مصادرها، ولا يتم تثبيت أي شيء.</item>
+    </plurals>
+    <string name="link_check_confirm">فحص</string>
+    <string name="link_check_not_now">ليس الآن</string>
+    <string name="engine_installer_fell_back">لم يكن %1$s جاهزًا، لذلك تم استخدام أداة تثبيت Android لهذا الملف.</string>
+    <string name="about_track_tern_fdroid_effect">قام F-Droid بتثبيت هذه النسخة، لذلك يتابع Tern مدخله هناك: التحديثات هي النسخ التي صنعها وفحصها F-Droid، كما يحصل عليها تطبيق F-Droid.</string>
+    <string name="about_track_tern_github">متابعة إصدارات GitHub بدلاً من ذلك</string>
+    <string name="about_track_tern_github_effect">تأتي التحديثات من GitHub بمجرد نشرها، قبل أن يقوم F-Droid ببنائها وفحصها. يتخطى هذا فحوصات F-Droid. لا يزال Tern يفحص كل ملف ويُلزمه بشهادته الخاصة.</string>
+</resources>

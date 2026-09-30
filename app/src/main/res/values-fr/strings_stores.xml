@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Un par ligne, sous la forme Nom: valeur. Jamais de mot de passe, de cookie ou de User-Agent : Tern indique à chaque site qu\'il est Tern.</string>
+    <string name="origin_republished_first">%1$s propose à nouveau ce que les développeurs publient ailleurs, et n\'est pas le développeur. Tant que l\'appli n\'est pas épinglée à un certificat, le premier fichier que Tern installe à partir d\'elle décide quel certificat chaque mise à jour ultérieure doit porter.</string>
+    <string name="origin_republished_pinned">%1$s propose à nouveau ce que les développeurs publient ailleurs, et n\'est pas le développeur. Ses fichiers doivent porter le certificat auquel cette appli est tenue.</string>
+    <string name="origin_store_first">%1$s est une boutique, pas le propre site du développeur. Tant que l\'appli n\'est pas épinglée à un certificat, le premier fichier que Tern installe à partir d\'elle décide quel certificat chaque mise à jour ultérieure doit porter.</string>
+    <string name="origin_store_pinned">%1$s est une boutique, pas le propre site du développeur. Ses fichiers doivent porter le certificat auquel cette appli est tenue.</string>
+    <string name="stores_paused">En pause. Les boutiques tierces sont désactivées, Tern ne demande donc rien à cette boutique. Activez-les dans les paramètres pour la vérifier à nouveau.</string>
+    <string name="stores_refused_modified">Tern ne lit pas les sites qui proposent des applis modifiées. Leurs fichiers sont modifiés par quelqu\'un d\'autre que le développeur et signés par celui qui les a modifiés.</string>
+    <string name="stores_refused_impersonation">Tern ne peut pas lire cette boutique sans se faire passer pour son appli, il ne la lit donc pas.</string>
+    <string name="stores_checksum_source">%1$s, qui n\'est pas le développeur</string>
+    <string name="stores_off_title">%1$s est une boutique tierce</string>
+    <string name="stores_off_body">Les boutiques tierces sont désactivées. Une boutique sert ses propres copies d\'applis, pas les fichiers du propre site du développeur, et Tern la lit via l\'interface que la boutique a créée pour sa propre appli ou son site web. Lorsqu\'elles sont activées, Tern interroge une boutique uniquement pour les applis que vous en ajoutez, et tant qu\'une appli n\'est pas épinglée à un certificat, le premier fichier que Tern installe depuis une boutique décide quel certificat ses mises à jour doivent porter.</string>
+    <string name="stores_turn_on">Activer les boutiques tierces</string>
+    <string name="stores_advice">Activez les boutiques tierces dans les paramètres pour vérifier cette appli à nouveau.</string>
+    <string name="stores_status_paused">En pause</string>
+    <string name="stores_row_paused">Boutiques tierces désactivées</string>
+    <string name="stores_setting">Boutiques tierces</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, le Galaxy Store et vivo. Ils servent leurs propres copies d\'applis, pas les fichiers du propre site du développeur, et Tern les lit via les interfaces qu\'ils ont créées pour leurs propres applis et sites web. Désactivé, Tern ne leur demande rien, une recherche les ignore et les applis qui en proviennent sont en pause.</string>
+    <string name="stores_off_tag">désactivé dans les paramètres</string>
+    <string name="stores_checksum_matched">Le fichier correspond à la somme de contrôle de la boutique</string>
+    <string name="stores_explain_checksum_matched">Une somme de contrôle est une empreinte du fichier lui-même. La boutique en a fourni une, et le fichier que Tern a téléchargé a la même, il est donc arrivé tel que la boutique l\'a. La boutique n\'est pas le développeur, cela ne dit donc rien sur qui a créé le fichier. Le certificat le dit.</string>
+    <string name="stores_import_from_stores">Celles-ci proviennent de boutiques tierces, qui servent leurs propres copies d\'applis. Tant qu\'une appli n\'est pas épinglée à un certificat, le premier fichier que Tern installe depuis sa boutique décide quel certificat ses mises à jour doivent porter.</string>
+    <string name="stores_import_paused">Les boutiques tierces sont désactivées, ces applis sont donc en pause. Tern ne demande rien à ces boutiques jusqu\'à ce que vous les activiez.</string>
+    <string name="stores_import_names">Depuis des boutiques tierces</string>
+    <string name="share_obtainium_link">Partager comme lien Obtainium</string>
+    <string name="share_obtainium_links">Partager comme liens Obtainium</string>
+</resources>

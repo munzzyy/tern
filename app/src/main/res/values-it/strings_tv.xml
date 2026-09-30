@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="interval_turn_off">Disattiva i controlli in background</string>
+    <string name="interval_turn_on">Attiva i controlli in background</string>
+</resources>

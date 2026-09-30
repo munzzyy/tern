@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Uno por línea, como Nombre: valor. Nunca una contraseña, una cookie o un User-Agent: Tern le dice a cada sitio que es Tern.</string>
+    <string name="origin_republished_first">%1$s vuelve a ofrecer lo que los desarrolladores publican en otros lugares, y no es el desarrollador. Hasta que la aplicación se fije a un certificado, el primer archivo que Tern instale desde allí decide qué certificado debe llevar cada actualización posterior.</string>
+    <string name="origin_republished_pinned">%1$s vuelve a ofrecer lo que los desarrolladores publican en otros lugares, y no es el desarrollador. Sus archivos deben llevar el certificado que se le exige a esta aplicación.</string>
+    <string name="origin_store_first">%1$s es una tienda, no el propio sitio del desarrollador. Hasta que la aplicación se fije a un certificado, el primer archivo que Tern instale desde allí decide qué certificado debe llevar cada actualización posterior.</string>
+    <string name="origin_store_pinned">%1$s es una tienda, no el propio sitio del desarrollador. Sus archivos deben llevar el certificado que se le exige a esta aplicación.</string>
+    <string name="stores_paused">En pausa. Las tiendas de terceros están desactivadas, así que Tern no le pregunta nada a esta tienda. Actívalas en Ajustes para volver a comprobarla.</string>
+    <string name="stores_refused_modified">Tern no lee sitios que ofrecen aplicaciones modificadas. Sus archivos están cambiados por alguien distinto del desarrollador y firmados por quien los cambió.</string>
+    <string name="stores_refused_impersonation">Tern no puede leer esta tienda sin fingir ser su aplicación, así que no la lee.</string>
+    <string name="stores_checksum_source">%1$s, que no es el desarrollador</string>
+    <string name="stores_off_title">%1$s es una tienda de terceros</string>
+    <string name="stores_off_body">Las tiendas de terceros están desactivadas. Una tienda sirve sus propias copias de aplicaciones, no archivos del propio sitio del desarrollador, y Tern la lee a través de la interfaz que la tienda hizo para su propia aplicación o sitio web. Con ellas activadas, Tern solo le pregunta a una tienda por las aplicaciones que añades de ella, y hasta que una aplicación se fije a un certificado, el primer archivo que Tern instale desde una tienda decide qué certificado deben llevar sus actualizaciones.</string>
+    <string name="stores_turn_on">Activar tiendas de terceros</string>
+    <string name="stores_advice">Activa las Tiendas de terceros en Ajustes para volver a comprobar esta aplicación.</string>
+    <string name="stores_status_paused">En pausa</string>
+    <string name="stores_row_paused">Tiendas de terceros desactivadas</string>
+    <string name="stores_setting">Tiendas de terceros</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, el Galaxy Store y vivo. Sirven sus propias copias de aplicaciones, no archivos del propio sitio del desarrollador, y Tern las lee a través de las interfaces que hicieron para sus propias aplicaciones y sitios web. Desactivadas, Tern no le pregunta nada a ninguna, una búsqueda las excluye y las aplicaciones de ellas están en pausa.</string>
+    <string name="stores_off_tag">desactivadas en Ajustes</string>
+    <string name="stores_checksum_matched">El archivo coincide con la suma de comprobación de la tienda</string>
+    <string name="stores_explain_checksum_matched">Una suma de comprobación es una huella digital del propio archivo. La tienda dio una, y el archivo que Tern descargó tiene la misma, así que llegó tal y como lo tiene la tienda. La tienda no es el desarrollador, así que esto no dice nada sobre quién hizo el archivo. El certificado sí.</string>
+    <string name="stores_import_from_stores">Estas vienen de tiendas de terceros, que sirven sus propias copias de aplicaciones. Hasta que una aplicación se fije a un certificado, el primer archivo que Tern instale desde su tienda decide qué certificado deben llevar sus actualizaciones.</string>
+    <string name="stores_import_paused">Las tiendas de terceros están desactivadas, así que estas aplicaciones están en pausa. Tern no le pregunta nada a esas tiendas hasta que las actives.</string>
+    <string name="stores_import_names">De tiendas de terceros</string>
+    <string name="share_obtainium_link">Compartir como enlace de Obtainium</string>
+    <string name="share_obtainium_links">Compartir como enlaces de Obtainium</string>
+</resources>

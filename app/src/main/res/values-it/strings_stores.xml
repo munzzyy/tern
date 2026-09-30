@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Uno per riga, come Nome: valore. Mai una password, un cookie o un User-Agent: Tern dice a ogni sito che è Tern.</string>
+    <string name="origin_republished_first">%1$s offre di nuovo ciò che gli sviluppatori pubblicano altrove, e non è lo sviluppatore. Finché l\'app non è fissata a un certificato, il primo file che Tern installa da qui decide quale certificato dovrà avere ogni aggiornamento successivo.</string>
+    <string name="origin_republished_pinned">%1$s offre di nuovo ciò che gli sviluppatori pubblicano altrove, e non è lo sviluppatore. I suoi file devono avere il certificato a cui è fissata questa app.</string>
+    <string name="origin_store_first">%1$s è uno store, non il sito dello sviluppatore. Finché l\'app non è fissata a un certificato, il primo file che Tern installa da qui decide quale certificato dovrà avere ogni aggiornamento successivo.</string>
+    <string name="origin_store_pinned">%1$s è uno store, non il sito dello sviluppatore. I suoi file devono avere il certificato a cui è fissata questa app.</string>
+    <string name="stores_paused">In pausa. Gli store di terze parti sono spenti, quindi Tern non chiede nulla a questo store. Attivali in Impostazioni per controllarlo di nuovo.</string>
+    <string name="stores_refused_modified">Tern non legge i siti che offrono app modificate. I loro file sono modificati da qualcuno diverso dallo sviluppatore e firmati da chi li ha modificati.</string>
+    <string name="stores_refused_impersonation">Tern non può leggere questo store senza fingere di essere la sua app, quindi non lo legge.</string>
+    <string name="stores_checksum_source">%1$s, che non è lo sviluppatore</string>
+    <string name="stores_off_title">%1$s è uno store di terze parti</string>
+    <string name="stores_off_body">Gli store di terze parti sono spenti. Uno store fornisce le proprie copie delle app, non i file dal sito dello sviluppatore, e Tern lo legge tramite l\'interfaccia che lo store ha creato per la propria app o sito web. Se attivati, Tern chiede a uno store solo le app che aggiungi da lì, e finché un\'app non è fissata a un certificato, il primo file che Tern installa da uno store decide quale certificato dovranno avere i suoi aggiornamenti.</string>
+    <string name="stores_turn_on">Attiva gli store di terze parti</string>
+    <string name="stores_advice">Attiva Store di terze parti in Impostazioni per controllare di nuovo questa app.</string>
+    <string name="stores_status_paused">In pausa</string>
+    <string name="stores_row_paused">Gli store di terze parti sono spenti</string>
+    <string name="stores_setting">Store di terze parti</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, il Galaxy Store e vivo. Forniscono le proprie copie delle app, non i file dal sito dello sviluppatore, e Tern li legge tramite le interfacce che hanno creato per le proprie app e siti web. Da spenti, Tern non chiede nulla a nessuno di loro, una ricerca li esclude e le app provenienti da loro sono in pausa.</string>
+    <string name="stores_off_tag">spenti in Impostazioni</string>
+    <string name="stores_checksum_matched">Il file corrisponde al checksum dello store</string>
+    <string name="stores_explain_checksum_matched">Un checksum è un\'impronta digitale del file stesso. Lo store ne ha fornito uno e il file che Tern ha scaricato ha lo stesso, quindi è arrivato come lo ha lo store. Lo store non è lo sviluppatore, quindi questo non dice nulla su chi ha creato il file. Il certificato sì.</string>
+    <string name="stores_import_from_stores">Queste provengono da store di terze parti, che forniscono le proprie copie delle app. Finché un\'app non è fissata a un certificato, il primo file che Tern installa dal suo store decide quale certificato dovranno avere i suoi aggiornamenti.</string>
+    <string name="stores_import_paused">Gli store di terze parti sono spenti, quindi queste app sono in pausa. Tern non chiede nulla a quegli store finché non li attivi.</string>
+    <string name="stores_import_names">Da store di terze parti</string>
+    <string name="share_obtainium_link">Condividi come link Obtainium</string>
+    <string name="share_obtainium_links">Condividi come link Obtainium</string>
+</resources>

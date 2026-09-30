@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">每行一個，格式為 Name: value。絕不可包含密碼、cookie 或 User-Agent：Tern 會向每個網站表明它是 Tern。</string>
+    <string name="origin_republished_first">%1$s 再次提供開發者在其他地方發佈的內容，且它並非開發者。在應用程式釘選到憑證之前，Tern 從它安裝的第一個檔案將決定之後每個更新必須帶有哪個憑證。</string>
+    <string name="origin_republished_pinned">%1$s 再次提供開發者在其他地方發佈的內容，且它並非開發者。它的檔案必須帶有釘選於此應用程式的憑證。</string>
+    <string name="origin_store_first">%1$s 是一家商店，不是開發者自己的網站。在應用程式釘選到憑證之前，Tern 從它安裝的第一個檔案將決定之後每個更新必須帶有哪個憑證。</string>
+    <string name="origin_store_pinned">%1$s 是一家商店，不是開發者自己的網站。它的檔案必須帶有釘選於此應用程式的憑證。</string>
+    <string name="stores_paused">已暫停。第三方商店已關閉，因此 Tern 不會向此商店提出任何要求。請在設定中開啟它們以再次檢查。</string>
+    <string name="stores_refused_modified">Tern 不會讀取提供經過修改之應用程式的網站。它們的檔案是由開發者以外的人所變更，並由變更者簽署。</string>
+    <string name="stores_refused_impersonation">Tern 必須偽裝成該商店的應用程式才能讀取此商店，因此 Tern 不會讀取它。</string>
+    <string name="stores_checksum_source">%1$s，它不是開發者</string>
+    <string name="stores_off_title">%1$s 是第三方商店</string>
+    <string name="stores_off_body">第三方商店已關閉。商店提供他們自己的應用程式副本，而非來自開發者自己網站的檔案，而 Tern 透過該商店為其自身應用程式或網站製作的介面來讀取它。開啟後，Tern 只會向商店請求您從該處新增的應用程式，且在應用程式釘選到憑證之前，Tern 從商店安裝的第一個檔案將決定其更新必須帶有哪個憑證。</string>
+    <string name="stores_turn_on">開啟第三方商店</string>
+    <string name="stores_advice">請在設定中開啟第三方商店，以再次檢查此應用程式。</string>
+    <string name="stores_status_paused">已暫停</string>
+    <string name="stores_row_paused">第三方商店已關閉</string>
+    <string name="stores_setting">第三方商店</string>
+    <string name="stores_setting_effect">APKPure、Aptoide、APKCombo、APKMirror、Tencent、Huawei AppGallery、Galaxy Store 和 vivo。它們提供自己的應用程式副本，而非來自開發者自己網站的檔案，而 Tern 透過它們為其自身應用程式和網站製作的介面來讀取它們。關閉時，Tern 不會向它們提出任何要求，搜尋會略過它們，且來自它們的應用程式會被暫停。</string>
+    <string name="stores_off_tag">已在設定中關閉</string>
+    <string name="stores_checksum_matched">檔案符合商店的檢查碼</string>
+    <string name="stores_explain_checksum_matched">檢查碼是檔案本身的指紋。商店提供了一個，而 Tern 下載的檔案與其相同，因此它和商店擁有的檔案一樣。商店不是開發者，所以這無法說明是誰製作了這個檔案。憑證才可以。</string>
+    <string name="stores_import_from_stores">這些來自第三方商店，它們提供自己的應用程式副本。在應用程式釘選到憑證之前，Tern 從其商店安裝的第一個檔案將決定其更新必須帶有哪個憑證。</string>
+    <string name="stores_import_paused">第三方商店已關閉，因此這些應用程式已暫停。在您開啟它們之前，Tern 不會向這些商店提出任何要求。</string>
+    <string name="stores_import_names">來自第三方商店</string>
+    <string name="share_obtainium_link">分享為 Obtainium 連結</string>
+    <string name="share_obtainium_links">分享為 Obtainium 連結</string>
+</resources>

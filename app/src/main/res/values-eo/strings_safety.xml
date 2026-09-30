@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Konservas vian liston kaj agordojn en dosiero. Ĵetonoj neniam eniras, kaj same ne peta kaplinio kiu povus enhavi ŝlosilon.</string>
+    <string name="engine_checksum_github_proxy">Haketaĵo de GitHub-eldono, kiel la hubproxy %1$s transdonis ĝin</string>
+    <string name="github_proxy_effect_trust">Ĉiu peto al GitHub iras al ĉi tiu gastiganto. Ĝi vidas ĉiun kaj povas ŝanĝi kio revenas: la eldonojn, iliajn haketaĵojn kaj la dosierojn. Aplikaĵoj kiujn vi havas restas tenataj al sia atestilo, sed unua instalo per ĝi fidas la hubproxy tiom kiom GitHub, kaj alpinglado de atestiloj ne atingas ĝin. Neniu ĵetono estas sendita per ĝi, do privataj projektoj kaj GitHub Actions ne povas esti sekvataj ĉi tiel.</string>
+    <string name="settings_unmetered_checks">Kontroli nur sur Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">Fonaj kontroloj atendas Wi-Fi aŭ kablon, do ili uzas neniujn poŝtelefonajn datumojn.</string>
+    <string name="settings_charging_checks">Kontroli nur dum ŝargado</string>
+    <string name="settings_charging_checks_effect">Fonaj kontroloj atendas ĝis la aparato ŝargas.</string>
+    <string name="settings_unmetered_installs_wait">Ĝisdatigo kiu instaliĝus mem atendas Wi-Fi aŭ kablon, kiel en Obtainium.</string>
+    <string name="settings_charging_installs_wait">Ĝisdatigo kiu instaliĝus mem atendas ĝis la aparato ŝargas.</string>
+    <string name="engine_downgrade_not_as_named">La fonto nomis versiokodon %2$d, sed ĉi tiu dosiero estas %1$d, pli malnova ol la instalita. Ĝi ne estas metita super la pli novan.</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgrade estas instalita, do Android eble metos pli malnovan version super pli novan. Tern faras tion nur por eldono kiun vi elektas el la historio de aplikaĵo, neniam en la fono aŭ per Ĝisdatigi ĉion.</string>
+    <string name="option_highest_version">Preni la plej altan version, kiel Tern 0.1.0 faris</string>
+    <string name="option_highest_version_effect">Ofertas la ligilon kun la plej alta versio sur la paĝo, negrave ĝia loko, kaj rulas la versio-ŝablonon sur la versio legita de ĉiu ligilo. Malŝaltite legas la paĝon kiel Obtainium faras: la lasta ligilo en la ordo estas la plej nova.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Aplikaĵo kiun vi malinstalas ekster Tern forlasas ankaŭ la liston. Arkivita aplikaĵo restas. Aldonita denove de la sama loko, aplikaĵo estas tenata al la atestilo kiun ĝi havis; forigi ĝin en Tern forgesas tion.</string>
+    <string name="link_check_title">Kontroli por ĝisdatigoj nun?</string>
+    <string name="link_check_one">Ligilo petis al Tern kontroli %1$s por ĝisdatigoj. Ĝia fonto estas demandita, kaj nenio estas instalita.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">Ligilo petis al Tern kontroli la %d aplikaĵon en via listo por ĝisdatigoj. Ĝia fonto estas demandita, kaj nenio estas instalita.</item>
+        <item quantity="other">Ligilo petis al Tern kontroli la %d aplikaĵojn en via listo por ĝisdatigoj. Iliaj fontoj estas demanditaj, kaj nenio estas instalita.</item>
+    </plurals>
+    <string name="link_check_confirm">Kontroli</string>
+    <string name="link_check_not_now">Ne nun</string>
+    <string name="engine_installer_fell_back">%1$s ne estis preta, do la instalilo de Android estis uzita por ĉi tiu.</string>
+    <string name="about_track_tern_fdroid_effect">F-Droid instalis ĉi tiun kopion, do Tern sekvas ĝian enskribon tie: ĝisdatigoj estas la kompiloj kiujn F-Droid konstruis kaj kontrolis, kiel la F-Droid-aplikaĵo ricevas ilin.</string>
+    <string name="about_track_tern_github">Sekvi GitHub-eldonojn anstataŭe</string>
+    <string name="about_track_tern_github_effect">Ĝisdatigoj venas de GitHub tuj kiam ili estas publikigitaj, antaŭ ol F-Droid konstruis kaj kontrolis ilin. Ĉi tio pretersaltas la kontrolojn de F-Droid. Tern ankoraŭ kontrolas ĉiun dosieron kaj tenas ĝin al sia propra atestilo.</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="interval_turn_off">Tắt kiểm tra trong nền</string>
+    <string name="interval_turn_on">Bật kiểm tra trong nền</string>
+</resources>

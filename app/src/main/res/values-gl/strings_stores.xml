@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Unha por liña, como Nome: valor. Nunca un contrasinal, unha cookie ou un User-Agent: Tern dille a cada sitio que é Tern.</string>
+    <string name="origin_republished_first">%1$s volve ofrecer o que os desenvolvedores publican noutros lugares, e non é o desenvolvedor. Ata que a aplicación se fixa a un certificado, o primeiro ficheiro que Tern instala dela decide que certificado debe levar cada actualización posterior.</string>
+    <string name="origin_republished_pinned">%1$s volve ofrecer o que os desenvolvedores publican noutros lugares, e non é o desenvolvedor. Os seus ficheiros deben levar o certificado ao que esta aplicación está fixada.</string>
+    <string name="origin_store_first">%1$s é unha tenda, non o propio sitio do desenvolvedor. Ata que a aplicación se fixa a un certificado, o primeiro ficheiro que Tern instala dela decide que certificado debe levar cada actualización posterior.</string>
+    <string name="origin_store_pinned">%1$s é unha tenda, non o propio sitio do desenvolvedor. Os seus ficheiros deben levar o certificado ao que esta aplicación está fixada.</string>
+    <string name="stores_paused">En pausa. As tendas de terceiros están desactivadas, polo que Tern non lle pregunta nada a esta tenda. Actívaas nos Axustes para comprobalo de novo.</string>
+    <string name="stores_refused_modified">Tern non le sitios que ofrecen aplicacións modificadas. Os seus ficheiros foron cambiados por alguén distinto ao desenvolvedor e asinados por quen os cambiou.</string>
+    <string name="stores_refused_impersonation">Tern non pode ler esta tenda sen finxir ser a súa aplicación, polo que non a le.</string>
+    <string name="stores_checksum_source">%1$s, que non é o desenvolvedor</string>
+    <string name="stores_off_title">%1$s é unha tenda de terceiros</string>
+    <string name="stores_off_body">As tendas de terceiros están desactivadas. Unha tenda serve as súas propias copias de aplicacións, non ficheiros do propio sitio do desenvolvedor, e Tern a le a través da interface que a tenda fixo para a súa propia aplicación ou sitio web. Con elas activadas, Tern pídelle a unha tenda só as aplicacións que engades dela, e ata que unha aplicación se fixa a un certificado, o primeiro ficheiro que Tern instala dunha tenda decide que certificado deben levar as súas actualizacións.</string>
+    <string name="stores_turn_on">Activar tendas de terceiros</string>
+    <string name="stores_advice">Activa Tendas de terceiros nos Axustes para comprobar esta aplicación de novo.</string>
+    <string name="stores_status_paused">En pausa</string>
+    <string name="stores_row_paused">As tendas de terceiros están desactivadas</string>
+    <string name="stores_setting">Tendas de terceiros</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store e vivo. Serven as súas propias copias de aplicacións, non ficheiros do propio sitio do desenvolvedor, e Tern as le a través das interfaces que fixeron para as súas propias aplicacións e sitios web. Desactivadas, Tern non lles pregunta nada, unha busca as omite e as aplicacións delas páusanse.</string>
+    <string name="stores_off_tag">desactivadas nos Axustes</string>
+    <string name="stores_checksum_matched">O ficheiro coincide coa suma de comprobación da tenda</string>
+    <string name="stores_explain_checksum_matched">Unha suma de comprobación é unha pegada dixital do propio ficheiro. A tenda deu unha e o ficheiro que Tern descargou ten a mesma, polo que chegou tal e como o ten a tenda. A tenda non é o desenvolvedor, así que isto non di nada sobre quen fixo o ficheiro. O certificado si.</string>
+    <string name="stores_import_from_stores">Estas veñen de tendas de terceiros, que serven as súas propias copias de aplicacións. Ata que unha aplicación se fixa a un certificado, o primeiro ficheiro que Tern instala da súa tenda decide que certificado deben levar as súas actualizacións.</string>
+    <string name="stores_import_paused">As tendas de terceiros están desactivadas, polo que estas aplicacións están en pausa. Tern non lles pregunta nada a esas tendas ata que as actives.</string>
+    <string name="stores_import_names">Desde tendas de terceiros</string>
+    <string name="share_obtainium_link">Compartir como ligazón de Obtainium</string>
+    <string name="share_obtainium_links">Compartir como ligazóns de Obtainium</string>
+</resources>

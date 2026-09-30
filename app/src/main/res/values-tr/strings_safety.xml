@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Listenizi ve ayarlarınızı bir dosyaya kaydeder. Belirteçler asla dahil edilmez, anahtar tutabilecek bir istek başlığı da öyle.</string>
+    <string name="engine_checksum_github_proxy">%1$s hubproxy\'sinin ilettiği şekliyle GitHub sürüm özeti</string>
+    <string name="github_proxy_effect_trust">GitHub\'a giden her istek bu sunucuya gider. Her birini görür ve geri gelenleri değiştirebilir: sürümler, özetleri ve dosyalar. Sahip olduğunuz uygulamalar sertifikalarına tabi kalır, ancak bunun üzerinden yapılan ilk yükleme hubproxy\'ye GitHub kadar güvenir ve sertifika sabitlemesi ona ulaşmaz. Üzerinden hiçbir belirteç gönderilmez, bu yüzden özel projeler ve GitHub Actions bu şekilde izlenemez.</string>
+    <string name="settings_unmetered_checks">Yalnızca Wi-Fi\'da denetle</string>
+    <string name="settings_unmetered_checks_effect">Arka plan denetimleri Wi-Fi veya kablo bağlantısını bekler, böylece hiç mobil veri kullanmazlar.</string>
+    <string name="settings_charging_checks">Yalnızca şarj olurken denetle</string>
+    <string name="settings_charging_checks_effect">Arka plan denetimleri cihaz şarj olana kadar bekler.</string>
+    <string name="settings_unmetered_installs_wait">Kendi kendine yüklenecek bir güncelleme, Obtainium\'da olduğu gibi Wi-Fi veya kablo bağlantısını bekler.</string>
+    <string name="settings_charging_installs_wait">Kendi kendine yüklenecek bir güncelleme cihaz şarj olana kadar bekler.</string>
+    <string name="engine_downgrade_not_as_named">Kaynak %2$d sürüm kodunu belirtti, ancak bu dosya yüklü olandan daha eski olan %1$d sürümüdür. Daha yeni olanın üzerine yüklenmez.</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgrade yüklü, bu nedenle Android daha eski bir sürümü daha yeni bir sürümün üzerine yükleyebilir. Tern bunu yalnızca bir uygulamanın geçmişinden seçtiğiniz bir sürüm için yapar, asla arka planda veya Tümünü güncelle ile yapmaz.</string>
+    <string name="option_highest_version">Tern 0.1.0\'ın yaptığı gibi en yüksek sürümü al</string>
+    <string name="option_highest_version_effect">Yeri ne olursa olsun sayfadaki en yüksek sürüme sahip bağlantıyı sunar ve her bağlantıdan okunan sürüm üzerinde sürüm kalıbını çalıştırır. Kapalı olduğunda sayfayı Obtainium\'un okuduğu gibi okur: sıradaki en son bağlantı en yenisidir.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Tern dışında kaldırdığınız bir uygulama listeden de çıkar. Arşivlenmiş bir uygulama kalır. Aynı yerden tekrar eklendiğinde, bir uygulama sahip olduğu sertifikaya tabi tutulur; onu Tern\'de kaldırmak bunu unutur.</string>
+    <string name="link_check_title">Şimdi güncellemeler denetlensin mi?</string>
+    <string name="link_check_one">Bir bağlantı Tern\'den %1$s için güncellemeleri denetlemesini istedi. Kaynağına sorulur ve hiçbir şey yüklenmez.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">Bir bağlantı Tern\'den listenizdeki %d uygulamayı güncellemeler için denetlemesini istedi. Kaynağına sorulur ve hiçbir şey yüklenmez.</item>
+        <item quantity="other">Bir bağlantı Tern\'den listenizdeki %d uygulamayı güncellemeler için denetlemesini istedi. Kaynaklarına sorulur ve hiçbir şey yüklenmez.</item>
+    </plurals>
+    <string name="link_check_confirm">Denetle</string>
+    <string name="link_check_not_now">Şimdi değil</string>
+    <string name="engine_installer_fell_back">%1$s hazır değildi, bu yüzden bunun için Android\'in yükleyicisi kullanıldı.</string>
+    <string name="about_track_tern_fdroid_effect">Bu kopyayı F-Droid yükledi, bu yüzden Tern oradaki girişini izler: güncellemeler, F-Droid uygulamasının aldığı gibi F-Droid\'in yapıp denetlediği derlemelerdir.</string>
+    <string name="about_track_tern_github">Bunun yerine GitHub sürümlerini izle</string>
+    <string name="about_track_tern_github_effect">Güncellemeler yayınlanır yayınlanmaz, F-Droid onları derlemeden ve denetlemeden önce GitHub\'dan gelir. Bu, F-Droid\'in denetimlerini atlar. Tern yine de her dosyayı denetler ve onu kendi sertifikasına tabi tutar.</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Eén per regel, als Naam: waarde. Nooit een wachtwoord, een cookie of een User-Agent: Tern vertelt elke site dat het Tern is.</string>
+    <string name="origin_republished_first">%1$s biedt opnieuw aan wat ontwikkelaars elders publiceren, en is niet de ontwikkelaar. Totdat de app aan een certificaat is vastgepind, bepaalt het eerste bestand dat Tern ervan installeert welk certificaat elke latere update moet dragen.</string>
+    <string name="origin_republished_pinned">%1$s biedt opnieuw aan wat ontwikkelaars elders publiceren, en is niet de ontwikkelaar. De bestanden ervan moeten het certificaat dragen waaraan deze app is gehouden.</string>
+    <string name="origin_store_first">%1$s is een store, niet de eigen site van de ontwikkelaar. Totdat de app aan een certificaat is vastgepind, bepaalt het eerste bestand dat Tern ervan installeert welk certificaat elke latere update moet dragen.</string>
+    <string name="origin_store_pinned">%1$s is een store, niet de eigen site van de ontwikkelaar. De bestanden ervan moeten het certificaat dragen waaraan deze app is gehouden.</string>
+    <string name="stores_paused">Gepauzeerd. Stores van derden staan uit, dus Tern vraagt deze store niets. Zet ze aan in Instellingen om deze weer te controleren.</string>
+    <string name="stores_refused_modified">Tern leest geen sites die gemodificeerde apps aanbieden. Hun bestanden zijn gewijzigd door iemand anders dan de ontwikkelaar en ondertekend door degene die ze heeft gewijzigd.</string>
+    <string name="stores_refused_impersonation">Tern kan deze store niet lezen zonder zich voor te doen als de app van de store, dus leest hij deze niet.</string>
+    <string name="stores_checksum_source">%1$s, wat niet de ontwikkelaar is</string>
+    <string name="stores_off_title">%1$s is een store van derden</string>
+    <string name="stores_off_body">Stores van derden staan uit. Een store levert zijn eigen kopieën van apps, geen bestanden van de eigen site van de ontwikkelaar, en Tern leest deze via de interface die de store voor zijn eigen app of website heeft gemaakt. Als ze aan staan, vraagt Tern een store alleen om de apps die je eruit toevoegt, en totdat een app aan een certificaat is vastgepind, bepaalt het eerste bestand dat Tern uit een store installeert welk certificaat de updates ervan moeten dragen.</string>
+    <string name="stores_turn_on">Stores van derden aanzetten</string>
+    <string name="stores_advice">Zet Stores van derden aan in Instellingen om deze app opnieuw te controleren.</string>
+    <string name="stores_status_paused">Gepauzeerd</string>
+    <string name="stores_row_paused">Stores van derden staan uit</string>
+    <string name="stores_setting">Stores van derden</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, the Galaxy Store en vivo. Ze leveren hun eigen kopieën van apps, geen bestanden van de eigen site van de ontwikkelaar, en Tern leest ze via de interfaces die ze voor hun eigen apps en websites hebben gemaakt. Als ze uit staan, vraagt Tern geen van hen iets, laat een zoekopdracht ze weg en worden apps ervan gepauzeerd.</string>
+    <string name="stores_off_tag">uit in Instellingen</string>
+    <string name="stores_checksum_matched">Het bestand komt overeen met de checksum van de store</string>
+    <string name="stores_explain_checksum_matched">Een checksum is een vingerafdruk van het bestand zelf. De store heeft er een gegeven, en het bestand dat Tern heeft gedownload heeft dezelfde, dus het is aangekomen zoals de store het heeft. De store is niet de ontwikkelaar, dus dit zegt niets over wie het bestand heeft gemaakt. Het certificaat wel.</string>
+    <string name="stores_import_from_stores">Deze komen uit stores van derden, die hun eigen kopieën van apps leveren. Totdat een app aan een certificaat is vastgepind, bepaalt het eerste bestand dat Tern uit de bijbehorende store installeert welk certificaat de updates ervan moeten dragen.</string>
+    <string name="stores_import_paused">Stores van derden staan uit, dus deze apps zijn gepauzeerd. Tern vraagt die stores niets totdat je ze aanzet.</string>
+    <string name="stores_import_names">Uit stores van derden</string>
+    <string name="share_obtainium_link">Delen als een Obtainium-link</string>
+    <string name="share_obtainium_links">Delen als Obtainium-links</string>
+</resources>

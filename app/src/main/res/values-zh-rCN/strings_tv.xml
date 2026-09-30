@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="interval_turn_off">关闭后台检查</string>
+    <string name="interval_turn_on">打开后台检查</string>
+</resources>

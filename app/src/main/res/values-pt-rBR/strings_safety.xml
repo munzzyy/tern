@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Salva a sua lista e as configurações em um arquivo. Tokens nunca entram, nem um cabeçalho de requisição que possa conter uma chave.</string>
+    <string name="engine_checksum_github_proxy">Digest de lançamento do GitHub, como o hubproxy %1$s o repassou</string>
+    <string name="github_proxy_effect_trust">Toda requisição ao GitHub vai para este host. Ele vê cada uma e pode alterar o que volta: os lançamentos, suas somas de verificação e os arquivos. Apps que você tem continuam fixados aos seus certificados, mas uma primeira instalação por meio dele confia no hubproxy tanto quanto no GitHub, e a fixação de certificado não o alcança. Nenhum token é enviado por ele, então projetos privados e GitHub Actions não podem ser acompanhados dessa forma.</string>
+    <string name="settings_unmetered_checks">Verificar apenas no Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">Verificações em segundo plano aguardam por Wi-Fi ou um cabo, para não usar dados móveis.</string>
+    <string name="settings_charging_checks">Verificar apenas ao carregar</string>
+    <string name="settings_charging_checks_effect">Verificações em segundo plano aguardam até o dispositivo estar carregando.</string>
+    <string name="settings_unmetered_installs_wait">Uma atualização que se instalaria sozinha aguarda por Wi-Fi ou um cabo, como no Obtainium.</string>
+    <string name="settings_charging_installs_wait">Uma atualização que se instalaria sozinha aguarda até o dispositivo estar carregando.</string>
+    <string name="engine_downgrade_not_as_named">A fonte nomeou o código de versão %2$d, mas este arquivo é %1$d, mais antigo que o instalado. Ele não é colocado sobre o mais recente.</string>
+    <string name="settings_allow_downgrades_picked">O Let Me Downgrade está instalado, então o Android pode colocar uma versão mais antiga sobre uma mais recente. O Tern faz isso apenas para um lançamento que você escolhe do histórico de um app, nunca em segundo plano ou com Atualizar todos.</string>
+    <string name="option_highest_version">Pegar a versão mais alta, como fez o Tern 0.1.0</string>
+    <string name="option_highest_version_effect">Oferece o link com a versão mais alta na página, qualquer que seja o seu lugar, e roda o padrão de versão sobre a versão lida de cada link. Desativado, lê a página como o Obtainium faz: o último link na ordem é o mais recente.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Um app que você desinstala fora do Tern também sai da lista. Um app arquivado fica. Adicionado de novo do mesmo lugar, um app é mantido no certificado que tinha; removê-lo no Tern faz esquecer isso.</string>
+    <string name="link_check_title">Verificar atualizações agora?</string>
+    <string name="link_check_one">Um link pediu ao Tern para verificar atualizações de %1$s. A fonte dele é consultada, e nada é instalado.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">Um link pediu ao Tern para verificar atualizações de %d app na sua lista. A fonte dele é consultada, e nada é instalado.</item>
+        <item quantity="many">Um link pediu ao Tern para verificar atualizações de %d apps na sua lista. As fontes deles são consultadas, e nada é instalado.</item>
+        <item quantity="other">Um link pediu ao Tern para verificar atualizações de %d apps na sua lista. As fontes deles são consultadas, e nada é instalado.</item>
+    </plurals>
+    <string name="link_check_confirm">Verificar</string>
+    <string name="link_check_not_now">Agora não</string>
+    <string name="engine_installer_fell_back">O %1$s não estava pronto, então o instalador do Android foi usado para este.</string>
+    <string name="about_track_tern_fdroid_effect">O F-Droid instalou esta cópia, então o Tern acompanha a entrada dele lá: as atualizações são as compilações que o F-Droid fez e verificou, como o app F-Droid as recebe.</string>
+    <string name="about_track_tern_github">Acompanhar lançamentos do GitHub</string>
+    <string name="about_track_tern_github_effect">As atualizações vêm do GitHub assim que são publicadas, antes de o F-Droid as ter compilado e verificado. Isso pula as verificações do F-Droid. O Tern ainda verifica cada arquivo e o fixa ao seu próprio certificado.</string>
+</resources>

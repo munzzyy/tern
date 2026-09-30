@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Desa la teva llista i configuració en un fitxer. Els tokens mai s\'hi inclouen, ni tampoc cap capçalera de petició que pugui contenir una clau.</string>
+    <string name="engine_checksum_github_proxy">Resum del llançament de GitHub, tal com l\'ha transmès el hubproxy %1$s</string>
+    <string name="github_proxy_effect_trust">Cada petició a GitHub va a aquest amfitrió. Les veu totes i pot canviar el que torna: els llançaments, els seus resums i els fitxers. Les aplicacions que tens es mantenen fixades al seu certificat, però una primera instal·lació a través seu confia tant en el hubproxy com en GitHub, i la fixació de certificats no hi arriba. No s\'hi envia cap token, de manera que els projectes privats i GitHub Actions no es poden seguir d\'aquesta manera.</string>
+    <string name="settings_unmetered_checks">Comprova només amb Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">Les comprovacions en segon pla esperen el Wi-Fi o un cable, de manera que no usen dades mòbils.</string>
+    <string name="settings_charging_checks">Comprova només mentre carrega</string>
+    <string name="settings_charging_checks_effect">Les comprovacions en segon pla esperen fins que el dispositiu s\'estigui carregant.</string>
+    <string name="settings_unmetered_installs_wait">Una actualització que s\'instal·laria per si sola espera el Wi-Fi o un cable, com a Obtainium.</string>
+    <string name="settings_charging_installs_wait">Una actualització que s\'instal·laria per si sola espera fins que el dispositiu s\'estigui carregant.</string>
+    <string name="engine_downgrade_not_as_named">L\'origen indicava el codi de versió %2$d, però aquest fitxer és %1$d, més antic que l\'instal·lat. No s\'instal·la per sobre del més nou.</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgrade està instal·lat, per la qual cosa Android pot instal·lar una versió més antiga sobre una de més nova. Tern només ho fa per a un llançament que triïs de l\'historial d\'una aplicació, mai en segon pla ni amb Actualitza-ho tot.</string>
+    <string name="option_highest_version">Pren la versió més alta, com feia Tern 0.1.0</string>
+    <string name="option_highest_version_effect">Ofereix l\'enllaç amb la versió més alta de la pàgina, sigui quin sigui el seu lloc, i executa el patró de versió sobre la versió llegida de cada enllaç. Desactivat llegeix la pàgina de la manera que ho fa Obtainium: l\'últim enllaç per ordre és el més recent.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Una aplicació que desinstal·les fora de Tern també surt de la llista. Una aplicació arxivada s\'hi manté. Afegida de nou des del mateix lloc, l\'aplicació es manté fixada al certificat que tenia; suprimir-la a Tern ho oblida.</string>
+    <string name="link_check_title">Comprova les actualitzacions ara?</string>
+    <string name="link_check_one">Un enllaç ha demanat a Tern que comprovi les actualitzacions de %1$s. Es pregunta al seu origen i no s\'instal·la res.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">Un enllaç ha demanat a Tern que comprovi %d aplicació de la teva llista per cercar actualitzacions. Es pregunta al seu origen i no s\'instal·la res.</item>
+        <item quantity="many">Un enllaç ha demanat a Tern que comprovi %d aplicacions de la teva llista per cercar actualitzacions. Es pregunta als seus orígens i no s\'instal·la res.</item>
+        <item quantity="other">Un enllaç ha demanat a Tern que comprovi %d aplicacions de la teva llista per cercar actualitzacions. Es pregunta als seus orígens i no s\'instal·la res.</item>
+    </plurals>
+    <string name="link_check_confirm">Comprova</string>
+    <string name="link_check_not_now">Ara no</string>
+    <string name="engine_installer_fell_back">%1$s no estava a punt, així que s\'ha usat l\'instal·lador d\'Android per a aquesta.</string>
+    <string name="about_track_tern_fdroid_effect">F-Droid ha instal·lat aquesta còpia, de manera que Tern segueix la seva entrada allà: les actualitzacions són les compilacions que F-Droid ha fet i comprovat, tal com les obté l\'aplicació F-Droid.</string>
+    <string name="about_track_tern_github">Segueix els llançaments de GitHub</string>
+    <string name="about_track_tern_github_effect">Les actualitzacions arriben de GitHub tan bon punt es publiquen, abans que F-Droid les hagi compilat i comprovat. Això omet les comprovacions de F-Droid. Tern encara comprova cada fitxer i el manté fixat al seu propi certificat.</string>
+</resources>

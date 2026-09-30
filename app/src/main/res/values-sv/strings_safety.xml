@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Sparar din lista och dina inställningar till en fil. Token inkluderas aldrig, och inte heller något begärandehuvud som skulle kunna innehålla en nyckel.</string>
+    <string name="engine_checksum_github_proxy">GitHub-utgåvans digest, så som hubproxyn %1$s vidarebefordrade den</string>
+    <string name="github_proxy_effect_trust">Varje förfrågan till GitHub går till denna värd. Den ser var och en och kan ändra det som kommer tillbaka: utgåvorna, deras digest och filerna. Appar du har förblir fästa vid sina certifikat, men en första installation genom den litar lika mycket på hubproxyn som på GitHub, och certifikatfästning når den inte. Ingen token skickas genom den, så privata projekt och GitHub Actions kan inte följas på detta sätt.</string>
+    <string name="settings_unmetered_checks">Kontrollera endast via Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">Bakgrundskontroller väntar på Wi-Fi eller en kabel, så de använder ingen mobildata.</string>
+    <string name="settings_charging_checks">Kontrollera endast vid laddning</string>
+    <string name="settings_charging_checks_effect">Bakgrundskontroller väntar tills enheten laddas.</string>
+    <string name="settings_unmetered_installs_wait">En uppdatering som skulle installeras av sig själv väntar på Wi-Fi eller en kabel, som i Obtainium.</string>
+    <string name="settings_charging_installs_wait">En uppdatering som skulle installeras av sig själv väntar tills enheten laddas.</string>
+    <string name="engine_downgrade_not_as_named">Källan angav versionskod %2$d, men denna fil är %1$d, äldre än den installerade. Den läggs inte över den nyare.</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgrade är installerad, så Android kan lägga en äldre version över en nyare. Tern gör det endast för en utgåva du väljer från en apps historik, aldrig i bakgrunden eller med Uppdatera alla.</string>
+    <string name="option_highest_version">Ta den högsta versionen, som Tern 0.1.0 gjorde</string>
+    <string name="option_highest_version_effect">Erbjuder länken med den högsta versionen på sidan, oavsett dess plats, och kör versionsmönstret över versionen som läses från varje länk. När det är av läses sidan på samma sätt som Obtainium gör: den sista länken i ordningen är den senaste.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">En app du avinstallerar utanför Tern lämnar också listan. En arkiverad app blir kvar. Om den läggs till igen från samma plats är appen fäst vid det certifikat den hade; tas den bort i Tern glöms det bort.</string>
+    <string name="link_check_title">Kontrollera uppdateringar nu?</string>
+    <string name="link_check_one">En länk bad Tern att kontrollera %1$s efter uppdateringar. Dess källa tillfrågas, och inget installeras.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">En länk bad Tern att kontrollera %d app i din lista efter uppdateringar. Dess källa tillfrågas, och inget installeras.</item>
+        <item quantity="other">En länk bad Tern att kontrollera de %d apparna i din lista efter uppdateringar. Deras källor tillfrågas, och inget installeras.</item>
+    </plurals>
+    <string name="link_check_confirm">Kontrollera</string>
+    <string name="link_check_not_now">Inte nu</string>
+    <string name="engine_installer_fell_back">%1$s var inte redo, så Androids installationsprogram användes för denna.</string>
+    <string name="about_track_tern_fdroid_effect">F-Droid installerade denna kopia, så Tern följer dess post där: uppdateringar är de byggen F-Droid gjorde och kontrollerade, så som F-Droid-appen hämtar dem.</string>
+    <string name="about_track_tern_github">Följ GitHub-utgåvor istället</string>
+    <string name="about_track_tern_github_effect">Uppdateringar kommer från GitHub så fort de publiceras, innan F-Droid har byggt och kontrollerat dem. Detta hoppar över F-Droids kontroller. Tern kontrollerar fortfarande varje fil och håller den till dess eget certifikat.</string>
+</resources>

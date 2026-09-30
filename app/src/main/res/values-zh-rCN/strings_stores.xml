@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">每行一个，格式为 名称: 值。切勿填写密码、Cookie 或 User-Agent：Tern 会告诉每个网站它是 Tern。</string>
+    <string name="origin_republished_first">%1$s 再次提供开发者在别处发布的内容，而它本身不是开发者。在该应用固定证书之前，Tern 从此处安装的第一个文件将决定其后每次更新必须携带的证书。</string>
+    <string name="origin_republished_pinned">%1$s 再次提供开发者在别处发布的内容，而它本身不是开发者。其文件必须携带此应用所固定的证书。</string>
+    <string name="origin_store_first">%1$s 是一个商店，不是开发者自己的网站。在该应用固定证书之前，Tern 从此处安装的第一个文件将决定其后每次更新必须携带的证书。</string>
+    <string name="origin_store_pinned">%1$s 是一个商店，不是开发者自己的网站。其文件必须携带此应用所固定的证书。</string>
+    <string name="stores_paused">已暂停。第三方商店已关闭，因此 Tern 不会向此商店发出任何请求。请在设置中将其打开以再次检查。</string>
+    <string name="stores_refused_modified">Tern 不会读取提供修改版应用的网站。这些文件被开发者以外的人修改过，并由修改者签名。</string>
+    <string name="stores_refused_impersonation">Tern 必须伪装成该商店的应用才能读取它，因此 Tern 不会读取它。</string>
+    <string name="stores_checksum_source">%1$s，并非开发者</string>
+    <string name="stores_off_title">%1$s 是第三方商店</string>
+    <string name="stores_off_body">第三方商店已关闭。商店提供其自己的应用副本，而不是开发者自己网站上的文件，而且 Tern 是通过该商店为其自有应用或网站制作的接口来读取它的。打开它们后，Tern 仅会向商店请求您从中添加的应用，并且在该应用固定证书之前，Tern 从商店安装的第一个文件将决定其更新必须携带的证书。</string>
+    <string name="stores_turn_on">打开第三方商店</string>
+    <string name="stores_advice">在设置中打开第三方商店以再次检查此应用。</string>
+    <string name="stores_status_paused">已暂停</string>
+    <string name="stores_row_paused">第三方商店已关闭</string>
+    <string name="stores_setting">第三方商店</string>
+    <string name="stores_setting_effect">APKPure、Aptoide、APKCombo、APKMirror、Tencent、Huawei AppGallery、Galaxy Store 和 vivo。它们提供其自己的应用副本，而不是开发者自己网站上的文件，而且 Tern 是通过它们为其自有应用或网站制作的接口来读取它们的。关闭时，Tern 不会向它们发出任何请求，搜索时会排除它们，并且来自它们的应用将被暂停。</string>
+    <string name="stores_off_tag">在设置中已关闭</string>
+    <string name="stores_checksum_matched">文件与商店的校验和相符</string>
+    <string name="stores_explain_checksum_matched">校验和是文件本身的指纹。商店提供了一个校验和，而 Tern 下载的文件拥有相同的校验和，因此它与商店中的文件完全一致。商店并非开发者，因此这无法说明该文件是谁制作的，只有证书可以。</string>
+    <string name="stores_import_from_stores">这些应用来自第三方商店，它们提供其自己复制的应用。在该应用固定证书之前，Tern 从商店安装的第一个文件将决定其更新必须携带的证书。</string>
+    <string name="stores_import_paused">第三方商店已关闭，因此这些应用被暂停。在您打开它们之前，Tern 不会向这些商店发出任何请求。</string>
+    <string name="stores_import_names">来自第三方商店</string>
+    <string name="share_obtainium_link">分享为 Obtainium 链接</string>
+    <string name="share_obtainium_links">分享为 Obtainium 链接</string>
+</resources>

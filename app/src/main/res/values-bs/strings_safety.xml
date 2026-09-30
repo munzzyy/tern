@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Sprema vaš spisak i postavke u datoteku. Tokeni nikada ne ulaze, kao ni zaglavlje zahtjeva koje bi moglo sadržavati ključ.</string>
+    <string name="engine_checksum_github_proxy">GitHub kontrolni zbir izdanja, kako ga je hubproxy %1$s proslijedio</string>
+    <string name="github_proxy_effect_trust">Svaki zahtjev prema GitHubu ide ka ovom domaćinu. On vidi svaki od njih i može promijeniti ono što se vraća: izdanja, njihove kontrolne zbirove i datoteke. Aplikacije koje imate i dalje se drže svog certifikata, ali prva instalacija preko njega vjeruje hubproxyju jednako kao i GitHubu, a prikačivanje certifikata do njega ne dopire. Nijedan token se ne šalje preko njega, tako da se privatni projekti i GitHub Actions na ovaj način ne mogu pratiti.</string>
+    <string name="settings_unmetered_checks">Provjeravaj samo na Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">Provjere u pozadini čekaju na Wi-Fi ili kabl, tako da ne troše mobilne podatke.</string>
+    <string name="settings_charging_checks">Provjeravaj samo dok se puni</string>
+    <string name="settings_charging_checks_effect">Provjere u pozadini čekaju dok se uređaj ne počne puniti.</string>
+    <string name="settings_unmetered_installs_wait">Ažuriranje koje bi se samo instaliralo čeka na Wi-Fi ili kabl, kao u Obtainiumu.</string>
+    <string name="settings_charging_installs_wait">Ažuriranje koje bi se samo instaliralo čeka dok se uređaj ne počne puniti.</string>
+    <string name="engine_downgrade_not_as_named">Izvor je naveo kod verzije %2$d, ali ova datoteka je %1$d, starija od instalirane. Ne stavlja se preko novije.</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgrade je instaliran, pa Android može staviti stariju verziju preko novije. Tern to radi samo za izdanje koje odaberete iz historije aplikacije, nikada u pozadini ili s opcijom Ažuriraj sve.</string>
+    <string name="option_highest_version">Uzmi najvišu verziju, kao što je to radio Tern 0.1.0</string>
+    <string name="option_highest_version_effect">Nudi link sa najvišom verzijom na stranici, bez obzira na njegovo mjesto, i pokreće obrazac verzije preko verzije pročitane sa svakog linka. Isključeno čita stranicu onako kako to radi Obtainium: posljednji link po redoslijedu je najnoviji.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Aplikacija koju deinstalirate van Terna također napušta spisak. Arhivirana aplikacija ostaje. Ponovo dodana sa istog mjesta, aplikacija se drži certifikata koji je imala; njeno uklanjanje u Ternu to zaboravlja.</string>
+    <string name="link_check_title">Provjeriti ažuriranja sada?</string>
+    <string name="link_check_one">Link je zatražio od Terna da provjeri ažuriranja za %1$s. Njegov izvor je upitan, i ništa se ne instalira.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">Link je zatražio od Terna da provjeri ažuriranja za %d aplikaciju na vašem spisku. Njen izvor je upitan, i ništa se ne instalira.</item>
+        <item quantity="few">Link je zatražio od Terna da provjeri ažuriranja za %d aplikacije na vašem spisku. Njihovi izvori su upitani, i ništa se ne instalira.</item>
+        <item quantity="other">Link je zatražio od Terna da provjeri ažuriranja za %d aplikacija na vašem spisku. Njihovi izvori su upitani, i ništa se ne instalira.</item>
+    </plurals>
+    <string name="link_check_confirm">Provjeri</string>
+    <string name="link_check_not_now">Ne sada</string>
+    <string name="engine_installer_fell_back">%1$s nije bio spreman, pa je za ovu iskorišten Androidov instalator.</string>
+    <string name="about_track_tern_fdroid_effect">F-Droid je instalirao ovu kopiju, tako da Tern prati njen unos tamo: ažuriranja su buildovi koje je F-Droid napravio i provjerio, onako kako ih dobija F-Droid aplikacija.</string>
+    <string name="about_track_tern_github">Umjesto toga prati GitHub izdanja</string>
+    <string name="about_track_tern_github_effect">Ažuriranja dolaze sa GitHuba čim se objave, prije nego što ih F-Droid izradi i provjeri. Ovo preskače provjere F-Droida. Tern i dalje provjerava svaku datoteku i drži je za njen vlastiti certifikat.</string>
+</resources>

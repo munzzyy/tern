@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="interval_turn_off">Isključi provjere u pozadini</string>
+    <string name="interval_turn_on">Uključi provjere u pozadini</string>
+</resources>

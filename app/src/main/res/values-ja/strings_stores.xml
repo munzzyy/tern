@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Name: value のように1行に1つずつ指定します。パスワード、Cookie、または User-Agent は絶対に含めないでください: TernはすべてのサイトにTernであることを伝えます。</string>
+    <string name="origin_republished_first">%1$s は開発者が別の場所で公開したものを再提供しているだけで、開発者ではありません。アプリが証明書にピン留めされるまで、Ternがそこからインストールする最初のファイルによって、以降のすべての更新で必要となる証明書が決定されます。</string>
+    <string name="origin_republished_pinned">%1$s は開発者が別の場所で公開したものを再提供しているだけで、開発者ではありません。そのファイルは、このアプリが保持している証明書を持っていなければなりません。</string>
+    <string name="origin_store_first">%1$s はストアであり、開発者自身のサイトではありません。アプリが証明書にピン留めされるまで、Ternがそこからインストールする最初のファイルによって、以降のすべての更新で必要となる証明書が決定されます。</string>
+    <string name="origin_store_pinned">%1$s はストアであり、開発者自身のサイトではありません。そのファイルは、このアプリが保持している証明書を持っていなければなりません。</string>
+    <string name="stores_paused">一時停止中。サードパーティストアがオフになっているため、Ternはこのストアには何も問い合わせません。もう一度確認するには、設定でオンにしてください。</string>
+    <string name="stores_refused_modified">Ternは変更されたアプリを提供するサイトを読み取りません。それらのファイルは開発者以外によって変更され、変更した者によって署名されています。</string>
+    <string name="stores_refused_impersonation">Ternはそのストアのアプリを偽装しないと読み取れないため、読み取りを行いません。</string>
+    <string name="stores_checksum_source">%1$s（開発者ではありません）</string>
+    <string name="stores_off_title">%1$s はサードパーティストアです</string>
+    <string name="stores_off_body">サードパーティストアはオフになっています。ストアは開発者自身のサイトから取得したファイルではなく、ストア独自のアプリのコピーを提供し、Ternはストアが自身のアプリやウェブサイト用に作成したインターフェースを通じてそれを読み取ります。オンにすると、Ternはそこから追加したアプリについてのみストアに問い合わせを行います。また、アプリが証明書にピン留めされるまで、Ternがストアからインストールする最初のファイルによって、以降の更新で必要となる証明書が決定されます。</string>
+    <string name="stores_turn_on">サードパーティストアをオンにする</string>
+    <string name="stores_advice">このアプリをもう一度確認するには、設定でサードパーティストアをオンにしてください。</string>
+    <string name="stores_status_paused">一時停止中</string>
+    <string name="stores_row_paused">サードパーティストアはオフです</string>
+    <string name="stores_setting">サードパーティストア</string>
+    <string name="stores_setting_effect">APKPure、Aptoide、APKCombo、APKMirror、Tencent、Huawei AppGallery、Galaxy Store、vivoが該当します。これらは開発者自身のサイトからのファイルではなく、独自のアプリのコピーを提供しており、Ternはこれらが自身のアプリやウェブサイト用に作成したインターフェースを通じて読み取ります。オフにすると、Ternはこれらに何も問い合わせず、検索から除外され、これらからのアプリは一時停止されます。</string>
+    <string name="stores_off_tag">設定でオフ</string>
+    <string name="stores_checksum_matched">ファイルはストアのチェックサムと一致します</string>
+    <string name="stores_explain_checksum_matched">チェックサムはファイル自体のフィンガープリントです。ストアが提供したものとTernがダウンロードしたファイルが同じであるため、ストアにある状態のまま届いています。ストアは開発者ではないため、誰がファイルを作成したかについては何もわかりません。証明書によって確認できます。</string>
+    <string name="stores_import_from_stores">これらは、独自のアプリのコピーを提供するサードパーティストアからのものです。アプリが証明書にピン留めされるまで、Ternがストアからインストールする最初のファイルによって、以降の更新で必要となる証明書が決定されます。</string>
+    <string name="stores_import_paused">サードパーティストアがオフになっているため、これらのアプリは一時停止されています。オンにするまで、Ternはそれらのストアには何も問い合わせません。</string>
+    <string name="stores_import_names">サードパーティストアから</string>
+    <string name="share_obtainium_link">Obtainiumリンクとして共有</string>
+    <string name="share_obtainium_links">Obtainiumリンクとして共有</string>
+</resources>

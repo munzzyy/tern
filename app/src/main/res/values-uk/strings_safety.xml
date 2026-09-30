@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_export_effect_plain">Зберігає ваш список і налаштування у файл. Маркери ніколи туди не потрапляють, як і заголовок запиту, що міг би містити ключ.</string>
+    <string name="engine_checksum_github_proxy">Дайджест випуску GitHub, як його передав hubproxy %1$s</string>
+    <string name="github_proxy_effect_trust">Кожен запит до GitHub надходить на цей хост. Він бачить кожен із них і може змінювати те, що повертається: випуски, їхні дайджести та файли. Програми, які ви маєте, залишаються закріпленими за своїм сертифікатом, але перше встановлення через нього довіряє hubproxy так само, як GitHub, і закріплення сертифіката до нього не застосовується. Через нього не надсилається жоден маркер, тому приватні проєкти та GitHub Actions неможливо відстежувати в такий спосіб.</string>
+    <string name="settings_unmetered_checks">Перевіряти лише через Wi-Fi</string>
+    <string name="settings_unmetered_checks_effect">Фонові перевірки чекають на Wi-Fi або кабель, тому вони не використовують мобільні дані.</string>
+    <string name="settings_charging_checks">Перевіряти лише під час заряджання</string>
+    <string name="settings_charging_checks_effect">Фонові перевірки чекають, поки пристрій заряджається.</string>
+    <string name="settings_unmetered_installs_wait">Оновлення, яке б встановилося самостійно, чекає на Wi-Fi або кабель, як у Obtainium.</string>
+    <string name="settings_charging_installs_wait">Оновлення, яке б встановилося самостійно, чекає, поки пристрій заряджається.</string>
+    <string name="engine_downgrade_not_as_named">Джерело вказало код версії %2$d, але цей файл має %1$d, що є старішим за встановлений. Його не буде встановлено поверх новішого.</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgrade встановлено, тому Android може встановити старішу версію поверх новішої. Tern робить це лише для випуску, який ви вибрали з історії програми, і ніколи у фоновому режимі або за допомогою функції «Оновити всі».</string>
+    <string name="option_highest_version">Брати найвищу версію, як це робив Tern 0.1.0</string>
+    <string name="option_highest_version_effect">Пропонує посилання з найвищою версією на сторінці, незалежно від його місця, і застосовує шаблон версії до версії, зчитаної з кожного посилання. Якщо вимкнено, сторінка читається так, як це робить Obtainium: останнє посилання по порядку є найновішим.</string>
+    <string name="settings_remove_uninstalled_keeps_pins">Програма, яку ви видаляєте поза Tern, також зникає зі списку. Архівована програма залишається. Додана знову з того самого місця, програма закріплюється за сертифікатом, який вона мала; її видалення в Tern змушує забути про це.</string>
+    <string name="link_check_title">Перевірити наявність оновлень зараз?</string>
+    <string name="link_check_one">Посилання попросило Tern перевірити %1$s на наявність оновлень. Tern звертається до її джерела, і нічого не встановлюється.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">Посилання попросило Tern перевірити %d програму з вашого списку на наявність оновлень. Відправляється запит до її джерела, і нічого не встановлюється.</item>
+        <item quantity="few">Посилання попросило Tern перевірити %d програми з вашого списку на наявність оновлень. Відправляється запит до їхніх джерел, і нічого не встановлюється.</item>
+        <item quantity="many">Посилання попросило Tern перевірити %d програм з вашого списку на наявність оновлень. Відправляється запит до їхніх джерел, і нічого не встановлюється.</item>
+        <item quantity="other">Посилання попросило Tern перевірити %d програми з вашого списку на наявність оновлень. Відправляється запит до їхніх джерел, і нічого не встановлюється.</item>
+    </plurals>
+    <string name="link_check_confirm">Перевірити</string>
+    <string name="link_check_not_now">Не зараз</string>
+    <string name="engine_installer_fell_back">%1$s не був готовий, тому для цього використано інсталятор Android.</string>
+    <string name="about_track_tern_fdroid_effect">F-Droid встановив цю копію, тому Tern відстежує її запис там: оновлення є збірками, які створив і перевірив F-Droid, так само, як їх отримує програма F-Droid.</string>
+    <string name="about_track_tern_github">Натомість відстежувати випуски GitHub</string>
+    <string name="about_track_tern_github_effect">Оновлення надходять із GitHub одразу після їх публікації, ще до того, як F-Droid їх збере та перевірить. Це пропускає перевірки F-Droid. Tern і далі перевіряє кожен файл і закріплює його за власним сертифікатом.</string>
+</resources>

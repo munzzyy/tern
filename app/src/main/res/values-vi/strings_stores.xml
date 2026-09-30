@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Mỗi dòng một mục, dạng Tên: giá trị. Không bao giờ là mật khẩu, cookie hoặc User-Agent: Tern cho mọi trang web biết nó là Tern.</string>
+    <string name="origin_republished_first">%1$s đề xuất lại những gì nhà phát triển xuất bản ở nơi khác, và không phải là nhà phát triển. Cho đến khi ứng dụng được ghim vào một chứng chỉ, tệp đầu tiên Tern cài đặt từ nó sẽ quyết định chứng chỉ mà mọi bản cập nhật sau này phải mang.</string>
+    <string name="origin_republished_pinned">%1$s đề xuất lại những gì nhà phát triển xuất bản ở nơi khác, và không phải là nhà phát triển. Các tệp của nó phải mang chứng chỉ mà ứng dụng này đang giữ.</string>
+    <string name="origin_store_first">%1$s là một cửa hàng, không phải trang web riêng của nhà phát triển. Cho đến khi ứng dụng được ghim vào một chứng chỉ, tệp đầu tiên Tern cài đặt từ cửa hàng này sẽ quyết định chứng chỉ mà mọi bản cập nhật sau này phải mang.</string>
+    <string name="origin_store_pinned">%1$s là một cửa hàng, không phải trang web riêng của nhà phát triển. Các tệp của nó phải mang chứng chỉ mà ứng dụng này đang giữ.</string>
+    <string name="stores_paused">Đã tạm dừng. Các cửa hàng của bên thứ ba đang tắt, nên Tern không hỏi cửa hàng này điều gì. Hãy bật chúng trong Cài đặt để kiểm tra lại.</string>
+    <string name="stores_refused_modified">Tern không đọc các trang web cung cấp ứng dụng đã sửa đổi. Tệp của chúng bị người khác không phải nhà phát triển thay đổi và được ký bởi người đã thay đổi chúng.</string>
+    <string name="stores_refused_impersonation">Tern không thể đọc cửa hàng này mà không giả làm ứng dụng của nó, nên nó không đọc cửa hàng này.</string>
+    <string name="stores_checksum_source">%1$s, không phải là nhà phát triển</string>
+    <string name="stores_off_title">%1$s là cửa hàng của bên thứ ba</string>
+    <string name="stores_off_body">Các cửa hàng của bên thứ ba đang tắt. Một cửa hàng phục vụ các bản sao ứng dụng của riêng nó, không phải tệp từ trang web riêng của nhà phát triển, và Tern đọc nó qua giao diện mà cửa hàng tạo cho ứng dụng hoặc trang web của chính nó. Khi bật, Tern chỉ hỏi cửa hàng về những ứng dụng bạn thêm từ nó, và cho đến khi một ứng dụng được ghim vào một chứng chỉ, tệp đầu tiên Tern cài đặt từ một cửa hàng sẽ quyết định chứng chỉ mà các bản cập nhật của nó phải mang.</string>
+    <string name="stores_turn_on">Bật cửa hàng bên thứ ba</string>
+    <string name="stores_advice">Bật Cửa hàng của bên thứ ba trong Cài đặt để kiểm tra lại ứng dụng này.</string>
+    <string name="stores_status_paused">Đã tạm dừng</string>
+    <string name="stores_row_paused">Cửa hàng bên thứ ba đang tắt</string>
+    <string name="stores_setting">Cửa hàng bên thứ ba</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store và vivo. Chúng phục vụ các bản sao ứng dụng của riêng chúng, không phải tệp từ trang web riêng của nhà phát triển, và Tern đọc chúng qua các giao diện chúng tạo cho ứng dụng và trang web của chính chúng. Khi tắt, Tern không hỏi chúng điều gì, một tìm kiếm sẽ bỏ qua chúng và các ứng dụng từ chúng bị tạm dừng.</string>
+    <string name="stores_off_tag">tắt trong Cài đặt</string>
+    <string name="stores_checksum_matched">Tệp khớp với tổng kiểm tra của cửa hàng</string>
+    <string name="stores_explain_checksum_matched">Tổng kiểm tra là dấu vân tay của chính tệp đó. Cửa hàng đã đưa ra một tổng kiểm tra, và tệp Tern đã tải xuống có tổng kiểm tra giống hệt, nên nó đến tay giống như cách cửa hàng có nó. Cửa hàng không phải là nhà phát triển, nên điều này không nói lên ai đã tạo ra tệp. Chứng chỉ thì có.</string>
+    <string name="stores_import_from_stores">Những ứng dụng này đến từ các cửa hàng của bên thứ ba, chúng phục vụ các bản sao ứng dụng của riêng chúng. Cho đến khi một ứng dụng được ghim vào một chứng chỉ, tệp đầu tiên Tern cài đặt từ cửa hàng của nó sẽ quyết định chứng chỉ mà các bản cập nhật của nó phải mang.</string>
+    <string name="stores_import_paused">Các cửa hàng của bên thứ ba đang tắt, nên những ứng dụng này bị tạm dừng. Tern không hỏi những cửa hàng đó điều gì cho đến khi bạn bật chúng.</string>
+    <string name="stores_import_names">Từ cửa hàng bên thứ ba</string>
+    <string name="share_obtainium_link">Chia sẻ dưới dạng liên kết Obtainium</string>
+    <string name="share_obtainium_links">Chia sẻ dưới dạng các liên kết Obtainium</string>
+</resources>

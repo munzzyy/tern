@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">Po jedan u redu, kao Ime: vrijednost. Nikada lozinka, kolačić ili User-Agent: Tern svakoj web lokaciji govori da je Tern.</string>
+    <string name="origin_republished_first">%1$s ponovo nudi ono što programeri objavljuju negdje drugo, i nije programer. Dok se aplikacija ne prikači za certifikat, prva datoteka koju Tern instalira sa njega odlučuje koji certifikat mora nositi svako kasnije ažuriranje.</string>
+    <string name="origin_republished_pinned">%1$s ponovo nudi ono što programeri objavljuju negdje drugo, i nije programer. Njegove datoteke moraju nositi certifikat za koji je ova aplikacija prikačena.</string>
+    <string name="origin_store_first">%1$s je prodavnica, a ne vlastita web lokacija programera. Dok se aplikacija ne prikači za certifikat, prva datoteka koju Tern instalira iz nje odlučuje koji certifikat mora nositi svako kasnije ažuriranje.</string>
+    <string name="origin_store_pinned">%1$s je prodavnica, a ne vlastita web lokacija programera. Njene datoteke moraju nositi certifikat za koji je ova aplikacija prikačena.</string>
+    <string name="stores_paused">Pauzirano. Prodavnice trećih strana su isključene, tako da Tern ne pita ništa ovu prodavnicu. Uključite ih u postavkama da biste je ponovo provjerili.</string>
+    <string name="stores_refused_modified">Tern ne čita lokacije koje nude modificirane aplikacije. Njihove datoteke mijenja neko drugi, a ne programer, i potpisane su od strane onoga ko ih je promijenio.</string>
+    <string name="stores_refused_impersonation">Tern ne može čitati ovu prodavnicu bez pretvaranja da je njena aplikacija, pa je ne čita.</string>
+    <string name="stores_checksum_source">%1$s, koji nije programer</string>
+    <string name="stores_off_title">%1$s je prodavnica treće strane</string>
+    <string name="stores_off_body">Prodavnice trećih strana su isključene. Prodavnica poslužuje vlastite kopije aplikacija, a ne datoteke sa vlastite web lokacije programera, a Tern je čita kroz interfejs koji je prodavnica napravila za vlastitu aplikaciju ili web lokaciju. Kada su uključene, Tern pita prodavnicu samo za aplikacije koje dodate iz nje, a dok se aplikacija ne prikači za certifikat, prva datoteka koju Tern instalira iz prodavnice odlučuje koji certifikat moraju nositi njena ažuriranja.</string>
+    <string name="stores_turn_on">Uključi prodavnice trećih strana</string>
+    <string name="stores_advice">Uključite Prodavnice trećih strana u postavkama da biste ponovo provjerili ovu aplikaciju.</string>
+    <string name="stores_status_paused">Pauzirano</string>
+    <string name="stores_row_paused">Prodavnice trećih strana su isključene</string>
+    <string name="stores_setting">Prodavnice trećih strana</string>
+    <string name="stores_setting_effect">APKPure, Aptoide, APKCombo, APKMirror, Tencent, Huawei AppGallery, Galaxy Store i vivo. One poslužuju vlastite kopije aplikacija, a ne datoteke sa vlastite web lokacije programera, i Tern ih čita kroz interfejse koje su napravile za vlastite aplikacije i web lokacije. Isključeno, Tern nijednu od njih ništa ne pita, pretraga ih izostavlja i aplikacije s njih su pauzirane.</string>
+    <string name="stores_off_tag">isključeno u postavkama</string>
+    <string name="stores_checksum_matched">Datoteka se podudara s kontrolnim zbirom prodavnice</string>
+    <string name="stores_explain_checksum_matched">Kontrolni zbir je otisak same datoteke. Prodavnica ga je dala, a datoteka koju je Tern preuzeo ima isti, pa je stigla onakva kakvu je prodavnica ima. Prodavnica nije programer, pa to ne govori ništa o tome ko je napravio datoteku. Certifikat to govori.</string>
+    <string name="stores_import_from_stores">Ove dolaze iz prodavnica trećih strana, koje poslužuju vlastite kopije aplikacija. Dok se aplikacija ne prikači za certifikat, prva datoteka koju Tern instalira iz njene prodavnice odlučuje koji certifikat njena ažuriranja moraju nositi.</string>
+    <string name="stores_import_paused">Prodavnice trećih strana su isključene, tako da su ove aplikacije pauzirane. Tern ne pita te prodavnice ništa dok ih ne uključite.</string>
+    <string name="stores_import_names">Iz prodavnica trećih strana</string>
+    <string name="share_obtainium_link">Podijeli kao Obtainium link</string>
+    <string name="share_obtainium_links">Podijeli kao Obtainium linkove</string>
+</resources>

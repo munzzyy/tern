@@ -78,6 +78,10 @@
             android:name=".install.InstallReceiver"
             android:exported="false" />
 
+        <receiver
+            android:name=".work.NotificationActions"
+            android:exported="false" />
+
         <!-- Hands a checked file, read-only, to the installer app the person chose. -->
         <provider
             android:name="androidx.core.content.FileProvider"

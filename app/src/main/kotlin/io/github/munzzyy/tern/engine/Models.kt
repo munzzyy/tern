@@ -248,6 +248,10 @@ data class Settings(
     val notifyFailures: Boolean = false,
     /** Off keeps the names of apps out of every notification, and with that off the lock screen. */
     val notifyNames: Boolean = true,
+    /** New releases of apps that are only tracked get a notification of their own. */
+    val notifyTracked: Boolean = true,
+    /** A quiet notification shows while a background check runs. */
+    val notifyChecking: Boolean = false,
     val keepInstallers: Boolean = false,
     /** Ask Android to make Tern the update owner of what it installs (Android 14 and later). */
     val claimUpdateOwnership: Boolean = false,

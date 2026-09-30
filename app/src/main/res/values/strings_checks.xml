@@ -31,5 +31,19 @@
     <string name="settings_phone_layout_effect">One pane and a bar at the bottom, however wide the screen.</string>
     <string name="density_minimal">Minimal</string>
     <string name="search_in">Search in</string>
+    <string name="engine_channel_tracked">New releases of tracked apps</string>
+    <string name="engine_channel_checking">Checking</string>
+    <string name="engine_notify_tracked_one">New release of %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d tracked app has a new release</item>
+        <item quantity="other">%1$d tracked apps have new releases</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">Checking %1$d app</item>
+        <item quantity="other">Checking %1$d apps</item>
+    </plurals>
+    <string name="settings_notify_tracked">When a tracked app has a new release</string>
+    <string name="settings_notify_checking">While checking in the background</string>
+    <string name="settings_notify_checking_effect">A quiet notification that goes away when the check is done.</string>
     <string name="engine_event_removed_uninstalled">Removed from the list, as it was uninstalled outside Tern</string>
 </resources>

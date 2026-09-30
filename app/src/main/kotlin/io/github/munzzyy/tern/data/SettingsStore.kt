@@ -21,6 +21,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             notifyInstalled = prefs.getBoolean("notifyInstalled", d.notifyInstalled),
             notifyFailures = prefs.getBoolean("notifyFailures", d.notifyFailures),
             notifyNames = prefs.getBoolean("notifyNames", d.notifyNames),
+            notifyTracked = prefs.getBoolean("notifyTracked", d.notifyTracked),
+            notifyChecking = prefs.getBoolean("notifyChecking", d.notifyChecking),
             keepInstallers = prefs.getBoolean("keepInstallers", d.keepInstallers),
             claimUpdateOwnership = prefs.getBoolean("claimUpdateOwnership", d.claimUpdateOwnership),
             openObtainiumLinks = prefs.getBoolean("openObtainiumLinks", d.openObtainiumLinks),
@@ -85,6 +87,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putBoolean("notifyInstalled", s.notifyInstalled)
             .putBoolean("notifyFailures", s.notifyFailures)
             .putBoolean("notifyNames", s.notifyNames)
+            .putBoolean("notifyTracked", s.notifyTracked)
+            .putBoolean("notifyChecking", s.notifyChecking)
             .putBoolean("keepInstallers", s.keepInstallers)
             .putBoolean("claimUpdateOwnership", s.claimUpdateOwnership)
             .putBoolean("openObtainiumLinks", s.openObtainiumLinks)

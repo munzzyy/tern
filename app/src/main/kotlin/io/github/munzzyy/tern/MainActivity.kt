@@ -28,17 +28,22 @@ import io.github.munzzyy.tern.ui.incomingAddInput
 import io.github.munzzyy.tern.ui.refreshLink
 import io.github.munzzyy.tern.ui.theme.TernTheme
 import io.github.munzzyy.tern.ui.theme.isDark
+import io.github.munzzyy.tern.work.Notifier
 import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.launch
 
 private const val PREFS = "ui"
 private const val KEY_FIRST_RUN_DONE = "first_run_done"
 private const val TAG = "TernMain"
+private const val MAX_APP_ID = 64
 
 private data class Incoming(val text: String, val nonce: Long)
 
 class MainActivity : ComponentActivity() {
     private var incoming by mutableStateOf<Incoming?>(null)
+
+    /** The app a notification asked to show. */
+    private var openApp by mutableStateOf<String?>(null)
     private var firstRunDone by mutableStateOf(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +69,12 @@ class MainActivity : ComponentActivity() {
                     incoming?.let {
                         stack.openAdd(it.text, it.nonce)
                         incoming = null
+                    }
+                }
+                LaunchedEffect(openApp) {
+                    openApp?.let { id ->
+                        if (engine.apps.value.any { it.id == id }) stack.showDetail(id)
+                        openApp = null
                     }
                 }
                 TernApp(
@@ -98,6 +109,10 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun receive(intent: Intent) {
+        intent.getStringExtra(Notifier.EXTRA_OPEN_APP)?.let { id ->
+            openApp = id.take(MAX_APP_ID)
+            return
+        }
         if (intent.action == Intent.ACTION_VIEW) {
             val refresh = try {
                 refreshLink(intent.dataString)

@@ -262,7 +262,14 @@ private fun NotificationsSection(s: Settings, update: Update) {
     SectionCard(title = stringResource(R.string.settings_notifications)) {
         SwitchRow(stringResource(R.string.settings_notify_updates), s.notifyUpdates, { v -> update { it.copy(notifyUpdates = v) } })
         SwitchRow(stringResource(R.string.settings_notify_installed), s.notifyInstalled, { v -> update { it.copy(notifyInstalled = v) } })
+        SwitchRow(stringResource(R.string.settings_notify_tracked), s.notifyTracked, { v -> update { it.copy(notifyTracked = v) } })
         SwitchRow(stringResource(R.string.settings_notify_failures), s.notifyFailures, { v -> update { it.copy(notifyFailures = v) } })
+        SwitchRow(
+            stringResource(R.string.settings_notify_checking),
+            s.notifyChecking,
+            { v -> update { it.copy(notifyChecking = v) } },
+            summary = stringResource(R.string.settings_notify_checking_effect),
+        )
         SwitchRow(
             stringResource(R.string.settings_notify_names),
             s.notifyNames,

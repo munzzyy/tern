@@ -437,7 +437,12 @@ internal class Installs(private val e: RealEngine) {
 
     suspend fun runScheduled(settings: Settings) {
         val targets = e.stored.values.filter { checkedInTheBackground(it.config) && e.inWholeListCheck(it.config) }.map { it.config.id }
-        val checked = e.checks.checkMany(targets)
+        if (settings.notifyChecking && targets.isNotEmpty()) e.notifier.checking(targets.size)
+        val checked = try {
+            e.checks.checkMany(targets)
+        } finally {
+            e.notifier.doneChecking()
+        }
         val installed = ArrayList<String>()
         val failed = ArrayList<String>()
         // Without the permission Android would ask from a notification and then call the install cancelled.
@@ -459,8 +464,11 @@ internal class Installs(private val e: RealEngine) {
             }
         }
         val names = { ids: List<String> -> ids.mapNotNull { e.stored[it]?.config?.name } }
+        val named = { ids: List<String> -> ids.mapNotNull { id -> e.stored[id]?.config?.name?.let { id to it } } }
         val fresh = checked.filter { it.newRelease && e.evaluations[it.id]?.status == AppStatus.UPDATE_AVAILABLE }.map { it.id }
-        if (settings.notifyUpdates) e.notifier.updates(names(fresh))
+        val tracked = checked.filter { it.newRelease && e.evaluations[it.id]?.status == AppStatus.NEW_RELEASE }.map { it.id }
+        if (settings.notifyUpdates) e.notifier.updates(named(fresh))
+        if (settings.notifyTracked) e.notifier.tracked(named(tracked))
         if (settings.notifyInstalled) e.notifier.installed(installed)
         if (settings.notifyFailures) e.notifier.failures(names(checked.filter { it.failed }.map { it.id }) + failed)
     }

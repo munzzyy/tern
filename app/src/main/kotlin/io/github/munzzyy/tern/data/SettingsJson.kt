@@ -30,6 +30,8 @@ object SettingsJson {
         Field.flag("notifyInstalled", { it.notifyInstalled }) { s, v -> s.copy(notifyInstalled = v) },
         Field.flag("notifyFailures", { it.notifyFailures }) { s, v -> s.copy(notifyFailures = v) },
         Field.flag("notifyNames", { it.notifyNames }) { s, v -> s.copy(notifyNames = v) },
+        Field.flag("notifyTracked", { it.notifyTracked }) { s, v -> s.copy(notifyTracked = v) },
+        Field.flag("notifyChecking", { it.notifyChecking }) { s, v -> s.copy(notifyChecking = v) },
         Field.flag("keepInstallers", { it.keepInstallers }) { s, v -> s.copy(keepInstallers = v) },
         Field.choice("theme", { it.theme }) { s, v -> s.copy(theme = v) },
         Field.choice("colorSource", { it.colorSource }) { s, v -> s.copy(colorSource = v) },

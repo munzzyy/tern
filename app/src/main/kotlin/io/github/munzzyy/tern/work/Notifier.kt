@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Icon
 import android.util.Log
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.real.Texts
@@ -26,13 +27,58 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
                 NotificationChannel(INSTALLED, texts.channelInstalled(), NotificationManager.IMPORTANCE_LOW),
                 NotificationChannel(ATTENTION, texts.channelAttention(), NotificationManager.IMPORTANCE_HIGH),
                 NotificationChannel(TRANSFERS, texts.channelTransfers(), NotificationManager.IMPORTANCE_LOW),
+                NotificationChannel(TRACKED, texts.channelTracked(), NotificationManager.IMPORTANCE_DEFAULT),
+                NotificationChannel(CHECKING, texts.channelChecking(), NotificationManager.IMPORTANCE_MIN),
             ),
         )
     }
 
-    fun updates(names: List<String>) {
-        if (names.isEmpty()) return
-        show(ID_UPDATES, updatesAbout(names))
+    /**
+     * [apps] are ids and names. A notification about one app opens its page and offers to update
+     * it; one about several offers to update them all. Either way nothing starts until it is tapped.
+     */
+    fun updates(apps: List<Pair<String, String>>) {
+        if (apps.isEmpty()) return
+        val single = apps.singleOrNull()
+        show(
+            ID_UPDATES,
+            updatesAbout(apps.map { it.second }) { b ->
+                if (single != null) b.setContentIntent(openApp(single.first))
+                val label = if (single != null) texts.actionUpdate() else texts.actionUpdateAll()
+                b.addAction(Notification.Action.Builder(Icon.createWithResource(c, R.drawable.ic_stat_update), label, NotificationActions.update(c, single?.first)).build())
+            },
+        )
+    }
+
+    /** New releases of apps that are only tracked, apart from the updates Tern can install. */
+    fun tracked(apps: List<Pair<String, String>>) {
+        if (apps.isEmpty()) return
+        val single = apps.singleOrNull()
+        val names = apps.map { it.second }
+        show(
+            ID_TRACKED,
+            about(TRACKED, R.drawable.ic_stat_update, texts.notifyTracked(names.size, null), texts.notifyTracked(names.size, names.singleOrNull()), names.joinToString()) { b ->
+                if (single != null) b.setContentIntent(openApp(single.first))
+            },
+        )
+    }
+
+    /** Shown, quietly, while a background check runs, when the settings ask for it. */
+    fun checking(count: Int) = show(
+        ID_CHECKING,
+        about(CHECKING, R.drawable.ic_stat_update, texts.notifyChecking(count), null, null) { b ->
+            b.setOngoing(true).setOnlyAlertOnce(true).setAutoCancel(false).setProgress(0, 0, true)
+        },
+    )
+
+    fun doneChecking() = manager.cancel(ID_CHECKING)
+
+    /** Opens the page of one app, from a notification about it alone. */
+    private fun openApp(appId: String): PendingIntent {
+        val open = (c.packageManager.getLaunchIntentForPackage(c.packageName) ?: Intent()).setPackage(c.packageName)
+            .putExtra(EXTRA_OPEN_APP, appId)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        return PendingIntent.getActivity(c, appId.hashCode(), open, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     fun installed(names: List<String>) {
@@ -63,8 +109,8 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
             }
         }
 
-    fun updatesAbout(apps: List<String>): Notification =
-        about(UPDATES, R.drawable.ic_stat_update, texts.notifyUpdates(apps.size, null), texts.notifyUpdates(apps.size, apps.singleOrNull()), apps.joinToString())
+    fun updatesAbout(apps: List<String>, more: (Notification.Builder) -> Unit = {}): Notification =
+        about(UPDATES, R.drawable.ic_stat_update, texts.notifyUpdates(apps.size, null), texts.notifyUpdates(apps.size, apps.singleOrNull()), apps.joinToString(), more)
 
     fun installedAbout(apps: List<String>): Notification =
         about(INSTALLED, R.drawable.ic_stat_done, texts.notifyInstalled(apps.size, null), texts.notifyInstalled(apps.size, apps.singleOrNull()), apps.joinToString())
@@ -108,10 +154,17 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
         const val INSTALLED = "installed"
         const val ATTENTION = "attention"
         const val TRANSFERS = "transfers"
+        const val TRACKED = "tracked"
+        const val CHECKING = "checking"
         const val ID_UPDATES = 1
         const val ID_INSTALLED = 2
         const val ID_FAILURES = 3
         const val ID_TRANSFER = 4
+        const val ID_TRACKED = 5
+        const val ID_CHECKING = 6
+
+        /** The app whose page a notification opens. */
+        const val EXTRA_OPEN_APP = "io.github.munzzyy.tern.OPEN_APP"
         private const val ID_CONFIRM_BASE = 0x10000
         private const val PROGRESS_SCALE = 1000
         private const val TAG = "TernNotify"

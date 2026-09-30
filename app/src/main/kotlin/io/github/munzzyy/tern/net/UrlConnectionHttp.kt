@@ -46,7 +46,7 @@ class UrlConnectionHttp(
                 connection.disconnect()
                 throw silentProxy(e)
             }
-            if (status in REDIRECTS) {
+            if (status in REDIRECTS && request.followRedirects) {
                 val location = connection.getHeaderField("Location")
                 connection.disconnect()
                 if (location.isNullOrBlank()) throw IOException("Redirect without a Location from $url")

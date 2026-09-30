@@ -12,6 +12,8 @@ data class HttpRequest(
     val headers: Map<String, String> = emptyMap(),
     /** Sent only to the host of [url]; an implementation must drop it when a redirect leaves that host. */
     val authorization: String? = null,
+    /** False answers a redirect with the redirect itself, so a source can read where it points without going there. */
+    val followRedirects: Boolean = true,
 )
 
 class HttpResponse(

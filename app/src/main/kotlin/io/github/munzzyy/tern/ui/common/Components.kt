@@ -59,6 +59,7 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -70,6 +71,8 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Dp
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.ui.icons.Glyphs
@@ -749,6 +752,19 @@ fun ChoiceChip(text: String, selected: Boolean, onClick: () -> Unit, modifier: M
         if (dot != null && !selected) ColorDot(dot)
         Text(text, style = MaterialTheme.typography.labelLarge, color = ink)
     }
+}
+
+/**
+ * Takes presses over at least [min] each way around something smaller, such as a link inside a
+ * row, without taking that room from the layout: the rest reaches over what lies around it. Put
+ * it first, and centre the content after the clickable.
+ */
+fun Modifier.pressRoom(min: Dp): Modifier = layout { measurable, constraints ->
+    val side = min.roundToPx()
+    val width = measurable.maxIntrinsicWidth(constraints.maxHeight).coerceIn(constraints.minWidth, constraints.maxWidth)
+    val height = measurable.minIntrinsicHeight(width).coerceIn(constraints.minHeight, constraints.maxHeight)
+    val pressed = measurable.measure(Constraints.fixed(maxOf(width, side), maxOf(height, side)))
+    layout(width, height) { pressed.placeRelative((width - pressed.width) / 2, (height - pressed.height) / 2) }
 }
 
 /** A small round swatch, such as the colour of a category next to its name. */

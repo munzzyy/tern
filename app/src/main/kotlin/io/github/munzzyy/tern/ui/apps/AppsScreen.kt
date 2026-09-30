@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -448,7 +449,7 @@ private fun LazyListScope.rows(
 
 /** The name of a group, how many apps it holds, and a press to fold it away or open it again. */
 @Composable
-private fun GroupHeader(title: String, count: Int, folded: Boolean, dot: Color?, focus: Modifier, onToggle: () -> Unit) {
+internal fun GroupHeader(title: String, count: Int, folded: Boolean, dot: Color?, focus: Modifier, onToggle: () -> Unit) {
     val look = LocalLook.current
     val spoken = stringResource(if (folded) R.string.group_folded else R.string.group_open)
     Row(
@@ -465,6 +466,7 @@ private fun GroupHeader(title: String, count: Int, folded: Boolean, dot: Color?,
                 heading()
                 stateDescription = spoken
             }
+            .heightIn(min = look.touchTarget)
             .padding(horizontal = look.rowPaddingHorizontal - look.focusRoom, vertical = look.gapSmall),
     ) {
         if (dot != null) ColorDot(dot)

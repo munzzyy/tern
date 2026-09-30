@@ -1,0 +1,43 @@
+{
+  "rtnCode": 0,
+  "count": 3,
+  "hasNextPage": 0,
+  "name": "Apps",
+  "layoutData": [
+    {
+      "layoutName": "searchresultlistcard",
+      "dataList": [
+        {
+          "appid": "C100000001",
+          "name": "Example App",
+          "package": "org.example.app",
+          "memo": "An app for trying things out",
+          "appVersionName": "8.4.0",
+          "icon": "https://appimg-drcn.dbankcdn.com/application/icon144/65/0123456789abcdef0123456789abcdef.webp"
+        },
+        {
+          "appInfo": {
+            "appid": "C100000002",
+            "name": "Example Notes",
+            "package": "org.example.notes",
+            "memo": "Notes, for trying things out"
+          }
+        },
+        {
+          "name": "Related searches",
+          "maxRows": 2
+        }
+      ]
+    },
+    {
+      "layoutName": "searchrecommendcard",
+      "dataList": [
+        {
+          "appid": "C100000001",
+          "name": "Example App",
+          "package": "org.example.app"
+        }
+      ]
+    }
+  ]
+}

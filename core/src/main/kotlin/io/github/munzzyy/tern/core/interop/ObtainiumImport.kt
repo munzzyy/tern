@@ -111,7 +111,7 @@ object ObtainiumImport {
 
     private fun mapSource(url: String, overrideSource: String?, settings: JsonObject): SourceSpec? {
         val address = Urls.normalize(url) ?: return null
-        STORE_SOURCES[overrideSource]?.let { type -> return store(type, address, settings) }
+        STORE_SOURCES[overrideSource]?.let { type -> return store(type, Urls.hashRouted(url) ?: address, settings) ?: store(type, address, settings) }
         return when (overrideSource) {
             "GitHub" -> GitHubSource().match(address)
             "GitLab" -> GitLabSource().match(address) ?: repository(SourceTypes.GITLAB, address, minSegments = 2, maxSegments = 12)
@@ -123,7 +123,7 @@ object ObtainiumImport {
             "Jenkins" -> JenkinsSource().match(address)
             "SourceHut" -> SourceHutSource().match(address)
             "SourceForge" -> SourceForgeSource().match(address)
-            null -> matchByUrl(address, settings)
+            null -> Urls.hashRouted(url)?.let { routed -> STORE_SOURCES.values.firstNotNullOfOrNull { store(it, routed, settings) } } ?: matchByUrl(address, settings)
             else -> null
         }
     }

@@ -37,6 +37,17 @@ class ObtainiumImportTest {
     }
 
     @Test
+    fun aStoreAddressRoutedAfterAHashKeepsItsApp() {
+        fun one(url: String, override: String?): String? {
+            val source = if (override == null) "null" else "\"$override\""
+            val text = """{"apps":[{"id":"x.y","url":"$url","author":"","name":"Hashed","overrideSource":$source,"additionalSettings":"{}"}]}"""
+            return ObtainiumImport.read(text).apps.singleOrNull()?.source?.url
+        }
+        assertEquals("https://appgallery.huawei.com/app/C100000000", one("https://appgallery.huawei.com/#/app/C100000000", "HuaweiAppGallery"))
+        assertEquals("https://appgallery.huawei.com/app/C100000000", one("https://appgallery.huawei.com/#/app/C100000000", null))
+    }
+
+    @Test
     fun inferSourceFromUrlWhenOverrideSourceIsNull() {
         val twelve = result().apps.first { it.name == "Twelve" }
         assertEquals(SourceTypes.DIRECT, twelve.source.type)

@@ -7,9 +7,18 @@ object IconAddresses {
     const val MAX_ADDRESSES = 4
     const val MAX_LENGTH = 2048
 
-    /** The only hosts an icon may come from besides the source's own, by the host of the source. */
+    /**
+     * The only hosts an icon may come from besides the source's own, by the host of the source.
+     * The stores keep their images on their own CDNs, which the store's own pages load too.
+     */
     val OTHER_HOSTS: Map<String, Set<String>> = mapOf(
         "github.com" to setOf("raw.githubusercontent.com", "avatars.githubusercontent.com"),
+        "appgallery.huawei.com" to setOf("appimg-dra.dbankcdn.com", "appimg-drcn.dbankcdn.com"),
+        "appgallery.huawei.ru" to setOf("appimg-dra.dbankcdn.com", "appimg-drcn.dbankcdn.com"),
+        "detail-browser.vivo.com.cn" to setOf("imgwsdl.vivo.com.cn", "appstoreimg-ipv6.vivo.com.cn"),
+        "sj.qq.com" to setOf("pp.myapp.com"),
+        "www.coolapk.com" to setOf("pp.myapp.com"),
+        "www.rustore.ru" to setOf("static.rustore.ru"),
     )
 
     /** What is left of [candidates], in their order, for a source at [sourceUrl]: HTTPS only, and no host but the allowed ones. */

@@ -1,0 +1,45 @@
+{
+  "code": 0,
+  "success": true,
+  "data": {
+    "appSearchResponse": {
+      "result": true,
+      "pageNo": 0,
+      "pageSize": 20,
+      "maxPage": 1,
+      "totalCount": 3,
+      "from": "local",
+      "value": [
+        {
+          "id": 12345,
+          "title_zh": "Example App",
+          "package_name": "org.example.app",
+          "developer": "Example Labs",
+          "download_count": 1000,
+          "official": "1",
+          "icon_url": "https://appstoreimg-ipv6.vivo.com.cn/appstore/developer/icon/20260101/example.png",
+          "version_name": "3.1.0",
+          "version_code": 310,
+          "size": 20480,
+          "from": "local",
+          "score": 4.5,
+          "remark": "An app for trying things out",
+          "atype": 1
+        },
+        {
+          "id": 67890,
+          "title_zh": "Example Notes",
+          "package_name": "org.example.notes",
+          "developer": "Example Labs",
+          "version_name": "1.0",
+          "version_code": 1,
+          "remark": "Notes, for trying things out",
+          "atype": 1
+        },
+        {
+          "title_zh": "A card without an id"
+        }
+      ]
+    }
+  }
+}

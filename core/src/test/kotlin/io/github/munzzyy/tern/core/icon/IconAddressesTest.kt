@@ -66,7 +66,15 @@ class IconAddressesTest {
     @Test
     fun theHostsAllowedBesidesTheSourcesOwnAreListedInOnePlace() {
         assertEquals(
-            mapOf("github.com" to setOf("raw.githubusercontent.com", "avatars.githubusercontent.com")),
+            mapOf(
+                "github.com" to setOf("raw.githubusercontent.com", "avatars.githubusercontent.com"),
+                "appgallery.huawei.com" to setOf("appimg-dra.dbankcdn.com", "appimg-drcn.dbankcdn.com"),
+                "appgallery.huawei.ru" to setOf("appimg-dra.dbankcdn.com", "appimg-drcn.dbankcdn.com"),
+                "detail-browser.vivo.com.cn" to setOf("imgwsdl.vivo.com.cn", "appstoreimg-ipv6.vivo.com.cn"),
+                "sj.qq.com" to setOf("pp.myapp.com"),
+                "www.coolapk.com" to setOf("pp.myapp.com"),
+                "www.rustore.ru" to setOf("static.rustore.ru"),
+            ),
             IconAddresses.OTHER_HOSTS,
         )
     }

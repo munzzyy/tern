@@ -68,6 +68,13 @@ class SourceRegistry(val sources: List<Source>) {
     val searchable: List<Searchable> get() = sources.filterIsInstance<Searchable>()
 
     fun match(url: String): SourceSpec? {
+        // A store that routes its pages after '#' reads the address as typed; a page reader would only see its front page.
+        Urls.hashRouted(url)?.let { routed ->
+            for (source in sources) {
+                if (source.type == SourceTypes.HTML || source.type == SourceTypes.DIRECT) continue
+                source.match(routed)?.let { return it }
+            }
+        }
         val normalized = Urls.normalize(url) ?: return null
         for (source in sources) {
             source.match(normalized)?.let { return it }
@@ -77,7 +84,7 @@ class SourceRegistry(val sources: List<Source>) {
 
     fun detect(url: String, context: CheckContext): SourceSpec? {
         val normalized = Urls.normalize(url) ?: return null
-        match(normalized)?.let { return it }
+        match(url)?.let { return it }
         for (source in sources) {
             val spec = try {
                 source.probe(normalized, context)

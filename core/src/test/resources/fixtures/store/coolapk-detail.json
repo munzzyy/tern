@@ -1,0 +1,33 @@
+{
+  "data": {
+    "id": 4242,
+    "apktype": 1,
+    "catid": 7,
+    "title": "Example App",
+    "subtitle": "An app for trying things out",
+    "version": "2.0.1",
+    "apkname": "org.example.app",
+    "apkmd5": "0123456789abcdef0123456789abcdef",
+    "apkversionname": "2.0.1",
+    "apkversioncode": 20001,
+    "apksize": "5.2M",
+    "apklength": 5452595,
+    "sdkversion": 24,
+    "logo": "http://pp.myapp.com/ma_icon/0/icon_4242_1611306222/256",
+    "url": "/apk/org.example.app",
+    "description": "",
+    "developername": "Example Labs",
+    "pubdate": 1326901827,
+    "lastupdate": 1790675588,
+    "status": 1,
+    "entityType": "apk",
+    "entityId": 4242,
+    "packageName": "org.example.app",
+    "apkfile": "/apk_file/2026/0929/Example-2.0.1-20001.apk",
+    "changehistory": "2026-09-29: 2.0.1\n2026-09-01: 2.0.0",
+    "introduce": "<p>An app for trying things out.</p>",
+    "changelog": "Fixed a crash when opening the settings\r\nStarts faster",
+    "relatedRows": [],
+    "tabList": []
+  }
+}

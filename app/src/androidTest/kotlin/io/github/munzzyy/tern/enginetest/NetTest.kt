@@ -48,7 +48,7 @@ class NetTest {
             val downloader = Downloader(local, dir, Texts(targetContext))
             val url = "http://127.0.0.1:${server.port}/app.apk"
             try {
-                downloader.fetch("resume", url, null) { _, _ -> }
+                downloader.fetch("resume", url, url, null) { _, _ -> }
                 fail("the cut connection was not noticed")
             } catch (e: StepFailure) {
                 assertEquals(ProblemKind.NETWORK, e.kind)
@@ -56,7 +56,7 @@ class NetTest {
             val kept = downloader.folder("resume").listFiles().orEmpty().single { it.name.endsWith(".part") }.length()
             assertTrue("partial file holds $kept bytes", kept in 1..299_999)
 
-            val result = downloader.fetch("resume", url, null) { _, _ -> }
+            val result = downloader.fetch("resume", url, url, null) { _, _ -> }
             assertEquals(Fingerprints.sha256(content), result.sha256)
             assertArrayEquals(content, result.file.readBytes())
             val second = server.requests[1]
@@ -88,8 +88,8 @@ class NetTest {
         }.use { server ->
             val downloader = Downloader(local, dir, Texts(targetContext))
             val url = "http://127.0.0.1:${server.port}/app.apk"
-            runCatching { downloader.fetch("etag", url, null) { _, _ -> } }
-            val result = downloader.fetch("etag", url, null) { _, _ -> }
+            runCatching { downloader.fetch("etag", url, url, null) { _, _ -> } }
+            val result = downloader.fetch("etag", url, url, null) { _, _ -> }
             assertEquals("\"e1\"", server.requests[1].header("If-Range"))
             assertEquals(Fingerprints.sha256(second), result.sha256)
             assertArrayEquals(second, result.file.readBytes())
@@ -106,7 +106,7 @@ class NetTest {
             var looks = 0
             val downloader = Downloader(local, dir, Texts(targetContext), freeBytes = { if (looks++ == 0) Long.MAX_VALUE else 1024L * 1024 })
             try {
-                downloader.fetch("endless", "http://127.0.0.1:${server.port}/app.apk", null) { _, _ -> }
+                downloader.fetch("endless", "http://127.0.0.1:${server.port}/app.apk", "http://127.0.0.1:${server.port}/app.apk", null) { _, _ -> }
                 fail("twelve megabytes were written with one megabyte free")
             } catch (e: StepFailure) {
                 assertEquals(ProblemKind.STORAGE, e.kind)
@@ -124,7 +124,7 @@ class NetTest {
             out.write(content)
         }.use { server ->
             val downloader = Downloader(local, dir, Texts(targetContext), freeBytes = { 10L * 1024 * 1024 * 1024 })
-            val result = downloader.fetch("roomy", "http://127.0.0.1:${server.port}/app.apk", null) { _, _ -> }
+            val result = downloader.fetch("roomy", "http://127.0.0.1:${server.port}/app.apk", "http://127.0.0.1:${server.port}/app.apk", null) { _, _ -> }
             assertEquals(Fingerprints.sha256(content), result.sha256)
             assertEquals(content.size.toLong(), result.size)
         }
@@ -148,12 +148,12 @@ class NetTest {
             var free = Long.MAX_VALUE
             val downloader = Downloader(local, dir, Texts(targetContext), freeBytes = { free })
             val url = "http://127.0.0.1:${server.port}/app.apk"
-            runCatching { downloader.fetch("full", url, null) { _, _ -> } }
+            runCatching { downloader.fetch("full", url, url, null) { _, _ -> } }
             assertTrue(downloader.folder("full").listFiles().orEmpty().any { it.name.endsWith(".part") })
 
             free = 1024
             try {
-                downloader.fetch("full", url, null) { _, _ -> }
+                downloader.fetch("full", url, url, null) { _, _ -> }
                 fail("a download was carried on with a kilobyte free")
             } catch (e: StepFailure) {
                 assertEquals(ProblemKind.STORAGE, e.kind)

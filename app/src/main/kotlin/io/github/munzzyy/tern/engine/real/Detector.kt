@@ -166,7 +166,8 @@ internal class Detector(private val e: RealEngine) {
         val warnings = ArrayList<String>()
 
         var eval = e.evaluator.evaluate(config, state, e.readInstalled(config.packageName), e.inspectorFor(config.source))
-        if (carried == null && eval.latest == null && eval.problem?.message == e.texts.onlyPrereleases()) {
+        val onlyPrereleases = carried == null && eval.latest == null && eval.problem?.message == e.texts.onlyPrereleases()
+        if (onlyPrereleases) {
             config = config.copy(releases = config.releases.copy(includePrereleases = true))
             eval = e.evaluator.evaluate(config, state, e.readInstalled(config.packageName), e.inspectorFor(config.source))
             warnings += e.texts.warnPrerelease()
@@ -210,6 +211,7 @@ internal class Detector(private val e: RealEngine) {
             iconUrls = IconAddresses.accepted(spec.url, listing.iconUrls),
             builtInPin = builtIn.isNotEmpty(),
             packageName = given,
+            prereleases = onlyPrereleases,
         )
     }
 

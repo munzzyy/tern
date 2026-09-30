@@ -202,6 +202,8 @@ sealed interface Detection {
         val builtInPin: Boolean = false,
         /** The package name the person gave. The app is stored with it, and a file of another package is refused. */
         val packageName: String? = null,
+        /** True when only pre-releases are published, so the app is added following them even where none has a file for this device. */
+        val prereleases: Boolean = false,
     ) : Detection
 
     /**

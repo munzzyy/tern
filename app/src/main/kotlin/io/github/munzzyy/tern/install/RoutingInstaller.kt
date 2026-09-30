@@ -38,6 +38,10 @@ class RoutingInstaller(
 
     override fun confirmation(sessionId: Int): Intent? = ownerOf(sessionId).confirmation(sessionId)
 
+    override val placesObb: Boolean get() = current().placesObb
+
+    override fun placeObb(sessionId: Int, packageName: String, files: List<ObbFile>): ObbOutcome = ownerOf(sessionId).placeObb(sessionId, packageName, files)
+
     /** After a restart nobody remembers who made a session: the one that still lists it made it. */
     private fun ownerOf(sessionId: Int): Installer =
         owners[sessionId] ?: all.firstOrNull { sessionId in it.liveSessionIds() } ?: system

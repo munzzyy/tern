@@ -39,8 +39,10 @@ import java.util.zip.ZipOutputStream
 /**
  * What passed the gate: the files to hand to the installer, and what Android itself read from the
  * base. Every file among them had its signature verified, by Android or by Tern's own verifier.
+ * [obbs] are the OBB files of the archive, which nothing signs: they only go to the app's OBB
+ * folder, and only after the app was installed.
  */
-data class GatePass(val apks: List<File>, val facts: FileFacts, val split: Boolean)
+data class GatePass(val apks: List<File>, val facts: FileFacts, val split: Boolean, val obbs: List<ObbFile> = emptyList())
 
 data class GateRequest(
     val file: File,
@@ -60,6 +62,13 @@ data class GateRequest(
     val allowDowngrade: Boolean = false,
     /** Which files inside an archive or a bundle may be installed, by their names there. */
     val installsInside: (String) -> Boolean = { true },
+    /**
+     * The splits fetched beside [file] when the source names each file of the app by itself. They
+     * are chosen and checked with it as the APKs of one bundle. [fileSha256] is the base's own.
+     */
+    val parts: List<FetchedPart> = emptyList(),
+    /** Whether the OBB files of an archive are unpacked, for an installer that can put them in place; otherwise only their names are read. */
+    val unpacksObb: Boolean = false,
 )
 
 fun interface Gate {
@@ -101,13 +110,17 @@ class InstallGate(
         }
     }
 
-    private class Chosen(val apks: List<File>, val split: Boolean)
+    private class Chosen(val apks: List<File>, val split: Boolean, val obbs: List<ObbFile> = emptyList())
 
     private fun choose(request: GateRequest): Chosen {
-        val file = when (val packing = packingOf(request.file)) {
-            Packing.ZSTD -> throw StepFailure(ProblemKind.UNSUPPORTED, texts.archiveCompressionUnsupported())
-            Packing.NONE -> if (isTar(request.file)) fromTar(request, packing) else request.file
-            else -> fromTar(request, packing)
+        val file = if (request.parts.isNotEmpty()) {
+            joined(request)
+        } else {
+            when (val packing = packingOf(request.file)) {
+                Packing.ZSTD -> throw StepFailure(ProblemKind.UNSUPPORTED, texts.archiveCompressionUnsupported())
+                Packing.NONE -> if (isTar(request.file)) fromTar(request, packing) else request.file
+                else -> fromTar(request, packing)
+            }
         }
         FileSource(file).use { source ->
             val index = try {
@@ -168,7 +181,22 @@ class InstallGate(
         }
         val files = chosenEntries.map(::fileFor)
         extracted.filterKeys { it !in chosenEntries }.values.forEach { it.delete() }
-        return Chosen(files, split)
+        // OBB files keep their names in the app's folder, so a name that could leave it refuses the archive.
+        val obbEntries = index.entries.filter { !it.isDirectory && ObbNames.isObb(it.name) }
+        if (obbEntries.size > MAX_APKS) throw StepFailure(ProblemKind.PARSE, texts.unreadableFile("${obbEntries.size} OBB files"))
+        val obbs = obbEntries.mapIndexed { i, entry ->
+            val name = ObbNames.of(entry.name) ?: throw StepFailure(ProblemKind.PARSE, texts.obbNameRefused())
+            val file = if (request.unpacksObb) {
+                budget -= entry.uncompressedSize
+                if (budget < 0) throw StepFailure(ProblemKind.STORAGE, texts.fileTooLarge())
+                File(request.staging, "obb-$i.obb").also { ZipExtract.extract(index, entry, it, Downloader.MAX_BYTES) }
+            } else {
+                null
+            }
+            ObbFile(name, file)
+        }
+        if (obbs.distinctBy { it.name }.size != obbs.size) throw StepFailure(ProblemKind.PARSE, texts.obbNameRefused())
+        return Chosen(files, split, obbs)
     }
 
     private fun bestOf(bases: List<ZipEntry>, manifests: Map<ZipEntry, ManifestInfo>, device: DeviceProfile): ZipEntry {
@@ -256,7 +284,24 @@ class InstallGate(
             testOnly = false,
             verified = true,
         )
-        return GatePass(chosen.apks, facts, chosen.split)
+        return GatePass(chosen.apks, facts, chosen.split, chosen.obbs)
+    }
+
+    /**
+     * A base and the splits fetched one by one beside it, put into one zip in the staging folder,
+     * so that they are chosen and checked exactly as the APKs of a bundle are.
+     */
+    private fun joined(request: GateRequest): File {
+        val target = File(request.staging, "parts.zip")
+        val all = listOf(FetchedPart(request.asset.name, request.file)) + request.parts
+        try {
+            PartsZip.join(all, target, File(request.staging, "part.apk"), Downloader.MAX_BYTES, MAX_APKS)
+        } catch (_: PartsZip.TooLarge) {
+            throw StepFailure(ProblemKind.STORAGE, texts.fileTooLarge())
+        } catch (e: ApkFormatException) {
+            throw StepFailure(ProblemKind.PARSE, texts.notAnApk(e.message))
+        }
+        return target
     }
 
     /** How the file is compressed, as its first bytes say whatever its name. */
@@ -284,10 +329,10 @@ class InstallGate(
     }
 
     /**
-     * The APKs of a tar archive, plain or compressed with gzip, bzip2 or xz, put into a zip in the
-     * staging folder, so that they are chosen and checked exactly as the APKs of a zip are. Only the
-     * files the app's filter lets through are taken, and never more than a download may hold: the
-     * archive may not unpack to more than that either.
+     * The APKs and OBB files of a tar archive, plain or compressed with gzip, bzip2 or xz, put into a
+     * zip in the staging folder, so that they are chosen and checked exactly as those of a zip are.
+     * Only the files the app's filter lets through are taken, and never more than a download may
+     * hold: the archive may not unpack to more than that either.
      */
     private fun fromTar(request: GateRequest, packing: Packing): File {
         val target = File(request.staging, "archive.zip")
@@ -297,10 +342,11 @@ class InstallGate(
             ZipOutputStream(FileOutputStream(target)).use { zip ->
                 zip.setLevel(Deflater.NO_COMPRESSION)
                 TarReader.read(input) { entry, body ->
-                    if (!entry.name.endsWith(".apk", ignoreCase = true)) return@read
+                    val obb = ObbNames.isObb(entry.name)
+                    if (!entry.name.endsWith(".apk", ignoreCase = true) && !obb) return@read
                     total += entry.size
                     if (total > Downloader.MAX_BYTES) throw StepFailure(ProblemKind.STORAGE, texts.fileTooLarge())
-                    if (++count > MAX_APKS) throw StepFailure(ProblemKind.PARSE, texts.unreadableFile("$count APKs"))
+                    if (!obb && ++count > MAX_APKS) throw StepFailure(ProblemKind.PARSE, texts.unreadableFile("$count APKs"))
                     // The name inside the zip keeps the one the archive gave, so the filter reads the same name either way.
                     zip.putNextEntry(java.util.zip.ZipEntry(entry.name.trimStart('/').take(MAX_NAME)))
                     body.copyTo(zip)

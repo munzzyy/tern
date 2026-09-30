@@ -26,8 +26,12 @@ import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.Progress
 import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.install.Downloader
+import io.github.munzzyy.tern.install.FetchedPart
 import io.github.munzzyy.tern.install.GateRequest
+import io.github.munzzyy.tern.install.ObbFile
+import io.github.munzzyy.tern.install.ObbOutcome
 import io.github.munzzyy.tern.install.OtherAppInstaller
+import io.github.munzzyy.tern.install.PartsZip
 import io.github.munzzyy.tern.install.StepFailure
 import io.github.munzzyy.tern.work.TransferService
 import java.io.File
@@ -179,17 +183,24 @@ internal class Installs(private val e: RealEngine) {
             e.setProgress(appId, Progress(Phase.QUEUED))
             val expected = expectedChecksum(config, chosenRelease, chosenAsset)
             e.setProgress(appId, Progress(Phase.DOWNLOADING, 0, chosenAsset.size))
-            val from = where(config, chosenAsset)
-            // A token goes only to the host it was given for, never to where a source sends the download.
-            val sameHost = Urls.host(from.url) == Urls.host(chosenAsset.url)
-            val authorization = if (chosenAsset.needsAuth && sameHost) e.tokens.tokenFor(Urls.host(from.url))?.let { "Bearer $it" } else null
-            val key = Downloader.key(chosenRelease.id, chosenAsset.url)
-            val download = inTurn {
-                e.downloader.fetch(appId, key, from.url, authorization, from.headers) { done, total ->
-                    e.setProgress(appId, Progress(Phase.DOWNLOADING, done, total ?: chosenAsset.size))
+            // A base and its splits come one by one, each from its own address, and count as one download.
+            val files = filesOf(chosenAsset)
+            var before = 0L
+            val downloads = inTurn {
+                files.map { file ->
+                    val from = where(config, file)
+                    // A token goes only to the host it was given for, never to where a source sends the download.
+                    val sameHost = Urls.host(from.url) == Urls.host(file.url)
+                    val authorization = if (file.needsAuth && sameHost) e.tokens.tokenFor(Urls.host(from.url))?.let { "Bearer $it" } else null
+                    e.downloader.fetch(appId, Downloader.key(chosenRelease.id, file.url), from.url, authorization, from.headers) { done, total ->
+                        val whole = if (files.size == 1) total ?: chosenAsset.size else chosenAsset.size
+                        e.setProgress(appId, Progress(Phase.DOWNLOADING, before + done, whole))
+                    }.also { before += it.size }
                 }
             }
-            if (!download.reused) e.event(appId, EventKind.DOWNLOADED, e.texts.eventDownloaded(download.size))
+            val download = downloads.first()
+            val fetched = downloads.filterNot { it.reused }
+            if (fetched.isNotEmpty()) e.event(appId, EventKind.DOWNLOADED, e.texts.eventDownloaded(fetched.sumOf { it.size }))
 
             e.setProgress(appId, Progress(Phase.VERIFYING))
             val request = GateRequest(
@@ -205,6 +216,8 @@ internal class Installs(private val e: RealEngine) {
                 builtInPin = e.builtIn.hold(config),
                 allowDowngrade = e.settings.value.allowDowngrades && e.canDowngrade(),
                 installsInside = { name -> AssetPicker.installsInside(config.assets, name) },
+                parts = files.drop(1).zip(downloads.drop(1)) { file, got -> FetchedPart(file.name, got.file) },
+                unpacksObb = e.installer.placesObb,
             )
             val pass = runInterruptible { e.gate.check(request) }
             val facts = pass.facts.copy(checksumMatchedFrom = expected?.second, fileSha256 = download.sha256)
@@ -226,12 +239,14 @@ internal class Installs(private val e: RealEngine) {
                 version = facts.versionName ?: chosenRelease.version,
                 versionCode = facts.versionCode,
                 fileSha256 = download.sha256,
-                fileSize = download.size,
+                fileSize = downloads.sumOf { it.size },
                 assetUrl = chosenAsset.url,
                 startedAtMs = e.nowMs(),
                 signers = facts.signers,
+                partUrls = chosenAsset.parts,
             )
             commit(appId, pending)
+            if (pass.obbs.isNotEmpty()) placeObb(appId, sessionId, facts.packageName, chosenAsset, pass.obbs)
             sessionId
         } catch (failure: StepFailure) {
             fail(appId, release, asset, failure.problem)
@@ -269,6 +284,27 @@ internal class Installs(private val e: RealEngine) {
 
     suspend fun awaitOutcome(appId: String, timeoutMs: Long): Int? = outcomes[appId]?.let { withTimeoutOrNull(timeoutMs) { it.await() } }
 
+    /**
+     * Puts the OBB files of the archive in the app's OBB folder once the install succeeded. Only
+     * the Shizuku and root installers can write there, and Tern asks for no storage of its own, so
+     * with another installer the activity says where the files are instead.
+     */
+    private suspend fun placeObb(appId: String, sessionId: Int, packageName: String, asset: Asset, obbs: List<ObbFile>) {
+        val folder = "Android/obb/$packageName"
+        val names = obbs.joinToString(", ") { it.name }
+        val message = try {
+            when (runInterruptible { e.installer.placeObb(sessionId, packageName, obbs) }) {
+                ObbOutcome.PLACED -> e.texts.obbPlaced(obbs.size, folder)
+                ObbOutcome.CANNOT -> e.texts.obbNotPlaced(folder, asset.name, names)
+                ObbOutcome.NOT_INSTALLED -> return
+            }
+        } catch (ex: IOException) {
+            Log.w(TAG, "OBB files of $appId were not put in place: ${ex.message}")
+            e.texts.obbFailed(folder, ex.message, asset.name, names)
+        }
+        e.event(appId, EventKind.MOVED, message)
+    }
+
     private fun expectedChecksum(config: AppConfig, release: Release, asset: Asset): Pair<String, String>? {
         asset.sha256?.let { sha -> return normalized(sha) to e.evaluator.digestLabel(config.source.type) }
         var fetched: Asset? = null
@@ -295,6 +331,13 @@ internal class Installs(private val e: RealEngine) {
         return normalized(sha) to source
     }
 
+    /**
+     * The files [asset] stands for, each as an asset of its own: the file it names, then the splits
+     * it names beside it. A checksum and a size belong to the asset as a whole, so a split has none.
+     */
+    private fun filesOf(asset: Asset): List<Asset> =
+        listOf(asset) + asset.parts.map { url -> asset.copy(name = PartsZip.nameOf(url), url = url, size = null, sha256 = null, signers = emptyList(), parts = emptyList()) }
+
     /** Where the file is to be fetched from now: a source whose links expire is asked for a fresh one. */
     private suspend fun where(config: AppConfig, asset: Asset): Download = runInterruptible(Dispatchers.IO) {
         try {
@@ -312,7 +355,7 @@ internal class Installs(private val e: RealEngine) {
         if (problem.kind in GATE_KINDS && release != null && asset != null) {
             e.saveState(appId) { it.copy(block = GateBlock(release.id, asset.url, problem), installProblem = null) }
             e.event(appId, EventKind.BLOCKED, problem.message)
-            e.downloader.discard(appId, Downloader.key(release.id, asset.url))
+            for (url in listOf(asset.url) + asset.parts) e.downloader.discard(appId, Downloader.key(release.id, url))
         } else {
             e.saveState(appId) { it.copy(installProblem = problem) }
             e.event(appId, EventKind.FAILED, problem.message)
@@ -383,7 +426,9 @@ internal class Installs(private val e: RealEngine) {
         }
         e.event(appId, EventKind.INSTALLED, e.texts.eventInstalled(pending.version, now.app.versionCode))
         e.notifier.installedUpdate(appId) { id -> e.stored[id]?.config?.shownName?.takeIf { e.evaluations[id]?.status == AppStatus.UPDATE_AVAILABLE } }
-        if (!e.settings.value.keepInstallers) e.downloader.discard(appId, Downloader.key(pending.releaseId, pending.assetUrl))
+        if (!e.settings.value.keepInstallers) {
+            for (url in listOf(pending.assetUrl) + pending.partUrls) e.downloader.discard(appId, Downloader.key(pending.releaseId, url))
+        }
         if (notify && e.settings.value.notifyInstalled) e.notifier.installed(listOfNotNull(e.stored[appId]?.config?.shownName))
     }
 

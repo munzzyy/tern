@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.install
 
 import android.content.pm.PackageInstaller
+import io.github.munzzyy.tern.engine.InstallerMode
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
@@ -126,6 +127,93 @@ class ShellInstallerTest {
         val (status, message) = PmOutput.outcome(ShellResult(1, "", "Error: Unknown option --pkg"))
         assertEquals(PackageInstaller.STATUS_FAILURE, status)
         assertEquals("Error: Unknown option --pkg", message)
+    }
+
+    /** pm, and a shell that writes what it is given and says how long a file is. */
+    private fun obbAnswers(commit: String = "Success", dd: Int = 0, size: (String) -> String = { "" }): (List<String>) -> ShellResult = { command ->
+        when (command[0]) {
+            "mkdir" -> ShellResult(0, "", "")
+            "dd" -> ShellResult(dd, "", if (dd == 0) "12+0 records in" else "dd: No space left on device")
+            "stat" -> ShellResult(0, size(command.last()), "")
+            else -> pmAnswers(commit)(command)
+        }
+    }
+
+    @Test
+    fun obbFilesAreWrittenToTheAppsFolderOnceTheInstallSucceeded() {
+        val main = file("obb-0.obb", 12)
+        val patch = file("obb-1.obb", 5)
+        val lengths = mapOf("main.3.org.example.game.obb" to "12", "patch.3.org.example.game.obb" to "5")
+        val shell = ScriptedShell(obbAnswers(size = { path -> lengths.getValue(path.substringAfterLast('/')) + "\n" }))
+        val installer = installer(shell)
+        installer.commit("app", 4242)
+        val files = listOf(ObbFile("main.3.org.example.game.obb", main), ObbFile("patch.3.org.example.game.obb", patch))
+        assertEquals(ObbOutcome.PLACED, installer.placeObb(4242, "org.example.game", files))
+        val folder = "/storage/emulated/10/Android/obb/org.example.game"
+        assertEquals(listOf("mkdir", "-p", folder), shell.commands[1])
+        assertEquals(listOf("dd", "of=$folder/main.3.org.example.game.obb", "bs=65536"), shell.commands[2])
+        assertEquals(main, shell.inputs[2])
+        assertEquals(listOf("stat", "-c", "%s", "$folder/main.3.org.example.game.obb"), shell.commands[3])
+        assertEquals(listOf("dd", "of=$folder/patch.3.org.example.game.obb", "bs=65536"), shell.commands[4])
+        assertEquals(patch, shell.inputs[4])
+        // Once placed, the session is done with.
+        assertEquals(ObbOutcome.NOT_INSTALLED, installer.placeObb(4242, "org.example.game", files))
+    }
+
+    @Test
+    fun noObbFileIsWrittenForAnInstallThatDidNotSucceed() {
+        val shell = ScriptedShell(obbAnswers(commit = "Failure [INSTALL_FAILED_UPDATE_INCOMPATIBLE: signatures do not match]"))
+        val installer = installer(shell)
+        val files = listOf(ObbFile("main.3.org.example.game.obb", file("obb-2.obb", 3)))
+        assertEquals(ObbOutcome.NOT_INSTALLED, installer.placeObb(4242, "org.example.game", files))
+        installer.commit("app", 4242)
+        assertEquals(ObbOutcome.NOT_INSTALLED, installer.placeObb(4242, "org.example.game", files))
+        assertTrue(shell.commands.none { it[0] == "dd" || it[0] == "mkdir" })
+    }
+
+    @Test
+    fun anObbFileThatWasNotWrittenWholeIsAFailure() {
+        val files = listOf(ObbFile("main.3.org.example.game.obb", file("obb-3.obb", 12)))
+        for (shell in listOf(ScriptedShell(obbAnswers(dd = 1)), ScriptedShell(obbAnswers(size = { "7" })))) {
+            val installer = installer(shell)
+            installer.commit("app", 4242)
+            try {
+                installer.placeObb(4242, "org.example.game", files)
+                fail("A file that did not arrive whole must not count as placed")
+            } catch (_: IOException) {
+            }
+        }
+    }
+
+    @Test
+    fun aNameThatCouldLeaveTheFolderIsNeverWritten() {
+        val shell = ScriptedShell(obbAnswers(size = { "3" }))
+        val installer = installer(shell)
+        installer.commit("app", 4242)
+        try {
+            installer.placeObb(4242, "org.example.game", listOf(ObbFile("..\\main.obb", file("obb-4.obb", 3))))
+            fail("Only a name the gate would keep is written")
+        } catch (_: IOException) {
+        }
+        assertTrue(shell.commands.none { it[0] == "dd" })
+    }
+
+    @Test
+    fun otherInstallersCannotPlaceObbFiles() {
+        val routing = RoutingInstaller(
+            system = object : Installer {
+                override fun prepare(packageName: String, apks: List<File>, claimUpdateOwnership: Boolean) = 1
+                override fun commit(appId: String, sessionId: Int) = Unit
+                override fun abandon(sessionId: Int) = Unit
+                override fun liveSessionIds(): Set<Int> = emptySet()
+                override fun abandonOlderThan(maxAgeMs: Long, nowMs: Long) = 0
+            },
+            others = emptyMap(),
+            mode = { InstallerMode.SYSTEM },
+        )
+        assertEquals(false, routing.placesObb)
+        assertEquals(ObbOutcome.CANNOT, routing.placeObb(1, "org.example.game", emptyList()))
+        assertTrue(installer(ScriptedShell(obbAnswers())).placesObb)
     }
 
     @Test

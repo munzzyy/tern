@@ -122,6 +122,7 @@ object StateJson {
                 Json.obj(
                     "name" to a.name, "url" to a.url, "size" to a.size, "sha256" to a.sha256,
                     "kind" to a.kind.name, "needsAuth" to a.needsAuth, "signers" to a.signers, "holdsApps" to a.holdsApps,
+                    "parts" to a.parts,
                 )
             },
         ),
@@ -149,6 +150,7 @@ object StateJson {
                 needsAuth = a.bool("needsAuth") ?: false,
                 signers = a.array("signers")?.strings().orEmpty(),
                 holdsApps = a.bool("holdsApps") ?: false,
+                parts = a.array("parts")?.strings().orEmpty().take(Asset.MAX_PARTS),
             )
         },
     )
@@ -177,6 +179,7 @@ object StateJson {
         "sessionId" to p.sessionId, "packageName" to p.packageName, "releaseId" to p.releaseId, "version" to p.version, "versionCode" to p.versionCode,
         "fileSha256" to p.fileSha256, "fileSize" to p.fileSize, "assetUrl" to p.assetUrl,
         "startedAtMs" to p.startedAtMs, "waitingForUser" to p.waitingForUser, "signers" to p.signers,
+        "partUrls" to p.partUrls,
     )
 
     private fun pending(obj: JsonObject): PendingInstall? = PendingInstall(
@@ -191,6 +194,7 @@ object StateJson {
         startedAtMs = obj.long("startedAtMs") ?: 0L,
         waitingForUser = obj.bool("waitingForUser") ?: false,
         signers = obj.array("signers")?.strings().orEmpty().mapNotNull(Fingerprints::normalize).take(8),
+        partUrls = obj.array("partUrls")?.strings().orEmpty().take(Asset.MAX_PARTS),
     )
 
     private inline fun <reified E : Enum<E>> enumOr(name: String?, fallback: E): E =

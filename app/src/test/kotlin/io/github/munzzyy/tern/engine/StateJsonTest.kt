@@ -23,6 +23,7 @@ class StateJsonTest {
             Asset("app.apk", "https://example.org/app.apk", 5, "ab".repeat(32), needsAuth = true, signers = listOf("cd".repeat(32))),
             Asset("SHA256SUMS", "https://example.org/SHA256SUMS", kind = AssetKind.CHECKSUM),
             Asset("build.zip", "https://example.org/build.zip", holdsApps = true),
+            Asset("app.apks", "https://example.org/base.zip", 9, parts = listOf("https://example.org/config.arm64_v8a.zip", "https://example.org/config.xxhdpi.zip")),
         ),
     )
 
@@ -33,7 +34,10 @@ class StateJsonTest {
             lastCheckedMs = 1,
             checkProblem = Problem(ProblemKind.RATE_LIMITED, "wait", 99),
             record = InstallRecord("v1", "1.0", 1, "ef".repeat(32), 4),
-            pending = PendingInstall(3, "com.example.app", "v2", "2.0", 2, null, 5, "https://example.org/app.apk", 7, waitingForUser = true),
+            pending = PendingInstall(
+                3, "com.example.app", "v2", "2.0", 2, null, 5, "https://example.org/base.zip", 7, waitingForUser = true,
+                partUrls = listOf("https://example.org/config.xxhdpi.zip"),
+            ),
             block = GateBlock("v2", "https://example.org/app.apk", Problem(ProblemKind.CHECKSUM_MISMATCH, "bad")),
             installProblem = Problem(ProblemKind.DOWNGRADE, "older"),
             seenReleaseId = "v2",

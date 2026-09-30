@@ -77,7 +77,7 @@ class RuStoreSource(private val random: Random = SecureRandom()) : Source, Searc
             publishedAtMs = info.string("appVerUpdatedAt")?.let(Iso8601::parseMs),
             pageUrl = spec.url,
             // An app RuStore only lists from another store has no file here.
-            assets = listOfNotNull(file(appId, context)?.let { Asset(name = "${pkg}_$version.apk", url = it) }),
+            assets = listOfNotNull(file(appId, pkg, version, context)),
         )
         val listing = SourceListing(
             releases = listOf(release),
@@ -90,17 +90,19 @@ class RuStoreSource(private val random: Random = SecureRandom()) : Source, Searc
     }
 
     /**
-     * Where the file is. Tern installs one file, and asked without splits RuStore names the one
-     * that holds the whole app. An app that has only a base and splits is named by its base alone,
-     * the first address RuStore gives.
+     * The app's file. RuStore names one file for an app that has one, and a base and its splits for
+     * the device described for an app that is split, each a .zip that holds an APK. One file is
+     * listed as the APK RuStore serves beside its .zip. A base and its splits are listed as one
+     * bundle of the files as named, installed whole or not at all, so one of them that is not on
+     * RuStore's hosts leaves the bundle out.
      */
-    private fun file(appId: Long, context: CheckContext): String? {
+    private fun file(appId: Long, pkg: String, version: String, context: CheckContext): Asset? {
         val device = context.device
         val body = Json.write(
             Json.obj(
                 "appId" to appId,
                 "firstInstall" to true,
-                "withoutSplits" to true,
+                "withoutSplits" to false,
                 "supportedAbis" to (device?.abis ?: listOf("arm64-v8a")),
                 "sdkVersion" to (device?.sdk ?: DEFAULT_SDK),
                 "screenDensity" to (device?.densityDpi ?: DEFAULT_DENSITY),
@@ -112,8 +114,19 @@ class RuStoreSource(private val random: Random = SecureRandom()) : Source, Searc
             if (!response.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "RuStore answered ${response.status} when asked for the file of app $appId")
             Json.parseObject(response.text(MAX_BODY))
         }
-        val first = answer.array("downloadUrls")?.objects().orEmpty().firstNotNullOfOrNull { it.string("url")?.takeIf { url -> url.isNotBlank() } }
-        return first?.let(::apkAddress)
+        val files = answer.array("downloadUrls")?.objects().orEmpty()
+            .mapNotNull { file -> file.string("url")?.takeIf { it.isNotBlank() }?.let { it to file.long("size")?.takeIf { size -> size > 0 } } }
+            .distinctBy { it.first }
+        if (files.size <= 1) return files.firstOrNull()?.let { apkAddress(it.first) }?.let { Asset(name = "${pkg}_$version.apk", url = it) }
+        if (files.size > Asset.MAX_PARTS + 1) throw SourceException(SourceErrorKind.PARSE, "RuStore named ${files.size} files for app $appId")
+        val addresses = files.map { onPublicHost(it.first) ?: return null }
+        val sizes = files.mapNotNull { it.second }
+        return Asset(
+            name = "${pkg}_$version.apks",
+            url = addresses.first(),
+            size = sizes.takeIf { it.size == files.size }?.sum(),
+            parts = addresses.drop(1),
+        )
     }
 
     /**

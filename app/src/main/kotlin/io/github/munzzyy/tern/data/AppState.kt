@@ -21,6 +21,8 @@ data class PendingInstall(
      * not Android's own must end with an app signed by exactly these, or the install does not count.
      */
     val signers: List<String> = emptyList(),
+    /** The addresses of the splits fetched beside the file at [assetUrl], whose kept copies go with it. */
+    val partUrls: List<String> = emptyList(),
 )
 
 /** A refusal tied to one file of one release, so a new release clears it by itself. */

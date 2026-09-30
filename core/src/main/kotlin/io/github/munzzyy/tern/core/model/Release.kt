@@ -19,8 +19,16 @@ data class Asset(
     val signers: List<String> = emptyList(),
     /** True for an archive the source knows to hold the app, such as a CI artifact; it is ranked like an installable file. */
     val holdsApps: Boolean = false,
+    /**
+     * The addresses of the splits that go with the base at [url], for a source that names each file
+     * of an app by itself. They are fetched one by one and installed with the base as one bundle.
+     */
+    val parts: List<String> = emptyList(),
 ) {
     companion object {
+        /** The most splits one asset may name. */
+        const val MAX_PARTS = 256
+
         private val ARCHIVES = listOf(".zip", ".tar", ".tar.gz", ".tgz", ".tar.bz2", ".tbz2", ".tar.xz", ".txz")
 
         fun kindOf(name: String): AssetKind {

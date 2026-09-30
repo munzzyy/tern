@@ -30,6 +30,15 @@ interface Installer {
      * without being told again. Android's own installer hands it over once, with its answer.
      */
     fun confirmation(sessionId: Int): Intent? = null
+
+    /** True for an installer that can put the OBB files of an archive in the app's OBB folder. */
+    val placesObb: Boolean get() = false
+
+    /**
+     * Writes [files] into the OBB folder of [packageName] once [sessionId] installed it, under the
+     * names they carry. Throws IOException when a file could not be written.
+     */
+    fun placeObb(sessionId: Int, packageName: String, files: List<ObbFile>): ObbOutcome = ObbOutcome.CANNOT
 }
 
 /** Hands files to Android's PackageInstaller as one session and tells it where to send the answer. */

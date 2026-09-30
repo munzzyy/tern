@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageInstaller
 import android.os.Process
 import android.util.Log
+import io.github.munzzyy.tern.core.apk.BinaryManifest
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.ConcurrentHashMap
@@ -29,6 +30,9 @@ class ShellInstaller(
 ) : Installer {
     /** Sessions this process made through [shell]. Android does not list them among Tern's own. */
     private val made = ConcurrentHashMap<Int, Long>()
+
+    /** Sessions pm said it installed, by when, until their OBB files are put in place. */
+    private val installed = ConcurrentHashMap<Int, Long>()
 
     override fun prepare(packageName: String, apks: List<File>, claimUpdateOwnership: Boolean): Int {
         require(apks.isNotEmpty())
@@ -65,7 +69,32 @@ class ShellInstaller(
         } finally {
             made.remove(sessionId)
         }
+        if (status == PackageInstaller.STATUS_SUCCESS) installed[sessionId] = System.currentTimeMillis()
         deliver(appId, sessionId, status, message)
+    }
+
+    override val placesObb: Boolean get() = true
+
+    /**
+     * The shell may write to the OBB folder of any app, which Tern itself may not without asking
+     * for storage. Each file is streamed in as pm is streamed a file, then its size is read back.
+     */
+    override fun placeObb(sessionId: Int, packageName: String, files: List<ObbFile>): ObbOutcome {
+        if (installed.remove(sessionId) == null) return ObbOutcome.NOT_INSTALLED
+        if (!BinaryManifest.isValidName(packageName)) throw IOException("$packageName is not a package name")
+        val folder = ObbNames.folder(userId(), packageName)
+        val mkdir = shell.run(listOf("mkdir", "-p", folder))
+        if (mkdir.exitCode != 0) throw IOException(failed("mkdir", mkdir))
+        for (obb in files) {
+            val name = ObbNames.of(obb.name) ?: throw IOException("${obb.name} is not a name to write")
+            val source = obb.file ?: throw IOException("$name was not unpacked")
+            val target = "$folder/$name"
+            val write = shell.run(listOf("dd", "of=$target", "bs=65536"), source)
+            if (write.exitCode != 0) throw IOException(failed("dd", write))
+            val size = shell.run(listOf("stat", "-c", "%s", target))
+            if (size.exitCode != 0 || size.out.trim() != source.length().toString()) throw IOException("$name was not written whole")
+        }
+        return ObbOutcome.PLACED
     }
 
     override fun abandon(sessionId: Int) {
@@ -80,13 +109,16 @@ class ShellInstaller(
     override fun liveSessionIds(): Set<Int> = made.keys.filterTo(HashSet(), sessionExists)
 
     override fun abandonOlderThan(maxAgeMs: Long, nowMs: Long): Int {
+        installed.values.removeIf { nowMs - it > maxAgeMs }
         val old = made.filterValues { nowMs - it > maxAgeMs }.keys
         old.forEach(::abandon)
         return old.size
     }
 
-    private fun failure(step: String, result: ShellResult): String =
-        "pm $step: " + (result.said.lineSequence().firstOrNull { it.isNotBlank() }?.take(300) ?: "exit ${result.exitCode}")
+    private fun failure(step: String, result: ShellResult): String = failed("pm $step", result)
+
+    private fun failed(what: String, result: ShellResult): String =
+        "$what: " + (result.said.lineSequence().firstOrNull { it.isNotBlank() }?.take(300) ?: "exit ${result.exitCode}")
 
     companion object {
         private const val TAG = "TernShellInstall"

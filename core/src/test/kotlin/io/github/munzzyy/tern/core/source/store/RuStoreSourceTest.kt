@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.core.source.store
 
 import io.github.munzzyy.tern.core.json.Json
+import io.github.munzzyy.tern.core.model.AssetKind
 import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.model.NotesFormat
 import io.github.munzzyy.tern.core.net.HttpResponse
@@ -109,7 +110,7 @@ class RuStoreSourceTest {
         val body = Json.parseObject(String(link.body!!, Charsets.UTF_8))
         assertEquals(2063000001L, body.long("appId"))
         assertEquals(true, body.bool("firstInstall"))
-        assertEquals(true, body.bool("withoutSplits"))
+        assertEquals(false, body.bool("withoutSplits"))
         assertEquals(listOf("arm64-v8a", "armeabi-v7a", "armeabi"), body.array("supportedAbis")?.strings())
         assertEquals(36L, body.long("sdkVersion"))
         assertEquals(420L, body.long("screenDensity"))
@@ -147,13 +148,50 @@ class RuStoreSourceTest {
     }
 
     @Test
-    fun onlyTheFirstOfSeveralFilesIsListed() {
+    fun aBaseAndItsSplitsAreListedAsOneBundle() {
         val link = """{"appId":2063000001,"downloadUrls":[
             {"url":"https://static-m.rustore.ru/2026/9/16/ab/base.zip","size":3},
-            {"url":"https://static-m.rustore.ru/2026/9/16/ab/split-one.zip","size":2},
-            {"url":"https://static-m.rustore.ru/2026/9/16/ab/split-two.zip","size":1}]}"""
+            {"url":"https://static-m.rustore.ru/2026/9/16/ab/config.arm64_v8a.zip","size":2},
+            {"url":"https://static-m.rustore.ru/2026/9/16/ab/config.xxhdpi.zip","size":1}]}"""
         val asset = listing(store(link = link)).releases.single().assets.single()
+        assertEquals("org.example.app_26.34.0.apks", asset.name)
+        assertEquals(AssetKind.BUNDLE, asset.kind)
+        // Each file as RuStore names it, a .zip that holds the APK, on the host whose certificate Android trusts.
+        assertEquals("https://static.rustore.ru/2026/9/16/ab/base.zip", asset.url)
+        assertEquals(
+            listOf("https://static.rustore.ru/2026/9/16/ab/config.arm64_v8a.zip", "https://static.rustore.ru/2026/9/16/ab/config.xxhdpi.zip"),
+            asset.parts,
+        )
+        assertEquals(6L, asset.size)
+    }
+
+    @Test
+    fun aBundleWithAFileOfUnknownSizeHasNoSize() {
+        val link = """{"appId":2063000001,"downloadUrls":[
+            {"url":"https://static.rustore.ru/2026/9/16/ab/base.zip","size":3},
+            {"url":"https://static.rustore.ru/2026/9/16/ab/config.xxhdpi.zip"}]}"""
+        val asset = listing(store(link = link)).releases.single().assets.single()
+        assertEquals(1, asset.parts.size)
+        assertNull(asset.size)
+    }
+
+    @Test
+    fun aFileNamedTwiceIsFetchedOnce() {
+        val link = """{"appId":2063000001,"downloadUrls":[
+            {"url":"https://static.rustore.ru/2026/9/16/ab/base.zip","size":3},
+            {"url":"https://static.rustore.ru/2026/9/16/ab/base.zip","size":3}]}"""
+        val asset = listing(store(link = link)).releases.single().assets.single()
+        // One file left is an app that is not split.
         assertEquals("https://static.rustore.ru/2026/9/16/ab/base.apk", asset.url)
+        assertTrue(asset.parts.isEmpty())
+    }
+
+    @Test
+    fun aBundleWithASplitOnAnotherHostIsLeftOut() {
+        val link = """{"appId":2063000001,"downloadUrls":[
+            {"url":"https://static.rustore.ru/2026/9/16/ab/base.zip","size":3},
+            {"url":"https://files.example.org/config.xxhdpi.zip","size":1}]}"""
+        assertTrue(listing(store(link = link)).releases.single().assets.isEmpty())
     }
 
     @Test

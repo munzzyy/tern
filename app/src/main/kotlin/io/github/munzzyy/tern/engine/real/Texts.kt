@@ -186,4 +186,11 @@ class Texts(context: Context) : ImportTexts {
     }
 
     private fun time(ms: Long): String = DateFormat.getTimeFormat(c).format(Date(ms))
+
+    fun obbNameRefused() = s(R.string.parts_obb_name_refused)
+    fun obbPlaced(count: Int, folder: String): String = c.resources.getQuantityString(R.plurals.parts_obb_placed, count, count, ltr(folder))
+    fun obbNotPlaced(folder: String, archive: String, names: String) =
+        s(R.string.parts_obb_not_placed, ltr(folder), ltr(archive.take(300)), ltr(names.take(1000)))
+    fun obbFailed(folder: String, detail: String?, archive: String, names: String) =
+        s(R.string.parts_obb_failed, ltr(folder), detail.orEmpty().take(300), ltr(archive.take(300)), ltr(names.take(1000)))
 }

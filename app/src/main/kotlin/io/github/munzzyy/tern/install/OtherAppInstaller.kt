@@ -8,11 +8,8 @@ import android.net.Uri
 import androidx.core.content.FileProvider
 import io.github.munzzyy.tern.engine.InstallerChoice
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.concurrent.atomic.AtomicInteger
-import java.util.zip.CRC32
-import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
 /**
@@ -108,27 +105,6 @@ class OtherAppInstaller(private val context: Context, private val target: () -> 
                 .distinctBy { it.packageName }
                 .map { InstallerChoice(it.packageName, it.applicationInfo.loadLabel(pm).toString().take(100)) }
                 .sortedBy { it.label.lowercase() }
-        }
-
-        private fun ZipOutputStream.putStored(name: String, file: File) {
-            val crc = CRC32()
-            FileInputStream(file).use { input ->
-                val buffer = ByteArray(64 * 1024)
-                while (true) {
-                    val n = input.read(buffer)
-                    if (n < 0) break
-                    crc.update(buffer, 0, n)
-                }
-            }
-            val entry = ZipEntry(name).apply {
-                method = ZipEntry.STORED
-                size = file.length()
-                compressedSize = file.length()
-                this.crc = crc.value
-            }
-            putNextEntry(entry)
-            FileInputStream(file).use { it.copyTo(this, 64 * 1024) }
-            closeEntry()
         }
     }
 }

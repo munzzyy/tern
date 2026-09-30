@@ -122,6 +122,14 @@ else
   echo "ok   apk is $size bytes (budget $MAX_BYTES)"
 fi
 
+# R8 renames Tern's classes but not the platform's, so a use of these shows by its type.
+doors=$(unzip -p "$APK" 'classes*.dex' | strings | grep -oE 'Landroid/app/DownloadManager\$Request;|Landroid/webkit/WebView;|Landroid/net/http/HttpEngine;|Landroid/net/DnsResolver;|Lorg/chromium/net/[A-Za-z]+;|Lokhttp3/[A-Za-z]+;' | sort -u || true)
+if [ -n "$doors" ]; then
+  echo "FAIL the apk reaches the network round the one door:"; echo "$doors"; fail=1
+else
+  echo "ok   no DownloadManager request, web view, HttpEngine, Cronet, OkHttp or DnsResolver in the apk"
+fi
+
 # Text, not class names: R8 renames classes, so a class name is absent even when the class is there.
 leftovers=$(unzip -p "$APK" 'classes*.dex' | strings | grep -E 'tern-stand-in-engine|forge\.test' | head -3 || true)
 if [ -n "$leftovers" ]; then

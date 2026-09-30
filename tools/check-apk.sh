@@ -76,6 +76,19 @@ else
   fi
 fi
 
+# The launcher shortcuts run Update all and a check without asking, so no other app may start their alias.
+shortcuts=$(echo "$manifest" | awk '
+  /E: / { if (alias && shortcuts) print record; alias = ($0 ~ /E: activity-alias/); shortcuts = 0; record = "" }
+  alias { record = record $0 "\n"; if ($0 ~ /android:name.*\.Shortcuts"/) shortcuts = 1 }
+  END { if (alias && shortcuts) print record }')
+if [ -z "$shortcuts" ]; then
+  echo "FAIL the shortcuts alias is missing from the manifest"; fail=1
+elif echo "$shortcuts" | grep -q 'android:exported.*=false'; then
+  echo "ok   the shortcuts alias is not exported"
+else
+  echo "FAIL the shortcuts alias is exported, so any app could start Update all"; fail=1
+fi
+
 badging=$("$AAPT" dump badging "$APK")
 television=""
 echo "$badging" | grep -q "^leanback-launchable-activity: name='[^']" || television="$television no-launcher-entry"

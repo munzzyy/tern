@@ -71,6 +71,12 @@
             </intent-filter>
         </activity>
 
+        <!-- What the launcher shortcuts start. No other app can, so they may run Update all and a check without asking. -->
+        <activity-alias
+            android:name=".Shortcuts"
+            android:exported="false"
+            android:targetActivity=".MainActivity" />
+
         <!-- Off until the user turns on "Open Obtainium links" in settings. -->
         <activity-alias
             android:name=".ObtainiumLinks"

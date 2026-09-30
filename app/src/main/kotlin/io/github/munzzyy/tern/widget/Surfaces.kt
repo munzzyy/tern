@@ -6,10 +6,12 @@ import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
-import android.net.Uri
-import io.github.munzzyy.tern.MainActivity
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.Engine
+import io.github.munzzyy.tern.ui.ACTION_ADD
+import io.github.munzzyy.tern.ui.ACTION_CHECK
+import io.github.munzzyy.tern.ui.ACTION_UPDATE_ALL
+import io.github.munzzyy.tern.ui.SHORTCUTS
 import io.github.munzzyy.tern.log.TernLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,10 +24,6 @@ import kotlinx.coroutines.launch
 
 /** The places outside Tern's own window that show its state: the widget, and the shortcuts of its launcher icon. */
 object Surfaces {
-    /** What a shortcut asks of Tern, besides the tern://refresh link the check uses. */
-    const val ACTION_ADD = "io.github.munzzyy.tern.action.ADD"
-    const val ACTION_UPDATE_ALL = "io.github.munzzyy.tern.action.UPDATE_ALL"
-
     /** Which shortcut an intent came from, so the launcher can learn which ones are used. */
     const val EXTRA_SHORTCUT = "io.github.munzzyy.tern.SHORTCUT"
     private const val TAG = "TernSurfaces"
@@ -55,7 +53,8 @@ object Surfaces {
 
     private fun shortcuts(context: Context) {
         val manager = context.getSystemService(ShortcutManager::class.java) ?: return
-        val main = ComponentName(context, MainActivity::class.java)
+        // Through the alias, which only Tern and the launcher acting for it can start.
+        val main = ComponentName(context, SHORTCUTS)
         fun shortcut(id: String, short: Int, long: Int, icon: Int, intent: Intent) = ShortcutInfo.Builder(context, id)
             .setShortLabel(context.getString(short))
             .setLongLabel(context.getString(long))
@@ -63,12 +62,14 @@ object Surfaces {
             .setIntent(intent.setComponent(main).putExtra(EXTRA_SHORTCUT, id))
             .build()
         val list = listOf(
-            shortcut("check", R.string.shortcut_check_short, R.string.shortcut_check_long, R.drawable.ic_shortcut_check, Intent(Intent.ACTION_VIEW, Uri.parse("tern://refresh"))),
+            shortcut("check", R.string.shortcut_check_short, R.string.shortcut_check_long, R.drawable.ic_shortcut_check, Intent(ACTION_CHECK)),
             shortcut("update_all", R.string.action_update_all, R.string.shortcut_update_all_long, R.drawable.ic_shortcut_update, Intent(ACTION_UPDATE_ALL)),
             shortcut("add", R.string.shortcut_add_short, R.string.shortcut_add_long, R.drawable.ic_shortcut_add, Intent(ACTION_ADD)),
         )
         try {
             manager.dynamicShortcuts = list
+            // A shortcut pinned to the home screen keeps its intent until it is updated.
+            manager.updateShortcuts(list)
         } catch (e: IllegalStateException) {
             TernLog.i(TAG, "The launcher took no shortcuts: ${e.message}")
         } catch (e: IllegalArgumentException) {

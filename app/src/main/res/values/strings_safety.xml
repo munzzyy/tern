@@ -14,4 +14,12 @@
     <string name="option_highest_version">Take the highest version, as Tern 0.1.0 did</string>
     <string name="option_highest_version_effect">Offers the link with the highest version on the page, whatever its place, and runs the version pattern over the version read from each link. Off reads the page the way Obtainium does: the last link in order is the latest.</string>
     <string name="settings_remove_uninstalled_keeps_pins">An app you uninstall outside Tern leaves the list as well. An archived app stays. Added again from the same place, an app is held to the certificate it had; removing it in Tern forgets that.</string>
+    <string name="link_check_title">Check for updates now?</string>
+    <string name="link_check_one">A link asked Tern to check %1$s for updates. Its source is asked, and nothing is installed.</string>
+    <plurals name="link_check_all">
+        <item quantity="one">A link asked Tern to check the app in your list for updates. Its source is asked, and nothing is installed.</item>
+        <item quantity="other">A link asked Tern to check the %d apps in your list for updates. Their sources are asked, and nothing is installed.</item>
+    </plurals>
+    <string name="link_check_confirm">Check</string>
+    <string name="link_check_not_now">Not now</string>
 </resources>

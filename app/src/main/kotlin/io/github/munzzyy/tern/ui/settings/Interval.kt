@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.ui.settings
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -61,7 +62,7 @@ fun IntervalRow(minutes: Int, onChange: (Int) -> Unit) {
             val buttons = LocalNoTouch.current
             if (buttons) {
                 IconButton(onClick = { settle(at - 1) }, enabled = at > 0, modifier = Modifier.focusLook(CircleShape)) {
-                    Icon(Glyphs.Minus, contentDescription = stringResource(R.string.interval_more_often), modifier = Modifier.size(look.glyph))
+                    Icon(Glyphs.Minus, contentDescription = stringResource(minusLabel(stops, at)), modifier = Modifier.size(look.glyph))
                 }
             }
             Slider(
@@ -80,9 +81,17 @@ fun IntervalRow(minutes: Int, onChange: (Int) -> Unit) {
             )
             if (buttons) {
                 IconButton(onClick = { settle(at + 1) }, enabled = at < stops.lastIndex, modifier = Modifier.focusLook(CircleShape)) {
-                    Icon(Glyphs.Plus, contentDescription = stringResource(R.string.interval_less_often), modifier = Modifier.size(look.glyph))
+                    Icon(Glyphs.Plus, contentDescription = stringResource(plusLabel(stops, at)), modifier = Modifier.size(look.glyph))
                 }
             }
         }
     }
 }
+
+/** What the minus button does from stop [at]: it checks more often, or turns the checks off where the stop below is off. */
+@StringRes
+fun minusLabel(stops: List<Int>, at: Int): Int = if (stops.getOrNull(at - 1) == 0) R.string.interval_turn_off else R.string.interval_more_often
+
+/** What the plus button does from stop [at]: it checks less often, or turns the checks on where they are off. */
+@StringRes
+fun plusLabel(stops: List<Int>, at: Int): Int = if (stops.getOrNull(at) == 0) R.string.interval_turn_on else R.string.interval_less_often

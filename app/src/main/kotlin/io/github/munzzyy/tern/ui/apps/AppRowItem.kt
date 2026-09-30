@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -45,6 +47,9 @@ import io.github.munzzyy.tern.ui.common.confirmInstall
 import io.github.munzzyy.tern.ui.common.focusLook
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.icons.AppIcon
+import io.github.munzzyy.tern.ui.icons.Glyphs
+import io.github.munzzyy.tern.ui.icons.StarFilled
+import io.github.munzzyy.tern.ui.theme.status
 import io.github.munzzyy.tern.ui.text.RowAction
 import io.github.munzzyy.tern.ui.text.canSkip
 import io.github.munzzyy.tern.ui.text.inlineAction
@@ -184,13 +189,19 @@ private fun RowText(row: AppRow, highlighted: Boolean, large: Boolean, modifier:
     val look = LocalLook.current
     val scheme = MaterialTheme.colorScheme
     Column(verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2), modifier = modifier) {
-        Text(
-            row.config.name,
-            style = MaterialTheme.typography.titleMedium.heavier(),
-            color = if (highlighted) scheme.onSecondaryContainer else scheme.onSurface,
-            maxLines = if (large) 3 else 2,
-            overflow = TextOverflow.Ellipsis,
-        )
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
+            Text(
+                row.config.name,
+                style = MaterialTheme.typography.titleMedium.heavier(),
+                color = if (highlighted) scheme.onSecondaryContainer else scheme.onSurface,
+                maxLines = if (large) 3 else 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f, fill = false),
+            )
+            if (row.config.favorite) {
+                Icon(Glyphs.StarFilled, contentDescription = null, tint = MaterialTheme.status.caution.color, modifier = Modifier.size(look.glyphSmall))
+            }
+        }
         StatusLine(
             statusLabel(row, LocalOnline.current),
             detail = row.progress?.let { progressText(it) } ?: versionText(versionChange(row)),

@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.ui.apps
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -45,6 +46,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -79,11 +81,14 @@ import io.github.munzzyy.tern.ui.common.confirmInstall
 import io.github.munzzyy.tern.ui.common.drivenByKeys
 import io.github.munzzyy.tern.ui.common.firstFocus
 import io.github.munzzyy.tern.ui.common.focusHighlight
+import io.github.munzzyy.tern.ui.common.focusLook
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.common.rememberScreenFocus
 import io.github.munzzyy.tern.ui.common.returnFocus
 import io.github.munzzyy.tern.ui.common.textFieldKeys
 import io.github.munzzyy.tern.ui.icons.Close
+import io.github.munzzyy.tern.ui.icons.Collapse
+import io.github.munzzyy.tern.ui.icons.Expand
 import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.icons.More
 import io.github.munzzyy.tern.ui.icons.Search
@@ -133,6 +138,9 @@ fun AppsScreen(
     val allRows = engine.apps.collectAsStateWithLifecycle().value
     val picked = remember(selection, allRows) { selection?.let { ids -> allRows.filter { it.id in ids } }.orEmpty() }
     var pending by rememberSaveable { mutableStateOf<BulkAction?>(null) }
+    var arranging by rememberSaveable { mutableStateOf(false) }
+    val collapsed = vm.collapsed.collectAsStateWithLifecycle().value
+    val swipe = engine.settings.collectAsStateWithLifecycle().value.swipeActions && !LocalNoTouch.current
     BackHandler(enabled = selection == null && folded && fieldShown, onBack = closeSearch)
     BackHandler(enabled = selection != null) { vm.stopSelecting() }
     val screen = rememberScreenFocus(active = selectedId == null)
@@ -164,7 +172,7 @@ fun AppsScreen(
                     modifier = (if (online) Modifier else Modifier.semantics { stateDescription = offlineReason })
                         .then(if (fieldShown || !state.loaded) Modifier else Modifier.backupFocus(screen)),
                 )
-                if (state.total > 0) ScreenMenu(query.sort, vm::setSort, onSelect = { vm.startSelecting() })
+                if (state.total > 0) ScreenMenu(onArrange = { arranging = true }, onSelect = { vm.startSelecting() })
             }
         },
         bottomBar = { if (selection != null) BulkBar(picked) { pending = it } },
@@ -210,6 +218,9 @@ fun AppsScreen(
                         selection = selection,
                         onSelect = { id -> if (selection == null) vm.startSelecting(id) else vm.toggle(id) },
                         screen = screen,
+                        collapsed = collapsed,
+                        onToggleGroup = vm::toggleGroup,
+                        swipe = swipe,
                     )
                 }
                 if (checking) LinearProgressIndicator(Modifier.fillMaxWidth().align(Alignment.TopCenter))
@@ -220,6 +231,7 @@ fun AppsScreen(
     pending?.let { action ->
         BulkDialog(action, picked, state.categories, engine, actions, onDismiss = { pending = null }, onDone = vm::stopSelecting)
     }
+    if (arranging) ListOptionsDialog(query, vm, onDismiss = { arranging = false })
 }
 
 /** What the search field holds and does. [grab] is true when the user has just opened it, so it takes focus. */
@@ -246,35 +258,13 @@ private fun WaitingBanner(waiting: List<AppRow>, onGone: () -> Unit, onConfirm: 
 }
 
 @Composable
-private fun ScreenMenu(sort: AppSort, onSort: (AppSort) -> Unit, onSelect: () -> Unit) {
-    val look = LocalLook.current
+private fun ScreenMenu(onArrange: () -> Unit, onSelect: () -> Unit) {
     var open by remember { mutableStateOf(false) }
     Box {
         GlyphButton(Glyphs.More, stringResource(R.string.action_more), onClick = { open = true })
         DropdownMenu(expanded = open, onDismissRequest = { open = false }, modifier = Modifier.focusHighlight()) {
             DropdownMenuItem(text = { Text(stringResource(R.string.action_select)) }, onClick = { open = false; onSelect() })
-            HorizontalDivider()
-            Text(
-                stringResource(R.string.sort_title),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier
-                    .padding(horizontal = look.rowPaddingHorizontal, vertical = look.gapSmall)
-                    .semantics { heading() },
-            )
-            for (choice in AppSort.entries) {
-                val taken = choice == sort
-                val spoken = stringResource(if (taken) R.string.state_selected else R.string.state_not_selected)
-                DropdownMenuItem(
-                    text = { Text(stringResource(sortLabel(choice))) },
-                    leadingIcon = { if (taken) Icon(Glyphs.Check, contentDescription = null, modifier = Modifier.size(look.glyph)) },
-                    modifier = Modifier.semantics { stateDescription = spoken },
-                    onClick = {
-                        onSort(choice)
-                        open = false
-                    },
-                )
-            }
+            DropdownMenuItem(text = { Text(stringResource(R.string.list_arrange)) }, onClick = { open = false; onArrange() })
         }
     }
 }
@@ -293,6 +283,9 @@ private fun AppList(
     selection: Set<String>?,
     onSelect: (String) -> Unit,
     screen: ScreenFocus,
+    collapsed: Set<String> = emptySet(),
+    onToggleGroup: (String) -> Unit = {},
+    swipe: Boolean = false,
 ) {
     val look = LocalLook.current
     val sections = state.sections
@@ -323,13 +316,21 @@ private fun AppList(
             item(key = "h-updates", contentType = "header") {
                 UpdatesHeader(sections.updates.size, if (selection == null) state.updatable else 0, onUpdateAll)
             }
-            rows(sections.updates, selectedId, onOpen, onRemove, selection, onSelect, rowFocus, place)
+            rows(sections.updates, selectedId, onOpen, onRemove, selection, onSelect, rowFocus, place, swipe)
         }
-        if (sections.others.isNotEmpty()) {
+        if (sections.groups.isNotEmpty()) {
+            for (group in sections.groups) {
+                val folded = group.key in collapsed
+                item(key = "g-${group.key}", contentType = "group") {
+                    GroupHeader(group.title ?: stringResource(R.string.group_other), group.rows.size, folded) { onToggleGroup(group.key) }
+                }
+                if (!folded) rows(group.rows, selectedId, onOpen, onRemove, selection, onSelect, rowFocus, place, swipe, keyPrefix = group.key)
+            }
+        } else if (sections.others.isNotEmpty()) {
             if (sections.updates.isNotEmpty()) {
                 item(key = "h-others", contentType = "header") { ListHeader(stringResource(R.string.apps_section_others)) }
             }
-            rows(sections.others, selectedId, onOpen, onRemove, selection, onSelect, rowFocus, place)
+            rows(sections.others, selectedId, onOpen, onRemove, selection, onSelect, rowFocus, place, swipe)
         }
     }
     }
@@ -344,18 +345,64 @@ private fun LazyListScope.rows(
     onSelect: (String) -> Unit,
     rowFocus: (String) -> Modifier,
     place: ActionPlace,
+    swipe: Boolean,
+    keyPrefix: String = "",
 ) {
-    items(rows, key = { it.id }, contentType = { "row" }) { row ->
-        AppRowItem(
-            row,
-            selected = row.id == selectedId,
-            onOpen = { onOpen(row.id) },
-            modifier = rowFocus(row.id),
-            selecting = selection != null,
-            checked = selection?.contains(row.id) == true,
-            onSelect = { onSelect(row.id) },
-            onRemove = { onRemove(row) },
-            actionPlace = place,
+    // An app filed under two categories is shown twice, so its key names the group too.
+    items(rows, key = { keyPrefix + it.id }, contentType = { "row" }) { row ->
+        val item: @Composable () -> Unit = {
+            AppRowItem(
+                row,
+                selected = row.id == selectedId,
+                onOpen = { onOpen(row.id) },
+                modifier = if (keyPrefix.isEmpty()) rowFocus(row.id) else Modifier,
+                selecting = selection != null,
+                checked = selection?.contains(row.id) == true,
+                onSelect = { onSelect(row.id) },
+                onRemove = { onRemove(row) },
+                actionPlace = place,
+            )
+        }
+        if (swipe && selection == null) SwipeRow(row, onRemove = { onRemove(row) }, content = item) else item()
+    }
+}
+
+/** The name of a group, how many apps it holds, and a press to fold it away or open it again. */
+@Composable
+private fun GroupHeader(title: String, count: Int, folded: Boolean, onToggle: () -> Unit) {
+    val look = LocalLook.current
+    val spoken = stringResource(if (folded) R.string.group_folded else R.string.group_open)
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(look.gapSmall),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = look.focusRoom, vertical = look.focusRoom / 2)
+            .focusLook(MaterialTheme.shapes.medium)
+            .clip(MaterialTheme.shapes.medium)
+            .clickable(onClick = onToggle)
+            .semantics(mergeDescendants = true) {
+                heading()
+                stateDescription = spoken
+            }
+            .padding(horizontal = look.rowPaddingHorizontal - look.focusRoom, vertical = look.gapSmall),
+    ) {
+        Text(
+            title,
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.weight(1f),
+        )
+        Text(
+            count.toString(),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Icon(
+            if (folded) Glyphs.Expand else Glyphs.Collapse,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(look.glyph),
         )
     }
 }
@@ -460,7 +507,11 @@ private fun filterLabel(filter: AppFilter): String = when (filter) {
     AppFilter.Updates -> stringResource(R.string.filter_updates)
     AppFilter.Installed -> stringResource(R.string.filter_installed)
     AppFilter.NotInstalled -> stringResource(R.string.filter_not_installed)
+    AppFilter.Favorites -> stringResource(R.string.filter_favorites)
+    AppFilter.TrackOnly -> stringResource(R.string.filter_track_only)
+    AppFilter.Problems -> stringResource(R.string.filter_problems)
     is AppFilter.Category -> filter.name
+    is AppFilter.Source -> sourceLabel(filter.type)
 }
 
 @Composable
@@ -478,12 +529,6 @@ private fun FilterChips(filters: List<AppFilter>, current: AppFilter, onFilter: 
             ChoiceChip(filterLabel(filter), selected = filter == current, onClick = { onFilter(filter) })
         }
     }
-}
-
-private fun sortLabel(sort: AppSort): Int = when (sort) {
-    AppSort.NAME -> R.string.sort_name
-    AppSort.RECENTLY_CHECKED -> R.string.sort_recently_checked
-    AppSort.SOURCE -> R.string.sort_source
 }
 
 @Composable

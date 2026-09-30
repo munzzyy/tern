@@ -67,6 +67,10 @@ import io.github.munzzyy.tern.ui.common.focusLook
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.common.rememberScreenFocus
 import io.github.munzzyy.tern.ui.common.sourceText
+import android.text.format.DateUtils
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.text.style.TextOverflow
 import io.github.munzzyy.tern.ui.icons.AppIcon
 import io.github.munzzyy.tern.ui.icons.Seal
 import io.github.munzzyy.tern.ui.text.PromptLine
@@ -204,25 +208,66 @@ private fun Header(row: AppRow, focus: Modifier) {
                 Text(stringResource(R.string.by_author, it), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             LinkText(sourceText(row.config.source), onClick = { link = row.config.source.url }, modifier = Modifier.focusLook())
+            row.lastCheckedMs?.let { checked ->
+                Text(
+                    stringResource(R.string.detail_last_checked, relativeTime(checked)),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+    }
+    val tools: @Composable () -> Unit = {
+        Row {
+            FavoriteButton(row)
+            DetailMenu(row)
         }
     }
     val frame = focus
         .padding(horizontal = look.screenPadding + look.focusRoom)
         .widthIn(max = look.contentMaxWidth)
         .fillMaxWidth()
-    if (LocalDensity.current.fontScale >= STACK_FONT_SCALE) {
-        Column(frame, verticalArrangement = Arrangement.spacedBy(look.gapSmall)) {
-            AppIcon(row, size = look.iconHeader)
+    Column(frame, verticalArrangement = Arrangement.spacedBy(look.gapSmall)) {
+        if (LocalDensity.current.fontScale >= STACK_FONT_SCALE) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                AppIcon(row, size = look.iconHeader)
+                Box(Modifier.weight(1f))
+                tools()
+            }
             words(Modifier.fillMaxWidth())
+        } else {
+            Row(horizontalArrangement = Arrangement.spacedBy(look.gap), verticalAlignment = Alignment.CenterVertically) {
+                AppIcon(row, size = look.iconHeader)
+                words(Modifier.weight(1f))
+                tools()
+            }
         }
-    } else {
-        Row(frame, horizontalArrangement = Arrangement.spacedBy(look.gap), verticalAlignment = Alignment.CenterVertically) {
-            AppIcon(row, size = look.iconHeader)
-            words(Modifier.weight(1f))
-        }
+        row.description?.takeIf { it.isNotBlank() }?.let { Description(it) }
     }
     link?.let { LinkDialog(it, onDismiss = { link = null }) }
 }
+
+/** What the source says the app is. Long ones open on a press, so the actions stay near the top. */
+@Composable
+private fun Description(text: String) {
+    var open by rememberSaveable(text) { mutableStateOf(false) }
+    val long = text.length > DESCRIPTION_FOLD
+    Text(
+        text,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        maxLines = if (open || !long) Int.MAX_VALUE else 3,
+        overflow = TextOverflow.Ellipsis,
+        modifier = if (long) Modifier.focusLook().clickable { open = !open } else Modifier,
+    )
+}
+
+private const val DESCRIPTION_FOLD = 160
+
+/** "5 minutes ago", as Android says it in the person's language. */
+@Composable
+private fun relativeTime(ms: Long): String =
+    DateUtils.getRelativeTimeSpanString(ms, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS).toString()
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

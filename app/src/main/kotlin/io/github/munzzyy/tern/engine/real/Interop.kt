@@ -2,6 +2,8 @@ package io.github.munzzyy.tern.engine.real
 
 import android.net.Uri
 import io.github.munzzyy.tern.BuildConfig
+import androidx.core.content.FileProvider
+import io.github.munzzyy.tern.core.interop.ObtainiumExport
 import io.github.munzzyy.tern.core.interop.ObtainiumImport
 import io.github.munzzyy.tern.core.interop.ObtainiumImportException
 import io.github.munzzyy.tern.core.interop.TernExport
@@ -14,12 +16,15 @@ import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.data.AppState
 import io.github.munzzyy.tern.data.StoredApp
 import io.github.munzzyy.tern.engine.EventKind
+import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.engine.ImportSummary
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemException
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.SavedFile
+import io.github.munzzyy.tern.install.OtherAppInstaller
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import kotlinx.coroutines.Dispatchers
@@ -155,8 +160,9 @@ internal class Interop(private val e: RealEngine) {
                 skipped += imported.name to (ex.message ?: "")
                 continue
             }
-            e.store.putApp(config, AppState())
-            e.stored[config.id] = StoredApp(config, AppState())
+            val state = AppState(addedAtMs = e.nowMs())
+            e.store.putApp(config, state)
+            e.stored[config.id] = StoredApp(config, state)
             e.event(config.id, EventKind.IMPORTED, e.texts.eventImported())
             fresh += config.id
             added++
@@ -174,18 +180,33 @@ internal class Interop(private val e: RealEngine) {
         config.releases.versionExtract, config.assets.include, config.assets.exclude,
     ).any { !it.isNullOrBlank() }
 
-    suspend fun exportTo(uri: Uri): Int = withContext(Dispatchers.IO) {
-        val (text, count) = export()
+    suspend fun exportTo(uri: Uri, format: ExportFormat = ExportFormat.TERN): Int = withContext(Dispatchers.IO) {
+        val (text, count) = export(null, format)
         val out = e.context.contentResolver.openOutputStream(uri, "wt") ?: throw IOException("Cannot write to $uri")
         out.use { it.write(text.toByteArray(Charsets.UTF_8)) }
         count
     }
 
-    suspend fun exportToFolder(): SavedFile = runInterruptible(Dispatchers.IO) { files.save(export().first) }
+    suspend fun exportToFolder(): SavedFile = runInterruptible(Dispatchers.IO) { files.save(export(null, ExportFormat.TERN).first) }
 
-    private fun export(): Pair<String, Int> {
-        val configs = e.stored.values.map { it.config }.sortedBy { it.name.lowercase() }
-        return TernExport.write(configs, e.nowMs(), BuildConfig.VERSION_NAME) to configs.size
+    /** A fresh file in the share folder, which holds nothing older, and its content address. */
+    suspend fun shareable(appIds: Collection<String>?, format: ExportFormat): Uri = runInterruptible(Dispatchers.IO) {
+        val text = export(appIds, format).first
+        val dir = File(e.context.cacheDir, SHARE_FOLDER)
+        dir.listFiles()?.forEach { it.delete() }
+        if (!dir.isDirectory && !dir.mkdirs()) throw IOException("Cannot write to $dir")
+        val name = if (format == ExportFormat.OBTAINIUM) "obtainium-export.json" else "tern-apps.json"
+        val file = File(dir, name).apply { writeText(text) }
+        FileProvider.getUriForFile(e.context, OtherAppInstaller.authority(e.context), file)
+    }
+
+    /** The apps in [appIds], or all of them, and how many were written. */
+    private fun export(appIds: Collection<String>?, format: ExportFormat): Pair<String, Int> {
+        val configs = e.stored.values.map { it.config }.filter { appIds == null || it.id in appIds }.sortedBy { it.name.lowercase() }
+        return when (format) {
+            ExportFormat.TERN -> TernExport.write(configs, e.nowMs(), BuildConfig.VERSION_NAME) to configs.size
+            ExportFormat.OBTAINIUM -> ObtainiumExport.write(configs, e.nowMs(), BuildConfig.VERSION_NAME).let { it.text to it.written }
+        }
     }
 
     private fun read(uri: Uri): ByteArray = try {
@@ -202,5 +223,6 @@ internal class Interop(private val e: RealEngine) {
     private companion object {
         const val MAX_BYTES = 8 * 1024 * 1024
         const val MAX_APPS = 2000
+        const val SHARE_FOLDER = "share"
     }
 }

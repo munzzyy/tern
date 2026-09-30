@@ -1,7 +1,12 @@
 package io.github.munzzyy.tern.ui.apps
 
 import androidx.compose.ui.unit.Dp
+import io.github.munzzyy.tern.core.source.SourceTypes
+import io.github.munzzyy.tern.engine.AppGrouping
 import io.github.munzzyy.tern.engine.AppRow
+import io.github.munzzyy.tern.engine.AppSort
+import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.ui.text.canUpdateNow
 import io.github.munzzyy.tern.ui.text.isUpdate
 import java.text.Collator
@@ -12,18 +17,46 @@ sealed interface AppFilter {
     data object Updates : AppFilter
     data object Installed : AppFilter
     data object NotInstalled : AppFilter
-    data class Category(val name: String) : AppFilter
-}
+    data object Favorites : AppFilter
+    data object TrackOnly : AppFilter
 
-enum class AppSort { NAME, RECENTLY_CHECKED, SOURCE }
+    /** Apps whose last check failed or whose offered file Tern refused. */
+    data object Problems : AppFilter
+    data class Category(val name: String) : AppFilter
+
+    /** Apps from one kind of source, such as GitHub or F-Droid. */
+    data class Source(val type: String) : AppFilter
+}
 
 data class ListQuery(
     val text: String = "",
     val filter: AppFilter = AppFilter.All,
     val sort: AppSort = AppSort.NAME,
-)
+    val descending: Boolean = false,
+    val grouping: AppGrouping = AppGrouping.NONE,
+    val updatesFirst: Boolean = true,
+    val buryNotInstalled: Boolean = false,
+) {
+    companion object {
+        /** The order, grouping and placement the person chose, with nothing typed and no filter. */
+        fun of(settings: Settings): ListQuery = ListQuery(
+            sort = settings.listSort,
+            descending = settings.listDescending,
+            grouping = settings.listGrouping,
+            updatesFirst = settings.updatesFirst,
+            buryNotInstalled = settings.buryNotInstalled,
+        )
+    }
+}
 
-data class AppSections(val updates: List<AppRow>, val others: List<AppRow>) {
+/** A group of the list. [title] is null for the apps that belong to none, such as those without a category. */
+data class RowGroup(val key: String, val title: String?, val rows: List<AppRow>)
+
+/**
+ * The list as it is drawn: [updates] on top, then [others]. When the list is grouped, [groups]
+ * holds [others] again, divided.
+ */
+data class AppSections(val updates: List<AppRow>, val others: List<AppRow>, val groups: List<RowGroup> = emptyList()) {
     val isEmpty: Boolean get() = updates.isEmpty() && others.isEmpty()
 }
 
@@ -33,12 +66,22 @@ fun categoriesOf(rows: List<AppRow>, locale: Locale = Locale.getDefault()): List
         .distinct().sortedWith(collator)
 }
 
+/** Source types present in [rows], by the name shown for them. */
+fun sourcesOf(rows: List<AppRow>, locale: Locale = Locale.getDefault()): List<String> {
+    val collator = Collator.getInstance(locale)
+    return rows.map { it.config.source.type }.distinct().sortedWith(compareBy(collator) { sourceLabel(it) })
+}
+
+/** What a source type is called in a filter or a group heading. */
+fun sourceLabel(type: String): String = SourceTypes.displayName(type) ?: type
+
+/** Every word typed has to be found, in the name, the author, the package or the address. */
 fun matches(row: AppRow, text: String): Boolean {
-    val q = text.trim()
-    if (q.isEmpty()) return true
+    val words = text.trim().split(WHITESPACE).filter { it.isNotEmpty() }
+    if (words.isEmpty()) return true
     val c = row.config
-    return listOfNotNull(c.name, c.author, c.packageName, row.installed?.packageName, c.source.url)
-        .any { it.contains(q, ignoreCase = true) }
+    val fields = listOfNotNull(c.name, c.author, c.packageName, row.installed?.packageName, c.source.url, sourceLabel(c.source.type))
+    return words.all { word -> fields.any { it.contains(word, ignoreCase = true) } }
 }
 
 fun passes(row: AppRow, filter: AppFilter): Boolean = when (filter) {
@@ -46,24 +89,58 @@ fun passes(row: AppRow, filter: AppFilter): Boolean = when (filter) {
     AppFilter.Updates -> isUpdate(row)
     AppFilter.Installed -> row.installed != null
     AppFilter.NotInstalled -> row.installed == null
+    AppFilter.Favorites -> row.config.favorite
+    AppFilter.TrackOnly -> row.config.trackOnly
+    AppFilter.Problems -> row.status == AppStatus.ERROR || row.status == AppStatus.BLOCKED
     is AppFilter.Category -> filter.name in row.config.categories.map { it.trim() }
+    is AppFilter.Source -> row.config.source.type == filter.type
+}
+
+/** The order of [query.sort], with ties broken by name, and each direction a true reversal of the other. */
+fun order(query: ListQuery, locale: Locale = Locale.getDefault()): Comparator<AppRow> {
+    val collator = Collator.getInstance(locale)
+    val byName = compareBy<AppRow, String>(collator) { it.config.name }
+    val primary: Comparator<AppRow> = when (query.sort) {
+        AppSort.NAME -> byName
+        AppSort.AUTHOR -> compareBy<AppRow, String>(collator) { it.config.author.orEmpty() }
+        AppSort.ADDED -> compareBy { it.addedAtMs ?: Long.MIN_VALUE }
+        AppSort.RELEASED -> compareBy { it.latest?.publishedAtMs ?: Long.MIN_VALUE }
+        // Newest first reads as the natural order here, so ascending means most recent first.
+        AppSort.RECENTLY_CHECKED -> compareByDescending { it.lastCheckedMs ?: Long.MIN_VALUE }
+        AppSort.SOURCE -> compareBy<AppRow, String>(collator) { sourceLabel(it.config.source.type) }
+    }
+    val directed = if (query.descending) primary.reversed() else primary
+    return directed.then(byName).then(compareBy { it.id })
 }
 
 fun arrange(rows: List<AppRow>, query: ListQuery, locale: Locale = Locale.getDefault()): AppSections {
-    val collator = Collator.getInstance(locale)
-    val byName = compareBy<AppRow, String>(collator) { it.config.name }
-    val order: Comparator<AppRow> = when (query.sort) {
-        AppSort.NAME -> byName
-        AppSort.RECENTLY_CHECKED -> compareByDescending<AppRow> { it.lastCheckedMs ?: Long.MIN_VALUE }.then(byName)
-        AppSort.SOURCE -> compareBy<AppRow> { it.config.source.type }.then(byName)
+    val kept = rows.filter { passes(it, query.filter) && matches(it, query.text) }.sortedWith(order(query, locale))
+    // Stable sorts: each placement keeps the chosen order within what it moves.
+    val placed = kept
+        .sortedBy { if (query.buryNotInstalled && it.installed == null && !it.config.trackOnly) 1 else 0 }
+        .sortedBy { if (it.config.favorite) 0 else 1 }
+    val (updates, others) = if (query.updatesFirst) placed.partition(::isUpdate) else emptyList<AppRow>() to placed
+    return AppSections(updates, others, group(others, query.grouping, locale))
+}
+
+/** [rows] divided by [grouping], the groups by name and the rows that belong to none last. */
+fun group(rows: List<AppRow>, grouping: AppGrouping, locale: Locale = Locale.getDefault()): List<RowGroup> = when (grouping) {
+    AppGrouping.NONE -> emptyList()
+    AppGrouping.CATEGORY -> {
+        val named = categoriesOf(rows, locale).map { name ->
+            RowGroup("c:$name", name, rows.filter { row -> name in row.config.categories.map { it.trim() } })
+        }
+        val none = rows.filter { row -> row.config.categories.none { it.isNotBlank() } }
+        named + listOfNotNull(none.takeIf { it.isNotEmpty() }?.let { RowGroup("c:", null, it) })
     }
-    val kept = rows.filter { passes(it, query.filter) && matches(it, query.text) }.sortedWith(order)
-    val (updates, others) = kept.partition(::isUpdate)
-    return AppSections(updates, others)
+    AppGrouping.SOURCE -> sourcesOf(rows, locale).map { type ->
+        RowGroup("s:$type", sourceLabel(type), rows.filter { it.config.source.type == type })
+    }
 }
 
 fun updatableCount(rows: List<AppRow>): Int = rows.count(::canUpdateNow)
 
+private val WHITESPACE = Regex("\\s+")
 private const val SEARCH_SHOWN_FROM = 8
 private const val STACK_FONT_SCALE = 1.5f
 private const val ICONS_PER_ROW = 9
@@ -96,7 +173,9 @@ fun foldsSearch(total: Int, television: Boolean = false): Boolean = television |
  * them, so a filter that was taken can be left again.
  */
 fun offeredFilters(rows: List<AppRow>, categories: List<String>, current: AppFilter): List<AppFilter> {
-    val narrowing = listOf(AppFilter.Updates, AppFilter.Installed, AppFilter.NotInstalled) + categories.map { AppFilter.Category(it) }
+    val narrowing = listOf(
+        AppFilter.Updates, AppFilter.Installed, AppFilter.NotInstalled, AppFilter.Favorites, AppFilter.TrackOnly, AppFilter.Problems,
+    ) + categories.map { AppFilter.Category(it) } + sourcesOf(rows).map { AppFilter.Source(it) }
     val useful = narrowing.filter { filter -> filter == current || rows.count { passes(it, filter) } in 1 until rows.size }
     return if (useful.isEmpty()) emptyList() else listOf(AppFilter.All) + useful
 }

@@ -44,6 +44,7 @@ import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.engine.EventKind
+import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.engine.Handoff
 import io.github.munzzyy.tern.engine.HandoffEnd
 import io.github.munzzyy.tern.engine.OrbotState
@@ -282,6 +283,8 @@ class RealEngine(
             silentUpdate = if (installed == null) null else installers.silent() ?: device.silentUpdateLikely(installed, eval.facts?.targetSdk),
             checking = id in checking,
             movedTo = Moves.suggestion(entry.state),
+            addedAtMs = entry.state.addedAtMs,
+            description = entry.state.description,
         )
     }
 
@@ -356,6 +359,7 @@ class RealEngine(
                 releases = listOfNotNull(found.release),
                 description = found.description?.take(1000),
                 iconUrls = IconAddresses.accepted(found.spec.url, found.iconUrls),
+                addedAtMs = nowMs(),
             )
             store.putApp(config, state)
             stored[config.id] = StoredApp(config, state)
@@ -563,9 +567,14 @@ class RealEngine(
         return stars.starredBy(user)
     }
 
-    override suspend fun exportTo(uri: Uri): Int {
+    override suspend fun exportTo(uri: Uri, format: ExportFormat): Int {
         ready()
-        return interop.exportTo(uri)
+        return interop.exportTo(uri, format)
+    }
+
+    override suspend fun shareableExport(appIds: Collection<String>?, format: ExportFormat): Uri {
+        ready()
+        return interop.shareable(appIds, format)
     }
 
     override suspend fun clearEvents() = withContext(Dispatchers.IO) {

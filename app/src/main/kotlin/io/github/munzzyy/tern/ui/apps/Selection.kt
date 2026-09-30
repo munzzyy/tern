@@ -41,11 +41,18 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.input.ImeAction
 import io.github.munzzyy.tern.R
+import androidx.compose.runtime.LaunchedEffect
+import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.Engine
+import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.ui.LocalOnline
 import io.github.munzzyy.tern.ui.common.Actions
+import io.github.munzzyy.tern.ui.common.ChoiceDialog
 import io.github.munzzyy.tern.ui.common.ConfirmDialog
+import io.github.munzzyy.tern.ui.common.shareFile
+import io.github.munzzyy.tern.ui.common.shareText
+import io.github.munzzyy.tern.ui.detail.updateModeLabel
 import io.github.munzzyy.tern.ui.common.GlyphButton
 import io.github.munzzyy.tern.ui.common.QuietButton
 import io.github.munzzyy.tern.ui.common.ScreenTop
@@ -89,6 +96,11 @@ private fun BulkMenu(picked: List<AppRow>, onAction: (BulkAction) -> Unit) {
                 BulkAction.CATEGORY to R.string.action_add_to_category,
                 BulkAction.CHECK to R.string.action_check_now,
                 BulkAction.UPDATE to R.string.action_update,
+                BulkAction.FAVORITE to if (favoriteAfter(picked)) R.string.action_favorite else R.string.action_unfavorite,
+                BulkAction.MODE to R.string.action_set_mode,
+                BulkAction.SHARE_ADDRESSES to R.string.action_share_addresses,
+                BulkAction.SHARE_EXPORT to R.string.action_share_export,
+                BulkAction.UNINSTALL to R.string.action_uninstall,
                 BulkAction.REMOVE to R.string.action_remove,
             )) {
                 DropdownMenuItem(
@@ -107,6 +119,7 @@ private fun BulkMenu(picked: List<AppRow>, onAction: (BulkAction) -> Unit) {
 fun available(action: BulkAction, picked: List<AppRow>, online: Boolean): Boolean = when (action) {
     BulkAction.CHECK -> online && picked.isNotEmpty()
     BulkAction.UPDATE -> online && touched(action, picked).isNotEmpty()
+    BulkAction.UNINSTALL -> touched(action, picked).isNotEmpty()
     else -> picked.isNotEmpty()
 }
 
@@ -134,6 +147,7 @@ fun BulkBar(picked: List<AppRow>, onAction: (BulkAction) -> Unit) {
             QuietButton(stringResource(R.string.action_check_now), onClick = { onAction(BulkAction.CHECK) }, modifier = netState, enabled = available(BulkAction.CHECK, picked, online))
             QuietButton(stringResource(R.string.action_update), onClick = { onAction(BulkAction.UPDATE) }, modifier = netState, enabled = available(BulkAction.UPDATE, picked, online))
             QuietButton(stringResource(R.string.action_remove), onClick = { onAction(BulkAction.REMOVE) }, ink = MaterialTheme.colorScheme.error)
+            BulkMenu(picked, onAction)
         }
     }
 }
@@ -186,6 +200,66 @@ fun BulkDialog(action: BulkAction, picked: List<AppRow>, categories: List<String
             confirm = stringResource(R.string.action_remove),
             onConfirm = {
                 actions.run { for (row in touched) engine.remove(row.id) }
+                onDone()
+            },
+            onDismiss = onDismiss,
+        )
+        BulkAction.FAVORITE -> {
+            val on = favoriteAfter(touched)
+            val words = LocalContext.current.resources.getQuantityString(if (on) R.plurals.bulk_favorite_done else R.plurals.bulk_unfavorite_done, n, n)
+            LaunchedEffect(Unit) {
+                actions.run {
+                    for (row in touched) engine.configure(row.id) { it.copy(favorite = on) }
+                    actions.say(words)
+                }
+                onDismiss()
+                onDone()
+            }
+        }
+        BulkAction.MODE -> ChoiceDialog(
+            title = pluralStringResource(R.plurals.bulk_mode_title, n, n),
+            options = UpdateMode.entries,
+            selected = touched.map { it.config.updates }.distinct().singleOrNull() ?: UpdateMode.NOTIFY,
+            label = { updateModeLabel(it) },
+            onDismiss = onDismiss,
+        ) { mode ->
+            actions.run { for (row in touched) engine.configure(row.id) { it.copy(updates = mode) } }
+            onDismiss()
+            onDone()
+        }
+        BulkAction.SHARE_ADDRESSES -> {
+            val context = LocalContext.current
+            val title = stringResource(R.string.action_share_addresses)
+            LaunchedEffect(Unit) {
+                shareText(context, title, addressList(touched))
+                onDismiss()
+                onDone()
+            }
+        }
+        BulkAction.SHARE_EXPORT -> {
+            val context = LocalContext.current
+            val title = stringResource(R.string.action_share_export)
+            ChoiceDialog(
+                title = title,
+                options = ExportFormat.entries,
+                selected = ExportFormat.TERN,
+                label = { stringResource(if (it == ExportFormat.TERN) R.string.export_format_tern else R.string.export_format_obtainium) },
+                onDismiss = onDismiss,
+            ) { format ->
+                actions.run {
+                    val uri = engine.shareableExport(touched.map { it.id }, format)
+                    shareFile(context, title, uri)
+                }
+                onDismiss()
+                onDone()
+            }
+        }
+        BulkAction.UNINSTALL -> ConfirmDialog(
+            title = pluralStringResource(R.plurals.bulk_uninstall_title, n, n),
+            text = stringResource(R.string.bulk_uninstall_text),
+            confirm = stringResource(R.string.action_uninstall),
+            onConfirm = {
+                for (row in touched) engine.uninstall(row.id)
                 onDone()
             },
             onDismiss = onDismiss,

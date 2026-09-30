@@ -66,6 +66,7 @@ import io.github.munzzyy.tern.ui.LocalSnackbar
 import io.github.munzzyy.tern.ui.common.ActionRow
 import io.github.munzzyy.tern.ui.common.ChoiceRow
 import io.github.munzzyy.tern.ui.common.InfoRow
+import io.github.munzzyy.tern.ui.common.LocalNoTouch
 import io.github.munzzyy.tern.ui.common.InstallPermissionQuestion
 import io.github.munzzyy.tern.ui.common.LinkDialog
 import io.github.munzzyy.tern.ui.common.ReadBlock
@@ -136,7 +137,7 @@ fun SettingsScreen(onImport: () -> Unit, onLook: () -> Unit, onAdd: (String) -> 
                 InstallingSection(s, update)
                 TokensSection(vm)
                 NetworkSection(s, update, onGetOrbot = { onAdd(ORBOT_URL) }, orbotFocus = Modifier.returnFocus(screen, "orbot"))
-                AppearanceSection(onLook, Modifier.returnFocus(screen, "look"))
+                AppearanceSection(s, update, onLook, Modifier.returnFocus(screen, "look"))
                 DataSection(s, vm, update, onImport, Modifier.returnFocus(screen, "import"))
                 AboutSection()
             }
@@ -622,7 +623,7 @@ private fun CustomProxy(s: Settings, update: Update) {
 }
 
 @Composable
-private fun AppearanceSection(onLook: () -> Unit, lookFocus: Modifier) {
+private fun AppearanceSection(s: Settings, update: Update, onLook: () -> Unit, lookFocus: Modifier) {
     SectionCard(title = stringResource(R.string.settings_appearance)) {
         ActionRow(
             title = stringResource(R.string.look_title),
@@ -632,6 +633,14 @@ private fun AppearanceSection(onLook: () -> Unit, lookFocus: Modifier) {
             modifier = lookFocus,
         )
         LanguageRow()
+        if (!LocalNoTouch.current) {
+            SwitchRow(
+                title = stringResource(R.string.settings_swipe),
+                summary = stringResource(R.string.settings_swipe_effect),
+                checked = s.swipeActions,
+                onChange = { v -> update { it.copy(swipeActions = v) } },
+            )
+        }
     }
 }
 

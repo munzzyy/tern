@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_share">Share</string>
+    <string name="action_release_page">Open the release page</string>
+    <string name="action_share_address">Share the address</string>
+    <string name="action_share_link">Share a link that opens it in Tern</string>
+    <string name="action_app_info">App info in Android</string>
+    <string name="detail_last_checked">Checked %1$s</string>
+    <string name="state_favorite">Favourite</string>
+</resources>

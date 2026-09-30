@@ -2,8 +2,11 @@ package io.github.munzzyy.tern.ui.apps
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import io.github.munzzyy.tern.engine.AppGrouping
 import io.github.munzzyy.tern.engine.AppRow
+import io.github.munzzyy.tern.engine.AppSort
 import io.github.munzzyy.tern.engine.Engine
+import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.ui.text.isWaitingForUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +17,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 data class AppsState(
     val loaded: Boolean = false,
@@ -45,12 +49,25 @@ fun listState(rows: List<AppRow>, query: ListQuery, gone: Set<String>): AppsStat
     )
 }
 
-class AppsViewModel(engine: Engine, hidden: StateFlow<Set<String>> = MutableStateFlow(emptySet())) : ViewModel() {
+class AppsViewModel(private val engine: Engine, hidden: StateFlow<Set<String>> = MutableStateFlow(emptySet())) : ViewModel() {
+    /** What was typed and the filter; the order and grouping come from the settings, so they last. */
     private val _query = MutableStateFlow(ListQuery())
-    val query: StateFlow<ListQuery> = _query.asStateFlow()
 
-    val state: StateFlow<AppsState> = combine(engine.apps, _query, hidden, ::listState)
+    val query: StateFlow<ListQuery> = combine(_query, engine.settings) { typed, settings ->
+        ListQuery.of(settings).copy(text = typed.text, filter = typed.filter)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, ListQuery.of(engine.settings.value))
+
+    val state: StateFlow<AppsState> = combine(engine.apps, query, hidden, ::listState)
         .flowOn(Dispatchers.Default).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), AppsState())
+
+    private val _collapsed = MutableStateFlow<Set<String>>(emptySet())
+
+    /** Keys of the groups folded away. Not kept: a group opens again when Tern starts. */
+    val collapsed: StateFlow<Set<String>> = _collapsed.asStateFlow()
+
+    fun toggleGroup(key: String) {
+        _collapsed.update { if (key in it) it - key else it + key }
+    }
 
     fun setText(text: String) {
         _query.value = _query.value.copy(text = text.take(200))
@@ -60,8 +77,18 @@ class AppsViewModel(engine: Engine, hidden: StateFlow<Set<String>> = MutableStat
         _query.value = _query.value.copy(filter = filter)
     }
 
-    fun setSort(sort: AppSort) {
-        _query.value = _query.value.copy(sort = sort)
+    fun setSort(sort: AppSort) = saveList { it.copy(listSort = sort) }
+
+    fun setDescending(descending: Boolean) = saveList { it.copy(listDescending = descending) }
+
+    fun setGrouping(grouping: AppGrouping) = saveList { it.copy(listGrouping = grouping) }
+
+    fun setUpdatesFirst(first: Boolean) = saveList { it.copy(updatesFirst = first) }
+
+    fun setBuryNotInstalled(bury: Boolean) = saveList { it.copy(buryNotInstalled = bury) }
+
+    private fun saveList(change: (Settings) -> Settings) {
+        viewModelScope.launch { engine.saveSettings(change(engine.settings.value)) }
     }
 
     private val _selection = MutableStateFlow<Set<String>?>(null)

@@ -186,7 +186,13 @@ interface Engine {
     suspend fun starredBy(user: String): List<SearchHit>
 
     /** Returns how many apps were written. Tokens are never exported. */
-    suspend fun exportTo(uri: Uri): Int
+    suspend fun exportTo(uri: Uri, format: ExportFormat = ExportFormat.TERN): Int
+
+    /**
+     * The apps in [appIds], or every app when it is null, written in [format] to a file another
+     * app may read through the returned address, for sharing. Tokens are never in it.
+     */
+    suspend fun shareableExport(appIds: Collection<String>?, format: ExportFormat): Uri
 
     suspend fun clearEvents()
 

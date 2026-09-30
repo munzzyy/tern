@@ -36,6 +36,12 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             proxy = enumOr(prefs.getString("proxy", null), d.proxy),
             proxyHost = prefs.getString("proxyHost", null) ?: d.proxyHost,
             proxyPort = prefs.getInt("proxyPort", d.proxyPort),
+            listSort = enumOr(prefs.getString("listSort", null), d.listSort),
+            listDescending = prefs.getBoolean("listDescending", d.listDescending),
+            listGrouping = enumOr(prefs.getString("listGrouping", null), d.listGrouping),
+            updatesFirst = prefs.getBoolean("updatesFirst", d.updatesFirst),
+            buryNotInstalled = prefs.getBoolean("buryNotInstalled", d.buryNotInstalled),
+            swipeActions = prefs.getBoolean("swipeActions", d.swipeActions),
             installer = enumOr(prefs.getString("installer", null), d.installer),
             otherInstaller = prefs.getString("otherInstaller", null)?.takeIf { PACKAGE.matches(it) },
             playInstaller = prefs.getBoolean("playInstaller", d.playInstaller),
@@ -70,6 +76,12 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putString("proxy", s.proxy.name)
             .putString("proxyHost", s.proxyHost)
             .putInt("proxyPort", s.proxyPort)
+            .putString("listSort", s.listSort.name)
+            .putBoolean("listDescending", s.listDescending)
+            .putString("listGrouping", s.listGrouping.name)
+            .putBoolean("updatesFirst", s.updatesFirst)
+            .putBoolean("buryNotInstalled", s.buryNotInstalled)
+            .putBoolean("swipeActions", s.swipeActions)
             .putString("installer", s.installer.name)
             .putString("otherInstaller", s.otherInstaller?.takeIf { PACKAGE.matches(it) })
             .putBoolean("playInstaller", s.playInstaller)

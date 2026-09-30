@@ -123,6 +123,10 @@ data class AppRow(
     val checking: Boolean = false,
     /** Where the source says the project lives now. Shown as a suggestion, never followed silently. */
     val movedTo: String? = null,
+    /** When the app was added to Tern; null for apps added before this was kept. */
+    val addedAtMs: Long? = null,
+    /** What the source says the app is, in a sentence or two. */
+    val description: String? = null,
 ) {
     val id: String get() = config.id
 }
@@ -181,6 +185,15 @@ sealed interface Detection {
 }
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
+
+/** How the list is ordered. Apps with an update come first unless [Settings.updatesFirst] is off. */
+enum class AppSort { NAME, AUTHOR, ADDED, RELEASED, RECENTLY_CHECKED, SOURCE }
+
+/** How the list is divided. An app with several categories is shown under each of them. */
+enum class AppGrouping { NONE, CATEGORY, SOURCE }
+
+/** Tern's own export, or the file Obtainium imports, for a list that moves to Obtainium. */
+enum class ExportFormat { TERN, OBTAINIUM }
 
 /** What hands a checked file to Android. Whichever it is, the file passed the same checks first. */
 enum class InstallerMode {
@@ -246,6 +259,15 @@ data class Settings(
     val proxy: ProxyMode = ProxyMode.NONE,
     val proxyHost: String = "127.0.0.1",
     val proxyPort: Int = 9050,
+    val listSort: AppSort = AppSort.NAME,
+    val listDescending: Boolean = false,
+    val listGrouping: AppGrouping = AppGrouping.NONE,
+    /** Apps with an update above all others, whatever the order. */
+    val updatesFirst: Boolean = true,
+    /** Apps that are not installed below all others. */
+    val buryNotInstalled: Boolean = false,
+    /** Swiping a row starts its update, or the other way removes it. Only on touch screens. */
+    val swipeActions: Boolean = true,
     val installer: InstallerMode = InstallerMode.SYSTEM,
     /** The package of the installer app used with [InstallerMode.OTHER_APP]. */
     val otherInstaller: String? = null,

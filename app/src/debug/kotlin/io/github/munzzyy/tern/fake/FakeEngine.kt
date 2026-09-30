@@ -18,6 +18,7 @@ import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.engine.EventKind
+import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.engine.ImportSummary
 import io.github.munzzyy.tern.engine.InstallerChoice
 import io.github.munzzyy.tern.engine.InstallerMode
@@ -575,11 +576,20 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     private fun tool(n: Int) = SearchHit("tool-$n", "example", "A command line tool with no Android build.", "${FakeLinks.NO_FILE_PREFIX}$n", "GitHub", n * 3)
 
-    override suspend fun exportTo(uri: Uri): Int {
+    override suspend fun exportTo(uri: Uri, format: ExportFormat): Int {
         val rows = _apps.value
         val json = rows.joinToString(",", "{\"apps\":[", "]}") { "{\"id\":\"${it.id}\"}" }
         context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) } ?: error("No output")
         return rows.size
+    }
+
+    /** The stand-in writes its ids to the share folder, as the real engine writes a whole export there. */
+    override suspend fun shareableExport(appIds: Collection<String>?, format: ExportFormat): Uri {
+        val rows = _apps.value.filter { appIds == null || it.id in appIds }
+        val dir = java.io.File(context.cacheDir, "share").apply { mkdirs() }
+        val file = java.io.File(dir, if (format == ExportFormat.OBTAINIUM) "obtainium-export.json" else "tern-apps.json")
+        file.writeText(rows.joinToString(",", "{\"apps\":[", "]}") { "{\"id\":\"${it.id}\"}" })
+        return androidx.core.content.FileProvider.getUriForFile(context, "${context.packageName}.handoff", file)
     }
 
     override suspend fun clearEvents() {

@@ -47,4 +47,6 @@ data class AppState(
     val announcedReleaseId: String? = null,
     /** Where the source says the icon can be had, the best first. */
     val iconUrls: List<String> = emptyList(),
+    /** When the app was added. Older apps have none. */
+    val addedAtMs: Long? = null,
 )

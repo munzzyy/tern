@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">Arrange the list</string>
+    <string name="list_options_title">Arrange the list</string>
+    <string name="list_reverse">Reverse the order</string>
+    <string name="list_updates_first">Updates on top</string>
+    <string name="list_bury_not_installed">Apps that are not installed at the bottom</string>
+    <string name="sort_author">By developer</string>
+    <string name="sort_added">By date added</string>
+    <string name="sort_released">By release date</string>
+    <string name="group_title">Group by</string>
+    <string name="group_none">Nothing</string>
+    <string name="group_category">Category</string>
+    <string name="group_source">Source</string>
+    <string name="group_category_effect">An app in several categories appears in each of them.</string>
+    <string name="group_other">Everything else</string>
+    <string name="group_folded">Folded</string>
+    <string name="group_open">Open</string>
+    <string name="filter_favorites">Favourites</string>
+    <string name="filter_track_only">Track only</string>
+    <string name="filter_problems">Problems</string>
+    <string name="action_done">Done</string>
+    <string name="settings_swipe">Swipe rows to act</string>
+    <string name="settings_swipe_effect">Swipe an app towards the end to update it, towards the start to remove it.</string>
+    <string name="action_favorite">Add to favourites</string>
+    <string name="action_unfavorite">Remove from favourites</string>
+    <string name="action_set_mode">When updates are found</string>
+    <string name="action_share_addresses">Share addresses</string>
+    <string name="action_share_export">Share as a file</string>
+    <string name="action_uninstall">Uninstall</string>
+    <string name="export_format_tern">A Tern file</string>
+    <string name="export_format_obtainium">A file for Obtainium</string>
+    <string name="bulk_uninstall_text">Android asks about each app in turn. Tern keeps following them until you remove them here.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d app is a favourite now</item>
+        <item quantity="other">%1$d apps are favourites now</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d app is no longer a favourite</item>
+        <item quantity="other">%1$d apps are no longer favourites</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">When an update of %1$d app is found</item>
+        <item quantity="other">When updates of %1$d apps are found</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">Uninstall %1$d app?</item>
+        <item quantity="other">Uninstall %1$d apps?</item>
+    </plurals>
+</resources>

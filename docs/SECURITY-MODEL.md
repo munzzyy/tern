@@ -166,6 +166,12 @@ only once Dhizuku is chosen. No hidden install flag is set. Where one of these
 calls is missing on some version of Android, Settings and the install say that
 Tern cannot install through Dhizuku there.
 
+Sui, the Magisk module that serves Shizuku's interface, is found the same way:
+its library reads `ServiceManager` and sends a call of its own to the activity
+service. Shizuku's library would do that at every start of Tern. Tern turns it
+off before anything starts and asks Sui only once Shizuku is the chosen
+installer. With Android's installer chosen, neither is asked anything.
+
 OBB files are the one exception, and a narrow one. After Android has installed
 an app that passed the gate, Shizuku or root writes the OBB files of its
 archive to `Android/obb/<the package the gate verified>/`, each with `dd` and

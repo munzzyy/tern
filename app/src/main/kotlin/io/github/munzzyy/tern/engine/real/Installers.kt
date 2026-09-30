@@ -14,12 +14,14 @@ import io.github.munzzyy.tern.install.SessionInstaller
 import io.github.munzzyy.tern.install.ShellInstaller
 import io.github.munzzyy.tern.install.ShizukuShell
 import io.github.munzzyy.tern.install.ShizukuState
+import io.github.munzzyy.tern.log.TernLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import rikka.shizuku.Shizuku
+import rikka.sui.Sui
 
 /**
  * Which installer an install goes to. The one the person chose, while it can be used; Android's own
@@ -89,7 +91,7 @@ internal class Installers(private val e: RealEngine) {
 
     private fun readinessNow(): InstallerReadiness = when (e.settings.value.installer) {
         InstallerMode.SYSTEM -> InstallerReadiness.READY
-        InstallerMode.SHIZUKU -> when (ShizukuShell.state()) {
+        InstallerMode.SHIZUKU -> when (suiThenShizuku()) {
             ShizukuState.READY -> InstallerReadiness.READY
             ShizukuState.NOT_RUNNING -> InstallerReadiness.SHIZUKU_NOT_RUNNING
             ShizukuState.TOO_OLD -> InstallerReadiness.SHIZUKU_TOO_OLD
@@ -98,6 +100,26 @@ internal class Installers(private val e: RealEngine) {
         InstallerMode.DHIZUKU -> dhizukuState?.readiness ?: InstallerReadiness.DHIZUKU_NOT_ANSWERING
         InstallerMode.ROOT -> if (rootGranted == true) InstallerReadiness.READY else InstallerReadiness.NO_ROOT
         InstallerMode.OTHER_APP -> if (otherApp() != null) InstallerReadiness.READY else InstallerReadiness.NO_OTHER_APP
+    }
+
+    @Volatile
+    private var suiAsked = false
+
+    /**
+     * Shizuku's state, once Sui has been asked for its binder. That asking goes through a hidden
+     * part of Android, so it waits until the person chose Shizuku; ShizukuProvider does not do
+     * it at start (App.attachBaseContext).
+     */
+    private fun suiThenShizuku(): ShizukuState {
+        if (!suiAsked) {
+            suiAsked = true
+            try {
+                Sui.init(e.context.packageName)
+            } catch (ex: RuntimeException) {
+                TernLog.w(TAG, "Sui could not be asked: ${ex.javaClass.simpleName}")
+            }
+        }
+        return ShizukuShell.state()
     }
 
     fun mayInstall(): Boolean = if (effective() == InstallerMode.SYSTEM) e.device.mayInstall() else true
@@ -150,6 +172,7 @@ internal class Installers(private val e: RealEngine) {
     private companion object {
         const val PLAY = "com.android.vending"
         const val SHIZUKU_REQUEST = 7301
+        const val TAG = "TernInstallers"
     }
 }
 

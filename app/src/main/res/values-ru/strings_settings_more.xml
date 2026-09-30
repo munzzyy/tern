@@ -19,7 +19,7 @@
     <string name="style_standard">Стандартный</string>
     <string name="style_vibrant">Яркий</string>
     <string name="style_expressive">Выразительный</string>
-    <string name="look_style_effect">Яркий стиль делает всю палитру более красочной. Выразительный сдвигает второй и третий цвета дальше от первого.</string>
+    <string name="look_style_effect">Яркий стиль делает всю палитру более красочной. Выразительный стиль сдвигает второй и третий цвета дальше от первого.</string>
     <string name="look_color_code">Код цвета</string>
     <string name="look_color_code_effect">Tern берет оттенок и насыщенность этого цвета и подбирает его тона, которые остаются легко читаемыми.</string>
     <string name="look_color_code_invalid">Шесть шестнадцатеричных цифр, например #3D5A80.</string>
@@ -39,7 +39,7 @@
     <string name="settings_auto_installs">Обновления устанавливаются самостоятельно</string>
     <string name="settings_auto_installs_effect">Приложения, настроенные обновляться самостоятельно, делают это после фоновой проверки. Если выключено, они только сообщают, что обновление есть, а выбор каждого из них сохраняется на потом.</string>
     <string name="settings_unmetered_installs">Устанавливать только по Wi-Fi</string>
-    <string name="settings_unmetered_installs_effect">Проверки выполняются в любой сети. Обновление, которое установилось бы само, ждет Wi-Fi или кабеля, как в Obtainium.</string>
+    <string name="settings_unmetered_installs_effect">Проверки выполняются в любой сети. Обновление, которое установилось бы само, ждет подключения к Wi-Fi или кабелю, как в Obtainium.</string>
     <string name="settings_charging_installs">Устанавливать только при зарядке</string>
     <string name="settings_charging_installs_effect">Проверки выполняются и при работе от батареи. Обновление, которое установилось бы само, ждет, пока устройство не начнет заряжаться.</string>
     <string name="engine_unreadable_app">Сохраненное приложение %1$s не удалось прочитать, поэтому оно не показано в списке. Ничего не удалено: более новая версия Tern может его прочитать.</string>

@@ -19,7 +19,7 @@
     <string name="style_standard">Стандартний</string>
     <string name="style_vibrant">Яскравий</string>
     <string name="style_expressive">Виразний</string>
-    <string name="look_style_effect">Яскравий стиль робить усю палітру барвистішою. Виразний зсуває другий і третій кольори далі від першого.</string>
+    <string name="look_style_effect">Яскравий стиль робить усю палітру барвистішою. Виразний стиль зсуває другий і третій кольори далі від першого.</string>
     <string name="look_color_code">Код кольору</string>
     <string name="look_color_code_effect">Tern бере відтінок і насиченість цього кольору та добирає його тони, які лишаються легкими для читання.</string>
     <string name="look_color_code_invalid">Шість шістнадцяткових цифр, наприклад #3D5A80.</string>

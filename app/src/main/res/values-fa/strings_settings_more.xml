@@ -1,2 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="language_system">مطابق با سیستم</string>
+    <string name="interval_more_often">بررسی با دفعات بیشتر</string>
+    <string name="interval_less_often">بررسی با دفعات کمتر</string>
+    <string name="about_help">Tern چگونه کار می‌کند</string>
+    <string name="about_help_effect">آنچه Tern بررسی می‌کند و روش افزودن، به‌روزرسانی و انتقال برنامه‌ها، در صفحه پروژه.</string>
+    <string name="about_security">Tern چگونه امنیت شما را حفظ می‌کند</string>
+    <string name="about_privacy">حریم خصوصی</string>
+    <string name="verification_title">تأیید توسعه‌دهندگان در Android</string>
+    <string name="verification_text">Google اعلام کرده است که دستگاه‌های Android دارای گواهی، فقط برنامه‌های توسعه‌دهندگانی را نصب خواهند کرد که در Google ثبت‌نام کرده‌اند، با شروع از سپتامبر ۲۰۲۶ در چند کشور و پس از آن در کشورهای بیشتر.\n\nدر جاهایی که این قاعده اجرا می‌شود، Android ممکن است برنامه توسعه‌دهنده‌ای را که ثبت‌نام نکرده رد کند، یا پیش از نصب آن از شما موارد بیشتری بخواهد، فارغ از نتیجه بررسی‌های خود Tern. Tern نمی‌تواند این را تغییر دهد و وقتی Android نصب را رد کند به شما اطلاع می‌دهد.\n\nدستگاه‌های بدون گواهی Google تحت تأثیر قرار نمی‌گیرند.</string>
+    <string name="verification_more">صفحه Google درباره آن</string>
+    <string name="kept_export_format">قالب</string>
+    <string name="kept_export_format_tern">قالب Tern که همه‌چیز را در خود دارد</string>
+    <string name="kept_export_format_obtainium">قالب Obtainium که Obtainium هم می‌تواند آن را بخواند</string>
+    <string name="kept_export_name">نام فایل</string>
+    <string name="kept_export_name_usual">برای استفاده از %1$s خالی بگذارید.</string>
+    <string name="look_style">سبک</string>
+    <string name="style_standard">استاندارد</string>
+    <string name="style_vibrant">شاداب</string>
+    <string name="style_expressive">بیانگر</string>
+    <string name="look_style_effect">شاداب در سراسر طرح رنگارنگ‌تر است. بیانگر رنگ‌های دوم و سوم را بیشتر از رنگ اول دور می‌کند.</string>
+    <string name="look_color_code">کد رنگ</string>
+    <string name="look_color_code_effect">Tern طیف و شدت این رنگ را برمی‌دارد و از آن سایه‌هایی را انتخاب می‌کند که خواندنشان آسان می‌ماند.</string>
+    <string name="look_color_code_invalid">شش رقم هگزادسیمال، مانند #3D5A80.</string>
+    <string name="crash_title">Tern به‌طور غیرمنتظره متوقف شد</string>
+    <string name="crash_text">این همان کاری است که Tern هنگام توقف انجام می‌داد. این اطلاعات روی این دستگاه می‌ماند؛ اگر می‌خواهید بررسی شود، آن را با توسعه‌دهنده به اشتراک بگذارید.</string>
+    <string name="crash_share">اشتراک‌گذاری</string>
+    <string name="crash_copied">کپی شد</string>
+    <string name="activity_range">نمایش</string>
+    <string name="activity_range_all">همه روزها</string>
+    <plurals name="activity_range_days">
+        <item quantity="one">%d روز گذشته</item>
+        <item quantity="other">%d روز گذشته</item>
+    </plurals>
+    <string name="activity_copied">گزارش کپی شد</string>
+    <string name="settings_auto_installs">نصب خودکار به‌روزرسانی‌ها</string>
+    <string name="settings_auto_installs_effect">برنامه‌هایی که برای به‌روزرسانی خودکار تنظیم شده‌اند، این کار را پس از یک بررسی در پس‌زمینه انجام می‌دهند. در حالت خاموش، فقط اعلام می‌کنند که به‌روزرسانی هست و هر کدام انتخاب خودش را برای بعد نگه می‌دارد.</string>
+    <string name="settings_unmetered_installs">نصب فقط با Wi-Fi</string>
+    <string name="settings_unmetered_installs_effect">بررسی‌ها روی هر شبکه‌ای انجام می‌شوند. به‌روزرسانی‌ای که قرار بود خودکار نصب شود، منتظر Wi-Fi یا کابل شبکه می‌ماند، مانند Obtainium.</string>
+    <string name="settings_charging_installs">نصب فقط هنگام شارژ</string>
+    <string name="settings_charging_installs_effect">بررسی‌ها روی باتری هم انجام می‌شوند. به‌روزرسانی‌ای که قرار بود خودکار نصب شود، منتظر می‌ماند تا دستگاه در حال شارژ باشد.</string>
+    <string name="engine_unreadable_app">برنامه ذخیره‌شده %1$s خوانده نشد، بنابراین از لیست کنار گذاشته شد. چیزی حذف نشده است: ممکن است نسخه جدیدتر Tern بتواند آن را بخواند.</string>
+    <string name="settings_pin_certificates">پین کردن گواهی‌های میزبان‌های کد</string>
+    <string name="settings_pin_certificates_effect">GitHub، GitLab و Codeberg باید گواهی‌ای از مرجع صدور گواهی شناخته‌شده خود ارائه دهند، مانند Obtainium. گواهی‌ای که مرجعی دیگر مجبور به صدور آن شده باشد، در این حالت رد می‌شود. اگر یکی از میزبان‌های کد مرجع خود را عوض کند، تا وقتی این گزینه خاموش نشده، بررسی‌ها در آنجا ناموفق می‌شوند.</string>
+</resources>

@@ -42,7 +42,7 @@
     <string name="settings_unmetered_installs_effect">Sprawdzanie działa w każdej sieci. Aktualizacja, która zainstalowałaby się sama, czeka na Wi-Fi lub kabel, jak w Obtainium.</string>
     <string name="settings_charging_installs">Instaluj tylko podczas ładowania</string>
     <string name="settings_charging_installs_effect">Sprawdzanie działa także na baterii. Aktualizacja, która zainstalowałaby się sama, czeka, aż urządzenie zacznie się ładować.</string>
-    <string name="engine_unreadable_app">Nie udało się odczytać zapisanej aplikacji %1$s, więc jest pominięta na liście. Nic nie zostało usunięte: nowsza wersja Tern może ją odczytać.</string>
+    <string name="engine_unreadable_app">Nie udało się odczytać zapisanej aplikacji %1$s, więc została pominięta na liście. Nic nie zostało usunięte: nowsza wersja Tern może ją odczytać.</string>
     <string name="settings_pin_certificates">Przypinaj certyfikaty hostingów kodu</string>
     <string name="settings_pin_certificates_effect">Tak jak w Obtainium, GitHub, GitLab i Codeberg muszą okazać certyfikat urzędu certyfikacji, z którego, jak wiadomo, korzysta każdy z nich. Certyfikat wystawiony pod przymusem przez inny urząd certyfikacji jest wtedy odrzucany. Jeśli hosting kodu zmieni urząd certyfikacji, sprawdzanie tam kończy się niepowodzeniem, dopóki ta opcja nie zostanie wyłączona.</string>
 </resources>

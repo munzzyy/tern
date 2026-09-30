@@ -8,7 +8,7 @@
     <string name="about_security">كيف يحافظ Tern على أمانك</string>
     <string name="about_privacy">الخصوصية</string>
     <string name="verification_title">التحقق من المطورين في Android</string>
-    <string name="verification_text">أعلنت Google أن أجهزة Android المعتمدة ستثبّت فقط التطبيقات من المطورين الذين سجّلوا لدى Google، بدءًا من عدد قليل من الدول في سبتمبر 2026، ثم في المزيد منها بعد ذلك.\n\nحيثما ينطبق ذلك، قد يرفض Android تطبيقًا من مطور لم يسجّل، أو يطلب منك المزيد قبل أن يثبّته، مهما كانت نتيجة فحوصات Tern الخاصة. لا يستطيع Tern تغيير ذلك، ويخبرك عندما يرفض Android.\n\nالأجهزة التي لا تحمل اعتماد Google لا تتأثر.</string>
+    <string name="verification_text">أعلنت Google أن أجهزة Android المعتمدة ستثبّت فقط التطبيقات من المطورين الذين سجّلوا لدى Google، بدءًا من عدد قليل من الدول في سبتمبر 2026، ثم في المزيد منها بعد ذلك.\n\nحيثما ينطبق ذلك، قد يرفض Android تطبيقًا من مطور لم يسجّل، أو يطلب منك المزيد قبل أن يثبّته، مهما كانت نتيجة فحوصات Tern الخاصة. لا يستطيع Tern تغيير ذلك، ويخبرك عندما يرفض Android التثبيت.\n\nالأجهزة التي لا تحمل اعتماد Google لا تتأثر.</string>
     <string name="verification_more">صفحة Google عن هذا الموضوع</string>
     <string name="kept_export_format">الصيغة</string>
     <string name="kept_export_format_tern">صيغة Tern التي تحتوي على كل شيء</string>

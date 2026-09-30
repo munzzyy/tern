@@ -1,2 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="language_system">システムと同じ</string>
+    <string name="interval_more_often">確認の頻度を上げる</string>
+    <string name="interval_less_often">確認の頻度を下げる</string>
+    <string name="about_help">Ternの仕組み</string>
+    <string name="about_help_effect">Ternが確認する内容と、アプリの追加、更新、移行の方法を、プロジェクトのページで説明しています。</string>
+    <string name="about_security">Ternが安全を守る仕組み</string>
+    <string name="about_privacy">プライバシー</string>
+    <string name="verification_title">Androidの開発者確認</string>
+    <string name="verification_text">Googleは、認定を受けたAndroid端末にインストールできるアプリを、Googleに登録した開発者のものだけにすると発表しました。2026年9月から一部の国で始まり、その後さらに多くの国に広がります。\n\nこれが適用される地域では、Ternによる確認の結果にかかわらず、Androidは登録していない開発者のアプリを拒否したり、インストールの前に追加の操作を求めたりすることがあります。Ternにはこれを変えられません。Androidが拒否した場合は、Ternがそのことをお知らせします。\n\nGoogleの認定を受けていない端末は影響を受けません。</string>
+    <string name="verification_more">Googleの説明ページ</string>
+    <string name="kept_export_format">形式</string>
+    <string name="kept_export_format_tern">Ternの形式（すべてを含みます）</string>
+    <string name="kept_export_format_obtainium">Obtainiumの形式（Obtainiumでも読み込めます）</string>
+    <string name="kept_export_name">ファイル名</string>
+    <string name="kept_export_name_usual">空欄のままにすると %1$s になります。</string>
+    <string name="look_style">スタイル</string>
+    <string name="style_standard">標準</string>
+    <string name="style_vibrant">ビビッド</string>
+    <string name="style_expressive">エクスプレッシブ</string>
+    <string name="look_style_effect">ビビッドは全体的により鮮やかになります。エクスプレッシブは、2番目と3番目の色の色相を、1番目の色からさらにずらします。</string>
+    <string name="look_color_code">カラーコード</string>
+    <string name="look_color_code_effect">Ternはこの色の色相と彩度を取り入れ、その色の濃淡のうち読みやすさが保たれるものを選びます。</string>
+    <string name="look_color_code_invalid">16進数6桁（例: #3D5A80）。</string>
+    <string name="crash_title">Ternが予期せず停止しました</string>
+    <string name="crash_text">停止したときに行っていた処理です。この端末内にとどまります。調べてほしい場合は、開発者に共有してください。</string>
+    <string name="crash_share">共有</string>
+    <string name="crash_copied">コピーしました</string>
+    <string name="activity_range">表示</string>
+    <string name="activity_range_all">全期間</string>
+    <plurals name="activity_range_days">
+        <item quantity="other">過去%d日間</item>
+    </plurals>
+    <string name="activity_copied">ログをコピーしました</string>
+    <string name="settings_auto_installs">更新を自動的にインストールする</string>
+    <string name="settings_auto_installs_effect">自動更新に設定されたアプリは、バックグラウンドでの確認後に更新されます。オフにすると、更新があることを知らせるだけになり、各アプリの設定は後のためにそのまま保持されます。</string>
+    <string name="settings_unmetered_installs">Wi-Fiでのみインストール</string>
+    <string name="settings_unmetered_installs_effect">確認はどのネットワークでも実行されます。自動でインストールされる更新は、Obtainiumと同様に、Wi-Fiまたは有線接続になるまで待機します。</string>
+    <string name="settings_charging_installs">充電中のみインストール</string>
+    <string name="settings_charging_installs_effect">確認はバッテリー駆動中も実行されます。自動でインストールされる更新は、端末が充電中になるまで待機します。</string>
+    <string name="engine_unreadable_app">保存されたアプリ %1$s を読み込めなかったため、リストから除外しています。何も削除されていません。新しいバージョンのTernなら読み込める可能性があります。</string>
+    <string name="settings_pin_certificates">コードホスティングの証明書をピン留め</string>
+    <string name="settings_pin_certificates_effect">GitHub、GitLab、Codebergは、Obtainiumと同様に、それぞれが使用していることが知られている認証局の証明書を提示する必要があります。別の認証局が発行させられた証明書は拒否されます。コードホスティングが認証局を変更すると、これをオフにするまで、そこでの確認は失敗します。</string>
+</resources>

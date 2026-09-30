@@ -104,6 +104,13 @@ interface Source {
      */
     fun probe(url: String, context: CheckContext): SourceSpec? = null
 
+    /**
+     * Reads [url] as this source because the person said it is one, where [match] may not know
+     * the address: a forge on a host of its own, a repository at an address of any shape. May ask
+     * the server. Null when the address cannot be read this way. Default: what [match] takes.
+     */
+    fun matchForced(url: String, context: CheckContext): SourceSpec? = match(url)
+
     @Throws(SourceException::class)
     fun check(spec: SourceSpec, context: CheckContext): CheckResult
 

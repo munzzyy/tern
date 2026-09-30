@@ -2,6 +2,8 @@ package io.github.munzzyy.tern.ui.importing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -20,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,8 +34,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
 import io.github.munzzyy.tern.R
+import io.github.munzzyy.tern.core.text.SafePattern
 import io.github.munzzyy.tern.engine.SearchHit
 import io.github.munzzyy.tern.ui.add.brief
+import io.github.munzzyy.tern.ui.common.LinkDialog
+import io.github.munzzyy.tern.ui.common.LinkText
 import io.github.munzzyy.tern.ui.common.ProblemBox
 import io.github.munzzyy.tern.ui.common.QuietButton
 import io.github.munzzyy.tern.ui.common.ReadBlock
@@ -40,6 +46,8 @@ import io.github.munzzyy.tern.ui.common.SectionCard
 import io.github.munzzyy.tern.ui.common.TonalButton
 import io.github.munzzyy.tern.ui.common.focusLook
 import io.github.munzzyy.tern.ui.common.textFieldKeys
+import io.github.munzzyy.tern.ui.text.ltr
+import io.github.munzzyy.tern.ui.text.shortUrl
 import io.github.munzzyy.tern.ui.theme.LocalLook
 
 const val STARS_USER_TAG = "stars_user"
@@ -84,12 +92,53 @@ fun LazyListScope.starsSection(state: StarsState, vm: StarsViewModel) {
             }
         }
     }
-    if (state is StarsState.Listed) {
-        items(state.hits, key = { "star:" + it.url }, contentType = { "star" }) { hit ->
-            StarRow(hit, picked = hit.url in state.picked, onToggle = { vm.toggle(hit.url) })
-        }
+    if (state is StarsState.Listed) pickList(state, vm, "star")
+}
+
+/** The list to pick from: a filter, ticking and unticking all that it shows, and a row for each that it shows. */
+fun LazyListScope.pickList(state: StarsState.Listed, vm: StarsViewModel, kind: String) {
+    if (state.hits.isEmpty()) return
+    item(key = "$kind-tools") { PickTools(state, vm) }
+    items(state.shown, key = { "$kind:" + it.url }, contentType = { kind }) { hit ->
+        StarRow(hit, picked = hit.url in state.picked, onToggle = { vm.toggle(hit.url) })
     }
 }
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun PickTools(state: StarsState.Listed, vm: StarsViewModel) {
+    val look = LocalLook.current
+    val n = state.shown.size
+    Column(
+        verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2),
+        modifier = Modifier
+            .widthIn(max = look.contentMaxWidth)
+            .fillMaxWidth()
+            .padding(horizontal = look.focusRoom, vertical = look.gapSmall),
+    ) {
+        OutlinedTextField(
+            value = state.filter,
+            onValueChange = { vm.filter(it.take(SafePattern.MAX_PATTERN)) },
+            label = { Text(stringResource(R.string.results_filter)) },
+            supportingText = { Text(stringResource(R.string.results_filter_help)) },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(autoCorrectEnabled = false),
+            modifier = Modifier
+                .fillMaxWidth()
+                .textFieldKeys()
+                .testTag(PICK_FILTER_TAG),
+        )
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(look.gapSmall)) {
+            QuietButton(pluralStringResource(R.plurals.import_pick_shown, n, n), onClick = { vm.pickShown(true) }, enabled = n > 0, modifier = Modifier.testTag(PICK_ALL_TAG))
+            QuietButton(pluralStringResource(R.plurals.import_unpick_shown, n, n), onClick = { vm.pickShown(false) }, enabled = n > 0, modifier = Modifier.testTag(PICK_NONE_TAG))
+        }
+        if (n == 0) Text(stringResource(R.string.results_filter_none, state.filter.trim()), style = MaterialTheme.typography.bodyMedium)
+    }
+}
+
+const val PICK_FILTER_TAG = "import_pick_filter"
+const val PICK_ALL_TAG = "import_pick_all"
+const val PICK_NONE_TAG = "import_pick_none"
 
 @Composable
 private fun AskUser(onLook: (String) -> Unit, problem: StarsState.Failed?) {
@@ -144,6 +193,10 @@ internal fun StarRow(hit: SearchHit, picked: Boolean, onToggle: () -> Unit) {
         Checkbox(checked = picked, onCheckedChange = null)
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(look.gapSmall / 4)) {
             Text(hit.owner?.let { "$it/${hit.name}" } ?: hit.name, style = MaterialTheme.typography.titleMedium)
+            // The whole address is shown before the browser opens it.
+            var linkOpen by remember { mutableStateOf(false) }
+            LinkText(ltr(shortUrl(hit.url)), onClick = { linkOpen = true })
+            if (linkOpen) LinkDialog(hit.url, onDismiss = { linkOpen = false })
             hit.description?.takeIf { it.isNotBlank() }?.let {
                 Text(brief(it, MAX_STAR_DESCRIPTION), style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
             }

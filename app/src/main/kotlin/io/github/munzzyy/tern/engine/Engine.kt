@@ -31,6 +31,20 @@ interface Engine {
     /** Looks at what the user typed, pasted or shared: a link is resolved, anything else is searched. */
     suspend fun detect(input: String): Detection
 
+    /**
+     * [detect], with the address read the way [reading] says: as the kind of source the person
+     * picked, with the options and the package name they gave, or the apps of a repository
+     * searched for words.
+     */
+    suspend fun detect(input: String, reading: Reading): Detection
+
+    /**
+     * Replaces the settings of the app in the list that [found] names with those it carried, as a
+     * link or a file sets them. Its pins stay where it has any, it keeps a package name it has, and
+     * it does not start to install by itself. Returns the app's id.
+     */
+    suspend fun replaceSettings(found: Detection.Found): String
+
     /** Every place a search can look, by the name each goes by; [Settings.searchIn] picks among them. */
     val searchOrigins: List<String>
 
@@ -161,6 +175,14 @@ interface Engine {
     suspend fun importFromLink(url: String): ImportSummary
 
     suspend fun importReceived(file: Received.ExportFile): ImportSummary
+
+    /**
+     * Does what an import only offered, for the import [offer] names: [replace] replaces the
+     * settings of the apps in the list with the file's, under the rules of [replaceSettings], and
+     * [takeSettings] takes the settings the file carries. Nothing is done twice. Returns all that
+     * has been done for the offer.
+     */
+    suspend fun finishImport(offer: String, replace: Boolean, takeSettings: Boolean): ImportSummary
 
     /** Well known apps to start from, those for a television first when this device is one. */
     fun suggestions(): List<Suggestion>

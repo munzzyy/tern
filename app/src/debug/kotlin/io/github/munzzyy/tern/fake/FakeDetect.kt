@@ -5,11 +5,13 @@ import io.github.munzzyy.tern.core.model.AssetPolicy
 import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.model.UpdateMode
+import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.engine.ChecksumState
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemKind
+import io.github.munzzyy.tern.engine.Reading
 import io.github.munzzyy.tern.engine.SearchHit
 import io.github.munzzyy.tern.engine.SignerState
 
@@ -37,6 +39,28 @@ object FakeLinks {
 
     /** Where Pocket Notes claims to have moved: a different signer, so following it is refused. */
     const val MOVED_ELSEWHERE = "https://github.com/someone-else/pocketnotes"
+
+    /** A web page whose files are only found once its options name a link filter. */
+    const val NEEDS_FILTER = "https://downloads.example.org/lantern"
+}
+
+/** What the Add screen asked for, read the way [reading] says: with its options, and held to the package name it gives. */
+fun fakeDetect(input: String, invent: Invent, reading: Reading): Detection {
+    val text = input.trim()
+    if (text.lowercase().startsWith(FakeLinks.NEEDS_FILTER)) {
+        val spec = SourceSpec(SourceTypes.HTML, FakeLinks.NEEDS_FILTER, reading.options.orEmpty())
+        if (spec.option(SourceOptions.LINK_FILTER) == null) {
+            return Detection.Failed(Problem(ProblemKind.NO_RELEASES, "No installable link on ${FakeLinks.NEEDS_FILTER}"), spec)
+        }
+        return found(invent, "Lantern", SourceTypes.HTML, "lantern", emptyList()).copy(spec = spec, packageName = reading.packageName)
+    }
+    return when (val detected = fakeDetect(input, invent)) {
+        is Detection.Found -> detected.copy(
+            spec = reading.options?.let { detected.spec.copy(options = it) } ?: detected.spec,
+            packageName = reading.packageName,
+        )
+        else -> detected
+    }
 }
 
 fun fakeDetect(input: String, invent: Invent): Detection {

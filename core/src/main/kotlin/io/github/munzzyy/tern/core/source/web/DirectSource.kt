@@ -31,6 +31,9 @@ class DirectSource : Source {
         return SourceSpec(type, uri.toString())
     }
 
+    /** Any address, taken to serve the app's file itself, when the person says so. */
+    override fun matchForced(url: String, context: CheckContext): SourceSpec? = Urls.normalize(url)?.let { SourceSpec(type, it) }
+
     /** An address that does not end in a file name, recognised by what the server says about it; the body is never read. */
     override fun probe(url: String, context: CheckContext): SourceSpec? {
         val address = Urls.normalize(url) ?: return null

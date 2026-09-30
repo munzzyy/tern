@@ -150,6 +150,23 @@ data class SearchHit(
     /** Human name of where it was found, such as "GitHub" or "Codeberg". */
     val origin: String,
     val stars: Int? = null,
+    /** The kind of source to read [url] as, where the address alone does not say, as for a project on a Forgejo of its own. */
+    val type: String? = null,
+)
+
+/** A place a search could not look in, and why, in one sentence. */
+data class SearchMiss(val origin: String, val reason: String)
+
+/** How the Add screen asks for an address to be read, beyond what [Engine.detect] finds by itself. */
+data class Reading(
+    /** The kind of source to read the address as, one of those a person may pick; null lets Tern find out. */
+    val type: String? = null,
+    /** The options of the source to read it with, in place of those the address carries; null keeps those. */
+    val options: Map<String, String>? = null,
+    /** The package name the person gave. The app is held to it and nothing is learned in its place. */
+    val packageName: String? = null,
+    /** Words to look for among the apps of a repository that is given by its address. */
+    val words: String? = null,
 )
 
 sealed interface Detection {
@@ -173,20 +190,30 @@ sealed interface Detection {
         val iconUrls: List<String> = emptyList(),
         /** True when the certificate this app is held to is one Tern itself carries for it, and not one that came with a link or a file. */
         val builtInPin: Boolean = false,
+        /** The package name the person gave. The app is stored with it, and a file of another package is refused. */
+        val packageName: String? = null,
     ) : Detection
 
     /**
      * A list to pick from: what a search found, or the apps of a repository that was given by its
-     * address. [more] says the list was cut and the rest is not shown.
+     * address. [more] says the list was cut and the rest is not shown. [missed] names the places a
+     * search could not look in. [within] holds the words a repository's apps were searched for.
      */
-    data class Results(val query: String, val hits: List<SearchHit>, val more: Boolean = false) : Detection {
+    data class Results(
+        val query: String,
+        val hits: List<SearchHit>,
+        val more: Boolean = false,
+        val missed: List<SearchMiss> = emptyList(),
+        val within: String? = null,
+    ) : Detection {
         companion object {
             /** The query of a list of apps that came in one link, which the Add screen heads apart from a search. */
             const val CARRIED = "obtainium://apps"
         }
     }
 
-    data class Failed(val problem: Problem) : Detection
+    /** [spec] is the source that was read, when Tern got as far as knowing it, so that its options can be set and it can be read again. */
+    data class Failed(val problem: Problem, val spec: SourceSpec? = null) : Detection
 }
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
@@ -333,10 +360,17 @@ data class Settings(
     val updateAllMode: UpdateAllMode = UpdateAllMode.UPDATES,
     /** Update all says first how many apps it installs or updates, and waits for a yes. */
     val confirmUpdateAll: Boolean = false,
+    /** The Forgejo or Gitea a search looks in, by its host. The token stored for that host goes with the search. */
+    val searchForgejo: String = DEFAULT_FORGEJO,
+    /** A search of GitHub or of a Forgejo leaves out projects with fewer stars than this. */
+    val searchMinStars: Int = 0,
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */
         val DEFAULT_SEARCH: Set<String> = setOf("GitHub", "Codeberg", "GitLab", "F-Droid")
+
+        /** The Forgejo a search looks in until another is named. */
+        const val DEFAULT_FORGEJO = "codeberg.org"
     }
 }
 
@@ -356,6 +390,14 @@ data class ImportSummary(
     val askedToInstallByThemselves: List<String> = emptyList(),
     /** The file carried settings, and they were taken: the look, the list, notifications and checks. */
     val settingsTaken: Boolean = false,
+    /** Apps already in the list whose settings were replaced with the file's, once the person asked for it. */
+    val replaced: Int = 0,
+    /** Names of apps already in the list for which the file holds other settings. Nothing of theirs changes unless the person asks. */
+    val replaceable: List<String> = emptyList(),
+    /** The file carries settings other than these. They are not taken unless the person asks. */
+    val settingsOffered: Boolean = false,
+    /** What [Engine.finishImport] is given to do what the file only offered; null when it offered nothing. */
+    val offer: String? = null,
 )
 
 /** Where the colours come from. [WALLPAPER] needs Android 12 and falls back to [PALETTE] before that. */

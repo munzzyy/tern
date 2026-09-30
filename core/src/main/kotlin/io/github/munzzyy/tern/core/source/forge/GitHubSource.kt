@@ -39,9 +39,22 @@ class GitHubSource : Source {
         return SourceSpec(type, "https://github.com/$owner/$repo")
     }
 
+    /** A repository on a GitHub of another host, such as GitHub Enterprise, when the person says the address is one. */
+    override fun matchForced(url: String, context: CheckContext): SourceSpec? {
+        val normalized = Urls.normalize(url) ?: return null
+        val at = Urls.authority(normalized)
+        if (at.isEmpty() || at.removePrefix("www.") == "github.com") return match(normalized)
+        val segments = Urls.segments(normalized)
+        if (segments.size < 2) return null
+        val owner = segments[0]
+        val repo = segments[1].removeSuffix(".git")
+        if (!RepoNames.isValid(owner) || !RepoNames.isValid(repo)) return null
+        return SourceSpec(type, "https://$at/$owner/$repo")
+    }
+
     override fun check(spec: SourceSpec, context: CheckContext): CheckResult {
         val (owner, repo) = ownerRepo(spec)
-        val token = context.tokens.tokenFor("api.github.com")
+        val token = context.tokens.tokenFor(Urls.host(apiBase(spec.url)))
 
         val pending = if (token == null) {
             when (val outcome = checkFeed(owner, repo, spec, context)) {
@@ -67,14 +80,15 @@ class GitHubSource : Source {
     }
 
     private fun checkFeed(owner: String, repo: String, spec: SourceSpec, context: CheckContext): FeedOutcome {
-        val feedUrl = "https://github.com/$owner/$repo/releases.atom"
+        val home = Urls.authority(spec.url)
+        val feedUrl = "https://$home/$owner/$repo/releases.atom"
         val feedKey = validatorKey(spec, "feed")
         val stored = context.validators.get(feedKey)
 
         val response = fetch(feedUrl, stored?.conditionalHeaders().orEmpty(), context)
         response.use {
             if (it.isNotModified) return FeedOutcome.Unchanged
-            val moved = movedTo(it.url, owner, repo)
+            val moved = movedTo(it.url, owner, repo, home)
             if (!it.isSuccess) return FeedOutcome.NeedsApi(Validator.from(it.headers), "", moved)
 
             val fingerprint = try {
@@ -97,7 +111,9 @@ class GitHubSource : Source {
         token: String?,
         pending: FeedOutcome.NeedsApi?,
     ): CheckResult {
-        val url = "https://api.github.com/repos/$owner/$repo/releases?per_page=30"
+        val home = Urls.authority(spec.url)
+        val api = apiBase(spec.url)
+        val url = "$api/repos/$owner/$repo/releases?per_page=30"
         val apiKey = validatorKey(spec, "api")
         val stored = context.validators.get(apiKey)
         val headers = API_HEADERS + stored?.conditionalHeaders().orEmpty()
@@ -126,24 +142,25 @@ class GitHubSource : Source {
             val assetDate = spec.flag(SourceOptions.ASSET_DATE)
             val listed = json.objects().asSequence()
                 .filterNot { obj -> obj.bool("draft") == true }
-                .mapNotNull { obj -> mapRelease(obj, assetDate) }
+                .mapNotNull { obj -> mapRelease(obj, assetDate, home) }
                 .take(MAX_RELEASES)
                 .toList()
-            val releases = if (spec.flag(SourceOptions.VERIFY_LATEST)) withLatest(listed, latest(owner, repo, context, token, assetDate), MAX_RELEASES) else listed
+            val releases = if (spec.flag(SourceOptions.VERIFY_LATEST)) withLatest(listed, latest(owner, repo, spec, context, token, assetDate), MAX_RELEASES) else listed
             if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $owner/$repo")
 
             context.validators.put(apiKey, Validator.from(it.headers))
             remember(spec, context, pending)
 
-            val movedTo = pending?.movedTo ?: movedTo(it.url, owner, repo, apiPath = true)
+            val movedTo = pending?.movedTo ?: movedTo(it.url, owner, repo, home, apiPath = true)
             val listing = SourceListing(releases = releases, name = repo, author = owner, movedTo = movedTo)
-            return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.gitHub(owner, repo)))
+            val icons = if (home == GITHUB) ForgeIcons.gitHub(owner, repo) else emptyList()
+            return CheckResult.Listing(listing.withIcons(spec.url, icons))
         }
     }
 
     /** The release GitHub marks as latest, or null when it marks none. Asked only when the listing changed. */
-    private fun latest(owner: String, repo: String, context: CheckContext, token: String?, assetDate: Boolean): Release? {
-        fetch("https://api.github.com/repos/$owner/$repo/releases/latest", API_HEADERS, context, token?.let { "Bearer $it" }).use {
+    private fun latest(owner: String, repo: String, spec: SourceSpec, context: CheckContext, token: String?, assetDate: Boolean): Release? {
+        fetch("${apiBase(spec.url)}/repos/$owner/$repo/releases/latest", API_HEADERS, context, token?.let { "Bearer $it" }).use {
             if (it.status == 404) return null
             if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "GitHub returned ${it.status} for the latest release of $owner/$repo")
             val obj = try {
@@ -151,7 +168,7 @@ class GitHubSource : Source {
             } catch (e: Exception) {
                 throw SourceException(SourceErrorKind.PARSE, "Malformed GitHub latest release JSON for $owner/$repo", cause = e)
             }
-            return if (obj.bool("draft") == true) null else mapRelease(obj, assetDate)
+            return if (obj.bool("draft") == true) null else mapRelease(obj, assetDate, Urls.authority(spec.url))
         }
     }
 
@@ -182,25 +199,25 @@ class GitHubSource : Source {
         return digest.joinToString("") { "%02x".format(it) }
     }
 
-    private fun movedTo(finalUrl: String, owner: String, repo: String, apiPath: Boolean = false): String? {
-        val segments = Urls.segments(finalUrl)
-        val offset = if (apiPath) 1 else 0
-        if (segments.size < offset + 2) return null
-        if (apiPath && segments[0] != "repos") return null
-        val newOwner = segments[offset]
-        val newRepo = segments[offset + 1].removeSuffix(".git")
+    /** Where the project at [home] says it lives now; an API answer names it after "repos", on any GitHub. */
+    private fun movedTo(finalUrl: String, owner: String, repo: String, home: String, apiPath: Boolean = false): String? {
+        val all = Urls.segments(finalUrl)
+        val segments = if (apiPath) all.dropWhile { it != "repos" }.drop(1) else all
+        if (segments.size < 2) return null
+        val newOwner = segments[0]
+        val newRepo = segments[1].removeSuffix(".git")
         if (newOwner.equals(owner, ignoreCase = true) && newRepo.equals(repo, ignoreCase = true)) return null
         if (!RepoNames.isValid(newOwner) || !RepoNames.isValid(newRepo)) return null
-        return "https://github.com/$newOwner/$newRepo"
+        return "https://$home/$newOwner/$newRepo"
     }
 
     /** With [assetDate], the release is dated by its newest file, or by its own date when no file says. */
-    private fun mapRelease(obj: JsonObject, assetDate: Boolean): Release? {
+    private fun mapRelease(obj: JsonObject, assetDate: Boolean, home: String): Release? {
         val tag = obj.string("tag_name") ?: return null
         val files = obj.array("assets")?.objects().orEmpty().mapNotNull { asset ->
             val name = asset.string("name") ?: return@mapNotNull null
             val downloadUrl = asset.string("browser_download_url") ?: return@mapNotNull null
-            if (!isAllowedAssetUrl(downloadUrl)) return@mapNotNull null
+            if (!isAllowedAssetUrl(downloadUrl, home)) return@mapNotNull null
             val digest = asset.string("digest")
             val sha256 = digest?.takeIf { it.startsWith("sha256:") }?.removePrefix("sha256:")
             asset to Asset(name = name, url = downloadUrl, size = asset.long("size"), sha256 = sha256)
@@ -219,20 +236,41 @@ class GitHubSource : Source {
         )
     }
 
-    private fun isAllowedAssetUrl(url: String): Boolean {
+    /** A file of github.com comes from GitHub's own hosts; one of another GitHub from that host or a host under it. */
+    private fun isAllowedAssetUrl(url: String, home: String): Boolean {
         if (!Urls.isHttps(url)) return false
         val normalized = Urls.normalize(url) ?: return false
         val host = Urls.host(normalized)
+        if (home != GITHUB) {
+            val homeHost = Urls.host("https://$home")
+            return host == homeHost || host.endsWith(".$homeHost")
+        }
         return host == "github.com" || host.endsWith(".githubusercontent.com") || host == "githubusercontent.com"
     }
 
-    private companion object {
-        const val MAX_RELEASES = 30
-        val API_HEADERS = mapOf("Accept" to "application/vnd.github+json", "X-GitHub-Api-Version" to "2022-11-28")
-        val RESERVED_OWNERS = setOf(
+    companion object {
+        private const val MAX_RELEASES = 30
+        private const val GITHUB = "github.com"
+        private val API_HEADERS = mapOf("Accept" to "application/vnd.github+json", "X-GitHub-Api-Version" to "2022-11-28")
+        private val RESERVED_OWNERS = setOf(
             "settings", "orgs", "marketplace", "topics", "sponsors", "features",
             "notifications", "issues", "pulls", "login", "join", "about", "pricing",
             "security", "explore", "dashboard", "apps", "codespaces", "new", "organizations",
         )
+
+        /**
+         * Where the API of the GitHub that holds the project at [url] answers, as each kind of
+         * GitHub documents it: api.github.com for github.com, api. before the host for GitHub
+         * Enterprise Cloud under ghe.com, and /api/v3 on the host for a GitHub Enterprise Server.
+         * A token goes to the host of this address and to no other.
+         */
+        fun apiBase(url: String): String {
+            val home = Urls.authority(url)
+            return when {
+                home == GITHUB -> "https://api.github.com"
+                home.endsWith(".ghe.com") -> "https://api.$home"
+                else -> "https://$home/api/v3"
+            }
+        }
     }
 }

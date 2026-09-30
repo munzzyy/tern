@@ -45,6 +45,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.Detection
+import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.LocalOnline
 import io.github.munzzyy.tern.ui.LocalSnackbar
@@ -64,6 +65,7 @@ import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.common.rememberScreenFocus
 import io.github.munzzyy.tern.ui.common.returnFocus
 import io.github.munzzyy.tern.ui.common.textFieldKeys
+import io.github.munzzyy.tern.ui.detail.SOURCES_WITH_OPTIONS
 import io.github.munzzyy.tern.ui.handoff.HandoffGlyphs
 import io.github.munzzyy.tern.ui.suggest.Starters
 import io.github.munzzyy.tern.ui.text.problemAdvice
@@ -200,6 +202,9 @@ fun AddScreen(
                     }
                 }
                 if (searchesByName(vm.input, state)) SearchPlaces()
+                if (readsAnAddress(vm.input, state)) {
+                    ReadingCard(vm, answered = (state as? AddState.Answer)?.detection.let { it is Detection.Found || it is Detection.Failed })
+                }
                 when (val s = state) {
                     AddState.Idle -> if (starting) {
                         if (handoff) {
@@ -225,7 +230,7 @@ fun AddScreen(
                         )
                         SourcesCard()
                     }
-                    is AddState.Looking -> Busy(stringResource(R.string.add_looking), onCancel = vm::cancel)
+                    is AddState.Looking -> Busy(stringResource(R.string.add_looking), onCancel = vm::cancel, takeFocus = !s.again)
                     is AddState.Adding -> Busy(stringResource(R.string.add_adding), onCancel = null)
                     AddState.Broken -> ProblemBox(
                         title = stringResource(R.string.add_broken),
@@ -234,21 +239,26 @@ fun AddScreen(
                         onAction = { vm.detect() },
                         modifier = Modifier.focusWhenShown(),
                     )
-                    is AddState.Answer -> Column(Modifier.focusWhenShown(revealTop = true)) {
+                    // Read again from the options, the answer leaves the focus where the person is.
+                    is AddState.Answer -> Column(if (s.again) Modifier else Modifier.focusWhenShown(revealTop = true)) {
                         when (val d = s.detection) {
                             is Detection.Found -> PreviewCard(
                                 found = d,
                                 carried = remember(d) { vm.carried(d) },
                                 onAdd = { install -> vm.add(d, install) },
                                 onShow = onShow,
+                                onReplace = { vm.replace(d) },
                             )
-                            is Detection.Results -> ResultsList(d, onPick = { vm.look(it.url) })
-                            is Detection.Failed -> ProblemBox(
-                                title = d.problem.message,
-                                body = stringResource(problemAdvice(d.problem.kind, installed = false)),
-                                action = stringResource(R.string.action_try_again),
-                                onAction = { vm.detect() },
-                            )
+                            is Detection.Results -> ResultsList(d, onPick = { vm.look(it.url, it.type) }, onSearchRepository = { vm.detect(words = it) })
+                            is Detection.Failed -> {
+                                val settable = optionsMayHelp(d)
+                                ProblemBox(
+                                    title = d.problem.message,
+                                    body = stringResource(if (settable) R.string.add_failed_options else problemAdvice(d.problem.kind, installed = false)),
+                                    action = stringResource(if (settable) R.string.add_set_options else R.string.action_try_again),
+                                    onAction = if (settable) vm::openOptions else ({ vm.detect() }),
+                                )
+                            }
                         }
                     }
                 }
@@ -258,7 +268,7 @@ fun AddScreen(
 }
 
 @Composable
-private fun Busy(text: String, onCancel: (() -> Unit)?) {
+private fun Busy(text: String, onCancel: (() -> Unit)?, takeFocus: Boolean = true) {
     val look = LocalLook.current
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -270,17 +280,33 @@ private fun Busy(text: String, onCancel: (() -> Unit)?) {
     ) {
         CircularProgressIndicator(Modifier.size(look.glyph + look.gapSmall))
         Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-        onCancel?.let { QuietButton(stringResource(R.string.action_cancel), onClick = it, modifier = Modifier.focusWhenShown()) }
+        onCancel?.let { QuietButton(stringResource(R.string.action_cancel), onClick = it, modifier = if (takeFocus) Modifier.focusWhenShown() else Modifier) }
     }
+}
+
+/** True for text that is an address or a link rather than words to search for. */
+fun isAddress(input: String): Boolean {
+    val text = input.trim()
+    return text.contains("://") || text.contains('/') || text.contains('.') && !text.contains(' ')
 }
 
 /** Words, not an address, and nothing found yet but what a search found: where to search is worth choosing. */
 fun searchesByName(input: String, state: AddState): Boolean {
     val text = input.trim()
-    if (text.isEmpty() || text.contains("://") || text.contains('/') || text.contains('.') && !text.contains(' ')) return false
+    if (text.isEmpty() || isAddress(text)) return false
     return when (state) {
         AddState.Idle -> true
         is AddState.Answer -> (state.detection as? Detection.Results)?.let { !isRepository(it) && !isCarriedList(it) } ?: false
         else -> false
     }
 }
+
+/** An address, and not a list of apps that came in one link: how to read it and what to hold it to is worth saying. */
+fun readsAnAddress(input: String, state: AddState): Boolean {
+    if (!isAddress(input) || state is AddState.Adding) return false
+    return ((state as? AddState.Answer)?.detection as? Detection.Results)?.let { !isCarriedList(it) } ?: true
+}
+
+/** A source was read and failed, and it has options that can tell it where to look; a failed connection is not one of those. */
+fun optionsMayHelp(failed: Detection.Failed): Boolean =
+    failed.spec?.type in SOURCES_WITH_OPTIONS && failed.problem.kind != ProblemKind.NETWORK && failed.problem.kind != ProblemKind.RATE_LIMITED

@@ -3,6 +3,7 @@ package io.github.munzzyy.tern.data
 import android.content.Context
 import android.content.SharedPreferences
 import io.github.munzzyy.tern.core.json.Json
+import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.engine.Settings
 
 class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
@@ -73,6 +74,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             autoInstalls = prefs.getBoolean("autoInstalls", d.autoInstalls),
             updateAllMode = enumOr(prefs.getString("updateAllMode", null), d.updateAllMode),
             confirmUpdateAll = prefs.getBoolean("confirmUpdateAll", d.confirmUpdateAll),
+            searchForgejo = prefs.getString("searchForgejo", null)?.let(::cleanHost) ?: d.searchForgejo,
+            searchMinStars = prefs.getInt("searchMinStars", d.searchMinStars).coerceIn(0, MAX_STARS),
         )
     }
 
@@ -147,6 +150,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putBoolean("autoInstalls", s.autoInstalls)
             .putString("updateAllMode", s.updateAllMode.name)
             .putBoolean("confirmUpdateAll", s.confirmUpdateAll)
+            .putString("searchForgejo", cleanHost(s.searchForgejo))
+            .putInt("searchMinStars", s.searchMinStars.coerceIn(0, MAX_STARS))
             .commit()
     }
 
@@ -177,5 +182,12 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
 
         /** A package name, so what goes into an Intent as one can be nothing else. */
         private val PACKAGE = Regex("^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)+$")
+
+        /** The most stars a search may ask a project to have. */
+        const val MAX_STARS = 1_000_000
+
+        /** The host of a Forgejo to search, with a port that is not the usual one; Codeberg for anything that names none. */
+        fun cleanHost(text: String?): String =
+            Urls.normalize("https://" + text.orEmpty().trim().substringAfter("://"))?.let(Urls::authority)?.takeIf { it.isNotEmpty() } ?: Settings.DEFAULT_FORGEJO
     }
 }

@@ -25,6 +25,7 @@ import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemException
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.SavedFile
+import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.install.Downloader
 import io.github.munzzyy.tern.install.OtherAppInstaller
 import io.github.munzzyy.tern.install.StepFailure
@@ -176,6 +177,104 @@ internal class Interop(private val e: RealEngine) {
         return oneAtATime.withLock { withContext(Dispatchers.IO) { store(decoded) } }
     }
 
+    /**
+     * What an import left for the person to decide: the apps already in the list that the file
+     * holds other settings for, by their id, and the settings it carries. Kept until they have
+     * decided, or until newer imports push it out.
+     */
+    private class Offer(val apps: List<Pair<String, AppConfig>>, val settings: JsonObject?) {
+        var replaced: Replaced? = null
+        var settingsTaken = false
+    }
+
+    /** What replacing the settings of the apps of an offer did, kept so that asking twice does it once. */
+    private class Replaced(
+        val count: Int,
+        val skipped: List<Pair<String, String>>,
+        val withPins: List<String>,
+        val withFilters: List<String>,
+        val askedForMore: List<String>,
+    )
+
+    private val offers = LinkedHashMap<String, Offer>()
+
+    /** Does what the import [id] offered and the person asked for. See [io.github.munzzyy.tern.engine.Engine.finishImport]. */
+    suspend fun finish(id: String, replace: Boolean, takeSettings: Boolean): ImportSummary = oneAtATime.withLock {
+        val offer = offers[id] ?: return@withLock ImportSummary(0, 0, emptyList())
+        if (replace && offer.replaced == null) offer.replaced = replaceAll(offer.apps)
+        val settings = offer.settings
+        if (takeSettings && !offer.settingsTaken && settings != null) {
+            e.saveSettings(taken(settings, e.settings.value))
+            offer.settingsTaken = true
+        }
+        val done = offer.replaced
+        ImportSummary(
+            added = 0,
+            alreadyPresent = 0,
+            skipped = done?.skipped.orEmpty(),
+            withPins = done?.withPins.orEmpty(),
+            withFilters = done?.withFilters.orEmpty(),
+            askedToInstallByThemselves = done?.askedForMore.orEmpty(),
+            settingsTaken = offer.settingsTaken,
+            replaced = done?.count ?: 0,
+            replaceable = if (done == null) offer.apps.map { (appId, imported) -> shownNameOf(appId, imported) } else emptyList(),
+            settingsOffered = settings != null && !offer.settingsTaken,
+            offer = id,
+        )
+    }
+
+    /**
+     * Gives the app [id] the settings [imported] holds for it, under the rules of
+     * [Arrivals.replaced], and says so in the activity. Throws IllegalArgumentException when the
+     * result is not valid.
+     */
+    suspend fun replace(id: String, imported: AppConfig) {
+        e.configure(id) { Arrivals.replaced(it, imported, e.builtIn) }
+        withContext(Dispatchers.IO) { e.event(id, EventKind.IMPORTED, e.texts.eventReplaced()) }
+    }
+
+    private suspend fun replaceAll(apps: List<Pair<String, AppConfig>>): Replaced {
+        var count = 0
+        val skipped = ArrayList<Pair<String, String>>()
+        val withPins = ArrayList<String>()
+        val withFilters = ArrayList<String>()
+        val askedForMore = ArrayList<String>()
+        for ((id, imported) in apps) {
+            val before = e.stored[id]?.config ?: continue
+            try {
+                replace(id, imported)
+            } catch (ex: IllegalArgumentException) {
+                skipped += before.shownName to (ex.message ?: "")
+                continue
+            }
+            val after = e.stored[id]?.config ?: continue
+            count++
+            if (before.pinnedSigners.isEmpty() && after.pinnedSigners.isNotEmpty() && !e.builtIn.hold(after)) withPins += after.shownName
+            if (hasFilters(after) && filters(after) != filters(before)) withFilters += after.shownName
+            if (imported.updates == UpdateMode.AUTO && after.updates != UpdateMode.AUTO) askedForMore += after.shownName
+        }
+        return Replaced(count, skipped, withPins, withFilters, askedForMore)
+    }
+
+    /** Whether the file's settings for the app [id] would change anything of it. */
+    private fun changes(id: String, imported: AppConfig): Boolean {
+        val existing = e.stored[id]?.config ?: return false
+        return try {
+            e.validated(Arrivals.replaced(existing, imported, e.builtIn)) != existing
+        } catch (_: IllegalArgumentException) {
+            false
+        }
+    }
+
+    private fun shownNameOf(id: String, imported: AppConfig): String = e.stored[id]?.config?.shownName ?: imported.shownName
+
+    private fun hold(offer: Offer): String {
+        val id = e.newId()
+        offers[id] = offer
+        while (offers.size > MAX_OFFERS) offers.remove(offers.keys.first())
+        return id
+    }
+
     private fun store(decoded: Decoded): ImportSummary {
         val skipped = ArrayList(decoded.skipped)
         var added = 0
@@ -184,9 +283,12 @@ internal class Interop(private val e: RealEngine) {
         val withPins = ArrayList<String>()
         val withFilters = ArrayList<String>()
         val askedForMore = ArrayList<String>()
+        val others = LinkedHashMap<String, AppConfig>()
         for (imported in decoded.apps.take(MAX_APPS)) {
-            if (e.findBySpec(imported.source) != null) {
+            val existing = e.findBySpec(imported.source)
+            if (existing != null) {
                 present++
+                if (changes(existing, imported)) others[existing] = imported
                 continue
             }
             val config = try {
@@ -207,16 +309,30 @@ internal class Interop(private val e: RealEngine) {
         }
         e.publish()
         if (fresh.isNotEmpty()) e.scope.launch { e.checks.checkMany(fresh) }
-        val settings = decoded.settings?.let { SettingsJson.apply(it, e.settings.value) }
-        if (settings != null) e.scope.launch { e.saveSettings(settings) }
-        return ImportSummary(added, present, skipped, withPins, withFilters, askedForMore, settingsTaken = settings != null)
+        // Neither the apps already in the list nor the settings change before the person says so.
+        val settings = decoded.settings?.takeIf { taken(it, e.settings.value) != e.settings.value }
+        val offer = if (others.isEmpty() && settings == null) null else hold(Offer(others.toList(), settings))
+        return ImportSummary(
+            added, present, skipped, withPins, withFilters, askedForMore,
+            replaceable = others.map { (id, imported) -> shownNameOf(id, imported) },
+            settingsOffered = settings != null,
+            offer = offer,
+        )
     }
 
-    private fun hasFilters(config: AppConfig): Boolean = listOf(
+    /** [current] with the settings a file carries, as far as a file may set them: they never make new apps install by themselves. */
+    private fun taken(file: JsonObject, current: Settings): Settings {
+        val taken = SettingsJson.apply(file, current)
+        return if (taken.defaultUpdateMode == UpdateMode.AUTO && current.defaultUpdateMode != UpdateMode.AUTO) taken.copy(defaultUpdateMode = current.defaultUpdateMode) else taken
+    }
+
+    private fun hasFilters(config: AppConfig): Boolean = filters(config).any { !it.isNullOrBlank() }
+
+    private fun filters(config: AppConfig): List<String?> = listOf(
         config.releases.tagFilter, config.releases.titleFilter, config.releases.notesFilter,
         config.releases.versionExtract, config.assets.include, config.assets.exclude,
         config.releases.versionFilter, config.assets.innerFilter,
-    ).any { !it.isNullOrBlank() }
+    )
 
     suspend fun exportTo(uri: Uri, format: ExportFormat = ExportFormat.TERN): Int = withContext(Dispatchers.IO) {
         val (text, count) = export(null, format)
@@ -272,6 +388,7 @@ internal class Interop(private val e: RealEngine) {
         const val MAX_BYTES = 8 * 1024 * 1024
         const val MAX_APPS = 2000
         const val SHARE_FOLDER = "share"
+        const val MAX_OFFERS = 8
     }
 }
 

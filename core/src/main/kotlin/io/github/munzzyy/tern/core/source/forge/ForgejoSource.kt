@@ -30,6 +30,13 @@ class ForgejoSource : Source {
         return ownerRepoSpec(normalized, "codeberg.org")
     }
 
+    /** A repository on a Forgejo or Gitea of any host, read without asking first whether one answers there. */
+    override fun matchForced(url: String, context: CheckContext): SourceSpec? {
+        val normalized = Urls.normalize(url) ?: return null
+        val at = Urls.authority(normalized).takeIf { it.isNotEmpty() } ?: return null
+        return ownerRepoSpec(normalized, at)
+    }
+
     override fun probe(url: String, context: CheckContext): SourceSpec? {
         val normalized = Urls.normalize(url) ?: return null
         val host = Urls.host(normalized)

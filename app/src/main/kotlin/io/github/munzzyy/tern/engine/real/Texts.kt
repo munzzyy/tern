@@ -169,5 +169,19 @@ class Texts(context: Context) : ImportTexts {
     fun notifyDownloading(name: String) = s(R.string.engine_notify_downloading, name)
     fun notifyDownloadingPlain() = s(R.string.notify_downloading_plain)
 
+    fun linkUnknown() = s(R.string.add_link_unknown)
+    fun notReadableAs(source: String) = s(R.string.add_not_readable_as, ltr(source))
+    fun eventReplaced() = s(R.string.add_event_replaced)
+    fun searchMiss(miss: Search.Miss): String {
+        val place = ltr(miss.origin)
+        return when (miss.why) {
+            Search.Why.UNREACHABLE -> s(R.string.search_miss_unreachable, place)
+            Search.Why.WAIT -> miss.retryAtMs?.let { s(R.string.search_miss_wait_until, place, time(it)) } ?: s(R.string.search_miss_wait, place)
+            Search.Why.REFUSED -> s(R.string.search_miss_refused, place)
+            Search.Why.STATUS -> s(R.string.search_miss_status, place, miss.status ?: 0)
+            Search.Why.UNREADABLE -> s(R.string.search_miss_unreadable, place)
+        }
+    }
+
     private fun time(ms: Long): String = DateFormat.getTimeFormat(c).format(Date(ms))
 }

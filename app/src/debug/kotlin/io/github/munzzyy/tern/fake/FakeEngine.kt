@@ -37,6 +37,7 @@ import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemException
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.Progress
+import io.github.munzzyy.tern.engine.Reading
 import io.github.munzzyy.tern.engine.SearchHit
 import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.ui.Scenarios
@@ -201,6 +202,24 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     override suspend fun detect(input: String): Detection {
         delay(detectDelayMs)
         return fakeDetect(input, Invent(System.currentTimeMillis()))
+    }
+
+    override suspend fun detect(input: String, reading: Reading): Detection {
+        delay(detectDelayMs)
+        return fakeDetect(input, Invent(System.currentTimeMillis()), reading)
+    }
+
+    override suspend fun replaceSettings(found: Detection.Found): String {
+        val id = found.alreadyTracked ?: return add(found, install = false)
+        val carried = found.carried ?: return id
+        delay(stepMs)
+        edit(id) { r -> r.copy(config = carried.copy(id = id, source = r.config.source, name = r.config.name, pinnedSigners = r.config.pinnedSigners.ifEmpty { carried.pinnedSigners })) }
+        return id
+    }
+
+    override suspend fun finishImport(offer: String, replace: Boolean, takeSettings: Boolean): ImportSummary {
+        delay(stepMs * 4)
+        return ImportSummary(0, 0, emptyList(), settingsTaken = takeSettings, replaced = if (replace) 2 else 0, offer = offer)
     }
 
     override fun proposedConfig(found: Detection.Found): AppConfig {

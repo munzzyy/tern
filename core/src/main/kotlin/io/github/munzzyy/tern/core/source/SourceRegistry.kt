@@ -82,6 +82,26 @@ class SourceRegistry(val sources: List<Source>) {
         return null
     }
 
+    /**
+     * [url] read as a source of [type] because the person said so, as Obtainium's "override source"
+     * reads it. Null when the address cannot be read that way, or [type] is not one a person may pick.
+     */
+    fun readAs(url: String, type: String, context: CheckContext): SourceSpec? {
+        if (type !in SourceTypes.OVERRIDABLE) return null
+        val source = get(type) ?: return null
+        if (type != SourceTypes.HTML && type != SourceTypes.DIRECT) {
+            Urls.hashRouted(url)?.let { routed -> source.match(routed)?.let { return it } }
+        }
+        val normalized = Urls.normalize(url) ?: return null
+        return try {
+            source.matchForced(normalized, context)
+        } catch (_: IOException) {
+            null
+        } catch (_: SourceException) {
+            null
+        }
+    }
+
     fun detect(url: String, context: CheckContext): SourceSpec? {
         val normalized = Urls.normalize(url) ?: return null
         match(url)?.let { return it }

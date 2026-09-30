@@ -6,9 +6,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
@@ -18,6 +21,7 @@ import io.github.munzzyy.tern.engine.ImportSummary
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.common.LinkText
 import io.github.munzzyy.tern.ui.common.QuietButton
+import io.github.munzzyy.tern.ui.common.TonalButton
 import io.github.munzzyy.tern.ui.common.TrustLine
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.text.Trust
@@ -51,6 +55,62 @@ private fun AppRow.hasFilters(): Boolean = listOf(
 @Composable
 fun CarriedNote(summary: ImportSummary, onOpenApp: (String) -> Unit) {
     if (summary.settingsTaken) TrustLine(Trust.NOTE, stringResource(R.string.import_settings_taken))
+    summary.offer?.let { ImportOffer(summary, it, onOpenApp) }
+    CarriedGroups(summary, onOpenApp)
+}
+
+const val REPLACE_TAG = "import_replace"
+const val TAKE_SETTINGS_TAG = "import_take_settings"
+
+/**
+ * What the file only offered: other settings for apps already in the list, and settings for Tern.
+ * Nothing of it is done until the person asks, and then each is done once.
+ */
+@Composable
+private fun ImportOffer(summary: ImportSummary, offer: String, onOpenApp: (String) -> Unit) {
+    val engine = LocalEngine.current
+    val actions = rememberActions()
+    val look = LocalLook.current
+    var done by remember(offer) { mutableStateOf<ImportSummary?>(null) }
+    var busy by remember(offer) { mutableStateOf(false) }
+    val now = done ?: summary
+    val finish = { replace: Boolean, take: Boolean ->
+        busy = true
+        actions.run {
+            try {
+                done = engine.finishImport(offer, replace, take)
+            } finally {
+                busy = false
+            }
+        }
+    }
+    val waiting = now.replaceable
+    if (waiting.isNotEmpty()) {
+        TrustLine(Trust.NOTE, pluralStringResource(R.plurals.import_replaceable, waiting.size, waiting.size))
+        Text(waiting.take(MAX_NAMES).joinToString("\n"), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(start = look.gap * 2))
+        TonalButton(
+            pluralStringResource(R.plurals.import_replace, waiting.size, waiting.size),
+            onClick = { finish(true, false) },
+            enabled = !busy,
+            modifier = Modifier.testTag(REPLACE_TAG),
+        )
+    }
+    done?.let { result ->
+        if (result.replaced > 0) TrustLine(Trust.GOOD, pluralStringResource(R.plurals.import_replaced, result.replaced, result.replaced))
+        CarriedGroups(result, onOpenApp)
+    }
+    if (now.settingsOffered) {
+        TrustLine(Trust.NOTE, stringResource(R.string.import_settings_offered))
+        TonalButton(stringResource(R.string.import_take_settings), onClick = { finish(false, true) }, enabled = !busy, modifier = Modifier.testTag(TAKE_SETTINGS_TAG))
+    } else if (done?.settingsTaken == true) {
+        TrustLine(Trust.NOTE, stringResource(R.string.import_settings_taken))
+    }
+}
+
+private const val MAX_NAMES = 20
+
+@Composable
+private fun CarriedGroups(summary: ImportSummary, onOpenApp: (String) -> Unit) {
     if (summary.withPins.isEmpty() && summary.withFilters.isEmpty() && summary.askedToInstallByThemselves.isEmpty()) return
     val rows by LocalEngine.current.apps.collectAsStateWithLifecycle()
     if (summary.withPins.isNotEmpty() || summary.withFilters.isNotEmpty()) {

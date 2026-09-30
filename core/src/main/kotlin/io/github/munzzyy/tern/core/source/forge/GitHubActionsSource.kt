@@ -27,6 +27,9 @@ class GitHubActionsSource : Source {
 
     override fun match(url: String): SourceSpec? = null
 
+    /** A repository on github.com, when the person says its builds are what to follow. Its options then name the workflow. */
+    override fun matchForced(url: String, context: CheckContext): SourceSpec? = GitHubSource().match(url)?.copy(type = type)
+
     override fun check(spec: SourceSpec, context: CheckContext): CheckResult {
         val (owner, repo) = ownerRepo(spec)
         val workflow = spec.option(SourceOptions.WORKFLOW)

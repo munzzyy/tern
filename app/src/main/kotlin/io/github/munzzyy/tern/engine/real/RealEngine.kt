@@ -63,6 +63,7 @@ import io.github.munzzyy.tern.engine.ProblemException
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.Progress
 import io.github.munzzyy.tern.engine.ProxyMode
+import io.github.munzzyy.tern.engine.Reading
 import io.github.munzzyy.tern.engine.Received
 import io.github.munzzyy.tern.engine.SavedFile
 import io.github.munzzyy.tern.engine.SearchHit
@@ -358,6 +359,18 @@ class RealEngine(
         return detector.detect(input)
     }
 
+    override suspend fun detect(input: String, reading: Reading): Detection {
+        ready()
+        return detector.detect(input, reading)
+    }
+
+    override suspend fun replaceSettings(found: Detection.Found): String {
+        ready()
+        val id = found.alreadyTracked?.takeIf { stored.containsKey(it) } ?: findBySpec(found.spec) ?: return add(found, install = false)
+        found.carried?.let { interop.replace(id, it) }
+        return id
+    }
+
     override fun proposedConfig(found: Detection.Found): AppConfig {
         val s = _settings.value
         val base = found.carried ?: AppConfig(
@@ -376,7 +389,7 @@ class RealEngine(
                 source = found.spec,
                 name = found.name.take(200).ifBlank { found.spec.url.take(200) },
                 author = found.author?.take(200),
-                packageName = found.verification?.packageName ?: base.packageName ?: found.installed?.packageName,
+                packageName = found.packageName ?: found.verification?.packageName ?: base.packageName ?: found.installed?.packageName,
                 pinnedSigners = builtIn.orElse(found.spec.url, base.pinnedSigners.ifEmpty { found.installed?.signers.orEmpty() }),
             ),
         )
@@ -505,7 +518,12 @@ class RealEngine(
         ready()
         withContext(Dispatchers.IO) {
             val before = stored[appId]?.config?.source
-            val saved = saveApp(appId) { it.copy(config = validated(change(it.config).copy(id = appId))) } ?: return@withContext
+            val saved = saveApp(appId) {
+                val config = validated(change(it.config).copy(id = appId))
+                // Another package has not been seen installed yet, so it is not taken for one that was uninstalled.
+                val state = if (config.packageName != it.config.packageName) it.state.copy(seenInstalled = false) else it.state
+                it.copy(config = config, state = state)
+            } ?: return@withContext
             checks.reevaluate(appId, network = false)
             publish()
             // Options of the source change what a page or a listing means, so what the server said before is not reused.
@@ -602,6 +620,11 @@ class RealEngine(
     override suspend fun importReceived(file: Received.ExportFile): ImportSummary {
         ready()
         return interop.importBytes(file.bytes)
+    }
+
+    override suspend fun finishImport(offer: String, replace: Boolean, takeSettings: Boolean): ImportSummary {
+        ready()
+        return interop.finish(offer, replace, takeSettings)
     }
 
     override fun suggestions(): List<Suggestion> = Suggestions.list(device.profile.television, catalog, context::getString)
@@ -762,18 +785,20 @@ class RealEngine(
         .toSet()
 
     internal fun findBySpec(spec: SourceSpec): String? =
-        stored.values.firstOrNull { it.config.source.type == spec.type && it.config.source.url.equals(spec.url, ignoreCase = true) }?.config?.id
+        stored.values.firstOrNull { sameSource(it.config.source, spec) }?.config?.id
 
     internal fun newId(): String = UUID.randomUUID().toString().replace("-", "").take(16)
 
     /** Stable per source, so the id shown before adding is the id that gets stored, and unlike any other tracked app's. */
     private fun idFor(spec: SourceSpec): String {
-        val base = Fingerprints.sha256("${spec.type}|${spec.url.lowercase()}".toByteArray())
+        // The apps of one repository share its address and are told apart by their package.
+        val pkg = spec.option(SourceOptions.PACKAGE)?.takeIf { spec.type == SourceTypes.FDROID_REPO }?.let { "|$it" }.orEmpty()
+        val base = Fingerprints.sha256("${spec.type}|${spec.url.lowercase()}$pkg".toByteArray())
         var length = 16
         while (length < base.length) {
             val id = base.take(length)
             val holder = stored[id]?.config?.source
-            if (holder == null || (holder.type == spec.type && holder.url.equals(spec.url, ignoreCase = true))) return id
+            if (holder == null || sameSource(holder, spec)) return id
             length += 4
         }
         return base
@@ -826,6 +851,11 @@ class RealEngine(
 
         /** The sources whose projects keep a README Tern reads for an app's page. */
         private val PROJECT_PAGE_SOURCES = setOf(SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS, SourceTypes.GITLAB, SourceTypes.FORGEJO)
+
+        /** Whether [a] and [b] are one app's source: one kind at one address, and in a repository of many apps, one package. */
+        internal fun sameSource(a: SourceSpec, b: SourceSpec): Boolean =
+            a.type == b.type && a.url.equals(b.url, ignoreCase = true) &&
+                (a.type != SourceTypes.FDROID_REPO || a.option(SourceOptions.PACKAGE) == b.option(SourceOptions.PACKAGE))
 
         @Volatile
         internal var current: RealEngine? = null

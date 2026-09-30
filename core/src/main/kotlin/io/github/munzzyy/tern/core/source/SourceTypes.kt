@@ -59,6 +59,15 @@ object SourceTypes {
     /** Sources that only tell of new releases and offer no file Tern may install, each of which says so through [Source.trackOnly]. */
     val TRACK_ONLY: Set<String> = setOf(APKMIRROR, ROCKMODS)
 
+    /**
+     * The kinds a person may say an address is, in the order the Add screen offers them: the
+     * general ones and those that are hosted anywhere first. Obtainium lets no address be read as
+     * vivo's or CoolApk's store, and neither does Tern.
+     */
+    val OVERRIDABLE: List<String> = listOf(HTML, DIRECT, GITHUB, GITHUB_ACTIONS, GITLAB, FORGEJO, FDROID_REPO, JENKINS, SOURCEHUT).let { first ->
+        first + ALL.filter { it !in first && it != VIVO && it != COOLAPK }
+    }
+
     /** The name a person knows the source by. Null for the general ones, which are named by their host. */
     fun displayName(type: String): String? = when (type) {
         GITHUB -> "GitHub"

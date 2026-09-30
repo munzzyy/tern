@@ -32,6 +32,9 @@ class HtmlSource : Source {
 
     override fun match(url: String): SourceSpec? = null
 
+    /** Any page, read for its links to files, when the person says that is what it is. */
+    override fun matchForced(url: String, context: CheckContext): SourceSpec? = Urls.normalize(url)?.let { SourceSpec(type, it) }
+
     override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
 
     /** The file is fetched with the headers the page asks for. */

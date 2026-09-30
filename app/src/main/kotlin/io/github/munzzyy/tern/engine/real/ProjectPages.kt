@@ -8,6 +8,7 @@ import io.github.munzzyy.tern.core.net.HttpRequest
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.TokenProvider
+import io.github.munzzyy.tern.core.source.forge.GitHubSource
 import io.github.munzzyy.tern.engine.NoteBlock
 import java.util.Base64
 
@@ -33,9 +34,11 @@ internal class ProjectPages(private val http: HttpClient, private val tokens: To
 
     private fun github(spec: SourceSpec): String? {
         val (owner, repo) = ownerRepo(spec) ?: return null
-        val token = tokens.tokenFor("api.github.com")
+        // A GitHub on a host of its own answers there, and only its own token goes along.
+        val api = GitHubSource.apiBase(spec.url)
+        val token = tokens.tokenFor(Urls.host(api))
         return get(
-            "https://api.github.com/repos/${Urls.encodeSegment(owner)}/${Urls.encodeSegment(repo)}/readme",
+            "$api/repos/${Urls.encodeSegment(owner)}/${Urls.encodeSegment(repo)}/readme",
             mapOf("Accept" to "application/vnd.github.raw", "X-GitHub-Api-Version" to "2022-11-28"),
             token?.let { "Bearer $it" },
         )

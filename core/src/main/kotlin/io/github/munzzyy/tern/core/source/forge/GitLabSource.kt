@@ -29,6 +29,13 @@ class GitLabSource : Source {
         return projectSpec(normalized, "gitlab.com")
     }
 
+    /** A project on a GitLab of any host, read without asking first whether one answers there, as some only do for a token. */
+    override fun matchForced(url: String, context: CheckContext): SourceSpec? {
+        val normalized = Urls.normalize(url) ?: return null
+        val at = Urls.authority(normalized).takeIf { it.isNotEmpty() } ?: return null
+        return projectSpec(normalized, at)
+    }
+
     override fun probe(url: String, context: CheckContext): SourceSpec? {
         val normalized = Urls.normalize(url) ?: return null
         val host = Urls.host(normalized)

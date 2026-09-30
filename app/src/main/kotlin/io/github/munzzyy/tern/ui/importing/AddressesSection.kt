@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -84,11 +83,7 @@ fun LazyListScope.addressesSection(state: StarsState, vm: StarsViewModel) {
             }
         }
     }
-    if (state is StarsState.Listed) {
-        items(state.hits, key = { "address:" + it.url }, contentType = { "address" }) { hit ->
-            StarRow(hit, picked = hit.url in state.picked, onToggle = { vm.toggle(hit.url) })
-        }
-    }
+    if (state is StarsState.Listed) pickList(state, vm, "address")
 }
 
 @OptIn(ExperimentalLayoutApi::class)

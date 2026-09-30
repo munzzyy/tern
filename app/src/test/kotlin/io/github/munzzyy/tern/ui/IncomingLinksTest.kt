@@ -49,7 +49,6 @@ class IncomingLinksTest {
         assertNull(fromLink("tern://add?url=http%3A%2F%2Fexample.org"))
         assertNull(fromLink("tern://add?url=javascript%3Aalert(1)"))
         assertNull(fromLink("tern://add?url=%zz"))
-        assertNull(fromLink("tern://remove?url=https%3A%2F%2Fexample.org"))
         assertNull(fromLink("tern://add"))
         assertNull(fromLink("tern://add?url=https%3A%2F%2Fexample.org%0Aevil"))
     }
@@ -67,7 +66,24 @@ class IncomingLinksTest {
         val raw = "obtainium://app/%7B%22id%22%3A%22x%22%7D"
         assertEquals(raw, fromLink(raw))
         assertEquals("obtainium://apps/[]", fromLink("obtainium://apps/[]"))
-        assertNull(fromLink("obtainium://settings/whatever"))
+    }
+
+    @Test
+    fun obtainiumAddTakesTheAddressAsAQueryToo() {
+        assertEquals("https://github.com/example/app", fromLink("obtainium://add?url=https%3A%2F%2Fgithub.com%2Fexample%2Fapp"))
+        assertEquals("https://github.com/example/app", fromLink("obtainium://add?url=https://github.com/example/app"))
+        assertNull(fromLink("obtainium://add?url=http%3A%2F%2Fexample.org"))
+        assertNull(fromLink("obtainium://add?other=1"))
+    }
+
+    @Test
+    fun aLinkOfAnUnknownKindGoesToTheAddScreenWholeToBeNamedThere() {
+        assertEquals("obtainium://settings/whatever", fromLink("obtainium://settings/whatever"))
+        assertEquals("tern://remove?url=https%3A%2F%2Fexample.org", fromLink("tern://remove?url=https%3A%2F%2Fexample.org"))
+        // Known kinds are either taken or dropped as before; a check never goes through the Add screen.
+        assertNull(fromLink("tern://refresh"))
+        assertNull(fromLink("obtainium://refresh?id=org.example.app"))
+        assertNull(fromLink("obtainium://app/"))
     }
 
     @Test

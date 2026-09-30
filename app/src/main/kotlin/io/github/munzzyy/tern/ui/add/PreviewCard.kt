@@ -54,6 +54,7 @@ import kotlinx.coroutines.CancellationException
 
 const val PREVIEW_TAG = "add_preview"
 const val PREVIEW_PIN_TAG = "add_preview_pin"
+const val ADD_REPLACE_TAG = "add_replace"
 
 /**
  * What was found, before anything is stored. What the user has to know first stands first: which
@@ -62,7 +63,7 @@ const val PREVIEW_PIN_TAG = "add_preview_pin"
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun PreviewCard(found: Detection.Found, carried: List<CarriedSetting>, onAdd: (install: Boolean) -> Unit, onShow: (String) -> Unit) {
+fun PreviewCard(found: Detection.Found, carried: List<CarriedSetting>, onAdd: (install: Boolean) -> Unit, onShow: (String) -> Unit, onReplace: () -> Unit = {}) {
     val look = LocalLook.current
     val scheme = MaterialTheme.colorScheme
     Surface(
@@ -126,11 +127,20 @@ fun PreviewCard(found: Detection.Found, carried: List<CarriedSetting>, onAdd: (i
             }
 
             val tracked = found.alreadyTracked
-            if (carried.isNotEmpty() && tracked == null) CarriedSection(carried)
+            // A link for an app already in the list says what it would set, for the person to take or leave.
+            if (carried.isNotEmpty()) CarriedSection(carried)
 
             if (tracked != null) {
                 Text(stringResource(R.string.preview_already_tracked), style = MaterialTheme.typography.bodyLarge)
-                PrimaryButton(stringResource(R.string.action_show_it), onClick = { onShow(tracked) })
+                if (found.carried != null) Text(stringResource(R.string.add_replace_explain), style = MaterialTheme.typography.bodyMedium)
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2, Alignment.End),
+                    verticalArrangement = Arrangement.spacedBy(look.focusRoom),
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    if (found.carried != null) TonalButton(stringResource(R.string.add_replace), onClick = onReplace, modifier = Modifier.testTag(ADD_REPLACE_TAG))
+                    PrimaryButton(stringResource(R.string.action_show_it), onClick = { onShow(tracked) })
+                }
             } else {
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2, Alignment.End),

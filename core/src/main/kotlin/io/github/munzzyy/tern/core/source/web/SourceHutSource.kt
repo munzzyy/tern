@@ -27,6 +27,14 @@ class SourceHutSource : Source {
         return SourceSpec(type, "https://git.sr.ht$path")
     }
 
+    /** A repository on a SourceHut of any host, such as one a project runs for itself. */
+    override fun matchForced(url: String, context: CheckContext): SourceSpec? {
+        val uri = Urls.parseHttps(url) ?: return null
+        val path = uri.path?.trimEnd('/') ?: return null
+        if (!REPO_PATH.matches(path)) return null
+        return SourceSpec(type, "https://${uri.authority}$path")
+    }
+
     override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
 
     private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {

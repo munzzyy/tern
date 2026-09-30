@@ -66,9 +66,9 @@ class SearchHitTest {
             listOf(store),
         )
         assertEquals(listOf("GitHub", "Codeberg", "GitLab", "Aptoide"), both.origins)
-        assertEquals(emptyList<SearchHit>(), both.search("maps", setOf("Somewhere else")))
+        assertEquals(emptyList<SearchHit>(), both.search("maps", setOf("Somewhere else")).hits)
         assertEquals(emptyList<String>(), asked)
-        assertEquals(listOf("Found"), both.search("maps", setOf("Aptoide")).map { it.name })
+        assertEquals(listOf("Found"), both.search("maps", setOf("Aptoide")).hits.map { it.name })
         assertEquals(listOf("maps"), asked)
     }
 

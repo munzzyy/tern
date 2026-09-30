@@ -145,17 +145,24 @@ data class OptionsDraft(
  */
 @Composable
 fun SourceOptionsCard(vm: DetailViewModel, config: AppConfig) {
-    val spec = config.source
-    if (spec.type !in SOURCES_WITH_OPTIONS) return
-    val look = LocalLook.current
     val actions = rememberActions()
     val failed = stringResource(R.string.save_failed)
-    val save: ((SourceSpec) -> SourceSpec) -> Unit = { change -> vm.save({ it.copy(source = change(it.source)) }) { actions.say(failed) } }
+    SourceOptionsCard(config.id, config.source) { change -> vm.save({ it.copy(source = change(it.source)) }) { actions.say(failed) } }
+}
+
+/**
+ * The options of [spec], each change handed to [save]: on an app's page it is stored, on the Add
+ * screen it is read again before anything is stored. [id] keeps the text typed for one app apart.
+ */
+@Composable
+fun SourceOptionsCard(id: String, spec: SourceSpec, save: ((SourceSpec) -> SourceSpec) -> Unit) {
+    if (spec.type !in SOURCES_WITH_OPTIONS) return
+    val look = LocalLook.current
     val flag = { key: String -> spec.option(key) == "true" }
     val setFlag = { key: String, on: Boolean ->
         save { s -> s.copy(options = if (on) s.options + (key to "true") else s.options - key) }
     }
-    var draft by rememberSaveable(config.id, spec) { mutableStateOf(OptionsDraft.of(spec)) }
+    var draft by rememberSaveable(id, spec) { mutableStateOf(OptionsDraft.of(spec)) }
     val invalid = draft.invalid(spec.type)
     val dirty = draft != OptionsDraft.of(spec)
     DetailCard(stringResource(R.string.group_source_options)) {

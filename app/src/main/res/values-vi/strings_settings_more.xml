@@ -19,7 +19,7 @@
     <string name="style_standard">Tiêu chuẩn</string>
     <string name="style_vibrant">Sống động</string>
     <string name="style_expressive">Biểu cảm</string>
-    <string name="look_style_effect">Sống động có màu sắc rực rỡ hơn về tổng thể. Biểu cảm xoay sắc thái của màu thứ hai và màu thứ ba lệch xa hơn khỏi màu thứ nhất.</string>
+    <string name="look_style_effect">Sống động có màu sắc rực rỡ hơn về tổng thể. Biểu cảm xoay sắc thái của màu thứ hai và màu thứ ba ra xa màu thứ nhất hơn.</string>
     <string name="look_color_code">Mã màu</string>
     <string name="look_color_code_effect">Tern lấy sắc thái và độ bão hòa của màu này, rồi chọn những tông màu của nó vẫn dễ đọc.</string>
     <string name="look_color_code_invalid">Sáu chữ số thập lục phân, ví dụ #3D5A80.</string>
@@ -41,5 +41,5 @@
     <string name="settings_charging_installs_effect">Việc kiểm tra cũng chạy khi dùng pin. Bản cập nhật lẽ ra sẽ tự cài đặt sẽ chờ đến khi thiết bị đang sạc.</string>
     <string name="engine_unreadable_app">Không thể đọc ứng dụng đã lưu %1$s, nên nó bị loại khỏi danh sách. Không có gì bị xóa: phiên bản Tern mới hơn có thể đọc được nó.</string>
     <string name="settings_pin_certificates">Ghim chứng chỉ của các nền tảng mã nguồn</string>
-    <string name="settings_pin_certificates_effect">GitHub, GitLab và Codeberg phải xuất trình chứng chỉ từ tổ chức cấp chứng chỉ mà mỗi nền tảng được biết là đang dùng, giống như Obtainium. Chứng chỉ do một tổ chức cấp chứng chỉ khác bị buộc phải cấp sẽ bị từ chối. Nếu một nền tảng mã nguồn đổi tổ chức cấp chứng chỉ, việc kiểm tra ở đó sẽ thất bại cho đến khi tắt tùy chọn này.</string>
+    <string name="settings_pin_certificates_effect">GitHub, GitLab và Codeberg phải xuất trình chứng chỉ từ tổ chức cấp chứng chỉ mà mỗi nền tảng được biết là đang dùng, giống như Obtainium. Chứng chỉ mà một tổ chức khác bị buộc phải cấp sẽ bị từ chối. Nếu một nền tảng mã nguồn đổi tổ chức cấp chứng chỉ, việc kiểm tra ở đó sẽ thất bại cho đến khi tắt tùy chọn này.</string>
 </resources>

@@ -188,7 +188,7 @@
     <plurals name="permissions_new">
         <item quantity="other">새 권한 %d개 요구</item>
     </plurals>
-    <string name="fingerprint_copied">지문이 복복사되었습니다</string>
+    <string name="fingerprint_copied">지문이 복사되었습니다</string>
     <string name="checks_virustotal">VirusTotal에서 이 파일 조회</string>
     <string name="checks_virustotal_note">브라우저를 통해 파일의 지문만 전송되며, 아무도 VirusTotal에 업로드하지 않은 파일은 찾을 수 없습니다.</string>
     <string name="advice_network">Tern가 소스에 연결할 수 없습니다. 연결 또는 프록시를 확인한 후 다시 시도해 주세요.</string>

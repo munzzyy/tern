@@ -24,7 +24,7 @@
     <string name="look_color_code_effect">Ternはこの色の色相と彩度を取り入れ、その色の濃淡のうち読みやすさが保たれるものを選びます。</string>
     <string name="look_color_code_invalid">16進数6桁（例: #3D5A80）。</string>
     <string name="crash_title">Ternが予期せず停止しました</string>
-    <string name="crash_text">停止したときに行っていた処理です。この端末内にとどまります。調べてほしい場合は、開発者に共有してください。</string>
+    <string name="crash_text">停止したときに行っていた処理です。この端末に残ります。調べてほしい場合は、開発者に共有してください。</string>
     <string name="crash_share">共有</string>
     <string name="crash_copied">コピーしました</string>
     <string name="activity_range">表示</string>

@@ -19,7 +19,7 @@
     <string name="style_standard">Standart</string>
     <string name="style_vibrant">Canlı</string>
     <string name="style_expressive">İfade edici</string>
-    <string name="look_style_effect">Canlı, genel olarak daha renklidir. İfade edici, ikinci ve üçüncü rengi birinci renkten daha uzağa çevirir.</string>
+    <string name="look_style_effect">Canlı, genel olarak daha renklidir. İfade edici, ikinci ve üçüncü rengi ilk renkten daha uzağa çevirir.</string>
     <string name="look_color_code">Renk kodu</string>
     <string name="look_color_code_effect">Tern, bu rengin tonunu ve yoğunluğunu alır ve ondan kolay okunur kalan tonları seçer.</string>
     <string name="look_color_code_invalid">Altı onaltılık basamak, örneğin #3D5A80.</string>
@@ -33,7 +33,7 @@
         <item quantity="one">Son %d gün</item>
         <item quantity="other">Son %d gün</item>
     </plurals>
-    <string name="activity_copied">Günlük kopyalandı</string>
+    <string name="activity_copied">Etkinlik günlüğü kopyalandı</string>
     <string name="settings_auto_installs">Güncellemeler kendiliğinden yüklenir</string>
     <string name="settings_auto_installs_effect">Kendiliğinden güncellenecek şekilde ayarlanan uygulamalar bunu bir arka plan denetiminden sonra yapar. Kapalıyken yalnızca bir güncelleme olduğunu bildirirler ve her biri kendi seçimini sonrası için korur.</string>
     <string name="settings_unmetered_installs">Yalnızca Wi-Fi bağlantısında yükle</string>

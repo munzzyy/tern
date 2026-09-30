@@ -41,5 +41,5 @@
     <string name="settings_charging_installs_effect">使用电池时也会运行检查。原本会自动安装的更新将等到设备正在充电时再安装。</string>
     <string name="engine_unreadable_app">无法读取已保存的应用 %1$s，因此已将其排除在列表之外。未删除任何内容：较新版本的 Tern 可能可以读取它。</string>
     <string name="settings_pin_certificates">固定代码托管平台的证书</string>
-    <string name="settings_pin_certificates_effect">与 Obtainium 相同，GitHub、GitLab 和 Codeberg 必须出示其已知所用证书颁发机构签发的证书。另一家证书颁发机构被迫签发的证书会被拒绝。如果某个代码托管平台更换了证书颁发机构，在关闭此选项之前，对它的检查都会失败。</string>
+    <string name="settings_pin_certificates_effect">与 Obtainium 相同，GitHub、GitLab 和 Codeberg 必须出示由其已知所用证书颁发机构签发的证书。另一家证书颁发机构被迫签发的证书会被拒绝。如果某个代码托管平台更换了证书颁发机构，在关闭此选项之前，对它的检查都会失败。</string>
 </resources>

@@ -41,5 +41,5 @@
     <string name="settings_charging_installs_effect">Pemeriksaan juga berjalan saat memakai baterai. Pembaruan yang akan diinstal dengan sendirinya menunggu hingga perangkat sedang mengisi daya.</string>
     <string name="engine_unreadable_app">Aplikasi tersimpan %1$s tidak dapat dibaca, jadi tidak dimasukkan ke daftar. Tidak ada yang dihapus: Tern versi yang lebih baru mungkin dapat membacanya.</string>
     <string name="settings_pin_certificates">Sematkan sertifikat platform kode</string>
-    <string name="settings_pin_certificates_effect">GitHub, GitLab, dan Codeberg harus menunjukkan sertifikat dari otoritas sertifikat yang diketahui digunakan masing-masing, seperti di Obtainium. Sertifikat yang diterbitkan otoritas sertifikat lain karena dipaksa akan ditolak. Jika sebuah platform kode mengganti otoritas sertifikatnya, pemeriksaan di sana gagal hingga ini dimatikan.</string>
+    <string name="settings_pin_certificates_effect">GitHub, GitLab, dan Codeberg harus menunjukkan sertifikat dari otoritas sertifikat yang diketahui digunakan masing-masing, seperti di Obtainium. Sertifikat yang diterbitkan otoritas lain karena dipaksa akan ditolak. Jika sebuah platform kode mengganti otoritasnya, pemeriksaan di sana gagal hingga ini dimatikan.</string>
 </resources>

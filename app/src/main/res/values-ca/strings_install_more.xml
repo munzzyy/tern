@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="install_archive_zstd_unsupported">Aquest arxiu està comprimit amb zstd, que Tern no pot obrir. Tria un fitxer .zip o .tar d\'aquest llançament, o un de comprimit amb gzip, bzip2 o xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s de %2$s</string>
+    <string name="install_setting_one_download">Una baixada alhora</string>
+    <string name="install_setting_one_download_effect">Les baixades s\'esperen les unes a les altres en lloc de fer-se alhora.</string>
+    <string name="install_file_foreign_host">Aquest fitxer ve de %1$s, que no és el lloc de l\'origen d\'aquesta aplicació. Es comprova com qualsevol altre fitxer.</string>
+    <string name="install_file_picked">La teva elecció</string>
+    <string name="install_file_automatic">Deixa que Tern torni a triar el fitxer</string>
+    <string name="install_file_picked_kept">Les actualitzacions es mantenen amb el fitxer que has triat, %1$s.</string>
+    <string name="install_file_picked_missing">Aquest llançament no té cap fitxer com el que has triat, %1$s, així que Tern n\'ha triat un.</string>
+</resources>

@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_track_only_forced">%1$s-ൽ നിന്നുള്ള ആപ്പുകൾ പിന്തുടരാൻ മാത്രമേ കഴിയൂ, കാരണം ഇൻസ്റ്റാൾ ചെയ്യാൻ ഫയലൊന്നും അത് നൽകുന്നില്ല.</string>
+    <string name="min_age_global">എല്ലാ ആപ്പുകൾക്കും സജ്ജമാക്കിയത് പോലെ: %1$s</string>
+    <string name="setting_min_age_global_effect">സ്വന്തമായി കാത്തിരിപ്പ് സമയമില്ലാത്ത ആപ്പുകൾ, ഒരു പുതിയ റിലീസ് വാഗ്ദാനം ചെയ്യുന്നതിന് മുമ്പ് ഇത്രയും സമയം കാത്തിരിക്കും, അതിനാൽ മോശമായ ഒന്ന് ആദ്യം പിൻവലിക്കാനാകും.</string>
+    <string name="option_link_text">ലിങ്കുകളെ അവയുടെ ടെക്സ്റ്റ് അനുസരിച്ച് ഫിൽട്ടർ ചെയ്യുക</string>
+    <string name="option_link_text_effect">ഫിൽട്ടർ ലിങ്കിൻ്റെ വിലാസത്തിന് പകരം ലിങ്കിൻ്റെ ടെക്സ്റ്റുമായാണ് പൊരുത്തപ്പെടുത്തുന്നത്.</string>
+    <string name="option_take_first">ആദ്യത്തെ ലിങ്ക് എടുക്കുക</string>
+    <string name="option_take_first_effect">അല്ലെങ്കിൽ ക്രമത്തിലെ അവസാനത്തെ ലിങ്ക് എടുക്കും.</string>
+    <string name="option_natural_order_effect">അല്ലെങ്കിൽ ലിങ്കുകൾ അവയുടെ വിലാസത്തിൻ്റെ സ്വാഭാവിക ക്രമത്തിൽ വയ്ക്കും, അക്കങ്ങളെ സംഖ്യകളായി കണക്കാക്കിക്കൊണ്ട്.</string>
+    <string name="option_by_last_segment">വിലാസത്തിൻ്റെ അവസാനഭാഗം അടിസ്ഥാനമാക്കുക</string>
+    <string name="option_by_last_segment_effect">അവസാനത്തെ സ്ലാഷിന് ശേഷമുള്ള ഭാഗം അനുസരിച്ച് ലിങ്കുകൾ ക്രമത്തിൽ വയ്ക്കുകയും പതിപ്പുകൾ വായിക്കുകയും ചെയ്യുന്നു.</string>
+    <string name="option_steps_title">ആദ്യം കടന്നുപോകേണ്ട പേജുകൾ</string>
+    <string name="option_steps_order_help">ഓരോ പേജിലും, പൊരുത്തപ്പെടുന്ന ലിങ്കുകൾ ക്രമത്തിൽ വയ്ക്കുകയും അവസാനത്തേത് പിന്തുടരുകയും ചെയ്യുന്നു.</string>
+    <string name="step_title">പേജ് %1$d</string>
+    <string name="step_filter">പിന്തുടരേണ്ട ലിങ്ക്</string>
+    <string name="step_text">ലിങ്കിൻ്റെ ടെക്സ്റ്റുമായി പൊരുത്തപ്പെടുത്തുക</string>
+    <string name="step_arch">ഈ ഉപകരണത്തിൻ്റെ പ്രോസസറിന് മുൻഗണന നൽകുക</string>
+    <string name="step_add">ഒരു പേജ് ചേർക്കുക</string>
+    <string name="step_remove">ഈ പേജ് നീക്കംചെയ്യുക</string>
+    <string name="option_file_version">ഫയലിൻ്റെ പേര് പതിപ്പായി ഉപയോഗിക്കുക</string>
+    <string name="option_file_version_effect">അപ്പോൾ ഓരോ ഫയലും സ്വന്തമായ ഒരു റിലീസായി കണക്കാക്കും.</string>
+    <string name="github_proxy_title">hubproxy വഴി GitHub</string>
+    <string name="github_proxy_effect">GitHub-ലേക്കുള്ള ഓരോ അഭ്യർത്ഥനയും ഈ ഹോസ്റ്റിലേക്ക് പോകുന്നു, ഇത് ഓരോന്നും കാണുന്നു. ഇതിലൂടെ ടോക്കൺ അയയ്ക്കില്ല, അതിനാൽ ഈ രീതിയിൽ സ്വകാര്യ പ്രോജക്റ്റുകൾ, GitHub Actions എന്നിവ പിന്തുടരാനാകില്ല.</string>
+    <string name="github_proxy_host">hubproxy ഹോസ്റ്റ്</string>
+    <string name="github_proxy_help">gh-proxy.com പോലെ ഒരു ഹോസ്റ്റ് നാമം മാത്രം. Tern HTTPS വഴി അതിലേക്ക് എത്തുന്നു.</string>
+    <string name="github_proxy_invalid">അത് Tern-ന് ഉപയോഗിക്കാനാകുന്ന ഹോസ്റ്റ് നാമമല്ല</string>
+    <string name="github_proxy_in_use">GitHub അഭ്യർത്ഥനകൾ %1$s വഴി പോകുന്നു</string>
+    <string name="github_proxy_remove">hubproxy ഉപയോഗിക്കുന്നത് നിർത്തുക</string>
+</resources>

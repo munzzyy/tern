@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="install_archive_zstd_unsupported">Este archivo comprimido usa zstd, que Tern no puede abrir. Elige un archivo .zip o .tar de este lanzamiento, o uno comprimido con gzip, bzip2 o xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s de %2$s</string>
+    <string name="install_setting_one_download">Una descarga a la vez</string>
+    <string name="install_setting_one_download_effect">Las descargas se esperan unas a otras en lugar de hacerse a la vez.</string>
+    <string name="install_file_foreign_host">Este archivo viene de %1$s, que no es el sitio del origen de esta aplicación. Se comprueba como cualquier otro archivo.</string>
+    <string name="install_file_picked">Tu elección</string>
+    <string name="install_file_automatic">Dejar que Tern elija el archivo de nuevo</string>
+    <string name="install_file_picked_kept">Las actualizaciones se ciñen al archivo que elegiste, %1$s.</string>
+    <string name="install_file_picked_missing">Este lanzamiento no tiene ningún archivo como el que elegiste, %1$s, así que Tern eligió uno.</string>
+</resources>

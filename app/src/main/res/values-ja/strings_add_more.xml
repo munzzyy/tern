@@ -18,14 +18,14 @@
     <string name="add_read_as_help">Ternが自動では認識できない提供元向けです。独自のホスト上にあるものなどが該当します。</string>
     <string name="add_package_label">パッケージ名</string>
     <string name="add_package_help">すべてのファイルがこのパッケージのものである必要があります。空欄の場合、Ternはアプリのファイルから読み取ります。</string>
-    <string name="add_package_invalid">パッケージ名ではありません。org.example.app のような形式です。</string>
+    <string name="add_package_invalid">パッケージ名ではありません。パッケージ名は org.example.app のような形式です。</string>
     <string name="add_set_options">オプションを設定</string>
     <string name="add_failed_options">オプションで、Ternに探す場所を伝えられる場合があります。上で設定すると、Ternが再確認します。</string>
     <string name="add_replace">設定を置き換える</string>
     <string name="add_replace_explain">リンクには、このアプリ用の独自の設定が含まれています。置き換えても、信頼する証明書とパッケージ名はそのまま保持され、更新の自動インストールも有効にはなりません。</string>
     <string name="results_filter">フィルター</string>
     <string name="results_filter_help">語句またはパターン</string>
-    <string name="results_filter_none">リストに「%1$s」に一致するものはありません。</string>
+    <string name="results_filter_none">「%1$s」に一致するものがリストにありません。</string>
     <string name="repo_search_all">リポジトリ全体から「%1$s」を検索</string>
     <string name="repo_show_all">すべてのアプリを表示</string>
     <string name="repo_heading_within">%1$s 内の「%2$s」を含むアプリ</string>

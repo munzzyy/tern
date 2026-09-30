@@ -9,5 +9,5 @@
     <string name="install_file_picked">あなたの選択</string>
     <string name="install_file_automatic">Ternにファイルを選び直させる</string>
     <string name="install_file_picked_kept">更新では、選択したファイル %1$s が引き続き使われます。</string>
-    <string name="install_file_picked_missing">このリリースには、選択したファイル %1$s に該当するファイルがないため、Ternが選びました。</string>
+    <string name="install_file_picked_missing">このリリースには、選択したファイル %1$s と同様のファイルがないため、Ternが1つ選びました。</string>
 </resources>

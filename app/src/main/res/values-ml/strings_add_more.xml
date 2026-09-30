@@ -1,2 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="add_link_unknown">ഇത്തരം ലിങ്ക് Tern-ന് അറിയില്ല.</string>
+    <string name="add_not_readable_as">ഈ വിലാസം %1$s ആയി വായിക്കാനാകില്ല.</string>
+    <string name="add_event_replaced">ഇതിനായി ഒരു ഫയലോ ലിങ്കോ കൈവശം വച്ചിരുന്ന സെറ്റിംഗ്‌സ് ഉപയോഗിച്ച് ഇതിൻ്റെ സെറ്റിംഗ്‌സ് മാറ്റിസ്ഥാപിച്ചു.</string>
+    <string name="search_miss_unreachable">%1$s തിരയാനായില്ല: അത് മറുപടി നൽകിയില്ല.</string>
+    <string name="search_miss_wait">%1$s തിരയാനായില്ല: കുറച്ചുനേരം കാത്തിരിക്കാൻ അത് Tern-നോട് ആവശ്യപ്പെടുന്നു.</string>
+    <string name="search_miss_wait_until">%1$s തിരയാനായില്ല: %2$s വരെ കാത്തിരിക്കാൻ അത് Tern-നോട് ആവശ്യപ്പെടുന്നു.</string>
+    <string name="search_miss_refused">%1$s തിരയാനായില്ല: അത് അഭ്യർത്ഥന നിരസിച്ചു.</string>
+    <string name="search_miss_status">%1$s തിരയാനായില്ല: അത് %2$d എന്ന് മറുപടി നൽകി.</string>
+    <string name="search_miss_unreadable">%1$s തിരയാനായില്ല: അതിൻ്റെ മറുപടി വായിക്കാനായില്ല.</string>
+    <string name="add_options_title">ചേർക്കുന്നതിന് മുമ്പ്</string>
+    <string name="add_options_auto">വിലാസം എന്താണെന്ന് Tern സ്വയം കണ്ടെത്തുന്നു.</string>
+    <string name="add_options_forced">%1$s ആയി വായിക്കുക</string>
+    <string name="add_read_as">വിലാസം ഇതായി വായിക്കുക</string>
+    <string name="add_read_as_auto">ഓട്ടോമാറ്റിക്</string>
+    <string name="add_read_as_forgejo">Forgejo അല്ലെങ്കിൽ Gitea</string>
+    <string name="add_read_as_help">സ്വന്തം ഹോസ്റ്റിലുള്ളത് പോലെ, Tern-ന് സ്വയം തിരിച്ചറിയാൻ കഴിയാത്ത ഒരു ഉറവിടത്തിനായി.</string>
+    <string name="add_package_label">പാക്കേജിൻ്റെ പേര്</string>
+    <string name="add_package_help">ഓരോ ഫയലും ഈ പാക്കേജിൻ്റേതായിരിക്കണം. ഒഴിച്ചിട്ടാൽ, ആപ്പിൻ്റെ ഫയലിൽ നിന്ന് Tern അത് വായിക്കും.</string>
+    <string name="add_package_invalid">ഇത് ഒരു പാക്കേജിൻ്റെ പേരല്ല. org.example.app പോലെയായിരിക്കണം പാക്കേജിൻ്റെ പേര്.</string>
+    <string name="add_set_options">ഓപ്ഷനുകൾ സജ്ജമാക്കുക</string>
+    <string name="add_failed_options">എവിടെ നോക്കണമെന്ന് ഇതിൻ്റെ ഓപ്ഷനുകൾ Tern-നോട് പറഞ്ഞേക്കാം. അവ മുകളിൽ സജ്ജമാക്കുക, തുടർന്ന് Tern വീണ്ടും പരിശോധിക്കും.</string>
+    <string name="add_replace">ഇതിൻ്റെ സെറ്റിംഗ്‌സ് മാറ്റിസ്ഥാപിക്കുക</string>
+    <string name="add_replace_explain">ലിങ്കിൽ ഇതിനുള്ള സ്വന്തം സെറ്റിംഗ്‌സ് ഉണ്ട്. മാറ്റിസ്ഥാപിക്കുമ്പോൾ ഇത് വിശ്വസിക്കുന്ന സർട്ടിഫിക്കറ്റുകളും പാക്കേജിൻ്റെ പേരും നിലനിൽക്കും, അപ്ഡേറ്റുകൾ സ്വയം ഇൻസ്റ്റാൾ ചെയ്യുന്ന രീതിയിലേക്ക് ഇത് മാറുകയുമില്ല.</string>
+    <string name="results_filter">ഫിൽട്ടർ</string>
+    <string name="results_filter_help">വാക്കുകൾ അല്ലെങ്കിൽ ഒരു പാറ്റേൺ</string>
+    <string name="results_filter_none">ലിസ്റ്റിൽ “%1$s” എന്നതുമായി പൊരുത്തപ്പെടുന്നതൊന്നുമില്ല.</string>
+    <string name="repo_search_all">“%1$s” എന്നതിനായി മുഴുവൻ റെപ്പോസിറ്ററിയിലും തിരയുക</string>
+    <string name="repo_show_all">ഇതിലെ എല്ലാ ആപ്പുകളും കാണിക്കുക</string>
+    <string name="repo_heading_within">%1$s-ലെ “%2$s” ഉള്ള ആപ്പുകൾ</string>
+    <string name="search_more">കാണിച്ചതിലും കൂടുതൽ കണ്ടെത്തി. ഫിൽട്ടർ അത് ചുരുക്കുന്നു.</string>
+    <string name="search_forgejo_label">തിരയാനുള്ള Forgejo അല്ലെങ്കിൽ Gitea</string>
+    <string name="search_forgejo_help">അതിൻ്റെ വിലാസം, ഉദാഹരണത്തിന് codeberg.org. അതിനായി സൂക്ഷിച്ചിട്ടുള്ള ടോക്കൺ കൂടെ അയയ്ക്കും.</string>
+    <string name="search_forgejo_invalid">ഇത് Tern-ന് തിരയാനാകുന്ന വിലാസമല്ല.</string>
+    <string name="search_min_stars_label">ഏറ്റവും കുറഞ്ഞ സ്റ്റാറുകൾ</string>
+    <string name="search_min_stars_help">GitHub-ലും Forgejo-യിലും ഇതിലും കുറച്ച് സ്റ്റാറുകളുള്ള പ്രോജക്റ്റുകൾ ഒഴിവാക്കും.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">നിങ്ങളുടെ ലിസ്റ്റിൽ ഇതിനകമുള്ള %1$d ആപ്പിനുള്ള മറ്റ് സെറ്റിംഗ്‌സും ഫയലിലുണ്ട്. നിങ്ങൾ മാറ്റിസ്ഥാപിക്കുന്നില്ലെങ്കിൽ അവ അതുപോലെ തുടരും.</item>
+        <item quantity="other">നിങ്ങളുടെ ലിസ്റ്റിൽ ഇതിനകമുള്ള %1$d ആപ്പുകൾക്കുള്ള മറ്റ് സെറ്റിംഗ്‌സും ഫയലിലുണ്ട്. നിങ്ങൾ മാറ്റിസ്ഥാപിക്കുന്നില്ലെങ്കിൽ അവ അതുപോലെ തുടരും.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">%1$d ആപ്പിൻ്റെ സെറ്റിംഗ്‌സ് മാറ്റിസ്ഥാപിക്കുക</item>
+        <item quantity="other">%1$d ആപ്പുകളുടെ സെറ്റിംഗ്‌സ് മാറ്റിസ്ഥാപിക്കുക</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">%1$d ആപ്പിൻ്റെ സെറ്റിംഗ്‌സ് മാറ്റിസ്ഥാപിച്ചു. അത് വിശ്വസിക്കുന്ന സർട്ടിഫിക്കറ്റുകൾ അതുപോലെ തുടർന്നു.</item>
+        <item quantity="other">%1$d ആപ്പുകളുടെ സെറ്റിംഗ്‌സ് മാറ്റിസ്ഥാപിച്ചു. അവ വിശ്വസിക്കുന്ന സർട്ടിഫിക്കറ്റുകൾ അതുപോലെ തുടർന്നു.</item>
+    </plurals>
+    <string name="import_settings_offered">ഫയലിൽ Tern-നുള്ള സെറ്റിംഗ്‌സും ഉണ്ട്: രൂപം, ലിസ്റ്റ്, നോട്ടിഫിക്കേഷനുകൾ, പരിശോധനകൾ. നിങ്ങൾ പറയാതെ അവ എടുക്കില്ല.</string>
+    <string name="import_take_settings">ഈ സെറ്റിംഗ്‌സ് എടുക്കുക</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">കാണിച്ചിരിക്കുന്ന %1$d എണ്ണത്തിൽ ടിക്ക് ചെയ്യുക</item>
+        <item quantity="other">കാണിച്ചിരിക്കുന്ന എല്ലാ %1$d എണ്ണത്തിലും ടിക്ക് ചെയ്യുക</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">കാണിച്ചിരിക്കുന്ന %1$d എണ്ണത്തിലെ ടിക്ക് മാറ്റുക</item>
+        <item quantity="other">കാണിച്ചിരിക്കുന്ന എല്ലാ %1$d എണ്ണത്തിലെയും ടിക്ക് മാറ്റുക</item>
+    </plurals>
+</resources>

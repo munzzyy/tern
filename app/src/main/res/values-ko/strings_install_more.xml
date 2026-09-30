@@ -9,5 +9,5 @@
     <string name="install_file_picked">사용자 선택</string>
     <string name="install_file_automatic">Tern이 파일을 다시 선택하도록 하기</string>
     <string name="install_file_picked_kept">업데이트에서도 선택한 파일 %1$s을(를) 계속 사용합니다.</string>
-    <string name="install_file_picked_missing">이 릴리스에는 선택한 파일 %1$s과(와) 같은 파일이 없어서 Tern이 파일을 선택했습니다.</string>
+    <string name="install_file_picked_missing">이 릴리스에는 선택한 파일 %1$s과(와) 같은 파일이 없어서 Tern이 파일을 하나 선택했습니다.</string>
 </resources>

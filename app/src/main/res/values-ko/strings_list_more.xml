@@ -44,7 +44,7 @@
     <plurals name="bulk_categories_title">
         <item quantity="other">앱 %d개의 카테고리</item>
     </plurals>
-    <string name="bulk_categories_help">체크하면 선택한 모든 앱이 해당 카테고리로 분류되고, 빈 상자는 모든 앱을 그 카테고리에서 뺍니다. 가로 줄은 각 앱을 그대로 둡니다.</string>
+    <string name="bulk_categories_help">체크하면 선택한 모든 앱이 해당 카테고리로 분류되고, 빈 상자는 모든 앱을 그 카테고리에서 뺍니다. 가로 줄 표시는 각 앱을 그대로 둡니다.</string>
     <string name="categories_filed_all">선택한 모든 앱</string>
     <string name="categories_filed_some">선택한 앱 중 일부</string>
     <string name="categories_filed_none">선택한 앱 없음</string>

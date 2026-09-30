@@ -1,2 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="filter_open">Filtriraj spisak</string>
+    <string name="filter_state_on">Filteri su uključeni</string>
+    <string name="filter_name">Naziv</string>
+    <string name="filter_author">Programer</string>
+    <string name="filter_package">Naziv paketa</string>
+    <string name="filter_show_up_to_date">Ažurne aplikacije</string>
+    <string name="filter_show_not_installed">Aplikacije koje nisu instalirane</string>
+    <string name="filter_show_tracked">Aplikacije koje se samo prate</string>
+    <string name="filter_categories">U bilo kojoj od ovih kategorija</string>
+    <string name="filter_sources">Iz bilo kojeg od ovih izvora</string>
+    <string name="filter_clear">Očisti filtere</string>
+    <plurals name="filter_shown">
+        <item quantity="one">Prikazano %1$d od %2$d aplikacije</item>
+        <item quantity="few">Prikazano %1$d od %2$d aplikacije</item>
+        <item quantity="other">Prikazano %1$d od %2$d aplikacija</item>
+    </plurals>
+    <string name="checking_count">Provjerava se %1$d od %2$d</string>
+    <string name="row_moved">Premješteno na %1$s</string>
+    <string name="row_released">Izdano %1$s</string>
+    <string name="row_changes">Promjene</string>
+    <string name="action_show_changes">Prikaži promjene</string>
+    <string name="action_install_all">Instaliraj sve</string>
+    <string name="action_install_update_all">Instaliraj i ažuriraj sve</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d aplikacija još nije instalirana</item>
+        <item quantity="few">%d aplikacije još nisu instalirane</item>
+        <item quantity="other">%d aplikacija još nije instalirano</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Instalirati i ažurirati %d aplikaciju?</item>
+        <item quantity="few">Instalirati i ažurirati %d aplikacije?</item>
+        <item quantity="other">Instalirati i ažurirati %d aplikacija?</item>
+    </plurals>
+    <string name="settings_update_all">Dugme \"Ažuriraj sve\"</string>
+    <string name="update_all_updates">Samo ažuriranja</string>
+    <string name="update_all_all">Ažuriranja i aplikacije koje još nisu instalirane</string>
+    <string name="update_all_none">Ne prikazuj</string>
+    <string name="settings_confirm_update_all">Pitaj prije \"Ažuriraj sve\"</string>
+    <string name="settings_confirm_update_all_effect">Kaže koliko aplikacija instalira ili ažurira i čeka vašu potvrdu.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Instalirati %d aplikaciju?</item>
+        <item quantity="few">Instalirati %d aplikacije?</item>
+        <item quantity="other">Instalirati %d aplikacija?</item>
+    </plurals>
+    <string name="bulk_install_text">Svaka datoteka se preuzima i provjerava prije nego što se od Androida zatraži da je instalira. Tern pamti certifikat kojim je svaka nova aplikacija potpisana i zahtijeva ga za svako kasnije ažuriranje.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d odabrana aplikacija sada nema ništa za instalaciju i ostaje kakva jeste.</item>
+        <item quantity="few">%d odabrane aplikacije sada nemaju ništa za instalaciju i ostaju kakve jesu.</item>
+        <item quantity="other">%d odabranih aplikacija sada nema ništa za instalaciju i ostaju kakve jesu.</item>
+    </plurals>
+    <string name="action_change_categories">Promijeni kategorije</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Kategorije %d aplikacije</item>
+        <item quantity="few">Kategorije %d aplikacije</item>
+        <item quantity="other">Kategorije %d aplikacija</item>
+    </plurals>
+    <string name="bulk_categories_help">Kvačica stavlja svaku odabranu aplikaciju pod kategoriju, a prazno polje ih sve uklanja iz nje. Crtica ostavlja svaku aplikaciju kakva jeste.</string>
+    <string name="categories_filed_all">Svaka odabrana aplikacija</string>
+    <string name="categories_filed_some">Neke od odabranih aplikacija</string>
+    <string name="categories_filed_none">Nijedna od odabranih aplikacija</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Promijenjene su kategorije %d aplikacije.</item>
+        <item quantity="few">Promijenjene su kategorije %d aplikacije.</item>
+        <item quantity="other">Promijenjene su kategorije %d aplikacija.</item>
+    </plurals>
+    <string name="action_share_config_link">Podijeli link s postavkama</string>
+    <string name="action_share_config_links">Podijeli linkove s postavkama</string>
+    <string name="share_link_none">Nijedan link ne može nositi postavke ove aplikacije. Podijelite je umjesto toga kao datoteku.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d aplikacija je izostavljena jer nijedan link ne može nositi njene postavke.</item>
+        <item quantity="few">%d aplikacije su izostavljene jer nijedan link ne može nositi njihove postavke.</item>
+        <item quantity="other">%d aplikacija je izostavljeno jer nijedan link ne može nositi njihove postavke.</item>
+    </plurals>
+</resources>

@@ -44,7 +44,7 @@
     <plurals name="bulk_categories_title">
         <item quantity="other">%d 個のアプリのカテゴリ</item>
     </plurals>
-    <string name="bulk_categories_help">チェックを入れると、選択したすべてのアプリがそのカテゴリに分類されます。空のボックスにすると、すべてのアプリがそのカテゴリから外れます。横線のままにすると、各アプリはそのままです。</string>
+    <string name="bulk_categories_help">チェックを入れると、選択したすべてのアプリがそのカテゴリに分類されます。空のボックスにすると、すべてのアプリがそのカテゴリから外れます。横線のボックスは、各アプリをそのままにします。</string>
     <string name="categories_filed_all">選択したすべてのアプリ</string>
     <string name="categories_filed_some">選択したアプリの一部</string>
     <string name="categories_filed_none">選択したアプリはなし</string>

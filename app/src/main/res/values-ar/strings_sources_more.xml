@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_track_only_forced">التطبيقات من %1$s يمكن متابعتها فقط، لأن هذا المصدر لا يقدم ملفًا للتثبيت.</string>
+    <string name="min_age_global">كما هو مضبوط لكل التطبيقات: %1$s</string>
+    <string name="setting_min_age_global_effect">التطبيقات التي ليس لها مدة انتظار خاصة بها تنتظر هذه المدة قبل عرض إصدار جديد، بحيث يمكن سحب الإصدار السيئ أولًا.</string>
+    <string name="option_link_text">تصفية الروابط بحسب نصها</string>
+    <string name="option_link_text_effect">تتم مطابقة الفلتر مع نص الرابط بدلًا من عنوانه.</string>
+    <string name="option_take_first">أخذ أول رابط</string>
+    <string name="option_take_first_effect">وإلا يُؤخذ آخر رابط في الترتيب.</string>
+    <string name="option_natural_order_effect">وإلا تُرتَّب الروابط بحسب عناوينها ترتيبًا طبيعيًا، مع قراءة الأرقام كأرقام.</string>
+    <string name="option_by_last_segment">الاعتماد على نهاية العنوان</string>
+    <string name="option_by_last_segment_effect">تُرتَّب الروابط وتُقرأ أرقام الإصدارات بحسب الجزء الذي يلي آخر شرطة مائلة.</string>
+    <string name="option_steps_title">صفحات يجب المرور بها أولًا</string>
+    <string name="option_steps_order_help">في كل صفحة تُرتَّب الروابط المطابقة ويُتبع آخر رابط منها.</string>
+    <string name="step_title">الصفحة %1$d</string>
+    <string name="step_filter">الرابط المراد اتباعه</string>
+    <string name="step_text">المطابقة مع نص الرابط</string>
+    <string name="step_arch">تفضيل معالج هذا الجهاز</string>
+    <string name="step_add">إضافة صفحة</string>
+    <string name="step_remove">إزالة هذه الصفحة</string>
+    <string name="option_file_version">استخدام اسم الملف كرقم الإصدار</string>
+    <string name="option_file_version_effect">عندها يُحتسب كل ملف إصدارًا مستقلًا.</string>
+    <string name="github_proxy_title">GitHub عبر hubproxy</string>
+    <string name="github_proxy_effect">كل طلب إلى GitHub يمر عبر هذا المضيف، الذي يرى كل طلب. لا يُرسَل أي رمز عبره، لذلك لا يمكن متابعة المشاريع الخاصة ولا GitHub Actions بهذه الطريقة.</string>
+    <string name="github_proxy_host">مضيف hubproxy</string>
+    <string name="github_proxy_help">اسم المضيف وحده، مثل gh-proxy.com. يتصل Tern به عبر HTTPS.</string>
+    <string name="github_proxy_invalid">هذا ليس اسم مضيف يمكن لـ Tern استخدامه</string>
+    <string name="github_proxy_in_use">تمر طلبات GitHub عبر %1$s</string>
+    <string name="github_proxy_remove">التوقف عن استخدام hubproxy</string>
+</resources>

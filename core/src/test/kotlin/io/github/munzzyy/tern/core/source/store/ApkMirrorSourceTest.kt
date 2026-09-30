@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.core.source.store
 
+import io.github.munzzyy.tern.core.model.NotesFormat
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.net.Headers
 import io.github.munzzyy.tern.core.net.HttpResponse
@@ -85,7 +86,9 @@ class ApkMirrorSourceTest {
         assertEquals("http://www.apkmirror.com/?p=1000001", elsewhere.id)
         assertNull(elsewhere.publishedAtMs)
 
-        assertEquals(listOf(feed, page), http.requests.map { it.url })
+        // The pages of the two releases that may be offered are asked for what they say; they cannot be read here.
+        assertEquals(listOf(feed, betaPage, stablePage, page), http.requests.map { it.url })
+        assertTrue(listing.releases.all { it.notes == null && it.fileSize == null })
         assertTrue(http.requests.all { it.headers["User-Agent"] == "APKUpdater-v3.5.9 Tern" })
     }
 
@@ -95,7 +98,77 @@ class ApkMirrorSourceTest {
         val listing = check(http, SourceSpec(SourceTypes.APKMIRROR, app, mapOf(SourceOptions.PACKAGE to "org.example.app")))
         assertEquals("org.example.app", listing.packageName)
         assertTrue(listing.learnedOptions.isEmpty())
-        assertEquals(listOf(feed), http.requests.map { it.url })
+        assertFalse(http.requests.any { it.url == page })
+    }
+
+    private val betaPage = "$app/example-app-2-2-0-beta-1-release/"
+    private val stablePage = "$app/example-app-2-1-0-release/"
+    private val stableDownload = "${stablePage}example-app-2-1-0-android-apk-download/"
+
+    @Test
+    fun readsWhatIsNewAndTheSizeFromThePagesOfTheReleasesThatMayBeOffered() {
+        val beta = """
+            <h3>What's new in Example App 2.2.0 beta 1</h3><p>Try the new look.</p>
+            <h3>Download Example App 2.2.0 beta 1</h3><div>File size: 12.50 MB (13,107,200 bytes)</div>
+        """.trimIndent()
+        val http = FakeHttp().resource(feed, "store/apkmirror_feed.xml")
+            .text(betaPage, beta)
+            .resource(stablePage, "store/apkmirror_release.html")
+            .resource(stableDownload, "store/apkmirror_download.html")
+        val listing = check(http, SourceSpec(SourceTypes.APKMIRROR, app, mapOf(SourceOptions.PACKAGE to "org.example.app")))
+        val (newest, stable, older) = listing.releases
+
+        assertEquals("Try the new look.", newest.notes)
+        assertEquals(NotesFormat.PLAIN, newest.notesFormat)
+        assertEquals(13_107_200L, newest.fileSize)
+        assertEquals(
+            "Thanks for using Example App!\nThis release makes sync faster & steadier.\n- Faster start\n- A new icon",
+            stable.notes,
+        )
+        // The page of the release does not state the size, so the page of its download is read.
+        assertEquals(Math.round(45.20 * 1024 * 1024), stable.fileSize)
+        assertNull(older.notes)
+        assertEquals(listOf(feed, betaPage, stablePage, stableDownload), http.requests.map { it.url })
+        // Still nothing to download.
+        assertTrue(listing.releases.all { it.assets.isEmpty() })
+    }
+
+    @Test
+    fun readsWhatIsNewOnlyUnderItsHeading() {
+        val html = """
+            <html><body>
+            <h2><a href="#whatsnew">What's new in App 1.2.3</a></h2>
+            <div><p>Thanks for choosing App!</p><p>Fixed bugs.</p><ul><li>Faster startup</li><li>New icon</li></ul></div>
+            <p>Verified safe to install (read more)</p>
+            <p>App 1.2.3 screenshots</p>
+            <p>This text must not be included.</p>
+            </body></html>
+        """.trimIndent()
+        assertEquals("Thanks for choosing App!\nFixed bugs.\n- Faster startup\n- New icon", ApkMirrorSource.whatsNew(html))
+        assertNull(ApkMirrorSource.whatsNew("<html><body><h2>About App</h2><p>x</p></body></html>"))
+        // What follows a heading inside a part of its own is not the heading's.
+        assertNull(ApkMirrorSource.whatsNew("<div><h2>What's new in App 1.2.3</h2></div><p>Elsewhere</p>"))
+    }
+
+    @Test
+    fun readsTheSizeAPageStates() {
+        assertEquals(Math.round(270.70 * 1024 * 1024), ApkMirrorSource.sizeIn("<span>File size:</span>\n<span>270.70 MB</span>"))
+        assertEquals(12L * 1024, ApkMirrorSource.sizeIn("File size: 12 KB"))
+        assertEquals(3L * 1024 * 1024 * 1024 / 2, ApkMirrorSource.sizeIn("<p>File size shown below</p><p>File size: 1.5 GB</p>"))
+        assertNull(ApkMirrorSource.sizeIn("No size here"))
+        assertNull(ApkMirrorSource.sizeIn("File size: unknown"))
+    }
+
+    @Test
+    fun takesOnlyTheDownloadPageOfTheSameRelease() {
+        val html = """
+            <a href="/apk/example-labs/example-app/example-app-2-1-0-release/example-app-2-1-0-android-apk-download/">APK</a>
+            <a href="/apk/other/thing/other-1-0-release/other-1-0-android-apk-download/">Other</a>
+            <a href="https://example.org/">Elsewhere</a>
+        """.trimIndent()
+        assertEquals(stableDownload, ApkMirrorSource.downloadPage(html, stablePage))
+        assertNull(ApkMirrorSource.downloadPage("""<a href="/apk/other/x/">x</a>""", stablePage))
+        assertNull(ApkMirrorSource.downloadPage(html, betaPage))
     }
 
     @Test

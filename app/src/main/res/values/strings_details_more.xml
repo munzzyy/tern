@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_package_effect">Every file has to be of this package, and the app installed under it is the one Tern looks at. Left empty, Tern reads it from the app\'s file.</string>
+</resources>

@@ -13,6 +13,7 @@ import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.web.PseudoVersion
 import io.github.munzzyy.tern.core.source.web.RequestHeaders
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -124,6 +125,29 @@ class ObtainiumExportTest {
         // Obtainium reads these as a JSON text inside the entry, not as an object.
         Json.parseObject(entry.string("additionalSettings")!!)
         Json.parseArray(entry.string("apkUrls")!!)
+    }
+
+    @Test
+    fun anAppWithoutAPackageNameGoesWithAnIdObtainiumTakesForTemporaryAndComesBackWithout() {
+        val entry = Json.parseObject(ObtainiumExport.write(listOf(page), 0, "0.2.0").text).array("apps")!!.objects().single()
+        val id = entry.string("id")!!
+        assertTrue(id, id.matches(Regex("[0-9a-f]{12}")))
+        assertEquals(true, entry.bool("allowIdChange"))
+        val back = ObtainiumImport.read(ObtainiumExport.write(listOf(page, github), 0, "0.2.0").text).apps
+        assertNull(back[0].packageName)
+        assertEquals(page.source, back[0].source)
+        assertEquals(github.packageName, back[1].packageName)
+    }
+
+    @Test
+    fun anIdThatStandsInForAPackageNameIsNotTakenForOne() {
+        for (id in listOf("a1b2c3d4e5f6", "0123456789ab", "1700000000000", "tern.a1b2c3d4e5f6")) {
+            val text = """[{"id":"$id","url":"https://github.com/example/app","name":"App","additionalSettings":"{}"}]"""
+            assertNull(id, ObtainiumImport.read(text).apps.single().packageName)
+        }
+        // A real package name that only looks a little like one is kept.
+        val text = """[{"id":"tern.a1b2c3d4e5f6g","url":"https://github.com/example/app","name":"App","additionalSettings":"{}"}]"""
+        assertEquals("tern.a1b2c3d4e5f6g", ObtainiumImport.read(text).apps.single().packageName)
     }
 
     @Test

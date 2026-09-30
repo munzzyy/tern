@@ -129,7 +129,7 @@ object ObtainiumExport {
             SourceTypes.FARSROID -> if (app.source.flag(SourceOptions.FILE_VERSION)) settings["releaseTitleAsVersion"] = true
         }
         return Json.obj(
-            "id" to (app.packageName ?: "tern." + Fingerprints.sha256(app.source.url.toByteArray()).take(12)),
+            "id" to (app.packageName ?: temporaryId(app.source.url)),
             "url" to url,
             "author" to (app.author ?: ""),
             "name" to app.name,
@@ -192,6 +192,17 @@ object ObtainiumExport {
 
     private fun iso(ms: Long): String = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ROOT)
         .apply { timeZone = TimeZone.getTimeZone("UTC") }.format(Date(ms))
+
+    /** The id of an app without a package name: twelve hex digits, which Obtainium replaces with the package name at the first install. */
+    internal fun temporaryId(url: String): String = Fingerprints.sha256(url.toByteArray()).take(12)
+
+    /**
+     * True for an id that names no package: one Obtainium takes for temporary, twelve hex digits or
+     * only digits, and the one earlier builds of Tern wrote in its place, tern. and twelve hex digits.
+     */
+    internal fun isTemporaryId(id: String): Boolean = TEMPORARY_ID.matches(id)
+
+    private val TEMPORARY_ID = Regex("[0-9]+|[0-9a-f]{12}|tern\\.[0-9a-f]{12}")
 
     /** Obtainium's own names for the sources, as its exports write them under overrideSource. */
     private val OVERRIDE = mapOf(

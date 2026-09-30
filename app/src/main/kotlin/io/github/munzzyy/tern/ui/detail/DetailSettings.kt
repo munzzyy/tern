@@ -407,6 +407,7 @@ private fun AdvancedGroup(vm: DetailViewModel, config: AppConfig) {
             onChange = { on -> save { it.copy(trackOnly = on) } },
             enabled = !forced,
         )
+        Padded { PackageNameSetting(config, save) }
         PinnedSigners(config, save)
     }
 }

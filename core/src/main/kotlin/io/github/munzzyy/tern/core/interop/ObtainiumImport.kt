@@ -70,7 +70,8 @@ object ObtainiumImport {
                 continue
             }
 
-            val id = entry.string("id")?.takeIf { FDroidSource.isValidPackage(it) }
+            // An id that stands in for a package name until the first install names none.
+            val id = entry.string("id")?.takeIf { !ObtainiumExport.isTemporaryId(it) && FDroidSource.isValidPackage(it) }
             val categories = entry.array("categories")?.strings()
                 ?: entry.string("category")?.let { listOf(it) }
                 ?: emptyList()

@@ -117,6 +117,7 @@ object StateJson {
         "prerelease" to r.prerelease,
         "pageUrl" to r.pageUrl,
         "latest" to r.latest,
+        "fileSize" to r.fileSize,
         "assets" to JsonArray(
             r.assets.map { a ->
                 Json.obj(
@@ -139,6 +140,7 @@ object StateJson {
         prerelease = obj.bool("prerelease") ?: false,
         pageUrl = obj.string("pageUrl"),
         latest = obj.bool("latest") ?: false,
+        fileSize = obj.long("fileSize")?.takeIf { it > 0 },
         assets = obj.array("assets")?.objects().orEmpty().mapNotNull { a ->
             val name = a.string("name") ?: return@mapNotNull null
             Asset(

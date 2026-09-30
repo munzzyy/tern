@@ -2,14 +2,12 @@ package io.github.munzzyy.tern.core.interop
 
 import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonObject
-import io.github.munzzyy.tern.core.json.JsonString
 import io.github.munzzyy.tern.core.json.JsonValue
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.web.RequestHeaders
-import io.github.munzzyy.tern.core.verify.Fingerprints
 
 /**
  * An app's settings as a link, the way Obtainium shares them: obtainium://app/ and the app as
@@ -35,11 +33,10 @@ object ConfigLink {
 
     /** The obtainium:// link to [app]; null when Obtainium has no source for it, or when Tern could not read it back. */
     fun of(app: AppConfig): String? {
+        // Without a package name the id is one Obtainium replaces at the first install, as the export writes it.
         val entry = ObtainiumExport.entry(shared(app)) as? JsonObject ?: return null
         val fields = LinkedHashMap<String, JsonValue>()
         for (key in KEYS) entry[key]?.let { fields[key] = it }
-        // Without a package name Obtainium takes an id of twelve hex digits as one to replace at the first install.
-        if (app.packageName == null) fields["id"] = JsonString(Fingerprints.sha256(app.source.url.toByteArray()).take(TEMPORARY_ID))
         return (PREFIX + Urls.encodeSegment(Json.write(JsonObject(fields)))).takeIf { it.length <= MAX_LENGTH }
     }
 
@@ -55,6 +52,4 @@ object ConfigLink {
         val options = if (plain.isEmpty()) spec.options - SourceOptions.HEADERS else spec.options + (SourceOptions.HEADERS to RequestHeaders.write(plain))
         return spec.copy(options = options)
     }
-
-    private const val TEMPORARY_ID = 12
 }

@@ -24,6 +24,61 @@ class SourceForgeSourceTest {
     }
 
     @Test
+    fun keepsTheFolderAnAddressNames() {
+        assertEquals("https://sourceforge.net/projects/app/files/Android", source.match("https://sourceforge.net/projects/app/files/Android/")?.url)
+        assertEquals("https://sourceforge.net/projects/app/files/Android/Stable%20builds", source.match("https://www.sourceforge.net/projects/app/files/Android/Stable%20builds/")?.url)
+        // The address of a file stands for its folder, and the link to the newest file for the whole project.
+        assertEquals("https://sourceforge.net/projects/app/files/Android", source.match("https://sourceforge.net/projects/app/files/Android/app-2.0.0.apk/download")?.url)
+        assertEquals("https://sourceforge.net/projects/app", source.match("https://sourceforge.net/projects/app/files/latest/download")?.url)
+    }
+
+    @Test
+    fun takesTheShortAddressOfAProject() {
+        assertEquals("https://sourceforge.net/projects/app", source.match("https://sourceforge.net/p/app/")?.url)
+        assertEquals("https://sourceforge.net/projects/app", source.match("https://sourceforge.net/p/app/wiki/Home/")?.url)
+        assertNull(source.match("https://sourceforge.net/p/"))
+        assertNull(source.match("https://sourceforge.net/directory/android/"))
+    }
+
+    @Test
+    fun readsOnlyTheFilesOfTheFolderFollowed() {
+        val spec = source.match("https://sourceforge.net/projects/app/files/Android/")!!
+        val feed = """
+            <rss><channel>
+              <item><link>https://sourceforge.net/projects/app/files/Android/app-2.0.0.apk/download</link></item>
+              <item><link>https://sourceforge.net/projects/app/files/Desktop/app-3.0.0.apk/download</link></item>
+              <item><link>https://sourceforge.net/projects/app/files/Android-old/app-1.0.0.apk/download</link></item>
+              <item><link>https://sourceforge.net/projects/other/files/Android/app-4.0.0.apk/download</link></item>
+            </channel></rss>
+        """.trimIndent()
+        val http = FakeHttp().text("https://sourceforge.net/projects/app/rss?path=/Android", feed)
+        val listing = (source.check(spec, CheckContext(http, InMemoryValidatorStore())) as CheckResult.Listing).listing
+        assertEquals(listOf("2.0.0"), listing.releases.map { it.version })
+        assertEquals("app", listing.name)
+    }
+
+    @Test
+    fun takesTheFolderForTheVersionWhenTheNameHasNone() {
+        val projectUrl = "https://sourceforge.net/projects/app"
+        val feed = """
+            <rss><channel>
+              <item><link>https://sourceforge.net/projects/app/files/v1.3.0/app-arm64.apk/download</link></item>
+              <item><link>https://sourceforge.net/projects/app/files/v1.3.0/app-universal.apk/download</link></item>
+              <item><link>https://sourceforge.net/projects/app/files/Android/1.2.0/app.apk/download</link></item>
+              <item><link>https://sourceforge.net/projects/app/files/app-latest.apk/download</link></item>
+            </channel></rss>
+        """.trimIndent()
+        val http = FakeHttp().text("$projectUrl/rss?path=/", feed)
+        val listing = (source.check(SourceSpec(source.type, projectUrl), CheckContext(http, InMemoryValidatorStore())) as CheckResult.Listing).listing
+        assertEquals(listOf("1.3.0", "1.2.0"), listing.releases.map { it.version })
+        assertEquals(listOf("app-arm64.apk", "app-universal.apk"), listing.releases[0].assets.map { it.name })
+        // A folder without a dotted version is the version as it is; a file right in the folder followed has none.
+        assertEquals("nightly/2026-09-30", SourceForgeSource.versionOf("app.apk", "nightly/2026-09-30"))
+        assertEquals("2.1.0", SourceForgeSource.versionOf("app-2.1.0.apk", "1.0.0"))
+        assertNull(SourceForgeSource.versionOf("app.apk", ""))
+    }
+
+    @Test
     fun groupsFilesByVersionAndStripsDownloadSuffix() {
         val projectUrl = "https://sourceforge.net/projects/app"
         val feedUrl = "$projectUrl/rss?path=/"

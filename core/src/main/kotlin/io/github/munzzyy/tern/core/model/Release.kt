@@ -60,6 +60,8 @@ data class Release(
     val assets: List<Asset> = emptyList(),
     /** Set by a source that knows which release the project marked as its latest. It comes first whatever the order. */
     val latest: Boolean = false,
+    /** The size of the release's file as a source that lists no file states it, such as a store that is only followed. */
+    val fileSize: Long? = null,
 ) {
     /** Files that can be installed as they are, and archives the source knows to hold the app. */
     val installable: List<Asset> get() = assets.filter { it.kind == AssetKind.APK || it.kind == AssetKind.BUNDLE || (it.kind == AssetKind.ARCHIVE && it.holdsApps) }

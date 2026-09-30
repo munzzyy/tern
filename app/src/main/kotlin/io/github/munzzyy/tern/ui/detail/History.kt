@@ -35,6 +35,7 @@ import io.github.munzzyy.tern.ui.common.QuietButton
 import io.github.munzzyy.tern.ui.common.TonalButton
 import io.github.munzzyy.tern.ui.notes.NotesView
 import io.github.munzzyy.tern.ui.text.canPickInstall
+import io.github.munzzyy.tern.ui.text.formatBytes
 import io.github.munzzyy.tern.ui.text.formatDate
 import io.github.munzzyy.tern.ui.text.isInstalledRelease
 import io.github.munzzyy.tern.ui.text.isolate
@@ -118,6 +119,8 @@ private fun ReleaseEntry(vm: DetailViewModel, row: AppRow, release: Release) {
         Text(version ?: stringResource(R.string.version_unknown_short), style = MaterialTheme.typography.titleSmall.figures())
         val meta = listOfNotNull(
             release.publishedAtMs?.let { isolate(formatDate(it)) },
+            // The size a store that is only followed states for the file it keeps to itself.
+            release.fileSize?.let { isolate(formatBytes(it)) },
             if (release.prerelease) stringResource(R.string.prerelease) else null,
             if (release.id == row.latest?.id) stringResource(R.string.version_offered) else null,
             if (isInstalledRelease(release, row.installed)) stringResource(R.string.version_installed) else null,

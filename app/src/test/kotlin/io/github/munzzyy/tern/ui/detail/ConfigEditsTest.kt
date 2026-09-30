@@ -2,6 +2,7 @@ package io.github.munzzyy.tern.ui.detail
 
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.ui.add.isPackageName
 import io.github.munzzyy.tern.ui.apps.cleanCategory
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -55,6 +56,21 @@ class ConfigEditsTest {
         assertEquals("^2", saved.releases.versionFilter)
         assertEquals("arm", saved.assets.innerFilter)
         assertEquals(PatternDraft.of(saved), PatternDraft.of(saved.copy()))
+    }
+
+    @Test
+    fun aPackageNameIsCheckedBeforeItIsSaved() {
+        assertEquals("org.example.app", packageEntry(" org.example .app\n"))
+        assertEquals(255, packageEntry("a".repeat(300)).length)
+        assertTrue(isPackageName(packageEntry("org.example.app")))
+        assertTrue(isPackageName(""))
+        assertFalse(isPackageName("example"))
+        assertFalse(isPackageName("org.1example"))
+        assertFalse(isPackageName("org..example"))
+        assertFalse(isPackageName("org.example-app"))
+        assertEquals("org.example.app", packageNameOf("org.example.app"))
+        // An empty field takes the name away, and Tern reads it from the app's file again.
+        assertNull(packageNameOf(""))
     }
 
     @Test

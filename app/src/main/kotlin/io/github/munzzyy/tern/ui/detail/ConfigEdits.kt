@@ -88,5 +88,13 @@ data class PatternDraft(
 
 private fun String.blankToNull(): String? = trim().takeIf { it.isNotEmpty() }
 
+/** What the package name field keeps of what is typed or pasted: no white space, and no more than a package name can be. */
+fun packageEntry(text: String): String = text.filterNot { it.isWhitespace() }.take(MAX_PACKAGE_NAME)
+
+/** The package name the field gives the app: none when it is empty, and then Tern reads it from the app's file again. */
+fun packageNameOf(entry: String): String? = entry.blankToNull()
+
+private const val MAX_PACKAGE_NAME = 255
+
 /** The longest name or author a person may give an app, as the export keeps it. */
 const val MAX_SHOWN_NAME = 200

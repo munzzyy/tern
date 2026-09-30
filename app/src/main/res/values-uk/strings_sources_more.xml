@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_track_only_forced">Програми з %1$s можна лише відстежувати, оскільки це джерело не пропонує файлів для встановлення.</string>
+    <string name="min_age_global">Як задано для всіх програм: %1$s</string>
+    <string name="setting_min_age_global_effect">Для програм без власного терміну очікування новий випуск пропонується не раніше, ніж мине цей час, тому поганий випуск можна відкликати першим.</string>
+    <string name="option_link_text">Фільтрувати посилання за їхнім текстом</string>
+    <string name="option_link_text_effect">Фільтр порівнюється з текстом посилання, а не з його адресою.</string>
+    <string name="option_take_first">Брати перше посилання</string>
+    <string name="option_take_first_effect">Інакше береться останнє посилання за порядком.</string>
+    <string name="option_natural_order_effect">Інакше посилання впорядковуються за їхньою адресою в природному порядку, де числа читаються як числа.</string>
+    <string name="option_by_last_segment">Орієнтуватися на кінець адреси</string>
+    <string name="option_by_last_segment_effect">Посилання впорядковуються, а версії зчитуються за частиною після останньої скісної риски.</string>
+    <string name="option_steps_title">Сторінки, які потрібно пройти спочатку</string>
+    <string name="option_steps_order_help">На кожній сторінці відповідні посилання впорядковуються, і відкривається останнє з них.</string>
+    <string name="step_title">Сторінка %1$d</string>
+    <string name="step_filter">Посилання для переходу</string>
+    <string name="step_text">Зіставляти з текстом посилання</string>
+    <string name="step_arch">Віддавати перевагу процесору цього пристрою</string>
+    <string name="step_add">Додати сторінку</string>
+    <string name="step_remove">Вилучити цю сторінку</string>
+    <string name="option_file_version">Використовувати назву файлу як версію</string>
+    <string name="option_file_version_effect">Тоді кожен файл вважається окремим випуском.</string>
+    <string name="github_proxy_title">GitHub через hubproxy</string>
+    <string name="github_proxy_effect">Кожен запит до GitHub іде на цей хост, який бачить усі запити. Маркер через нього не надсилається, тому приватні проєкти та GitHub Actions так відстежувати не можна.</string>
+    <string name="github_proxy_host">Хост hubproxy</string>
+    <string name="github_proxy_help">Лише назва хоста, наприклад gh-proxy.com. Tern звертається до нього через HTTPS.</string>
+    <string name="github_proxy_invalid">Це не назва хоста, яку може використовувати Tern</string>
+    <string name="github_proxy_in_use">Запити до GitHub ідуть через %1$s</string>
+    <string name="github_proxy_remove">Більше не використовувати hubproxy</string>
+</resources>

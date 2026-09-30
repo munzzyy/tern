@@ -1,2 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="filter_open">Filtrera listan</string>
+    <string name="filter_state_on">Filter är påslagna</string>
+    <string name="filter_name">Namn</string>
+    <string name="filter_author">Utvecklare</string>
+    <string name="filter_package">Paketnamn</string>
+    <string name="filter_show_up_to_date">Appar som är uppdaterade</string>
+    <string name="filter_show_not_installed">Appar som inte är installerade</string>
+    <string name="filter_show_tracked">Appar som endast följs</string>
+    <string name="filter_categories">I någon av dessa kategorier</string>
+    <string name="filter_sources">Från någon av dessa källor</string>
+    <string name="filter_clear">Rensa filter</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%1$d av %2$d app visas</item>
+        <item quantity="other">%1$d av %2$d appar visas</item>
+    </plurals>
+    <string name="checking_count">Kontrollerar %1$d av %2$d</string>
+    <string name="row_moved">Flyttad till %1$s</string>
+    <string name="row_released">Utgiven %1$s</string>
+    <string name="row_changes">Ändringar</string>
+    <string name="action_show_changes">Visa ändringarna</string>
+    <string name="action_install_all">Installera alla</string>
+    <string name="action_install_update_all">Installera och uppdatera alla</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d app är inte installerad än</item>
+        <item quantity="other">%d appar är inte installerade än</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Installera och uppdatera %d app?</item>
+        <item quantity="other">Installera och uppdatera %d appar?</item>
+    </plurals>
+    <string name="settings_update_all">Knappen Uppdatera alla</string>
+    <string name="update_all_updates">Endast uppdateringar</string>
+    <string name="update_all_all">Uppdateringar och appar som inte är installerade än</string>
+    <string name="update_all_none">Visas inte</string>
+    <string name="settings_confirm_update_all">Fråga före Uppdatera alla</string>
+    <string name="settings_confirm_update_all_effect">Säger hur många appar som installeras eller uppdateras och väntar på ett ja.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Installera %d app?</item>
+        <item quantity="other">Installera %d appar?</item>
+    </plurals>
+    <string name="bulk_install_text">Varje fil laddas ned och kontrolleras innan Android ombeds att installera den. Tern sparar certifikatet som varje ny app är signerad med och kräver samma certifikat för varje senare uppdatering.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d av de valda apparna har inget att installera nu och lämnas som den är.</item>
+        <item quantity="other">%d av de valda apparna har inget att installera nu och lämnas som de är.</item>
+    </plurals>
+    <string name="action_change_categories">Ändra kategorier</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Kategorier för %d app</item>
+        <item quantity="other">Kategorier för %d appar</item>
+    </plurals>
+    <string name="bulk_categories_help">En bock lägger varje vald app under kategorin, och en tom ruta tar bort dem alla från den. Ett streck lämnar varje app som den är.</string>
+    <string name="categories_filed_all">Varje vald app</string>
+    <string name="categories_filed_some">Några av de valda apparna</string>
+    <string name="categories_filed_none">Ingen av de valda apparna</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Ändrade kategorierna för %d app.</item>
+        <item quantity="other">Ändrade kategorierna för %d appar.</item>
+    </plurals>
+    <string name="action_share_config_link">Dela en länk med dess inställningar</string>
+    <string name="action_share_config_links">Dela länkar med deras inställningar</string>
+    <string name="share_link_none">Ingen länk kan rymma denna apps inställningar. Dela den som en fil i stället.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d app utelämnas, eftersom ingen länk kan rymma dess inställningar.</item>
+        <item quantity="other">%d appar utelämnas, eftersom ingen länk kan rymma deras inställningar.</item>
+    </plurals>
+</resources>

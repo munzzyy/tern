@@ -1,2 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="add_link_unknown">Tern не знает такого вида ссылок.</string>
+    <string name="add_not_readable_as">Этот адрес нельзя прочитать как %1$s.</string>
+    <string name="add_event_replaced">Настройки заменены теми, что были для него в файле или ссылке.</string>
+    <string name="search_miss_unreachable">Поиск в %1$s не удался: источник не ответил.</string>
+    <string name="search_miss_wait">Поиск в %1$s не удался: источник просит Tern подождать.</string>
+    <string name="search_miss_wait_until">Поиск в %1$s не удался: источник просит Tern подождать до %2$s.</string>
+    <string name="search_miss_refused">Поиск в %1$s не удался: источник отклонил запрос.</string>
+    <string name="search_miss_status">Поиск в %1$s не удался: источник ответил %2$d.</string>
+    <string name="search_miss_unreadable">Поиск в %1$s не удался: ответ источника не удалось прочитать.</string>
+    <string name="add_options_title">Перед добавлением</string>
+    <string name="add_options_auto">Tern сам определяет, что это за адрес.</string>
+    <string name="add_options_forced">Читать как: %1$s</string>
+    <string name="add_read_as">Читать адрес как</string>
+    <string name="add_read_as_auto">Автоматически</string>
+    <string name="add_read_as_forgejo">Forgejo или Gitea</string>
+    <string name="add_read_as_help">Для источника, который Tern не распознает сам, например на собственном сервере.</string>
+    <string name="add_package_label">Имя пакета</string>
+    <string name="add_package_help">Каждый файл должен относиться к этому пакету. Если оставить поле пустым, Tern возьмет имя из файла приложения.</string>
+    <string name="add_package_invalid">Это не имя пакета. Оно выглядит так: org.example.app.</string>
+    <string name="add_set_options">Задать параметры</string>
+    <string name="add_failed_options">Параметры могут подсказать Tern, где искать. Задайте их выше, и Tern проверит снова.</string>
+    <string name="add_replace">Заменить настройки</string>
+    <string name="add_replace_explain">В ссылке есть собственные настройки для этого приложения. При замене сохраняются сертификаты, которым оно доверяет, и имя пакета, а самостоятельная установка обновлений не включается.</string>
+    <string name="results_filter">Фильтр</string>
+    <string name="results_filter_help">Слова или шаблон</string>
+    <string name="results_filter_none">Ничего в списке не соответствует «%1$s».</string>
+    <string name="repo_search_all">Искать «%1$s» во всем репозитории</string>
+    <string name="repo_show_all">Показать все приложения репозитория</string>
+    <string name="repo_heading_within">Приложения в %1$s по запросу «%2$s»</string>
+    <string name="search_more">Найдено больше, чем показано. Фильтр сужает выбор.</string>
+    <string name="search_forgejo_label">Forgejo или Gitea для поиска</string>
+    <string name="search_forgejo_help">Его адрес, например codeberg.org. Сохраненный для него токен отправляется вместе с запросом.</string>
+    <string name="search_forgejo_invalid">Tern не может искать по этому адресу.</string>
+    <string name="search_min_stars_label">Минимум звезд</string>
+    <string name="search_min_stars_help">Проекты на GitHub и на указанном Forgejo, у которых меньше звезд, в результаты не попадают.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">В файле есть и другие настройки для %1$d приложения, которое уже есть в вашем списке. Они остаются как есть, пока вы их не замените.</item>
+        <item quantity="few">В файле есть и другие настройки для %1$d приложений, которые уже есть в вашем списке. Они остаются как есть, пока вы их не замените.</item>
+        <item quantity="many">В файле есть и другие настройки для %1$d приложений, которые уже есть в вашем списке. Они остаются как есть, пока вы их не замените.</item>
+        <item quantity="other">В файле есть и другие настройки для %1$d приложения, которое уже есть в вашем списке. Они остаются как есть, пока вы их не замените.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">Заменить настройки %1$d приложения</item>
+        <item quantity="few">Заменить настройки %1$d приложений</item>
+        <item quantity="many">Заменить настройки %1$d приложений</item>
+        <item quantity="other">Заменить настройки %1$d приложения</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">Настройки %1$d приложения заменены. Сертификаты, которым оно доверяет, сохранены.</item>
+        <item quantity="few">Настройки %1$d приложений заменены. Сертификаты, которым они доверяют, сохранены.</item>
+        <item quantity="many">Настройки %1$d приложений заменены. Сертификаты, которым они доверяют, сохранены.</item>
+        <item quantity="other">Настройки %1$d приложения заменены. Сертификаты, которым оно доверяет, сохранены.</item>
+    </plurals>
+    <string name="import_settings_offered">В файле есть и настройки самого Tern: внешний вид, список, уведомления и проверки. Они не применяются, пока вы не решите их принять.</string>
+    <string name="import_take_settings">Применить эти настройки</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">Отметить %1$d показанный</item>
+        <item quantity="few">Отметить все %1$d показанных</item>
+        <item quantity="many">Отметить все %1$d показанных</item>
+        <item quantity="other">Отметить все %1$d показанных</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">Снять отметку с %1$d показанного</item>
+        <item quantity="few">Снять отметки со всех %1$d показанных</item>
+        <item quantity="many">Снять отметки со всех %1$d показанных</item>
+        <item quantity="other">Снять отметки со всех %1$d показанных</item>
+    </plurals>
+</resources>

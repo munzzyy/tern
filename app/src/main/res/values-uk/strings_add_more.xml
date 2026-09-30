@@ -1,2 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="add_link_unknown">Tern не знає такого виду посилань.</string>
+    <string name="add_not_readable_as">Цю адресу не можна прочитати як %1$s.</string>
+    <string name="add_event_replaced">Налаштування замінено тими, що для неї були у файлі або посиланні.</string>
+    <string name="search_miss_unreachable">Пошук у %1$s не вдався: джерело не відповіло.</string>
+    <string name="search_miss_wait">Пошук у %1$s не вдався: джерело просить Tern зачекати.</string>
+    <string name="search_miss_wait_until">Пошук у %1$s не вдався: джерело просить Tern зачекати до %2$s.</string>
+    <string name="search_miss_refused">Пошук у %1$s не вдався: джерело відхилило запит.</string>
+    <string name="search_miss_status">Пошук у %1$s не вдався: джерело відповіло %2$d.</string>
+    <string name="search_miss_unreadable">Пошук у %1$s не вдався: відповідь джерела не вдалося прочитати.</string>
+    <string name="add_options_title">Перед додаванням</string>
+    <string name="add_options_auto">Tern сам визначає, що це за адреса.</string>
+    <string name="add_options_forced">Читати як: %1$s</string>
+    <string name="add_read_as">Читати адресу як</string>
+    <string name="add_read_as_auto">Автоматично</string>
+    <string name="add_read_as_forgejo">Forgejo або Gitea</string>
+    <string name="add_read_as_help">Для джерела, яке Tern не розпізнає сам, наприклад на власному сервері.</string>
+    <string name="add_package_label">Назва пакета</string>
+    <string name="add_package_help">Кожен файл має належати до цього пакета. Якщо залишити поле порожнім, Tern візьме назву з файлу програми.</string>
+    <string name="add_package_invalid">Це не назва пакета. Вона виглядає так: org.example.app.</string>
+    <string name="add_set_options">Задати параметри</string>
+    <string name="add_failed_options">Параметри можуть підказати Tern, де шукати. Задайте їх вище, і Tern перевірить знову.</string>
+    <string name="add_replace">Замінити налаштування</string>
+    <string name="add_replace_explain">У посиланні є власні налаштування для цієї програми. Під час заміни зберігаються сертифікати, яким вона довіряє, та назва пакета, а самостійне встановлення оновлень не вмикається.</string>
+    <string name="results_filter">Фільтр</string>
+    <string name="results_filter_help">Слова або шаблон</string>
+    <string name="results_filter_none">У списку немає збігів із «%1$s».</string>
+    <string name="repo_search_all">Шукати «%1$s» в усьому репозиторії</string>
+    <string name="repo_show_all">Показати всі програми репозиторію</string>
+    <string name="repo_heading_within">Програми в %1$s за запитом «%2$s»</string>
+    <string name="search_more">Знайдено більше, ніж показано. Фільтр звужує вибір.</string>
+    <string name="search_forgejo_label">Forgejo або Gitea для пошуку</string>
+    <string name="search_forgejo_help">Його адреса, наприклад codeberg.org. Збережений для нього маркер надсилається разом із запитом.</string>
+    <string name="search_forgejo_invalid">Tern не може шукати за цією адресою.</string>
+    <string name="search_min_stars_label">Мінімум зірок</string>
+    <string name="search_min_stars_help">Проєкти на GitHub і на вказаному Forgejo, що мають менше зірок, до результатів не потрапляють.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">У файлі є й інші налаштування для %1$d програми, яка вже є у вашому списку. Вони залишаються як є, доки ви їх не заміните.</item>
+        <item quantity="few">У файлі є й інші налаштування для %1$d програм, які вже є у вашому списку. Вони залишаються як є, доки ви їх не заміните.</item>
+        <item quantity="many">У файлі є й інші налаштування для %1$d програм, які вже є у вашому списку. Вони залишаються як є, доки ви їх не заміните.</item>
+        <item quantity="other">У файлі є й інші налаштування для %1$d програми, яка вже є у вашому списку. Вони залишаються як є, доки ви їх не заміните.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">Замінити налаштування %1$d програми</item>
+        <item quantity="few">Замінити налаштування %1$d програм</item>
+        <item quantity="many">Замінити налаштування %1$d програм</item>
+        <item quantity="other">Замінити налаштування %1$d програми</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">Налаштування %1$d програми замінено. Сертифікати, яким вона довіряє, збережено.</item>
+        <item quantity="few">Налаштування %1$d програм замінено. Сертифікати, яким вони довіряють, збережено.</item>
+        <item quantity="many">Налаштування %1$d програм замінено. Сертифікати, яким вони довіряють, збережено.</item>
+        <item quantity="other">Налаштування %1$d програми замінено. Сертифікати, яким вона довіряє, збережено.</item>
+    </plurals>
+    <string name="import_settings_offered">У файлі є також налаштування самого Tern: вигляд, список, сповіщення та перевірки. Вони не застосовуються, доки ви не вирішите їх прийняти.</string>
+    <string name="import_take_settings">Застосувати ці налаштування</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">Позначити %1$d показаний</item>
+        <item quantity="few">Позначити всі %1$d показані</item>
+        <item quantity="many">Позначити всі %1$d показаних</item>
+        <item quantity="other">Позначити всі %1$d показаних</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">Зняти позначку з %1$d показаного</item>
+        <item quantity="few">Зняти позначки з усіх %1$d показаних</item>
+        <item quantity="many">Зняти позначки з усіх %1$d показаних</item>
+        <item quantity="other">Зняти позначки з усіх %1$d показаних</item>
+    </plurals>
+</resources>

@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="install_archive_zstd_unsupported">Ĉi tiu arkivo estas densigita per zstd, kiun Tern ne povas malfermi. Elektu dosieron .zip aŭ .tar de ĉi tiu eldono, aŭ unu densigitan per gzip, bzip2 aŭ xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s de %2$s</string>
+    <string name="install_setting_one_download">Unu elŝuto samtempe</string>
+    <string name="install_setting_one_download_effect">Elŝutoj atendas unu la alian anstataŭ funkcii paralele.</string>
+    <string name="install_file_foreign_host">Ĉi tiu dosiero venas de %1$s, kiu ne estas la retejo de la fonto de ĉi tiu aplikaĵo. Ĝi estas kontrolata kiel ĉiu alia dosiero.</string>
+    <string name="install_file_picked">Via elekto</string>
+    <string name="install_file_automatic">Lasi Tern denove elekti la dosieron</string>
+    <string name="install_file_picked_kept">Ĝisdatigoj restas ĉe la dosiero, kiun vi elektis: %1$s.</string>
+    <string name="install_file_picked_missing">Ĉi tiu eldono ne havas dosieron similan al tiu, kiun vi elektis (%1$s), do Tern elektis unu.</string>
+</resources>

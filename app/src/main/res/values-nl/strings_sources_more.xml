@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_track_only_forced">Apps van %1$s kunnen alleen worden gevolgd, omdat daar geen bestand om te installeren wordt aangeboden.</string>
+    <string name="min_age_global">Zoals ingesteld voor alle apps: %1$s</string>
+    <string name="setting_min_age_global_effect">Apps zonder eigen wachttijd wachten zo lang voordat een nieuwe release wordt aangeboden, zodat een slechte versie eerst kan worden teruggetrokken.</string>
+    <string name="option_link_text">Links filteren op hun tekst</string>
+    <string name="option_link_text_effect">Het filter wordt vergeleken met de tekst van een link in plaats van met het adres.</string>
+    <string name="option_take_first">De eerste link nemen</string>
+    <string name="option_take_first_effect">Anders wordt de laatste link in de volgorde genomen.</string>
+    <string name="option_natural_order_effect">Anders worden links in natuurlijke volgorde van hun adres gesorteerd, waarbij getallen als getallen worden gelezen.</string>
+    <string name="option_by_last_segment">Afgaan op het einde van het adres</string>
+    <string name="option_by_last_segment_effect">Links worden op het deel na de laatste schuine streep gesorteerd en versies worden daaruit gelezen.</string>
+    <string name="option_steps_title">Pagina\'s om eerst te doorlopen</string>
+    <string name="option_steps_order_help">Op elke pagina worden de links die overeenkomen op volgorde gezet en wordt de laatste gevolgd.</string>
+    <string name="step_title">Pagina %1$d</string>
+    <string name="step_filter">Te volgen link</string>
+    <string name="step_text">Met de tekst van de link vergelijken</string>
+    <string name="step_arch">Voorkeur geven aan de processor van dit apparaat</string>
+    <string name="step_add">Een pagina toevoegen</string>
+    <string name="step_remove">Deze pagina verwijderen</string>
+    <string name="option_file_version">De bestandsnaam als versie gebruiken</string>
+    <string name="option_file_version_effect">Elk bestand telt dan als een eigen release.</string>
+    <string name="github_proxy_title">GitHub via een hubproxy</string>
+    <string name="github_proxy_effect">Elk verzoek aan GitHub gaat naar deze host, die elk verzoek ziet. Er wordt geen token doorheen gestuurd, dus privéprojecten en GitHub Actions kunnen op deze manier niet worden gevolgd.</string>
+    <string name="github_proxy_host">Hubproxy-host</string>
+    <string name="github_proxy_help">Alleen een hostnaam, zoals gh-proxy.com. Tern bereikt deze via HTTPS.</string>
+    <string name="github_proxy_invalid">Dat is geen hostnaam die Tern kan gebruiken</string>
+    <string name="github_proxy_in_use">GitHub-verzoeken gaan via %1$s</string>
+    <string name="github_proxy_remove">De hubproxy niet meer gebruiken</string>
+</resources>

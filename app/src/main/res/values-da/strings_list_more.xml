@@ -1,2 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="filter_open">Filtrer listen</string>
+    <string name="filter_state_on">Filtre er slået til</string>
+    <string name="filter_name">Navn</string>
+    <string name="filter_author">Udvikler</string>
+    <string name="filter_package">Pakkenavn</string>
+    <string name="filter_show_up_to_date">Apps, der er opdaterede</string>
+    <string name="filter_show_not_installed">Apps, der ikke er installeret</string>
+    <string name="filter_show_tracked">Apps, der kun spores</string>
+    <string name="filter_categories">I en af disse kategorier</string>
+    <string name="filter_sources">Fra en af disse kilder</string>
+    <string name="filter_clear">Ryd filtre</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%1$d af %2$d app vist</item>
+        <item quantity="other">%1$d af %2$d apps vist</item>
+    </plurals>
+    <string name="checking_count">Tjekker %1$d af %2$d</string>
+    <string name="row_moved">Flyttet til %1$s</string>
+    <string name="row_released">Udgivet %1$s</string>
+    <string name="row_changes">Ændringer</string>
+    <string name="action_show_changes">Vis ændringerne</string>
+    <string name="action_install_all">Installer alle</string>
+    <string name="action_install_update_all">Installer og opdater alle</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d app er ikke installeret endnu</item>
+        <item quantity="other">%d apps er ikke installeret endnu</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Installer og opdater %d app?</item>
+        <item quantity="other">Installer og opdater %d apps?</item>
+    </plurals>
+    <string name="settings_update_all">Knappen Opdater alle</string>
+    <string name="update_all_updates">Kun opdateringer</string>
+    <string name="update_all_all">Opdateringer og apps, der ikke er installeret endnu</string>
+    <string name="update_all_none">Vises ikke</string>
+    <string name="settings_confirm_update_all">Spørg før Opdater alle</string>
+    <string name="settings_confirm_update_all_effect">Siger, hvor mange apps der installeres eller opdateres, og venter på et ja.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Installer %d app?</item>
+        <item quantity="other">Installer %d apps?</item>
+    </plurals>
+    <string name="bulk_install_text">Hver fil hentes og tjekkes, før Android bedes om at installere den. Tern husker det certifikat, hver ny app er signeret med, og holder hver senere opdatering op imod det.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d af de valgte apps har intet at installere nu og forbliver som den er.</item>
+        <item quantity="other">%d af de valgte apps har intet at installere nu og forbliver som de er.</item>
+    </plurals>
+    <string name="action_change_categories">Skift kategorier</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Kategorier for %d app</item>
+        <item quantity="other">Kategorier for %d apps</item>
+    </plurals>
+    <string name="bulk_categories_help">Et kryds lægger hver valgt app under kategorien, og en tom boks tager dem alle ud af den. En streg lader hver app være, som den er.</string>
+    <string name="categories_filed_all">Hver valgt app</string>
+    <string name="categories_filed_some">Nogle af de valgte apps</string>
+    <string name="categories_filed_none">Ingen af de valgte apps</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Ændrede kategorierne for %d app.</item>
+        <item quantity="other">Ændrede kategorierne for %d apps.</item>
+    </plurals>
+    <string name="action_share_config_link">Del et link med dens indstillinger</string>
+    <string name="action_share_config_links">Del links med deres indstillinger</string>
+    <string name="share_link_none">Intet link kan rumme denne apps indstillinger. Del den som en fil i stedet.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d app er udeladt, da intet link kan rumme dens indstillinger.</item>
+        <item quantity="other">%d apps er udeladt, da intet link kan rumme deres indstillinger.</item>
+    </plurals>
+</resources>

@@ -1,2 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="filter_open">Фильтровать список</string>
+    <string name="filter_state_on">Фильтры включены</string>
+    <string name="filter_name">Название</string>
+    <string name="filter_author">Разработчик</string>
+    <string name="filter_package">Имя пакета</string>
+    <string name="filter_show_up_to_date">Обновленные приложения</string>
+    <string name="filter_show_not_installed">Неустановленные приложения</string>
+    <string name="filter_show_tracked">Приложения, которые только отслеживаются</string>
+    <string name="filter_categories">В любой из этих категорий</string>
+    <string name="filter_sources">Из любого из этих источников</string>
+    <string name="filter_clear">Сбросить фильтры</string>
+    <plurals name="filter_shown">
+        <item quantity="one">Показано %1$d из %2$d приложения</item>
+        <item quantity="few">Показано %1$d из %2$d приложений</item>
+        <item quantity="many">Показано %1$d из %2$d приложений</item>
+        <item quantity="other">Показано %1$d из %2$d приложения</item>
+    </plurals>
+    <string name="checking_count">Проверка %1$d из %2$d</string>
+    <string name="row_moved">Переехал на %1$s</string>
+    <string name="row_released">Релиз от %1$s</string>
+    <string name="row_changes">Изменения</string>
+    <string name="action_show_changes">Показать изменения</string>
+    <string name="action_install_all">Установить все</string>
+    <string name="action_install_update_all">Установить и обновить все</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d приложение еще не установлено</item>
+        <item quantity="few">%d приложения еще не установлены</item>
+        <item quantity="many">%d приложений еще не установлено</item>
+        <item quantity="other">%d приложения еще не установлено</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Установить и обновить %d приложение?</item>
+        <item quantity="few">Установить и обновить %d приложения?</item>
+        <item quantity="many">Установить и обновить %d приложений?</item>
+        <item quantity="other">Установить и обновить %d приложения?</item>
+    </plurals>
+    <string name="settings_update_all">Кнопка «Обновить все»</string>
+    <string name="update_all_updates">Только обновления</string>
+    <string name="update_all_all">Обновления и еще не установленные приложения</string>
+    <string name="update_all_none">Не показывать</string>
+    <string name="settings_confirm_update_all">Спрашивать перед «Обновить все»</string>
+    <string name="settings_confirm_update_all_effect">Сообщает, сколько приложений будет установлено или обновлено, и ждет вашего согласия.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Установить %d приложение?</item>
+        <item quantity="few">Установить %d приложения?</item>
+        <item quantity="many">Установить %d приложений?</item>
+        <item quantity="other">Установить %d приложения?</item>
+    </plurals>
+    <string name="bulk_install_text">Каждый файл скачивается и проверяется перед запросом к Android на установку. Tern запоминает сертификат, которым подписано каждое новое приложение, и проверяет каждое последующее обновление на соответствие ему.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">Для %d из выбранных приложений сейчас нечего устанавливать, оно остается как есть.</item>
+        <item quantity="few">Для %d из выбранных приложений сейчас нечего устанавливать, они остаются как есть.</item>
+        <item quantity="many">Для %d из выбранных приложений сейчас нечего устанавливать, они остаются как есть.</item>
+        <item quantity="other">Для %d из выбранных приложений сейчас нечего устанавливать, они остаются как есть.</item>
+    </plurals>
+    <string name="action_change_categories">Изменить категории</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Категории %d приложения</item>
+        <item quantity="few">Категории %d приложений</item>
+        <item quantity="many">Категории %d приложений</item>
+        <item quantity="other">Категории %d приложения</item>
+    </plurals>
+    <string name="bulk_categories_help">Галочка добавляет все выбранные приложения в категорию, а пустой флажок убирает их из нее. Прочерк оставляет каждое приложение как есть.</string>
+    <string name="categories_filed_all">Все выбранные приложения</string>
+    <string name="categories_filed_some">Некоторые из выбранных приложений</string>
+    <string name="categories_filed_none">Ни одно из выбранных приложений</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Изменены категории %d приложения.</item>
+        <item quantity="few">Изменены категории %d приложений.</item>
+        <item quantity="many">Изменены категории %d приложений.</item>
+        <item quantity="other">Изменены категории %d приложения.</item>
+    </plurals>
+    <string name="action_share_config_link">Поделиться ссылкой с настройками</string>
+    <string name="action_share_config_links">Поделиться ссылками с настройками</string>
+    <string name="share_link_none">Настройки этого приложения не поместятся ни в одну ссылку. Поделитесь им как файлом.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d приложение пропущено, так как его настройки не поместятся ни в одну ссылку.</item>
+        <item quantity="few">%d приложения пропущены, так как их настройки не поместятся ни в одну ссылку.</item>
+        <item quantity="many">%d приложений пропущено, так как их настройки не поместятся ни в одну ссылку.</item>
+        <item quantity="other">%d приложения пропущено, так как его настройки не поместятся ни в одну ссылку.</item>
+    </plurals>
+</resources>

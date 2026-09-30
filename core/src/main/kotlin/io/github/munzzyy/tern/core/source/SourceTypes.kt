@@ -187,6 +187,14 @@ object SourceOptions {
      */
     const val SORT = "sort"
 
+    /**
+     * html: "true" to take the release with the highest version, as Tern 0.1.0 did. No link is
+     * marked as the latest by its place, and the app's version pattern reads the version guessed
+     * from each link rather than the link itself. Apps saved by 0.1.0 have it, so an update
+     * leaves them offering what they offered before.
+     */
+    const val HIGHEST_VERSION = "highestVersion"
+
     /** farsroid: "true" to take the name of each file as a version, each file then a release of its own. */
     const val FILE_VERSION = "fileVersion"
 

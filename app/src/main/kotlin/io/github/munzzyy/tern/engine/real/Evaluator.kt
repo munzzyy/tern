@@ -17,6 +17,7 @@ import io.github.munzzyy.tern.core.select.AssetPolicyException
 import io.github.munzzyy.tern.core.select.FileOrigin
 import io.github.munzzyy.tern.core.select.Pick
 import io.github.munzzyy.tern.core.select.PreferredFile
+import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.forge.GitHubSource
 import io.github.munzzyy.tern.core.text.PatternException
@@ -68,7 +69,9 @@ class Evaluator(
     fun effective(given: AppConfig): AppConfig {
         var releases = given.releases
         if (releases.minAgeDays == null) releases = releases.copy(minAgeDays = globalMinAgeDays())
-        if (given.source.type in SourceTypes.READS_OWN_VERSIONS) releases = releases.copy(versionExtract = null, matchGroup = null)
+        if (given.source.type in SourceTypes.READS_OWN_VERSIONS && !given.source.flag(SourceOptions.HIGHEST_VERSION)) {
+            releases = releases.copy(versionExtract = null, matchGroup = null)
+        }
         val assets = given.assets
         val global = globalFilter()
         val files = if (assets.include != null || assets.exclude != null || global == null) assets else assets.copy(include = global)

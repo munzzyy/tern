@@ -171,6 +171,12 @@ fun SourceOptionsCard(id: String, spec: SourceSpec, save: ((SourceSpec) -> Sourc
             )
             SourceTypes.HTML -> {
                 SwitchRow(
+                    title = stringResource(R.string.option_highest_version),
+                    summary = stringResource(R.string.option_highest_version_effect),
+                    checked = flag(SourceOptions.HIGHEST_VERSION),
+                    onChange = { setFlag(SourceOptions.HIGHEST_VERSION, it) },
+                )
+                SwitchRow(
                     title = stringResource(R.string.option_link_text),
                     summary = stringResource(R.string.option_link_text_effect),
                     checked = flag(SourceOptions.LINK_TEXT),

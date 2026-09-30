@@ -11,4 +11,6 @@
     <string name="settings_charging_installs_wait">An update that would install by itself waits until the device is charging.</string>
     <string name="engine_downgrade_not_as_named">The source named version code %2$d, but this file is %1$d, older than the one installed. It is not put over the newer one.</string>
     <string name="settings_allow_downgrades_picked">Let Me Downgrade is installed, so Android may put an older version over a newer one. Tern does it only for a release you pick from an app\'s history, never in the background or with Update all.</string>
+    <string name="option_highest_version">Take the highest version, as Tern 0.1.0 did</string>
+    <string name="option_highest_version_effect">Offers the link with the highest version on the page, whatever its place, and runs the version pattern over the version read from each link. Off reads the page the way Obtainium does: the last link in order is the latest.</string>
 </resources>

@@ -44,7 +44,7 @@ class AppConfigJsonTest {
     @Test
     fun encodesSchemaField() {
         val json = AppConfigJson.encode(sample())
-        assertEquals(1L, json.long("schema"))
+        assertEquals(2L, json.long("schema"))
     }
 
     @Test
@@ -111,7 +111,7 @@ class AppConfigJsonTest {
         val original = everything()
         assertEquals(original, AppConfigJson.decode(AppConfigJson.encode(original)))
         assertEquals(original, AppConfigJson.decode(Json.parseObject(Json.write(AppConfigJson.encode(original)))))
-        assertEquals(1L, AppConfigJson.encode(original).long("schema"))
+        assertEquals(2L, AppConfigJson.encode(original).long("schema"))
     }
 
     @Test
@@ -130,8 +130,8 @@ class AppConfigJsonTest {
             "assets": {"include": null, "exclude": null, "matchDevice": true},
             "updates": "NOTIFY", "trackOnly": false, "pinnedSigners": [], "categories": [], "favorite": false, "notes": null}"""
         val decoded = AppConfigJson.decode(Json.parseObject(older))
-        // A wait that was stored stays the app's own; only an app without one follows the setting for all apps.
-        assertEquals(ReleasePolicy(minAgeDays = 0), decoded.releases)
+        // Tern 0.1.0 wrote a wait of 0 for every app, which was no choice of the person's, so it follows the setting for all apps.
+        assertEquals(ReleasePolicy(minAgeDays = null), decoded.releases)
         assertEquals(AssetPolicy(), decoded.assets)
         assertNull(decoded.customName)
         assertNull(decoded.customAuthor)

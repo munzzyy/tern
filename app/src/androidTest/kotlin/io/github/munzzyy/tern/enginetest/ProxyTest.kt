@@ -10,6 +10,7 @@ import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.ProxyMode
 import io.github.munzzyy.tern.enginetest.LoopbackServer.Companion.head
+import io.github.munzzyy.tern.install.Downloader
 import io.github.munzzyy.tern.install.Installer
 import io.github.munzzyy.tern.engine.real.Texts
 import io.github.munzzyy.tern.net.ProxyDoor
@@ -260,7 +261,7 @@ class ProxyTest {
                 assertEquals(h.describe(id), Texts(targetContext).proxySilent(), h.state(id).installProblem?.message)
                 assertEquals(h.describe(id), ProblemKind.NETWORK, h.row(id).problem?.kind)
                 assertEquals("requests arrived although the proxy did not answer", 0, wire.arrived)
-                assertNull(h.engine.downloader.kept(id, file))
+                assertNull(h.engine.downloader.kept(id, Downloader.key("v1.0", file)))
                 assertTrue(h.eventsFor(id).none { it.kind == EventKind.DOWNLOADED })
                 assertEquals(0, h.installer.prepared.get())
 

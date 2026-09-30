@@ -10,6 +10,7 @@ import io.github.munzzyy.tern.engine.AppStatus
 import io.github.munzzyy.tern.engine.ChecksumState
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.ProblemKind
+import io.github.munzzyy.tern.install.Downloader
 import io.github.munzzyy.tern.install.Gate
 import io.github.munzzyy.tern.install.GatePass
 import io.github.munzzyy.tern.install.Installer
@@ -110,7 +111,7 @@ class GateTest {
             waitUntil(30_000, "the gate to decide") { h.state(id).block != null }
 
             assertEquals(ProblemKind.CHECKSUM_MISMATCH, h.state(id).block?.problem?.kind)
-            assertNull(h.engine.downloader.kept(id, "${FakeForge.FILES}v1.0/app-v1.apk"))
+            assertNull(h.engine.downloader.kept(id, Downloader.key("v1.0", "${FakeForge.FILES}v1.0/app-v1.apk")))
             assertTrue(h.engine.downloader.folder(id).listFiles().orEmpty().none { it.name.endsWith(".bin") || it.name.endsWith(".part") })
             waitUntil(5_000, "the row to show the block") { h.row(id).progress == null }
             assertEquals(AppStatus.BLOCKED, h.row(id).status)

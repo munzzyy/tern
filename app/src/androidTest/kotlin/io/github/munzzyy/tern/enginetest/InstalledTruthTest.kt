@@ -19,6 +19,7 @@ import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.Phase
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.real.RealEngine
+import io.github.munzzyy.tern.install.Downloader
 import io.github.munzzyy.tern.install.Gate
 import io.github.munzzyy.tern.install.GatePass
 import java.io.File
@@ -110,7 +111,7 @@ class InstalledTruthTest {
             assertEquals(h.describe(id), AppStatus.UPDATE_AVAILABLE, h.row(id).status)
             assertNull(h.describe(id), h.row(id).problem)
             assertTrue(h.eventsFor(id).none { it.kind == EventKind.FAILED })
-            assertNotNull("the file stays for the next try", h.engine.downloader.kept(id, h.row(id).file!!.asset.url))
+            assertNotNull("the file stays for the next try", h.engine.downloader.kept(id, Downloader.key(h.row(id).latest!!.id, h.row(id).file!!.asset.url)))
         }
     }
 

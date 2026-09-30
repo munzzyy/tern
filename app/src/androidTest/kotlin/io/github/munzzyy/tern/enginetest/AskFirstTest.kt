@@ -9,6 +9,7 @@ import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.engine.AppStatus
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.Received
+import io.github.munzzyy.tern.install.Downloader
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -46,7 +47,7 @@ class AskFirstTest {
         assertNull(h.describe(id), h.state(id).record)
         assertNull(h.describe(id), h.row(id).progress)
         assertTrue(h.describe(id), h.eventsFor(id).none { it.kind == EventKind.DOWNLOADED || it.kind == EventKind.VERIFIED || it.kind == EventKind.INSTALLED })
-        assertNull("a file was downloaded", h.engine.downloader.kept(id, "${FakeForge.FILES}v2.0/app-v2.apk"))
+        assertNull("a file was downloaded", h.engine.downloader.kept(id, Downloader.key("v2.0", "${FakeForge.FILES}v2.0/app-v2.apk")))
         assertFalse("the system installer asked the user", Prompt.visible())
     }
 

@@ -65,7 +65,7 @@ class AddFlowTest {
             compose.onNodeWithText("Paste").performClick()
             compose.tagged(ADD_FIND_TAG).performClick()
             compose.waitForText("results for")
-            compose.onNodeWithText("Wren").performClick()
+            compose.onNodeWithText("Wren").performScrollTo().performClick()
             compose.waitForText("The newest release is a pre-release")
             compose.onNodeWithText("The publisher offers no checksum for this file").performScrollTo().assertIsDisplayed()
         }

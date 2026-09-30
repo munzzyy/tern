@@ -5,6 +5,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.isFocused
 import androidx.compose.ui.test.junit4.ComposeTestRule
@@ -49,6 +50,12 @@ fun ComposeTestRule.assertFocusOn(matcher: SemanticsMatcher, why: String, timeou
     expect(why, timeoutMs) { hasFocusOn(matcher) }
 
 val isTab = SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.Tab)
+
+/** Where Settings opens under keys: the minus button of how often, which only a device without touch has, or else the slider itself. */
+val firstSetting: SemanticsMatcher get() = hasContentDescription(if (withoutTouch) "Check more often" else "How often")
+
+/** Enough presses of down to walk Settings from top to bottom; a phone has more of them than a television. */
+const val SETTINGS_STOPS = 60
 
 fun ComposeTestRule.expect(why: String, timeoutMs: Long = 3_000, condition: () -> Boolean) {
     try {

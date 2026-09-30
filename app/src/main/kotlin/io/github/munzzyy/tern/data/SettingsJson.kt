@@ -55,6 +55,8 @@ object SettingsJson {
         Field("categoryColors", { it.categoryColors }, CategoryColors::encode, { v -> (v as? JsonObject)?.let(CategoryColors::decode) }) { s, v ->
             s.copy(categoryColors = v)
         },
+        Field.number("customStrength", { it.customStrength }, 0..100) { s, v -> s.copy(customStrength = v) },
+        Field.choice("colorStyle", { it.colorStyle }) { s, v -> s.copy(colorStyle = v) },
     )
 
     /** The keys a file may carry. */

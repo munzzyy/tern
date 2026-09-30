@@ -15,4 +15,12 @@
     <string name="kept_export_format_obtainium">Obtainium\'s, which Obtainium can read too</string>
     <string name="kept_export_name">File name</string>
     <string name="kept_export_name_usual">Leave it empty for %1$s.</string>
+    <string name="look_style">Style</string>
+    <string name="style_standard">Standard</string>
+    <string name="style_vibrant">Vibrant</string>
+    <string name="style_expressive">Expressive</string>
+    <string name="look_style_effect">Vibrant is more colourful throughout. Expressive turns the second and third colours further from the first.</string>
+    <string name="look_color_code">Colour code</string>
+    <string name="look_color_code_effect">Tern takes the hue and strength of this colour and picks the shades of it that stay easy to read.</string>
+    <string name="look_color_code_invalid">Six hexadecimal digits, such as #3D5A80.</string>
 </resources>

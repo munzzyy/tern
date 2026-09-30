@@ -29,6 +29,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.ColorSource
+import io.github.munzzyy.tern.engine.ColorStyle
 import io.github.munzzyy.tern.engine.Contrast
 import io.github.munzzyy.tern.engine.Corners
 import io.github.munzzyy.tern.engine.Density
@@ -45,7 +46,7 @@ import io.github.munzzyy.tern.ui.common.SwitchRow
 import io.github.munzzyy.tern.ui.common.firstFocus
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.common.rememberScreenFocus
-import io.github.munzzyy.tern.ui.theme.CUSTOM_STRENGTH
+import io.github.munzzyy.tern.ui.theme.dynamicColorSupported
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.isDark
 import kotlinx.coroutines.CancellationException
@@ -163,9 +164,22 @@ private fun Choices(settings: Settings, onChange: ((Settings) -> Settings) -> Un
             if (settings.colorSource == ColorSource.CUSTOM) {
                 HueSlider(
                     hue = settings.customHue,
-                    colorOf = remember(settings.contrast, dark) { { hue -> accentOf(hue % 360, CUSTOM_STRENGTH, settings, dark) } },
+                    colorOf = remember(settings.contrast, settings.customStrength, settings.colorStyle, dark) {
+                        { hue -> accentOf(hue % 360, settings.ownStrength, settings, dark) }
+                    },
                     onChange = onHue,
-                    onSettled = { hue -> onChange { it.copy(colorSource = ColorSource.CUSTOM, customHue = hue) } },
+                    onSettled = { hue -> onChange { it.copy(colorSource = ColorSource.CUSTOM, customHue = hue, customColor = null) } },
+                )
+                ColorCodeRow(settings, dark, onChange)
+            }
+            // Android's wallpaper colours are its own; the style shapes Tern's.
+            if (settings.colorSource != ColorSource.WALLPAPER || !dynamicColorSupported) {
+                ChoiceChips(
+                    title = stringResource(R.string.look_style),
+                    options = listOf(stringResource(R.string.style_standard), stringResource(R.string.style_vibrant), stringResource(R.string.style_expressive)),
+                    selected = ColorStyle.entries.indexOf(settings.colorStyle),
+                    onSelect = { picked -> onChange { it.copy(colorStyle = ColorStyle.entries[picked]) } },
+                    summary = stringResource(R.string.look_style_effect),
                 )
             }
             ChoiceChips(

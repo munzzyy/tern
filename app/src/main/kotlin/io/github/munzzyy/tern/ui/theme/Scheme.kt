@@ -9,6 +9,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import io.github.munzzyy.tern.engine.ColorSource
+import io.github.munzzyy.tern.engine.ColorStyle
 import io.github.munzzyy.tern.engine.Contrast
 import io.github.munzzyy.tern.engine.Palette
 import io.github.munzzyy.tern.engine.Settings
@@ -43,8 +44,8 @@ val MaterialTheme.status: StatusColors
     get() = LocalStatusColors.current
 
 /** Material's scheme for a hue in degrees and a strength from 0 to 1. */
-fun colorScheme(hue: Int, strength: Double, dark: Boolean, contrast: Contrast, pureBlack: Boolean = false): ColorScheme =
-    roles(hue, strength, dark, contrast, pureBlack).toColorScheme()
+fun colorScheme(hue: Int, strength: Double, dark: Boolean, contrast: Contrast, pureBlack: Boolean = false, style: ColorStyle = ColorStyle.STANDARD): ColorScheme =
+    roles(hue, strength, dark, contrast, pureBlack, style).toColorScheme()
 
 /**
  * The colours the settings ask for. [wallpaper] is Android's own scheme where the settings want
@@ -52,7 +53,7 @@ fun colorScheme(hue: Int, strength: Double, dark: Boolean, contrast: Contrast, p
  */
 fun ternColors(settings: Settings, dark: Boolean, wallpaper: ColorScheme? = null): TernColors {
     val seed = seedOf(settings)
-    val own = roles(seed.hue, seed.strength, dark, settings.contrast, settings.pureBlack)
+    val own = roles(seed.hue, seed.strength, dark, settings.contrast, settings.pureBlack, seed.style)
     if (settings.colorSource != ColorSource.WALLPAPER || wallpaper == null) return TernColors(own.toColorScheme(), own.toStatusColors())
     val taken = wallpaper.toRoles(own)
     val roles = (if (dark && settings.pureBlack) taken.blackened() else taken).fitted(settings.contrast)

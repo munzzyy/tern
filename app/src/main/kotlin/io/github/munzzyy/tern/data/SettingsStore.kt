@@ -66,6 +66,9 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             searchIn = prefs.getStringSet("searchIn", null)?.filterTo(LinkedHashSet()) { it.length <= MAX_ORIGIN }?.take(MAX_ORIGINS)?.toSet() ?: d.searchIn,
             keptExportName = KeptExportName.clean(prefs.getString("keptExportName", null)),
             keptExportFormat = enumOr(prefs.getString("keptExportFormat", null), d.keptExportFormat),
+            customStrength = prefs.getInt("customStrength", d.customStrength).coerceIn(0, 100),
+            customColor = if (prefs.contains("customColor")) prefs.getInt("customColor", 0) or OPAQUE else null,
+            colorStyle = enumOr(prefs.getString("colorStyle", null), d.colorStyle),
         )
     }
 
@@ -133,6 +136,9 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putString("categoryColors", Json.write(CategoryColors.encode(s.categoryColors)))
             .putString("keptExportName", KeptExportName.clean(s.keptExportName))
             .putString("keptExportFormat", s.keptExportFormat.name)
+            .putInt("customStrength", s.customStrength.coerceIn(0, 100))
+            .also { if (s.customColor == null) it.remove("customColor") else it.putInt("customColor", s.customColor or OPAQUE) }
+            .putString("colorStyle", s.colorStyle.name)
             .commit()
     }
 
@@ -150,6 +156,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
         const val MAX_FILTER = 500
         private const val MAX_ORIGIN = 60
         private const val MAX_ORIGINS = 40
+        private const val OPAQUE = 0xFF000000.toInt()
 
         /** 0 stays off; anything else is taken to the range Android keeps to. */
         fun cleanMinutes(minutes: Int): Int = if (minutes <= 0) 0 else minutes.coerceIn(MIN_MINUTES, MAX_MINUTES)

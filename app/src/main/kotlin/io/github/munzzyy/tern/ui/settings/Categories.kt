@@ -39,7 +39,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
@@ -56,6 +59,8 @@ import io.github.munzzyy.tern.ui.common.focusWhenShown
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.common.textFieldKeys
 import io.github.munzzyy.tern.ui.icons.Glyphs
+import io.github.munzzyy.tern.ui.look.colorOfHex
+import io.github.munzzyy.tern.ui.look.hexOf
 import io.github.munzzyy.tern.ui.theme.CATEGORY_SWATCHES
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.categoryArgb
@@ -197,6 +202,7 @@ private fun CategoryEditor(
     val look = LocalLook.current
     var text by rememberSaveable { mutableStateOf(original.orEmpty()) }
     var picked by rememberSaveable { mutableIntStateOf(argb) }
+    var code by rememberSaveable { mutableStateOf(hexOf(argb)) }
     val clean = cleanCategory(text)
     val taken = clean != null && categoryTaken(clean, original, existing)
     AlertDialog(
@@ -220,7 +226,33 @@ private fun CategoryEditor(
                     modifier = Modifier.fillMaxWidth().textFieldKeys(),
                 )
                 Text(stringResource(R.string.category_color), style = MaterialTheme.typography.labelLarge)
-                Swatches(picked, onPick = { picked = it })
+                Swatches(
+                    picked,
+                    onPick = {
+                        picked = it
+                        code = hexOf(it)
+                    },
+                )
+                // Any colour at all, as Obtainium's colour wheel allows, typed or pasted as a code.
+                OutlinedTextField(
+                    value = code,
+                    onValueChange = { typed ->
+                        code = typed.take(9)
+                        colorOfHex(code)?.let { picked = it }
+                    },
+                    singleLine = true,
+                    isError = colorOfHex(code) == null,
+                    label = { Text(stringResource(R.string.look_color_code)) },
+                    leadingIcon = { ColorDot(Color(picked)) },
+                    supportingText = if (colorOfHex(code) == null) {
+                        { Text(stringResource(R.string.look_color_code_invalid)) }
+                    } else {
+                        null
+                    },
+                    textStyle = TextStyle(fontFamily = FontFamily.Monospace),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii, imeAction = ImeAction.Done, autoCorrectEnabled = false),
+                    modifier = Modifier.fillMaxWidth().textFieldKeys(),
+                )
                 if (onDelete != null) {
                     Text(stringResource(R.string.category_delete_effect), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     TextButton(onClick = { onDelete(); onDismiss() }) {

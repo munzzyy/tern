@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.ui.theme
 
+import io.github.munzzyy.tern.engine.ColorStyle
 import io.github.munzzyy.tern.engine.Contrast
 
 internal enum class Ramp { PRIMARY, SECONDARY, TERTIARY, NEUTRAL, NEUTRAL_VARIANT, REFUSED, VERIFIED, CAUTION }
@@ -157,24 +158,38 @@ private const val REFUSED_HUE = 27.0
 private const val VERIFIED_HUE = 150.0
 private const val CAUTION_HUE = 75.0
 private const val TERTIARY_TURN = 45.0
+private const val EXPRESSIVE_TERTIARY_TURN = 120.0
+private const val EXPRESSIVE_SECONDARY_TURN = 330.0
 private const val DARK_CHROMA = 0.8
 
-private fun Ramp.hue(seed: Double): Double = when (this) {
-    Ramp.TERTIARY -> (seed + TERTIARY_TURN) % 360
+private fun Ramp.hue(seed: Double, style: ColorStyle): Double = when (this) {
+    Ramp.SECONDARY -> if (style == ColorStyle.EXPRESSIVE) (seed + EXPRESSIVE_SECONDARY_TURN) % 360 else seed
+    Ramp.TERTIARY -> (seed + if (style == ColorStyle.EXPRESSIVE) EXPRESSIVE_TERTIARY_TURN else TERTIARY_TURN) % 360
     Ramp.REFUSED -> REFUSED_HUE
     Ramp.VERIFIED -> VERIFIED_HUE
     Ramp.CAUTION -> CAUTION_HUE
     else -> seed
 }
 
-private fun Ramp.chroma(strength: Double, dark: Boolean): Double {
+/** The colours of meaning keep their chroma in every style; the accents and the surfaces take the style's. */
+private fun Ramp.chroma(strength: Double, dark: Boolean, style: ColorStyle): Double {
     val accent = if (dark) DARK_CHROMA else 1.0
+    val lift = when (style) {
+        ColorStyle.STANDARD -> 1.0
+        ColorStyle.VIBRANT -> 1.4
+        ColorStyle.EXPRESSIVE -> 1.2
+    }
+    val tint = when (style) {
+        ColorStyle.STANDARD -> 1.0
+        ColorStyle.VIBRANT -> 1.75
+        ColorStyle.EXPRESSIVE -> 1.5
+    }
     return when (this) {
-        Ramp.PRIMARY -> (0.04 + 0.15 * strength) * accent
-        Ramp.SECONDARY -> (0.015 + 0.045 * strength) * accent
-        Ramp.TERTIARY -> (0.03 + 0.09 * strength) * accent
-        Ramp.NEUTRAL -> 0.004 + 0.008 * strength
-        Ramp.NEUTRAL_VARIANT -> 0.008 + 0.016 * strength
+        Ramp.PRIMARY -> (0.04 + 0.15 * strength) * accent * lift
+        Ramp.SECONDARY -> (0.015 + 0.045 * strength) * accent * lift
+        Ramp.TERTIARY -> (0.03 + 0.09 * strength) * accent * lift
+        Ramp.NEUTRAL -> (0.004 + 0.008 * strength) * tint
+        Ramp.NEUTRAL_VARIANT -> (0.008 + 0.016 * strength) * tint
         Ramp.REFUSED -> 0.17 * accent
         Ramp.VERIFIED, Ramp.CAUTION -> 0.14 * accent
     }
@@ -184,21 +199,21 @@ private fun Ramp.chroma(strength: Double, dark: Boolean): Double {
  * Every colour of a scheme from one hue, in degrees, and one strength, from 0 for nearly grey to
  * 1 for vivid. [pureBlack] applies to a dark scheme only.
  */
-fun roles(hue: Int, strength: Double, dark: Boolean, contrast: Contrast, pureBlack: Boolean = false): Roles {
-    val table = drawn(hue, strength, dark, contrast)
+fun roles(hue: Int, strength: Double, dark: Boolean, contrast: Contrast, pureBlack: Boolean = false, style: ColorStyle = ColorStyle.STANDARD): Roles {
+    val table = drawn(hue, strength, dark, contrast, style)
     return (if (dark && pureBlack) table.blackened() else table).fitted(contrast)
 }
 
 /** The scheme as the table of tones gives it, before any pair is measured. */
-internal fun drawn(hue: Int, strength: Double, dark: Boolean, contrast: Contrast): Roles {
-    return Roles(IntArray(Role.entries.size) { tableColor(Role.entries[it], hue, strength, dark, contrast) })
+internal fun drawn(hue: Int, strength: Double, dark: Boolean, contrast: Contrast, style: ColorStyle = ColorStyle.STANDARD): Roles {
+    return Roles(IntArray(Role.entries.size) { tableColor(Role.entries[it], hue, strength, dark, contrast, style) })
 }
 
 /** One role straight from the table of tones: enough for a swatch, without working out the scheme around it. */
-fun tableColor(role: Role, hue: Int, strength: Double, dark: Boolean, contrast: Contrast): Int {
+fun tableColor(role: Role, hue: Int, strength: Double, dark: Boolean, contrast: Contrast, style: ColorStyle = ColorStyle.STANDARD): Int {
     val seed = ((hue % 360) + 360) % 360.0
     val tone = (if (dark) role.dark else role.light).at(contrast)
-    return toned(role.ramp.hue(seed), role.ramp.chroma(strength.coerceIn(0.0, 1.0), dark), tone.toDouble())
+    return toned(role.ramp.hue(seed, style), role.ramp.chroma(strength.coerceIn(0.0, 1.0), dark, style), tone.toDouble())
 }
 
 /** Pure black: the backgrounds of a dark scheme go to black and the surfaces on them to the tones next to it. */

@@ -319,6 +319,12 @@ data class Settings(
     val keptExportName: String? = null,
     /** The kept export is written in Tern's format, which holds everything, or in Obtainium's. */
     val keptExportFormat: ExportFormat = ExportFormat.TERN,
+    /** How colourful the user's own colour is, from 0 for nearly grey to 100 for vivid. */
+    val customStrength: Int = 80,
+    /** The colour code the user's own colour was taken from, shown back to them; null once the hue is moved by hand. */
+    val customColor: Int? = null,
+    /** How far the colours of a scheme reach from the seed. Android's wallpaper colours are its own. */
+    val colorStyle: ColorStyle = ColorStyle.STANDARD,
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */
@@ -351,6 +357,9 @@ enum class ColorSource { WALLPAPER, PALETTE, CUSTOM }
 enum class Palette { INK, SLATE, TIDE, MOSS, AMBER, CLAY, ROSE, PLUM }
 
 enum class Contrast { STANDARD, MEDIUM, HIGH }
+
+/** Standard keeps to the seed; vibrant is more colourful throughout; expressive turns its second and third colours further away. */
+enum class ColorStyle { STANDARD, VIBRANT, EXPRESSIVE }
 
 /** How much room the list takes. Minimal leaves out the icon and the author. */
 enum class Density { COMFORTABLE, COMPACT, MINIMAL }

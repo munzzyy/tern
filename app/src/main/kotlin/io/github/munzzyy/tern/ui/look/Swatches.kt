@@ -63,10 +63,13 @@ fun paletteName(palette: Palette): Int = when (palette) {
 
 /** The accent a hue gives under the settings as they are, which is what the swatches and the slider show. */
 fun accentOf(hue: Int, strength: Double, settings: Settings, dark: Boolean): Color =
-    Color(tableColor(ColorRole.PRIMARY, hue, strength, dark, settings.contrast))
+    Color(tableColor(ColorRole.PRIMARY, hue, strength, dark, settings.contrast, settings.colorStyle))
 
 fun onAccentOf(hue: Int, strength: Double, settings: Settings, dark: Boolean): Color =
-    Color(tableColor(ColorRole.ON_PRIMARY, hue, strength, dark, settings.contrast))
+    Color(tableColor(ColorRole.ON_PRIMARY, hue, strength, dark, settings.contrast, settings.colorStyle))
+
+/** How colourful the user's own colour is, from 0 to 1. */
+val Settings.ownStrength: Double get() = customStrength.coerceIn(0, 100) / 100.0
 
 /** Wallpaper where Android has it, the eight palettes, and the user's own colour. Left and right move along them. */
 @Composable
@@ -77,7 +80,7 @@ fun Swatches(settings: Settings, dark: Boolean, onPick: ((Settings) -> Settings)
     val ownName = stringResource(R.string.look_own)
     val names = Palette.entries.associateWith { stringResource(paletteName(it)) }
     val source = if (settings.colorSource == ColorSource.WALLPAPER && !dynamicColorSupported) ColorSource.PALETTE else settings.colorSource
-    val swatches = remember(settings.colorSource, settings.palette, settings.customHue, settings.contrast, dark, names) {
+    val swatches = remember(settings.colorSource, settings.palette, settings.customHue, settings.customStrength, settings.colorStyle, settings.contrast, dark, names) {
         buildList {
             wallpaperScheme(context, settings.copy(colorSource = ColorSource.WALLPAPER), dark)?.let { scheme ->
                 add(
@@ -102,8 +105,8 @@ fun Swatches(settings: Settings, dark: Boolean, onPick: ((Settings) -> Settings)
                 Swatch(
                     name = ownName,
                     fill = wheelHues().map { accentOf(it, CUSTOM_STRENGTH, settings, dark) },
-                    chosen = accentOf(settings.customHue, CUSTOM_STRENGTH, settings, dark),
-                    mark = onAccentOf(settings.customHue, CUSTOM_STRENGTH, settings, dark),
+                    chosen = accentOf(settings.customHue, settings.ownStrength, settings, dark),
+                    mark = onAccentOf(settings.customHue, settings.ownStrength, settings, dark),
                     taken = source == ColorSource.CUSTOM,
                 ) { it.copy(colorSource = ColorSource.CUSTOM) },
             )

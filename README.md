@@ -21,10 +21,15 @@ leaves the device.
 - Every signature is verified twice: by Tern's own verifier and by Android.
 - Each app stays tied to the certificate of its first install. For 15
   well-known apps Tern knows the certificate before that.
+- It reads every source Obtainium reads, from GitHub to the Galaxy Store, and
+  installs through Android, Shizuku, root or another installer app.
+- A widget, a Quick Settings tile and launcher shortcuts check and update from
+  outside the app.
 - Android TV works by remote, and a phone can send links to it sealed with a
   code the TV shows.
 - With Orbot chosen, everything goes through Tor and nothing goes around it.
-- An Obtainium export brings your list along.
+- An Obtainium export brings your list and your settings along, and Tern can
+  write one for Obtainium too.
 
 [<img src="site/badge.png" alt="Get it with Tern" height="80">](https://munzzyy.github.io/tern/add/?url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Ftern)
 
@@ -85,12 +90,19 @@ page also offers a second check there, against AppVerifier's own list.
 | A web page | Links to installable files, with optional steps through other pages |
 | A direct link | One file at a fixed address, whether or not the address ends in a file name |
 | Jenkins, SourceHut, SourceForge | The last successful build, tags, the project's files |
+| Huawei AppGallery, Samsung Galaxy Store, vivo, Tencent, RuStore, CoolApk, itch.io | Each store's own app record; the Galaxy Store with the device model and CSC of your choice |
+| Telegram, NeutronCode | Their own release channels |
+| APKPure, Aptoide, Uptodown, APKCombo, APKMirror, Farsroid | Stores that offer again what developers publish elsewhere (APKMirror for tracking only) |
+| LiteAPKs, Apk4Free, RockMods | Sites that offer apps changed by someone else (RockMods for tracking only) |
 
 Paste a link, or share one from the browser, and Tern works out which of
-these it is.
+these it is. Searching by name looks in the forges, F-Droid and the stores
+you pick.
 
-Mirror sites and sites that repack other people's apps are left out on purpose.
-Tern follows the developer, and a mirror is somebody else.
+Tern follows the developer, so it says so before you add an app from a store
+that republishes other people's apps, and it says plainly when a site offers
+apps someone else changed. Whatever the source, a file is held to the
+certificate of the app you have, and to the pinned one.
 
 ## Updates without a prompt
 
@@ -105,11 +117,25 @@ update; where Android wants a confirmation you get a notification instead of a
 surprise. Android refuses a second silent update of the same app within 30
 seconds of the last one, and that is one of the cases where you are asked.
 
-Checks run every six hours by default, through Android's own job scheduler, and
-the schedule is put back after a reboot and after Tern itself is updated. You
-can limit them to unmetered networks or to charging, and choose per app between
-being told, updating automatically, and never checking in the background. If you
-force stop Tern, Android drops the schedule until you open the app again.
+With Shizuku or root chosen under Settings, Installing, first installs and
+updates install without a prompt on any Android from 10 on. You can also hand
+every checked file to another installer app; Tern then compares the signer of
+what it installed with the file it checked.
+
+Checks run every six hours by default, and anywhere from every 15 minutes to
+every 30 days, through Android's own job scheduler. The schedule is put back
+after a reboot and after Tern itself is updated. You can limit them to unmetered
+networks or to charging, check when Tern opens or when an app's page opens, and
+choose per app between being told, updating automatically, and never checking
+in the background. If you force stop Tern, Android drops the schedule until you
+open the app again.
+
+## Outside the app
+
+A widget on the home screen says how many updates there are, with a Check
+button and an Update all button. A Quick Settings tile checks and shows the
+count, and the launcher icon's shortcuts check, update everything or add an app.
+Notifications about updates carry an Update button of their own.
 
 ## Through Tor
 
@@ -135,11 +161,13 @@ details.
 
 ## Coming from Obtainium
 
-Import its export file under Settings. Apps from sources Tern carries come
-over with their filters, categories and pinned certificates. The rest are listed
-by name with the reason, so you know what to look for elsewhere. Apps that
-arrive with a pinned certificate or a filter are named in the summary, because
-those are settings somebody else chose.
+Import its export file under Settings. Apps come over with their filters,
+categories, notes and pinned certificates, and the settings in the file come
+along under Tern's names: the interval, the list's order and grouping, the
+theme and the colours of the categories. Tokens and the installer never travel
+in a file. Apps that arrive with a pinned certificate or a filter are named in
+the summary, because those are settings somebody else chose. Going the other
+way, Settings writes a file Obtainium imports.
 
 You can also start from the repositories you starred on GitHub: give a user
 name, tick the ones that are apps, and Tern adds them one by one.
@@ -184,8 +212,10 @@ Obtainium does that Tern does not.
 
 ## What it does not do
 
-- It installs through Android's own installer only. There is no Shizuku and no
-  root mode, so a first install always asks, and silent updates need Android 12.
+- Without Shizuku or root, a first install always asks, and silent updates
+  need Android 12, as Android decides.
+- An archive compressed with bzip2, xz or zstd is not opened; zip, tar and
+  tar.gz are.
 - The translations are machine-made. Details of an error that come from a
   server or a parser stay in English, and an entry in the activity log stays in
   the language it was written in.

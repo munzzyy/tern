@@ -117,6 +117,48 @@ The system installer runs its own checks after all of that. Tern treats an
 install as done when Android reports success and the package manager shows the
 expected version code.
 
+## Installers other than Android's
+
+Every check above runs before any installer sees a file, whichever one the
+person chose under Settings, Installing.
+
+With Shizuku or root, Tern runs Android's own `pm install-create`,
+`install-write` and `install-commit`, and streams the checked files into the
+session. The command is made of fixed words, the package name the gate read and
+checked, the sizes of the files and the session number `pm` gave back. Nothing
+a server sent is ever part of it. Root runs it through `su -c` with every word
+quoted. If the chosen installer is not there, Tern falls back to Android's own
+and says so.
+
+With another installer app, the checked file is copied, read-only, to a folder
+of Tern's own and offered to that app alone through a content address. That app
+may do anything with it, so the install counts only when the package manager
+then shows the app signed by exactly the certificate the gate verified. Anything
+else is reported and not counted.
+
+## Stores and mirrors
+
+Some sources are stores that offer again what developers published elsewhere,
+and three are sites that offer apps someone else changed. The Add screen says so
+before an app from one is stored. Their files are held to the same pin as any
+other, so once the developer's certificate is known a file signed by someone
+else is refused as an update.
+
+Some stores hand out a link that expires, or a file only to a request with the
+right headers. Such a link is asked for right before the download, has to be an
+https address like any other, and has to point to one of the hosts that store
+keeps its files on; each source names those hosts. The headers a source may add
+never include `Authorization`, `Cookie`, `Proxy-Authorization`, `Host`, `Range`
+or `If-Range`. A token still goes only to the host it was given for.
+
+## Archives
+
+A release that is a zip, tar or tar.gz archive is opened in Tern's own staging
+folder. The names of the files inside are data and never paths. Only the APKs
+are taken, only those the app's filter for files inside archives lets through,
+never more bytes than a download may hold and never more than 512 of them. They
+then go through the same checks as the APKs of any bundle.
+
 ## Reading a file before downloading it
 
 Tern reads a file's manifest and signing block from the server with range
@@ -190,6 +232,11 @@ that is not set that way, and that is how phones come, so Settings has a switch,
 "Name the apps in notifications". Off, a notification says how many apps and
 never which.
 
+The Update and Update all buttons on a notification about updates start the
+same install as the buttons in Tern, through every check above. So do the
+widget's Update all button and the launcher shortcut of that name. The tile and
+the widget's Check button only check.
+
 ## Links, shares and imports
 
 A link or a shared text fills in the Add screen and nothing more. `obtainium://`
@@ -202,6 +249,13 @@ an import is stored as "tell me" even when the file asked for more, because a
 file can come from anyone. That is for the user of the device to switch on,
 app by app.
 
+An export may carry settings, and an import may set them, from a list kept in
+one place: the look of the list, notifications, when to check, and the defaults
+for new apps. What reaches past the device or decides how it is protected is not
+on that list, either way: tokens, the proxy, the installer, the folder of the
+kept export, the file filter for every app, and older versions over newer ones.
+Obtainium's settings are read through the same list, under Tern's names.
+
 ## Text from servers
 
 Names, authors, descriptions, versions, release titles, file names and the
@@ -213,8 +267,9 @@ import file, to the label of an installed app and to the words of a failed
 check. Without that, a name can be made to look like another.
 
 Release notes are cleaned the same way, keeping their line breaks, and then
-parsed into a small block model and drawn by the app. There is
-no web view. Links open in the browser after their full address has been shown.
+parsed into a small block model and drawn by the app. So are an app's notes, and
+the project page, a README asked of the forge's API only when the person opens
+it, with its HTML taken out first. There is no web view. Links open in the browser after their full address has been shown.
 Patterns written by the user or carried in an import are matched under a
 deadline.
 

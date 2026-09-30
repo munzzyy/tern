@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.InputMode
+import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.hasText
@@ -45,7 +48,15 @@ class ChipLinesRemoteTest {
     private fun chipLines() {
         compose.host(television = true) {
             val start = remember { FocusRequester() }
-            LaunchedEffect(Unit) { start.requestFocus() }
+            val input = LocalInputModeManager.current
+            // On a phone focus takes only out of touch mode and not on the first frame; Tern's screens land it the same way.
+            LaunchedEffect(Unit) {
+                input.requestInputMode(InputMode.Keyboard)
+                repeat(30) {
+                    withFrameNanos {}
+                    if (start.requestFocus()) return@LaunchedEffect
+                }
+            }
             // What stands beside the chips and further down, like the example on the Look page, must not catch right at the end of a line.
             Row(verticalAlignment = Alignment.Bottom) {
                 Column(Modifier.width(320.dp)) {

@@ -21,6 +21,9 @@ object Scheduler {
     const val EXTRA_ATTEMPT = "attempt"
     const val EXTRA_APPS = "apps"
     private const val MINUTE_MS = 60L * 1000
+
+    /** The waiting job runs no sooner than this after it is set, so it can never go round in a loop. */
+    const val WAITING_LATENCY_MS = 15 * MINUTE_MS
     private const val TAG = "TernScheduler"
 
     fun apply(context: Context, settings: Settings): Boolean {
@@ -45,10 +48,14 @@ object Scheduler {
 
     fun isScheduled(context: Context): Boolean = context.getSystemService(JobScheduler::class.java).getPendingJob(JOB_ID) != null
 
-    /** Runs the check again, and installs what waited, as soon as the network and the charger are what the settings ask for. */
+    /**
+     * Installs what waited, from what the last check found, once the network and the charger are
+     * what the settings ask for. It checks nothing again but what an app asks to have checked first.
+     */
     fun waitForInstalls(context: Context, settings: Settings) {
         val job = JobInfo.Builder(WAITING_JOB_ID, ComponentName(context, CheckJobService::class.java))
             .setPersisted(true)
+            .setMinimumLatency(WAITING_LATENCY_MS)
             .setRequiredNetworkType(installNetwork(settings))
             .setRequiresCharging(settings.onlyWhileCharging)
             .setRequiresBatteryNotLow(true)
@@ -76,6 +83,17 @@ object Scheduler {
 
     /** The network the waiting job waits for. */
     fun installNetwork(settings: Settings): Int = if (settings.onlyOnUnmetered) JobInfo.NETWORK_TYPE_UNMETERED else JobInfo.NETWORK_TYPE_ANY
+
+    /**
+     * Whether a run installs now. The waiting job runs only once JobScheduler found the network
+     * and the charger the settings ask for, so it takes that as settled; asking the device again
+     * could get another answer (a charger that paused at 80 %) and hold the installs once more.
+     */
+    fun installsNow(settings: Settings, waitingJob: Boolean, unmetered: () -> Boolean, charging: () -> Boolean): Boolean =
+        settings.autoInstalls && (waitingJob || (!settings.onlyOnUnmetered || unmetered()) && (!settings.onlyWhileCharging || charging()))
+
+    /** Whether a run that held installs back sets the waiting job. The waiting job never sets itself again. */
+    fun armsWaiting(settings: Settings, waitingJob: Boolean, waited: Boolean): Boolean = !waitingJob && waited && settings.autoInstalls
 
     private fun same(a: JobInfo, b: JobInfo): Boolean =
         a.intervalMillis == b.intervalMillis && a.isPersisted == b.isPersisted && a.requiredNetwork == b.requiredNetwork &&

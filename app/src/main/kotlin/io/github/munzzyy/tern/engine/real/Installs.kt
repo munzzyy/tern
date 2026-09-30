@@ -574,15 +574,26 @@ internal class Installs(private val e: RealEngine) {
      * Checks [only] or every app the background looks at, and installs what may install by itself.
      * With [installsNow] false such updates wait, and the run says so. [cause] is what the log says started it.
      */
-    suspend fun runScheduled(settings: Settings, installsNow: Boolean = true, only: Set<String>? = null, cause: CheckCause = CheckCause.SCHEDULE): ScheduledRun {
+    /** [check] false installs from what the last check found, as the waiting job does. */
+    suspend fun runScheduled(
+        settings: Settings,
+        installsNow: Boolean = true,
+        only: Set<String>? = null,
+        cause: CheckCause = CheckCause.SCHEDULE,
+        check: Boolean = true,
+    ): ScheduledRun {
         val targets = e.stored.values
             .filter { checkedInTheBackground(it.config) && e.inWholeListCheck(it.config) && (only == null || it.config.id in only) }
             .map { it.config.id }
-        if (settings.notifyChecking && targets.isNotEmpty()) e.notifier.checking(targets.size)
-        val checked = try {
-            e.checks.run(targets, cause)
-        } finally {
-            e.notifier.doneChecking()
+        val checked: List<CheckOutcome> = if (!check) {
+            emptyList()
+        } else {
+            if (settings.notifyChecking && targets.isNotEmpty()) e.notifier.checking(targets.size)
+            try {
+                e.checks.run(targets, cause)
+            } finally {
+                e.notifier.doneChecking()
+            }
         }
         val installed = ArrayList<Installed>()
         val failed = ArrayList<String>()

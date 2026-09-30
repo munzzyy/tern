@@ -827,12 +827,22 @@ class RealEngine(
         }
         _lastRunProblem.value = null
         val settings = _settings.value
-        val installsNow = settings.autoInstalls &&
-            (!settings.onlyOnUnmetered || device.onUnmeteredNetwork()) &&
-            (!settings.onlyWhileCharging || device.isCharging())
+        val installsNow = Scheduler.installsNow(settings, waitingJob = false, device::onUnmeteredNetwork, device::isCharging)
         val run = installs.runScheduled(settings, installsNow, only, cause)
-        if (run.waited && settings.autoInstalls) Scheduler.waitForInstalls(context, settings)
+        if (Scheduler.armsWaiting(settings, waitingJob = false, waited = run.waited)) Scheduler.waitForInstalls(context, settings)
         retryDelay(run.failed, attempt, nowMs())?.let { (again, delay) -> Scheduler.retry(context, again, attempt + 1, delay) }
+    }
+
+    /** The waiting job: installs what the last check held back, without checking the list again or setting itself anew. */
+    suspend fun runWaitingInstalls() {
+        ready()
+        if (!_online.value) {
+            offline(null)
+            return
+        }
+        val settings = _settings.value
+        if (!Scheduler.installsNow(settings, waitingJob = true, device::onUnmeteredNetwork, device::isCharging)) return
+        installs.runScheduled(settings, installsNow = true, check = false)
     }
 
     /** Which of [failed] to check again and how long to wait first, or null for none. */

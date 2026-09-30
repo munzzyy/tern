@@ -271,6 +271,17 @@ package, version and certificate is `aapt2` and `apksigner` and not Tern.
 same code against GitHub, F-Droid, Codeberg and GitLab. It reads public data and
 sends no credentials.
 
+`bash tools/device-suite.sh <serial> -e live true -e class io.github.munzzyy.tern.enginetest.LiveSourcesTest`
+does the same on a device, through the real engine, with one real app from each
+of GitHub, GitLab, Codeberg, F-Droid, IzzyOnDroid, a web page, SourceForge,
+itch.io, Telegram, Neutron Code and the eight stores. It leaves out GitHub
+Actions, which needs a token, Jenkins, SourceHut, direct links and other F-Droid
+format repositories. Every request has to carry Tern's User-Agent, and a refused
+site, or a store while the stores are off, must not be asked anything. On an
+Android 16 phone emulator and an Android TV 14 emulator every source gave a
+listing. Where a store offers only ARM files that the emulator cannot run, Tern
+says there is no file for that device.
+
 `bash tools/device-suite.sh <serial>` runs the device tests on an emulator or a
 phone, after `./gradlew :app:assembleDebug :app:assembleDebugAndroidTest`. They
 install a test app through Tern, publish a new version, and check that the

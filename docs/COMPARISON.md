@@ -13,13 +13,15 @@ Android 16 emulator on 2026-09-29.
 
 | | Obtainium | Tern |
 |---|---|---|
-| Release APK, arm64 | 26,088,490 bytes (v1.6.17, `app-arm64-v8a-fdroid-release.apk`) | 5,072,017 bytes, all architectures, 29 languages |
+| Release APK, arm64 | 26,088,490 bytes (v1.6.17, `app-arm64-v8a-fdroid-release.apk`) | 6,937,650 bytes, all architectures, 29 languages |
 | Toolkit | Flutter | Kotlin and Jetpack Compose |
-| Cold start to first frame | not measured | 913 ms, the middle of five cold starts (`am start -W`, release build, on a host that was busy with other emulators) |
+| Cold start to first frame | not measured | 913 ms for 0.1.0, the middle of five cold starts (`am start -W`, release build, on a host that was busy with other emulators); not measured again since |
 
 Tern's APK carries one native library, a 10 KB path helper that comes with
 Compose, built for all four architectures. One file serves every device. The
-table of strings, which holds the translations, is 1.7 MB of the total.
+code is 3.9 MB of the total and the table of strings, which holds the
+translations, 2.9 MB; both are stored uncompressed, so that Android maps them
+instead of unpacking them.
 
 ## Whether an update exists
 

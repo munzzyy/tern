@@ -8,7 +8,7 @@
     <string name="journal_mark_warning">Ternからの警告</string>
     <string name="journal_mark_error">Ternからのエラー</string>
     <plurals name="journal_check_started">
-        <item quantity="other">%1$d 個のアプリの確認を開始しました。</item>
+        <item quantity="other">%1$d個のアプリの確認を開始しました。</item>
     </plurals>
     <string name="journal_check_started_one">%1$s の確認を開始しました。</string>
     <string name="journal_cause_asked">Ternで要求されました。</string>
@@ -25,14 +25,14 @@
     <string name="journal_cause_changed">そのアプリの設定が変更されました。</string>
     <string name="journal_cause_install">そのアプリはこれからインストールされるところで、先に確認されます。</string>
     <plurals name="journal_check_ended">
-        <item quantity="other">%1$d 個のアプリの確認が%2$s後に終了しました。</item>
+        <item quantity="other">%1$d個のアプリの確認が%2$s後に終了しました。</item>
     </plurals>
     <string name="journal_check_ended_one">%1$s の確認が%2$s後に終了しました。</string>
     <plurals name="journal_check_updates">
         <item quantity="other">%1$d件の更新が見つかりました。</item>
     </plurals>
     <plurals name="journal_check_failures">
-        <item quantity="other">%1$d 個のアプリを確認できませんでした。</item>
+        <item quantity="other">%1$d個のアプリを確認できませんでした。</item>
     </plurals>
     <string name="journal_check_stopped">確認が%1$s後に停止し、完了しませんでした。</string>
 </resources>

@@ -14,7 +14,7 @@ what it was handed: who signed the file, whether it is the app you asked for, an
 whether it matches the checksum the publisher gave. Only then does Android's
 installer see it.
 
-It is a native app of about 6 MB, with no analytics and no account. It talks to
+It is a native app of about 7 MB, with no analytics and no account. It talks to
 the sources you add and to nobody else. [PRIVACY.md](PRIVACY.md) says what
 leaves the device.
 

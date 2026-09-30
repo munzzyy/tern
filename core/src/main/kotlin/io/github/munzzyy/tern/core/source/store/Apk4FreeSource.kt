@@ -170,8 +170,8 @@ class Apk4FreeSource : Source {
         private val TAG = Regex("<[^>]*>")
         private val SPACES = Regex("\\s+")
 
-        // What Obtainium takes out of a title to leave the app's name.
-        private val BRACKETS = Regex("""\[.*?]|\{.*?}""")
+        // What Obtainium takes out of a title to leave the app's name. Android refuses a bare closing brace that Java takes.
+        private val BRACKETS = Regex("""\[.*?\]|\{.*?\}""")
         private val TYPE_WORDS = Regex("""\b(APK|MOD|XAPK|HACK)\b""", RegexOption.IGNORE_CASE)
         private val MOD_NOTES = Regex(
             """\((?:[^)]*?(?:Unlocked|Mod|Premium|Money|Menu|Full|Patched|Subscribed|AdFree|BG Play|Paid|Unlimited|God Mode)[^)]*?)\)""",

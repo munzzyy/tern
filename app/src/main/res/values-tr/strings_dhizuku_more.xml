@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">Cihaz sahibi olan Dhizuku üzerinden sormadan yükler ve günceller. Her dosya önce aynı denetimlerden geçer. Android bu durumda yükleyici olarak Dhizuku\'yu belirtir.</string>
+    <string name="installer_dhizuku_not_ready">Hazır değil, hazır olana kadar hiçbir şey yüklenmez</string>
+    <string name="installer_dhizuku_unsupported">Tern, Android\'in bu sürümünde Dhizuku üzerinden yükleyemez.</string>
+    <string name="installer_dhizuku_not_installed">Dhizuku yüklü değil. Yükleyin, cihaz sahibi yapın, sonra geri dönün.</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku cihaz sahibi değil. Dhizuku uygulamasında onu cihaz sahibi yapın, sonra geri dönün.</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku yanıt vermedi. Dhizuku uygulamasını açın, sonra geri dönün.</string>
+    <string name="installer_dhizuku_not_allowed">Tern henüz Dhizuku\'yu kullanamıyor. İzin istemek için buraya basın.</string>
+    <string name="dhizuku_failed_not_installed">Dhizuku yüklü değil.</string>
+    <string name="dhizuku_failed_not_owner">Dhizuku cihaz sahibi değil.</string>
+    <string name="dhizuku_failed_not_answering">Dhizuku yanıt vermedi.</string>
+    <string name="dhizuku_failed_not_allowed">Dhizuku, Tern\'ın onu kullanmasına izin vermiyor.</string>
+    <string name="install_signer_changed">Şu an yüklü olan uygulama, Tern\'ın denetlediği dosyayı imzalayandan farklı biri tarafından imzalanmış, bu yüzden yükleme geçerli sayılmaz.</string>
+</resources>

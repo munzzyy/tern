@@ -3,7 +3,7 @@
     <string name="action_share">Paylaş</string>
     <string name="action_release_page">Sürüm sayfasını aç</string>
     <string name="action_share_address">Adresi paylaş</string>
-    <string name="action_share_link">Uygulamayı Tern\'da açan bir bağlantı paylaş</string>
+    <string name="action_share_link">Uygulamayı Tern\'de açan bir bağlantı paylaş</string>
     <string name="action_app_info">Android\'de uygulama bilgisi</string>
     <string name="detail_last_checked">Son denetim: %1$s</string>
     <string name="state_favorite">Favori</string>
@@ -18,6 +18,6 @@
     <string name="project_page_read">Projenin sayfasını oku</string>
     <string name="project_page_effect">README dosyası, metin olarak gösterilir. Siz açana kadar kod platformundan hiçbir şey istenmez.</string>
     <string name="project_page_loading">Okunuyor…</string>
-    <string name="project_page_none">Projenin Tern\'ın okuyabileceği bir sayfası yok.</string>
+    <string name="project_page_none">Projenin Tern\'in okuyabileceği bir sayfası yok.</string>
     <string name="project_page_failed">Sayfa okunamadı. Tekrar denemek için dokunun.</string>
 </resources>

@@ -11,6 +11,6 @@
     <string name="dhizuku_failed_not_installed">Dhizuku yüklü değil.</string>
     <string name="dhizuku_failed_not_owner">Dhizuku cihaz sahibi değil.</string>
     <string name="dhizuku_failed_not_answering">Dhizuku yanıt vermedi.</string>
-    <string name="dhizuku_failed_not_allowed">Dhizuku, Tern\'ın onu kullanmasına izin vermiyor.</string>
-    <string name="install_signer_changed">Şu an yüklü olan uygulama, Tern\'ın denetlediği dosyayı imzalayandan farklı biri tarafından imzalanmış, bu yüzden yükleme geçerli sayılmaz.</string>
+    <string name="dhizuku_failed_not_allowed">Dhizuku, Tern\'in onu kullanmasına izin vermiyor.</string>
+    <string name="install_signer_changed">Şu an yüklü olan uygulama, Tern\'in denetlediği dosyayı imzalayandan farklı biri tarafından imzalanmış, bu yüzden yükleme geçerli sayılmaz.</string>
 </resources>

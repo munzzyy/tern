@@ -180,8 +180,8 @@
     <string name="signer_unknown">İmzalayan hakkında henüz hiçbir şey bilinmiyor. İndirildikten sonra denetlenir.</string>
     <string name="signer_first_seen">İlk yükleme: bu sertifika hatırlanacak</string>
     <string name="signer_first_seen_claimed">İlk yükleme: dosya bu sertifikayı iddia ediyor ve Android onayladığında hatırlanacak</string>
-    <string name="signer_matches_pin">Tern\'ın bu uygulama için tuttuğu sertifika ile imzalanmış</string>
-    <string name="signer_matches_pin_claimed">Dosya, Tern\'ın bu uygulama için tuttuğu sertifikayı iddia ediyor. Android yüklemeden önce bunu onaylar.</string>
+    <string name="signer_matches_pin">Tern\'in bu uygulama için tuttuğu sertifika ile imzalanmış</string>
+    <string name="signer_matches_pin_claimed">Dosya, Tern\'in bu uygulama için tuttuğu sertifikayı iddia ediyor. Android yüklemeden önce bunu onaylar.</string>
     <string name="signer_matches_installed">Yüklü uygulamanın geliştiricisi ile aynı kişi tarafından imzalanmış</string>
     <string name="signer_matches_installed_claimed">Dosya, yüklü uygulamayla aynı geliştiriciyi iddia ediyor. Android yüklemeden önce bunu onaylar.</string>
     <string name="signer_mismatch">Yüklü uygulamanın geliştiricisinden başka biri tarafından imzalanmış</string>
@@ -203,8 +203,8 @@
     <string name="advice_rate_limited">Kaynak kendisine ne sıklıkla sorulabileceğini sınırlıyor. Bu sunucu için kaydedilmiş bir erişim belirteci sınırı yükseltir.</string>
     <string name="advice_not_found">Proje taşınmış veya gizli hale getirilmiş olabilir. Bağlantının tarayıcıda hala açıldığını kontrol edin.</string>
     <string name="advice_auth">Kaynak erişim belirtecini reddetti. Onu Ayarlar\'daki erişim belirteçleri altında değiştirin.</string>
-    <string name="advice_parse">Kaynak, Tern\'ın okuyamadığı bir şeyle cevap verdi. Kendi taraflarında geçici bir arıza olabilir.</string>
-    <string name="advice_no_releases">Proje henüz Tern\'ın kullanabileceği bir sürüm yayınlamadı. Ön sürümleri açarsanız onlar da sayılır.</string>
+    <string name="advice_parse">Kaynak, Tern\'in okuyamadığı bir şeyle cevap verdi. Kendi taraflarında geçici bir arıza olabilir.</string>
+    <string name="advice_no_releases">Proje henüz Tern\'in kullanabileceği bir sürüm yayınlamadı. Ön sürümleri açarsanız onlar da sayılır.</string>
     <string name="advice_no_file">Dosyaların hiçbiri bu cihaza uymuyor. Dosya seçimi altından kendiniz birini seçin veya dahil etme ve atlama kurallarını değiştirin.</string>
     <string name="advice_checksum_mismatch">Dosya yayınlandıktan sonra değişmiş veya yolda hasar görmüş. Yüklemeyin. Daha sonra tekrar deneyin.</string>
     <string name="advice_signer_mismatch">Dosya, bu uygulama için sabitlenmiş sertifikadan farklı bir sertifika ile imzalanmış, bu yüzden Tern reddediyor. Geliştirici yeni bir anahtar duyurduysa, Gelişmiş altındaki sabitlenmiş sertifikayı değiştirin.</string>
@@ -330,7 +330,7 @@
     <string name="settings_keep_installers">İndirilen dosyaları sakla</string>
     <string name="settings_keep_installers_effect">Dosyalar yüklendikten sonra kalarak depolama alanı kullanır. Kapalıysa silinir.</string>
     <string name="settings_ownership">Tek güncelleyici ol</string>
-    <string name="settings_ownership_effect">Başka bir mağazanın değiştirememesi için Android\'den yalnızca Tern\'ın kendi yüklediği uygulamaları güncellemesine izin vermesini iste.</string>
+    <string name="settings_ownership_effect">Başka bir mağazanın değiştirememesi için Android\'den yalnızca Tern\'in kendi yüklediği uygulamaları güncellemesine izin vermesini iste.</string>
     <string name="settings_tokens">Erişim belirteçleri</string>
     <string name="settings_tokens_effect">Bir belirteç, hız sınırlarını yükseltir ve gizli projeleri açar. Yalnızca tam olarak kaydedildiği sunucuya gönderilir ve bir daha asla gösterilmez.</string>
     <string name="token_saved">Kaydedildi</string>
@@ -372,7 +372,7 @@
     </plurals>
     <string name="export_failed">Dışa aktarım dosyaya yazılamadı.</string>
     <string name="settings_obtainium_links">Obtainium bağlantılarını aç</string>
-    <string name="settings_obtainium_links_effect">Obtainium için tasarlanan bağlantılar Tern\'da açılır. Yine de her uygulamayı onaylarsınız.</string>
+    <string name="settings_obtainium_links_effect">Obtainium için tasarlanan bağlantılar Tern\'de açılır. Yine de her uygulamayı onaylarsınız.</string>
     <string name="settings_about">Hakkında</string>
     <string name="about_version">Sürüm</string>
     <string name="about_licence">Lisans</string>
@@ -433,7 +433,7 @@
     <string name="import_skip_no_file">Sürümlerindeki hiçbir şey bu cihaza yüklenemez.</string>
     <string name="import_skip_no_releases">Hiç sürüm yayınlamıyor.</string>
     <string name="import_skip_not_found">Tern bunu bulamadı.</string>
-    <string name="import_skip_rate_limited">GitHub, Tern\'dan beklemesini istedi. Bunları daha sonra tekrar deneyin.</string>
+    <string name="import_skip_rate_limited">GitHub, Tern\'den beklemesini istedi. Bunları daha sonra tekrar deneyin.</string>
     <string name="import_skip_network">Bağlantı başarısız oldu.</string>
     <string name="import_skip_other">Tern sürümlerini okuyamadı.</string>
     <string name="first_title">Tern</string>
@@ -444,8 +444,8 @@
     <string name="first_notify_denied">Bildirimler kapalı. Bunları daha sonra Ayarlar\'dan açabilirsiniz.</string>
     <string name="first_notify_allow">Bildirimlere izin ver</string>
     <string name="first_skip">Şimdi değil</string>
-    <string name="install_permission_title">Tern\'a uygulama yükleme izni verin</string>
+    <string name="install_permission_title">Tern\'e uygulama yükleme izni verin</string>
     <string name="install_permission_body">Android, bir uygulamanın başka bir uygulama yüklemesine izin vermeden önce bir kez sorar. Sonraki ekranda Tern için anahtarı açın ve geri dönün. Yükleme kendiliğinden devam eder.</string>
     <string name="install_permission_open">Ayarları aç</string>
-    <string name="install_permission_closes">Anahtarı açtığınızda Android\'in bu sürümü Tern\'ı kapatır. Ardından Tern\'ı tekrar açtığınızda yükleme devam eder.</string>
+    <string name="install_permission_closes">Anahtarı açtığınızda Android\'in bu sürümü Tern\'i kapatır. Ardından Tern\'i tekrar açtığınızda yükleme devam eder.</string>
 </resources>

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="setting_package_effect">Her dosya bu pakete ait olmalıdır ve bu adla yüklü olan uygulama, Tern\'ın baktığı uygulamadır. Boş bırakılırsa Tern adı uygulamanın dosyasından okur.</string>
+    <string name="setting_package_effect">Her dosya bu pakete ait olmalıdır ve bu adla yüklü olan uygulama, Tern\'in baktığı uygulamadır. Boş bırakılırsa Tern adı uygulamanın dosyasından okur.</string>
 </resources>

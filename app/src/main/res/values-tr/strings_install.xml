@@ -14,12 +14,12 @@
     <string name="installer_shizuku_not_running">Shizuku çalışmıyor. Shizuku uygulamasından başlatın, sonra geri dönün.</string>
     <string name="installer_shizuku_too_old">Shizuku\'nun bu sürümü Tern için çok eski. Shizuku\'yu güncelleyin.</string>
     <string name="installer_shizuku_not_allowed">Tern henüz Shizuku\'yu kullanamıyor. İzin istemek için buraya basın.</string>
-    <string name="installer_no_root">Tern\'ın root erişimi yok. Tekrar istemek için buraya basın.</string>
+    <string name="installer_no_root">Tern\'in root erişimi yok. Tekrar istemek için buraya basın.</string>
     <string name="installer_no_other_app">Hiçbir yükleyici uygulama seçilmedi veya seçilen artık yok.</string>
     <string name="installer_pick_app">Yükleyici uygulama</string>
     <string name="installer_pick_app_none">Hiçbiri seçilmedi</string>
     <string name="installer_no_apps">Bu cihazda başka bir yükleyici uygulama yok.</string>
     <string name="installer_play">Uygulamaları Google Play\'in yüklediğini bildir</string>
     <string name="installer_play_effect">Bazı uygulamalar yalnızca Google Play\'in kendilerini yüklediğine inandıklarında çalışır. Bu durumda Tern artık yükleyicileri olarak görünmez.</string>
-    <string name="install_other_app_signer">Yükleyici uygulama, Tern\'ın denetlediği dosyadan farklı biri tarafından imzalanmış bir şey yükledi, bu yüzden yükleme geçerli sayılmaz.</string>
+    <string name="install_other_app_signer">Yükleyici uygulama, Tern\'in denetlediği dosyadan farklı biri tarafından imzalanmış bir şey yükledi, bu yüzden yükleme geçerli sayılmaz.</string>
 </resources>

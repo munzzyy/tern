@@ -1,2 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="journal_section">Etkinlik günlüğü</string>
+    <string name="journal_keep_own">Tern\'in kendi iletilerini günlükte sakla</string>
+    <string name="journal_keep_own_effect">Tern uyarıları ve hataları, ayrıca her denetimin ne zaman başlayıp bittiği. Parola veya belirteç olabilecek her şey dışarıda bırakılır ve günlük, siz paylaşmadıkça bu cihazda kalır.</string>
+    <string name="journal_filter_own">Tern iletileri</string>
+    <string name="journal_mark_note">Tern notu</string>
+    <string name="journal_mark_warning">Tern uyarısı</string>
+    <string name="journal_mark_error">Tern hatası</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">%1$d uygulamanın denetimi başladı.</item>
+        <item quantity="other">%1$d uygulamanın denetimi başladı.</item>
+    </plurals>
+    <string name="journal_check_started_one">%1$s denetimi başladı.</string>
+    <string name="journal_cause_asked">Tern uygulamasında istendi.</string>
+    <string name="journal_cause_opening">Tern açıldı.</string>
+    <string name="journal_cause_page">Uygulamanın sayfası açıldı.</string>
+    <string name="journal_cause_link">Denetimi bir bağlantı istedi.</string>
+    <string name="journal_cause_shortcut">Denetimi bir kısayol istedi.</string>
+    <string name="journal_cause_widget">Denetimi widget istedi.</string>
+    <string name="journal_cause_tile">Denetimi Hızlı Ayarlar kutusu istedi.</string>
+    <string name="journal_cause_schedule">Denetimi zamanlama başlattı.</string>
+    <string name="journal_cause_retry">Son denetimin başarısız olduğu yerlerde tekrar dener.</string>
+    <string name="journal_cause_added">Uygulama az önce eklendi.</string>
+    <string name="journal_cause_imported">Uygulamalar az önce içe aktarıldı.</string>
+    <string name="journal_cause_changed">Uygulamanın ayarları değişti.</string>
+    <string name="journal_cause_install">Uygulama yüklenmek üzere ve önce denetleniyor.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">%1$d uygulamanın denetimi %2$s sonra bitti.</item>
+        <item quantity="other">%1$d uygulamanın denetimi %2$s sonra bitti.</item>
+    </plurals>
+    <string name="journal_check_ended_one">%1$s denetimi %2$s sonra bitti.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">%1$d güncelleme buldu.</item>
+        <item quantity="other">%1$d güncelleme buldu.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d uygulama denetlenemedi.</item>
+        <item quantity="other">%1$d uygulama denetlenemedi.</item>
+    </plurals>
+    <string name="journal_check_stopped">Denetim, %1$s sonra bitmeden durdu.</string>
+</resources>

@@ -32,7 +32,7 @@
     <string name="density_minimal">Minimal</string>
     <string name="search_in">Şurada ara</string>
     <string name="activity_share">Etkinliği paylaş</string>
-    <string name="sources_title">Tern\'ın okuyabildiği kaynaklar</string>
+    <string name="sources_title">Tern\'in okuyabildiği kaynaklar</string>
     <string name="sources_effect">Kod platformları, depolar, mağazalar ve web sayfaları ve bunlardan hangilerinde arama yapılabildiği.</string>
     <string name="sources_forges">Kod platformları</string>
     <string name="sources_repositories">Depolar</string>
@@ -46,12 +46,12 @@
     <string name="sources_track_only">yalnızca izleme</string>
     <string name="sources_self_hosted">Kendi sunucularında çalışan GitLab, Forgejo, Gitea ve Jenkins adreslerinden tanınır.</string>
     <string name="shared_configs_title">Obtainium kullanıcılarının paylaştığı yapılandırmalar</string>
-    <string name="shared_configs_effect">Uygulamalar için hazır ayarlar içeren bir site. Ayarlar\'da Obtainium bağlantılarını aç seçeneği açıkken bağlantıları Tern\'da açılır.</string>
+    <string name="shared_configs_effect">Uygulamalar için hazır ayarlar içeren bir site. Ayarlar\'da Obtainium bağlantılarını aç seçeneği açıkken bağlantıları Tern\'de açılır.</string>
     <string name="engine_inner_filter_nothing">Arşivlerin içindeki dosyalar için filtre, bu arşivdeki APK\'lerin hiçbiriyle eşleşmiyor.</string>
     <string name="preview_republished">%1$s, geliştiricilerin başka yerde yayınladıklarını yeniden sunar. Tern geliştiricinin sertifikasını öğrendiğinde bu dosyaları o sertifikaya tabi tutar, bu yüzden mümkünse bir sertifika sabitleyin veya önce geliştiriciden yükleyin.</string>
     <string name="preview_modified">%1$s, geliştiricilerinden başka biri tarafından değiştirilmiş uygulamalar sunar. Bunlar, onları değiştiren kişi tarafından imzalanır ve Tern neyin değiştirildiğini anlayamaz.</string>
-    <string name="about_track_tern">Tern\'ın kendisini güncel tut</string>
-    <string name="about_track_tern_effect">Tern\'ın kendi sürümlerini listeye ekler, herhangi bir uygulama gibi denetlenir ve doğrulanır.</string>
+    <string name="about_track_tern">Tern\'in kendisini güncel tut</string>
+    <string name="about_track_tern_effect">Tern\'in kendi sürümlerini listeye ekler, herhangi bir uygulama gibi denetlenir ve doğrulanır.</string>
     <string name="engine_channel_tracked">İzlenen uygulamaların yeni sürümleri</string>
     <string name="engine_channel_checking">Denetleniyor</string>
     <string name="engine_notify_tracked_one">%1$s için yeni sürüm</string>

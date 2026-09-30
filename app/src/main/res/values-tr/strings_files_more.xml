@@ -22,8 +22,8 @@
     <string name="files_problems_title">Ne ters gitti</string>
     <string name="files_problems_none">Bu uygulamaların hiçbirinde şu an sorun yok.</string>
     <string name="files_setting_verifier">Yeni uygulamaları önce Verified Apps uygulamasına göster</string>
-    <string name="files_setting_verifier_effect">Bir uygulama ilk kez yüklenmeden önce, denetlenen dosyası ikinci bir bakış için Verified Apps veya AppVerifier uygulamalarından yüklü olana gönderilir. Tern\'a döndüğünüzde yükleme devam eder.</string>
+    <string name="files_setting_verifier_effect">Bir uygulama ilk kez yüklenmeden önce, denetlenen dosyası ikinci bir bakış için Verified Apps veya AppVerifier uygulamalarından yüklü olana gönderilir. Tern\'e döndüğünüzde yükleme devam eder.</string>
     <string name="files_verifier_about">Verified Apps hakkında</string>
-    <string name="files_verifier_card_effect">%1$s ayrı bir uygulamadır. Bu uygulamayı, Tern\'ın onu tabi tuttuğu sertifikayla ve bildiği uygulamalardan oluşan kendi listesiyle karşılaştırır.</string>
+    <string name="files_verifier_card_effect">%1$s ayrı bir uygulamadır. Bu uygulamayı, Tern\'in onu tabi tuttuğu sertifikayla ve bildiği uygulamalardan oluşan kendi listesiyle karşılaştırır.</string>
     <string name="files_verifier_card_action">%1$s ile denetle</string>
 </resources>

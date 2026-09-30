@@ -24,7 +24,7 @@
     <string name="github_proxy_effect">GitHub\'a giden her istek, hepsini gören bu sunucuya gider. Üzerinden hiçbir belirteç gönderilmez, bu yüzden gizli projeler ve GitHub Actions bu yolla izlenemez.</string>
     <string name="github_proxy_host">Hubproxy sunucusu</string>
     <string name="github_proxy_help">Yalnızca bir sunucu adı, örneğin gh-proxy.com. Tern ona HTTPS üzerinden ulaşır.</string>
-    <string name="github_proxy_invalid">Bu, Tern\'ın kullanabileceği bir sunucu adı değil</string>
+    <string name="github_proxy_invalid">Bu, Tern\'in kullanabileceği bir sunucu adı değil</string>
     <string name="github_proxy_in_use">GitHub istekleri %1$s üzerinden geçiyor</string>
     <string name="github_proxy_remove">Hubproxy kullanmayı bırak</string>
 </resources>

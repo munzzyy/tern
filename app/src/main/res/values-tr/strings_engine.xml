@@ -5,11 +5,11 @@
     <string name="engine_download_failed_plain">İndirme başarısız oldu. Bağlantıyı kontrol edip tekrar deneyin.</string>
     <string name="engine_server_status">Sunucu, dosyayı göndermek yerine %1$d yanıtını verdi.</string>
     <string name="engine_encoded_download">Sunucu dosyayı %1$s kodlanmış olarak gönderdi, bu yüzden baytları denetlenemez.</string>
-    <string name="engine_file_too_large">Dosya, Tern\'ın reddettiği sınır olan 4 GiB\'den daha büyük.</string>
+    <string name="engine_file_too_large">Dosya, Tern\'in reddettiği sınır olan 4 GiB\'den daha büyük.</string>
     <string name="engine_no_space">Yeterli boş yer yok: bu %1$s gerektiriyor ve %2$s boş yer var.</string>
     <string name="engine_download_cut">İndirme, %2$s içinden %1$s inmişken durdu. Devam etmek için tekrar deneyin.</string>
     <string name="engine_checksum_mismatch">Dosya, yayıncının verdiği sağlama toplamıyla eşleşmediği için silindi. Hasar görmüş veya değiştirilmiş olabilir.</string>
-    <string name="engine_not_an_apk">Bu dosya bir APK veya Tern\'ın okuyabileceği bir arşiv değil (%1$s).</string>
+    <string name="engine_not_an_apk">Bu dosya bir APK veya Tern\'in okuyabileceği bir arşiv değil (%1$s).</string>
     <string name="engine_archive_no_apk">Arşiv hiçbir APK içermiyor.</string>
     <string name="engine_archive_no_base">Arşivde bölünmüş APK\'ler var ancak temel APK yok.</string>
     <string name="engine_unreadable_file">Dosya okunamadı: %1$s</string>
@@ -29,7 +29,7 @@
     <string name="engine_check_network">Kaynağa ulaşılamadı: %1$s</string>
     <string name="engine_check_not_found">Kaynağın artık bu adreste hiçbir şeyi yok: %1$s</string>
     <string name="engine_check_auth">Kaynak isteği reddetti. Ayarlardan bu site için belirteci ekleyin veya kontrol edin. (%1$s)</string>
-    <string name="engine_check_rate_limited">Kaynak, Tern\'dan beklemesini istedi. %1$s öncesinde tekrar sorulmayacak.</string>
+    <string name="engine_check_rate_limited">Kaynak, Tern\'den beklemesini istedi. %1$s öncesinde tekrar sorulmayacak.</string>
     <string name="engine_check_parse">Kaynaktan gelen cevap okunamadı: %1$s</string>
     <string name="engine_check_unsupported">Tern bu kaynağı desteklemiyor: %1$s</string>
     <string name="engine_check_no_releases">Kaynağın henüz sürümü yok.</string>

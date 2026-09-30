@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="install_archive_zstd_unsupported">Bu arşiv, Tern\'ın açamadığı zstd ile sıkıştırılmış. Bu sürümün .zip veya .tar dosyasını ya da gzip, bzip2 veya xz ile sıkıştırılmış bir dosyasını seçin.</string>
+    <string name="install_archive_zstd_unsupported">Bu arşiv, Tern\'in açamadığı zstd ile sıkıştırılmış. Bu sürümün .zip veya .tar dosyasını ya da gzip, bzip2 veya xz ile sıkıştırılmış bir dosyasını seçin.</string>
     <string name="install_notify_bytes">%1$s</string>
     <string name="install_notify_bytes_of">%1$s / %2$s</string>
     <string name="install_setting_one_download">Aynı anda tek indirme</string>

@@ -21,8 +21,8 @@
     <string name="suggest_tusky">Mastodon için bir istemci</string>
     <string name="suggest_organic_maps">Çevrimdışı çalışan haritalar ve navigasyon</string>
     <string name="suggest_osmand">Çevrimdışı haritalar, rota oluşturma ve iz kaydetme</string>
-    <string name="suggest_magpie">Şifreli bir olay günlüğü, Tern\'ın yazarından</string>
-    <string name="suggest_sepia">Fotoğraflardan gizli verileri sıyırır, Tern\'ın yazarından</string>
-    <string name="suggest_sweep">Bir takip yazılımı denetleyicisi, Tern\'ın yazarından</string>
-    <string name="suggest_starling">Özel konum paylaşımı, Tern\'ın yazarından</string>
+    <string name="suggest_magpie">Şifreli bir olay günlüğü, Tern\'in yazarından</string>
+    <string name="suggest_sepia">Fotoğraflardan gizli verileri sıyırır, Tern\'in yazarından</string>
+    <string name="suggest_sweep">Bir takip yazılımı denetleyicisi, Tern\'in yazarından</string>
+    <string name="suggest_starling">Özel konum paylaşımı, Tern\'in yazarından</string>
 </resources>

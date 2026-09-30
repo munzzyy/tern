@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dhizuku is the name of an app that holds the device owner role and shares it with the apps you allow. -->
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">Installs and updates without a prompt, through Dhizuku as the device owner. Every file passes the same checks first. Android then names Dhizuku as the installer.</string>
+    <string name="installer_dhizuku_not_ready">Not ready, nothing is installed until it is</string>
+    <string name="installer_dhizuku_unsupported">Tern cannot install through Dhizuku on this version of Android.</string>
+    <string name="installer_dhizuku_not_installed">Dhizuku is not installed. Install it and make it the device owner, then come back.</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku is not the device owner. Make it the device owner in the Dhizuku app, then come back.</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku did not answer. Open the Dhizuku app, then come back.</string>
+    <string name="installer_dhizuku_not_allowed">Tern may not use Dhizuku yet. Press here to ask.</string>
+    <!-- Shown after "The install failed:" when the install was to go through Dhizuku. -->
+    <string name="dhizuku_failed_not_installed">Dhizuku is not installed.</string>
+    <!-- Shown after "The install failed:" when the install was to go through Dhizuku. -->
+    <string name="dhizuku_failed_not_owner">Dhizuku is not the device owner.</string>
+    <!-- Shown after "The install failed:" when the install was to go through Dhizuku. -->
+    <string name="dhizuku_failed_not_answering">Dhizuku did not answer.</string>
+    <!-- Shown after "The install failed:" when the install was to go through Dhizuku. -->
+    <string name="dhizuku_failed_not_allowed">Dhizuku does not let Tern use it.</string>
+    <string name="install_signer_changed">The app now installed is signed by someone other than the file Tern checked, so the install does not count.</string>
+</resources>

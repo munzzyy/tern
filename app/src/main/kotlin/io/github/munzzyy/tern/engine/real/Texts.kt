@@ -205,6 +205,7 @@ class Texts(context: Context) : ImportTexts {
     fun notifyUpdatedTo(name: String, version: String) = s(R.string.files_notify_updated_to, name, ltr(version))
     fun notifyInstalledAt(name: String, version: String) = s(R.string.files_notify_installed_at, name, ltr(version))
     fun notifyProblemLine(names: String, reason: String) = s(R.string.files_notify_problem_line, names, reason)
+    fun installedSignerDiffers() = s(R.string.install_signer_changed)
 
     /** How a check began, for the log: of [app] by its name when it is one app, else of [count] apps, and what started it. */
     fun checkStarted(count: Int, app: String?, cause: CheckCause): String {

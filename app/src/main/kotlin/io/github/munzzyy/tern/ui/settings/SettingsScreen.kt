@@ -166,6 +166,9 @@ fun showsNotifications(television: Boolean): Boolean = !television
 /** Android lets an installer claim the updates of what it installed from version 14 on. */
 fun ownershipSupported(sdk: Int = Build.VERSION.SDK_INT): Boolean = sdk >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 
+/** Whether Tern can ask for update ownership with [mode]: not through Dhizuku, whose own package makes the session. */
+fun ownershipOffered(mode: InstallerMode, sdk: Int = Build.VERSION.SDK_INT): Boolean = ownershipSupported(sdk) && mode != InstallerMode.DHIZUKU
+
 private typealias Update = ((Settings) -> Settings) -> Unit
 
 @Composable
@@ -300,7 +303,7 @@ private fun NotificationsSection(s: Settings, update: Update) {
 private fun InstallingSection(s: Settings, vm: SettingsViewModel, update: Update) {
     SectionCard(title = stringResource(R.string.settings_installing)) {
         InstallerRows(s, update)
-        if (s.installer != InstallerMode.OTHER_APP) InstallPermissionRow()
+        if (asksAndroidToInstall(s.installer)) InstallPermissionRow()
         if (vm.canDowngrade || s.allowDowngrades) {
             SwitchRow(
                 title = stringResource(R.string.settings_allow_downgrades),
@@ -322,7 +325,7 @@ private fun InstallingSection(s: Settings, vm: SettingsViewModel, update: Update
             onChange = { v -> update { it.copy(oneDownloadAtATime = v) } },
         )
         VerifierRows(s.shareToVerifier) { v -> update { it.copy(shareToVerifier = v) } }
-        if (ownershipSupported()) {
+        if (ownershipOffered(s.installer)) {
             SwitchRow(
                 title = stringResource(R.string.settings_ownership),
                 summary = stringResource(R.string.settings_ownership_effect),
@@ -357,6 +360,7 @@ fun installerLabel(mode: InstallerMode): String = stringResource(
     when (mode) {
         InstallerMode.SYSTEM -> R.string.installer_system
         InstallerMode.SHIZUKU -> R.string.installer_shizuku
+        InstallerMode.DHIZUKU -> R.string.installer_dhizuku
         InstallerMode.ROOT -> R.string.installer_root
         InstallerMode.OTHER_APP -> R.string.installer_other_app
     },
@@ -367,6 +371,7 @@ private fun installerEffect(mode: InstallerMode): String = stringResource(
     when (mode) {
         InstallerMode.SYSTEM -> R.string.installer_system_effect
         InstallerMode.SHIZUKU -> R.string.installer_shizuku_effect
+        InstallerMode.DHIZUKU -> R.string.installer_dhizuku_effect
         InstallerMode.ROOT -> R.string.installer_root_effect
         InstallerMode.OTHER_APP -> R.string.installer_other_app_effect
     },
@@ -380,11 +385,22 @@ fun readinessWords(readiness: InstallerReadiness): Int? = when (readiness) {
     InstallerReadiness.SHIZUKU_NOT_ALLOWED -> R.string.installer_shizuku_not_allowed
     InstallerReadiness.NO_ROOT -> R.string.installer_no_root
     InstallerReadiness.NO_OTHER_APP -> R.string.installer_no_other_app
+    InstallerReadiness.DHIZUKU_UNSUPPORTED -> R.string.installer_dhizuku_unsupported
+    InstallerReadiness.DHIZUKU_NOT_INSTALLED -> R.string.installer_dhizuku_not_installed
+    InstallerReadiness.DHIZUKU_NOT_OWNER -> R.string.installer_dhizuku_not_owner
+    InstallerReadiness.DHIZUKU_NOT_ANSWERING -> R.string.installer_dhizuku_not_answering
+    InstallerReadiness.DHIZUKU_NOT_ALLOWED -> R.string.installer_dhizuku_not_allowed
 }
 
+/** What stands above those words: Dhizuku never hands an install to Android's installer, the others do until they are ready. */
+fun notReadyTitle(mode: InstallerMode): Int = if (mode == InstallerMode.DHIZUKU) R.string.installer_dhizuku_not_ready else R.string.installer_not_ready
+
+/** Whether Android's own permission to install matters with [mode]: not when another app or Dhizuku installs. */
+fun asksAndroidToInstall(mode: InstallerMode): Boolean = mode != InstallerMode.OTHER_APP && mode != InstallerMode.DHIZUKU
+
 /**
- * The installer, how it stands, and what it takes to use it. Shizuku and root install without a
- * prompt; another app always asks. Whichever it is, the file passed the same checks before.
+ * The installer, how it stands, and what it takes to use it. Shizuku, Dhizuku and root install
+ * without a prompt; another app always asks. Whichever it is, the file passed the same checks before.
  */
 @Composable
 private fun InstallerRows(s: Settings, update: Update) {
@@ -406,13 +422,14 @@ private fun InstallerRows(s: Settings, update: Update) {
     if (s.installer == InstallerMode.SYSTEM) return
     val problem = readinessWords(readiness)
     ActionRow(
-        title = stringResource(if (problem == null) R.string.installer_ready else R.string.installer_not_ready),
+        title = stringResource(if (problem == null) R.string.installer_ready else notReadyTitle(s.installer)),
         summary = problem?.let { stringResource(it) },
         trailing = if (problem == null) Glyphs.Check else Glyphs.Caution,
         iconTint = if (problem == null) status.verified.color else status.caution.color,
         onClick = {
             when (readiness) {
                 InstallerReadiness.SHIZUKU_NOT_ALLOWED -> if (!engine.askShizuku()) engine.recheckInstaller()
+                InstallerReadiness.DHIZUKU_NOT_ALLOWED -> if (!engine.askDhizuku()) engine.recheckInstaller()
                 else -> engine.recheckInstaller()
             }
         },
@@ -426,7 +443,8 @@ private fun InstallerRows(s: Settings, update: Update) {
             checked = s.playInstaller,
             onChange = { v -> update { it.copy(playInstaller = v) } },
         )
-        InstallerMode.SYSTEM -> Unit
+        // The session is Dhizuku's own, so Android names Dhizuku as the installer and nothing else can be asked for.
+        InstallerMode.SYSTEM, InstallerMode.DHIZUKU -> Unit
     }
 }
 

@@ -17,8 +17,9 @@ data class PendingInstall(
     val startedAtMs: Long,
     val waitingForUser: Boolean = false,
     /**
-     * SHA-256 of the certificates the gate verified in the file handed over. An installer that is
-     * not Android's own must end with an app signed by exactly these, or the install does not count.
+     * SHA-256 of the certificates the gate verified in the file handed over. The install must end
+     * with an app signed by exactly these, or it does not count: another installer app or Dhizuku
+     * could change what it was given.
      */
     val signers: List<String> = emptyList(),
     /** The addresses of the splits fetched beside the file at [assetUrl], whose kept copies go with it. */

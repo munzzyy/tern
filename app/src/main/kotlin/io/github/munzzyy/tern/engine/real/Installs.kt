@@ -447,13 +447,11 @@ internal class Installs(private val e: RealEngine) {
             failed(appId, Problem(ProblemKind.INSTALL_FAILED, e.texts.installVersionMismatch(pending.versionCode, now?.app?.versionCode ?: 0)))
             return
         }
-        if (byOtherApp(pending)) {
-            e.installer.abandon(pending.sessionId)
-            // Another app installed something; it counts only if it is what the gate passed.
-            if (pending.signers.isNotEmpty() && now.app.signers.toSet() != pending.signers.toSet()) {
-                failed(appId, Problem(ProblemKind.SIGNER_MISMATCH, e.texts.otherAppSigner()))
-                return
-            }
+        if (byOtherApp(pending)) e.installer.abandon(pending.sessionId)
+        // It counts only if it is what the gate passed: another app, or Dhizuku, holds the session it installed from and could change it.
+        if (pending.signers.isNotEmpty() && now.app.signers.toSet() != pending.signers.toSet()) {
+            failed(appId, Problem(ProblemKind.SIGNER_MISMATCH, if (byOtherApp(pending)) e.texts.otherAppSigner() else e.texts.installedSignerDiffers()))
+            return
         }
         val record = InstallRecord(pending.releaseId, pending.version, now.app.versionCode, pending.fileSha256, pending.fileSize)
         e.saveApp(appId) { s ->

@@ -16,6 +16,16 @@
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
+    <!-- Dhizuku lists the apps that name this among those it can let in. It grants nothing by itself. -->
+    <uses-permission android:name="com.rosan.dhizuku.permission.API" />
+
+    <!-- Dhizuku's provider and the way to it, as Dhizuku's own library declares them. -->
+    <queries>
+        <provider android:authorities="com.rosan.dhizuku.server.provider" />
+        <intent>
+            <action android:name="com.rosan.dhizuku.server.provider" />
+        </intent>
+    </queries>
 
     <uses-feature
         android:name="android.hardware.touchscreen"

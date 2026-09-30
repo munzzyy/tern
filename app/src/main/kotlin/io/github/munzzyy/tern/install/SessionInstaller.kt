@@ -47,32 +47,15 @@ class SessionInstaller(private val context: Context) : Installer {
 
     override fun prepare(packageName: String, apks: List<File>, claimUpdateOwnership: Boolean): Int {
         require(apks.isNotEmpty())
-        val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL).apply {
-            setAppPackageName(packageName)
-            setSize(apks.sumOf { it.length() })
-            setInstallReason(PackageManager.INSTALL_REASON_USER)
-            if (Build.VERSION.SDK_INT >= 33) setPackageSource(PackageInstaller.PACKAGE_SOURCE_STORE)
-            if (Build.VERSION.SDK_INT >= 31) setRequireUserAction(PackageInstaller.SessionParams.USER_ACTION_NOT_REQUIRED)
-            if (Build.VERSION.SDK_INT >= 34 && claimUpdateOwnership) setRequestUpdateOwnership(true)
-        }
-        val sessionId = installer.createSession(params)
+        val sessionId = installer.createSession(sessionParams(packageName, apks.sumOf { it.length() }, claimUpdateOwnership))
         guarded(sessionId) {
-            installer.openSession(sessionId).use { session ->
-                apks.forEachIndexed { i, apk ->
-                    FileInputStream(apk).use { input ->
-                        session.openWrite("apk-$i.apk", 0, apk.length()).use { out ->
-                            input.copyTo(out, 64 * 1024)
-                            session.fsync(out)
-                        }
-                    }
-                }
-            }
+            installer.openSession(sessionId).use { it.writeAll(apks) }
         }
         return sessionId
     }
 
     override fun commit(appId: String, sessionId: Int) = guarded(sessionId) {
-        installer.openSession(sessionId).use { it.commit(resultIntent(appId, sessionId).intentSender) }
+        installer.openSession(sessionId).use { it.commit(installResult(context, appId, sessionId).intentSender) }
     }
 
     override fun abandon(sessionId: Int) {
@@ -110,15 +93,39 @@ class SessionInstaller(private val context: Context) : Installer {
         }
     }
 
-    private fun resultIntent(appId: String, sessionId: Int): PendingIntent {
-        val intent = Intent(context, InstallReceiver::class.java)
-            .setAction(InstallReceiver.ACTION)
-            .setPackage(context.packageName)
-            .putExtra(InstallReceiver.EXTRA_APP_ID, appId)
-        return PendingIntent.getBroadcast(context, sessionId, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE)
-    }
-
     private companion object {
         const val TAG = "TernInstall"
     }
+}
+
+/** What every session of Tern's asks of Android: one app, the size of its files, and the person as the reason. */
+internal fun sessionParams(packageName: String, size: Long, claimUpdateOwnership: Boolean): PackageInstaller.SessionParams =
+    PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL).apply {
+        setAppPackageName(packageName)
+        setSize(size)
+        setInstallReason(PackageManager.INSTALL_REASON_USER)
+        if (Build.VERSION.SDK_INT >= 33) setPackageSource(PackageInstaller.PACKAGE_SOURCE_STORE)
+        if (Build.VERSION.SDK_INT >= 31) setRequireUserAction(PackageInstaller.SessionParams.USER_ACTION_NOT_REQUIRED)
+        if (Build.VERSION.SDK_INT >= 34 && claimUpdateOwnership) setRequestUpdateOwnership(true)
+    }
+
+/** Writes [apks] into the session unchanged, each one whole and synced, in the order the gate passed them. */
+internal fun PackageInstaller.Session.writeAll(apks: List<File>) {
+    apks.forEachIndexed { i, apk ->
+        FileInputStream(apk).use { input ->
+            openWrite("apk-$i.apk", 0, apk.length()).use { out ->
+                input.copyTo(out, 64 * 1024)
+                fsync(out)
+            }
+        }
+    }
+}
+
+/** Where Android sends how [sessionId] ended: to [InstallReceiver], with [appId], and to nothing else. */
+internal fun installResult(context: Context, appId: String, sessionId: Int): PendingIntent {
+    val intent = Intent(context, InstallReceiver::class.java)
+        .setAction(InstallReceiver.ACTION)
+        .setPackage(context.packageName)
+        .putExtra(InstallReceiver.EXTRA_APP_ID, appId)
+    return PendingIntent.getBroadcast(context, sessionId, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE)
 }

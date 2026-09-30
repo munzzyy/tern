@@ -243,6 +243,9 @@ enum class InstallerMode {
     /** pm, run through Shizuku or Sui: installs and updates without a prompt. */
     SHIZUKU,
 
+    /** Android's installer, called through Dhizuku as the device owner: installs and updates without a prompt. Never hands an install to another. */
+    DHIZUKU,
+
     /** pm, run through su: installs and updates without a prompt. */
     ROOT,
 
@@ -260,6 +263,19 @@ enum class InstallerReadiness {
 
     /** "Another app" is chosen and no app is picked, or the one picked is gone. */
     NO_OTHER_APP,
+
+    /** This Android lacks a part of its installer that Tern reaches through Dhizuku. */
+    DHIZUKU_UNSUPPORTED,
+    DHIZUKU_NOT_INSTALLED,
+
+    /** Dhizuku is installed, and neither the device owner nor a profile owner that may install without asking. */
+    DHIZUKU_NOT_OWNER,
+
+    /** Dhizuku is the owner and did not hand over its binder, or the binder did not answer. */
+    DHIZUKU_NOT_ANSWERING,
+
+    /** Dhizuku answers, and Tern has not been allowed to use it. */
+    DHIZUKU_NOT_ALLOWED,
 }
 
 /**

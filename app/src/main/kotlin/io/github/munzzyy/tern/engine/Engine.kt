@@ -101,6 +101,9 @@ interface Engine {
     /** Asks Shizuku to let Tern use it; the answer arrives through [installerReadiness]. False when Shizuku cannot be asked. */
     fun askShizuku(): Boolean
 
+    /** Opens Dhizuku's own question whether Tern may use it; the answer arrives through [installerReadiness]. False when there is no Dhizuku to ask. */
+    fun askDhizuku(): Boolean
+
     /** Apps on this device that take an APK to install, for [InstallerMode.OTHER_APP]; an app with several ways in has a choice for each. */
     fun installerChoices(): List<InstallerChoice>
 

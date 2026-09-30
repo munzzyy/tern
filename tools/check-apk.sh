@@ -22,6 +22,7 @@ android.permission.RECEIVE_BOOT_COMPLETED
 android.permission.REQUEST_DELETE_PACKAGES
 android.permission.REQUEST_INSTALL_PACKAGES
 android.permission.UPDATE_PACKAGES_WITHOUT_USER_ACTION
+com.rosan.dhizuku.permission.API
 moe.shizuku.manager.permission.API_V23
 LIST
 )

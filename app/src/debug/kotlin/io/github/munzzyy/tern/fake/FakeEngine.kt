@@ -392,11 +392,12 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     private val _installerReadiness = MutableStateFlow(InstallerReadiness.READY)
     override val installerReadiness: StateFlow<InstallerReadiness> = _installerReadiness.asStateFlow()
 
-    /** The stand-in has Shizuku running and waiting for a yes, root refused, and one installer app. */
+    /** The stand-in has Shizuku and Dhizuku running and waiting for a yes, root refused, and one installer app. */
     override fun recheckInstaller() {
         _installerReadiness.value = when (_settings.value.installer) {
             InstallerMode.SYSTEM -> InstallerReadiness.READY
             InstallerMode.SHIZUKU -> if (shizukuAllowed) InstallerReadiness.READY else InstallerReadiness.SHIZUKU_NOT_ALLOWED
+            InstallerMode.DHIZUKU -> if (dhizukuAllowed) InstallerReadiness.READY else InstallerReadiness.DHIZUKU_NOT_ALLOWED
             InstallerMode.ROOT -> InstallerReadiness.NO_ROOT
             InstallerMode.OTHER_APP ->
                 if (_settings.value.otherInstaller == null) InstallerReadiness.NO_OTHER_APP else InstallerReadiness.READY
@@ -407,6 +408,14 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override fun askShizuku(): Boolean {
         shizukuAllowed = true
+        recheckInstaller()
+        return true
+    }
+
+    @Volatile private var dhizukuAllowed = false
+
+    override fun askDhizuku(): Boolean {
+        dhizukuAllowed = true
         recheckInstaller()
         return true
     }

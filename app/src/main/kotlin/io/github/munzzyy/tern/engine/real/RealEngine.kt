@@ -551,6 +551,8 @@ class RealEngine(
 
     override fun askShizuku(): Boolean = installers.askShizuku()
 
+    override fun askDhizuku(): Boolean = installers.askDhizuku()
+
     override fun installerChoices(): List<InstallerChoice> = installers.choices()
 
     override suspend fun installerIcon(choice: InstallerChoice, sizePx: Int): Bitmap? = withContext(Dispatchers.IO) {

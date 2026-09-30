@@ -175,7 +175,6 @@ class SettingsRowsScreenTest {
         val shown = compose.textCount("Be the only updater")
         assertEquals(if (Build.VERSION.SDK_INT >= 34) 1 else 0, shown)
         assertEquals(0, compose.textCount("Needs Android 14 or later."))
-        val language = compose.textCount("Language")
-        assertTrue(language == if (Build.VERSION.SDK_INT >= 33) 1 else 0)
+        assertEquals("Tern offers its own language setting on every version", 1, compose.textCount("Language"))
     }
 }

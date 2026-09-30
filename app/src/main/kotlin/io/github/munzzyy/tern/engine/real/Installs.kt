@@ -37,8 +37,11 @@ import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runInterruptible
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 
@@ -62,7 +65,11 @@ internal class Installs(private val e: RealEngine) {
             e.userTransfers += appId
             e.setProgress(appId, Progress(Phase.QUEUED))
         }
-        val job = e.scope.launch { run(appId, releaseId, assetUrl) }
+        val self = e.stored[appId]?.config?.let(e::isSelf) == true
+        val job = e.scope.launch {
+            if (self) untilOthersDone(appId)
+            run(appId, releaseId, assetUrl)
+        }
         jobs[appId] = job
         job.invokeOnCompletion {
             jobs.remove(appId, job)
@@ -72,6 +79,23 @@ internal class Installs(private val e: RealEngine) {
         if (userStarted) TransferService.start(e.context)
         return job
     }
+
+    /**
+     * Tern's own update waits for every other install under way, one waiting for the person
+     * included: once it is in, Android restarts Tern and whatever still ran would stop. After ten
+     * minutes it goes ahead all the same.
+     */
+    private suspend fun untilOthersDone(appId: String) {
+        // Installs started together, as by Update all, have all begun by then.
+        delay(SETTLE_MS)
+        val until = e.nowMs() + SELF_WAIT_MS
+        while (e.progress.keys.any { it != appId } && e.nowMs() < until) delay(POLL_MS)
+    }
+
+    /** The one download at a time the settings may ask for; otherwise downloads run side by side. */
+    private val turn = Mutex()
+
+    internal suspend fun <T> inTurn(block: suspend () -> T): T = if (e.settings.value.oneDownloadAtATime) turn.withLock { block() } else block()
 
     fun cancel(appId: String) {
         jobs.remove(appId)?.cancel()
@@ -146,7 +170,7 @@ internal class Installs(private val e: RealEngine) {
             release = chosenRelease
             val chosenAsset = assetUrl?.let { url -> chosenRelease.assets.firstOrNull { it.url == url } }
                 ?: eval?.file?.asset?.takeIf { eval.latest?.id == chosenRelease.id }
-                ?: e.evaluator.rank(config, chosenRelease).firstOrNull()?.asset
+                ?: e.evaluator.bestFile(config, chosenRelease)
                 ?: throw StepFailure(ProblemKind.NO_FILE_FOR_DEVICE, e.texts.noFileForDevice(null))
             asset = chosenAsset
             val lower = chosenAsset.name.lowercase()
@@ -160,8 +184,10 @@ internal class Installs(private val e: RealEngine) {
             val sameHost = Urls.host(from.url) == Urls.host(chosenAsset.url)
             val authorization = if (chosenAsset.needsAuth && sameHost) e.tokens.tokenFor(Urls.host(from.url))?.let { "Bearer $it" } else null
             val key = Downloader.key(chosenRelease.id, chosenAsset.url)
-            val download = e.downloader.fetch(appId, key, from.url, authorization, from.headers) { done, total ->
-                e.setProgress(appId, Progress(Phase.DOWNLOADING, done, total ?: chosenAsset.size))
+            val download = inTurn {
+                e.downloader.fetch(appId, key, from.url, authorization, from.headers) { done, total ->
+                    e.setProgress(appId, Progress(Phase.DOWNLOADING, done, total ?: chosenAsset.size))
+                }
             }
             if (!download.reused) e.event(appId, EventKind.DOWNLOADED, e.texts.eventDownloaded(download.size))
 
@@ -356,6 +382,7 @@ internal class Installs(private val e: RealEngine) {
             )
         }
         e.event(appId, EventKind.INSTALLED, e.texts.eventInstalled(pending.version, now.app.versionCode))
+        e.notifier.installedUpdate(appId) { id -> e.stored[id]?.config?.shownName?.takeIf { e.evaluations[id]?.status == AppStatus.UPDATE_AVAILABLE } }
         if (!e.settings.value.keepInstallers) e.downloader.discard(appId, Downloader.key(pending.releaseId, pending.assetUrl))
         if (notify && e.settings.value.notifyInstalled) e.notifier.installed(listOfNotNull(e.stored[appId]?.config?.shownName))
     }
@@ -465,7 +492,7 @@ internal class Installs(private val e: RealEngine) {
         // Without the permission Android would ask from a notification and then call the install cancelled.
         val allowed = e.mayInstallUnattended()
         var waited = false
-        for (id in targets) {
+        for (id in selfLast(targets) { e.stored[it]?.config?.let(e::isSelf) == true }) {
             val config = e.stored[id]?.config ?: continue
             if (!installsByItself(config, allowed, e.evaluations[id], busy = e.progress.containsKey(id))) continue
             if (!installsNow) {
@@ -514,14 +541,21 @@ internal class Installs(private val e: RealEngine) {
         /** Which apps the background check looks at: all but those the user set to be left alone. */
         fun checkedInTheBackground(config: AppConfig): Boolean = config.updates != UpdateMode.MANUAL
 
+        /** [ids] in their order, but the one [isSelf] names last: Tern's own update restarts Tern. */
+        fun <T> selfLast(ids: List<T>, isSelf: (T) -> Boolean): List<T> = ids.sortedBy(isSelf)
+
+        private const val SETTLE_MS = 1000L
+        private const val SELF_WAIT_MS = 10 * 60 * 1000L
+        private const val POLL_MS = 1000L
+
         private const val TAG = "TernInstalls"
         private const val CONFIRM_INSTALL = "android.content.pm.action.CONFIRM_INSTALL"
         private const val DAY_MS = 24L * 60 * 60 * 1000
         private const val SUMS_LIMIT = 1024 * 1024
         private const val INSTALL_WAIT_MS = 3 * 60 * 1000L
 
-        /** Tar archives compressed in a way Android has no reader for; plain and gzipped ones are opened. */
-        private val UNOPENED_ARCHIVES = listOf(".tar.bz2", ".tbz2", ".tbz", ".tar.xz", ".txz", ".tar.zst")
+        /** Tar archives compressed with zstd, which neither Tern nor Obtainium reads; plain ones and gzip, bzip2 and xz are opened. */
+        private val UNOPENED_ARCHIVES = listOf(".tar.zst", ".tzst")
         private val GATE_KINDS = setOf(
             ProblemKind.CHECKSUM_MISMATCH, ProblemKind.SIGNER_MISMATCH, ProblemKind.PIN_MISMATCH, ProblemKind.PACKAGE_MISMATCH,
             ProblemKind.DOWNGRADE, ProblemKind.UNSUPPORTED, ProblemKind.NO_FILE_FOR_DEVICE, ProblemKind.PARSE,

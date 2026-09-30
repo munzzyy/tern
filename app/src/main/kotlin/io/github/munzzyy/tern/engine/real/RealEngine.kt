@@ -57,6 +57,7 @@ import io.github.munzzyy.tern.engine.ExportStatus
 import io.github.munzzyy.tern.engine.Handoff
 import io.github.munzzyy.tern.engine.HandoffEnd
 import io.github.munzzyy.tern.engine.OrbotState
+import io.github.munzzyy.tern.engine.Phase
 import io.github.munzzyy.tern.engine.ImportSummary
 import io.github.munzzyy.tern.engine.InstallerChoice
 import io.github.munzzyy.tern.engine.InstallerReadiness
@@ -453,12 +454,22 @@ class RealEngine(
     }
 
     override fun installAllUpdates() {
-        for (row in _apps.value) {
-            if (row.status == AppStatus.UPDATE_AVAILABLE && !row.config.trackOnly && row.progress == null) install(row.id)
-        }
+        val rows = _apps.value.filter { it.status == AppStatus.UPDATE_AVAILABLE && !it.config.trackOnly && it.progress == null }
+        // Tern's own update comes last, and waits for the others: once it is in, Android restarts Tern.
+        for (row in rows.sortedBy { isSelf(it.config) }) install(row.id)
     }
 
+    /** Whether [config] is Tern itself, which Android restarts once its update is installed. */
+    internal fun isSelf(config: AppConfig): Boolean = packageOf(config) == context.packageName
+
     override fun cancel(appId: String) = installs.cancel(appId)
+
+    /** Stops every download the person started that has not reached the installer yet, as the Cancel of its notification asks. */
+    fun cancelDownloads() {
+        for (id in userTransfers.toList()) {
+            if (progress[id]?.phase in CANCELLABLE) cancel(id)
+        }
+    }
 
     override suspend fun remove(appId: String) {
         ready()
@@ -867,6 +878,9 @@ class RealEngine(
 
         /** The module that lets Android put an older version of an app over a newer one. */
         internal const val LET_ME_DOWNGRADE = "com.berdik.letmedowngrade"
+
+        /** Where a download stands until its file is handed to the installer. */
+        private val CANCELLABLE = setOf(Phase.QUEUED, Phase.DOWNLOADING, Phase.VERIFYING)
 
         /** The sources whose projects keep a README Tern reads for an app's page. */
         private val PROJECT_PAGE_SOURCES = setOf(SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS, SourceTypes.GITLAB, SourceTypes.FORGEJO)

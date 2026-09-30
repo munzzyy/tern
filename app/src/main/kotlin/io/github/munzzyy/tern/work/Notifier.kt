@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Icon
+import android.os.Bundle
 import android.util.Log
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.real.Texts
@@ -37,17 +38,38 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
      * [apps] are ids and names. A notification about one app opens its page and offers to update
      * it; one about several offers to update them all. Either way nothing starts until it is tapped.
      */
-    fun updates(apps: List<Pair<String, String>>) {
+    fun updates(apps: List<Pair<String, String>>, quiet: Boolean = false) {
         if (apps.isEmpty()) return
         val single = apps.singleOrNull()
         show(
             ID_UPDATES,
             updatesAbout(apps.map { it.second }) { b ->
+                // Which apps it names, so that an install can take its app out of it later.
+                b.addExtras(Bundle().apply { putStringArray(EXTRA_APPS, apps.map { it.first }.toTypedArray()) })
+                if (quiet) b.setOnlyAlertOnce(true)
                 if (single != null) b.setContentIntent(openApp(single.first))
                 val label = if (single != null) texts.actionUpdate() else texts.actionUpdateAll()
                 b.addAction(Notification.Action.Builder(Icon.createWithResource(c, R.drawable.ic_stat_update), label, NotificationActions.update(c, single?.first)).build())
             },
         )
+    }
+
+    /**
+     * Takes [appId], now installed, out of the notification of updates, if one shows: it then names
+     * the apps that still wait, or goes when none does. [waiting] gives the name of an app whose
+     * update still waits, and null for one whose does not. A notification that was swiped away
+     * stays away.
+     */
+    fun installedUpdate(appId: String, waiting: (String) -> String?) {
+        val shown = try {
+            manager.activeNotifications.firstOrNull { it.id == ID_UPDATES }?.notification
+        } catch (e: RuntimeException) {
+            Log.i(TAG, "Could not read the notifications shown: ${e.message}")
+            null
+        } ?: return
+        val named = shown.extras.getStringArray(EXTRA_APPS)?.toList().orEmpty()
+        val left = stillWaiting(named, appId, waiting)
+        if (left.isEmpty()) manager.cancel(ID_UPDATES) else updates(left, quiet = true)
     }
 
     /** New releases of apps that are only tracked, apart from the updates Tern can install. */
@@ -99,9 +121,12 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
 
     fun cancelConfirm(appId: String) = manager.cancel(confirmId(appId))
 
+    /** The downloads the person started: how far they are, in bytes too, and a way to stop them all. */
     fun transfer(apps: List<String>, done: Long, total: Long?): Notification =
         about(TRANSFERS, R.drawable.ic_stat_download, texts.notifyDownloadingPlain(), apps.takeIf { it.isNotEmpty() }?.let { texts.notifyDownloading(it.joinToString()) }, null) { b ->
             b.setOngoing(true).setOnlyAlertOnce(true)
+            if (apps.isNotEmpty()) b.setContentText(texts.notifyBytes(done, total?.takeIf { it > 0 }))
+            b.addAction(Notification.Action.Builder(Icon.createWithResource(c, R.drawable.ic_stat_download), texts.actionCancel(), NotificationActions.cancelDownloads(c)).build())
             if (total != null && total > 0) {
                 b.setProgress(PROGRESS_SCALE, (done * PROGRESS_SCALE / total).toInt().coerceIn(0, PROGRESS_SCALE), false)
             } else {
@@ -165,6 +190,15 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
 
         /** The app whose page a notification opens. */
         const val EXTRA_OPEN_APP = "io.github.munzzyy.tern.OPEN_APP"
+        private const val EXTRA_APPS = "io.github.munzzyy.tern.APPS"
+
+        /**
+         * The apps of a notification that named [named] which still wait for their update, by id
+         * and name, once [installed] is in. An app named there only by an older Tern is not known
+         * and so not named again.
+         */
+        fun stillWaiting(named: List<String>, installed: String, waiting: (String) -> String?): List<Pair<String, String>> =
+            named.filter { it != installed }.mapNotNull { id -> waiting(id)?.let { id to it } }
         private const val ID_CONFIRM_BASE = 0x10000
         private const val PROGRESS_SCALE = 1000
         private const val TAG = "TernNotify"

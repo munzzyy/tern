@@ -45,7 +45,6 @@
     <string name="sources_self_hosted">独自サーバー上のGitLab、Forgejo、Gitea、Jenkinsはアドレスで認識されます。</string>
     <string name="shared_configs_title">Obtainiumのユーザーが共有する設定</string>
     <string name="shared_configs_effect">アプリ用の既成の設定を集めたサイトです。［設定］で「Obtainiumのリンクを開く」がオンのとき、そのリンクはTernで開きます。</string>
-    <string name="engine_archive_compression_unsupported">このアーカイブはbzip2、xz、またはzstdで圧縮されていて、Androidでは開けません。このリリースの.zip、.tar、または.tar.gzファイルを選択してください。</string>
     <string name="engine_inner_filter_nothing">アーカイブ内のファイルのフィルターが、このアーカイブ内のどのAPKにも一致しません。</string>
     <string name="preview_republished">%1$s は、開発者が別の場所で公開しているものを再配布しています。Ternが開発者の証明書を把握すると、ここのファイルにもその証明書が求められます。可能であれば証明書をピン留めするか、先に開発者からインストールしてください。</string>
     <string name="preview_modified">%1$s は、開発者以外の人が改変したアプリを提供しています。それらは改変した人によって署名されており、Ternには何が変更されたか判断できません。</string>

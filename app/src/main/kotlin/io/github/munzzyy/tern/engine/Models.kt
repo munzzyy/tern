@@ -103,6 +103,10 @@ data class FileChoice(
     val asset: Asset,
     /** Short plain phrases that explain the ranking, such as "matches this device (arm64-v8a)". */
     val reasons: List<String>,
+    /** The host the file is served from when that is not the site of the app's source. It is said, never held against the file. */
+    val foreignHost: String? = null,
+    /** The person picked this file, and the updates keep to its kind. */
+    val picked: Boolean = false,
 )
 
 data class AppRow(
@@ -366,6 +370,8 @@ data class Settings(
     val searchMinStars: Int = 0,
     /** A hubproxy host every request to GitHub goes through, with no token; null goes to GitHub itself. Never exported. */
     val githubProxy: String? = null,
+    /** Downloads wait for each other instead of running side by side. */
+    val oneDownloadAtATime: Boolean = false,
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */

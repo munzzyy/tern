@@ -47,7 +47,6 @@
     <string name="sources_self_hosted">GitLab, Forgejo, Gitea kaj Jenkins sur propra servilo estas rekonataj laŭ sia adreso.</string>
     <string name="shared_configs_title">Agordaroj kunhavigitaj de la uzantoj de Obtainium</string>
     <string name="shared_configs_effect">Retejo kun pretaj agordoj por aplikaĵoj. Ĝiaj ligiloj malfermiĝas en Tern kiam Malfermi Obtainium-ligilojn estas ŝaltita en Agordoj.</string>
-    <string name="engine_archive_compression_unsupported">Ĉi tiu arkivo estas densigita per bzip2, xz aŭ zstd, kiujn Android ne povas malfermi. Elektu dosieron .zip, .tar aŭ .tar.gz de ĉi tiu eldono.</string>
     <string name="engine_inner_filter_nothing">La filtrilo por dosieroj en arkivoj kongruas kun neniu el la APK-oj en ĉi tiu arkivo.</string>
     <string name="preview_republished">%1$s reofertas tion, kion programistoj eldonas aliloke. Ĝiaj dosieroj estas tenataj al la atestilo de la programisto tuj kiam Tern konas ĝin, do alpinglu unu aŭ unue instalu de la programisto kiam vi povas.</string>
     <string name="preview_modified">%1$s ofertas aplikaĵojn ŝanĝitajn de iu alia ol ilia programisto. Ili estas subskribitaj de tiu, kiu ŝanĝis ilin, kaj Tern ne povas diri, kio estis ŝanĝita.</string>

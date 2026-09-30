@@ -30,6 +30,9 @@ class NetTest {
     private val dir = File(targetContext.cacheDir, "nettest").apply { deleteRecursively() }
     private val local = UrlConnectionHttp(cleartextHostsForTests = setOf("127.0.0.1"))
 
+    /** A download cut short is tried again by itself; these tests look at the one try, so there is no other. */
+    private val noSecondTry: suspend (Long) -> Unit = { throw StepFailure(ProblemKind.NETWORK, "no second try in this test") }
+
     @Test
     fun aCutDownloadResumesToTheIdenticalFile() = runBlocking {
         val content = Random(7).nextBytes(300_000)
@@ -45,7 +48,7 @@ class NetTest {
             head(out, "206 Partial Content", "Content-Range" to "bytes $from-${content.size - 1}/${content.size}", "Content-Length" to "${content.size - from}", "ETag" to "\"e1\"")
             out.write(content, from, content.size - from)
         }.use { server ->
-            val downloader = Downloader(local, dir, Texts(targetContext))
+            val downloader = Downloader(local, dir, Texts(targetContext), pause = noSecondTry)
             val url = "http://127.0.0.1:${server.port}/app.apk"
             try {
                 downloader.fetch("resume", url, url, null) { _, _ -> }
@@ -86,7 +89,7 @@ class NetTest {
                 out.write(first, 50_000, first.size - 50_000)
             }
         }.use { server ->
-            val downloader = Downloader(local, dir, Texts(targetContext))
+            val downloader = Downloader(local, dir, Texts(targetContext), pause = noSecondTry)
             val url = "http://127.0.0.1:${server.port}/app.apk"
             runCatching { downloader.fetch("etag", url, url, null) { _, _ -> } }
             val result = downloader.fetch("etag", url, url, null) { _, _ -> }

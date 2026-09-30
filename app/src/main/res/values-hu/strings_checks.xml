@@ -47,7 +47,6 @@
     <string name="sources_self_hosted">A saját szerveren futó GitLab, Forgejo, Gitea és Jenkins a címe alapján felismerhető.</string>
     <string name="shared_configs_title">Az Obtainium felhasználói által megosztott konfigurációk</string>
     <string name="shared_configs_effect">Kész alkalmazásbeállításokat tartalmazó oldal. A linkjei a Ternben nyílnak meg, ha az Obtainium linkek megnyitása be van kapcsolva a Beállításokban.</string>
-    <string name="engine_archive_compression_unsupported">Ez az archívum bzip2, xz vagy zstd tömörítésű, amelyet az Android nem tud megnyitni. Válasszon .zip, .tar vagy .tar.gz fájlt ebből a kiadásból.</string>
     <string name="engine_inner_filter_nothing">Az archívumokon belüli fájlok szűrője ebben az archívumban egyik APK-ra sem illik.</string>
     <string name="preview_republished">A(z) %1$s újra kínálja azt, amit a fejlesztők máshol tesznek közzé. A fájljait a Tern a fejlesztő tanúsítványához köti, amint ismeri azt, ezért ha teheti, rögzítsen egyet, vagy először a fejlesztőtől telepítsen.</string>
     <string name="preview_modified">A(z) %1$s olyan alkalmazásokat kínál, amelyeket a fejlesztőjükön kívül valaki más módosított. Az írja alá őket, aki módosította őket, és a Tern nem tudja megállapítani, mi lett módosítva.</string>

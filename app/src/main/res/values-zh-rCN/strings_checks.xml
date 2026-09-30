@@ -45,7 +45,6 @@
     <string name="sources_self_hosted">架设在自有服务器上的 GitLab、Forgejo、Gitea 和 Jenkins 可通过其地址识别。</string>
     <string name="shared_configs_title">Obtainium 用户分享的配置</string>
     <string name="shared_configs_effect">一个提供现成应用设置的网站。在设置中开启“打开 Obtainium 链接”后，其链接会在 Tern 中打开。</string>
-    <string name="engine_archive_compression_unsupported">此压缩包使用 bzip2、xz 或 zstd 压缩，Android 无法打开。请选择此发布中的 .zip、.tar 或 .tar.gz 文件。</string>
     <string name="engine_inner_filter_nothing">压缩包内文件的过滤器与此压缩包中的任何 APK 都不匹配。</string>
     <string name="preview_republished">%1$s 会重新提供开发者在别处发布的内容。一旦 Tern 知道开发者的证书，其文件就必须符合该证书，因此请尽可能固定一个证书，或先从开发者处安装。</string>
     <string name="preview_modified">%1$s 提供由开发者以外的人修改过的应用。这些应用由修改者签名，Tern 无法判断修改了什么。</string>

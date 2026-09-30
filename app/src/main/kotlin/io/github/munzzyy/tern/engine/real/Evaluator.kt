@@ -12,7 +12,9 @@ import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.select.AssetPicker
 import io.github.munzzyy.tern.core.select.AssetPolicyException
+import io.github.munzzyy.tern.core.select.FileOrigin
 import io.github.munzzyy.tern.core.select.Pick
+import io.github.munzzyy.tern.core.select.PreferredFile
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.text.PatternException
 import io.github.munzzyy.tern.core.verify.Checksums
@@ -101,7 +103,9 @@ class Evaluator(
         }
 
         val ranked = rank(config, candidate)
-        val (chosen, facts) = chooseFile(config, installed, candidate, ranked, device, inspect)
+        val preferred = preferred(config, ranked)
+        val order = if (preferred == null) ranked else listOf(preferred) + ranked.filter { it !== preferred }
+        val (chosen, facts) = chooseFile(config, installed, candidate, order, device, inspect)
         val abiMismatch = facts?.nativeAbis?.takeIf { it.isNotEmpty() && it.none { abi -> abi in device.abis } }
         val app = installed?.app
         var decision = UpdateDecision.decide(
@@ -142,8 +146,8 @@ class Evaluator(
             status = status,
             certain = certain,
             latest = latest,
-            file = FileChoice(chosen.asset, chosen.reasons.map(texts::pickReason)),
-            otherFiles = ranked.filter { it !== chosen }.map { FileChoice(it.asset, it.reasons.map(texts::pickReason)) },
+            file = choice(config, chosen, picked = chosen === preferred),
+            otherFiles = ranked.filter { it !== chosen }.map { choice(config, it, picked = false) },
             verification = verification(config, state, candidate, chosen.asset, facts, installed),
             problem = problem,
             facts = facts,
@@ -151,6 +155,23 @@ class Evaluator(
     }
 
     fun rank(config: AppConfig, release: Release): List<Pick> = AssetPicker.rank(release.assets, device, effective(config).assets)
+
+    /** The file of [release] to install when nothing else names one: the kind the person picked, else the best ranked. */
+    fun bestFile(config: AppConfig, release: Release): Asset? {
+        val ranked = rank(config, release)
+        return (preferred(config, ranked) ?: ranked.firstOrNull())?.asset
+    }
+
+    /** Of [ranked], the file of the kind the person picked for the app, if one is there. */
+    private fun preferred(config: AppConfig, ranked: List<Pick>): Pick? =
+        config.preferredFile?.let { name -> PreferredFile.find(name, ranked) { it.asset.name } }
+
+    private fun choice(config: AppConfig, pick: Pick, picked: Boolean) = FileChoice(
+        asset = pick.asset,
+        reasons = pick.reasons.map(texts::pickReason),
+        foreignHost = FileOrigin.foreignHost(config.source.type, config.source.url, pick.asset),
+        picked = picked,
+    )
 
     fun verification(config: AppConfig, state: AppState, release: Release, asset: Asset, facts: FileFacts?, installed: DeviceApp?): Verification {
         val signerState = when {

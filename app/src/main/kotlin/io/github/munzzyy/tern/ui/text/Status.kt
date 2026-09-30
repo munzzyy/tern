@@ -94,9 +94,13 @@ fun promptLine(row: AppRow, sdk: Int): PromptLine? {
     }
 }
 
+/** A download can be stopped from its row until its file is handed to the installer. */
+fun canCancelDownload(row: AppRow): Boolean = row.progress?.phase.let { it == Phase.QUEUED || it == Phase.DOWNLOADING || it == Phase.VERIFYING }
+
 /** The one button that fits inline in a list row, if any. An app that is only tracked is never installed from there, only marked as seen. */
 fun inlineAction(row: AppRow): RowAction? = when {
     isWaitingForUser(row) -> RowAction.CONFIRM
+    canCancelDownload(row) -> RowAction.CANCEL
     isBusy(row) || row.checking -> null
     row.config.trackOnly -> RowAction.MARK_SEEN.takeIf { row.status == AppStatus.NEW_RELEASE && row.latest != null }
     row.status == AppStatus.UPDATE_AVAILABLE -> RowAction.UPDATE

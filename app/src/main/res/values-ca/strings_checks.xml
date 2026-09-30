@@ -49,7 +49,6 @@
     <string name="sources_self_hosted">GitLab, Forgejo, Gitea i Jenkins en un servidor propi es reconeixen per la seva adreça.</string>
     <string name="shared_configs_title">Configuracions compartides pels usuaris d\'Obtainium</string>
     <string name="shared_configs_effect">Un lloc de configuracions ja fetes per a aplicacions. Els seus enllaços s\'obren a Tern quan Obre enllaços d\'Obtainium està activat a la Configuració.</string>
-    <string name="engine_archive_compression_unsupported">Aquest arxiu està comprimit amb bzip2, xz o zstd, que Android no pot obrir. Tria un fitxer .zip, .tar o .tar.gz d\'aquest llançament.</string>
     <string name="engine_inner_filter_nothing">El filtre de fitxers dins d\'arxius no coincideix amb cap dels APK d\'aquest.</string>
     <string name="preview_republished">%1$s torna a oferir el que els desenvolupadors publiquen en altres llocs. Tern exigeix als seus fitxers el certificat del desenvolupador tan bon punt el coneix, així que fixa\'n un o instal·la primer des del desenvolupador quan puguis.</string>
     <string name="preview_modified">%1$s ofereix aplicacions modificades per algú que no és el seu desenvolupador. Estan signades per qui les ha modificat, i Tern no pot saber què s\'ha canviat.</string>

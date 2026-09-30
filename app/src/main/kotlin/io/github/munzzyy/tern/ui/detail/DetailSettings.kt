@@ -55,6 +55,7 @@ import io.github.munzzyy.tern.ui.text.breakableFingerprint
 import io.github.munzzyy.tern.ui.text.canPickInstall
 import io.github.munzzyy.tern.ui.text.formatFingerprint
 import io.github.munzzyy.tern.ui.text.isolate
+import io.github.munzzyy.tern.ui.text.ltr
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.fingerprint
 
@@ -241,19 +242,36 @@ private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
                 if (index > 0) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                 Column(verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
                     Text(
-                        stringResource(if (index == 0) R.string.file_recommended else R.string.file_alternative, index + 1),
+                        when {
+                            choice.picked -> stringResource(R.string.install_file_picked)
+                            else -> stringResource(if (index == 0) R.string.file_recommended else R.string.file_alternative, index + 1)
+                        },
                         style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.primary,
                     )
                     FileChoiceView(choice)
                     Row(horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2)) {
                         if (index > 0 && canPickInstall(row)) {
-                            TonalButton(stringResource(R.string.action_install_file), onClick = { engine.install(row.id, assetUrl = choice.asset.url) })
+                            // The file picked is kept for the updates that follow, by the shape of its name.
+                            TonalButton(stringResource(R.string.action_install_file), onClick = {
+                                save { it.copy(preferredFile = choice.asset.name) }
+                                engine.install(row.id, assetUrl = choice.asset.url)
+                            })
                         }
                         row.latest?.let { release -> SaveFileButton(vm, release.id, choice.asset.url) }
                     }
                 }
             }
+        }
+        config.preferredFile?.let { picked ->
+            ActionRow(
+                title = stringResource(R.string.install_file_automatic),
+                summary = stringResource(
+                    if (row.file?.picked == true || row.file == null) R.string.install_file_picked_kept else R.string.install_file_picked_missing,
+                    ltr(picked),
+                ),
+                onClick = { save { it.copy(preferredFile = null) } },
+            )
         }
         SwitchRow(
             title = stringResource(R.string.setting_match_device),

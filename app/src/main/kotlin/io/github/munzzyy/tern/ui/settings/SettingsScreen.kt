@@ -315,6 +315,12 @@ private fun InstallingSection(s: Settings, vm: SettingsViewModel, update: Update
             checked = s.keepInstallers,
             onChange = { v -> update { it.copy(keepInstallers = v) } },
         )
+        SwitchRow(
+            title = stringResource(R.string.install_setting_one_download),
+            summary = stringResource(R.string.install_setting_one_download_effect),
+            checked = s.oneDownloadAtATime,
+            onChange = { v -> update { it.copy(oneDownloadAtATime = v) } },
+        )
         if (ownershipSupported()) {
             SwitchRow(
                 title = stringResource(R.string.settings_ownership),

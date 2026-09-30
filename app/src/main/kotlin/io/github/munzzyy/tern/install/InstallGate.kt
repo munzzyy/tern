@@ -15,6 +15,7 @@ import io.github.munzzyy.tern.core.apk.TarReader
 import io.github.munzzyy.tern.core.apk.WindowSource
 import io.github.munzzyy.tern.core.apk.ZipEntry
 import io.github.munzzyy.tern.core.apk.ZipIndex
+import io.github.munzzyy.tern.core.compress.Packing
 import io.github.munzzyy.tern.core.engine.Block
 import io.github.munzzyy.tern.core.engine.InstalledApp
 import io.github.munzzyy.tern.core.engine.Inspection
@@ -33,7 +34,6 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.zip.Deflater
-import java.util.zip.GZIPInputStream
 import java.util.zip.ZipOutputStream
 
 /**
@@ -104,10 +104,10 @@ class InstallGate(
     private class Chosen(val apks: List<File>, val split: Boolean)
 
     private fun choose(request: GateRequest): Chosen {
-        val file = when {
-            isGzip(request.file) -> fromTar(request, gzip = true)
-            isTar(request.file) -> fromTar(request, gzip = false)
-            else -> request.file
+        val file = when (val packing = packingOf(request.file)) {
+            Packing.ZSTD -> throw StepFailure(ProblemKind.UNSUPPORTED, texts.archiveCompressionUnsupported())
+            Packing.NONE -> if (isTar(request.file)) fromTar(request, packing) else request.file
+            else -> fromTar(request, packing)
         }
         FileSource(file).use { source ->
             val index = try {
@@ -259,9 +259,16 @@ class InstallGate(
         return GatePass(chosen.apks, facts, chosen.split)
     }
 
-    private fun isGzip(file: File): Boolean = FileInputStream(file).use { input ->
-        val head = ByteArray(2)
-        input.read(head) == 2 && head[0] == 0x1f.toByte() && head[1] == 0x8b.toByte()
+    /** How the file is compressed, as its first bytes say whatever its name. */
+    private fun packingOf(file: File): Packing = FileInputStream(file).use { input ->
+        val head = ByteArray(Packing.HEAD)
+        var read = 0
+        while (read < head.size) {
+            val n = input.read(head, read, head.size - read)
+            if (n < 0) break
+            read += n
+        }
+        Packing.of(head.copyOf(read))
     }
 
     /** A ustar or GNU tar archive names itself at the same place of its first header. */
@@ -277,15 +284,16 @@ class InstallGate(
     }
 
     /**
-     * The APKs of a tar archive, plain or gzipped, put into a zip in the staging folder, so that
-     * they are chosen and checked exactly as the APKs of a zip are. Only the files the app's filter
-     * lets through are taken, and never more than a download may hold.
+     * The APKs of a tar archive, plain or compressed with gzip, bzip2 or xz, put into a zip in the
+     * staging folder, so that they are chosen and checked exactly as the APKs of a zip are. Only the
+     * files the app's filter lets through are taken, and never more than a download may hold: the
+     * archive may not unpack to more than that either.
      */
-    private fun fromTar(request: GateRequest, gzip: Boolean): File {
+    private fun fromTar(request: GateRequest, packing: Packing): File {
         val target = File(request.staging, "archive.zip")
         var total = 0L
         var count = 0
-        FileInputStream(request.file).buffered().let { if (gzip) GZIPInputStream(it) else it }.use { input ->
+        Packing.open(FileInputStream(request.file).buffered(), packing, Downloader.MAX_BYTES).use { input ->
             ZipOutputStream(FileOutputStream(target)).use { zip ->
                 zip.setLevel(Deflater.NO_COMPRESSION)
                 TarReader.read(input) { entry, body ->

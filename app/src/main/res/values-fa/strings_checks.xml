@@ -47,7 +47,6 @@
     <string name="sources_self_hosted">GitLab، Forgejo، Gitea و Jenkins روی سرور شخصی، از روی آدرسشان شناخته می‌شوند.</string>
     <string name="shared_configs_title">پیکربندی‌های به‌اشتراک‌گذاشته کاربران Obtainium</string>
     <string name="shared_configs_effect">سایتی از تنظیمات آماده برای برنامه‌ها. وقتی «باز کردن پیوندهای Obtainium» در تنظیمات روشن باشد، پیوندهای آن در Tern باز می‌شوند.</string>
-    <string name="engine_archive_compression_unsupported">این آرشیو با bzip2، xz یا zstd فشرده شده است که Android نمی‌تواند آن را باز کند. یک فایل .zip، .tar یا .tar.gz از این انتشار انتخاب کنید.</string>
     <string name="engine_inner_filter_nothing">فیلتر فایل‌های درون آرشیوها با هیچ‌کدام از APKهای این آرشیو مطابقت ندارد.</string>
     <string name="preview_republished">%1$s آنچه را توسعه‌دهندگان در جای دیگری منتشر می‌کنند دوباره ارائه می‌دهد. فایل‌های آن به‌محض اینکه Tern گواهی توسعه‌دهنده را بشناسد، ملزم به همان گواهی می‌شوند، پس هر وقت توانستید یک گواهی پین کنید یا ابتدا از خود توسعه‌دهنده نصب کنید.</string>
     <string name="preview_modified">%1$s برنامه‌هایی را ارائه می‌دهد که شخصی غیر از توسعه‌دهنده‌شان تغییر داده است. این برنامه‌ها توسط کسی که آن‌ها را تغییر داده امضا شده‌اند، و Tern نمی‌تواند بگوید چه چیزی تغییر کرده است.</string>

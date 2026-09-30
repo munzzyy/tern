@@ -43,7 +43,8 @@ fun SwipeRow(row: AppRow, onRemove: () -> Unit, content: @Composable () -> Unit)
     val actions = rememberActions()
     val scope = rememberCoroutineScope()
     val haptics = rememberHaptics()
-    val action = inlineAction(row)
+    // A download under way is not started or stopped by a swipe, as in Obtainium.
+    val action = inlineAction(row).takeIf { it != RowAction.CANCEL }
     val state = rememberSwipeToDismissBoxState()
     SwipeToDismissBox(
         state = state,

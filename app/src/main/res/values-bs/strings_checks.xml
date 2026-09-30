@@ -49,7 +49,6 @@
     <string name="sources_self_hosted">GitLab, Forgejo, Gitea i Jenkins na vlastitom serveru prepoznaju se po adresi.</string>
     <string name="shared_configs_title">Konfiguracije koje dijele korisnici Obtainiuma</string>
     <string name="shared_configs_effect">Stranica s gotovim postavkama za aplikacije. Njeni linkovi se otvaraju u Ternu kada je u Postavkama uključeno \"Otvori Obtainium linkove\".</string>
-    <string name="engine_archive_compression_unsupported">Ova arhiva je komprimirana s bzip2, xz ili zstd, koje Android ne može otvoriti. Odaberite .zip, .tar ili .tar.gz datoteku ovog izdanja.</string>
     <string name="engine_inner_filter_nothing">Filter za datoteke unutar arhiva ne odgovara nijednom APK-u u ovoj arhivi.</string>
     <string name="preview_republished">%1$s ponovo nudi ono što programeri objavljuju negdje drugo. Njegove datoteke se provjeravaju prema certifikatu programera čim ga Tern sazna, zato prikvačite certifikat ili prvo instalirajte od programera kada možete.</string>
     <string name="preview_modified">%1$s nudi aplikacije koje je izmijenio neko drugi, a ne njihov programer. Potpisao ih je onaj ko ih je izmijenio, i Tern ne može znati šta je izmijenjeno.</string>

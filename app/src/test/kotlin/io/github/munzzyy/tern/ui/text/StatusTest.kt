@@ -55,10 +55,19 @@ class StatusTest {
     fun busyAppOffersCancelOnly() {
         val row = testRow(status = AppStatus.UPDATE_AVAILABLE, progress = Progress(Phase.DOWNLOADING, 1, 10))
         assertEquals(RowAction.CANCEL, primaryAction(row))
-        assertNull(inlineAction(row))
+        assertEquals(RowAction.CANCEL, inlineAction(row))
         assertFalse(canUpdateNow(row))
         assertFalse(canSkip(row))
         assertTrue(canSkip(row.copy(progress = null)))
+    }
+
+    @Test
+    fun aDownloadIsStoppedFromItsRowUntilTheInstallerHasTheFile() {
+        val row = testRow(status = AppStatus.UPDATE_AVAILABLE)
+        for (phase in listOf(Phase.QUEUED, Phase.DOWNLOADING, Phase.VERIFYING)) {
+            assertEquals(phase.name, RowAction.CANCEL, inlineAction(row.copy(progress = Progress(phase))))
+        }
+        assertNull(inlineAction(row.copy(progress = Progress(Phase.INSTALLING))))
     }
 
     @Test

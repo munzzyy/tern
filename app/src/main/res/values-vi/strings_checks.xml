@@ -45,7 +45,6 @@
     <string name="sources_self_hosted">GitLab, Forgejo, Gitea và Jenkins trên máy chủ riêng được nhận diện qua địa chỉ.</string>
     <string name="shared_configs_title">Cấu hình do người dùng Obtainium chia sẻ</string>
     <string name="shared_configs_effect">Một trang web chứa các thiết lập làm sẵn cho ứng dụng. Liên kết của trang sẽ mở trong Tern khi bật \"Mở liên kết Obtainium\" trong Cài đặt.</string>
-    <string name="engine_archive_compression_unsupported">Tệp lưu trữ này được nén bằng bzip2, xz hoặc zstd, mà Android không mở được. Hãy chọn tệp .zip, .tar hoặc .tar.gz của bản phát hành này.</string>
     <string name="engine_inner_filter_nothing">Bộ lọc cho tệp bên trong tệp lưu trữ không khớp với APK nào trong tệp này.</string>
     <string name="preview_republished">%1$s cung cấp lại những gì nhà phát triển xuất bản ở nơi khác. Khi Tern đã biết chứng chỉ của nhà phát triển, tệp từ đây phải khớp với chứng chỉ đó, vì vậy khi có thể, hãy ghim một chứng chỉ hoặc cài đặt từ nhà phát triển trước.</string>
     <string name="preview_modified">%1$s cung cấp các ứng dụng đã bị người khác ngoài nhà phát triển sửa đổi. Chúng được ký bởi người đã sửa đổi, và Tern không thể biết những gì đã bị thay đổi.</string>

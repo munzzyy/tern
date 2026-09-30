@@ -77,6 +77,7 @@ object ObtainiumSettings {
         flag("tactileFeedbackEnabled", "haptics"),
         flag("collapseGroupsOnStartup", "collapseGroups"),
         choice("appListDensity", "density", byIndex = false, listOf("standard" to "COMFORTABLE", "compact" to "COMPACT", "dense" to "MINIMAL")),
+        flag("parallelDownloads", "oneDownloadAtATime", inverted = true),
         // Obtainium keeps its categories as a map of name to colour written into a string.
         Link(
             "categories", "categoryColors",

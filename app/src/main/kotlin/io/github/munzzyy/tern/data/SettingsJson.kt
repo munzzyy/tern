@@ -60,6 +60,7 @@ object SettingsJson {
         Field.flag("autoInstalls", { it.autoInstalls }) { s, v -> s.copy(autoInstalls = v) },
         Field.choice("updateAllMode", { it.updateAllMode }) { s, v -> s.copy(updateAllMode = v) },
         Field.flag("confirmUpdateAll", { it.confirmUpdateAll }) { s, v -> s.copy(confirmUpdateAll = v) },
+        Field.flag("oneDownloadAtATime", { it.oneDownloadAtATime }) { s, v -> s.copy(oneDownloadAtATime = v) },
     )
 
     /** The keys a file may carry. */

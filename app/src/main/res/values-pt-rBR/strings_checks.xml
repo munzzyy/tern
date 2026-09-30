@@ -49,7 +49,6 @@
     <string name="sources_self_hosted">GitLab, Forgejo, Gitea e Jenkins em um servidor próprio são reconhecidos pelo endereço.</string>
     <string name="shared_configs_title">Configurações compartilhadas pelos usuários do Obtainium</string>
     <string name="shared_configs_effect">Um site de configurações prontas para apps. Os links dele abrem no Tern quando Abrir links do Obtainium está ativado nas Configurações.</string>
-    <string name="engine_archive_compression_unsupported">Este arquivo compactado usa bzip2, xz ou zstd, que o Android não consegue abrir. Escolha um arquivo .zip, .tar ou .tar.gz deste lançamento.</string>
     <string name="engine_inner_filter_nothing">O filtro de arquivos dentro de arquivos compactados não corresponde a nenhum dos APKs deste.</string>
     <string name="preview_republished">%1$s oferece de novo o que os desenvolvedores publicam em outro lugar. O Tern exige dos arquivos dele o certificado do desenvolvedor assim que o conhece, então fixe um ou instale primeiro a partir do desenvolvedor quando puder.</string>
     <string name="preview_modified">%1$s oferece apps alterados por alguém que não é o desenvolvedor deles. Eles são assinados por quem os alterou, e o Tern não tem como saber o que foi alterado.</string>

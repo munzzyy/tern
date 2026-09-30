@@ -103,6 +103,7 @@ class AppConfigJsonTest {
         muted = true,
         refreshFirst = true,
         playInstaller = true,
+        preferredFile = "app-arm64-v8a-2.1.apk",
     )
 
     @Test
@@ -137,6 +138,7 @@ class AppConfigJsonTest {
         assertFalse(decoded.muted)
         assertFalse(decoded.refreshFirst)
         assertFalse(decoded.playInstaller)
+        assertNull(decoded.preferredFile)
     }
 
     @Test

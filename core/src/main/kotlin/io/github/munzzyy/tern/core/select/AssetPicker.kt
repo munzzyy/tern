@@ -168,6 +168,12 @@ object AssetPicker {
     /** [abi] as Android calls it, whichever common spelling it comes in. */
     internal fun canonical(abi: String): String = canonicalAbi(abi.lowercase())
 
+    /** The words of [name] in lowercase, a processor name that holds a dash or an underscore kept as one. */
+    internal fun tokens(name: String): List<String> = tokenize(name.take(MAX_NAME_LENGTH))
+
+    /** True for a word that names a processor type; a word for a universal build is not one. */
+    internal fun isAbiToken(token: String): Boolean = ABI_ALIASES[token].let { it != null && it != "any" }
+
     private fun canonicalAbi(abi: String): String = ABI_ALIASES[abi] ?: abi
 
     private fun tokenize(name: String): List<String> {

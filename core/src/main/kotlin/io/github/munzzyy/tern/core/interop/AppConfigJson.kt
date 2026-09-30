@@ -13,6 +13,7 @@ import io.github.munzzyy.tern.core.model.VersionFrom
 import io.github.munzzyy.tern.core.apk.BinaryManifest
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.source.SourceTypes
+import io.github.munzzyy.tern.core.text.Shown
 import io.github.munzzyy.tern.core.verify.Fingerprints
 
 class AppConfigJsonException(message: String) : Exception(message)
@@ -60,6 +61,7 @@ object AppConfigJson {
         "muted" to config.muted,
         "refreshFirst" to config.refreshFirst,
         "playInstaller" to config.playInstaller,
+        "preferredFile" to config.preferredFile,
     )
 
     fun decode(obj: JsonObject): AppConfig {
@@ -125,6 +127,7 @@ object AppConfigJson {
             muted = obj.bool("muted") ?: false,
             refreshFirst = obj.bool("refreshFirst") ?: false,
             playInstaller = obj.bool("playInstaller") ?: false,
+            preferredFile = Shown.lineOrNull(obj.string("preferredFile"), MAX_FILE_NAME),
         )
     }
 
@@ -140,6 +143,7 @@ object AppConfigJson {
 
     private const val MAX_SHORT = 200
     private const val MAX_LONG = 4000
+    private const val MAX_FILE_NAME = 512
     private const val MAX_OPTIONS = 32
     private val KNOWN_TYPES = SourceTypes.ALL.toSet()
 

@@ -126,6 +126,12 @@ data class AppConfig(
     val refreshFirst: Boolean = false,
     /** Name Google Play as the installer when a privileged installer (Shizuku or root) installs it. */
     val playInstaller: Boolean = false,
+    /**
+     * The name of the file the person picked for this app, as it was then. Later releases offer the
+     * file whose name has the same shape, so that a new version number does not undo the choice.
+     * Null leaves the choice to the ranking.
+     */
+    val preferredFile: String? = null,
 ) {
     val shownName: String get() = customName?.takeIf { it.isNotBlank() } ?: name
 

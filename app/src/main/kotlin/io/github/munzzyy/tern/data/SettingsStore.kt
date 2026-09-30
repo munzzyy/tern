@@ -78,6 +78,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             searchForgejo = prefs.getString("searchForgejo", null)?.let(::cleanHost) ?: d.searchForgejo,
             searchMinStars = prefs.getInt("searchMinStars", d.searchMinStars).coerceIn(0, MAX_STARS),
             githubProxy = GitHubProxy.cleanHost(prefs.getString("githubProxy", null)),
+            oneDownloadAtATime = prefs.getBoolean("oneDownloadAtATime", d.oneDownloadAtATime),
         )
     }
 
@@ -155,6 +156,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putString("searchForgejo", cleanHost(s.searchForgejo))
             .putInt("searchMinStars", s.searchMinStars.coerceIn(0, MAX_STARS))
             .putString("githubProxy", GitHubProxy.cleanHost(s.githubProxy))
+            .putBoolean("oneDownloadAtATime", s.oneDownloadAtATime)
             .commit()
     }
 

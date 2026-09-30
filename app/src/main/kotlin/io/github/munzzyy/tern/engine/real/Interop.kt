@@ -159,7 +159,7 @@ internal class Interop(private val e: RealEngine) {
             val from = runInterruptible(Dispatchers.IO) { e.registry.resolve(stored.config.source, asset, e.sourceContext()) }
             val sameHost = Urls.host(from.url) == Urls.host(asset.url)
             val authorization = if (asset.needsAuth && sameHost) e.tokens.tokenFor(Urls.host(asset.url))?.let { "Bearer $it" } else null
-            val download = e.downloader.fetch(appId, key, from.url, authorization, from.headers) { _, _ -> }
+            val download = e.installs.inTurn { e.downloader.fetch(appId, key, from.url, authorization, from.headers) { _, _ -> } }
             fresh = !download.reused
             return runInterruptible(Dispatchers.IO) { files.saveCopy(download.file, savedName(asset.name), mimeOf(asset.name)) }
         } catch (ex: SourceException) {
@@ -405,6 +405,8 @@ internal fun mimeOf(name: String): String {
         lower.endsWith(".apk") -> "application/vnd.android.package-archive"
         lower.endsWith(".apks") || lower.endsWith(".xapk") || lower.endsWith(".apkm") || lower.endsWith(".zip") -> "application/zip"
         lower.endsWith(".tar.gz") || lower.endsWith(".tgz") -> "application/gzip"
+        lower.endsWith(".tar.bz2") || lower.endsWith(".tbz2") -> "application/x-bzip2"
+        lower.endsWith(".tar.xz") || lower.endsWith(".txz") -> "application/x-xz"
         lower.endsWith(".tar") -> "application/x-tar"
         else -> "application/octet-stream"
     }

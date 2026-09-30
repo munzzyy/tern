@@ -45,7 +45,6 @@
     <string name="sources_self_hosted">GitLab, Forgejo, Gitea, dan Jenkins di server sendiri dikenali dari alamatnya.</string>
     <string name="shared_configs_title">Konfigurasi yang dibagikan pengguna Obtainium</string>
     <string name="shared_configs_effect">Situs berisi setelan siap pakai untuk aplikasi. Tautannya terbuka di Tern saat \"Buka tautan Obtainium\" aktif di Setelan.</string>
-    <string name="engine_archive_compression_unsupported">Arsip ini dikompresi dengan bzip2, xz, atau zstd, yang tidak dapat dibuka Android. Pilih file .zip, .tar, atau .tar.gz dari rilis ini.</string>
     <string name="engine_inner_filter_nothing">Filter untuk file di dalam arsip tidak cocok dengan APK mana pun di arsip ini.</string>
     <string name="preview_republished">%1$s menawarkan ulang apa yang diterbitkan pengembang di tempat lain. Setelah Tern mengetahui sertifikat pengembang, file dari sini harus cocok dengan sertifikat itu, jadi sematkan sertifikat atau instal dari pengembang terlebih dahulu jika bisa.</string>
     <string name="preview_modified">%1$s menawarkan aplikasi yang diubah oleh orang selain pengembangnya. Aplikasi itu ditandatangani oleh siapa pun yang mengubahnya, dan Tern tidak dapat mengetahui apa yang diubah.</string>

@@ -47,7 +47,6 @@
     <string name="sources_self_hosted">Kendi sunucularında çalışan GitLab, Forgejo, Gitea ve Jenkins adreslerinden tanınır.</string>
     <string name="shared_configs_title">Obtainium kullanıcılarının paylaştığı yapılandırmalar</string>
     <string name="shared_configs_effect">Uygulamalar için hazır ayarlar içeren bir site. Ayarlar\'da Obtainium bağlantılarını aç seçeneği açıkken bağlantıları Tern\'da açılır.</string>
-    <string name="engine_archive_compression_unsupported">Bu arşiv, Android\'in açamadığı bzip2, xz veya zstd ile sıkıştırılmış. Bu sürümün .zip, .tar veya .tar.gz dosyasını seçin.</string>
     <string name="engine_inner_filter_nothing">Arşivlerin içindeki dosyalar için filtre, bu arşivdeki APK\'lerin hiçbiriyle eşleşmiyor.</string>
     <string name="preview_republished">%1$s, geliştiricilerin başka yerde yayınladıklarını yeniden sunar. Tern geliştiricinin sertifikasını öğrendiğinde bu dosyaları o sertifikaya tabi tutar, bu yüzden mümkünse bir sertifika sabitleyin veya önce geliştiriciden yükleyin.</string>
     <string name="preview_modified">%1$s, geliştiricilerinden başka biri tarafından değiştirilmiş uygulamalar sunar. Bunlar, onları değiştiren kişi tarafından imzalanır ve Tern neyin değiştirildiğini anlayamaz.</string>

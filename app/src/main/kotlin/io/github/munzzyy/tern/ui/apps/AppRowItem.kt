@@ -112,6 +112,7 @@ fun AppRowItem(
             RowAction.UPDATE, RowAction.INSTALL -> engine.install(row.id)
             RowAction.CONFIRM -> confirmInstall(engine, row.id, actions)
             RowAction.MARK_SEEN -> actions.run { engine.dismissRelease(row.id) }
+            RowAction.CANCEL -> engine.cancel(row.id)
             else -> Unit
         }
     }

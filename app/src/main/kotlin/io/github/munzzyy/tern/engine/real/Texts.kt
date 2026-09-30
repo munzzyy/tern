@@ -35,7 +35,7 @@ class Texts(context: Context) : ImportTexts {
     fun downloadCut(got: Long, total: Long) = s(R.string.engine_download_cut, bytes(got), bytes(total))
 
     fun checksumMismatch() = s(R.string.engine_checksum_mismatch)
-    fun archiveCompressionUnsupported() = s(R.string.engine_archive_compression_unsupported)
+    fun archiveCompressionUnsupported() = s(R.string.install_archive_zstd_unsupported)
     fun onlyFilteredVersions() = s(R.string.engine_only_filtered_versions)
     fun stayingBehind() = s(R.string.engine_staying_behind)
     fun innerFilterMatchesNothing() = s(R.string.engine_inner_filter_nothing)
@@ -167,6 +167,8 @@ class Texts(context: Context) : ImportTexts {
         PickReason.Kind.UNSIGNED -> s(R.string.engine_pick_unsigned)
     }
     fun notifyDownloading(name: String) = s(R.string.engine_notify_downloading, name)
+    fun notifyBytes(done: Long, total: Long?) = if (total == null) s(R.string.install_notify_bytes, bytes(done)) else s(R.string.install_notify_bytes_of, bytes(done), bytes(total))
+    fun actionCancel() = s(R.string.action_cancel)
     fun notifyDownloadingPlain() = s(R.string.notify_downloading_plain)
 
     fun linkUnknown() = s(R.string.add_link_unknown)

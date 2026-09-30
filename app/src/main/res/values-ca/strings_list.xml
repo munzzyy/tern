@@ -1,3 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="list_arrange">Organitza la llista</string>
+    <string name="list_options_title">Organitza la llista</string>
+    <string name="list_reverse">Inverteix l\'ordre</string>
+    <string name="list_updates_first">Actualitzacions a dalt</string>
+    <string name="list_bury_not_installed">Aplicacions no instal·lades a baix</string>
+    <string name="sort_author">Per desenvolupador</string>
+    <string name="sort_added">Per data d\'addició</string>
+    <string name="sort_released">Per data de llançament</string>
+    <string name="group_title">Agrupa per</string>
+    <string name="group_none">Res</string>
+    <string name="group_category">Categoria</string>
+    <string name="group_source">Origen</string>
+    <string name="group_category_effect">Una aplicació en diverses categories apareix a cadascuna.</string>
+    <string name="group_other">Tota la resta</string>
+    <string name="group_folded">Plegat</string>
+    <string name="group_open">Desplegat</string>
+    <string name="filter_favorites">Preferides</string>
+    <string name="filter_track_only">Només seguiment</string>
+    <string name="filter_problems">Problemes</string>
+    <string name="action_done">Fet</string>
+    <string name="settings_swipe">Llisca les files per actuar</string>
+    <string name="settings_swipe_effect">Llisca una aplicació cap al final per actualitzar-la, cap al principi per suprimir-la.</string>
+    <string name="action_favorite">Afegeix a les preferides</string>
+    <string name="action_unfavorite">Treu de les preferides</string>
+    <string name="action_set_mode">Quan es troben actualitzacions</string>
+    <string name="action_share_addresses">Comparteix les adreces</string>
+    <string name="action_share_export">Comparteix com a fitxer</string>
+    <string name="action_uninstall">Desinstal·la</string>
+    <string name="export_format_tern">Un fitxer de Tern</string>
+    <string name="export_format_obtainium">Un fitxer per a Obtainium</string>
+    <string name="bulk_uninstall_text">Android pregunta per cada aplicació, una rere l\'altra. Tern les continua seguint fins que les suprimeixis aquí.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d aplicació ara és preferida</item>
+        <item quantity="many">%1$d aplicacions ara són preferides</item>
+        <item quantity="other">%1$d aplicacions ara són preferides</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d aplicació ja no és preferida</item>
+        <item quantity="many">%1$d aplicacions ja no són preferides</item>
+        <item quantity="other">%1$d aplicacions ja no són preferides</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">Quan es troba una actualització de %1$d aplicació</item>
+        <item quantity="many">Quan es troben actualitzacions de %1$d aplicacions</item>
+        <item quantity="other">Quan es troben actualitzacions de %1$d aplicacions</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">Vols desinstal·lar %1$d aplicació?</item>
+        <item quantity="many">Vols desinstal·lar %1$d aplicacions?</item>
+        <item quantity="other">Vols desinstal·lar %1$d aplicacions?</item>
+    </plurals>
 </resources>

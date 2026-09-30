@@ -1,3 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="list_arrange">ترتيب القائمة</string>
+    <string name="list_options_title">ترتيب القائمة</string>
+    <string name="list_reverse">عكس الترتيب</string>
+    <string name="list_updates_first">التحديثات في الأعلى</string>
+    <string name="list_bury_not_installed">التطبيقات غير المثبتة في الأسفل</string>
+    <string name="sort_author">حسب المطور</string>
+    <string name="sort_added">حسب تاريخ الإضافة</string>
+    <string name="sort_released">حسب تاريخ الإصدار</string>
+    <string name="group_title">التجميع حسب</string>
+    <string name="group_none">لا شيء</string>
+    <string name="group_category">الفئة</string>
+    <string name="group_source">المصدر</string>
+    <string name="group_category_effect">يظهر التطبيق الموجود في عدة فئات في كل واحدة منها.</string>
+    <string name="group_other">كل شيء آخر</string>
+    <string name="group_folded">مطوية</string>
+    <string name="group_open">مفتوحة</string>
+    <string name="filter_favorites">المفضلة</string>
+    <string name="filter_track_only">المتابعة فقط</string>
+    <string name="filter_problems">المشاكل</string>
+    <string name="action_done">تم</string>
+    <string name="settings_swipe">اسحب الصفوف لتنفيذ إجراء</string>
+    <string name="settings_swipe_effect">اسحب تطبيقًا نحو النهاية لتحديثه، ونحو البداية لإزالته.</string>
+    <string name="action_favorite">إضافة إلى المفضلة</string>
+    <string name="action_unfavorite">إزالة من المفضلة</string>
+    <string name="action_set_mode">عند العثور على تحديثات</string>
+    <string name="action_share_addresses">مشاركة العناوين</string>
+    <string name="action_share_export">مشاركة كملف</string>
+    <string name="action_uninstall">إلغاء التثبيت</string>
+    <string name="export_format_tern">ملف Tern</string>
+    <string name="export_format_obtainium">ملف لـ Obtainium</string>
+    <string name="bulk_uninstall_text">يسأل Android عن كل تطبيق بدوره. يستمر Tern في متابعتها حتى تزيلها من هنا.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="zero">%1$d تطبيق في المفضلة الآن</item>
+        <item quantity="one">تطبيق واحد (%1$d) في المفضلة الآن</item>
+        <item quantity="two">تطبيقان (%1$d) في المفضلة الآن</item>
+        <item quantity="few">%1$d تطبيقات في المفضلة الآن</item>
+        <item quantity="many">%1$d تطبيقًا في المفضلة الآن</item>
+        <item quantity="other">%1$d تطبيق في المفضلة الآن</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="zero">%1$d تطبيق لم يعد في المفضلة</item>
+        <item quantity="one">تطبيق واحد (%1$d) لم يعد في المفضلة</item>
+        <item quantity="two">تطبيقان (%1$d) لم يعودا في المفضلة</item>
+        <item quantity="few">%1$d تطبيقات لم تعد في المفضلة</item>
+        <item quantity="many">%1$d تطبيقًا لم تعد في المفضلة</item>
+        <item quantity="other">%1$d تطبيق لم تعد في المفضلة</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="zero">عند العثور على تحديثات لـ %1$d تطبيق</item>
+        <item quantity="one">عند العثور على تحديث لتطبيق واحد (%1$d)</item>
+        <item quantity="two">عند العثور على تحديثات لتطبيقين (%1$d)</item>
+        <item quantity="few">عند العثور على تحديثات لـ %1$d تطبيقات</item>
+        <item quantity="many">عند العثور على تحديثات لـ %1$d تطبيقًا</item>
+        <item quantity="other">عند العثور على تحديثات لـ %1$d تطبيق</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="zero">إلغاء تثبيت %1$d تطبيق؟</item>
+        <item quantity="one">إلغاء تثبيت تطبيق واحد (%1$d)؟</item>
+        <item quantity="two">إلغاء تثبيت تطبيقين (%1$d)؟</item>
+        <item quantity="few">إلغاء تثبيت %1$d تطبيقات؟</item>
+        <item quantity="many">إلغاء تثبيت %1$d تطبيقًا؟</item>
+        <item quantity="other">إلغاء تثبيت %1$d تطبيق؟</item>
+    </plurals>
 </resources>

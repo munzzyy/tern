@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_installer">Installa con</string>
+    <string name="installer_system">Installer di Android</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">Un\'altra app</string>
+    <string name="installer_system_effect">Android chiede prima di una prima installazione, e prima di un aggiornamento quando lo ritiene opportuno.</string>
+    <string name="installer_shizuku_effect">Installa e aggiorna senza richieste, tramite Shizuku o Sui. Ogni file supera prima gli stessi controlli.</string>
+    <string name="installer_root_effect">Installa e aggiorna senza richieste, tramite su. Ogni file supera prima gli stessi controlli.</string>
+    <string name="installer_other_app_effect">Passa ogni file controllato all\'app di installazione che scegli. Quell\'app chiede sempre, quindi nulla viene installato in background.</string>
+    <string name="installer_ready">Pronto</string>
+    <string name="installer_not_ready">Non pronto, nel frattempo viene usato l\'installer di Android</string>
+    <string name="installer_shizuku_not_running">Shizuku non è in esecuzione. Avvialo nell\'app Shizuku, poi torna qui.</string>
+    <string name="installer_shizuku_too_old">Questa versione di Shizuku è troppo vecchia per Tern. Aggiorna Shizuku.</string>
+    <string name="installer_shizuku_not_allowed">Tern non ha ancora il permesso di usare Shizuku. Premi qui per chiederlo.</string>
+    <string name="installer_no_root">Tern non ha l\'accesso root. Premi qui per chiederlo di nuovo.</string>
+    <string name="installer_no_other_app">Nessuna app di installazione è scelta, oppure quella scelta non c\'è più.</string>
+    <string name="installer_pick_app">App di installazione</string>
+    <string name="installer_pick_app_none">Nessuna scelta</string>
+    <string name="installer_no_apps">Non c\'è nessun\'altra app di installazione su questo dispositivo.</string>
+    <string name="installer_play">Indica che le app sono state installate da Google Play</string>
+    <string name="installer_play_effect">Alcune app funzionano solo se credono di essere state installate da Google Play. Tern allora non risulta più come loro installer.</string>
+    <string name="install_other_app_signer">L\'app di installazione ha installato qualcosa firmato da qualcuno diverso dal firmatario del file controllato da Tern, quindi l\'installazione non conta.</string>
 </resources>

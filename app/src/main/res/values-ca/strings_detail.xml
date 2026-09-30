@@ -1,3 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">Comparteix</string>
+    <string name="action_release_page">Obre la pàgina del llançament</string>
+    <string name="action_share_address">Comparteix l\'adreça</string>
+    <string name="action_share_link">Comparteix un enllaç que l\'obre a Tern</string>
+    <string name="action_app_info">Informació de l\'aplicació a Android</string>
+    <string name="detail_last_checked">Comprovada %1$s</string>
+    <string name="state_favorite">Preferida</string>
+    <string name="action_save_file">Desa a Baixades</string>
+    <string name="file_saved">Desat com a %1$s a %2$s, tal com s\'ha baixat. Tern comprova un fitxer quan l\'instal·la.</string>
+    <string name="action_save_files">Desa els fitxers a Baixades</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="one">S\'ha desat %d fitxer a Download/Tern</item>
+        <item quantity="many">S\'han desat %d fitxers a Download/Tern</item>
+        <item quantity="other">S\'han desat %d fitxers a Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">S\'ha marcat %d llançament com a vist</item>
+        <item quantity="many">S\'han marcat %d llançaments com a vistos</item>
+        <item quantity="other">S\'han marcat %d llançaments com a vistos</item>
+    </plurals>
+    <string name="project_page">Pàgina del projecte</string>
+    <string name="project_page_read">Llegeix la pàgina del projecte</string>
+    <string name="project_page_effect">El seu README, mostrat com a text. No es demana res a la forja fins que l\'obres.</string>
+    <string name="project_page_loading">Llegint…</string>
+    <string name="project_page_none">El projecte no té cap pàgina que Tern pugui llegir.</string>
+    <string name="project_page_failed">No s\'ha pogut llegir la pàgina. Toca per tornar-ho a provar.</string>
 </resources>

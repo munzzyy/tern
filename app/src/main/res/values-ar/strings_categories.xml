@@ -1,3 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_categories">الفئات</string>
+    <string name="settings_categories_effect">سمّها وامنح كل واحدة منها لونًا، وأعد تسميتها أو احذفها لكل التطبيقات دفعة واحدة.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="zero">%d فئة</item>
+        <item quantity="one">فئة واحدة (%d)</item>
+        <item quantity="two">فئتان (%d)</item>
+        <item quantity="few">%d فئات</item>
+        <item quantity="many">%d فئة</item>
+        <item quantity="other">%d فئة</item>
+    </plurals>
+    <string name="categories_none">لا توجد فئات بعد. أنشئ واحدة هنا، أو صنّف التطبيقات ضمن فئة من القائمة.</string>
+    <string name="categories_new">فئة جديدة</string>
+    <string name="category_edit">تعديل الفئة</string>
+    <string name="category_name">الاسم</string>
+    <string name="category_color">اللون</string>
+    <string name="category_color_spoken">اللون %1$d من %2$d</string>
+    <string name="category_exists">توجد فئة بهذا الاسم بالفعل.</string>
+    <string name="category_delete">حذف</string>
+    <string name="category_delete_effect">تبقى التطبيقات التي فيها في القائمة؛ لكنها لم تعد مصنفة ضمنها.</string>
+    <plurals name="category_apps">
+        <item quantity="zero">%d تطبيق</item>
+        <item quantity="one">تطبيق واحد (%d)</item>
+        <item quantity="two">تطبيقان (%d)</item>
+        <item quantity="few">%d تطبيقات</item>
+        <item quantity="many">%d تطبيقًا</item>
+        <item quantity="other">%d تطبيق</item>
+    </plurals>
+    <string name="action_close">إغلاق</string>
+    <string name="categories_new_short">جديدة…</string>
+    <string name="app_notes_title">ملاحظات</string>
+    <string name="app_notes_help">يعمل Markdown: **غامق**، *مائل*، والقوائم والروابط.</string>
+    <string name="app_notes_add">إضافة ملاحظة</string>
+    <string name="app_notes_add_effect">أي شيء يستحق التذكر عن هذا التطبيق. تُضمَّن الملاحظة في ملفات التصدير.</string>
+    <string name="app_notes_edit">تعديل الملاحظة</string>
 </resources>

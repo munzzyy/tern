@@ -1,3 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Ogni %d minuto</item>
+        <item quantity="many">Ogni %d minuti</item>
+        <item quantity="other">Ogni %d minuti</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Ogni %d giorno</item>
+        <item quantity="many">Ogni %d giorni</item>
+        <item quantity="other">Ogni %d giorni</item>
+    </plurals>
+    <string name="settings_check_now">Esegui ora il controllo in background</string>
+    <string name="settings_check_now_effect">Controlla ogni app e installa ciò che è impostato per aggiornarsi da solo, come fa il controllo in background.</string>
+    <string name="settings_check_now_running">Controllo in corso…</string>
+    <string name="settings_check_on_start">Controlla all\'apertura di Tern</string>
+    <string name="settings_check_on_open">Controlla un\'app all\'apertura della sua pagina</string>
+    <string name="settings_check_on_open_effect">Non di nuovo entro cinque minuti dall\'ultimo controllo.</string>
+    <string name="settings_only_installed">Controlla solo le app installate</string>
+    <string name="settings_only_installed_effect">Anche le app solo tracciate vengono controllate. Un\'app che apri viene sempre controllata.</string>
+    <string name="settings_remove_uninstalled">Rimuovi le app disinstallate altrove</string>
+    <string name="settings_remove_uninstalled_effect">Un\'app che disinstalli fuori da Tern esce anche dalla lista.</string>
+    <string name="settings_file_filter">Filtro per i file</string>
+    <string name="settings_file_filter_effect">Un pattern con cui ogni app senza un proprio filtro sceglie il suo file.</string>
+    <string name="settings_file_filter_none">Nessuno</string>
+    <string name="settings_file_filter_invalid">Questo pattern non può essere letto.</string>
+    <string name="settings_allow_downgrades">Consenti versioni precedenti</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade è installato, quindi Android può mettere una versione più vecchia sopra una più recente.</string>
+    <string name="settings_collapse_groups">Inizia con i gruppi chiusi</string>
+    <string name="settings_haptics">Feedback aptico</string>
+    <string name="settings_haptics_effect">Una leggera vibrazione quando uno scorrimento o una pressione prolungata fa qualcosa.</string>
+    <string name="settings_phone_layout">Usa sempre il layout da telefono</string>
+    <string name="settings_phone_layout_effect">Un solo riquadro e una barra in basso, qualunque sia la larghezza dello schermo.</string>
+    <string name="density_minimal">Minima</string>
+    <string name="search_in">Cerca in</string>
+    <string name="activity_share">Condividi attività</string>
+    <string name="sources_title">Cosa può leggere Tern</string>
+    <string name="sources_effect">Forge, repository, store e pagine web, e in quali si può cercare.</string>
+    <string name="sources_forges">Forge</string>
+    <string name="sources_repositories">Repository</string>
+    <string name="sources_stores">Store</string>
+    <string name="sources_mirrors">Store che ripubblicano app</string>
+    <string name="sources_modified">Siti con app modificate</string>
+    <string name="sources_other">Altri posti</string>
+    <string name="sources_web_page">Una pagina web con link a file</string>
+    <string name="sources_direct">Un link diretto a un file</string>
+    <string name="sources_searchable">ricercabile</string>
+    <string name="sources_track_only">solo tracciamento</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea e Jenkins su un server proprio vengono riconosciuti dal loro indirizzo.</string>
+    <string name="shared_configs_title">Configurazioni condivise dagli utenti di Obtainium</string>
+    <string name="shared_configs_effect">Un sito di impostazioni già pronte per le app. I suoi link si aprono in Tern quando Apri link di Obtainium è attivo nelle Impostazioni.</string>
+    <string name="engine_archive_compression_unsupported">Questo archivio è compresso con bzip2, xz o zstd, che Android non può aprire. Scegli un file .zip, .tar o .tar.gz di questa release.</string>
+    <string name="engine_inner_filter_nothing">Il filtro per i file dentro gli archivi non corrisponde a nessuno degli APK di questo.</string>
+    <string name="preview_republished">%1$s ripropone ciò che gli sviluppatori pubblicano altrove. Tern vincola i suoi file al certificato dello sviluppatore non appena lo conosce, quindi fissane uno o installa prima dallo sviluppatore quando puoi.</string>
+    <string name="preview_modified">%1$s offre app modificate da qualcuno diverso dal loro sviluppatore. Sono firmate da chi le ha modificate, e Tern non può sapere cosa è stato cambiato.</string>
+    <string name="about_track_tern">Mantieni aggiornato Tern stesso</string>
+    <string name="about_track_tern_effect">Aggiunge le release di Tern alla lista, controllate e verificate come qualsiasi app.</string>
+    <string name="engine_channel_tracked">Nuove release delle app tracciate</string>
+    <string name="engine_channel_checking">Controllo in corso</string>
+    <string name="engine_notify_tracked_one">Nuova release di %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d app tracciata ha una nuova release</item>
+        <item quantity="many">%1$d app tracciate hanno nuove release</item>
+        <item quantity="other">%1$d app tracciate hanno nuove release</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">Controllo di %1$d app</item>
+        <item quantity="many">Controllo di %1$d app</item>
+        <item quantity="other">Controllo di %1$d app</item>
+    </plurals>
+    <string name="settings_notify_tracked">Quando un\'app tracciata ha una nuova release</string>
+    <string name="settings_notify_checking">Durante il controllo in background</string>
+    <string name="settings_notify_checking_effect">Una notifica silenziosa che scompare quando il controllo è finito.</string>
+    <string name="engine_event_removed_uninstalled">Rimossa dalla lista, perché disinstallata fuori da Tern</string>
 </resources>

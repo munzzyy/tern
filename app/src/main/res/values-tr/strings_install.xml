@@ -1,3 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_installer">Şununla yükle</string>
+    <string name="installer_system">Android\'in yükleyicisi</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">Başka bir uygulama</string>
+    <string name="installer_system_effect">Android ilk yüklemeden önce ve istediği durumlarda bir güncellemeden önce sorar.</string>
+    <string name="installer_shizuku_effect">Shizuku veya Sui üzerinden sormadan yükler ve günceller. Her dosya önce aynı denetimlerden geçer.</string>
+    <string name="installer_root_effect">su üzerinden sormadan yükler ve günceller. Her dosya önce aynı denetimlerden geçer.</string>
+    <string name="installer_other_app_effect">Denetlenen her dosyayı seçtiğiniz yükleyici uygulamaya verir. O uygulama her zaman sorar, bu yüzden arka planda hiçbir şey yüklenmez.</string>
+    <string name="installer_ready">Hazır</string>
+    <string name="installer_not_ready">Hazır değil, bu arada Android\'in yükleyicisi kullanılıyor</string>
+    <string name="installer_shizuku_not_running">Shizuku çalışmıyor. Shizuku uygulamasından başlatın, sonra geri dönün.</string>
+    <string name="installer_shizuku_too_old">Shizuku\'nun bu sürümü Tern için çok eski. Shizuku\'yu güncelleyin.</string>
+    <string name="installer_shizuku_not_allowed">Tern henüz Shizuku\'yu kullanamıyor. İzin istemek için buraya basın.</string>
+    <string name="installer_no_root">Tern\'ın root erişimi yok. Tekrar istemek için buraya basın.</string>
+    <string name="installer_no_other_app">Hiçbir yükleyici uygulama seçilmedi veya seçilen artık yok.</string>
+    <string name="installer_pick_app">Yükleyici uygulama</string>
+    <string name="installer_pick_app_none">Hiçbiri seçilmedi</string>
+    <string name="installer_no_apps">Bu cihazda başka bir yükleyici uygulama yok.</string>
+    <string name="installer_play">Uygulamaları Google Play\'in yüklediğini bildir</string>
+    <string name="installer_play_effect">Bazı uygulamalar yalnızca Google Play\'in kendilerini yüklediğine inandıklarında çalışır. Bu durumda Tern artık yükleyicileri olarak görünmez.</string>
+    <string name="install_other_app_signer">Yükleyici uygulama, Tern\'ın denetlediği dosyadan farklı biri tarafından imzalanmış bir şey yükledi, bu yüzden yükleme geçerli sayılmaz.</string>
 </resources>

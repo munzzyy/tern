@@ -1,3 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_categories">Categorias</string>
+    <string name="settings_categories_effect">Dê-lhes um nome, atribua uma cor a cada uma, e mude-lhes o nome ou elimine-as em todas as aplicações de uma só vez.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d categoria</item>
+        <item quantity="many">%d categorias</item>
+        <item quantity="other">%d categorias</item>
+    </plurals>
+    <string name="categories_none">Ainda nenhuma. Crie uma aqui, ou adicione aplicações a uma a partir da lista.</string>
+    <string name="categories_new">Nova categoria</string>
+    <string name="category_edit">Editar categoria</string>
+    <string name="category_name">Nome</string>
+    <string name="category_color">Cor</string>
+    <string name="category_color_spoken">Cor %1$d de %2$d</string>
+    <string name="category_exists">Já existe uma categoria com este nome.</string>
+    <string name="category_delete">Eliminar</string>
+    <string name="category_delete_effect">As aplicações nela continuam na lista; apenas deixam de estar nesta categoria.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d aplicação</item>
+        <item quantity="many">%d aplicações</item>
+        <item quantity="other">%d aplicações</item>
+    </plurals>
+    <string name="action_close">Fechar</string>
+    <string name="categories_new_short">Nova…</string>
+    <string name="app_notes_title">Notas</string>
+    <string name="app_notes_help">Pode usar Markdown: **negrito**, *itálico*, listas e ligações.</string>
+    <string name="app_notes_add">Adicionar uma nota</string>
+    <string name="app_notes_add_effect">Tudo o que valha a pena lembrar sobre esta aplicação. A nota é incluída nas exportações.</string>
+    <string name="app_notes_edit">Editar a nota</string>
 </resources>

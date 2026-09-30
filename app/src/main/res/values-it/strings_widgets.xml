@@ -1,3 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">Controlla</string>
+    <string name="shortcut_check_long">Controlla aggiornamenti</string>
+    <string name="shortcut_update_all_long">Aggiorna tutte le app</string>
+    <string name="shortcut_add_short">Aggiungi</string>
+    <string name="shortcut_add_long">Aggiungi un\'app</string>
+    <string name="tile_check">Controlla aggiornamenti</string>
+    <string name="tile_checking">Controllo in corso…</string>
+    <string name="tile_up_to_date">Tutto aggiornato</string>
+    <string name="widget_label">Aggiornamenti</string>
+    <string name="widget_description">Quante app hanno un aggiornamento, con un pulsante per controllare e uno per aggiornarle tutte.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d aggiornamento</item>
+        <item quantity="many">%d aggiornamenti</item>
+        <item quantity="other">%d aggiornamenti</item>
+    </plurals>
+    <string name="widget_up_to_date">È tutto aggiornato</string>
+    <string name="widget_checked">Controllato alle %1$s</string>
+    <string name="widget_never_checked">Non ancora controllato</string>
+    <string name="widget_check">Controlla</string>
 </resources>

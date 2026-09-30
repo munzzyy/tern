@@ -1,3 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">مشاركة</string>
+    <string name="action_release_page">فتح صفحة الإصدار</string>
+    <string name="action_share_address">مشاركة العنوان</string>
+    <string name="action_share_link">مشاركة رابط يفتحه في Tern</string>
+    <string name="action_app_info">معلومات التطبيق في Android</string>
+    <string name="detail_last_checked">تم الفحص %1$s</string>
+    <string name="state_favorite">مفضّل</string>
+    <string name="action_save_file">حفظ في التنزيلات</string>
+    <string name="file_saved">تم الحفظ باسم %1$s في %2$s، كما تم تنزيله. يفحص Tern الملف عندما يثبّته.</string>
+    <string name="action_save_files">حفظ الملفات في التنزيلات</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="zero">تم حفظ %d ملف في Download/Tern</item>
+        <item quantity="one">تم حفظ ملف واحد (%d) في Download/Tern</item>
+        <item quantity="two">تم حفظ ملفين (%d) في Download/Tern</item>
+        <item quantity="few">تم حفظ %d ملفات في Download/Tern</item>
+        <item quantity="many">تم حفظ %d ملفًا في Download/Tern</item>
+        <item quantity="other">تم حفظ %d ملف في Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="zero">تم تحديد %d إصدار كمقروء</item>
+        <item quantity="one">تم تحديد إصدار واحد (%d) كمقروء</item>
+        <item quantity="two">تم تحديد إصدارين (%d) كمقروءين</item>
+        <item quantity="few">تم تحديد %d إصدارات كمقروءة</item>
+        <item quantity="many">تم تحديد %d إصدارًا كمقروء</item>
+        <item quantity="other">تم تحديد %d إصدار كمقروء</item>
+    </plurals>
+    <string name="project_page">صفحة المشروع</string>
+    <string name="project_page_read">قراءة صفحة المشروع</string>
+    <string name="project_page_effect">ملف README الخاص به، معروضًا كنص. لا يُطلب شيء من منصة الشيفرة حتى تفتحها.</string>
+    <string name="project_page_loading">جارٍ القراءة…</string>
+    <string name="project_page_none">لا يحتفظ المشروع بصفحة يستطيع Tern قراءتها.</string>
+    <string name="project_page_failed">تعذرت قراءة الصفحة. انقر للمحاولة مرة أخرى.</string>
 </resources>

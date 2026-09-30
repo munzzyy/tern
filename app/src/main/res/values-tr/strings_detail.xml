@@ -1,3 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="action_share">Paylaş</string>
+    <string name="action_release_page">Sürüm sayfasını aç</string>
+    <string name="action_share_address">Adresi paylaş</string>
+    <string name="action_share_link">Uygulamayı Tern\'da açan bir bağlantı paylaş</string>
+    <string name="action_app_info">Android\'de uygulama bilgisi</string>
+    <string name="detail_last_checked">Son denetim: %1$s</string>
+    <string name="state_favorite">Favori</string>
+    <string name="action_save_file">İndirilenler klasörüne kaydet</string>
+    <string name="file_saved">İndirildiği haliyle %2$s içinde %1$s olarak kaydedildi. Tern bir dosyayı yüklerken denetler.</string>
+    <string name="action_save_files">Dosyaları İndirilenler klasörüne kaydet</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="one">%d dosya Download/Tern içine kaydedildi</item>
+        <item quantity="other">%d dosya Download/Tern içine kaydedildi</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d sürüm okundu olarak işaretlendi</item>
+        <item quantity="other">%d sürüm okundu olarak işaretlendi</item>
+    </plurals>
+    <string name="project_page">Proje sayfası</string>
+    <string name="project_page_read">Projenin sayfasını oku</string>
+    <string name="project_page_effect">README dosyası, metin olarak gösterilir. Siz açana kadar kod platformundan hiçbir şey istenmez.</string>
+    <string name="project_page_loading">Okunuyor…</string>
+    <string name="project_page_none">Projenin Tern\'ın okuyabileceği bir sayfası yok.</string>
+    <string name="project_page_failed">Sayfa okunamadı. Tekrar denemek için dokunun.</string>
 </resources>

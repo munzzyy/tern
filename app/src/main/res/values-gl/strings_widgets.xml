@@ -1,3 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shortcut_check_short">Comprobar</string>
+    <string name="shortcut_check_long">Comprobar actualizacións</string>
+    <string name="shortcut_update_all_long">Actualizar todas as aplicacións</string>
+    <string name="shortcut_add_short">Engadir</string>
+    <string name="shortcut_add_long">Engadir unha aplicación</string>
+    <string name="tile_check">Comprobar actualizacións</string>
+    <string name="tile_checking">Comprobando…</string>
+    <string name="tile_up_to_date">Ao día</string>
+    <string name="widget_label">Actualizacións</string>
+    <string name="widget_description">Cantas aplicacións teñen unha actualización, cun botón para comprobar e outro para actualizalas todas.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d actualización</item>
+        <item quantity="other">%d actualizacións</item>
+    </plurals>
+    <string name="widget_up_to_date">Todo está ao día</string>
+    <string name="widget_checked">Comprobado ás %1$s</string>
+    <string name="widget_never_checked">Aínda sen comprobar</string>
+    <string name="widget_check">Comprobar</string>
 </resources>

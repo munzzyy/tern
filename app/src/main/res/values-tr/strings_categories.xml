@@ -1,3 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_categories">Kategoriler</string>
+    <string name="settings_categories_effect">Onlara ad verin, her birine bir renk verin ve tüm uygulamalar için tek seferde yeniden adlandırın veya silin.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d kategori</item>
+        <item quantity="other">%d kategori</item>
+    </plurals>
+    <string name="categories_none">Henüz yok. Burada bir tane oluşturun veya listeden uygulamaları bir kategorinin altına ekleyin.</string>
+    <string name="categories_new">Yeni kategori</string>
+    <string name="category_edit">Kategoriyi düzenle</string>
+    <string name="category_name">Ad</string>
+    <string name="category_color">Renk</string>
+    <string name="category_color_spoken">%2$d renkten %1$d. renk</string>
+    <string name="category_exists">Bu adda bir kategori zaten var.</string>
+    <string name="category_delete">Sil</string>
+    <string name="category_delete_effect">İçindeki uygulamalar listede kalır; yalnızca artık bu kategorinin altında yer almazlar.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d uygulama</item>
+        <item quantity="other">%d uygulama</item>
+    </plurals>
+    <string name="action_close">Kapat</string>
+    <string name="categories_new_short">Yeni…</string>
+    <string name="app_notes_title">Notlar</string>
+    <string name="app_notes_help">Markdown çalışır: **kalın**, *italik*, listeler ve bağlantılar.</string>
+    <string name="app_notes_add">Not ekle</string>
+    <string name="app_notes_add_effect">Bu uygulama hakkında hatırlamaya değer her şey. Dışa aktarımlara dahil edilir.</string>
+    <string name="app_notes_edit">Notu düzenle</string>
 </resources>

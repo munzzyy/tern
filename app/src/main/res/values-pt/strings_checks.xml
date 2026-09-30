@@ -1,3 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">A cada %d minuto</item>
+        <item quantity="many">A cada %d minutos</item>
+        <item quantity="other">A cada %d minutos</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">A cada %d dia</item>
+        <item quantity="many">A cada %d dias</item>
+        <item quantity="other">A cada %d dias</item>
+    </plurals>
+    <string name="settings_check_now">Executar agora a verificação em segundo plano</string>
+    <string name="settings_check_now_effect">Verifica todas as aplicações e instala o que está definido para se atualizar sozinho, como faz a verificação em segundo plano.</string>
+    <string name="settings_check_now_running">A verificar…</string>
+    <string name="settings_check_on_start">Verificar quando o Tern abre</string>
+    <string name="settings_check_on_open">Verificar uma aplicação quando a sua página abre</string>
+    <string name="settings_check_on_open_effect">Não novamente nos cinco minutos após a última verificação.</string>
+    <string name="settings_only_installed">Verificar apenas aplicações instaladas</string>
+    <string name="settings_only_installed_effect">As aplicações que são apenas seguidas também são verificadas. Uma aplicação que abra é sempre verificada.</string>
+    <string name="settings_remove_uninstalled">Remover aplicações desinstaladas fora do Tern</string>
+    <string name="settings_remove_uninstalled_effect">Uma aplicação que desinstale fora do Tern também sai da lista.</string>
+    <string name="settings_file_filter">Filtro de ficheiros</string>
+    <string name="settings_file_filter_effect">Um padrão pelo qual cada aplicação sem filtro próprio escolhe o seu ficheiro.</string>
+    <string name="settings_file_filter_none">Nenhum</string>
+    <string name="settings_file_filter_invalid">Este padrão não pode ser lido.</string>
+    <string name="settings_allow_downgrades">Permitir versões mais antigas</string>
+    <string name="settings_allow_downgrades_effect">O Let Me Downgrade está instalado, por isso o Android pode instalar uma versão mais antiga sobre uma mais recente.</string>
+    <string name="settings_collapse_groups">Começar com os grupos fechados</string>
+    <string name="settings_haptics">Resposta tátil</string>
+    <string name="settings_haptics_effect">Uma vibração leve quando um deslize ou um toque longo faz algo.</string>
+    <string name="settings_phone_layout">Usar sempre o esquema de telemóvel</string>
+    <string name="settings_phone_layout_effect">Um só painel e uma barra em baixo, seja qual for a largura do ecrã.</string>
+    <string name="density_minimal">Mínima</string>
+    <string name="search_in">Pesquisar em</string>
+    <string name="activity_share">Partilhar atividade</string>
+    <string name="sources_title">O que o Tern consegue ler</string>
+    <string name="sources_effect">Forjas, repositórios, lojas e páginas web, e em quais se pode pesquisar.</string>
+    <string name="sources_forges">Forjas</string>
+    <string name="sources_repositories">Repositórios</string>
+    <string name="sources_stores">Lojas</string>
+    <string name="sources_mirrors">Lojas que republicam aplicações</string>
+    <string name="sources_modified">Sites com aplicações modificadas</string>
+    <string name="sources_other">Outros locais</string>
+    <string name="sources_web_page">Uma página web com ligações para ficheiros</string>
+    <string name="sources_direct">Uma ligação direta para um ficheiro</string>
+    <string name="sources_searchable">pesquisável</string>
+    <string name="sources_track_only">apenas seguir</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea e Jenkins num servidor próprio são reconhecidos pelo endereço.</string>
+    <string name="shared_configs_title">Configurações partilhadas pelos utilizadores do Obtainium</string>
+    <string name="shared_configs_effect">Um site de definições prontas para aplicações. As suas ligações abrem no Tern quando Abrir ligações do Obtainium está ativado nas Definições.</string>
+    <string name="engine_archive_compression_unsupported">Este arquivo está comprimido com bzip2, xz ou zstd, que o Android não consegue abrir. Escolha um ficheiro .zip, .tar ou .tar.gz deste lançamento.</string>
+    <string name="engine_inner_filter_nothing">O filtro de ficheiros dentro de arquivos não corresponde a nenhum dos APK deste.</string>
+    <string name="preview_republished">%1$s volta a oferecer o que os programadores publicam noutros locais. O Tern sujeita os seus ficheiros ao certificado do programador assim que o conhece, por isso fixe um ou instale primeiro a partir do programador quando puder.</string>
+    <string name="preview_modified">%1$s oferece aplicações alteradas por outra pessoa que não o seu programador. São assinadas por quem as alterou, e o Tern não consegue saber o que foi alterado.</string>
+    <string name="about_track_tern">Manter o próprio Tern atualizado</string>
+    <string name="about_track_tern_effect">Adiciona os lançamentos do Tern à lista, verificados e confirmados como qualquer aplicação.</string>
+    <string name="engine_channel_tracked">Novos lançamentos de aplicações seguidas</string>
+    <string name="engine_channel_checking">A verificar</string>
+    <string name="engine_notify_tracked_one">Novo lançamento de %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d aplicação seguida tem um novo lançamento</item>
+        <item quantity="many">%1$d aplicações seguidas têm novos lançamentos</item>
+        <item quantity="other">%1$d aplicações seguidas têm novos lançamentos</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">A verificar %1$d aplicação</item>
+        <item quantity="many">A verificar %1$d aplicações</item>
+        <item quantity="other">A verificar %1$d aplicações</item>
+    </plurals>
+    <string name="settings_notify_tracked">Quando uma aplicação seguida tem um novo lançamento</string>
+    <string name="settings_notify_checking">Durante a verificação em segundo plano</string>
+    <string name="settings_notify_checking_effect">Uma notificação discreta que desaparece quando a verificação termina.</string>
+    <string name="engine_event_removed_uninstalled">Removida da lista, porque foi desinstalada fora do Tern</string>
 </resources>

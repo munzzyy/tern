@@ -1,3 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="interval_minutes">
+        <item quantity="zero">كل %d دقيقة</item>
+        <item quantity="one">كل دقيقة (%d)</item>
+        <item quantity="two">كل دقيقتين (%d)</item>
+        <item quantity="few">كل %d دقائق</item>
+        <item quantity="many">كل %d دقيقة</item>
+        <item quantity="other">كل %d دقيقة</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="zero">كل %d يوم</item>
+        <item quantity="one">كل يوم (%d)</item>
+        <item quantity="two">كل يومين (%d)</item>
+        <item quantity="few">كل %d أيام</item>
+        <item quantity="many">كل %d يومًا</item>
+        <item quantity="other">كل %d يوم</item>
+    </plurals>
+    <string name="settings_check_now">تشغيل الفحص في الخلفية الآن</string>
+    <string name="settings_check_now_effect">يفحص كل التطبيقات ويثبّت ما هو مضبوط ليتحدث تلقائيًا، كما يفعل الفحص في الخلفية.</string>
+    <string name="settings_check_now_running">جارٍ الفحص…</string>
+    <string name="settings_check_on_start">الفحص عند فتح Tern</string>
+    <string name="settings_check_on_open">فحص التطبيق عند فتح صفحته</string>
+    <string name="settings_check_on_open_effect">ليس مرة أخرى خلال خمس دقائق من آخر فحص.</string>
+    <string name="settings_only_installed">فحص التطبيقات المثبتة فقط</string>
+    <string name="settings_only_installed_effect">التطبيقات التي تُتابَع فقط تُفحص أيضًا. التطبيق الذي تفتحه يُفحص دائمًا.</string>
+    <string name="settings_remove_uninstalled">إزالة التطبيقات التي أُلغي تثبيتها في مكان آخر</string>
+    <string name="settings_remove_uninstalled_effect">التطبيق الذي تلغي تثبيته خارج Tern يخرج من القائمة أيضًا.</string>
+    <string name="settings_file_filter">فلتر الملفات</string>
+    <string name="settings_file_filter_effect">نمط يختار به كل تطبيق ليس له فلتر خاص به ملفَّه.</string>
+    <string name="settings_file_filter_none">لا شيء</string>
+    <string name="settings_file_filter_invalid">تتعذر قراءة هذا النمط.</string>
+    <string name="settings_allow_downgrades">السماح بالإصدارات الأقدم</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade مثبت، لذا يمكن لـ Android وضع إصدار أقدم فوق إصدار أحدث.</string>
+    <string name="settings_collapse_groups">البدء بالمجموعات مطوية</string>
+    <string name="settings_haptics">الاستجابة اللمسية</string>
+    <string name="settings_haptics_effect">اهتزاز خفيف عندما يؤدي السحب أو الضغط المطوّل إلى إجراء ما.</string>
+    <string name="settings_phone_layout">استخدام تخطيط الهاتف دائمًا</string>
+    <string name="settings_phone_layout_effect">لوحة واحدة وشريط في الأسفل، مهما كان عرض الشاشة.</string>
+    <string name="density_minimal">بسيطة</string>
+    <string name="search_in">البحث في</string>
+    <string name="activity_share">مشاركة النشاط</string>
+    <string name="sources_title">ما يستطيع Tern قراءته</string>
+    <string name="sources_effect">منصات الشيفرة، والمستودعات، والمتاجر، وصفحات الويب، وأيها يمكن البحث فيه.</string>
+    <string name="sources_forges">منصات الشيفرة</string>
+    <string name="sources_repositories">المستودعات</string>
+    <string name="sources_stores">المتاجر</string>
+    <string name="sources_mirrors">متاجر تعيد نشر التطبيقات</string>
+    <string name="sources_modified">مواقع لتطبيقات معدّلة</string>
+    <string name="sources_other">أماكن أخرى</string>
+    <string name="sources_web_page">صفحة ويب بها روابط إلى ملفات</string>
+    <string name="sources_direct">رابط مباشر إلى ملف</string>
+    <string name="sources_searchable">قابل للبحث</string>
+    <string name="sources_track_only">للمتابعة فقط</string>
+    <string name="sources_self_hosted">يُتعرَّف على GitLab وForgejo وGitea وJenkins على خادم خاص بها من عنوانها.</string>
+    <string name="shared_configs_title">إعدادات يشاركها مستخدمو Obtainium</string>
+    <string name="shared_configs_effect">موقع لإعدادات جاهزة للتطبيقات. تُفتح روابطه في Tern عند تشغيل «فتح روابط Obtainium» في الإعدادات.</string>
+    <string name="engine_archive_compression_unsupported">هذا الأرشيف مضغوط بـ bzip2 أو xz أو zstd، وهي صيغ لا يستطيع Android فتحها. اختر ملف .zip أو .tar أو .tar.gz من هذا الإصدار.</string>
+    <string name="engine_inner_filter_nothing">فلتر الملفات داخل الأرشيفات لا يطابق أيًا من ملفات APK في هذا الأرشيف.</string>
+    <string name="preview_republished">يعيد %1$s نشر ما ينشره المطورون في أماكن أخرى. تُلزَم ملفاته بشهادة المطور بمجرد أن يعرفها Tern، لذا متى استطعت، ثبّت شهادة أو قم أولًا بتثبيت التطبيق من مطوره.</string>
+    <string name="preview_modified">يقدم %1$s تطبيقات عدّلها شخص غير مطورها. وهي موقّعة ممن عدّلها، ولا يستطيع Tern معرفة ما الذي تم تغييره.</string>
+    <string name="about_track_tern">إبقاء Tern نفسه محدثًا</string>
+    <string name="about_track_tern_effect">يضيف إصدارات Tern نفسه إلى القائمة، تُفحص ويُتحقق منها مثل أي تطبيق.</string>
+    <string name="engine_channel_tracked">إصدارات جديدة للتطبيقات المتابَعة</string>
+    <string name="engine_channel_checking">الفحص</string>
+    <string name="engine_notify_tracked_one">إصدار جديد من %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="zero">%1$d تطبيق متابَع لديه إصدار جديد</item>
+        <item quantity="one">تطبيق متابَع واحد (%1$d) لديه إصدار جديد</item>
+        <item quantity="two">تطبيقان متابَعان (%1$d) لديهما إصدارات جديدة</item>
+        <item quantity="few">%1$d تطبيقات متابَعة لديها إصدارات جديدة</item>
+        <item quantity="many">%1$d تطبيقًا متابَعًا لديها إصدارات جديدة</item>
+        <item quantity="other">%1$d تطبيق متابَع لديها إصدارات جديدة</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="zero">جارٍ فحص %1$d تطبيق</item>
+        <item quantity="one">جارٍ فحص تطبيق واحد (%1$d)</item>
+        <item quantity="two">جارٍ فحص تطبيقين (%1$d)</item>
+        <item quantity="few">جارٍ فحص %1$d تطبيقات</item>
+        <item quantity="many">جارٍ فحص %1$d تطبيقًا</item>
+        <item quantity="other">جارٍ فحص %1$d تطبيق</item>
+    </plurals>
+    <string name="settings_notify_tracked">عندما يكون لتطبيق متابَع إصدار جديد</string>
+    <string name="settings_notify_checking">أثناء الفحص في الخلفية</string>
+    <string name="settings_notify_checking_effect">إشعار هادئ يختفي عند انتهاء الفحص.</string>
+    <string name="engine_event_removed_uninstalled">أُزيل من القائمة، لأنه أُلغي تثبيته خارج Tern</string>
 </resources>

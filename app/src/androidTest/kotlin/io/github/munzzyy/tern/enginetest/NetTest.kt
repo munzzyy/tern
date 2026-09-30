@@ -149,7 +149,7 @@ class NetTest {
             out.write(content, from, content.size - from)
         }.use { server ->
             var free = Long.MAX_VALUE
-            val downloader = Downloader(local, dir, Texts(targetContext), freeBytes = { free })
+            val downloader = Downloader(local, dir, Texts(targetContext), freeBytes = { free }, pause = noSecondTry)
             val url = "http://127.0.0.1:${server.port}/app.apk"
             runCatching { downloader.fetch("full", url, url, null) { _, _ -> } }
             assertTrue(downloader.folder("full").listFiles().orEmpty().any { it.name.endsWith(".part") })

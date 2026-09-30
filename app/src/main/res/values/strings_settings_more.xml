@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_system">Same as the system</string>
+    <string name="interval_more_often">Check more often</string>
+    <string name="interval_less_often">Check less often</string>
+    <string name="about_help">How Tern works</string>
+    <string name="about_help_effect">What Tern checks and how to add, update and move apps, on the project\'s page.</string>
+    <string name="about_security">How Tern keeps you safe</string>
+    <string name="about_privacy">Privacy</string>
+    <string name="verification_title">Android\'s developer verification</string>
+    <string name="verification_text">Google has announced that certified Android devices will install only apps from developers who have registered with Google, starting in a few countries from September 2026 and in more after that.\n\nWhere this applies, Android may refuse an app from a developer who has not registered, or ask more of you before it installs one, however Tern\'s own checks turn out. Tern cannot change that, and it tells you when Android refuses.\n\nDevices without Google\'s certification are not affected.</string>
+    <string name="verification_more">Google\'s page about it</string>
+    <string name="kept_export_format">Format</string>
+    <string name="kept_export_format_tern">Tern\'s, which holds everything</string>
+    <string name="kept_export_format_obtainium">Obtainium\'s, which Obtainium can read too</string>
+    <string name="kept_export_name">File name</string>
+    <string name="kept_export_name_usual">Leave it empty for %1$s.</string>
+</resources>

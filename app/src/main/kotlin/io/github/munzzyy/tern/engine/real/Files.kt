@@ -6,6 +6,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemException
 import io.github.munzzyy.tern.engine.ProblemKind
@@ -19,19 +20,25 @@ import java.nio.file.StandardOpenOption
 import java.time.Instant
 import java.time.ZoneId
 
-/** The name of an export: tern-apps-2026-09-29.json, and tern-apps-2026-09-29-2.json for the second of that day. */
+/**
+ * The name of an export: tern-apps-2026-09-29.json, and tern-apps-2026-09-29-2.json for the second
+ * of that day. An export in Obtainium's format is named as Obtainium names its own.
+ */
 internal object ExportNames {
-    private const val PREFIX = "tern-apps-"
+    const val PREFIX = "tern-apps-"
+    private const val OBTAINIUM_PREFIX = "obtainium-export-"
     private const val SUFFIX = ".json"
     private const val MAX_PER_DAY = 500
 
-    fun forDay(nowMs: Long, zone: ZoneId, taken: Collection<String>): String {
+    fun prefixOf(format: ExportFormat): String = if (format == ExportFormat.OBTAINIUM) OBTAINIUM_PREFIX else PREFIX
+
+    fun forDay(nowMs: Long, zone: ZoneId, taken: Collection<String>, prefix: String = PREFIX): String {
         val day = Instant.ofEpochMilli(nowMs).atZone(zone).toLocalDate()
         val used = taken.mapTo(HashSet()) { it.lowercase() }
-        val plain = "$PREFIX$day$SUFFIX"
+        val plain = "$prefix$day$SUFFIX"
         if (plain !in used) return plain
         for (number in 2..MAX_PER_DAY) {
-            val numbered = "$PREFIX$day-$number$SUFFIX"
+            val numbered = "$prefix$day-$number$SUFFIX"
             if (numbered !in used) return numbered
         }
         return plain
@@ -74,9 +81,9 @@ internal class Files(context: Context, private val texts: Texts, private val now
 
     private class Entry(val file: SavedFile, val uri: Uri?)
 
-    fun save(text: String, fixedName: String? = null): SavedFile {
+    fun save(text: String, fixedName: String? = null, prefix: String = ExportNames.PREFIX): SavedFile {
         val bytes = text.toByteArray(Charsets.UTF_8)
-        val name = fixedName ?: ExportNames.forDay(nowMs(), ZoneId.systemDefault(), asked { exports() }.orEmpty().map { it.file.name })
+        val name = fixedName ?: ExportNames.forDay(nowMs(), ZoneId.systemDefault(), asked { exports() }.orEmpty().map { it.file.name }, prefix)
         val values = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, Device.EXPORT_TYPE)

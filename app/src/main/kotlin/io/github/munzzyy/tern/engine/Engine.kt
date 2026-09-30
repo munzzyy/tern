@@ -147,7 +147,7 @@ interface Engine {
     fun hasFilePicker(): Boolean
 
     /** Writes the export where a file manager can find it and returns where that is. Tokens are never exported. */
-    suspend fun exportToFolder(): SavedFile
+    suspend fun exportToFolder(format: ExportFormat = ExportFormat.TERN): SavedFile
 
     /** Export files this app may read without a picker, newest first. */
     suspend fun importableFiles(): List<SavedFile>

@@ -469,9 +469,10 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override fun hasFilePicker(): Boolean = filePicker
 
-    override suspend fun exportToFolder(): SavedFile {
+    override suspend fun exportToFolder(format: ExportFormat): SavedFile {
         delay(stepMs * 6)
-        return SavedFile("tern-apps-2026-09-29.json", "Download/Tern", "/storage/emulated/0/Download/Tern/tern-apps-2026-09-29.json", System.currentTimeMillis(), 18_432)
+        val name = if (format == ExportFormat.OBTAINIUM) "obtainium-export-2026-09-29.json" else "tern-apps-2026-09-29.json"
+        return SavedFile(name, "Download/Tern", "/storage/emulated/0/Download/Tern/$name", System.currentTimeMillis(), 18_432)
     }
 
     /** Switched off by a test to stand for a device that holds no export file. */

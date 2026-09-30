@@ -35,6 +35,14 @@ class ExportNamesTest {
     }
 
     @Test
+    fun anExportForObtainiumIsNamedAsObtainiumNamesItsOwn() {
+        val prefix = ExportNames.prefixOf(ExportFormat.OBTAINIUM)
+        assertEquals("obtainium-export-2026-09-29.json", ExportNames.forDay(noon, ZoneOffset.UTC, emptyList(), prefix))
+        assertEquals("obtainium-export-2026-09-29-2.json", ExportNames.forDay(noon, ZoneOffset.UTC, listOf("obtainium-export-2026-09-29.json"), prefix))
+        assertEquals("tern-apps-", ExportNames.prefixOf(ExportFormat.TERN))
+    }
+
+    @Test
     fun theNumbersEndAndTheNameIsThenLeftToAndroid() {
         val taken = listOf("tern-apps-2026-09-29.json") + (2..500).map { "tern-apps-2026-09-29-$it.json" }
         assertEquals("tern-apps-2026-09-29.json", ExportNames.forDay(noon, ZoneOffset.UTC, taken))

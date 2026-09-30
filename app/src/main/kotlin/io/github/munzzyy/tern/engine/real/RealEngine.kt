@@ -564,9 +564,9 @@ class RealEngine(
 
     override fun hasFilePicker(): Boolean = device.hasFilePicker()
 
-    override suspend fun exportToFolder(): SavedFile {
+    override suspend fun exportToFolder(format: ExportFormat): SavedFile {
         ready()
-        return interop.exportToFolder()
+        return interop.exportToFolder(format)
     }
 
     override suspend fun importableFiles(): List<SavedFile> = interop.importableFiles()

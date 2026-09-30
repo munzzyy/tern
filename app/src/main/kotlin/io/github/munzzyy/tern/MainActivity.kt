@@ -18,6 +18,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import io.github.munzzyy.tern.data.AppLanguage
 import io.github.munzzyy.tern.ui.BackStack
 import io.github.munzzyy.tern.ui.EXTRA_SCENARIO
 import io.github.munzzyy.tern.ui.RefreshLink
@@ -26,6 +27,7 @@ import io.github.munzzyy.tern.ui.Scenarios
 import io.github.munzzyy.tern.ui.TernApp
 import io.github.munzzyy.tern.ui.incomingAddInput
 import io.github.munzzyy.tern.ui.refreshLink
+import io.github.munzzyy.tern.ui.settings.VerificationNote
 import io.github.munzzyy.tern.ui.theme.TernTheme
 import io.github.munzzyy.tern.ui.theme.isDark
 import io.github.munzzyy.tern.widget.Surfaces
@@ -35,6 +37,7 @@ import kotlinx.coroutines.launch
 
 private const val PREFS = "ui"
 private const val KEY_FIRST_RUN_DONE = "first_run_done"
+private const val KEY_VERIFICATION_NOTE_SHOWN = "verification_note_shown"
 private const val TAG = "TernMain"
 private const val MAX_APP_ID = 64
 
@@ -47,10 +50,18 @@ class MainActivity : ComponentActivity() {
     private var openApp by mutableStateOf<String?>(null)
     private var firstRunDone by mutableStateOf(true)
 
+    /** Shown once, on the first start after the first run, so it never stands in the way of that run. */
+    private var verificationNote by mutableStateOf(false)
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(AppLanguage.wrap(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         firstRunDone = prefs().getBoolean(KEY_FIRST_RUN_DONE, false)
+        verificationNote = firstRunDone && !prefs().getBoolean(KEY_VERIFICATION_NOTE_SHOWN, false)
         applyScenario(intent)
         if (savedInstanceState == null) receive(intent)
         if (savedInstanceState == null && firstRunDone && engine.settings.value.checkOnStart) checkOnStart()
@@ -85,6 +96,7 @@ class MainActivity : ComponentActivity() {
                     onFirstRunDone = ::finishFirstRun,
                     reducedMotion = animationsOff(),
                 )
+                if (verificationNote) VerificationNote(onDismiss = ::sawVerificationNote)
             }
         }
     }
@@ -159,6 +171,11 @@ class MainActivity : ComponentActivity() {
         prefs().edit().putBoolean(KEY_FIRST_RUN_DONE, true).apply()
     }
 
+    private fun sawVerificationNote() {
+        verificationNote = false
+        prefs().edit().putBoolean(KEY_VERIFICATION_NOTE_SHOWN, true).apply()
+    }
+
     private fun applyScenario(intent: Intent) {
         if (!BuildConfig.DEBUG) return
         val name = try {
@@ -167,6 +184,7 @@ class MainActivity : ComponentActivity() {
             null
         } ?: return
         (engine as? Scenarios)?.loadScenario(name)
+        verificationNote = false
         firstRunDone = name != SCENARIO_FIRST_RUN
         prefs().edit().putBoolean(KEY_FIRST_RUN_DONE, firstRunDone).apply()
     }

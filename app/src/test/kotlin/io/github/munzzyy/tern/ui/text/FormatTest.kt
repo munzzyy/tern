@@ -109,11 +109,20 @@ class FormatTest {
     }
 
     @Test
-    fun intervalChoicesKeepTheCurrentValue() {
-        val offered = listOf(0, 15, 30, 60, 180, 360, 720, 1440, 2880, 4320, 10080, 20160, 43200)
-        assertEquals(offered, intervalChoices(360))
-        assertEquals((offered + 45).sorted(), intervalChoices(45))
-        assertEquals(offered, intervalChoices(-4))
+    fun intervalStopsKeepTheCurrentValue() {
+        assertEquals(INTERVAL_STOPS, intervalStops(360))
+        assertEquals((INTERVAL_STOPS + 2000).sorted(), intervalStops(2000))
+        assertEquals(INTERVAL_STOPS, intervalStops(-4))
+    }
+
+    @Test
+    fun theSliderStopsWhereObtainiumsDoes() {
+        // Obtainium's slider runs through these, off first; the stops between them are Tern's own.
+        val obtainium = listOf(0, 15, 30, 60, 120, 180, 360, 720, 1440, 4320, 10080, 20160, 43200)
+        assertTrue(INTERVAL_STOPS.containsAll(obtainium))
+        assertEquals(INTERVAL_STOPS.sorted(), INTERVAL_STOPS)
+        assertEquals(43200, INTERVAL_STOPS.last())
+        assertTrue(INTERVAL_STOPS.none { it in 1 until 15 })
     }
 
     @Test

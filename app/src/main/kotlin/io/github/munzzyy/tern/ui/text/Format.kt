@@ -154,9 +154,17 @@ fun minutesUntil(atMs: Long, nowMs: Long): Long {
     return (diff + 59_999) / 60_000
 }
 
-/** Minutes between background checks to offer, from a quarter of an hour to a month, and the one chosen now. */
-fun intervalChoices(current: Int): List<Int> =
-    (listOf(0, 15, 30, 60, 180, 360, 720, 1440, 2880, 4320, 10080, 20160, 43200) + current).filter { it >= 0 }.distinct().sorted()
+/**
+ * Minutes between background checks the slider stops at: off, then a quarter of an hour to a
+ * month, in round numbers that lie closer together where a difference is felt.
+ */
+val INTERVAL_STOPS: List<Int> = listOf(
+    0, 15, 20, 30, 45, 60, 90, 120, 180, 240, 300, 360, 480, 600, 720, 960,
+    1440, 2160, 2880, 4320, 5760, 7200, 8640, 10080, 14400, 20160, 30240, 43200,
+)
+
+/** [INTERVAL_STOPS], with the interval chosen now among them when it is not one already. */
+fun intervalStops(current: Int): List<Int> = (INTERVAL_STOPS + current).filter { it >= 0 }.distinct().sorted()
 
 /** How an interval of [minutes] is named: in days, hours or minutes, whichever divides it evenly. */
 enum class IntervalUnit { OFF, MINUTES, HOURS, DAYS }

@@ -64,6 +64,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             categoryColors = prefs.getString("categoryColors", null)
                 ?.let { runCatching { CategoryColors.decode(Json.parseObject(it)) }.getOrNull() } ?: d.categoryColors,
             searchIn = prefs.getStringSet("searchIn", null)?.filterTo(LinkedHashSet()) { it.length <= MAX_ORIGIN }?.take(MAX_ORIGINS)?.toSet() ?: d.searchIn,
+            keptExportName = KeptExportName.clean(prefs.getString("keptExportName", null)),
+            keptExportFormat = enumOr(prefs.getString("keptExportFormat", null), d.keptExportFormat),
         )
     }
 
@@ -129,6 +131,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putBoolean("allowDowngrades", s.allowDowngrades)
             .putStringSet("searchIn", s.searchIn.filterTo(LinkedHashSet()) { it.length <= MAX_ORIGIN })
             .putString("categoryColors", Json.write(CategoryColors.encode(s.categoryColors)))
+            .putString("keptExportName", KeptExportName.clean(s.keptExportName))
+            .putString("keptExportFormat", s.keptExportFormat.name)
             .commit()
     }
 

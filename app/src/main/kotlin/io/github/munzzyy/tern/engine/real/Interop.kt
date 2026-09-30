@@ -125,7 +125,7 @@ internal object ImportDecoder {
 
 internal class Interop(private val e: RealEngine) {
     private val files = Files(e.context, e.texts, e.nowMs)
-    val kept = AutoExport(e, files) { export(null, ExportFormat.TERN).first }
+    val kept = AutoExport(e, files) { format -> export(null, format).first }
     private val links = Links(e.http, e.texts, e.nowMs)
     private val oneAtATime = Mutex()
 
@@ -225,7 +225,9 @@ internal class Interop(private val e: RealEngine) {
         count
     }
 
-    suspend fun exportToFolder(): SavedFile = runInterruptible(Dispatchers.IO) { files.save(export(null, ExportFormat.TERN).first) }
+    suspend fun exportToFolder(format: ExportFormat): SavedFile = runInterruptible(Dispatchers.IO) {
+        files.save(export(null, format).first, prefix = ExportNames.prefixOf(format))
+    }
 
     /** A fresh file in the share folder, which holds nothing older, and its content address. */
     suspend fun shareable(appIds: Collection<String>?, format: ExportFormat): Uri = runInterruptible(Dispatchers.IO) {

@@ -315,6 +315,10 @@ data class Settings(
     val searchIn: Set<String> = DEFAULT_SEARCH,
     /** The colour picked for each category, as ARGB; a category without one takes a colour its name falls on. */
     val categoryColors: Map<String, Int> = emptyMap(),
+    /** The name of the kept export's file; null for the usual name of its format. */
+    val keptExportName: String? = null,
+    /** The kept export is written in Tern's format, which holds everything, or in Obtainium's. */
+    val keptExportFormat: ExportFormat = ExportFormat.TERN,
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */

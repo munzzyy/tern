@@ -1,10 +1,10 @@
 package io.github.munzzyy.tern.ui.settings
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.provider.Settings as AndroidSettings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -55,6 +55,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.tern.BuildConfig
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.model.UpdateMode
+import io.github.munzzyy.tern.data.AppLanguage
 import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.engine.InstallerChoice
 import io.github.munzzyy.tern.engine.InstallerMode
@@ -89,7 +90,6 @@ import io.github.munzzyy.tern.ui.detail.updateModeLabel
 import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.text.formatTime
 import io.github.munzzyy.tern.ui.text.IntervalUnit
-import io.github.munzzyy.tern.ui.text.intervalChoices
 import io.github.munzzyy.tern.ui.text.intervalUnit
 import io.github.munzzyy.tern.ui.text.ltr
 import io.github.munzzyy.tern.ui.theme.LocalLook
@@ -97,6 +97,9 @@ import io.github.munzzyy.tern.ui.theme.status
 import java.net.URLDecoder
 
 const val SOURCE_URL = "https://github.com/munzzyy/tern"
+private const val HELP_URL = "$SOURCE_URL#readme"
+private const val SECURITY_URL = "$SOURCE_URL/blob/main/docs/SECURITY-MODEL.md"
+private const val PRIVACY_URL = "$SOURCE_URL/blob/main/PRIVACY.md"
 const val ORBOT_URL = "https://github.com/guardianproject/orbot-android"
 const val ORBOT_TAG = "settings_orbot"
 const val PERMIT_ROW_TAG = "settings_install_permission"
@@ -166,13 +169,7 @@ private typealias Update = ((Settings) -> Settings) -> Unit
 private fun BackgroundSection(s: Settings, vm: SettingsViewModel, update: Update) {
     val running by vm.runningCheck.collectAsStateWithLifecycle()
     SectionCard(title = stringResource(R.string.settings_background)) {
-        ChoiceRow(
-            title = stringResource(R.string.settings_interval),
-            options = intervalChoices(s.checkEveryMinutes),
-            selected = s.checkEveryMinutes,
-            label = { intervalLabel(it) },
-            onSelect = { m -> update { it.copy(checkEveryMinutes = m) } },
-        )
+        IntervalRow(s.checkEveryMinutes) { m -> update { it.copy(checkEveryMinutes = m) } }
         val on = s.checkEveryMinutes > 0
         SwitchRow(
             title = stringResource(R.string.settings_unmetered),
@@ -728,21 +725,22 @@ private fun AppearanceSection(s: Settings, update: Update, onLook: () -> Unit, l
     }
 }
 
-/** Android keeps the language of each app itself from version 13 on; before that the app follows the device. */
+/** Which language Tern speaks. Android 13 and newer keep the choice themselves and show it in their own settings too. */
 @Composable
 private fun LanguageRow() {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
     val context = LocalContext.current
-    val actions = rememberActions()
-    val failed = stringResource(R.string.action_failed)
-    ActionRow(
+    val system = stringResource(R.string.language_system)
+    var chosen by remember { mutableStateOf(AppLanguage.chosen(context)) }
+    ChoiceRow(
         title = stringResource(R.string.settings_language),
-        summary = stringResource(R.string.settings_language_effect),
-        onClick = {
-            try {
-                context.startActivity(Intent(AndroidSettings.ACTION_APP_LOCALE_SETTINGS, Uri.parse("package:${context.packageName}")))
-            } catch (_: ActivityNotFoundException) {
-                actions.say(failed)
+        options = listOf<String?>(null) + remember { AppLanguage.byName() },
+        selected = chosen,
+        label = { tag -> tag?.let(AppLanguage::nameOf) ?: system },
+        onSelect = { tag ->
+            if (tag != chosen) {
+                chosen = tag
+                AppLanguage.choose(context, tag)
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) (context as? Activity)?.recreate()
             }
         },
     )
@@ -758,6 +756,7 @@ private fun DataSection(s: Settings, vm: SettingsViewModel, update: Update, onIm
     val resources = context.resources
     val hasPicker = remember(engine) { engine.hasFilePicker() }
     var outcome by rememberSaveable { mutableStateOf<String?>(null) }
+    var obtainiumOutcome by rememberSaveable { mutableStateOf<String?>(null) }
     val done: (Int?) -> Unit = { count -> actions.say(if (count == null) exportFailed else resources.getQuantityString(R.plurals.exported, count, count)) }
     val exporter = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
         if (uri != null) vm.export(uri, onDone = done)
@@ -797,13 +796,23 @@ private fun DataSection(s: Settings, vm: SettingsViewModel, update: Update, onIm
                 .testTag(EXPORT_ROW_TAG)
                 .semantics { liveRegion = LiveRegionMode.Polite },
         )
-        if (hasPicker) {
-            ActionRow(
-                title = stringResource(R.string.settings_export_obtainium),
-                summary = stringResource(R.string.settings_export_obtainium_effect),
-                onClick = { if (!exporting) obtainiumExporter.launch("obtainium-export.json") },
-            )
-        }
+        ActionRow(
+            title = stringResource(R.string.settings_export_obtainium),
+            summary = obtainiumOutcome ?: stringResource(R.string.settings_export_obtainium_effect),
+            onClick = {
+                when {
+                    exporting -> Unit
+                    hasPicker -> obtainiumExporter.launch("obtainium-export.json")
+                    else -> vm.exportToFolder(ExportFormat.OBTAINIUM) { saved, problem ->
+                        obtainiumOutcome = when {
+                            saved != null -> resources.getString(R.string.door_export_done, ltr(saved.name.take(MAX_SHOWN)), ltr(saved.place.take(MAX_SHOWN)))
+                            else -> problem ?: exportFailed
+                        }
+                    }
+                }
+            },
+            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+        )
         SwitchRow(
             title = stringResource(R.string.settings_export_installed_only),
             checked = s.exportInstalledOnly,
@@ -862,6 +871,16 @@ private fun KeptExport(s: Settings, vm: SettingsViewModel, update: Update, hasPi
             onClick = { picker.launch(s.exportFolder?.let(Uri::parse)) },
         )
     }
+    if (s.autoExport) {
+        ChoiceRow(
+            title = stringResource(R.string.kept_export_format),
+            options = ExportFormat.entries,
+            selected = s.keptExportFormat,
+            label = { stringResource(if (it == ExportFormat.OBTAINIUM) R.string.kept_export_format_obtainium else R.string.kept_export_format_tern) },
+            onSelect = { f -> update { it.copy(keptExportFormat = f) } },
+        )
+        KeptExportNameRow(s, update)
+    }
 }
 
 /** The picked folder as a person knows it, "Documents/Backups" rather than its content address. */
@@ -876,6 +895,7 @@ fun folderName(folder: String?): String? {
 @Composable
 private fun AboutSection(onAdd: (String) -> Unit) {
     var link by remember { mutableStateOf<String?>(null) }
+    var note by remember { mutableStateOf(false) }
     val rows by LocalEngine.current.apps.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val tracked = remember(rows) { tracksItself(rows.map { it.config.source.url to (it.config.packageName ?: it.installed?.packageName) }, context.packageName) }
@@ -888,6 +908,26 @@ private fun AboutSection(onAdd: (String) -> Unit) {
                 onClick = { onAdd(SOURCE_URL) },
             )
         }
+        ActionRow(
+            title = stringResource(R.string.about_help),
+            summary = stringResource(R.string.about_help_effect),
+            trailing = Glyphs.OpenInNew,
+            onClick = { link = HELP_URL },
+        )
+        ActionRow(
+            title = stringResource(R.string.about_security),
+            trailing = Glyphs.OpenInNew,
+            onClick = { link = SECURITY_URL },
+        )
+        ActionRow(
+            title = stringResource(R.string.about_privacy),
+            trailing = Glyphs.OpenInNew,
+            onClick = { link = PRIVACY_URL },
+        )
+        ActionRow(
+            title = stringResource(R.string.verification_title),
+            onClick = { note = true },
+        )
         InfoRow(title = stringResource(R.string.about_licence), value = stringResource(R.string.about_licence_name))
         ActionRow(
             title = stringResource(R.string.about_source),
@@ -897,4 +937,5 @@ private fun AboutSection(onAdd: (String) -> Unit) {
         )
     }
     link?.let { LinkDialog(it, onDismiss = { link = null }) }
+    if (note) VerificationNote(onDismiss = { note = false })
 }

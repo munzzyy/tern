@@ -91,12 +91,12 @@ class SettingsViewModel(private val engine: Engine) : ViewModel() {
     }
 
     /** Hands back the file that was written, or else the engine's sentence about why not, which is null when it gave none. */
-    fun exportToFolder(onDone: (SavedFile?, String?) -> Unit) {
+    fun exportToFolder(format: ExportFormat = ExportFormat.TERN, onDone: (SavedFile?, String?) -> Unit) {
         if (_exporting.value) return
         _exporting.value = true
         viewModelScope.launch {
             val (saved, problem) = try {
-                engine.exportToFolder() to null
+                engine.exportToFolder(format) to null
             } catch (e: CancellationException) {
                 throw e
             } catch (e: ProblemException) {

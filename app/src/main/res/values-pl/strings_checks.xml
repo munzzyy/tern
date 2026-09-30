@@ -21,7 +21,6 @@
     <string name="settings_only_installed">Sprawdzaj tylko zainstalowane aplikacje</string>
     <string name="settings_only_installed_effect">Aplikacje, które są tylko śledzone, też są sprawdzane. Aplikacja, którą otworzysz, jest zawsze sprawdzana.</string>
     <string name="settings_remove_uninstalled">Usuwaj aplikacje odinstalowane gdzie indziej</string>
-    <string name="settings_remove_uninstalled_effect">Aplikacja odinstalowana poza Tern również znika z listy.</string>
     <string name="settings_file_filter">Filtr plików</string>
     <string name="settings_file_filter_effect">Wzorzec, według którego plik wybiera każda aplikacja bez własnego filtra.</string>
     <string name="settings_file_filter_none">Brak</string>

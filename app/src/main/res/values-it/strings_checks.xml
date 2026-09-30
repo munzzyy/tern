@@ -19,7 +19,6 @@
     <string name="settings_only_installed">Controlla solo le app installate</string>
     <string name="settings_only_installed_effect">Anche le app solo tracciate vengono controllate. Un\'app che apri viene sempre controllata.</string>
     <string name="settings_remove_uninstalled">Rimuovi le app disinstallate altrove</string>
-    <string name="settings_remove_uninstalled_effect">Un\'app che disinstalli fuori da Tern esce anche dalla lista.</string>
     <string name="settings_file_filter">Filtro per i file</string>
     <string name="settings_file_filter_effect">Un pattern con cui ogni app senza un proprio filtro sceglie il suo file.</string>
     <string name="settings_file_filter_none">Nessuno</string>

@@ -237,7 +237,7 @@ private fun BackgroundSection(s: Settings, vm: SettingsViewModel, update: Update
         )
         SwitchRow(
             title = stringResource(R.string.settings_remove_uninstalled),
-            summary = stringResource(R.string.settings_remove_uninstalled_effect),
+            summary = stringResource(R.string.settings_remove_uninstalled_keeps_pins),
             checked = s.removeUninstalled,
             onChange = { v -> update { it.copy(removeUninstalled = v) } },
         )

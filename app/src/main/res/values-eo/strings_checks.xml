@@ -17,7 +17,6 @@
     <string name="settings_only_installed">Kontroli nur instalitajn aplikaĵojn</string>
     <string name="settings_only_installed_effect">Aplikaĵoj kiuj estas nur sekvataj ankaŭ estas kontrolataj. Aplikaĵo kiun vi malfermas ĉiam estas kontrolata.</string>
     <string name="settings_remove_uninstalled">Forigi aplikaĵojn malinstalitajn aliloke</string>
-    <string name="settings_remove_uninstalled_effect">Aplikaĵo kiun vi malinstalas ekster Tern ankaŭ forlasas la liston.</string>
     <string name="settings_file_filter">Filtrilo por dosieroj</string>
     <string name="settings_file_filter_effect">Ŝablono laŭ kiu ĉiu aplikaĵo sen propra filtrilo elektas sian dosieron.</string>
     <string name="settings_file_filter_none">Neniu</string>

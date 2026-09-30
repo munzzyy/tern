@@ -17,7 +17,6 @@
     <string name="settings_only_installed">Only check installed apps</string>
     <string name="settings_only_installed_effect">Apps that are only tracked are checked too. An app you open is always checked.</string>
     <string name="settings_remove_uninstalled">Remove apps uninstalled elsewhere</string>
-    <string name="settings_remove_uninstalled_effect">An app you uninstall outside Tern leaves the list as well.</string>
     <string name="settings_file_filter">Filter for files</string>
     <string name="settings_file_filter_effect">A pattern every app without a filter of its own picks its file by.</string>
     <string name="settings_file_filter_none">None</string>

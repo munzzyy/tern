@@ -17,7 +17,6 @@
     <string name="settings_only_installed">Csak a telepített alkalmazások ellenőrzése</string>
     <string name="settings_only_installed_effect">A csak követett alkalmazások is ellenőrzésre kerülnek. A megnyitott alkalmazás mindig ellenőrzésre kerül.</string>
     <string name="settings_remove_uninstalled">Máshol eltávolított alkalmazások törlése a listáról</string>
-    <string name="settings_remove_uninstalled_effect">Ha a Ternen kívül eltávolít egy alkalmazást, az a listáról is lekerül.</string>
     <string name="settings_file_filter">Fájlszűrő</string>
     <string name="settings_file_filter_effect">Minta, amely alapján minden saját szűrő nélküli alkalmazás kiválasztja a fájlját.</string>
     <string name="settings_file_filter_none">Nincs</string>

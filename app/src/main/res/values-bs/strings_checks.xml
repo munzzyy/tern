@@ -19,7 +19,6 @@
     <string name="settings_only_installed">Provjeravaj samo instalirane aplikacije</string>
     <string name="settings_only_installed_effect">Aplikacije koje se samo prate također se provjeravaju. Aplikacija koju otvorite uvijek se provjerava.</string>
     <string name="settings_remove_uninstalled">Ukloni aplikacije deinstalirane negdje drugo</string>
-    <string name="settings_remove_uninstalled_effect">Aplikacija koju deinstalirate izvan Terna također napušta spisak.</string>
     <string name="settings_file_filter">Filter za datoteke</string>
     <string name="settings_file_filter_effect">Obrazac po kojem svaka aplikacija bez vlastitog filtera bira svoju datoteku.</string>
     <string name="settings_file_filter_none">Nijedan</string>

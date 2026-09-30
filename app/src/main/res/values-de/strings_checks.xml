@@ -17,7 +17,6 @@
     <string name="settings_only_installed">Nur installierte Apps prüfen</string>
     <string name="settings_only_installed_effect">Apps, die nur verfolgt werden, werden auch geprüft. Eine App, die du öffnest, wird immer geprüft.</string>
     <string name="settings_remove_uninstalled">Anderswo deinstallierte Apps entfernen</string>
-    <string name="settings_remove_uninstalled_effect">Eine App, die du außerhalb von Tern deinstallierst, verschwindet auch aus der Liste.</string>
     <string name="settings_file_filter">Filter für Dateien</string>
     <string name="settings_file_filter_effect">Ein Muster, nach dem jede App ohne eigenen Filter ihre Datei auswählt.</string>
     <string name="settings_file_filter_none">Keiner</string>

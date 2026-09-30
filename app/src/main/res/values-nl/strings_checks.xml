@@ -17,7 +17,6 @@
     <string name="settings_only_installed">Alleen geïnstalleerde apps controleren</string>
     <string name="settings_only_installed_effect">Apps die alleen worden gevolgd, worden ook gecontroleerd. Een app die je opent, wordt altijd gecontroleerd.</string>
     <string name="settings_remove_uninstalled">Elders gede-installeerde apps verwijderen</string>
-    <string name="settings_remove_uninstalled_effect">Een app die je buiten Tern de-installeert, verdwijnt ook uit de lijst.</string>
     <string name="settings_file_filter">Filter voor bestanden</string>
     <string name="settings_file_filter_effect">Een patroon waarmee elke app zonder eigen filter zijn bestand kiest.</string>
     <string name="settings_file_filter_none">Geen</string>

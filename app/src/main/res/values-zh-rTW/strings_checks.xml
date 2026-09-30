@@ -15,7 +15,6 @@
     <string name="settings_only_installed">只檢查已安裝的應用程式</string>
     <string name="settings_only_installed_effect">僅追蹤的應用程式也會檢查。您開啟的應用程式一律會檢查。</string>
     <string name="settings_remove_uninstalled">移除在其他地方解除安裝的應用程式</string>
-    <string name="settings_remove_uninstalled_effect">在 Tern 以外解除安裝的應用程式也會從清單中移除。</string>
     <string name="settings_file_filter">檔案篩選器</string>
     <string name="settings_file_filter_effect">所有沒有自己篩選器的應用程式用來挑選檔案的模式。</string>
     <string name="settings_file_filter_none">無</string>

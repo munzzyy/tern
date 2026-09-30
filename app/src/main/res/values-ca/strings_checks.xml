@@ -19,7 +19,6 @@
     <string name="settings_only_installed">Comprova només les aplicacions instal·lades</string>
     <string name="settings_only_installed_effect">Les aplicacions que només se segueixen també es comproven. Una aplicació que obres sempre es comprova.</string>
     <string name="settings_remove_uninstalled">Suprimeix les aplicacions desinstal·lades fora de Tern</string>
-    <string name="settings_remove_uninstalled_effect">Una aplicació que desinstal·les fora de Tern també surt de la llista.</string>
     <string name="settings_file_filter">Filtre de fitxers</string>
     <string name="settings_file_filter_effect">Un patró amb què cada aplicació sense filtre propi tria el seu fitxer.</string>
     <string name="settings_file_filter_none">Cap</string>

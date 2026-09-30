@@ -19,7 +19,6 @@
     <string name="settings_only_installed">Verificar apenas apps instalados</string>
     <string name="settings_only_installed_effect">Apps que são apenas acompanhados também são verificados. Um app que você abre é sempre verificado.</string>
     <string name="settings_remove_uninstalled">Remover apps desinstalados fora do Tern</string>
-    <string name="settings_remove_uninstalled_effect">Um app que você desinstala fora do Tern também sai da lista.</string>
     <string name="settings_file_filter">Filtro de arquivos</string>
     <string name="settings_file_filter_effect">Um padrão pelo qual todo app sem filtro próprio escolhe seu arquivo.</string>
     <string name="settings_file_filter_none">Nenhum</string>

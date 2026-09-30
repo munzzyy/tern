@@ -15,7 +15,6 @@
     <string name="settings_only_installed">Chỉ kiểm tra ứng dụng đã cài đặt</string>
     <string name="settings_only_installed_effect">Ứng dụng chỉ được theo dõi vẫn được kiểm tra. Ứng dụng bạn mở luôn được kiểm tra.</string>
     <string name="settings_remove_uninstalled">Xóa ứng dụng đã gỡ cài đặt ở nơi khác</string>
-    <string name="settings_remove_uninstalled_effect">Ứng dụng bạn gỡ cài đặt bên ngoài Tern cũng sẽ rời khỏi danh sách.</string>
     <string name="settings_file_filter">Bộ lọc tệp</string>
     <string name="settings_file_filter_effect">Mẫu mà mọi ứng dụng không có bộ lọc riêng dùng để chọn tệp.</string>
     <string name="settings_file_filter_none">Không có</string>

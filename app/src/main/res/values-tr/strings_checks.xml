@@ -17,7 +17,6 @@
     <string name="settings_only_installed">Yalnızca yüklü uygulamaları denetle</string>
     <string name="settings_only_installed_effect">Yalnızca izlenen uygulamalar da denetlenir. Açtığınız bir uygulama her zaman denetlenir.</string>
     <string name="settings_remove_uninstalled">Başka yerden kaldırılan uygulamaları listeden çıkar</string>
-    <string name="settings_remove_uninstalled_effect">Tern dışında kaldırdığınız bir uygulama listeden de çıkar.</string>
     <string name="settings_file_filter">Dosya filtresi</string>
     <string name="settings_file_filter_effect">Kendi filtresi olmayan her uygulamanın dosyasını seçerken kullandığı bir kalıp.</string>
     <string name="settings_file_filter_none">Yok</string>

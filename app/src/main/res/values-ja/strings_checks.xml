@@ -15,7 +15,6 @@
     <string name="settings_only_installed">インストール済みのアプリのみ確認</string>
     <string name="settings_only_installed_effect">追跡のみのアプリも確認されます。開いたアプリは常に確認されます。</string>
     <string name="settings_remove_uninstalled">他でアンインストールされたアプリを削除</string>
-    <string name="settings_remove_uninstalled_effect">Tern以外でアンインストールしたアプリは、リストからも削除されます。</string>
     <string name="settings_file_filter">ファイルのフィルター</string>
     <string name="settings_file_filter_effect">独自のフィルターがないすべてのアプリが、ファイルを選ぶときに使うパターンです。</string>
     <string name="settings_file_filter_none">なし</string>

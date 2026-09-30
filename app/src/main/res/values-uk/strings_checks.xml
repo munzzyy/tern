@@ -21,7 +21,6 @@
     <string name="settings_only_installed">Перевіряти лише встановлені програми</string>
     <string name="settings_only_installed_effect">Програми, які лише відстежуються, теж перевіряються. Програма, яку ви відкриваєте, перевіряється завжди.</string>
     <string name="settings_remove_uninstalled">Вилучати програми, видалені в іншому місці</string>
-    <string name="settings_remove_uninstalled_effect">Програма, яку ви видаляєте не через Tern, також зникає зі списку.</string>
     <string name="settings_file_filter">Фільтр файлів</string>
     <string name="settings_file_filter_effect">Шаблон, за яким вибирають файл усі програми без власного фільтра.</string>
     <string name="settings_file_filter_none">Немає</string>

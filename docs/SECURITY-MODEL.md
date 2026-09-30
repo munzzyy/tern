@@ -106,6 +106,13 @@ passes on what it claims.
 The log shows a file as verified after every file that goes to the installer
 has been verified by Android or by Tern.
 
+When "Remove apps uninstalled elsewhere" takes an app out of the list, Tern
+keeps the certificates it was pinned to and its repository's key. Added again
+from the same source, the app is held to them again, so uninstalling and
+reinstalling does not let the next file served become the pin. An app Android
+15 archived is not taken out at all. Removing an app in Tern by hand forgets
+what was kept, which is how a person lets an app change its signer.
+
 ### Package, version and kind
 
 A file for another package is refused. So is an older version code, a test-only

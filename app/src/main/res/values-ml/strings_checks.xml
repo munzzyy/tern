@@ -17,7 +17,6 @@
     <string name="settings_only_installed">ഇൻസ്റ്റാൾ ചെയ്ത ആപ്പുകൾ മാത്രം പരിശോധിക്കുക</string>
     <string name="settings_only_installed_effect">പിന്തുടരുക മാത്രം ചെയ്യുന്ന ആപ്പുകളും പരിശോധിക്കും. നിങ്ങൾ തുറക്കുന്ന ആപ്പ് എപ്പോഴും പരിശോധിക്കും.</string>
     <string name="settings_remove_uninstalled">മറ്റിടങ്ങളിൽ അൺഇൻസ്റ്റാൾ ചെയ്ത ആപ്പുകൾ നീക്കംചെയ്യുക</string>
-    <string name="settings_remove_uninstalled_effect">Tern-ന് പുറത്ത് നിങ്ങൾ അൺഇൻസ്റ്റാൾ ചെയ്യുന്ന ആപ്പ് ലിസ്റ്റിൽ നിന്നും പോകും.</string>
     <string name="settings_file_filter">ഫയലുകൾക്കുള്ള ഫിൽട്ടർ</string>
     <string name="settings_file_filter_effect">സ്വന്തമായി ഫിൽട്ടർ ഇല്ലാത്ത ഓരോ ആപ്പും അതിൻ്റെ ഫയൽ തിരഞ്ഞെടുക്കാൻ ഉപയോഗിക്കുന്ന പാറ്റേൺ.</string>
     <string name="settings_file_filter_none">ഒന്നുമില്ല</string>

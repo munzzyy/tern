@@ -21,7 +21,6 @@
     <string name="settings_only_installed">Проверять только установленные приложения</string>
     <string name="settings_only_installed_effect">Приложения, которые только отслеживаются, тоже проверяются. Открытое вами приложение проверяется всегда.</string>
     <string name="settings_remove_uninstalled">Убирать приложения, удаленные в другом месте</string>
-    <string name="settings_remove_uninstalled_effect">Приложение, которое вы удалили не через Tern, тоже исчезает из списка.</string>
     <string name="settings_file_filter">Фильтр файлов</string>
     <string name="settings_file_filter_effect">Шаблон, по которому выбирают файл все приложения без собственного фильтра.</string>
     <string name="settings_file_filter_none">Нет</string>

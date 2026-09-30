@@ -15,7 +15,6 @@
     <string name="settings_only_installed">Hanya periksa aplikasi yang terinstal</string>
     <string name="settings_only_installed_effect">Aplikasi yang hanya diikuti juga diperiksa. Aplikasi yang Anda buka selalu diperiksa.</string>
     <string name="settings_remove_uninstalled">Hapus aplikasi yang di-uninstal di tempat lain</string>
-    <string name="settings_remove_uninstalled_effect">Aplikasi yang Anda uninstal di luar Tern juga keluar dari daftar.</string>
     <string name="settings_file_filter">Filter untuk file</string>
     <string name="settings_file_filter_effect">Pola yang dipakai setiap aplikasi tanpa filter sendiri untuk memilih filenya.</string>
     <string name="settings_file_filter_none">Tidak ada</string>

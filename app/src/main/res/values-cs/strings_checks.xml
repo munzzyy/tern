@@ -21,7 +21,6 @@
     <string name="settings_only_installed">Kontrolovat jen nainstalované aplikace</string>
     <string name="settings_only_installed_effect">Aplikace, které se jen sledují, se kontrolují také. Aplikace, kterou otevřete, se kontroluje vždy.</string>
     <string name="settings_remove_uninstalled">Odebírat aplikace odinstalované jinde</string>
-    <string name="settings_remove_uninstalled_effect">Aplikace, kterou odinstalujete mimo Tern, zmizí i ze seznamu.</string>
     <string name="settings_file_filter">Filtr souborů</string>
     <string name="settings_file_filter_effect">Vzor, podle kterého si soubor vybírá každá aplikace bez vlastního filtru.</string>
     <string name="settings_file_filter_none">Žádný</string>

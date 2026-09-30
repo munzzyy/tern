@@ -17,7 +17,6 @@
     <string name="settings_only_installed">Comprobar só as aplicacións instaladas</string>
     <string name="settings_only_installed_effect">As aplicacións que só se seguen tamén se comproban. Unha aplicación que abras compróbase sempre.</string>
     <string name="settings_remove_uninstalled">Eliminar as aplicacións desinstaladas fóra de Tern</string>
-    <string name="settings_remove_uninstalled_effect">Unha aplicación que desinstales fóra de Tern tamén sae da lista.</string>
     <string name="settings_file_filter">Filtro de ficheiros</string>
     <string name="settings_file_filter_effect">Un patrón co que cada aplicación sen filtro propio escolle o seu ficheiro.</string>
     <string name="settings_file_filter_none">Ningún</string>

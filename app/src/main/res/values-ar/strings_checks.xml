@@ -25,7 +25,6 @@
     <string name="settings_only_installed">فحص التطبيقات المثبتة فقط</string>
     <string name="settings_only_installed_effect">التطبيقات التي تُتابَع فقط تُفحص أيضًا. التطبيق الذي تفتحه يُفحص دائمًا.</string>
     <string name="settings_remove_uninstalled">إزالة التطبيقات التي أُلغي تثبيتها في مكان آخر</string>
-    <string name="settings_remove_uninstalled_effect">التطبيق الذي تلغي تثبيته خارج Tern يخرج من القائمة أيضًا.</string>
     <string name="settings_file_filter">فلتر الملفات</string>
     <string name="settings_file_filter_effect">نمط يختار به كل تطبيق ليس له فلتر خاص به ملفَّه.</string>
     <string name="settings_file_filter_none">لا شيء</string>

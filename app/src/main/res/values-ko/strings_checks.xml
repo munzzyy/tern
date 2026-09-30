@@ -15,7 +15,6 @@
     <string name="settings_only_installed">설치된 앱만 확인</string>
     <string name="settings_only_installed_effect">추적만 하는 앱도 확인합니다. 직접 연 앱은 항상 확인합니다.</string>
     <string name="settings_remove_uninstalled">다른 곳에서 설치 삭제한 앱 제거</string>
-    <string name="settings_remove_uninstalled_effect">Tern 밖에서 설치 삭제한 앱은 목록에서도 제거됩니다.</string>
     <string name="settings_file_filter">파일 필터</string>
     <string name="settings_file_filter_effect">자체 필터가 없는 모든 앱이 파일을 고를 때 사용하는 패턴입니다.</string>
     <string name="settings_file_filter_none">없음</string>

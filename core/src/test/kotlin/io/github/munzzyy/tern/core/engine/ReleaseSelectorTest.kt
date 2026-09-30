@@ -68,6 +68,23 @@ class ReleaseSelectorTest {
     }
 
     @Test
+    fun aReleaseWithoutATitleIsFilteredByItsTag() {
+        val releases = listOf(release("nightly-5", title = " "), release("android-v4.2"), release("android-v4.1", title = "Desktop"))
+        assertEquals("android-v4.2", pick(releases, ReleasePolicy(titleFilter = "^android")).candidate!!.id)
+    }
+
+    @Test
+    fun theLastReleasesOldEnoughStayWhileEveryNewOneIsTooYoung() {
+        val old = release("v1.0", daysAgo = 10)
+        val young = release("v1.1", daysAgo = 1)
+        assertEquals(listOf("v1.1", "v1.0"), ReleaseSelector.keptUntilOldEnough(listOf(young), listOf(old), 3, now).map { it.id })
+        assertEquals(listOf("v1.1"), ReleaseSelector.keptUntilOldEnough(listOf(young), listOf(old), 0, now).map { it.id })
+        assertEquals(listOf("v1.2", "v1.1"), ReleaseSelector.keptUntilOldEnough(listOf(release("v1.2", daysAgo = 5), young), listOf(old), 3, now).map { it.id })
+        assertEquals(listOf("v1.1", "v1.0"), ReleaseSelector.keptUntilOldEnough(listOf(young), listOf(young, old), 3, now).map { it.id })
+        assertEquals("v1.0", pick(ReleaseSelector.keptUntilOldEnough(listOf(young), listOf(old), 3, now), ReleasePolicy(minAgeDays = 3)).candidate!!.id)
+    }
+
+    @Test
     fun holdsBackReleasesYoungerThanTheMinimumAge() {
         val releases = listOf(release("v2.0.0", daysAgo = 2), release("v1.9.0", daysAgo = 9))
         val picked = pick(releases, ReleasePolicy(minAgeDays = 7))

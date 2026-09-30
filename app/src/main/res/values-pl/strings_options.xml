@@ -72,12 +72,7 @@
     <string name="option_csc_help">Trzy litery, na przykład DBT.</string>
     <string name="option_link_filter">Filtr linków do pobrania</string>
     <string name="option_link_filter_help">Tylko pasujące linki liczą się jako pliki do pobrania.</string>
-    <string name="option_steps">Strony do przejścia najpierw</string>
-    <string name="option_steps_help">Jeden wzorzec w wierszu: na każdej stronie otwierany jest pierwszy pasujący link.</string>
     <string name="option_page_order">Zachowaj kolejność ze strony</string>
-    <string name="option_page_order_effect">W przeciwnym razie linki są porządkowane według wersji, którą podają.</string>
-    <string name="option_first_link">Bierz tylko pierwszy link</string>
-    <string name="option_last_segment">Odczytuj wersje z końca adresu</string>
     <string name="option_any_text">Szukaj linków także poza znacznikami linków</string>
     <string name="option_any_text_effect">W tekście strony, w JSON i w innych atrybutach.</string>
     <string name="option_version_from">Skąd brać wersję</string>

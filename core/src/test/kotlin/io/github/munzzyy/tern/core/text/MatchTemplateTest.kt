@@ -57,9 +57,10 @@ class MatchTemplateTest {
     }
 
     @Test
-    fun aPatternFillsTheTemplateFromItsFirstMatch() {
+    fun aPatternFillsTheTemplateFromItsLastMatch() {
         val pattern = SafePattern.compile("(\\d+)\\.(\\d+)")
-        assertEquals("2-1", pattern.extract("app 1.2 and 3.4", MatchTemplate.parse("$2-$1")!!))
+        assertEquals("4-3", pattern.extract("app 1.2 and 3.4", MatchTemplate.parse("$2-$1")!!))
+        assertEquals(listOf("3.4", "3", "4"), pattern.groups("app 1.2 and 3.4"))
         assertNull(pattern.extract("no numbers", MatchTemplate.parse("$1")!!))
         assertEquals(listOf("1.2", "1", "2"), pattern.groups("app 1.2"))
         assertEquals(listOf("1", "1", null), SafePattern.compile("(\\d)(x)?").groups("1"))

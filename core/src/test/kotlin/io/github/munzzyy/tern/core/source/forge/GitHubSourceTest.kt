@@ -258,6 +258,57 @@ class GitHubSourceTest {
     }
 
     @Test
+    fun withATokenFilesComeThroughTheApiAsTheFileItself() {
+        val body = """[{"tag_name": "v2.0", "name": "", "draft": false, "prerelease": false, "assets": [{"name": "app.apk",
+            "url": "https://api.github.com/repos/example/app/releases/assets/42",
+            "browser_download_url": "https://github.com/example/app/releases/download/v2.0/app.apk"}]}]"""
+        val withToken = listing(FakeHttp().text(apiUrl, body), spec()).releases.single().assets.single()
+        assertEquals("https://api.github.com/repos/example/app/releases/assets/42", withToken.url)
+        assertTrue(withToken.needsAuth)
+        val download = source.resolve(spec(), withToken, context(FakeHttp()))
+        assertEquals("application/octet-stream", download.headers["Accept"])
+
+        val anonymous = (source.check(spec(), context(FakeHttp().text(feedUrl, "<feed/>").text(apiUrl, body))) as CheckResult.Listing).listing
+        val file = anonymous.releases.single().assets.single()
+        assertEquals("https://github.com/example/app/releases/download/v2.0/app.apk", file.url)
+        assertEquals(false, file.needsAuth)
+        assertTrue(source.resolve(spec(), file, context(FakeHttp())).headers.isEmpty())
+    }
+
+    @Test
+    fun aRefusedTokenIsTriedOnceWithout() {
+        val http = FakeHttp().on(apiUrl) { request ->
+            if (request.authorization != null) HttpResponse.of(401, """{"message": "Bad credentials"}""", url = apiUrl) else HttpResponse.of(200, Fixtures.text("forge/github_releases.json"), url = apiUrl)
+        }
+        val releases = listing(http, spec()).releases
+        assertEquals(listOf("v1.2.0", "v1.1.0"), releases.map { it.id })
+        assertEquals(listOf("Bearer tok", null), http.requestsTo(apiUrl).map { it.authorization })
+        assertTrue(releases.flatMap { it.assets }.none { it.needsAuth })
+    }
+
+    @Test
+    fun aProjectWithoutReleasesListsItsTagsForAnAppThatIsOnlyTracked() {
+        val tagsUrl = "https://api.github.com/repos/example/app/tags?per_page=30"
+        val http = FakeHttp().text(apiUrl, "[]").on(tagsUrl) { request ->
+            if (request.headers["If-None-Match"] == "\"t1\"") HttpResponse.of(304, "", url = tagsUrl)
+            else HttpResponse.of(200, """[{"name": "v3.1"}, {"name": "v3.0"}]""", Headers.of("ETag" to "\"t1\""), tagsUrl)
+        }
+        val tracked = io.github.munzzyy.tern.core.model.AppConfig(id = "a", source = spec(), name = "App", trackOnly = true)
+        val validators = InMemoryValidatorStore()
+        val ctx = CheckContext(http, validators, TokenProvider { if (it == "api.github.com") "tok" else null }, app = tracked)
+        val releases = (source.check(spec(), ctx) as CheckResult.Listing).listing.releases
+        assertEquals(listOf("v3.1", "v3.0"), releases.map { it.id })
+        assertTrue(releases.all { it.assets.isEmpty() })
+        assertEquals(CheckResult.Unchanged, source.check(spec(), ctx))
+        try {
+            listing(FakeHttp().text(apiUrl, "[]"), spec())
+            org.junit.Assert.fail("expected SourceException")
+        } catch (e: SourceException) {
+            assertEquals(SourceErrorKind.NO_RELEASES, e.kind)
+        }
+    }
+
+    @Test
     fun aReleaseCanBeDatedByItsNewestFile() {
         val http = FakeHttp().resource(apiUrl, "forge/github_file_dates.json")
         val dated = listing(http, spec(SourceOptions.ASSET_DATE to "true")).releases

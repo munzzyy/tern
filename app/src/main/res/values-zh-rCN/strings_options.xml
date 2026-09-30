@@ -66,12 +66,7 @@
     <string name="option_csc_help">三个字母，例如 DBT。</string>
     <string name="option_link_filter">下载链接过滤器</string>
     <string name="option_link_filter_help">仅匹配的链接算作下载。</string>
-    <string name="option_steps">先依次打开的页面</string>
-    <string name="option_steps_help">每行一个模式：在每个页面上，打开第一个匹配的链接。</string>
     <string name="option_page_order">保留页面上的顺序</string>
-    <string name="option_page_order_effect">否则链接将按其标明的版本排序。</string>
-    <string name="option_first_link">仅取第一个链接</string>
-    <string name="option_last_segment">从地址末尾读取版本</string>
     <string name="option_any_text">也查找链接标签之外的链接</string>
     <string name="option_any_text_effect">在页面文本、JSON 和其他属性中查找。</string>
     <string name="option_version_from">读取版本的位置</string>

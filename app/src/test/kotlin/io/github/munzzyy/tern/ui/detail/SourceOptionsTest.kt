@@ -4,6 +4,7 @@ import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
+import io.github.munzzyy.tern.core.source.web.HtmlStep
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -23,12 +24,15 @@ class SourceOptionsTest {
     @Test
     fun theDraftShowsWhatIsStoredAndSavesWhatWasTyped() {
         val draft = OptionsDraft.of(page)
-        assertEquals("releases\narm64", draft.steps)
-        val saved = draft.copy(steps = "releases\narm64\nlatest", headers = "User-Agent: Mozilla/5.0").applyTo(page)
+        assertEquals(listOf(HtmlStep("releases"), HtmlStep("arm64", byText = true, arch = true)), draft.steps)
+        val typed = draft.steps + HtmlStep(" latest ", pageOrder = true, firstLink = true, lastSegment = true, anyText = true)
+        val saved = draft.copy(steps = typed, headers = "User-Agent: Mozilla/5.0").applyTo(page)
         val steps = Json.parseArray(saved.option(SourceOptions.STEPS)!!)
-        // A step that was an object keeps what it said about the link's text and the processor.
+        assertEquals("releases", (steps[0] as io.github.munzzyy.tern.core.json.JsonString).value)
         assertEquals(Json.parseObject("""{"filter":"arm64","text":true,"arch":true}"""), steps[1])
-        assertEquals("latest", (steps[2] as io.github.munzzyy.tern.core.json.JsonString).value)
+        assertEquals(Json.parseObject("""{"filter":"latest","pageOrder":true,"firstLink":true,"lastSegment":true,"anyText":true}"""), steps[2])
+        assertTrue("steps" in draft.copy(steps = listOf(HtmlStep(" "))).invalid(SourceTypes.HTML))
+        assertTrue("steps" in draft.copy(steps = listOf(HtmlStep("("))).invalid(SourceTypes.HTML))
         assertEquals("page", saved.option(SourceOptions.SORT))
         assertEquals("""{"User-Agent":"Mozilla/5.0"}""", saved.option(SourceOptions.HEADERS))
         assertNull(draft.copy(linkFilter = "  ").applyTo(page).option(SourceOptions.LINK_FILTER))

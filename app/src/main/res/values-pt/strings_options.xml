@@ -70,12 +70,7 @@
     <string name="option_csc_help">Três letras, como DBT.</string>
     <string name="option_link_filter">Filtro de ligações de transferência</string>
     <string name="option_link_filter_help">Apenas as ligações correspondentes contam como transferências.</string>
-    <string name="option_steps">Páginas a percorrer primeiro</string>
-    <string name="option_steps_help">Um padrão por linha: em cada página, é seguida a primeira ligação correspondente.</string>
     <string name="option_page_order">Manter a ordem da página</string>
-    <string name="option_page_order_effect">Caso contrário, as ligações são ordenadas pela versão que indicam.</string>
-    <string name="option_first_link">Usar apenas a primeira ligação</string>
-    <string name="option_last_segment">Ler as versões do fim do endereço</string>
     <string name="option_any_text">Encontrar ligações também fora das etiquetas de ligação</string>
     <string name="option_any_text_effect">No texto da página, em JSON e noutros atributos.</string>
     <string name="option_version_from">Ler a versão de</string>

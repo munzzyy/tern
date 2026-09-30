@@ -1,10 +1,11 @@
 package io.github.munzzyy.tern.engine.real
 
 import io.github.munzzyy.tern.core.apk.BinaryManifest
+import io.github.munzzyy.tern.core.engine.ReleaseSelector
 import io.github.munzzyy.tern.core.icon.IconAddresses
+import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.net.Urls
-import io.github.munzzyy.tern.core.source.CheckContext
 import io.github.munzzyy.tern.core.source.CheckResult
 import io.github.munzzyy.tern.core.source.SourceErrorKind
 import io.github.munzzyy.tern.core.source.SourceException
@@ -55,7 +56,7 @@ internal class Checks(private val e: RealEngine) {
         try {
             return withContext(Dispatchers.IO) {
                 val retryAt = stored.state.checkProblem?.takeIf { it.kind == ProblemKind.RATE_LIMITED }?.retryAtMs
-                val failed = if (retryAt != null && retryAt > e.nowMs()) true else fetch(id, stored.config.source)
+                val failed = if (retryAt != null && retryAt > e.nowMs()) true else fetch(id, stored.config)
                 reevaluate(id, network = true)
                 CheckOutcome(id, announce(id), failed)
             }
@@ -66,13 +67,14 @@ internal class Checks(private val e: RealEngine) {
     }
 
     /** Returns true when the check failed. */
-    private suspend fun fetch(id: String, spec: io.github.munzzyy.tern.core.model.SourceSpec): Boolean {
+    private suspend fun fetch(id: String, config: AppConfig): Boolean {
+        val spec = config.source
         val hostPermits = perHost.getOrPut(Urls.host(spec.url)) { Semaphore(PER_HOST) }
         val outcome: Any = all.withPermit {
             hostPermits.withPermit {
                 runInterruptible(Dispatchers.IO) {
                     try {
-                        e.registry.check(spec, CheckContext(e.http, e.store, e.tokens, e.nowMs, e.device.profile))
+                        e.registry.check(spec, e.checkContext(config, e.store))
                     } catch (ex: SourceException) {
                         ex
                     }
@@ -101,7 +103,9 @@ internal class Checks(private val e: RealEngine) {
             }
             val listed = listing.packageName
             if (config.packageName == null && listed != null && BinaryManifest.isValidName(listed)) config = config.copy(packageName = listed)
-            val releases = listing.releases.take(StateJson.MAX_RELEASES).map { it.copy(notes = it.notes?.take(StateJson.MAX_NOTES)) }
+            // While every release listed now is too young, the last ones that were old enough stay on offer.
+            val kept = ReleaseSelector.keptUntilOldEnough(listing.releases, s.state.releases, e.evaluator.minAgeDays(config), now)
+            val releases = kept.take(StateJson.MAX_RELEASES).map { it.copy(notes = it.notes?.take(StateJson.MAX_NOTES)) }
             val icons = IconAddresses.afterCheck(config.source.url, listing.iconUrls, s.state.iconUrls)
             s.copy(
                 config = config,

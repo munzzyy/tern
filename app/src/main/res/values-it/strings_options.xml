@@ -70,12 +70,7 @@
     <string name="option_csc_help">Tre lettere, come DBT.</string>
     <string name="option_link_filter">Filtro per i link di download</string>
     <string name="option_link_filter_help">Solo i link corrispondenti contano come download.</string>
-    <string name="option_steps">Pagine da attraversare prima</string>
-    <string name="option_steps_help">Un pattern per riga: su ogni pagina viene seguito il primo link corrispondente.</string>
     <string name="option_page_order">Mantieni l\'ordine della pagina</string>
-    <string name="option_page_order_effect">Altrimenti i link vengono ordinati in base alla versione che indicano.</string>
-    <string name="option_first_link">Prendi solo il primo link</string>
-    <string name="option_last_segment">Leggi le versioni dalla fine dell\'indirizzo</string>
     <string name="option_any_text">Trova i link anche fuori dai tag dei link</string>
     <string name="option_any_text_effect">Nel testo della pagina, nel JSON e in altri attributi.</string>
     <string name="option_version_from">Leggi la versione da</string>

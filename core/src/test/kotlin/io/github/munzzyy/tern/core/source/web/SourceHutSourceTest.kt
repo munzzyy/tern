@@ -25,27 +25,29 @@ class SourceHutSourceTest {
     }
 
     @Test
-    fun readsThreeNewestRefsAndCollectsArtifacts() {
+    fun aRefsAddressNamesTheRepository() {
+        assertEquals("https://git.sr.ht/~user/repo", source.match("https://git.sr.ht/~user/repo/refs")?.url)
+    }
+
+    @Test
+    fun readsTheSixNewestRefsWithTheirDatesAndCollectsArtifacts() {
         val repoUrl = "https://git.sr.ht/~user/repo"
         val feedUrl = "$repoUrl/refs/rss.xml"
-        val feed = """
-            <rss><channel>
-              <item><title>v1.2.0</title><link>https://git.sr.ht/~user/repo/refs/v1.2.0</link></item>
-              <item><title>v1.1.0</title><link>https://git.sr.ht/~user/repo/refs/v1.1.0</link></item>
-              <item><title>v1.0.0</title><link>https://git.sr.ht/~user/repo/refs/v1.0.0</link></item>
-              <item><title>v0.9.0</title><link>https://git.sr.ht/~user/repo/refs/v0.9.0</link></item>
-            </channel></rss>
-        """.trimIndent()
-        val http = FakeHttp().text(feedUrl, feed)
-        http.text("https://git.sr.ht/~user/repo/refs/v1.2.0", "<html><body><a href=\"/dl/app-1.2.0.apk\">apk</a></body></html>")
-        http.text("https://git.sr.ht/~user/repo/refs/v1.1.0", "<html><body>no artifacts</body></html>")
-        http.text("https://git.sr.ht/~user/repo/refs/v1.0.0", "<html><body><a href=\"/dl/app-1.0.0.apk\">apk</a></body></html>")
+        val items = (7 downTo 1).joinToString("") { n ->
+            "<item><title>v1.$n.0</title><link>https://git.sr.ht/~user/repo/refs/v1.$n.0</link><author>~user</author><pubDate>0$n Sep 2026 10:00:00 +0000</pubDate></item>"
+        }
+        val http = FakeHttp().text(feedUrl, "<rss><channel>$items<item><title>elsewhere</title><link>https://example.com/refs/x</link></item></channel></rss>")
+        http.text("https://git.sr.ht/~user/repo/refs/v1.7.0", "<html><body><a href=\"/dl/app-1.7.0.apk\">apk</a></body></html>")
+        http.text("https://git.sr.ht/~user/repo/refs/v1.6.0", "<html><body>no artifacts</body></html>")
 
         val result = source.check(SourceSpec(source.type, repoUrl), CheckContext(http, InMemoryValidatorStore()))
         val listing = (result as CheckResult.Listing).listing
-        assertEquals(3, listing.releases.size)
-        assertEquals("v1.2.0", listing.releases[0].id)
-        assertTrue(listing.releases[0].assets[0].url.endsWith("app-1.2.0.apk"))
+        assertEquals(listOf("v1.7.0", "v1.6.0", "v1.5.0", "v1.4.0", "v1.3.0", "v1.2.0"), listing.releases.map { it.id })
+        assertTrue(listing.releases[0].assets[0].url.endsWith("app-1.7.0.apk"))
         assertTrue(listing.releases[1].assets.isEmpty())
+        assertEquals(java.time.Instant.parse("2026-09-07T10:00:00Z").toEpochMilli(), listing.releases[0].publishedAtMs)
+        assertEquals("~user", listing.author)
+        assertEquals("repo", listing.name)
+        assertTrue(http.requests.none { it.url.startsWith("https://example.com") })
     }
 }

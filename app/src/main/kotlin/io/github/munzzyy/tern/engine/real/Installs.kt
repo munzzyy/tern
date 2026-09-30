@@ -249,8 +249,15 @@ internal class Installs(private val e: RealEngine) {
         val sha = try {
             Checksums.expectedFor(release, asset) { sums ->
                 fetched = sums
-                val authorization = if (sums.needsAuth) e.tokens.tokenFor(Urls.host(sums.url))?.let { "Bearer $it" } else null
-                e.http.execute(HttpRequest(sums.url, authorization = authorization)).use { response ->
+                // Asked for where the source says, as the file is: a file behind GitHub's API needs the header that asks for the file itself.
+                val from = try {
+                    e.registry.resolve(config.source, sums, e.sourceContext())
+                } catch (ex: SourceException) {
+                    throw IOException(ex.message, ex)
+                }
+                val sameHost = Urls.host(from.url) == Urls.host(sums.url)
+                val authorization = if (sums.needsAuth && sameHost) e.tokens.tokenFor(Urls.host(sums.url))?.let { "Bearer $it" } else null
+                e.http.execute(HttpRequest(from.url, headers = from.headers, authorization = authorization)).use { response ->
                     if (!response.isSuccess) throw IOException("HTTP ${response.status} for ${sums.name}")
                     response.text(SUMS_LIMIT)
                 }

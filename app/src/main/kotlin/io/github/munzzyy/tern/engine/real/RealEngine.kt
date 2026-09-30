@@ -24,7 +24,10 @@ import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.net.GitHubProxy
+import io.github.munzzyy.tern.core.net.GitHubProxyHttp
 import io.github.munzzyy.tern.core.net.InMemoryValidatorStore
+import io.github.munzzyy.tern.core.net.ValidatorStore
 import io.github.munzzyy.tern.core.source.CheckContext
 import io.github.munzzyy.tern.data.FileFacts
 import io.github.munzzyy.tern.core.net.HttpClient
@@ -125,12 +128,13 @@ class RealEngine(
     private val vault = TokenVault(this.context, prefsPrefix + TokenVault.DEFAULT_NAME)
     internal val texts = Texts(this.context)
     internal val device = Device(this.context)
-    internal val tokens = TokenProvider { host -> vault.tokenFor(host) }
-    internal val http: HttpClient = PoliteHttp(transport, RateLimiter(nowMs), "Tern/${BuildConfig.VERSION_NAME}")
+    /** No token for GitHub while its requests go through a hubproxy, which must never see one. */
+    internal val tokens = TokenProvider { host -> if (_settings.value.githubProxy != null && GitHubProxy.isGitHubHost(host)) null else vault.tokenFor(host) }
+    internal val http: HttpClient = PoliteHttp(GitHubProxyHttp(transport) { _settings.value.githubProxy }, RateLimiter(nowMs), "Tern/${BuildConfig.VERSION_NAME}")
     internal val registry = SourceRegistry.standard(::trackedInRepository)
     internal val inspector = FileInspector(http, store, tokens, device.sdk)
     internal val builtIn = BuiltInPins(catalog)
-    internal val evaluator = Evaluator(texts, device.profile, builtIn, nowMs) { _settings.value.globalFileFilter }
+    internal val evaluator = Evaluator(texts, device.profile, builtIn, nowMs, { _settings.value.globalFileFilter }) { _settings.value.minAgeDaysByDefault }
     internal val downloader = Downloader(http, downloadsDir ?: File(this.context.filesDir, "downloads"), texts)
     internal val gate: Gate = gate ?: InstallGate(archiveReader ?: PackageManagerArchiveReader(this.context.packageManager), texts)
     private val installers = Installers(this)
@@ -310,6 +314,10 @@ class RealEngine(
     /** For asking a source where a file is now; what it learns is not kept. */
     internal fun sourceContext(): CheckContext = CheckContext(http, InMemoryValidatorStore(), tokens, nowMs, device.profile)
 
+    /** For a check of [app], or of an address before there is an app when null; validators go to [validators]. */
+    internal fun checkContext(app: AppConfig?, validators: ValidatorStore = InMemoryValidatorStore()): CheckContext =
+        CheckContext(http, validators, tokens, nowMs, device.profile, app)
+
     /** Reads a file of an app of [spec] from the server, fetched from where the source says it is now. */
     internal fun inspectorFor(spec: SourceSpec): (Asset, String) -> FileFacts? = { asset, releaseId ->
         inspector.inspect(asset, releaseId) { registry.resolve(spec, asset, sourceContext()) }
@@ -377,10 +385,8 @@ class RealEngine(
             id = "",
             source = found.spec,
             name = "",
-            releases = ReleasePolicy(
-                includePrereleases = s.includePrereleasesByDefault || found.release?.countsAsPrerelease == true,
-                minAgeDays = s.minAgeDaysByDefault,
-            ),
+            // No wait of its own: a new app follows the setting for all apps, also when that changes.
+            releases = ReleasePolicy(includePrereleases = s.includePrereleasesByDefault || found.release?.countsAsPrerelease == true),
             updates = s.defaultUpdateMode,
         )
         return validated(
@@ -517,7 +523,8 @@ class RealEngine(
     override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
         ready()
         withContext(Dispatchers.IO) {
-            val before = stored[appId]?.config?.source
+            val previous = stored[appId]?.config
+            val before = previous?.source
             val saved = saveApp(appId) {
                 val config = validated(change(it.config).copy(id = appId))
                 // Another package has not been seen installed yet, so it is not taken for one that was uninstalled.
@@ -526,8 +533,9 @@ class RealEngine(
             } ?: return@withContext
             checks.reevaluate(appId, network = false)
             publish()
-            // Options of the source change what a page or a listing means, so what the server said before is not reused.
-            if (before != null && before.options != saved.config.source.options) {
+            // Options of the source change what a page or a listing means, and so does what the app asks of its
+            // source, so what the server said before is not reused.
+            if (before != null && (before.options != saved.config.source.options || asksAnew(previous, saved.config))) {
                 store.removeValidators("${before.type}|${before.url}|")
                 if (_online.value) scope.launch { checks.checkOne(appId) }
             }
@@ -578,7 +586,7 @@ class RealEngine(
             setObtainiumLinks(loaded.openObtainiumLinks)
             if (loaded.proxy == ProxyMode.ORBOT && before.proxy != ProxyMode.ORBOT) orbotLink.ask()
             if (loaded.installer != before.installer || loaded.otherInstaller != before.otherInstaller) installers.recheck()
-            if (loaded.globalFileFilter != before.globalFileFilter) {
+            if (loaded.globalFileFilter != before.globalFileFilter || loaded.minAgeDaysByDefault != before.minAgeDaysByDefault) {
                 for (id in stored.keys) checks.reevaluate(id, network = false)
                 publish()
             }
@@ -802,6 +810,17 @@ class RealEngine(
             length += 4
         }
         return base
+    }
+
+    /**
+     * Whether [after] asks something else of its source than [before]: a forge lists tags for an
+     * app that is only tracked, and a web page is read with the app's version pattern.
+     */
+    private fun asksAnew(before: AppConfig?, after: AppConfig): Boolean {
+        if (before == null) return false
+        if (before.trackOnly != after.trackOnly) return true
+        return after.source.type in SourceTypes.READS_OWN_VERSIONS &&
+            (before.releases.versionExtract != after.releases.versionExtract || before.releases.matchGroup != after.releases.matchGroup)
     }
 
     internal fun validated(config: AppConfig): AppConfig = try {

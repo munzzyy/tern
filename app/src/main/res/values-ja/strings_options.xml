@@ -66,12 +66,7 @@
     <string name="option_csc_help">3文字（例: DBT）。</string>
     <string name="option_link_filter">ダウンロードリンクのフィルター</string>
     <string name="option_link_filter_help">一致するリンクのみダウンロードとみなされます。</string>
-    <string name="option_steps">先にたどるページ</string>
-    <string name="option_steps_help">1行に1つのパターン。各ページで、最初に一致したリンクをたどります。</string>
     <string name="option_page_order">ページ上の順序を保つ</string>
-    <string name="option_page_order_effect">オフの場合、リンクは示しているバージョンの順に並べられます。</string>
-    <string name="option_first_link">最初のリンクのみ使用</string>
-    <string name="option_last_segment">アドレスの末尾からバージョンを読み取る</string>
     <string name="option_any_text">リンクタグ以外のリンクも探す</string>
     <string name="option_any_text_effect">ページのテキスト、JSON、その他の属性の中も探します。</string>
     <string name="option_version_from">バージョンの読み取り元</string>

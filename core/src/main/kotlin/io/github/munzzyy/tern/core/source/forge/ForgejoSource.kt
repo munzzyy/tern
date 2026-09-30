@@ -114,8 +114,53 @@ class ForgejoSource : Source {
                 .take(MAX_RELEASES)
                 .toList()
             val releases = if (spec.flag(SourceOptions.VERIFY_LATEST)) withLatest(listed, latest(at, owner, repo, context, token, assetDate), MAX_RELEASES) else listed
-            if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $owner/$repo")
+            if (releases.isEmpty()) {
+                if (context.app?.trackOnly == true) return tags(spec, owner, repo, context, token)
+                throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $owner/$repo")
+            }
 
+            context.validators.put(key, Validator.from(it.headers))
+            context.validators.remove(validatorKey(spec, "tags"))
+            val listing = SourceListing(releases = releases, name = repo, author = owner)
+            return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.forgejo(at, owner, repo, context, token?.let { t -> "token $t" })))
+        }
+    }
+
+    /**
+     * The tags of a project that has no releases, for an app that is only tracked, as Obtainium
+     * lists them: each one a release, with no file, dated by its commit.
+     */
+    private fun tags(spec: SourceSpec, owner: String, repo: String, context: CheckContext, token: String?): CheckResult {
+        val at = Urls.authority(spec.url)
+        val url = "https://$at/api/v1/repos/$owner/$repo/tags?limit=20"
+        val key = validatorKey(spec, "tags")
+        val stored = context.validators.get(key)
+        val response = try {
+            context.http.execute(HttpRequest(url, headers = stored?.conditionalHeaders().orEmpty(), authorization = token?.let { "token $it" }))
+        } catch (e: RateLimitedException) {
+            throw SourceException(SourceErrorKind.RATE_LIMITED, "Rate limited by ${e.host}", e.retryAtMs, e)
+        } catch (e: IOException) {
+            throw SourceException(SourceErrorKind.NETWORK, "Failed to fetch $url", cause = e)
+        }
+        response.use {
+            if (it.isNotModified) return CheckResult.Unchanged
+            if (it.status == 404) throw SourceException(SourceErrorKind.NOT_FOUND, "Repository not found: $owner/$repo")
+            if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "$at returned ${it.status} for the tags of $owner/$repo")
+            val json = try {
+                Json.parseArray(it.text())
+            } catch (e: Exception) {
+                throw SourceException(SourceErrorKind.PARSE, "Malformed Forgejo tags JSON for $owner/$repo", cause = e)
+            }
+            val releases = json.objects().asSequence().mapNotNull { tag ->
+                val name = tag.string("name")?.takeIf { n -> n.isNotBlank() } ?: return@mapNotNull null
+                Release(
+                    id = name,
+                    version = name,
+                    publishedAtMs = tag.obj("commit")?.string("created")?.let(Iso8601::parseMs),
+                    pageUrl = "https://$at/$owner/$repo/releases/tag/${Urls.encodeSegment(name)}",
+                )
+            }.take(MAX_RELEASES).toList()
+            if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases or tags for $owner/$repo")
             context.validators.put(key, Validator.from(it.headers))
             val listing = SourceListing(releases = releases, name = repo, author = owner)
             return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.forgejo(at, owner, repo, context, token?.let { t -> "token $t" })))

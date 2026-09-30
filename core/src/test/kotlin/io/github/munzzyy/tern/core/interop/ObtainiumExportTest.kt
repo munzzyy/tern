@@ -65,7 +65,9 @@ class ObtainiumExportTest {
         assertEquals(github.packageName, app.packageName)
         assertEquals(github.releases.copy(tagFilter = null), app.releases)
         assertEquals(github.assets, app.assets)
-        assertEquals(UpdateMode.MANUAL, app.updates)
+        // Never checked in the background goes out as exempt from background installs and with no notifications, and comes back as that.
+        assertEquals(UpdateMode.NOTIFY, app.updates)
+        assertTrue(app.muted)
         assertEquals(listOf(pin), app.pinnedSigners)
         assertEquals(github.categories, app.categories)
         assertTrue(app.favorite)

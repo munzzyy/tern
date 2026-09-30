@@ -68,12 +68,7 @@
     <string name="option_csc_help">മൂന്ന് അക്ഷരങ്ങൾ, DBT പോലെ.</string>
     <string name="option_link_filter">ഡൗൺലോഡ് ലിങ്കുകൾക്കുള്ള ഫിൽട്ടർ</string>
     <string name="option_link_filter_help">പൊരുത്തപ്പെടുന്ന ലിങ്കുകൾ മാത്രമേ ഡൗൺലോഡുകളായി കണക്കാക്കൂ.</string>
-    <string name="option_steps">ആദ്യം കടന്നുപോകേണ്ട പേജുകൾ</string>
-    <string name="option_steps_help">ഓരോ വരിയിലും ഒരു പാറ്റേൺ: ഓരോ പേജിലും, പൊരുത്തപ്പെടുന്ന ആദ്യ ലിങ്ക് പിന്തുടരും.</string>
     <string name="option_page_order">പേജിലെ ക്രമം നിലനിർത്തുക</string>
-    <string name="option_page_order_effect">അല്ലെങ്കിൽ ലിങ്കുകൾ അവ പറയുന്ന പതിപ്പ് അനുസരിച്ച് ക്രമീകരിക്കും.</string>
-    <string name="option_first_link">ആദ്യ ലിങ്ക് മാത്രം എടുക്കുക</string>
-    <string name="option_last_segment">വിലാസത്തിൻ്റെ അവസാനത്തിൽ നിന്ന് പതിപ്പുകൾ വായിക്കുക</string>
     <string name="option_any_text">ലിങ്ക് ടാഗുകൾക്ക് പുറത്തുള്ള ലിങ്കുകളും കണ്ടെത്തുക</string>
     <string name="option_any_text_effect">പേജിൻ്റെ ടെക്സ്റ്റിലും JSON-ലും മറ്റ് ആട്രിബ്യൂട്ടുകളിലും.</string>
     <string name="option_version_from">പതിപ്പ് ഇതിൽ നിന്ന് വായിക്കുക</string>

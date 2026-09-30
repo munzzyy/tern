@@ -66,12 +66,7 @@
     <string name="option_csc_help">三個字母，例如 DBT。</string>
     <string name="option_link_filter">下載連結篩選器</string>
     <string name="option_link_filter_help">只有符合的連結才算是下載連結。</string>
-    <string name="option_steps">先經過的頁面</string>
-    <string name="option_steps_help">每行一個模式：在每個頁面上，會前往第一個符合的連結。</string>
     <string name="option_page_order">保留頁面的順序</string>
-    <string name="option_page_order_effect">否則連結會依其標示的版本排序。</string>
-    <string name="option_first_link">只取第一個連結</string>
-    <string name="option_last_segment">從網址結尾讀取版本</string>
     <string name="option_any_text">也尋找連結標籤以外的連結</string>
     <string name="option_any_text_effect">在頁面文字、JSON 和其他屬性中尋找。</string>
     <string name="option_version_from">讀取版本的位置</string>

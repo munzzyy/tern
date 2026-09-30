@@ -68,12 +68,7 @@
     <string name="option_csc_help">Három betű, például DBT.</string>
     <string name="option_link_filter">Szűrő a letöltési linkekre</string>
     <string name="option_link_filter_help">Csak az egyező linkek számítanak letöltésnek.</string>
-    <string name="option_steps">Előbb bejárandó oldalak</string>
-    <string name="option_steps_help">Soronként egy minta: minden oldalon az első egyező linket követi.</string>
     <string name="option_page_order">Az oldal sorrendjének megtartása</string>
-    <string name="option_page_order_effect">Egyébként a linkek az általuk megnevezett verzió szerint rendeződnek.</string>
-    <string name="option_first_link">Csak az első link használata</string>
-    <string name="option_last_segment">Verziók kiolvasása a cím végéből</string>
     <string name="option_any_text">Linkek keresése a linkelemeken kívül is</string>
     <string name="option_any_text_effect">Az oldal szövegében, JSON-ban és más attribútumokban.</string>
     <string name="option_version_from">A verzió kiolvasása innen</string>

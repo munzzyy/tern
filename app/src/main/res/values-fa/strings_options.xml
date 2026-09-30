@@ -68,12 +68,7 @@
     <string name="option_csc_help">سه حرف، مانند DBT.</string>
     <string name="option_link_filter">فیلتر پیوندهای دانلود</string>
     <string name="option_link_filter_help">فقط پیوندهای مطابق به‌عنوان دانلود حساب می‌شوند.</string>
-    <string name="option_steps">صفحه‌هایی که ابتدا باید طی شوند</string>
-    <string name="option_steps_help">یک الگو در هر خط: در هر صفحه، اولین پیوند مطابق دنبال می‌شود.</string>
     <string name="option_page_order">حفظ ترتیب صفحه</string>
-    <string name="option_page_order_effect">در غیر این صورت پیوندها بر اساس نسخه‌ای که نام می‌برند مرتب می‌شوند.</string>
-    <string name="option_first_link">فقط اولین پیوند گرفته شود</string>
-    <string name="option_last_segment">خواندن نسخه‌ها از انتهای آدرس</string>
     <string name="option_any_text">یافتن پیوندها بیرون از تگ‌های پیوند هم</string>
     <string name="option_any_text_effect">در متن صفحه، در JSON و در ویژگی‌های دیگر.</string>
     <string name="option_version_from">خواندن نسخه از</string>

@@ -82,7 +82,7 @@ object AppConfigJson {
             titleFilter = releasesObj?.string("titleFilter"),
             notesFilter = releasesObj?.string("notesFilter"),
             versionExtract = releasesObj?.string("versionExtract"),
-            minAgeDays = (releasesObj?.long("minAgeDays") ?: 0L).coerceIn(0L, 365L).toInt(),
+            minAgeDays = releasesObj?.long("minAgeDays")?.coerceIn(0L, 365L)?.toInt(),
             skippedReleaseId = releasesObj?.string("skippedReleaseId"),
             fallbackToOlder = releasesObj?.bool("fallbackToOlder") ?: true,
             matchGroup = short(releasesObj?.string("matchGroup"), "releases.matchGroup"),
@@ -114,7 +114,8 @@ object AppConfigJson {
             releases = releases,
             assets = assets,
             updates = updates,
-            trackOnly = obj.bool("trackOnly") ?: false,
+            // What was made or saved before a source became track-only, or by hand, cannot turn that off.
+            trackOnly = obj.bool("trackOnly") == true || type in SourceTypes.TRACK_ONLY,
             pinnedSigners = obj.array("pinnedSigners")?.strings().orEmpty().mapNotNull(Fingerprints::normalize).distinct().take(MAX_OPTIONS),
             categories = obj.array("categories")?.strings().orEmpty().map { it.take(MAX_SHORT) }.take(MAX_OPTIONS),
             favorite = obj.bool("favorite") ?: false,

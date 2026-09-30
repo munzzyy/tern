@@ -497,6 +497,8 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
 
     private fun buildV1Releases(root: JsonObject, pkg: String, repoBase: String, context: CheckContext): List<Release> {
         val device = context.device
+        // What the repository suggests; a version newer than that counts as a pre-release, as on F-Droid itself.
+        val suggested = root.array("apps")?.objects()?.firstOrNull { it.string("packageName") == pkg }?.long("suggestedVersionCode") ?: Long.MAX_VALUE
         // In this format "packages" maps each package to the list of its versions.
         val entries = root.obj("packages")?.array(pkg)?.objects().orEmpty()
         val releases = entries.filter { it.string("packageName") == pkg }.mapNotNull { entry ->
@@ -516,7 +518,14 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
                 sha256 = entry.string("hash")?.takeIf { entry.string("hashType").equals("sha256", ignoreCase = true) }?.let(Fingerprints::normalize),
                 signers = listOfNotNull(entry.string("signer")?.let(Fingerprints::normalize)),
             )
-            Release(id = versionCode.toString(), version = versionName, versionCode = versionCode, publishedAtMs = entry.long("added"), assets = listOf(asset))
+            Release(
+                id = versionCode.toString(),
+                version = versionName,
+                versionCode = versionCode,
+                publishedAtMs = entry.long("added"),
+                prerelease = versionCode > suggested,
+                assets = listOf(asset),
+            )
         }
         return releases.sortedByDescending { it.versionCode }.take(MAX_RELEASES)
     }

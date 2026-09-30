@@ -95,7 +95,8 @@ class ObtainiumImportTest {
         val sixteen = result().apps.first { it.name == "Sixteen" }
         assertEquals(listOf("aa".repeat(32), "bb".repeat(32)), sixteen.pinnedSigners)
         assertEquals("Legacy notes", sixteen.notes)
-        assertEquals(io.github.munzzyy.tern.core.model.UpdateMode.MANUAL, sixteen.updates)
+        // Exempt from background updates still checks and notifies; it only does not install by itself.
+        assertEquals(io.github.munzzyy.tern.core.model.UpdateMode.NOTIFY, sixteen.updates)
         assertEquals("arm64", sixteen.assets.include)
     }
 
@@ -196,7 +197,7 @@ class ObtainiumImportTest {
         assertEquals("link", page.option(SourceOptions.PSEUDO))
         assertEquals(mapOf("X-Mirror" to "eu:west", "user-agent" to "Example/2.0"), RequestHeaders.parse(page.option(SourceOptions.HEADERS)))
         assertEquals(
-            Json.parseArray("""[{"filter": "Releases", "text": true, "arch": false}, "/latest/", {"filter": "/builds/", "text": false, "arch": true}]"""),
+            Json.parseArray("""[{"filter": "Releases", "text": true}, "/latest/", {"filter": "/builds/", "arch": true}]"""),
             Json.parseArray(page.option(SourceOptions.STEPS)!!),
         )
 
@@ -207,7 +208,7 @@ class ObtainiumImportTest {
         }
 
         val legacy = options().getValue("Legacy Page").source
-        assertEquals(Json.parseArray("""[{"filter": "Download", "text": true, "arch": false}]"""), Json.parseArray(legacy.option(SourceOptions.STEPS)!!))
+        assertEquals(Json.parseArray("""[{"filter": "Download", "text": true}]"""), Json.parseArray(legacy.option(SourceOptions.STEPS)!!))
         assertEquals("true", legacy.option(SourceOptions.LAST_SEGMENT))
         assertEquals("link", legacy.option(SourceOptions.PSEUDO))
     }

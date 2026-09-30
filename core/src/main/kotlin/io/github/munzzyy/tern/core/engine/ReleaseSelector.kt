@@ -107,7 +107,7 @@ object ReleaseSelector {
             val reason = when {
                 !policy.includePrereleases && release.countsAsPrerelease -> Rejection.PRERELEASE
                 filters.tag != null && !filters.tag.matches(release.id) -> Rejection.TAG_FILTER
-                filters.title != null && !filters.title.matches(release.title) -> Rejection.TITLE_FILTER
+                filters.title != null && !filters.title.matches(titleOf(original)) -> Rejection.TITLE_FILTER
                 filters.notes != null && !filters.notes.matches(release.notes) -> Rejection.NOTES_FILTER
                 filters.version != null && !filters.version.matches(release.version) -> Rejection.VERSION_FILTER
                 policy.skippedReleaseId != null && policy.skippedReleaseId == release.id -> Rejection.SKIPPED
@@ -134,10 +134,31 @@ object ReleaseSelector {
         return if (version == release.version) release else release.copy(version = version)
     }
 
-    private fun tooNew(release: Release, policy: ReleasePolicy, nowMs: Long): Boolean {
-        if (policy.minAgeDays <= 0) return false
+    /**
+     * What the title filter reads: the title, or where a release has none the version the source
+     * gave, which on a forge is the tag. GitHub's releases need not have a name, and Obtainium
+     * filters those by their tag.
+     */
+    private fun titleOf(release: Release): String = release.title?.trim()?.takeIf { it.isNotEmpty() } ?: release.version
+
+    private fun tooNew(release: Release, minAgeDays: Int, nowMs: Long): Boolean {
+        if (minAgeDays <= 0) return false
         val published = release.publishedAtMs ?: return false
-        return nowMs - published < policy.minAgeDays * DAY_MS
+        return nowMs - published < minAgeDays * DAY_MS
+    }
+
+    private fun tooNew(release: Release, policy: ReleasePolicy, nowMs: Long): Boolean = tooNew(release, policy.minAgeDays ?: 0, nowMs)
+
+    /**
+     * The releases a check [found], and while every one of them is too young for [minAgeDays], the
+     * ones listed [before] that were old enough and that the source no longer lists. A store that
+     * names only its newest release would otherwise leave nothing to offer until that one is old
+     * enough. Obtainium keeps offering the last release it had in the same way.
+     */
+    fun keptUntilOldEnough(found: List<Release>, before: List<Release>, minAgeDays: Int, nowMs: Long): List<Release> {
+        if (minAgeDays <= 0 || found.isEmpty() || found.any { !tooNew(it, minAgeDays, nowMs) }) return found
+        val listed = found.mapTo(HashSet()) { it.id }
+        return found + before.filter { it.id !in listed && !tooNew(it, minAgeDays, nowMs) }
     }
 
     private fun order(releases: List<Release>, order: ReleaseOrder): List<Release> {

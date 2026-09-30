@@ -68,12 +68,7 @@
     <string name="option_csc_help">Three letters, such as DBT.</string>
     <string name="option_link_filter">Filter for download links</string>
     <string name="option_link_filter_help">Only links that match count as downloads.</string>
-    <string name="option_steps">Pages to go through first</string>
-    <string name="option_steps_help">One pattern a line: on each page, the first link that matches is followed.</string>
     <string name="option_page_order">Keep the order of the page</string>
-    <string name="option_page_order_effect">Otherwise links are ordered by the version they name.</string>
-    <string name="option_first_link">Take the first link only</string>
-    <string name="option_last_segment">Read versions from the end of the address</string>
     <string name="option_any_text">Find links outside of link tags too</string>
     <string name="option_any_text_effect">In the text of the page, in JSON and in other attributes.</string>
     <string name="option_version_from">Read the version from</string>

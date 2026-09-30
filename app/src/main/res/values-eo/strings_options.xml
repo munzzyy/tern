@@ -68,12 +68,7 @@
     <string name="option_csc_help">Tri literoj, ekzemple DBT.</string>
     <string name="option_link_filter">Filtrilo por elŝutaj ligiloj</string>
     <string name="option_link_filter_help">Nur kongruantaj ligiloj validas kiel elŝutoj.</string>
-    <string name="option_steps">Paĝoj por trairi unue</string>
-    <string name="option_steps_help">Po unu ŝablono en linio: sur ĉiu paĝo, la unua kongruanta ligilo estas sekvata.</string>
     <string name="option_page_order">Konservi la ordon de la paĝo</string>
-    <string name="option_page_order_effect">Alie ligiloj estas ordigataj laŭ la versio kiun ili nomas.</string>
-    <string name="option_first_link">Preni nur la unuan ligilon</string>
-    <string name="option_last_segment">Legi versiojn el la fino de la adreso</string>
     <string name="option_any_text">Trovi ligilojn ankaŭ ekster ligilaj markoj</string>
     <string name="option_any_text_effect">En la teksto de la paĝo, en JSON kaj en aliaj atributoj.</string>
     <string name="option_version_from">Legi la version el</string>

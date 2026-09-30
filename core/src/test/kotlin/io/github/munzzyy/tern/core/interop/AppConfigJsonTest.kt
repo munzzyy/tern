@@ -5,6 +5,7 @@ import io.github.munzzyy.tern.core.model.AssetPolicy
 import io.github.munzzyy.tern.core.model.ReleaseOrder
 import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.model.VersionFrom
 import io.github.munzzyy.tern.core.json.Json
@@ -113,6 +114,13 @@ class AppConfigJsonTest {
     }
 
     @Test
+    fun anAppOfASourceThatOffersNoFileIsAlwaysTrackOnly() {
+        val mirror = sample().copy(source = SourceSpec(SourceTypes.APKMIRROR, "https://www.apkmirror.com/apk/example/app"), trackOnly = false)
+        assertTrue(AppConfigJson.decode(AppConfigJson.encode(mirror)).trackOnly)
+        assertNull(AppConfigJson.decode(AppConfigJson.encode(sample().copy(releases = ReleasePolicy()))).releases.minAgeDays)
+    }
+
+    @Test
     fun anOlderFileWithoutTheNewFieldsLoadsWithTheirDefaults() {
         val older = """{"schema": 1, "id": "org.example.app", "source": {"type": "github", "url": "https://github.com/example/app", "options": {}},
             "name": "Example", "author": null, "packageName": null,
@@ -121,7 +129,8 @@ class AppConfigJsonTest {
             "assets": {"include": null, "exclude": null, "matchDevice": true},
             "updates": "NOTIFY", "trackOnly": false, "pinnedSigners": [], "categories": [], "favorite": false, "notes": null}"""
         val decoded = AppConfigJson.decode(Json.parseObject(older))
-        assertEquals(ReleasePolicy(), decoded.releases)
+        // A wait that was stored stays the app's own; only an app without one follows the setting for all apps.
+        assertEquals(ReleasePolicy(minAgeDays = 0), decoded.releases)
         assertEquals(AssetPolicy(), decoded.assets)
         assertNull(decoded.customName)
         assertNull(decoded.customAuthor)

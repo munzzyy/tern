@@ -156,6 +156,9 @@ object Urls {
     fun encodeSegment(text: String): String =
         URLEncoder.encode(text, "UTF-8").replace("+", "%20")
 
+    /** [text] with its percent escapes read as UTF-8 and a plus left as it is; the text as it was when an escape is broken. */
+    fun decode(text: String): String = decodeOrNull(text.replace("+", "%2B")) ?: text
+
     fun queryParam(url: String, name: String): String? {
         val query = try {
             URI(url).rawQuery

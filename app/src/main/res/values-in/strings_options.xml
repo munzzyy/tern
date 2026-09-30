@@ -66,12 +66,7 @@
     <string name="option_csc_help">Tiga huruf, seperti DBT.</string>
     <string name="option_link_filter">Filter untuk tautan unduhan</string>
     <string name="option_link_filter_help">Hanya tautan yang cocok yang dihitung sebagai unduhan.</string>
-    <string name="option_steps">Halaman yang dilalui lebih dulu</string>
-    <string name="option_steps_help">Satu pola per baris: di setiap halaman, tautan pertama yang cocok akan diikuti.</string>
     <string name="option_page_order">Pertahankan urutan halaman</string>
-    <string name="option_page_order_effect">Jika tidak, tautan diurutkan menurut versi yang disebutkannya.</string>
-    <string name="option_first_link">Ambil tautan pertama saja</string>
-    <string name="option_last_segment">Baca versi dari akhir alamat</string>
     <string name="option_any_text">Cari tautan di luar tag tautan juga</string>
     <string name="option_any_text_effect">Di teks halaman, di JSON, dan di atribut lain.</string>
     <string name="option_version_from">Baca versi dari</string>

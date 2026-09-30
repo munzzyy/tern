@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.core.source
 
 import io.github.munzzyy.tern.core.icon.IconAddresses
+import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.model.Release
@@ -24,7 +25,16 @@ class CheckContext(
     val nowMs: () -> Long = System::currentTimeMillis,
     /** Lets a source that publishes one file per architecture leave out the ones that cannot run here. */
     val device: DeviceProfile? = null,
-)
+    /**
+     * The app being checked, for what it asks of its source beyond the spec: a forge lists the tags
+     * of a project without releases for an app that is only tracked, and a web page is read with the
+     * app's version pattern. Null while an address is looked at before there is an app.
+     */
+    val app: AppConfig? = null,
+) {
+    /** The same context, with validators written to [validators]. */
+    fun withValidators(validators: ValidatorStore): CheckContext = CheckContext(http, validators, tokens, nowMs, device, app)
+}
 
 data class SourceListing(
     /** Newest first. */

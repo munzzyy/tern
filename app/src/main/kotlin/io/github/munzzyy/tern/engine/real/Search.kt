@@ -4,6 +4,7 @@ import android.util.Log
 import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonException
 import io.github.munzzyy.tern.core.json.JsonObject
+import io.github.munzzyy.tern.core.net.GitHubProxy
 import io.github.munzzyy.tern.core.net.HttpClient
 import io.github.munzzyy.tern.core.net.HttpRequest
 import io.github.munzzyy.tern.core.net.InMemoryValidatorStore
@@ -125,7 +126,7 @@ class Search(
             mapOf("Accept" to "application/vnd.github+json", "X-GitHub-Api-Version" to "2022-11-28"),
         )
         return Json.parseObject(text).array("items")?.objects().orEmpty().mapNotNull { repo ->
-            hit(repo, "GitHub", repo.string("name"), repo.obj("owner")?.string("login"), repo.string("html_url"), repo.long("stargazers_count"))
+            hit(repo, "GitHub", repo.string("name"), repo.obj("owner")?.string("login"), repo.string("html_url")?.let(GitHubProxy::unwrap), repo.long("stargazers_count"))
         }
     }
 

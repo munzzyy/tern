@@ -68,12 +68,7 @@
     <string name="option_csc_help">Üç harf, örneğin DBT.</string>
     <string name="option_link_filter">İndirme bağlantıları için filtre</string>
     <string name="option_link_filter_help">Yalnızca eşleşen bağlantılar indirme sayılır.</string>
-    <string name="option_steps">Önce geçilecek sayfalar</string>
-    <string name="option_steps_help">Her satıra bir kalıp: her sayfada eşleşen ilk bağlantı izlenir.</string>
     <string name="option_page_order">Sayfanın sırasını koru</string>
-    <string name="option_page_order_effect">Aksi halde bağlantılar belirttikleri sürüme göre sıralanır.</string>
-    <string name="option_first_link">Yalnızca ilk bağlantıyı al</string>
-    <string name="option_last_segment">Sürümleri adresin sonundan oku</string>
     <string name="option_any_text">Bağlantı etiketlerinin dışındaki bağlantıları da bul</string>
     <string name="option_any_text_effect">Sayfanın metninde, JSON\'da ve diğer özniteliklerde.</string>
     <string name="option_version_from">Sürümü şuradan oku</string>

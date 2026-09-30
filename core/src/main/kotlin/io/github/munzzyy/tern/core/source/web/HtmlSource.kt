@@ -1,9 +1,5 @@
 package io.github.munzzyy.tern.core.source.web
 
-import io.github.munzzyy.tern.core.json.Json
-import io.github.munzzyy.tern.core.json.JsonException
-import io.github.munzzyy.tern.core.json.JsonObject
-import io.github.munzzyy.tern.core.json.JsonString
 import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.model.Release
@@ -22,11 +18,18 @@ import io.github.munzzyy.tern.core.source.SourceListing
 import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.guarded
+import io.github.munzzyy.tern.core.text.MatchTemplate
 import io.github.munzzyy.tern.core.text.NaturalOrder
 import io.github.munzzyy.tern.core.text.PatternException
 import io.github.munzzyy.tern.core.text.SafePattern
-import io.github.munzzyy.tern.core.version.Version
 
+/**
+ * Any web page with links to an app's files, read the way Obtainium's HTML source reads one. On
+ * each page the links that match are put in natural order of their address, or kept in the
+ * order of the page, and the last one is taken: on a page before the last it is followed, and on
+ * the last page its release is marked as the latest. The other links stay in the listing, so a
+ * file the app's filters refuse is not the end of it.
+ */
 class HtmlSource : Source {
     override val type: String = SourceTypes.HTML
 
@@ -40,13 +43,23 @@ class HtmlSource : Source {
     /** The file is fetched with the headers the page asks for. */
     override fun resolve(spec: SourceSpec, asset: Asset, context: CheckContext): Download = Download(asset.url, RequestHeaders.of(spec))
 
-    private class Found(val url: String, val version: String?, val order: Int)
+    /** A link found on a page: where it points, and what it says, or the end of its address when it says nothing. */
+    private class Link(val url: String, val text: String)
 
-    /**
-     * One page to pass through: the link whose address, or with [text] its text, matches [filter].
-     * With [arch], one that names this device's processor is preferred.
-     */
-    private class Step(val filter: SafePattern, val text: Boolean, val arch: Boolean)
+    /** Which links of a page count and in what order they are put. A null [filter] keeps links to installable files. */
+    private class Choice(
+        val filter: SafePattern?,
+        val byText: Boolean,
+        val anyText: Boolean,
+        val pageOrder: Boolean,
+        val firstLink: Boolean,
+        val lastSegment: Boolean,
+    )
+
+    private class Step(val choice: Choice, val arch: Boolean)
+
+    /** How the version of a link is read: through the app's pattern when it has one, and else by a guess. */
+    private class Reading(val from: String, val lastSegment: Boolean, val pattern: SafePattern?, val template: MatchTemplate?)
 
     private fun checkOnce(spec: SourceSpec, context: CheckContext): CheckResult {
         val headers = RequestHeaders.of(spec)
@@ -72,66 +85,111 @@ class HtmlSource : Source {
         }
 
         val base = LinkScanner.baseHref(html)?.let { Urls.resolve(finalUrl, it) } ?: finalUrl
-        val linkFilter = compileOrThrow(spec.option(SourceOptions.LINK_FILTER), SourceOptions.LINK_FILTER) ?: DEFAULT_LINK_FILTER
-        val versionFrom = spec.option(SourceOptions.VERSION_FROM) ?: "link"
-        val sort = spec.option(SourceOptions.SORT) ?: "version"
-        val lastSegment = spec.flag(SourceOptions.LAST_SEGMENT)
+        val choice = Choice(
+            filter = compileOrThrow(spec.option(SourceOptions.LINK_FILTER), "Option ${SourceOptions.LINK_FILTER}"),
+            byText = spec.flag(SourceOptions.LINK_TEXT),
+            anyText = spec.flag(SourceOptions.ANY_TEXT),
+            pageOrder = spec.option(SourceOptions.SORT) == "page",
+            firstLink = spec.flag(SourceOptions.FIRST_LINK),
+            lastSegment = spec.flag(SourceOptions.LAST_SEGMENT),
+        )
+        val ordered = watched("Option ${SourceOptions.LINK_FILTER}") { chosen(links(html, base, choice.anyText), choice) }
+        if (ordered.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No installable link on ${spec.url}")
+        // The link Obtainium takes is the last in order. Here it comes first, and the others follow it.
+        val preferred = ordered.asReversed().distinctBy { it.url }.take(MAX_LINKS)
 
-        val found = watched(SourceOptions.LINK_FILTER) {
-            scan(html, base, linkFilter, versionFrom, lastSegment, spec.flag(SourceOptions.ANY_TEXT))
-        }.distinctBy { it.url }
-        if (found.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No installable link on ${spec.url}")
-        val offered = if (spec.flag(SourceOptions.FIRST_LINK)) listOf(first(found, sort, lastSegment)) else found
-
-        val releases = ArrayList<Release>()
-        val versioned = offered.filter { it.version != null }.groupBy { it.version!! }
-        val ordered = if (sort == "page") {
-            versioned.entries.sortedBy { entry -> entry.value.minOf { it.order } }
-        } else {
-            versioned.entries.sortedWith(compareByDescending { Version.parse(it.key) })
+        val reading = reading(spec, context)
+        val versions = watched("The version pattern") { versionsOf(preferred, html, reading) }
+        val versioned = LinkedHashMap<String, MutableList<Link>>()
+        val unversioned = ArrayList<Link>()
+        for (link in preferred) {
+            val version = versions[link.url]
+            if (version == null) unversioned.add(link) else versioned.getOrPut(version) { ArrayList() }.add(link)
         }
-        for ((version, links) in ordered.take(MAX_RELEASES)) {
-            releases.add(Release(id = version, version = version, pageUrl = finalUrl, assets = links.map { Asset(fileName(it.url), it.url) }))
-        }
 
-        val unversioned = offered.filter { it.version == null }.take(MAX_UNVERSIONED)
-        if (unversioned.isNotEmpty()) releases.add(followedByContent(unversioned, finalUrl, pseudo, headers, context))
+        val releases = versioned.entries.take(MAX_RELEASES).map { (version, links) ->
+            Release(id = version, version = version, pageUrl = finalUrl, assets = links.map { Asset(fileName(it.url), it.url) })
+        }.toMutableList()
+        val taken = unversioned.take(MAX_UNVERSIONED)
+        if (taken.isNotEmpty()) {
+            val release = followedByContent(taken, finalUrl, pseudo, headers, context)
+            if (versions[preferred.first().url] == null) releases.add(0, release) else releases.add(release)
+        }
         if (unversioned.isEmpty() || pseudo == PseudoVersion.LINK) context.validators.put(key, pageValidator)
+        releases[0] = releases[0].copy(latest = true)
         return CheckResult.Listing(SourceListing(releases = releases.take(MAX_RELEASES), name = LinkScanner.title(html)))
     }
 
-    private fun scan(html: String, base: String, linkFilter: SafePattern, versionFrom: String, lastSegment: Boolean, anyText: Boolean): List<Found> {
-        val links = if (anyText) LinkScanner.anchors(html) + LinkScanner.addresses(html) else LinkScanner.anchors(html)
-        return links.mapIndexedNotNull { index, anchor ->
-            val resolved = Urls.resolve(base, anchor.href) ?: return@mapIndexedNotNull null
-            if (!linkFilter.matches(resolved.take(2000))) return@mapIndexedNotNull null
-            val candidate = when (versionFrom) {
-                "text" -> anchor.text
-                "page" -> html
-                else -> if (lastSegment) lastSegmentOf(resolved) else resolved.substringAfter("://").substringAfter('/')
-            }
-            Found(resolved, VersionGuess.find(candidate.take(2000)), index)
+    /**
+     * Every link of a page, in the order of the page: its `<a>` tags, and where [anyText] asks for
+     * it or the page has no link tag at all, the addresses in its JSON, its text and its attributes.
+     */
+    private fun links(html: String, base: String, anyText: Boolean): List<Link> {
+        val anchors = LinkScanner.anchors(html).filter { it.href.isNotBlank() }
+        val found = if (anchors.isEmpty() || anyText) anchors + LinkScanner.addresses(html) else anchors
+        return found.mapNotNull { anchor ->
+            val url = Urls.resolve(base, anchor.href) ?: return@mapNotNull null
+            Link(url, anchor.text.ifEmpty { lastSegmentOf(url) })
         }
     }
 
     /**
-     * The link Obtainium's "take first link" takes: the first on the page when links keep the
-     * page's order, else the lowest in natural order of the address, or of its last segment.
+     * The links [choice] keeps, in its order: natural order of the address or of its last segment,
+     * or the order of the page, turned around with [Choice.firstLink]. The last is the one taken.
      */
-    private fun first(found: List<Found>, sort: String, lastSegment: Boolean): Found {
-        if (sort == "page") return found.first()
-        return found.minWith { a, b ->
-            NaturalOrder.compare(if (lastSegment) lastSegmentOf(a.url) else a.url, if (lastSegment) lastSegmentOf(b.url) else b.url)
-        }
+    private fun chosen(links: List<Link>, choice: Choice): List<Link> {
+        val filter = choice.filter ?: DEFAULT_LINK_FILTER
+        val kept = links.filter { link -> filter.matches((if (choice.byText) link.text else Urls.decode(link.url)).take(MAX_MATCHED)) }
+        val ordered = if (choice.pageOrder) kept else kept.sortedWith { a, b -> NaturalOrder.compare(sortKey(a, choice), sortKey(b, choice)) }
+        return if (choice.firstLink) ordered.asReversed() else ordered
     }
+
+    private fun sortKey(link: Link, choice: Choice): String = if (choice.lastSegment) lastSegmentOf(link.url) else link.url
 
     /** The part after the last slash, query included, as Obtainium's "last link segment" reads it. */
     private fun lastSegmentOf(url: String): String = url.split('/').lastOrNull { it.isNotEmpty() } ?: url
 
-    private fun <T> watched(optionName: String, body: () -> T): T = try {
-        SafePattern.watched(optionName, body = body)
+    private fun reading(spec: SourceSpec, context: CheckContext): Reading {
+        val from = spec.option(SourceOptions.VERSION_FROM) ?: "link"
+        val raw = context.app?.releases?.versionExtract?.takeIf { it.isNotBlank() }
+        val pattern = try {
+            raw?.let { if (from == "page") SafePattern.compileForPages(it) else SafePattern.compile(it) }
+        } catch (e: PatternException) {
+            throw SourceException(SourceErrorKind.UNSUPPORTED, "The version pattern: ${e.message}", cause = e)
+        }
+        return Reading(from, spec.flag(SourceOptions.LAST_SEGMENT), pattern, MatchTemplate.parse(context.app?.releases?.matchGroup))
+    }
+
+    /**
+     * The version of each link, null where none can be read. The app's pattern reads the link's
+     * decoded address, what it says, or the whole page with its line breaks written as \n, as
+     * Obtainium's does. Where it has no pattern, or its pattern finds nothing, a dotted number in
+     * the address, its last segment, what it says or the page is taken.
+     */
+    private fun versionsOf(links: List<Link>, html: String, reading: Reading): Map<String, String?> {
+        if (reading.from == "page") {
+            val page = reading.pattern?.let { extract(it, reading.template, html.replace("\r\n", "\n").replace("\n", "\\n")) }
+            val version = page ?: VersionGuess.find(html.take(MAX_MATCHED))
+            return links.associate { it.url to version }
+        }
+        return links.associate { link ->
+            val text = if (reading.from == "text") link.text else Urls.decode(link.url)
+            val guessed = when {
+                reading.from == "text" -> link.text
+                reading.lastSegment -> lastSegmentOf(link.url)
+                else -> link.url.substringAfter("://").substringAfter('/')
+            }
+            link.url to (reading.pattern?.let { extract(it, reading.template, text.take(MAX_MATCHED)) } ?: VersionGuess.find(guessed.take(MAX_MATCHED)))
+        }
+    }
+
+    private fun extract(pattern: SafePattern, template: MatchTemplate?, text: String): String? =
+        if (template == null) pattern.extract(text) else pattern.extract(text, template)
+
+    private fun <T> watched(what: String, body: () -> T): T = try {
+        SafePattern.watched(what, body = body)
     } catch (e: PatternException) {
-        throw SourceException(SourceErrorKind.UNSUPPORTED, "Option $optionName: ${e.message}", cause = e)
+        throw SourceException(SourceErrorKind.UNSUPPORTED, "$what: ${e.message}", cause = e)
     }
 
     /**
@@ -139,7 +197,7 @@ class HtmlSource : Source {
      * change when the file does. Its identity is therefore taken from the file itself, and the page
      * is fetched in full every time, unless [PseudoVersion.LINK] makes the address its identity.
      */
-    private fun followedByContent(links: List<Found>, pageUrl: String, pseudo: PseudoVersion?, headers: Map<String, String>, context: CheckContext): Release {
+    private fun followedByContent(links: List<Link>, pageUrl: String, pseudo: PseudoVersion?, headers: Map<String, String>, context: CheckContext): Release {
         val identities = ArrayList<String>()
         val assets = links.map { link ->
             val probe = DirectSource.identify(link.url, pseudo, context, headers)
@@ -155,6 +213,7 @@ class HtmlSource : Source {
         return last.take(200)
     }
 
+    /** The address of the link the step takes on the page at [url]. */
     private fun followStep(url: String, step: Step, headers: Map<String, String>, context: CheckContext): String {
         val response = context.http.execute(HttpRequest(url, headers = headers))
         return response.use {
@@ -163,61 +222,56 @@ class HtmlSource : Source {
             val pageUrl = Urls.normalize(it.url) ?: url
             val base = LinkScanner.baseHref(text)?.let { b -> Urls.resolve(pageUrl, b) } ?: pageUrl
             val device = context.device
-            watched(SourceOptions.STEPS) {
-                val matching = LinkScanner.anchors(text).asSequence()
-                    .mapNotNull { anchor -> Urls.resolve(base, anchor.href)?.let { address -> address to anchor.text } }
-                    .filter { (address, label) -> step.filter.matches((if (step.text) label else address).take(2000)) }
-                if (step.arch && device != null) forDevice(matching.toList(), device) else matching.firstOrNull()?.first
+            watched("Option ${SourceOptions.STEPS}") {
+                val ordered = chosen(links(text, base, step.choice.anyText), step.choice)
+                val kept = if (step.arch && device != null) forDevice(ordered, device) else ordered
+                kept.lastOrNull()?.url
             } ?: throw SourceException(SourceErrorKind.UNSUPPORTED, "No link on $url matched a step pattern")
         }
     }
 
     /**
-     * The first link that names this device's most preferred processor; failing that, the first
-     * that names none, and only then one that names another processor.
+     * The links that name this device's most preferred processor; failing that, those that name
+     * none, and only then all of them. The order stays as it was.
      */
-    private fun forDevice(links: List<Pair<String, String>>, device: DeviceProfile): String? {
-        val abis = device.abis.map(AssetPicker::canonical)
-        return links.minByOrNull { (address, label) ->
-            val named = AssetPicker.abisIn("$address $label")
-            if (named.isEmpty()) abis.size else named.map { abis.indexOf(it) }.filter { it >= 0 }.minOrNull() ?: (abis.size + 1)
-        }?.first
+    private fun forDevice(links: List<Link>, device: DeviceProfile): List<Link> {
+        val named = links.map { AssetPicker.abisIn("${it.url} ${it.text}") }
+        for (abi in device.abis.map(AssetPicker::canonical)) {
+            val fit = links.filterIndexed { i, _ -> abi in named[i] }
+            if (fit.isNotEmpty()) return fit
+        }
+        return links.filterIndexed { i, _ -> named[i].isEmpty() }.ifEmpty { links }
     }
 
     private fun parseSteps(spec: SourceSpec): List<Step> {
-        val raw = spec.option(SourceOptions.STEPS) ?: return emptyList()
-        val array = try {
-            Json.parseArray(raw)
-        } catch (e: JsonException) {
-            throw SourceException(SourceErrorKind.UNSUPPORTED, "Option ${SourceOptions.STEPS} is not a JSON array", cause = e)
+        val steps = HtmlStep.parse(spec.option(SourceOptions.STEPS))
+            ?: throw SourceException(SourceErrorKind.UNSUPPORTED, "Option ${SourceOptions.STEPS} is not a JSON array")
+        if (steps.size > HtmlStep.MAX) {
+            throw SourceException(SourceErrorKind.UNSUPPORTED, "Option ${SourceOptions.STEPS} allows at most ${HtmlStep.MAX} entries")
         }
-        val entries = array.filter { it is JsonString || it is JsonObject }
-        if (entries.size > MAX_STEPS) {
-            throw SourceException(SourceErrorKind.UNSUPPORTED, "Option ${SourceOptions.STEPS} allows at most $MAX_STEPS entries")
-        }
-        return entries.map { entry ->
-            if (entry is JsonObject) {
-                Step(compileStep(entry.string("filter")), text = entry.bool("text") == true, arch = entry.bool("arch") == true)
-            } else {
-                Step(compileStep((entry as JsonString).value), text = false, arch = false)
-            }
+        return steps.map { step ->
+            val filter = compileOrThrow(step.filter, "Option ${SourceOptions.STEPS}")
+                ?: throw SourceException(SourceErrorKind.UNSUPPORTED, "Option ${SourceOptions.STEPS} holds an empty pattern")
+            Step(Choice(filter, step.byText, step.anyText, step.pageOrder, step.firstLink, step.lastSegment), step.arch)
         }
     }
 
-    private fun compileStep(raw: String?): SafePattern =
-        compileOrThrow(raw, SourceOptions.STEPS) ?: throw SourceException(SourceErrorKind.UNSUPPORTED, "Option ${SourceOptions.STEPS} holds an empty pattern")
-
-    private fun compileOrThrow(raw: String?, optionName: String): SafePattern? = try {
+    private fun compileOrThrow(raw: String?, what: String): SafePattern? = try {
         SafePattern.compileOrNull(raw)
     } catch (e: PatternException) {
-        throw SourceException(SourceErrorKind.UNSUPPORTED, "Option $optionName: ${e.message}", cause = e)
+        throw SourceException(SourceErrorKind.UNSUPPORTED, "$what: ${e.message}", cause = e)
     }
 
     companion object {
         private const val PAGE_CAP = 4 * 1024 * 1024
-        private const val MAX_STEPS = 5
         private const val MAX_RELEASES = 30
         private const val MAX_UNVERSIONED = 4
+
+        /** The most links of the last page that get a version read, the one taken first. */
+        private const val MAX_LINKS = 400
+
+        /** How much of an address or a text a filter or a guess reads. */
+        private const val MAX_MATCHED = 2000
         private val DEFAULT_LINK_FILTER = SafePattern.compile("\\.(apk|xapk|apks|apkm)(\\?.*)?$")
     }
 }

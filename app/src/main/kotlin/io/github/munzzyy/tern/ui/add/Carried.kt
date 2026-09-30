@@ -40,7 +40,7 @@ fun carriedSettings(proposed: AppConfig, plain: AppConfig): List<CarriedSetting>
     val p = plain.releases
     if (proposed.updates != plain.updates) add(CarriedSetting.Mode(proposed.updates))
     if (r.includePrereleases != p.includePrereleases) add(CarriedSetting.Prereleases(r.includePrereleases))
-    if (r.minAgeDays != p.minAgeDays) add(CarriedSetting.MinAge(r.minAgeDays))
+    r.minAgeDays?.takeIf { it != p.minAgeDays }?.let { add(CarriedSetting.MinAge(it)) }
     if (proposed.assets.include != plain.assets.include) add(CarriedSetting.Include(proposed.assets.include))
     if (proposed.assets.exclude != plain.assets.exclude) add(CarriedSetting.Exclude(proposed.assets.exclude))
     if (r.tagFilter != p.tagFilter) add(CarriedSetting.TagFilter(r.tagFilter))

@@ -66,12 +66,7 @@
     <string name="option_csc_help">Ba chữ cái, chẳng hạn DBT.</string>
     <string name="option_link_filter">Bộ lọc liên kết tải xuống</string>
     <string name="option_link_filter_help">Chỉ những liên kết khớp mới được tính là tải xuống.</string>
-    <string name="option_steps">Các trang cần đi qua trước</string>
-    <string name="option_steps_help">Mỗi dòng một mẫu: trên mỗi trang, liên kết khớp đầu tiên sẽ được theo.</string>
     <string name="option_page_order">Giữ thứ tự của trang</string>
-    <string name="option_page_order_effect">Nếu không, liên kết được sắp xếp theo phiên bản mà chúng ghi.</string>
-    <string name="option_first_link">Chỉ lấy liên kết đầu tiên</string>
-    <string name="option_last_segment">Đọc phiên bản từ cuối địa chỉ</string>
     <string name="option_any_text">Tìm cả liên kết bên ngoài thẻ liên kết</string>
     <string name="option_any_text_effect">Trong văn bản của trang, trong JSON và trong các thuộc tính khác.</string>
     <string name="option_version_from">Đọc phiên bản từ</string>

@@ -11,6 +11,7 @@ import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
+import io.github.munzzyy.tern.core.source.web.HtmlStep
 import io.github.munzzyy.tern.core.source.web.PseudoVersion
 import io.github.munzzyy.tern.core.verify.Fingerprints
 import java.text.SimpleDateFormat
@@ -74,7 +75,8 @@ object ObtainiumExport {
             ReleaseOrder.NAME -> "name"
         }
         if (r.stayBehind > 0) settings["stayOneVersionBehind"] = true
-        if (r.minAgeDays > 0) settings["minimumUpdateAgeDays"] = r.minAgeDays
+        // Obtainium reads this as text, and takes '' for its global default.
+        settings["minimumUpdateAgeDays"] = r.minAgeDays?.toString() ?: ""
         val a = app.assets
         when {
             a.include != null -> settings["apkFilterRegEx"] = a.include
@@ -93,10 +95,12 @@ object ObtainiumExport {
             settings["tarballedApkFilterRegEx"] = it
         }
         settings["trackOnly"] = app.trackOnly
-        settings["exemptFromBackgroundUpdates"] = app.updates == UpdateMode.MANUAL
+        // Only an app that installs by itself is left to Obtainium's background installs. One that is
+        // never checked in the background also gets no notification of an update there.
+        settings["exemptFromBackgroundUpdates"] = app.updates != UpdateMode.AUTO
         app.customName?.let { settings["appName"] = it }
         app.customAuthor?.let { settings["appAuthor"] = it }
-        if (app.muted) settings["skipUpdateNotifications"] = true
+        if (app.muted || app.updates == UpdateMode.MANUAL) settings["skipUpdateNotifications"] = true
         if (app.refreshFirst) settings["refreshBeforeDownload"] = true
         if (app.playInstaller) settings["shizukuPretendToBeGooglePlay"] = true
         if (app.pinnedSigners.isNotEmpty()) {
@@ -122,6 +126,7 @@ object ObtainiumExport {
                 app.source.option(SourceOptions.DEVICE_MODEL)?.let { settings["deviceId"] = it }
                 app.source.option(SourceOptions.CSC)?.let { settings["csc"] = it }
             }
+            SourceTypes.FARSROID -> if (app.source.flag(SourceOptions.FILE_VERSION)) settings["releaseTitleAsVersion"] = true
         }
         return Json.obj(
             "id" to (app.packageName ?: "tern." + Fingerprints.sha256(app.source.url.toByteArray()).take(12)),
@@ -145,35 +150,30 @@ object ObtainiumExport {
         )
     }
 
+    /** Obtainium reads the version from a link's address or the whole page; reading it from what the link says is Tern's own, and stays behind. */
     private fun html(app: AppConfig, settings: MutableMap<String, Any?>) {
         val spec = app.source
         spec.option(SourceOptions.LINK_FILTER)?.let { settings["customLinkFilterRegex"] = it }
-        spec.option(SourceOptions.STEPS)?.let { raw ->
-            val steps = runCatching { Json.parseArray(raw).items }.getOrDefault(emptyList()).mapNotNull(::step)
-            if (steps.isNotEmpty()) settings["intermediateLink"] = steps
-        }
+        val steps = HtmlStep.parse(spec.option(SourceOptions.STEPS)).orEmpty().filter { it.filter.isNotBlank() }.map(::step)
+        if (steps.isNotEmpty()) settings["intermediateLink"] = steps
         if (spec.option(SourceOptions.SORT) == "page") settings["skipSort"] = true
-        when (spec.option(SourceOptions.VERSION_FROM)) {
-            "text" -> settings["filterByLinkText"] = true
-            "page" -> settings["versionExtractWholePage"] = true
-        }
+        if (spec.flag(SourceOptions.LINK_TEXT)) settings["filterByLinkText"] = true
+        if (spec.option(SourceOptions.VERSION_FROM) == "page") settings["versionExtractWholePage"] = true
         if (spec.option(SourceOptions.FIRST_LINK) == "true") settings["reverseSort"] = true
         if (spec.option(SourceOptions.LAST_SEGMENT) == "true") settings["sortByLastLinkSegment"] = true
         if (spec.option(SourceOptions.ANY_TEXT) == "true") settings["matchLinksOutsideATags"] = true
     }
 
-    /** One of the steps through other pages, a pattern alone or an object that says more. */
-    private fun step(value: JsonValue): Map<String, Any?>? = when (value) {
-        is JsonString -> mapOf("customLinkFilterRegex" to value.value)
-        is JsonObject -> value.string("filter")?.let { filter ->
-            mapOf(
-                "customLinkFilterRegex" to filter,
-                "filterByLinkText" to (value.bool("text") ?: false),
-                "autoLinkFilterByArch" to (value.bool("arch") ?: false),
-            )
-        }
-        else -> null
-    }
+    /** One of the steps through other pages, with every option Obtainium keeps for it. */
+    private fun step(step: HtmlStep): Map<String, Any?> = mapOf(
+        "customLinkFilterRegex" to step.filter,
+        "filterByLinkText" to step.byText,
+        "autoLinkFilterByArch" to step.arch,
+        "skipSort" to step.pageOrder,
+        "reverseSort" to step.firstLink,
+        "sortByLastLinkSegment" to step.lastSegment,
+        "matchLinksOutsideATags" to step.anyText,
+    )
 
     /** The request headers and the way to tell files apart that the HTML and direct link sources share with Obtainium's. */
     private fun web(app: AppConfig, settings: MutableMap<String, Any?>) {

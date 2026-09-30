@@ -63,8 +63,8 @@ data class ReleasePolicy(
     val notesFilter: String? = null,
     /** Applied to the raw version; the first capture group (or whole match) becomes the version. */
     val versionExtract: String? = null,
-    /** Hide a release until it has been public for this many days. */
-    val minAgeDays: Int = 0,
+    /** Hide a release until it has been public for this many days. Null follows the setting for all apps. */
+    val minAgeDays: Int? = null,
     /** Release id the user chose to skip. */
     val skippedReleaseId: String? = null,
     /** When the newest release has no usable file, fall back to the newest one that does. */

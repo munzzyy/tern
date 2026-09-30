@@ -364,6 +364,8 @@ data class Settings(
     val searchForgejo: String = DEFAULT_FORGEJO,
     /** A search of GitHub or of a Forgejo leaves out projects with fewer stars than this. */
     val searchMinStars: Int = 0,
+    /** A hubproxy host every request to GitHub goes through, with no token; null goes to GitHub itself. Never exported. */
+    val githubProxy: String? = null,
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */

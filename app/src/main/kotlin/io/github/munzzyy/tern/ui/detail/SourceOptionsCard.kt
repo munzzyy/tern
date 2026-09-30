@@ -17,14 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import io.github.munzzyy.tern.R
-import io.github.munzzyy.tern.core.json.Json
-import io.github.munzzyy.tern.core.json.JsonObject
-import io.github.munzzyy.tern.core.json.JsonString
-import io.github.munzzyy.tern.core.json.JsonValue
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
+import io.github.munzzyy.tern.core.source.web.HtmlStep
 import io.github.munzzyy.tern.core.source.web.PseudoVersion
 import io.github.munzzyy.tern.core.source.web.RequestHeaders
 import io.github.munzzyy.tern.ui.common.ChoiceRow
@@ -37,23 +34,23 @@ import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.fingerprint
 
 /** The sources that have options a person may set. */
-val SOURCES_WITH_OPTIONS = setOf(SourceTypes.GITHUB, SourceTypes.FORGEJO, SourceTypes.GITHUB_ACTIONS, SourceTypes.HTML, SourceTypes.DIRECT, SourceTypes.SAMSUNG)
+val SOURCES_WITH_OPTIONS = setOf(SourceTypes.GITHUB, SourceTypes.FORGEJO, SourceTypes.GITHUB_ACTIONS, SourceTypes.HTML, SourceTypes.DIRECT, SourceTypes.SAMSUNG, SourceTypes.FARSROID)
 
 private val WORKFLOW_NAME = Regex("^[A-Za-z0-9._-]{1,100}\\.ya?ml$")
 private val BRANCH_NAME = Regex("^[A-Za-z0-9._/-]{1,100}$")
 private val DEVICE_MODEL = Regex("^[A-Za-z0-9-]{2,40}$")
 private val CSC = Regex("^[A-Za-z0-9]{3}$")
 
-/** The text options of a source, edited together and saved with one button. */
+/** The text options of a source, and the pages a web page source goes through, edited together and saved with one button. */
 data class OptionsDraft(
     val workflow: String = "",
     val branch: String = "",
     val deviceModel: String = "",
     val csc: String = "",
     val linkFilter: String = "",
-    val steps: String = "",
+    val steps: List<HtmlStep> = emptyList(),
     val headers: String = "",
-) {
+) : java.io.Serializable {
     /** The fields that cannot be used as they are. */
     fun invalid(type: String): Set<String> = buildSet {
         if (type == SourceTypes.GITHUB_ACTIONS) {
@@ -66,12 +63,12 @@ data class OptionsDraft(
         }
         if (type == SourceTypes.HTML) {
             if (!isValidPattern(linkFilter)) add("linkFilter")
-            if (stepLines(steps).any { !isValidPattern(it) }) add("steps")
+            if (steps.any { it.filter.isBlank() || !isValidPattern(it.filter) }) add("steps")
         }
         if ((type == SourceTypes.HTML || type == SourceTypes.DIRECT) && headerMap(headers) == null) add("headers")
     }
 
-    /** [spec] with these options, the others it has kept as they were. Steps that were objects keep their flags when their pattern stays. */
+    /** [spec] with these options, the others it has kept as they were. */
     fun applyTo(spec: SourceSpec): SourceSpec {
         val options = LinkedHashMap(spec.options)
         fun put(key: String, value: String?) {
@@ -88,9 +85,7 @@ data class OptionsDraft(
             }
             SourceTypes.HTML -> {
                 put(SourceOptions.LINK_FILTER, linkFilter.trim())
-                val before = storedSteps(spec).associateBy { stepFilter(it) }
-                val lines = stepLines(steps)
-                put(SourceOptions.STEPS, if (lines.isEmpty()) null else Json.write(Json.of(lines.map { before[it] ?: JsonString(it) })))
+                put(SourceOptions.STEPS, HtmlStep.write(steps.map { it.copy(filter = it.filter.trim()) }.take(HtmlStep.MAX)))
                 put(SourceOptions.HEADERS, headerMap(headers)?.takeIf { it.isNotEmpty() }?.let(RequestHeaders::write))
             }
             SourceTypes.DIRECT -> put(SourceOptions.HEADERS, headerMap(headers)?.takeIf { it.isNotEmpty() }?.let(RequestHeaders::write))
@@ -105,21 +100,10 @@ data class OptionsDraft(
             deviceModel = spec.option(SourceOptions.DEVICE_MODEL).orEmpty(),
             csc = spec.option(SourceOptions.CSC).orEmpty(),
             linkFilter = spec.option(SourceOptions.LINK_FILTER).orEmpty(),
-            steps = storedSteps(spec).mapNotNull(::stepFilter).joinToString("\n"),
+            steps = HtmlStep.parse(spec.option(SourceOptions.STEPS)).orEmpty(),
             headers = runCatching { RequestHeaders.parse(spec.option(SourceOptions.HEADERS)) }.getOrDefault(emptyMap())
                 .entries.joinToString("\n") { "${it.key}: ${it.value}" },
         )
-
-        private fun storedSteps(spec: SourceSpec): List<JsonValue> =
-            spec.option(SourceOptions.STEPS)?.let { raw -> runCatching { Json.parseArray(raw).items }.getOrNull() }.orEmpty()
-
-        private fun stepFilter(step: JsonValue): String? = when (step) {
-            is JsonString -> step.value
-            is JsonObject -> step.string("filter")
-            else -> null
-        }
-
-        private fun stepLines(text: String): List<String> = text.lines().map { it.trim() }.filter { it.isNotEmpty() }.take(MAX_STEPS)
 
         /** The headers the lines name, or null when one of them may not be sent. */
         fun headerMap(text: String): Map<String, String>? {
@@ -133,8 +117,6 @@ data class OptionsDraft(
             }
             return out.takeIf { it.size <= RequestHeaders.MAX_HEADERS }
         }
-
-        private const val MAX_STEPS = 8
     }
 }
 
@@ -181,15 +163,37 @@ fun SourceOptionsCard(id: String, spec: SourceSpec, save: ((SourceSpec) -> Sourc
                     onChange = { setFlag(SourceOptions.ASSET_DATE, it) },
                 )
             }
+            SourceTypes.FARSROID -> SwitchRow(
+                title = stringResource(R.string.option_file_version),
+                summary = stringResource(R.string.option_file_version_effect),
+                checked = flag(SourceOptions.FILE_VERSION),
+                onChange = { setFlag(SourceOptions.FILE_VERSION, it) },
+            )
             SourceTypes.HTML -> {
                 SwitchRow(
+                    title = stringResource(R.string.option_link_text),
+                    summary = stringResource(R.string.option_link_text_effect),
+                    checked = flag(SourceOptions.LINK_TEXT),
+                    onChange = { setFlag(SourceOptions.LINK_TEXT, it) },
+                )
+                SwitchRow(
                     title = stringResource(R.string.option_page_order),
-                    summary = stringResource(R.string.option_page_order_effect),
+                    summary = stringResource(R.string.option_natural_order_effect),
                     checked = spec.option(SourceOptions.SORT) == "page",
                     onChange = { on -> save { s -> s.copy(options = if (on) s.options + (SourceOptions.SORT to "page") else s.options - SourceOptions.SORT) } },
                 )
-                SwitchRow(stringResource(R.string.option_first_link), flag(SourceOptions.FIRST_LINK), { setFlag(SourceOptions.FIRST_LINK, it) })
-                SwitchRow(stringResource(R.string.option_last_segment), flag(SourceOptions.LAST_SEGMENT), { setFlag(SourceOptions.LAST_SEGMENT, it) })
+                SwitchRow(
+                    title = stringResource(R.string.option_take_first),
+                    summary = stringResource(R.string.option_take_first_effect),
+                    checked = flag(SourceOptions.FIRST_LINK),
+                    onChange = { setFlag(SourceOptions.FIRST_LINK, it) },
+                )
+                SwitchRow(
+                    title = stringResource(R.string.option_by_last_segment),
+                    summary = stringResource(R.string.option_by_last_segment_effect),
+                    checked = flag(SourceOptions.LAST_SEGMENT),
+                    onChange = { setFlag(SourceOptions.LAST_SEGMENT, it) },
+                )
                 SwitchRow(
                     title = stringResource(R.string.option_any_text),
                     summary = stringResource(R.string.option_any_text_effect),
@@ -241,6 +245,7 @@ fun SourceOptionsCard(id: String, spec: SourceSpec, save: ((SourceSpec) -> Sourc
             for (field in fields) {
                 OptionField(field, draft, "${field.key}" in invalid) { draft = it }
             }
+            if (spec.type == SourceTypes.HTML) StepsEditor(draft.steps) { draft = draft.copy(steps = it) }
             if (dirty) {
                 Row(horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2, Alignment.End), modifier = Modifier.fillMaxWidth()) {
                     QuietButton(stringResource(R.string.action_discard), onClick = { draft = OptionsDraft.of(spec) })
@@ -257,16 +262,54 @@ private enum class OptionField(val key: String, val label: Int, val help: Int?, 
     DEVICE_MODEL("deviceModel", R.string.option_device_model, R.string.option_device_model_help),
     CSC("csc", R.string.option_csc, R.string.option_csc_help),
     LINK_FILTER("linkFilter", R.string.option_link_filter, R.string.option_link_filter_help, code = true),
-    STEPS("steps", R.string.option_steps, R.string.option_steps_help, lines = true, code = true),
     HEADERS("headers", R.string.option_headers, R.string.option_headers_help, lines = true, code = true),
 }
 
 private fun fieldsFor(type: String): List<OptionField> = when (type) {
     SourceTypes.GITHUB_ACTIONS -> listOf(OptionField.WORKFLOW, OptionField.BRANCH)
     SourceTypes.SAMSUNG -> listOf(OptionField.DEVICE_MODEL, OptionField.CSC)
-    SourceTypes.HTML -> listOf(OptionField.LINK_FILTER, OptionField.STEPS, OptionField.HEADERS)
+    SourceTypes.HTML -> listOf(OptionField.LINK_FILTER, OptionField.HEADERS)
     SourceTypes.DIRECT -> listOf(OptionField.HEADERS)
     else -> emptyList()
+}
+
+/** The pages a web page source goes through before the last, each with its link pattern and how its links are chosen. */
+@Composable
+private fun StepsEditor(steps: List<HtmlStep>, onChange: (List<HtmlStep>) -> Unit) {
+    val look = LocalLook.current
+    fun change(index: Int, step: HtmlStep) = onChange(steps.toMutableList().also { it[index] = step })
+    Text(stringResource(R.string.option_steps_title), style = MaterialTheme.typography.titleSmall)
+    Text(stringResource(R.string.option_steps_order_help), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    steps.forEachIndexed { index, step ->
+        Column(verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
+            Text(stringResource(R.string.step_title, index + 1), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+            val bad = step.filter.isBlank() || !isValidPattern(step.filter)
+            OutlinedTextField(
+                value = step.filter,
+                onValueChange = { change(index, step.copy(filter = it.take(500))) },
+                label = { Text(stringResource(R.string.step_filter)) },
+                supportingText = if (bad) {
+                    { Text(stringResource(R.string.option_invalid)) }
+                } else {
+                    null
+                },
+                isError = bad,
+                singleLine = true,
+                textStyle = MaterialTheme.typography.bodyLarge.fingerprint(),
+                modifier = Modifier.fillMaxWidth().textFieldKeys(),
+            )
+            SwitchRow(stringResource(R.string.step_text), step.byText, { change(index, step.copy(byText = it)) })
+            SwitchRow(stringResource(R.string.step_arch), step.arch, { change(index, step.copy(arch = it)) })
+            SwitchRow(stringResource(R.string.option_page_order), step.pageOrder, { change(index, step.copy(pageOrder = it)) })
+            SwitchRow(stringResource(R.string.option_take_first), step.firstLink, { change(index, step.copy(firstLink = it)) })
+            SwitchRow(stringResource(R.string.option_by_last_segment), step.lastSegment, { change(index, step.copy(lastSegment = it)) })
+            SwitchRow(stringResource(R.string.option_any_text), step.anyText, { change(index, step.copy(anyText = it)) })
+            QuietButton(stringResource(R.string.step_remove), onClick = { onChange(steps.filterIndexed { i, _ -> i != index }) })
+        }
+    }
+    if (steps.size < HtmlStep.MAX) {
+        QuietButton(stringResource(R.string.step_add), onClick = { onChange(steps + HtmlStep("")) })
+    }
 }
 
 @Composable
@@ -277,7 +320,6 @@ private fun OptionField(field: OptionField, draft: OptionsDraft, invalid: Boolea
         OptionField.DEVICE_MODEL -> draft.deviceModel
         OptionField.CSC -> draft.csc
         OptionField.LINK_FILTER -> draft.linkFilter
-        OptionField.STEPS -> draft.steps
         OptionField.HEADERS -> draft.headers
     }
     val change: (String) -> OptionsDraft = { v ->
@@ -288,7 +330,6 @@ private fun OptionField(field: OptionField, draft: OptionsDraft, invalid: Boolea
             OptionField.DEVICE_MODEL -> draft.copy(deviceModel = text)
             OptionField.CSC -> draft.copy(csc = text)
             OptionField.LINK_FILTER -> draft.copy(linkFilter = text)
-            OptionField.STEPS -> draft.copy(steps = text)
             OptionField.HEADERS -> draft.copy(headers = text)
         }
     }

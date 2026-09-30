@@ -56,7 +56,10 @@ object SourceTypes {
      */
     val REPUBLISHING: Set<String> = setOf(APKPURE, APTOIDE, UPTODOWN, APKCOMBO, APKMIRROR, FARSROID) + MODIFIED
 
-    /** Sources that only tell of new releases and offer no file Tern may install, each of which says so through [Source.trackOnly]. */
+    /**
+     * Sources that only tell of new releases and offer no file Tern may install, each of which says
+     * so through [Source.trackOnly]. Every app of one is track-only, whatever it was made or saved with.
+     */
     val TRACK_ONLY: Set<String> = setOf(APKMIRROR, ROCKMODS)
 
     /**
@@ -67,6 +70,13 @@ object SourceTypes {
     val OVERRIDABLE: List<String> = listOf(HTML, DIRECT, GITHUB, GITHUB_ACTIONS, GITLAB, FORGEJO, FDROID_REPO, JENKINS, SOURCEHUT).let { first ->
         first + ALL.filter { it !in first && it != VIVO && it != COOLAPK }
     }
+
+    /**
+     * Sources that read versions with the app's version pattern themselves, from more than a version:
+     * the web page reader runs it over a link's address or the whole page. The release selector
+     * leaves the pattern alone for them.
+     */
+    val READS_OWN_VERSIONS: Set<String> = setOf(HTML)
 
     /** The name a person knows the source by. Null for the general ones, which are named by their host. */
     fun displayName(type: String): String? = when (type) {
@@ -120,24 +130,36 @@ object SourceOptions {
     /** fdroid-repo: SHA-256 of the repository signing certificate, lowercase hex. */
     const val FINGERPRINT = "fingerprint"
 
-    /** html: regular expression a link must match to count as a download. */
+    /** html: regular expression a link's decoded address must match to count as a download. */
     const val LINK_FILTER = "linkFilter"
 
+    /** html: "true" to match [LINK_FILTER] against what a link says instead of its address. */
+    const val LINK_TEXT = "linkText"
+
     /**
-     * html: JSON array, one entry per intermediate page to follow before the final one. An entry is
-     * a regular expression the link's address must match, or an object `{"filter": "...", "text":
-     * true, "arch": true}` whose filter is matched against the link's text instead and which prefers
-     * links that name this device's processor.
+     * html: JSON array, one entry per intermediate page to follow before the final one, at most
+     * ten. An entry is a regular expression the link's decoded address must match, or an object
+     * `{"filter": "..."}` that can also hold these flags, each `true` when set: `text` matches the
+     * link's text instead, `arch` prefers links that name this device's processor, and
+     * `pageOrder`, `firstLink`, `lastSegment` and `anyText` mean for that page what [SORT] "page",
+     * [FIRST_LINK], [LAST_SEGMENT] and [ANY_TEXT] mean for the last one. On each page the matching
+     * links are put in order and the last is followed, as Obtainium does.
      */
     const val STEPS = "steps"
 
-    /** html: "true" to take only the first link: the first on the page with sort "page", else the lowest in natural order. */
+    /**
+     * html: "true" to turn the order of the links around, so that the first in natural order, or the
+     * first on the page with [SORT] "page", is the one taken: Obtainium's "take first link".
+     */
     const val FIRST_LINK = "firstLink"
 
-    /** html: "true" to read versions from, and order links by, only the last segment of their path. */
+    /** html: "true" to order links, and read versions without a pattern, by only the last segment of their address. */
     const val LAST_SEGMENT = "lastSegment"
 
-    /** html: "true" to also find addresses outside `<a>` tags: in JSON strings, in the text, and in other tags' attributes. */
+    /**
+     * html: "true" to also find addresses outside `<a>` tags: in JSON strings, in the text, and in
+     * other tags' attributes. A page without any link tag is always read that way.
+     */
     const val ANY_TEXT = "anyText"
 
     /** html, direct: JSON object of extra headers sent with the page and the file requests. See [io.github.munzzyy.tern.core.source.web.RequestHeaders]. */
@@ -150,11 +172,23 @@ object SourceOptions {
      */
     const val PSEUDO = "pseudo"
 
-    /** html: "link" (default), "text" or "page": where the version is read from. */
+    /**
+     * html: "link" (default), "text" or "page": what the app's version pattern, or without one a
+     * guess, reads the version from. "link" is the link's decoded address, "text" what the link
+     * says, and "page" the whole page with its line breaks written as \n, as Obtainium's
+     * versionExtractWholePage has it.
+     */
     const val VERSION_FROM = "versionFrom"
 
-    /** html: "version" (default) or "page": how candidate links are ordered. */
+    /**
+     * html: "page" to keep the links in the order of the page. Otherwise they are put in natural
+     * order of their address, numbers read as numbers. The last link in that order is the one
+     * taken, and the release it belongs to is marked as the latest.
+     */
     const val SORT = "sort"
+
+    /** farsroid: "true" to take the name of each file as a version, each file then a release of its own. */
+    const val FILE_VERSION = "fileVersion"
 
     /** samsung: the device model the store is asked for, such as "SM-S948B". */
     const val DEVICE_MODEL = "deviceModel"

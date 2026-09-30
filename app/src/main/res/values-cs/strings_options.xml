@@ -72,12 +72,7 @@
     <string name="option_csc_help">Tři písmena, například DBT.</string>
     <string name="option_link_filter">Filtr odkazů ke stažení</string>
     <string name="option_link_filter_help">Jako stažení se počítají jen odpovídající odkazy.</string>
-    <string name="option_steps">Stránky, kterými nejdřív projít</string>
-    <string name="option_steps_help">Jeden vzor na řádek: na každé stránce se přejde na první odpovídající odkaz.</string>
     <string name="option_page_order">Zachovat pořadí stránky</string>
-    <string name="option_page_order_effect">Jinak se odkazy řadí podle verze, kterou uvádějí.</string>
-    <string name="option_first_link">Vzít jen první odkaz</string>
-    <string name="option_last_segment">Číst verze z konce adresy</string>
     <string name="option_any_text">Hledat odkazy i mimo značky odkazů</string>
     <string name="option_any_text_effect">V textu stránky, v JSON a v dalších atributech.</string>
     <string name="option_version_from">Odkud číst verzi</string>

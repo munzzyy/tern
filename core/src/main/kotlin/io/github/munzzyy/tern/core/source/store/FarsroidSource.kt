@@ -12,6 +12,7 @@ import io.github.munzzyy.tern.core.source.Source
 import io.github.munzzyy.tern.core.source.SourceErrorKind
 import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.core.source.SourceListing
+import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.guarded
 import io.github.munzzyy.tern.core.source.web.LinkScanner
@@ -57,7 +58,13 @@ class FarsroidSource : Source {
             .take(MAX_FILES)
             .toList()
         if (assets.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "The download box at ${spec.url} offers no file")
-        return CheckResult.Listing(SourceListing(releases = listOf(Release(id = version, version = version, pageUrl = spec.url, assets = assets))))
+        // Obtainium's "release title as version" takes the file's name; each file is then a release, so the app's filters choose among them.
+        val releases = if (spec.flag(SourceOptions.FILE_VERSION)) {
+            assets.map { Release(id = it.name, version = it.name, pageUrl = spec.url, assets = listOf(it)) }
+        } else {
+            listOf(Release(id = version, version = version, pageUrl = spec.url, assets = assets))
+        }
+        return CheckResult.Listing(SourceListing(releases = releases))
     }
 
     private fun read(url: String, context: CheckContext): String = context.http.execute(HttpRequest(url)).use {

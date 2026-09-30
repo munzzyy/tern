@@ -68,12 +68,7 @@
     <string name="option_csc_help">Tre bogstaver, f.eks. DBT.</string>
     <string name="option_link_filter">Filter for downloadlinks</string>
     <string name="option_link_filter_help">Kun links, der matcher, tæller som downloads.</string>
-    <string name="option_steps">Sider, der skal gennemgås først</string>
-    <string name="option_steps_help">Ét mønster pr. linje: på hver side følges det første link, der matcher.</string>
     <string name="option_page_order">Behold sidens rækkefølge</string>
-    <string name="option_page_order_effect">Ellers sorteres links efter den version, de nævner.</string>
-    <string name="option_first_link">Tag kun det første link</string>
-    <string name="option_last_segment">Læs versioner fra slutningen af adressen</string>
     <string name="option_any_text">Find også links uden for link-tags</string>
     <string name="option_any_text_effect">I sidens tekst, i JSON og i andre attributter.</string>
     <string name="option_version_from">Læs versionen fra</string>

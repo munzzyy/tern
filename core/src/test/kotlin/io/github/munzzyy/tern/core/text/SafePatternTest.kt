@@ -34,6 +34,19 @@ class SafePatternTest {
     }
 
     @Test
+    fun theLastMatchIsTheOneExtractedAsObtainiumTakesIt() {
+        assertEquals("1.3", SafePattern.compile("v(\\d+\\.\\d+)").extract("v1.2 is out, then v1.3"))
+        assertEquals("20260930", SafePattern.compile("\\d{8}").extract("app-20260101.apk from 20260930"))
+    }
+
+    @Test
+    fun aPatternForPagesReadsFarBeyondTheUsualLimit() {
+        val page = "x".repeat(SafePattern.MAX_INPUT * 10) + "Version: 20260930"
+        assertNull(SafePattern.compile("Version: (\\d+)").extract(page))
+        assertEquals("20260930", SafePattern.compileForPages("Version: (\\d+)").extract(page))
+    }
+
+    @Test
     fun ordinaryPatternsFitTheBudgetOnTheLongestInput() {
         val text = "release notes line with words and 1.2.3 numbers\n".repeat(200)
         for (pattern in listOf("security", "\\bfix(es|ed)?\\b", "^.*android.*$", "(\\d+)\\.(\\d+)\\.(\\d+)", "[a-z]+-[a-z]+", "(?s).*numbers.*")) {

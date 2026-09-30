@@ -68,12 +68,7 @@
     <string name="option_csc_help">Tre bokstäver, till exempel DBT.</string>
     <string name="option_link_filter">Filter för nedladdningslänkar</string>
     <string name="option_link_filter_help">Endast länkar som matchar räknas som nedladdningar.</string>
-    <string name="option_steps">Sidor att gå igenom först</string>
-    <string name="option_steps_help">Ett mönster per rad: på varje sida följs den första länken som matchar.</string>
     <string name="option_page_order">Behåll sidans ordning</string>
-    <string name="option_page_order_effect">Annars sorteras länkar efter den version de anger.</string>
-    <string name="option_first_link">Ta endast den första länken</string>
-    <string name="option_last_segment">Läs versioner från slutet av adressen</string>
     <string name="option_any_text">Hitta länkar även utanför länktaggar</string>
     <string name="option_any_text_effect">I sidans text, i JSON och i andra attribut.</string>
     <string name="option_version_from">Läs versionen från</string>

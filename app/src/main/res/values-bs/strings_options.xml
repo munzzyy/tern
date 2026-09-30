@@ -70,12 +70,7 @@
     <string name="option_csc_help">Tri slova, na primjer DBT.</string>
     <string name="option_link_filter">Filter za linkove za preuzimanje</string>
     <string name="option_link_filter_help">Samo linkovi koji se podudaraju računaju se kao preuzimanja.</string>
-    <string name="option_steps">Stranice kroz koje prvo treba proći</string>
-    <string name="option_steps_help">Jedan obrazac po redu: na svakoj stranici prati se prvi link koji se podudara.</string>
     <string name="option_page_order">Zadrži redoslijed stranice</string>
-    <string name="option_page_order_effect">U suprotnom se linkovi redaju po verziji koju navode.</string>
-    <string name="option_first_link">Uzmi samo prvi link</string>
-    <string name="option_last_segment">Čitaj verzije s kraja adrese</string>
     <string name="option_any_text">Pronađi linkove i izvan oznaka za linkove</string>
     <string name="option_any_text_effect">U tekstu stranice, u JSON-u i u drugim atributima.</string>
     <string name="option_version_from">Odakle čitati verziju</string>

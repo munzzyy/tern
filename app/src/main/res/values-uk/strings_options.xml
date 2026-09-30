@@ -72,12 +72,7 @@
     <string name="option_csc_help">Три літери, наприклад DBT.</string>
     <string name="option_link_filter">Фільтр посилань на завантаження</string>
     <string name="option_link_filter_help">Завантаженнями вважаються лише відповідні посилання.</string>
-    <string name="option_steps">Сторінки, які треба пройти спершу</string>
-    <string name="option_steps_help">Один шаблон на рядок: на кожній сторінці виконується перехід за першим відповідним посиланням.</string>
     <string name="option_page_order">Зберігати порядок сторінки</string>
-    <string name="option_page_order_effect">Інакше посилання впорядковуються за версією, яку вони вказують.</string>
-    <string name="option_first_link">Брати лише перше посилання</string>
-    <string name="option_last_segment">Читати версії з кінця адреси</string>
     <string name="option_any_text">Шукати посилання й поза тегами посилань</string>
     <string name="option_any_text_effect">У тексті сторінки, у JSON та в інших атрибутах.</string>
     <string name="option_version_from">Звідки брати версію</string>

@@ -3,6 +3,7 @@ package io.github.munzzyy.tern.data
 import android.content.Context
 import android.content.SharedPreferences
 import io.github.munzzyy.tern.core.json.Json
+import io.github.munzzyy.tern.core.net.GitHubProxy
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.engine.Settings
 
@@ -76,6 +77,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             confirmUpdateAll = prefs.getBoolean("confirmUpdateAll", d.confirmUpdateAll),
             searchForgejo = prefs.getString("searchForgejo", null)?.let(::cleanHost) ?: d.searchForgejo,
             searchMinStars = prefs.getInt("searchMinStars", d.searchMinStars).coerceIn(0, MAX_STARS),
+            githubProxy = GitHubProxy.cleanHost(prefs.getString("githubProxy", null)),
         )
     }
 
@@ -152,6 +154,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putBoolean("confirmUpdateAll", s.confirmUpdateAll)
             .putString("searchForgejo", cleanHost(s.searchForgejo))
             .putInt("searchMinStars", s.searchMinStars.coerceIn(0, MAX_STARS))
+            .putString("githubProxy", GitHubProxy.cleanHost(s.githubProxy))
             .commit()
     }
 

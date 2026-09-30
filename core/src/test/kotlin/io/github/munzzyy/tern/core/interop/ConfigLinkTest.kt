@@ -93,7 +93,10 @@ class ConfigLinkTest {
     fun aLinkedAppNeverInstallsByItself() {
         val auto = app.copy(updates = UpdateMode.AUTO)
         assertEquals(UpdateMode.NOTIFY, readBack(ConfigLink.of(auto)!!).updates)
-        assertEquals(UpdateMode.MANUAL, readBack(ConfigLink.of(app.copy(updates = UpdateMode.MANUAL))!!).updates)
+        // Obtainium has no mode that is never checked: such an app arrives checked, notified of nothing, and still not installing.
+        val manual = readBack(ConfigLink.of(app.copy(updates = UpdateMode.MANUAL))!!)
+        assertEquals(UpdateMode.NOTIFY, manual.updates)
+        assertTrue(manual.muted)
     }
 
     @Test

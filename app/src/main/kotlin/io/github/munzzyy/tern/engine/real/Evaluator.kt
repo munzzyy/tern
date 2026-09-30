@@ -48,16 +48,28 @@ class Evaluator(
     private val nowMs: () -> Long,
     /** The file filter of the settings, for apps that have none of their own. */
     private val globalFilter: () -> String? = { null },
+    /** The wait of the settings, for apps that have none of their own. */
+    private val globalMinAgeDays: () -> Int = { 0 },
 ) {
     constructor(texts: Texts, device: DeviceProfile, nowMs: () -> Long) : this(texts, device, BuiltInPins(), nowMs)
 
-    /** [given] with the file filter of the settings when it has no filter for files of its own. */
+    /**
+     * [given] with the file filter and the wait of the settings where it has none of its own. A
+     * source that reads versions with the app's pattern itself has done so, so the pattern is not
+     * run over them a second time.
+     */
     fun effective(given: AppConfig): AppConfig {
+        var releases = given.releases
+        if (releases.minAgeDays == null) releases = releases.copy(minAgeDays = globalMinAgeDays())
+        if (given.source.type in SourceTypes.READS_OWN_VERSIONS) releases = releases.copy(versionExtract = null, matchGroup = null)
         val assets = given.assets
-        if (assets.include != null || assets.exclude != null) return given
-        val global = globalFilter() ?: return given
-        return given.copy(assets = assets.copy(include = global))
+        val global = globalFilter()
+        val files = if (assets.include != null || assets.exclude != null || global == null) assets else assets.copy(include = global)
+        return if (releases == given.releases && files == assets) given else given.copy(releases = releases, assets = files)
     }
+
+    /** How many days [config] waits, its own or the setting's. */
+    fun minAgeDays(config: AppConfig): Int = config.releases.minAgeDays ?: globalMinAgeDays()
 
     /** [inspect] returns what a file says, or null when that cannot be known now. */
     fun evaluate(given: AppConfig, state: AppState, installed: DeviceApp?, inspect: (Asset, String) -> FileFacts?): Evaluation {

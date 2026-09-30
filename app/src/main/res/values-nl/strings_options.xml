@@ -68,12 +68,7 @@
     <string name="option_csc_help">Drie letters, zoals DBT.</string>
     <string name="option_link_filter">Filter voor downloadlinks</string>
     <string name="option_link_filter_help">Alleen links die overeenkomen, tellen als downloads.</string>
-    <string name="option_steps">Pagina\'s om eerst te doorlopen</string>
-    <string name="option_steps_help">Eén patroon per regel: op elke pagina wordt de eerste overeenkomende link gevolgd.</string>
     <string name="option_page_order">De volgorde van de pagina behouden</string>
-    <string name="option_page_order_effect">Anders worden links gesorteerd op de versie die ze noemen.</string>
-    <string name="option_first_link">Alleen de eerste link nemen</string>
-    <string name="option_last_segment">Versies lezen uit het einde van het adres</string>
     <string name="option_any_text">Ook links buiten linktags vinden</string>
     <string name="option_any_text_effect">In de tekst van de pagina, in JSON en in andere attributen.</string>
     <string name="option_version_from">De versie lezen uit</string>

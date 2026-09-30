@@ -100,7 +100,7 @@ class HtmlSourceTest {
     @Test
     fun tooManyStepsIsUnsupported() {
         val startUrl = "https://example.com/project"
-        val steps = (1..6).joinToString(",", "[", "]") { "\"step$it\"" }
+        val steps = (1..11).joinToString(",", "[", "]") { "\"step$it\"" }
         val spec = SourceSpec(source.type, startUrl, mapOf(SourceOptions.STEPS to steps))
         try {
             source.check(spec, CheckContext(FakeHttp(), InMemoryValidatorStore()))
@@ -158,12 +158,82 @@ class HtmlSourceTest {
         }
     }
 
+    /** The release marked as the latest, which is the one of the link Obtainium would take. */
+    private fun taken(http: FakeHttp, spec: SourceSpec) = listing(http, spec).releases.single { it.latest }
+
     @Test
-    fun theFirstLinkIsTheFirstOnThePageOrTheLowestInNaturalOrder() {
+    fun theLinkTakenIsTheLastInNaturalOrderOrOnThePageAndFirstLinkTurnsThatAround() {
         val http = FakeHttp().text(page, """<a href="/dl/app-1.10.apk">new</a><a href="/dl/app-1.9.apk">old</a><a href="/dl/app-1.2.apk">older</a>""")
         assertEquals(listOf("1.10", "1.9", "1.2"), listing(http, spec()).releases.map { it.version })
-        assertEquals(listOf("1.2"), listing(http, spec(SourceOptions.FIRST_LINK to "true")).releases.map { it.version })
-        assertEquals(listOf("1.10"), listing(http, spec(SourceOptions.FIRST_LINK to "true", SourceOptions.SORT to "page")).releases.map { it.version })
+        assertEquals("1.10", taken(http, spec()).version)
+        assertEquals("1.2", taken(http, spec(SourceOptions.FIRST_LINK to "true")).version)
+        assertEquals("1.2", taken(http, spec(SourceOptions.SORT to "page")).version)
+        assertEquals("1.10", taken(http, spec(SourceOptions.FIRST_LINK to "true", SourceOptions.SORT to "page")).version)
+    }
+
+    @Test
+    fun theLinkFilterCanReadWhatALinkSays() {
+        val http = FakeHttp().text(page, """<a href="/get?id=1">Beta build</a><a href="/get?id=2">Stable build</a>""")
+            .on("https://example.com/get?id=2") { HttpResponse.of(200, "", Headers.of("ETag" to "\"s\""), "https://example.com/get?id=2") }
+        val release = taken(http, spec(SourceOptions.LINK_FILTER to "^Stable", SourceOptions.LINK_TEXT to "true"))
+        assertEquals("https://example.com/get?id=2", release.assets.single().url)
+        unsupportedOrEmpty(http, spec(SourceOptions.LINK_FILTER to "^Stable"))
+    }
+
+    private fun unsupportedOrEmpty(http: FakeHttp, spec: SourceSpec) {
+        try {
+            listing(http, spec)
+            fail("expected SourceException")
+        } catch (e: SourceException) {
+            assertEquals(SourceErrorKind.NO_RELEASES, e.kind)
+        }
+    }
+
+    @Test
+    fun theVersionPatternReadsTheDecodedLinkOrTheWholePage() {
+        val app = io.github.munzzyy.tern.core.model.AppConfig(
+            id = "a",
+            source = spec(),
+            name = "A",
+            releases = io.github.munzzyy.tern.core.model.ReleasePolicy(versionExtract = "build%?[ -]?(\\d{8})"),
+        )
+        val links = FakeHttp().text(page, """<a href="/dl/app%20build%2020260101.apk">old</a><a href="/dl/app%20build%2020260930.apk">new</a>""")
+        val fromLinks = (source.check(spec(), CheckContext(links, InMemoryValidatorStore(), app = app)) as CheckResult.Listing).listing
+        assertEquals(setOf("20260101", "20260930"), fromLinks.releases.map { it.version }.toSet())
+        assertEquals("20260930", fromLinks.releases.single { it.latest }.version)
+
+        val body = "<html>\n<p>Build\n 1</p>\n" + "<p>filler</p>\n".repeat(1000) + "<span>Released: 2026-09-30</span>\n<a href=\"/dl/latest.apk\">get</a></html>"
+        val whole = FakeHttp().text(page, body)
+        val pageApp = app.copy(releases = app.releases.copy(versionExtract = "Released: (\\d{4})-(\\d{2})-(\\d{2})", matchGroup = "$1$2$3"))
+        val fromPage = (source.check(spec(SourceOptions.VERSION_FROM to "page"), CheckContext(whole, InMemoryValidatorStore(), app = pageApp)) as CheckResult.Listing).listing
+        assertEquals("20260930", fromPage.releases.single().version)
+        val escaped = app.copy(releases = app.releases.copy(versionExtract = "Build\\\\n (\\d+)", matchGroup = null))
+        assertEquals("1", (source.check(spec(SourceOptions.VERSION_FROM to "page"), CheckContext(whole, InMemoryValidatorStore(), app = escaped)) as CheckResult.Listing).listing.releases.single().version)
+    }
+
+    @Test
+    fun aStepPutsItsLinksInOrderAndFollowsTheLast() {
+        val start = "https://example.com/project"
+        val http = FakeHttp()
+            .text(start, """<a href="/v/1.9/">1.9</a><a href="/v/1.10/">1.10</a><a href="/v/1.2/">1.2</a>""")
+            .text("https://example.com/v/1.10/", """<a href="/dl/app-1.10.apk">get</a>""")
+            .text("https://example.com/v/1.2/", """<a href="/dl/app-1.2.apk">get</a>""")
+            .text("https://example.com/v/1.9/", """<a href="/dl/app-1.9.apk">get</a>""")
+        fun followed(step: String) = listing(http, SourceSpec(source.type, start, mapOf(SourceOptions.STEPS to "[$step]"))).releases.single().version
+        assertEquals("1.10", followed("\"/v/\""))
+        assertEquals("1.2", followed("""{"filter": "/v/", "firstLink": true}"""))
+        assertEquals("1.2", followed("""{"filter": "/v/", "pageOrder": true}"""))
+        assertEquals("1.9", followed("""{"filter": "/v/", "pageOrder": true, "firstLink": true}"""))
+    }
+
+    @Test
+    fun tenStepsAreAllowed() {
+        val start = "https://example.com/p0"
+        val http = FakeHttp()
+        for (i in 0 until 10) http.text("https://example.com/p$i", """<a href="/p${i + 1}">next</a>""")
+        http.text("https://example.com/p10", """<a href="/dl/app-1.0.apk">get</a>""")
+        val steps = (1..10).joinToString(",", "[", "]") { "\"/p$it\"" }
+        assertEquals("1.0", listing(http, SourceSpec(source.type, start, mapOf(SourceOptions.STEPS to steps))).releases.single().version)
     }
 
     @Test
@@ -174,7 +244,7 @@ class HtmlSourceTest {
 
         val names = FakeHttp().text(page, """<a href="/b/app-2.apk">c</a><a href="/a/app-3.apk">d</a>""")
         fun first(vararg options: Pair<String, String>) =
-            listing(names, spec(SourceOptions.FIRST_LINK to "true", SourceOptions.PSEUDO to "link", *options)).releases.single().assets.single().url
+            listing(names, spec(SourceOptions.FIRST_LINK to "true", SourceOptions.PSEUDO to "link", *options)).releases.single().assets.first().url
         assertEquals("https://example.com/a/app-3.apk", first())
         assertEquals("https://example.com/b/app-2.apk", first(SourceOptions.LAST_SEGMENT to "true"))
     }
@@ -189,9 +259,9 @@ class HtmlSourceTest {
         val http = FakeHttp().text(page, html)
         assertEquals(listOf("1.0.0"), listing(http, spec()).releases.map { it.version })
         val any = listing(http, spec(SourceOptions.ANY_TEXT to "true")).releases
-        assertEquals(listOf("3.0.0", "2.9.0", "1.0.0"), any.map { it.version })
-        assertEquals("https://cdn.example.com/files/app-2.9.0.apk", any[1].assets.single().url)
-        assertEquals("https://example.com/dl/app-3.0.0.apk", any[0].assets.single().url)
+        assertEquals(setOf("3.0.0", "2.9.0", "1.0.0"), any.map { it.version }.toSet())
+        assertEquals("https://cdn.example.com/files/app-2.9.0.apk", any.single { it.version == "2.9.0" }.assets.single().url)
+        assertEquals("https://example.com/dl/app-3.0.0.apk", any.single { it.latest }.assets.single().url)
     }
 
     @Test
@@ -201,17 +271,13 @@ class HtmlSourceTest {
     }
 
     @Test
-    fun addressesInAJsonAnswerAreFoundWhenAskedFor() {
+    fun addressesInAJsonAnswerAreFoundAsAPageWithoutLinkTagsIsReadForThem() {
         val json = """{"name": "Example", "latest": {"url": "https://cdn.example.com/app-4.1.0.apk", "mirror": "/files/app-4.1.0-mirror.apk"}, "notes": "see https://example.com/notes"}"""
         val http = FakeHttp().text(page, json)
-        val release = listing(http, spec(SourceOptions.ANY_TEXT to "true")).releases.single()
-        assertEquals("4.1.0", release.version)
-        assertEquals(setOf("https://cdn.example.com/app-4.1.0.apk", "https://example.com/files/app-4.1.0-mirror.apk"), release.assets.map { it.url }.toSet())
-        try {
-            listing(http, spec())
-            fail("expected SourceException")
-        } catch (e: SourceException) {
-            assertEquals(SourceErrorKind.NO_RELEASES, e.kind)
+        for (options in listOf(spec(SourceOptions.ANY_TEXT to "true"), spec())) {
+            val release = listing(http, options).releases.single()
+            assertEquals("4.1.0", release.version)
+            assertEquals(setOf("https://cdn.example.com/app-4.1.0.apk", "https://example.com/files/app-4.1.0-mirror.apk"), release.assets.map { it.url }.toSet())
         }
     }
 

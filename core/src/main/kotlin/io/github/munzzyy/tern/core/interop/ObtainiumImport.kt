@@ -6,7 +6,6 @@ import io.github.munzzyy.tern.core.json.JsonBool
 import io.github.munzzyy.tern.core.json.JsonNumber
 import io.github.munzzyy.tern.core.json.JsonObject
 import io.github.munzzyy.tern.core.json.JsonString
-import io.github.munzzyy.tern.core.json.JsonValue
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.AssetPolicy
 import io.github.munzzyy.tern.core.model.ReleaseOrder
@@ -24,6 +23,7 @@ import io.github.munzzyy.tern.core.source.forge.GitLabSource
 import io.github.munzzyy.tern.core.source.fdroid.FDroidRepoSource
 import io.github.munzzyy.tern.core.source.fdroid.FDroidSource
 import io.github.munzzyy.tern.core.source.web.DirectSource
+import io.github.munzzyy.tern.core.source.web.HtmlStep
 import io.github.munzzyy.tern.core.source.web.JenkinsSource
 import io.github.munzzyy.tern.core.source.web.PseudoVersion
 import io.github.munzzyy.tern.core.source.web.RequestHeaders
@@ -96,10 +96,11 @@ object ObtainiumImport {
                         titleFilter = settingString(settings, "filterReleaseTitlesByRegEx"),
                         notesFilter = settingString(settings, "filterReleaseNotesByRegEx"),
                         versionExtract = versionExtract,
-                        minAgeDays = (settingInt(settings, "minimumUpdateAgeDays") ?: 0).coerceIn(0, 365),
+                        // Obtainium keeps '' for "use the global default", which is what no value of Tern's means.
+                        minAgeDays = settingInt(settings, "minimumUpdateAgeDays")?.coerceIn(0, 365),
                         fallbackToOlder = settingBool(settings, "fallbackToOlderReleases") ?: true,
                         matchGroup = matchGroup(settings, versionExtract),
-                        versionFrom = versionFrom(settings),
+                        versionFrom = versionFrom(settings, source.type),
                         order = order(settings),
                         stayBehind = if (settingBool(settings, "stayOneVersionBehind") == true) 1 else 0,
                         versionFilter = settingString(settings, "filterVersionsByRegEx"),
@@ -111,8 +112,11 @@ object ObtainiumImport {
                         archives = settingBool(settings, "includeZips") == true || settingBool(settings, "includeTarballs") == true,
                         innerFilter = settingString(settings, "zippedApkFilterRegEx") ?: settingString(settings, "tarballedApkFilterRegEx"),
                     ),
-                    updates = if (settingBool(settings, "exemptFromBackgroundUpdates") == true) UpdateMode.MANUAL else UpdateMode.NOTIFY,
-                    trackOnly = settingBool(settings, "trackOnly") ?: false,
+                    // Exempt from background updates, an app is still checked and its updates still
+                    // announced; it only does not install by itself. That is "tell me", and so is an
+                    // app that is not exempt, because a file never switches on installs by themselves.
+                    updates = UpdateMode.NOTIFY,
+                    trackOnly = settingBool(settings, "trackOnly") == true || source.type in SourceTypes.TRACK_ONLY,
                     pinnedSigners = pinnedSigners,
                     categories = categories.map { it.take(MAX_NAME) }.take(32),
                     favorite = pinned,
@@ -167,10 +171,9 @@ object ObtainiumImport {
     private fun html(address: String, settings: JsonObject): SourceSpec {
         val options = LinkedHashMap<String, String>()
         settingString(settings, "customLinkFilterRegex")?.let { options[SourceOptions.LINK_FILTER] = it }
-        val steps = steps(settings)
-        if (steps.isNotEmpty()) options[SourceOptions.STEPS] = Json.write(Json.of(steps))
+        HtmlStep.write(steps(settings))?.let { options[SourceOptions.STEPS] = it }
         if (settingBool(settings, "skipSort") == true) options[SourceOptions.SORT] = "page"
-        if (settingBool(settings, "filterByLinkText") == true) options[SourceOptions.VERSION_FROM] = "text"
+        if (settingBool(settings, "filterByLinkText") == true) options[SourceOptions.LINK_TEXT] = "true"
         if (settingBool(settings, "versionExtractWholePage") == true) options[SourceOptions.VERSION_FROM] = "page"
         if (settingBool(settings, "reverseSort") == true) options[SourceOptions.FIRST_LINK] = "true"
         if ((settingBool(settings, "sortByLastLinkSegment") ?: settingBool(settings, "sortByFileNamesNotLinks")) == true) options[SourceOptions.LAST_SEGMENT] = "true"
@@ -179,22 +182,23 @@ object ObtainiumImport {
         return SourceSpec(SourceTypes.HTML, address, options)
     }
 
-    /**
-     * Obtainium's intermediate links (or the single one older versions kept) as Tern's steps: the
-     * pattern alone, or an object when it is matched against the link text or prefers links that
-     * name this device's processor.
-     */
-    private fun steps(settings: JsonObject): List<JsonValue> {
+    /** Obtainium's intermediate links, or the single one older versions kept, as Tern's steps with every option of each. */
+    private fun steps(settings: JsonObject): List<HtmlStep> {
         val legacy = settingString(settings, "intermediateLinkRegex")?.let { filter ->
             listOf(Json.obj("customLinkFilterRegex" to filter, "filterByLinkText" to (settingBool(settings, "intermediateLinkByText") ?: false)))
         }
         val links = settings.array("intermediateLink")?.objects()?.takeIf { it.isNotEmpty() } ?: legacy.orEmpty()
         return links.mapNotNull { link ->
-            val filter = settingString(link, "customLinkFilterRegex") ?: return@mapNotNull null
-            val text = settingBool(link, "filterByLinkText") == true
-            val arch = settingBool(link, "autoLinkFilterByArch") == true
-            if (text || arch) Json.obj("filter" to filter, "text" to text, "arch" to arch) else JsonString(filter)
-        }.take(MAX_STEPS)
+            HtmlStep(
+                filter = settingString(link, "customLinkFilterRegex") ?: return@mapNotNull null,
+                byText = settingBool(link, "filterByLinkText") == true,
+                arch = settingBool(link, "autoLinkFilterByArch") == true,
+                pageOrder = settingBool(link, "skipSort") == true,
+                firstLink = settingBool(link, "reverseSort") == true,
+                lastSegment = settingBool(link, "sortByLastLinkSegment") == true,
+                anyText = settingBool(link, "matchLinksOutsideATags") == true,
+            )
+        }.take(HtmlStep.MAX)
     }
 
     /** The options Obtainium keeps for a forge or a direct download address that Tern reads too. */
@@ -246,9 +250,10 @@ object ObtainiumImport {
         return named.takeUnless { it.removePrefix("$") == ObtainiumOptions.defaultGroup(versionExtract) }
     }
 
-    private fun versionFrom(settings: JsonObject): VersionFrom = when {
+    /** On Farsroid, releaseTitleAsVersion names the file instead, which is an option of that source; see [store]. */
+    private fun versionFrom(settings: JsonObject, type: String): VersionFrom = when {
         settingBool(settings, "releaseDateAsVersion") == true || settingString(settings, "versionDetection") == "releaseDateAsVersion" -> VersionFrom.DATE
-        settingBool(settings, "releaseTitleAsVersion") == true -> VersionFrom.TITLE
+        settingBool(settings, "releaseTitleAsVersion") == true && type != SourceTypes.FARSROID -> VersionFrom.TITLE
         else -> VersionFrom.TAG
     }
 
@@ -283,11 +288,16 @@ object ObtainiumImport {
     /** A store source by its type, with the options Obtainium keeps for it that Tern reads too. */
     private fun store(type: String, address: String, settings: JsonObject): SourceSpec? {
         val spec = REGISTRY.get(type)?.match(address) ?: return null
-        if (type != SourceTypes.SAMSUNG) return spec
         val options = LinkedHashMap(spec.options)
-        settingString(settings, "deviceId")?.let { options[SourceOptions.DEVICE_MODEL] = it.take(40) }
-        settingString(settings, "csc")?.let { options[SourceOptions.CSC] = it.take(10) }
-        return spec.copy(options = options)
+        when (type) {
+            SourceTypes.SAMSUNG -> {
+                settingString(settings, "deviceId")?.let { options[SourceOptions.DEVICE_MODEL] = it.take(40) }
+                settingString(settings, "csc")?.let { options[SourceOptions.CSC] = it.take(10) }
+            }
+            // Farsroid's "release title as version" takes the name of the file.
+            SourceTypes.FARSROID -> if (settingBool(settings, "releaseTitleAsVersion") == true) options[SourceOptions.FILE_VERSION] = "true"
+        }
+        return if (options == spec.options) spec else spec.copy(options = options)
     }
 
     private fun settingString(settings: JsonObject, key: String): String? = when (val v = settings[key]) {
@@ -312,7 +322,6 @@ object ObtainiumImport {
 
     private const val MAX_APPS = 5000
     private const val MAX_NAME = 200
-    private const val MAX_STEPS = 5
 
     /** Obtainium's names for the stores and single-app sites, as its exports write them. */
     private val STORE_SOURCES = linkedMapOf(

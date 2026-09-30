@@ -76,12 +76,7 @@
     <string name="option_csc_help">ثلاثة أحرف، مثل DBT.</string>
     <string name="option_link_filter">فلتر روابط التنزيل</string>
     <string name="option_link_filter_help">الروابط المطابقة فقط تُحتسب كتنزيلات.</string>
-    <string name="option_steps">صفحات يُمر بها أولًا</string>
-    <string name="option_steps_help">نمط واحد في كل سطر: في كل صفحة، يُتبع أول رابط مطابق.</string>
     <string name="option_page_order">الإبقاء على ترتيب الصفحة</string>
-    <string name="option_page_order_effect">وإلا تُرتب الروابط حسب رقم الإصدار الذي تذكره.</string>
-    <string name="option_first_link">أخذ الرابط الأول فقط</string>
-    <string name="option_last_segment">قراءة أرقام الإصدارات من نهاية العنوان</string>
     <string name="option_any_text">العثور على روابط خارج وسوم الروابط أيضًا</string>
     <string name="option_any_text_effect">في نص الصفحة، وفي JSON، وفي السمات الأخرى.</string>
     <string name="option_version_from">قراءة رقم الإصدار من</string>

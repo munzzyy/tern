@@ -70,12 +70,7 @@
     <string name="option_csc_help">Tres lletres, com ara DBT.</string>
     <string name="option_link_filter">Filtre d\'enllaços de baixada</string>
     <string name="option_link_filter_help">Només els enllaços que coincideixen compten com a baixades.</string>
-    <string name="option_steps">Pàgines per recórrer primer</string>
-    <string name="option_steps_help">Un patró per línia: a cada pàgina, se segueix el primer enllaç que coincideix.</string>
     <string name="option_page_order">Mantén l\'ordre de la pàgina</string>
-    <string name="option_page_order_effect">Si no, els enllaços s\'ordenen per la versió que indiquen.</string>
-    <string name="option_first_link">Agafa només el primer enllaç</string>
-    <string name="option_last_segment">Llegeix les versions del final de l\'adreça</string>
     <string name="option_any_text">Troba enllaços també fora de les etiquetes d\'enllaç</string>
     <string name="option_any_text_effect">Al text de la pàgina, en JSON i en altres atributs.</string>
     <string name="option_version_from">Llegeix la versió de</string>

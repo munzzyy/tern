@@ -72,12 +72,7 @@
     <string name="option_csc_help">Три буквы, например DBT.</string>
     <string name="option_link_filter">Фильтр ссылок на скачивание</string>
     <string name="option_link_filter_help">Скачиваниями считаются только подходящие ссылки.</string>
-    <string name="option_steps">Страницы, которые нужно пройти сначала</string>
-    <string name="option_steps_help">Один шаблон на строку: на каждой странице выполняется переход по первой подходящей ссылке.</string>
     <string name="option_page_order">Сохранять порядок страницы</string>
-    <string name="option_page_order_effect">Иначе ссылки упорядочиваются по версии, которую они указывают.</string>
-    <string name="option_first_link">Брать только первую ссылку</string>
-    <string name="option_last_segment">Читать версии из конца адреса</string>
     <string name="option_any_text">Искать ссылки и вне тегов ссылок</string>
     <string name="option_any_text_effect">В тексте страницы, в JSON и в других атрибутах.</string>
     <string name="option_version_from">Откуда брать версию</string>

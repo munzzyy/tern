@@ -75,6 +75,8 @@ import io.github.munzzyy.tern.ui.common.LinkDialog
 import io.github.munzzyy.tern.ui.common.ReadBlock
 import io.github.munzzyy.tern.ui.common.SectionCard
 import io.github.munzzyy.tern.ui.common.ScreenTop
+import io.github.munzzyy.tern.core.net.GitHubProxy
+import io.github.munzzyy.tern.ui.common.QuietButton
 import io.github.munzzyy.tern.ui.common.SwitchRow
 import io.github.munzzyy.tern.ui.common.TonalButton
 import io.github.munzzyy.tern.ui.common.firstFocus
@@ -107,7 +109,7 @@ const val PERMIT_ROW_TAG = "settings_install_permission"
 const val INSTALLER_STATUS_TAG = "settings_installer_status"
 const val EXPORT_ROW_TAG = "settings_export"
 
-private val MIN_AGE_CHOICES = listOf(0, 1, 3, 7, 14, 30)
+private val MIN_AGE_CHOICES = listOf(0, 1, 2, 3, 5, 7, 14, 30)
 private const val STACK_FONT_SCALE = 1.5f
 
 /** [onAdd] opens the Add screen with an address, where nothing is added until the user says so. */
@@ -144,7 +146,7 @@ fun SettingsScreen(onImport: () -> Unit, onLook: () -> Unit, onAdd: (String) -> 
                 DefaultsSection(s, update)
                 if (showsNotifications(look.television)) NotificationsSection(s, update)
                 InstallingSection(s, vm, update)
-                TokensSection(vm)
+                TokensSection(vm) { GitHubProxyRow(s, update) }
                 NetworkSection(s, update, onGetOrbot = { onAdd(ORBOT_URL) }, orbotFocus = Modifier.returnFocus(screen, "orbot"))
                 AppearanceSection(s, update, onLook, Modifier.returnFocus(screen, "look"))
                 DataSection(s, vm, update, onImport, Modifier.returnFocus(screen, "import"))
@@ -258,7 +260,7 @@ private fun DefaultsSection(s: Settings, update: Update) {
             options = (MIN_AGE_CHOICES + s.minAgeDaysByDefault).distinct().sorted(),
             selected = s.minAgeDaysByDefault,
             label = { minAgeLabel(it) },
-            summary = stringResource(R.string.setting_min_age_effect),
+            summary = stringResource(R.string.setting_min_age_global_effect),
             onSelect = { d -> update { it.copy(minAgeDaysByDefault = d) } },
         )
         FileFilterRow(s, update)
@@ -481,8 +483,49 @@ private fun InstallPermissionRow() {
     }
 }
 
+/**
+ * A hubproxy that every request to GitHub goes through, as Obtainium's GHReqPrefix: a bare host,
+ * reached over HTTPS, that is never sent a token and never goes into an export.
+ */
 @Composable
-private fun TokensSection(vm: SettingsViewModel) {
+private fun GitHubProxyRow(s: Settings, update: Update) {
+    val look = LocalLook.current
+    val scheme = MaterialTheme.colorScheme
+    var host by remember(s.githubProxy) { mutableStateOf(s.githubProxy.orEmpty()) }
+    val cleaned = GitHubProxy.cleanHost(host)
+    val bad = host.isNotBlank() && cleaned == null
+    Column(
+        verticalArrangement = Arrangement.spacedBy(look.gapSmall),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = look.cardPadding, vertical = look.gapSmall / 2),
+    ) {
+        Text(stringResource(R.string.github_proxy_title), style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(R.string.github_proxy_effect), style = MaterialTheme.typography.bodyMedium, color = scheme.onSurfaceVariant)
+        s.githubProxy?.let { Text(stringResource(R.string.github_proxy_in_use, ltr(it)), style = MaterialTheme.typography.bodyMedium) }
+        OutlinedTextField(
+            value = host,
+            onValueChange = { host = it.take(260) },
+            label = { Text(stringResource(R.string.github_proxy_host)) },
+            supportingText = { Text(stringResource(if (bad) R.string.github_proxy_invalid else R.string.github_proxy_help)) },
+            isError = bad,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
+            modifier = Modifier.fillMaxWidth().textFieldKeys(),
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2, Alignment.End), modifier = Modifier.fillMaxWidth()) {
+            if (s.githubProxy != null) {
+                QuietButton(stringResource(R.string.github_proxy_remove), onClick = { update { it.copy(githubProxy = null) } })
+            }
+            if (cleaned != null && cleaned != s.githubProxy) {
+                TonalButton(stringResource(R.string.action_save), onClick = { update { it.copy(githubProxy = cleaned) } })
+            }
+        }
+    }
+}
+
+@Composable
+private fun TokensSection(vm: SettingsViewModel, extra: @Composable () -> Unit = {}) {
     val hosts by vm.tokenHosts.collectAsStateWithLifecycle()
     val actions = rememberActions()
     val look = LocalLook.current
@@ -563,6 +606,7 @@ private fun TokensSection(vm: SettingsViewModel) {
                 modifier = Modifier.align(Alignment.End),
             )
         }
+        extra()
     }
 }
 

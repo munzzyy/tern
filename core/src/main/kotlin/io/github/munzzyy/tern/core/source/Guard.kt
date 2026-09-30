@@ -34,7 +34,7 @@ internal class PendingValidators(private val target: ValidatorStore) : Validator
  */
 internal inline fun <T> guarded(context: CheckContext, check: (CheckContext) -> T): T {
     val validators = PendingValidators(context.validators)
-    val scoped = CheckContext(context.http, validators, context.tokens, context.nowMs, context.device)
+    val scoped = context.withValidators(validators)
     val result = try {
         check(scoped)
     } catch (e: SourceException) {

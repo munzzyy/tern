@@ -31,6 +31,7 @@ import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.ReleaseOrder
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.model.VersionFrom
+import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.InstallerMode
 import io.github.munzzyy.tern.ui.LocalEngine
@@ -57,7 +58,7 @@ import io.github.munzzyy.tern.ui.text.isolate
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.fingerprint
 
-private val MIN_AGE_CHOICES = listOf(0, 1, 3, 7, 14, 30)
+private val MIN_AGE_CHOICES = listOf(0, 1, 2, 3, 5, 7, 14, 30)
 
 fun LazyListScope.settings(vm: DetailViewModel, row: AppRow, onRemoved: () -> Unit) {
     item(key = "s-files") { FilesGroup(vm, row) }
@@ -162,11 +163,12 @@ private fun UpdatesGroup(vm: DetailViewModel, config: AppConfig) {
             checked = config.releases.includePrereleases,
             onChange = { on -> save { it.copy(releases = it.releases.copy(includePrereleases = on)) } },
         )
+        val globalWait = LocalEngine.current.settings.collectAsStateWithLifecycle().value.minAgeDaysByDefault
         ChoiceRow(
             title = stringResource(R.string.setting_min_age),
-            options = (MIN_AGE_CHOICES + config.releases.minAgeDays).distinct().sorted(),
+            options = listOf<Int?>(null) + (MIN_AGE_CHOICES + listOfNotNull(config.releases.minAgeDays)).distinct().sorted(),
             selected = config.releases.minAgeDays,
-            label = { minAgeLabel(it) },
+            label = { days -> if (days == null) stringResource(R.string.min_age_global, minAgeLabel(globalWait)) else minAgeLabel(days) },
             summary = stringResource(R.string.setting_min_age_effect),
             onSelect = { days -> save { it.copy(releases = it.releases.copy(minAgeDays = days)) } },
         )
@@ -374,11 +376,18 @@ private fun AdvancedGroup(vm: DetailViewModel, config: AppConfig) {
             checked = config.releases.fallbackToOlder,
             onChange = { on -> save { it.copy(releases = it.releases.copy(fallbackToOlder = on)) } },
         )
+        // A source that offers no file keeps its apps track-only, and says why.
+        val forced = config.source.type in SourceTypes.TRACK_ONLY
         SwitchRow(
             title = stringResource(R.string.setting_track_only),
-            summary = stringResource(R.string.setting_track_only_effect),
-            checked = config.trackOnly,
+            summary = if (forced) {
+                stringResource(R.string.setting_track_only_forced, SourceTypes.displayName(config.source.type) ?: config.source.type)
+            } else {
+                stringResource(R.string.setting_track_only_effect)
+            },
+            checked = config.trackOnly || forced,
             onChange = { on -> save { it.copy(trackOnly = on) } },
+            enabled = !forced,
         )
         PinnedSigners(config, save)
     }

@@ -10,7 +10,6 @@ import io.github.munzzyy.tern.core.json.JsonException
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.SourceSpec
-import io.github.munzzyy.tern.core.net.InMemoryValidatorStore
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.source.CheckContext
 import io.github.munzzyy.tern.core.source.CheckResult
@@ -80,7 +79,7 @@ internal class Detector(private val e: RealEngine) {
 
     private suspend fun resolve(target: Target, reading: Reading): Detection {
         val normalized = Urls.normalize(target.url) ?: return Detection.Failed(Problem(ProblemKind.NOT_FOUND, e.texts.notASource()))
-        val context = CheckContext(e.http, InMemoryValidatorStore(), e.tokens, e.nowMs, e.device.profile)
+        val context = e.checkContext(target.config)
         val forced = reading.type?.takeIf { it in SourceTypes.OVERRIDABLE && it != target.spec?.type }
         val known = if (forced != null) {
             runInterruptible { e.registry.readAs(target.url, forced, context) }
@@ -145,7 +144,8 @@ internal class Detector(private val e: RealEngine) {
             name = listing.name?.take(200) ?: Urls.host(spec.url),
             author = listing.author?.take(200),
             packageName = given ?: listed,
-            releases = ReleasePolicy(includePrereleases = settings.includePrereleasesByDefault, minAgeDays = settings.minAgeDaysByDefault),
+            releases = ReleasePolicy(includePrereleases = settings.includePrereleasesByDefault),
+            trackOnly = spec.type in SourceTypes.TRACK_ONLY,
         )
         if (builtIn.isNotEmpty()) config = config.copy(pinnedSigners = builtIn)
         val state = AppState(releases = listing.releases, lastCheckedMs = e.nowMs())

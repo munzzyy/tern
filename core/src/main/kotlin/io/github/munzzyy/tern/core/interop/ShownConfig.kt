@@ -15,4 +15,6 @@ internal fun shown(config: AppConfig): AppConfig = config.copy(
     author = Shown.lineOrNull(config.author, MAX_SHORT),
     categories = config.categories.mapNotNull { Shown.lineOrNull(it, MAX_SHORT) },
     notes = config.notes?.let { Shown.prose(it, MAX_LONG) },
+    customName = Shown.lineOrNull(config.customName, MAX_SHORT),
+    customAuthor = Shown.lineOrNull(config.customAuthor, MAX_SHORT),
 )

@@ -16,6 +16,7 @@ import io.github.munzzyy.tern.core.source.Source
 import io.github.munzzyy.tern.core.source.SourceErrorKind
 import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.core.source.SourceListing
+import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import java.io.IOException
 
@@ -99,16 +100,40 @@ class ForgejoSource : Source {
                 throw SourceException(SourceErrorKind.PARSE, "Malformed Forgejo releases JSON for $owner/$repo", cause = e)
             }
 
-            val releases = json.objects().asSequence()
+            val assetDate = spec.flag(SourceOptions.ASSET_DATE)
+            val listed = json.objects().asSequence()
                 .filterNot { obj -> obj.bool("draft") == true }
-                .mapNotNull(::mapRelease)
+                .mapNotNull { obj -> mapRelease(obj, assetDate) }
                 .take(MAX_RELEASES)
                 .toList()
+            val releases = if (spec.flag(SourceOptions.VERIFY_LATEST)) withLatest(listed, latest(at, owner, repo, context, token, assetDate), MAX_RELEASES) else listed
             if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $owner/$repo")
 
             context.validators.put(key, Validator.from(it.headers))
             val listing = SourceListing(releases = releases, name = repo, author = owner)
             return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.forgejo(at, owner, repo, context, token?.let { t -> "token $t" })))
+        }
+    }
+
+    /** The release the forge marks as latest, or null when it marks none. Asked only when the listing changed. */
+    private fun latest(at: String, owner: String, repo: String, context: CheckContext, token: String?, assetDate: Boolean): Release? {
+        val url = "https://$at/api/v1/repos/$owner/$repo/releases/latest"
+        val response = try {
+            context.http.execute(HttpRequest(url, authorization = token?.let { "token $it" }))
+        } catch (e: RateLimitedException) {
+            throw SourceException(SourceErrorKind.RATE_LIMITED, "Rate limited by ${e.host}", e.retryAtMs, e)
+        } catch (e: IOException) {
+            throw SourceException(SourceErrorKind.NETWORK, "Failed to fetch $url", cause = e)
+        }
+        response.use {
+            if (it.status == 404) return null
+            if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "$at returned ${it.status} for the latest release of $owner/$repo")
+            val obj = try {
+                Json.parseObject(it.text())
+            } catch (e: Exception) {
+                throw SourceException(SourceErrorKind.PARSE, "Malformed Forgejo latest release JSON for $owner/$repo", cause = e)
+            }
+            return if (obj.bool("draft") == true) null else mapRelease(obj, assetDate)
         }
     }
 
@@ -121,24 +146,26 @@ class ForgejoSource : Source {
         return SourceSpec(type, "https://$at/$owner/$repo")
     }
 
-    private fun mapRelease(obj: JsonObject): Release? {
+    /** With [assetDate], the release is dated by its newest file, or by its own date when no file says. */
+    private fun mapRelease(obj: JsonObject, assetDate: Boolean): Release? {
         val tag = obj.string("tag_name") ?: return null
-        val assets = obj.array("assets")?.objects().orEmpty().mapNotNull { asset ->
+        val files = obj.array("assets")?.objects().orEmpty().mapNotNull { asset ->
             val name = asset.string("name") ?: return@mapNotNull null
             val downloadUrl = asset.string("browser_download_url") ?: return@mapNotNull null
             if (!Urls.isHttps(downloadUrl) || Urls.normalize(downloadUrl) == null) return@mapNotNull null
-            Asset(name = name, url = downloadUrl, size = asset.long("size"))
+            asset to Asset(name = name, url = downloadUrl, size = asset.long("size"))
         }
+        val published = obj.string("published_at")?.let(Iso8601::parseMs)
         return Release(
             id = tag,
             version = tag,
             title = obj.string("name"),
             notes = obj.string("body"),
             notesFormat = NotesFormat.MARKDOWN,
-            publishedAtMs = obj.string("published_at")?.let(Iso8601::parseMs),
+            publishedAtMs = if (assetDate) newestFileMs(files.map { it.first }) ?: published else published,
             prerelease = obj.bool("prerelease") ?: false,
             pageUrl = obj.string("html_url"),
-            assets = assets,
+            assets = files.map { it.second },
         )
     }
 

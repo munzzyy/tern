@@ -2,12 +2,16 @@ package io.github.munzzyy.tern.core.interop
 
 import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonObject
+import io.github.munzzyy.tern.core.json.JsonString
 import io.github.munzzyy.tern.core.json.JsonValue
 import io.github.munzzyy.tern.core.model.AppConfig
+import io.github.munzzyy.tern.core.model.ReleaseOrder
+import io.github.munzzyy.tern.core.model.VersionFrom
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
+import io.github.munzzyy.tern.core.source.web.PseudoVersion
 import io.github.munzzyy.tern.core.verify.Fingerprints
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -52,7 +56,24 @@ object ObtainiumExport {
         settings["fallbackToOlderReleases"] = r.fallbackToOlder
         r.titleFilter?.let { settings["filterReleaseTitlesByRegEx"] = it }
         r.notesFilter?.let { settings["filterReleaseNotesByRegEx"] = it }
-        r.versionExtract?.let { settings["versionExtractionRegEx"] = it }
+        r.versionExtract?.let { extract ->
+            settings["versionExtractionRegEx"] = extract
+            // Obtainium takes the whole match unless a group is named, so the one Tern takes is named.
+            settings["matchGroupToUse"] = r.matchGroup ?: ObtainiumOptions.defaultGroup(extract)
+        }
+        r.versionFilter?.let { settings["filterVersionsByRegEx"] = it }
+        when (r.versionFrom) {
+            VersionFrom.DATE -> settings["releaseDateAsVersion"] = true
+            VersionFrom.TITLE -> settings["releaseTitleAsVersion"] = true
+            VersionFrom.TAG -> Unit
+        }
+        settings["sortMethodChoice"] = when (r.order) {
+            ReleaseOrder.VERSION -> "smartname"
+            ReleaseOrder.DATE -> "date"
+            ReleaseOrder.SOURCE -> "none"
+            ReleaseOrder.NAME -> "name"
+        }
+        if (r.stayBehind > 0) settings["stayOneVersionBehind"] = true
         if (r.minAgeDays > 0) settings["minimumUpdateAgeDays"] = r.minAgeDays
         val a = app.assets
         when {
@@ -63,15 +84,36 @@ object ObtainiumExport {
             }
         }
         settings["autoApkFilterByArch"] = a.matchDevice
+        if (a.archives) {
+            settings["includeZips"] = true
+            settings["includeTarballs"] = true
+        }
+        a.innerFilter?.let {
+            settings["zippedApkFilterRegEx"] = it
+            settings["tarballedApkFilterRegEx"] = it
+        }
         settings["trackOnly"] = app.trackOnly
         settings["exemptFromBackgroundUpdates"] = app.updates == UpdateMode.MANUAL
+        app.customName?.let { settings["appName"] = it }
+        app.customAuthor?.let { settings["appAuthor"] = it }
+        if (app.muted) settings["skipUpdateNotifications"] = true
+        if (app.refreshFirst) settings["refreshBeforeDownload"] = true
+        if (app.playInstaller) settings["shizukuPretendToBeGooglePlay"] = true
         if (app.pinnedSigners.isNotEmpty()) {
             settings["allowedSigningCertHashes"] = app.pinnedSigners.joinToString("\n") { Fingerprints.format(it) }
         }
         app.notes?.let { settings["about"] = it }
         var url = app.source.url
         when (app.source.type) {
-            SourceTypes.HTML -> html(app, settings)
+            SourceTypes.HTML -> {
+                html(app, settings)
+                web(app, settings)
+            }
+            SourceTypes.DIRECT -> web(app, settings)
+            SourceTypes.GITHUB, SourceTypes.FORGEJO -> {
+                if (app.source.option(SourceOptions.VERIFY_LATEST) == "true") settings["verifyLatestTag"] = true
+                if (app.source.option(SourceOptions.ASSET_DATE) == "true") settings["useLatestAssetDateAsReleaseDate"] = true
+            }
             SourceTypes.FDROID_REPO -> app.source.option(SourceOptions.PACKAGE)?.let { pkg ->
                 settings["appIdOrName"] = pkg
                 url = "$url?appId=${Urls.encodeSegment(pkg)}"
@@ -107,13 +149,44 @@ object ObtainiumExport {
         val spec = app.source
         spec.option(SourceOptions.LINK_FILTER)?.let { settings["customLinkFilterRegex"] = it }
         spec.option(SourceOptions.STEPS)?.let { raw ->
-            val steps = runCatching { Json.parseArray(raw).strings() }.getOrDefault(emptyList())
-            if (steps.isNotEmpty()) settings["intermediateLink"] = steps.map { mapOf("customLinkFilterRegex" to it) }
+            val steps = runCatching { Json.parseArray(raw).items }.getOrDefault(emptyList()).mapNotNull(::step)
+            if (steps.isNotEmpty()) settings["intermediateLink"] = steps
         }
         if (spec.option(SourceOptions.SORT) == "page") settings["skipSort"] = true
         when (spec.option(SourceOptions.VERSION_FROM)) {
             "text" -> settings["filterByLinkText"] = true
             "page" -> settings["versionExtractWholePage"] = true
+        }
+        if (spec.option(SourceOptions.FIRST_LINK) == "true") settings["reverseSort"] = true
+        if (spec.option(SourceOptions.LAST_SEGMENT) == "true") settings["sortByLastLinkSegment"] = true
+        if (spec.option(SourceOptions.ANY_TEXT) == "true") settings["matchLinksOutsideATags"] = true
+    }
+
+    /** One of the steps through other pages, a pattern alone or an object that says more. */
+    private fun step(value: JsonValue): Map<String, Any?>? = when (value) {
+        is JsonString -> mapOf("customLinkFilterRegex" to value.value)
+        is JsonObject -> value.string("filter")?.let { filter ->
+            mapOf(
+                "customLinkFilterRegex" to filter,
+                "filterByLinkText" to (value.bool("text") ?: false),
+                "autoLinkFilterByArch" to (value.bool("arch") ?: false),
+            )
+        }
+        else -> null
+    }
+
+    /** The request headers and the way to tell files apart that the HTML and direct link sources share with Obtainium's. */
+    private fun web(app: AppConfig, settings: MutableMap<String, Any?>) {
+        val spec = app.source
+        spec.option(SourceOptions.HEADERS)?.let { raw ->
+            val headers = runCatching { Json.parseObject(raw).fields }.getOrDefault(emptyMap())
+                .mapNotNull { (name, value) -> (value as? JsonString)?.value?.let { mapOf("requestHeader" to "$name: $it") } }
+            if (headers.isNotEmpty()) settings["requestHeader"] = headers
+        }
+        when (spec.option(SourceOptions.PSEUDO)) {
+            PseudoVersion.HASH.option -> settings["defaultPseudoVersioningMethod"] = "partialAPKHash"
+            PseudoVersion.LINK.option -> settings["defaultPseudoVersioningMethod"] = "APKLinkHash"
+            PseudoVersion.ETAG.option -> settings["defaultPseudoVersioningMethod"] = "ETag"
         }
     }
 

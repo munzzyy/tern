@@ -9,6 +9,7 @@ import io.github.munzzyy.tern.core.source.CheckContext
 import io.github.munzzyy.tern.core.source.CheckResult
 import io.github.munzzyy.tern.core.source.SourceErrorKind
 import io.github.munzzyy.tern.core.source.SourceException
+import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.TokenProvider
 import io.github.munzzyy.tern.core.testing.FakeHttp
@@ -17,6 +18,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.time.Instant
 
 class GitHubSourceTest {
     private val source = GitHubSource()
@@ -198,5 +200,70 @@ class GitHubSourceTest {
         source.check(SourceSpec(SourceTypes.GITHUB, "https://github.com/example/app"), context(http, token = "secret"))
         val request = http.requestsTo(apiUrl).single()
         assertEquals("Bearer secret", request.authorization)
+    }
+
+    private val latestUrl = "https://api.github.com/repos/example/app/releases/latest"
+
+    private fun spec(vararg options: Pair<String, String>) = SourceSpec(SourceTypes.GITHUB, "https://github.com/example/app", options.toMap())
+
+    private fun listing(http: FakeHttp, spec: SourceSpec) = (source.check(spec, context(http, token = "tok")) as CheckResult.Listing).listing
+
+    @Test
+    fun theReleaseGitHubMarksAsLatestIsMarkedWhenAsked() {
+        val http = FakeHttp()
+            .resource(apiUrl, "forge/github_releases.json")
+            .text(latestUrl, """{"tag_name": "v1.1.0", "name": "App 1.1.0", "draft": false, "prerelease": false, "assets": []}""")
+        val releases = listing(http, spec(SourceOptions.VERIFY_LATEST to "true")).releases
+        assertEquals(listOf("v1.2.0" to false, "v1.1.0" to true), releases.map { it.id to it.latest })
+        assertEquals("Bearer tok", http.requestsTo(latestUrl).single().authorization)
+    }
+
+    @Test
+    fun aLatestReleaseTheListingLacksIsAddedInFront() {
+        val latest = """{"tag_name": "v0.9.0", "name": "Old", "draft": false, "prerelease": false, "published_at": "2025-01-01T00:00:00Z",
+            "assets": [{"name": "app.apk", "browser_download_url": "https://github.com/example/app/releases/download/v0.9.0/app.apk"}]}"""
+        val http = FakeHttp().resource(apiUrl, "forge/github_releases.json").text(latestUrl, latest)
+        val releases = listing(http, spec(SourceOptions.VERIFY_LATEST to "true")).releases
+        assertEquals(listOf("v0.9.0", "v1.2.0", "v1.1.0"), releases.map { it.id })
+        assertTrue(releases[0].latest)
+        assertEquals("app.apk", releases[0].assets.single().name)
+    }
+
+    @Test
+    fun whenGitHubMarksNoReleaseAsLatestNoneIsMarked() {
+        val http = FakeHttp().resource(apiUrl, "forge/github_releases.json").text(latestUrl, """{"message": "Not Found"}""", status = 404)
+        assertTrue(listing(http, spec(SourceOptions.VERIFY_LATEST to "true")).releases.none { it.latest })
+    }
+
+    @Test
+    fun theLatestReleaseIsOnlyAskedForWhenTheOptionIsSetAndTheListingChanged() {
+        val plain = FakeHttp().resource(apiUrl, "forge/github_releases.json")
+        assertTrue(listing(plain, spec()).releases.none { it.latest })
+        assertTrue(plain.requestsTo(latestUrl).isEmpty())
+
+        val unchanged = FakeHttp().on(apiUrl) { HttpResponse.of(304, "", url = apiUrl) }
+        assertEquals(CheckResult.Unchanged, source.check(spec(SourceOptions.VERIFY_LATEST to "true"), context(unchanged, token = "tok")))
+        assertTrue(unchanged.requestsTo(latestUrl).isEmpty())
+    }
+
+    @Test
+    fun aFailedQuestionForTheLatestReleaseFailsTheCheck() {
+        val http = FakeHttp().resource(apiUrl, "forge/github_releases.json").text(latestUrl, "oops", status = 502)
+        try {
+            listing(http, spec(SourceOptions.VERIFY_LATEST to "true"))
+            org.junit.Assert.fail("expected SourceException")
+        } catch (e: SourceException) {
+            assertEquals(SourceErrorKind.NETWORK, e.kind)
+        }
+    }
+
+    @Test
+    fun aReleaseCanBeDatedByItsNewestFile() {
+        val http = FakeHttp().resource(apiUrl, "forge/github_file_dates.json")
+        val dated = listing(http, spec(SourceOptions.ASSET_DATE to "true")).releases
+        assertEquals(Instant.parse("2026-03-05T10:00:00Z").toEpochMilli(), dated[0].publishedAtMs)
+        assertEquals(Instant.parse("2025-06-01T00:00:00Z").toEpochMilli(), dated[1].publishedAtMs)
+        val own = listing(http, spec()).releases
+        assertEquals(Instant.parse("2026-01-01T00:00:00Z").toEpochMilli(), own[0].publishedAtMs)
     }
 }

@@ -6,11 +6,14 @@ import io.github.munzzyy.tern.core.json.JsonBool
 import io.github.munzzyy.tern.core.json.JsonNumber
 import io.github.munzzyy.tern.core.json.JsonObject
 import io.github.munzzyy.tern.core.json.JsonString
+import io.github.munzzyy.tern.core.json.JsonValue
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.AssetPolicy
+import io.github.munzzyy.tern.core.model.ReleaseOrder
 import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.model.UpdateMode
+import io.github.munzzyy.tern.core.model.VersionFrom
 import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceRegistry
@@ -22,6 +25,8 @@ import io.github.munzzyy.tern.core.source.fdroid.FDroidRepoSource
 import io.github.munzzyy.tern.core.source.fdroid.FDroidSource
 import io.github.munzzyy.tern.core.source.web.DirectSource
 import io.github.munzzyy.tern.core.source.web.JenkinsSource
+import io.github.munzzyy.tern.core.source.web.PseudoVersion
+import io.github.munzzyy.tern.core.source.web.RequestHeaders
 import io.github.munzzyy.tern.core.source.web.SourceForgeSource
 import io.github.munzzyy.tern.core.source.web.SourceHutSource
 import io.github.munzzyy.tern.core.text.Shown
@@ -58,7 +63,7 @@ object ObtainiumImport {
                 ?: entry.string("additionalSettings")?.let { raw -> runCatching { Json.parseObject(raw) }.getOrNull() }
                 ?: JsonObject(emptyMap())
 
-            val source = mapSource(url, overrideSource, settings)
+            val source = mapSource(url, overrideSource, settings)?.let { withOptions(it, settings) }
             if (source == null) {
                 val reason = if (Urls.normalize(url) == null) "Its address is not a web address Tern can open" else unsupportedReason(overrideSource)
                 skipped.add(Skipped(Shown.line(name, MAX_NAME), Shown.line(url, MAX_NAME), reason))
@@ -77,6 +82,7 @@ object ObtainiumImport {
                 ?.split(Regex("[\\n,]"))
                 ?.mapNotNull { Fingerprints.normalize(it) }
                 ?: emptyList()
+            val versionExtract = settingString(settings, "versionExtractionRegEx")
 
             apps.add(
                 AppConfig(
@@ -89,14 +95,21 @@ object ObtainiumImport {
                         includePrereleases = settingBool(settings, "includePrereleases") ?: false,
                         titleFilter = settingString(settings, "filterReleaseTitlesByRegEx"),
                         notesFilter = settingString(settings, "filterReleaseNotesByRegEx"),
-                        versionExtract = settingString(settings, "versionExtractionRegEx"),
+                        versionExtract = versionExtract,
                         minAgeDays = (settingInt(settings, "minimumUpdateAgeDays") ?: 0).coerceIn(0, 365),
                         fallbackToOlder = settingBool(settings, "fallbackToOlderReleases") ?: true,
+                        matchGroup = matchGroup(settings, versionExtract),
+                        versionFrom = versionFrom(settings),
+                        order = order(settings),
+                        stayBehind = if (settingBool(settings, "stayOneVersionBehind") == true) 1 else 0,
+                        versionFilter = settingString(settings, "filterVersionsByRegEx"),
                     ),
                     assets = AssetPolicy(
                         include = if (invertApkFilter) null else apkFilter,
                         exclude = if (invertApkFilter) apkFilter else null,
                         matchDevice = settingBool(settings, "autoApkFilterByArch") ?: true,
+                        archives = settingBool(settings, "includeZips") == true || settingBool(settings, "includeTarballs") == true,
+                        innerFilter = settingString(settings, "zippedApkFilterRegEx") ?: settingString(settings, "tarballedApkFilterRegEx"),
                     ),
                     updates = if (settingBool(settings, "exemptFromBackgroundUpdates") == true) UpdateMode.MANUAL else UpdateMode.NOTIFY,
                     trackOnly = settingBool(settings, "trackOnly") ?: false,
@@ -104,6 +117,11 @@ object ObtainiumImport {
                     categories = categories.map { it.take(MAX_NAME) }.take(32),
                     favorite = pinned,
                     notes = settingString(settings, "about")?.take(4000),
+                    customName = settingString(settings, "appName")?.takeIf { it.isNotBlank() }?.take(MAX_NAME),
+                    customAuthor = settingString(settings, "appAuthor")?.takeIf { it.isNotBlank() }?.take(MAX_NAME),
+                    muted = settingBool(settings, "skipUpdateNotifications") ?: false,
+                    refreshFirst = settingBool(settings, "refreshBeforeDownload") ?: false,
+                    playInstaller = settingBool(settings, "shizukuPretendToBeGooglePlay") ?: false,
                 ),
             )
         }
@@ -149,14 +167,97 @@ object ObtainiumImport {
     private fun html(address: String, settings: JsonObject): SourceSpec {
         val options = LinkedHashMap<String, String>()
         settingString(settings, "customLinkFilterRegex")?.let { options[SourceOptions.LINK_FILTER] = it }
-        val steps = settings.array("intermediateLink")?.objects().orEmpty()
-            .mapNotNull { settingString(it, "customLinkFilterRegex") }
-            .take(MAX_STEPS)
+        val steps = steps(settings)
         if (steps.isNotEmpty()) options[SourceOptions.STEPS] = Json.write(Json.of(steps))
         if (settingBool(settings, "skipSort") == true) options[SourceOptions.SORT] = "page"
         if (settingBool(settings, "filterByLinkText") == true) options[SourceOptions.VERSION_FROM] = "text"
         if (settingBool(settings, "versionExtractWholePage") == true) options[SourceOptions.VERSION_FROM] = "page"
+        if (settingBool(settings, "reverseSort") == true) options[SourceOptions.FIRST_LINK] = "true"
+        if ((settingBool(settings, "sortByLastLinkSegment") ?: settingBool(settings, "sortByFileNamesNotLinks")) == true) options[SourceOptions.LAST_SEGMENT] = "true"
+        if (settingBool(settings, "matchLinksOutsideATags") == true) options[SourceOptions.ANY_TEXT] = "true"
+        webOptions(settings, options)
         return SourceSpec(SourceTypes.HTML, address, options)
+    }
+
+    /**
+     * Obtainium's intermediate links (or the single one older versions kept) as Tern's steps: the
+     * pattern alone, or an object when it is matched against the link text or prefers links that
+     * name this device's processor.
+     */
+    private fun steps(settings: JsonObject): List<JsonValue> {
+        val legacy = settingString(settings, "intermediateLinkRegex")?.let { filter ->
+            listOf(Json.obj("customLinkFilterRegex" to filter, "filterByLinkText" to (settingBool(settings, "intermediateLinkByText") ?: false)))
+        }
+        val links = settings.array("intermediateLink")?.objects()?.takeIf { it.isNotEmpty() } ?: legacy.orEmpty()
+        return links.mapNotNull { link ->
+            val filter = settingString(link, "customLinkFilterRegex") ?: return@mapNotNull null
+            val text = settingBool(link, "filterByLinkText") == true
+            val arch = settingBool(link, "autoLinkFilterByArch") == true
+            if (text || arch) Json.obj("filter" to filter, "text" to text, "arch" to arch) else JsonString(filter)
+        }.take(MAX_STEPS)
+    }
+
+    /** The options Obtainium keeps for a forge or a direct download address that Tern reads too. */
+    private fun withOptions(spec: SourceSpec, settings: JsonObject): SourceSpec {
+        val options = LinkedHashMap(spec.options)
+        when (spec.type) {
+            SourceTypes.GITHUB, SourceTypes.FORGEJO -> {
+                if (settingBool(settings, "verifyLatestTag") == true) options[SourceOptions.VERIFY_LATEST] = "true"
+                if (settingBool(settings, "useLatestAssetDateAsReleaseDate") == true) options[SourceOptions.ASSET_DATE] = "true"
+            }
+            SourceTypes.DIRECT -> webOptions(settings, options)
+        }
+        return if (options == spec.options) spec else spec.copy(options = options)
+    }
+
+    /** The request headers and the way to tell files apart that Obtainium's HTML and direct link sources share. */
+    private fun webOptions(settings: JsonObject, options: MutableMap<String, String>) {
+        val headers = LinkedHashMap<String, String>()
+        for (entry in settings.array("requestHeader")?.objects().orEmpty()) {
+            val line = settingString(entry, "requestHeader") ?: continue
+            val name = line.substringBefore(':', "").trim()
+            val value = line.substringAfter(':', "").trim()
+            if (RequestHeaders.problem(name, value) != null) continue
+            headers.keys.firstOrNull { it.equals(name, ignoreCase = true) }?.let(headers::remove)
+            headers[name] = value
+        }
+        if (headers.isNotEmpty()) options[SourceOptions.HEADERS] = RequestHeaders.write(headers.entries.take(RequestHeaders.MAX_HEADERS).associate { it.key to it.value })
+        val pseudo = when (settingString(settings, "defaultPseudoVersioningMethod")) {
+            "partialAPKHash" -> PseudoVersion.HASH
+            "APKLinkHash" -> PseudoVersion.LINK
+            "ETag" -> PseudoVersion.ETAG
+            else -> when (settingBool(settings, "supportFixedAPKURL")) {
+                true -> PseudoVersion.HASH
+                false -> PseudoVersion.LINK
+                null -> null
+            }
+        }
+        if (pseudo != null) options[SourceOptions.PSEUDO] = pseudo.option
+    }
+
+    /**
+     * Obtainium takes the whole match when no group is named; Tern would take the first group, so
+     * that is named. A group that is what Tern takes anyway is left unnamed, so that an app comes
+     * back from a trip through Obtainium's format as it went.
+     */
+    private fun matchGroup(settings: JsonObject, versionExtract: String?): String? {
+        if (versionExtract == null) return null
+        val named = settingString(settings, "matchGroupToUse")?.takeIf { it.isNotBlank() }?.take(MAX_NAME) ?: "0"
+        return named.takeUnless { it.removePrefix("$") == ObtainiumOptions.defaultGroup(versionExtract) }
+    }
+
+    private fun versionFrom(settings: JsonObject): VersionFrom = when {
+        settingBool(settings, "releaseDateAsVersion") == true || settingString(settings, "versionDetection") == "releaseDateAsVersion" -> VersionFrom.DATE
+        settingBool(settings, "releaseTitleAsVersion") == true -> VersionFrom.TITLE
+        else -> VersionFrom.TAG
+    }
+
+    /** Obtainium's "smart" name sorts are what Tern's version order already does. */
+    private fun order(settings: JsonObject): ReleaseOrder = when (settingString(settings, "sortMethodChoice")) {
+        "date" -> ReleaseOrder.DATE
+        "none" -> ReleaseOrder.SOURCE
+        "name" -> ReleaseOrder.NAME
+        else -> if (settingBool(settings, "dontSortReleasesList") == true) ReleaseOrder.SOURCE else ReleaseOrder.VERSION
     }
 
     private fun matchByUrl(address: String, settings: JsonObject): SourceSpec? {

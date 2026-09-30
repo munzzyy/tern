@@ -17,6 +17,7 @@ import io.github.munzzyy.tern.core.source.Source
 import io.github.munzzyy.tern.core.source.SourceErrorKind
 import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.core.source.SourceListing
+import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.xml.XmlException
 import io.github.munzzyy.tern.core.xml.XmlScanner
@@ -99,10 +100,7 @@ class GitHubSource : Source {
         val url = "https://api.github.com/repos/$owner/$repo/releases?per_page=30"
         val apiKey = validatorKey(spec, "api")
         val stored = context.validators.get(apiKey)
-        val headers = mapOf(
-            "Accept" to "application/vnd.github+json",
-            "X-GitHub-Api-Version" to "2022-11-28",
-        ) + stored?.conditionalHeaders().orEmpty()
+        val headers = API_HEADERS + stored?.conditionalHeaders().orEmpty()
 
         val response = fetch(url, headers, context, token?.let { "Bearer $it" })
         response.use {
@@ -125,11 +123,13 @@ class GitHubSource : Source {
                 throw SourceException(SourceErrorKind.PARSE, "Malformed GitHub releases JSON for $owner/$repo", cause = e)
             }
 
-            val releases = json.objects().asSequence()
+            val assetDate = spec.flag(SourceOptions.ASSET_DATE)
+            val listed = json.objects().asSequence()
                 .filterNot { obj -> obj.bool("draft") == true }
-                .mapNotNull(::mapRelease)
+                .mapNotNull { obj -> mapRelease(obj, assetDate) }
                 .take(MAX_RELEASES)
                 .toList()
+            val releases = if (spec.flag(SourceOptions.VERIFY_LATEST)) withLatest(listed, latest(owner, repo, context, token, assetDate), MAX_RELEASES) else listed
             if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $owner/$repo")
 
             context.validators.put(apiKey, Validator.from(it.headers))
@@ -138,6 +138,20 @@ class GitHubSource : Source {
             val movedTo = pending?.movedTo ?: movedTo(it.url, owner, repo, apiPath = true)
             val listing = SourceListing(releases = releases, name = repo, author = owner, movedTo = movedTo)
             return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.gitHub(owner, repo)))
+        }
+    }
+
+    /** The release GitHub marks as latest, or null when it marks none. Asked only when the listing changed. */
+    private fun latest(owner: String, repo: String, context: CheckContext, token: String?, assetDate: Boolean): Release? {
+        fetch("https://api.github.com/repos/$owner/$repo/releases/latest", API_HEADERS, context, token?.let { "Bearer $it" }).use {
+            if (it.status == 404) return null
+            if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "GitHub returned ${it.status} for the latest release of $owner/$repo")
+            val obj = try {
+                Json.parseObject(it.text())
+            } catch (e: Exception) {
+                throw SourceException(SourceErrorKind.PARSE, "Malformed GitHub latest release JSON for $owner/$repo", cause = e)
+            }
+            return if (obj.bool("draft") == true) null else mapRelease(obj, assetDate)
         }
     }
 
@@ -180,26 +194,28 @@ class GitHubSource : Source {
         return "https://github.com/$newOwner/$newRepo"
     }
 
-    private fun mapRelease(obj: JsonObject): Release? {
+    /** With [assetDate], the release is dated by its newest file, or by its own date when no file says. */
+    private fun mapRelease(obj: JsonObject, assetDate: Boolean): Release? {
         val tag = obj.string("tag_name") ?: return null
-        val assets = obj.array("assets")?.objects().orEmpty().mapNotNull { asset ->
+        val files = obj.array("assets")?.objects().orEmpty().mapNotNull { asset ->
             val name = asset.string("name") ?: return@mapNotNull null
             val downloadUrl = asset.string("browser_download_url") ?: return@mapNotNull null
             if (!isAllowedAssetUrl(downloadUrl)) return@mapNotNull null
             val digest = asset.string("digest")
             val sha256 = digest?.takeIf { it.startsWith("sha256:") }?.removePrefix("sha256:")
-            Asset(name = name, url = downloadUrl, size = asset.long("size"), sha256 = sha256)
+            asset to Asset(name = name, url = downloadUrl, size = asset.long("size"), sha256 = sha256)
         }
+        val published = obj.string("published_at")?.let(Iso8601::parseMs)
         return Release(
             id = tag,
             version = tag,
             title = obj.string("name"),
             notes = obj.string("body"),
             notesFormat = NotesFormat.MARKDOWN,
-            publishedAtMs = obj.string("published_at")?.let(Iso8601::parseMs),
+            publishedAtMs = if (assetDate) newestFileMs(files.map { it.first }) ?: published else published,
             prerelease = obj.bool("prerelease") ?: false,
             pageUrl = obj.string("html_url"),
-            assets = assets,
+            assets = files.map { it.second },
         )
     }
 
@@ -212,6 +228,7 @@ class GitHubSource : Source {
 
     private companion object {
         const val MAX_RELEASES = 30
+        val API_HEADERS = mapOf("Accept" to "application/vnd.github+json", "X-GitHub-Api-Version" to "2022-11-28")
         val RESERVED_OWNERS = setOf(
             "settings", "orgs", "marketplace", "topics", "sponsors", "features",
             "notifications", "issues", "pulls", "login", "join", "about", "pricing",

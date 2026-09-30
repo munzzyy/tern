@@ -8,6 +8,7 @@ import io.github.munzzyy.tern.core.source.CheckContext
 import io.github.munzzyy.tern.core.source.CheckResult
 import io.github.munzzyy.tern.core.source.SourceErrorKind
 import io.github.munzzyy.tern.core.source.SourceException
+import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.TokenProvider
 import io.github.munzzyy.tern.core.testing.FakeHttp
@@ -15,6 +16,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.time.Instant
 
 class ForgejoSourceTest {
     private val source = ForgejoSource()
@@ -138,5 +140,43 @@ class ForgejoSourceTest {
         val http = FakeHttp().resource(releasesUrl, "forge/forgejo_releases.json")
         source.check(SourceSpec(SourceTypes.FORGEJO, "https://codeberg.org/example/app"), context(http, token = "secret"))
         assertEquals("token secret", http.requestsTo(releasesUrl).single().authorization)
+    }
+
+    private val latestUrl = "https://codeberg.org/api/v1/repos/example/app/releases/latest"
+
+    private fun spec(vararg options: Pair<String, String>) = SourceSpec(SourceTypes.FORGEJO, "https://codeberg.org/example/app", options.toMap())
+
+    private fun listing(http: FakeHttp, spec: SourceSpec) = (source.check(spec, context(http, token = "secret")) as CheckResult.Listing).listing
+
+    @Test
+    fun theReleaseTheForgeMarksAsLatestIsMarkedAndAddedWhenMissing() {
+        val marked = FakeHttp().resource(releasesUrl, "forge/forgejo_file_dates.json")
+            .text(latestUrl, """{"tag_name": "v2.0.0", "name": "v2.0.0", "draft": false, "prerelease": false, "assets": []}""")
+        assertEquals(listOf("v3.0.0" to false, "v2.0.0" to true), listing(marked, spec(SourceOptions.VERIFY_LATEST to "true")).releases.map { it.id to it.latest })
+        assertEquals("token secret", marked.requestsTo(latestUrl).single().authorization)
+
+        val missing = FakeHttp().resource(releasesUrl, "forge/forgejo_file_dates.json")
+            .text(latestUrl, """{"tag_name": "v1.0.0", "name": "v1.0.0", "draft": false, "prerelease": false, "assets": []}""")
+        val releases = listing(missing, spec(SourceOptions.VERIFY_LATEST to "true")).releases
+        assertEquals(listOf("v1.0.0", "v3.0.0", "v2.0.0"), releases.map { it.id })
+        assertTrue(releases[0].latest)
+    }
+
+    @Test
+    fun withNoReleaseMarkedLatestOrWithoutTheOptionNoneIsMarked() {
+        val none = FakeHttp().resource(releasesUrl, "forge/forgejo_file_dates.json").text(latestUrl, "{}", status = 404)
+        assertTrue(listing(none, spec(SourceOptions.VERIFY_LATEST to "true")).releases.none { it.latest })
+        val plain = FakeHttp().resource(releasesUrl, "forge/forgejo_file_dates.json")
+        assertTrue(listing(plain, spec()).releases.none { it.latest })
+        assertTrue(plain.requestsTo(latestUrl).isEmpty())
+    }
+
+    @Test
+    fun aReleaseCanBeDatedByItsNewestFile() {
+        val http = FakeHttp().resource(releasesUrl, "forge/forgejo_file_dates.json")
+        val dated = listing(http, spec(SourceOptions.ASSET_DATE to "true")).releases
+        assertEquals(Instant.parse("2026-04-03T08:30:00Z").toEpochMilli(), dated[0].publishedAtMs)
+        assertEquals(Instant.parse("2026-02-01T00:00:00Z").toEpochMilli(), dated[1].publishedAtMs)
+        assertEquals(Instant.parse("2026-04-01T00:00:00Z").toEpochMilli(), listing(http, spec()).releases[0].publishedAtMs)
     }
 }

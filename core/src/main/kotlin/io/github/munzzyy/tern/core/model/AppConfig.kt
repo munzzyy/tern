@@ -24,6 +24,37 @@ enum class UpdateMode {
     MANUAL,
 }
 
+/** Where a release's version is read from, before [ReleasePolicy.versionExtract] is applied. */
+enum class VersionFrom {
+    /** The version the source gives, usually the tag. */
+    TAG,
+
+    /** The release title, where it is not blank. */
+    TITLE,
+
+    /**
+     * The day and time the release was published, in UTC, written yyyy.MM.dd.HHmm. The time is
+     * always there, so two releases of one day stay apart and a release's version never changes
+     * with its neighbours. For sources whose version strings say nothing. Undated releases keep theirs.
+     */
+    DATE,
+}
+
+/** Which release counts as the newest. A release the source marks as latest comes first in every order. */
+enum class ReleaseOrder {
+    /** Highest version first; releases without a version follow in the order the source gave. */
+    VERSION,
+
+    /** Most recently published first; undated releases follow in the order the source gave. */
+    DATE,
+
+    /** Exactly the order the source gave. */
+    SOURCE,
+
+    /** Natural order of the version text, numbers read as numbers, highest first. */
+    NAME,
+}
+
 data class ReleasePolicy(
     val includePrereleases: Boolean = false,
     /** Applied to the release id (tag). Releases that do not match are ignored. */
@@ -38,6 +69,20 @@ data class ReleasePolicy(
     val skippedReleaseId: String? = null,
     /** When the newest release has no usable file, fall back to the newest one that does. */
     val fallbackToOlder: Boolean = true,
+    /**
+     * Which part of the [versionExtract] match becomes the version: `N` or `$N` for group N (0 is the
+     * whole match), or a template such as `$1.$2`, where `\$` writes a dollar sign. A group the
+     * pattern lacks counts as no match. Null: the first group, else the whole match.
+     */
+    val matchGroup: String? = null,
+    /** Where the version is read from: the tag, the title or the publishing date. */
+    val versionFrom: VersionFrom = VersionFrom.TAG,
+    /** Which release counts as the newest: by version, by date, as the source gave them, or by name. */
+    val order: ReleaseOrder = ReleaseOrder.VERSION,
+    /** Pass over this many of the newest releases that would otherwise be chosen, 0 to 5. */
+    val stayBehind: Int = 0,
+    /** Applied to the version once extracted. Releases whose version does not match are ignored. */
+    val versionFilter: String? = null,
 )
 
 data class AssetPolicy(
@@ -45,6 +90,13 @@ data class AssetPolicy(
     val exclude: String? = null,
     /** Narrow by device architecture when several files are offered. */
     val matchDevice: Boolean = true,
+    /** Offer .zip and tar archives as files that hold the app. One ranks below a plain APK of the same score. */
+    val archives: Boolean = false,
+    /**
+     * Applied to the names of the files inside an archive or bundle; only those that match are
+     * installed. Checked with the other filters, applied by the install.
+     */
+    val innerFilter: String? = null,
 )
 
 data class AppConfig(
@@ -64,4 +116,18 @@ data class AppConfig(
     val categories: List<String> = emptyList(),
     val favorite: Boolean = false,
     val notes: String? = null,
-)
+    /** The name the person chose. Shown instead of [name], and never replaced by what a source or an install says. */
+    val customName: String? = null,
+    /** The author the person chose, shown instead of [author] and kept the same way. */
+    val customAuthor: String? = null,
+    /** No notification that an update is available. */
+    val muted: Boolean = false,
+    /** Check the source again right before a download, for sources whose file addresses do not last. */
+    val refreshFirst: Boolean = false,
+    /** Name Google Play as the installer when a privileged installer (Shizuku or root) installs it. */
+    val playInstaller: Boolean = false,
+) {
+    val shownName: String get() = customName?.takeIf { it.isNotBlank() } ?: name
+
+    val shownAuthor: String? get() = customAuthor?.takeIf { it.isNotBlank() } ?: author
+}

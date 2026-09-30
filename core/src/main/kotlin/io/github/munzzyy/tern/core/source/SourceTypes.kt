@@ -99,6 +99,12 @@ object SourceOptions {
     /** github-actions: branch whose successful runs are followed. */
     const val BRANCH = "branch"
 
+    /** github, forgejo: "true" to also ask the forge which release it marks as latest, which then comes first. Costs a request. */
+    const val VERIFY_LATEST = "verifyLatest"
+
+    /** github, forgejo: "true" to date a release by the newest upload or update of its files instead of its own date. */
+    const val ASSET_DATE = "assetDate"
+
     /** fdroid, fdroid-repo: application id inside the repository. */
     const val PACKAGE = "package"
 
@@ -108,8 +114,32 @@ object SourceOptions {
     /** html: regular expression a link must match to count as a download. */
     const val LINK_FILTER = "linkFilter"
 
-    /** html: JSON array of regular expressions, one per intermediate page to follow before the final one. */
+    /**
+     * html: JSON array, one entry per intermediate page to follow before the final one. An entry is
+     * a regular expression the link's address must match, or an object `{"filter": "...", "text":
+     * true, "arch": true}` whose filter is matched against the link's text instead and which prefers
+     * links that name this device's processor.
+     */
     const val STEPS = "steps"
+
+    /** html: "true" to take only the first link: the first on the page with sort "page", else the lowest in natural order. */
+    const val FIRST_LINK = "firstLink"
+
+    /** html: "true" to read versions from, and order links by, only the last segment of their path. */
+    const val LAST_SEGMENT = "lastSegment"
+
+    /** html: "true" to also find addresses outside `<a>` tags: in JSON strings, in the text, and in other tags' attributes. */
+    const val ANY_TEXT = "anyText"
+
+    /** html, direct: JSON object of extra headers sent with the page and the file requests. See [io.github.munzzyy.tern.core.source.web.RequestHeaders]. */
+    const val HEADERS = "headers"
+
+    /**
+     * html, direct: "hash", "link" or "etag", what tells a file from the one before it when no
+     * version can be read. See [io.github.munzzyy.tern.core.source.web.PseudoVersion]. Unset: the
+     * server's ETag, else its Last-Modified, else the size.
+     */
+    const val PSEUDO = "pseudo"
 
     /** html: "link" (default), "text" or "page": where the version is read from. */
     const val VERSION_FROM = "versionFrom"

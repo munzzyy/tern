@@ -1,9 +1,13 @@
 package io.github.munzzyy.tern.core.select
 
 import io.github.munzzyy.tern.core.model.Asset
+import io.github.munzzyy.tern.core.model.AssetKind
 import io.github.munzzyy.tern.core.model.AssetPolicy
 import io.github.munzzyy.tern.core.model.DeviceProfile
+import io.github.munzzyy.tern.core.model.Release
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -184,6 +188,57 @@ class AssetPickerTest {
         assertTrue(byName.getValue("app-armeabiv7a.apk").reasons.any { it.kind == PickReason.Kind.ABI_MATCH && it.detail == "armeabi-v7a" })
         assertTrue(byName.getValue("app-armhf.apk").reasons.any { it.kind == PickReason.Kind.ABI_MATCH && it.detail == "armeabi-v7a" })
         assertTrue(byName.getValue("app-x8664.apk").reasons.any { it.kind == PickReason.Kind.ABI_MISMATCH && it.detail == "x86_64" })
+    }
+
+    @Test
+    fun archivesAreLeftOutUnlessAskedFor() {
+        val assets = listOf(asset("app-arm64-v8a.zip"), asset("app-arm64-v8a.tar.xz"), asset("notes.txt"))
+        assertTrue(AssetPicker.rank(assets, DeviceProfile.ARM64_PHONE, AssetPolicy()).isEmpty())
+        val picks = AssetPicker.rank(assets, DeviceProfile.ARM64_PHONE, AssetPolicy(archives = true))
+        assertEquals(listOf("app-arm64-v8a.tar.xz", "app-arm64-v8a.zip"), picks.map { it.asset.name })
+    }
+
+    @Test
+    fun anArchiveRanksBelowAnApkOrBundleWhoseNameScoresTheSame() {
+        val assets = listOf(asset("app-arm64-v8a.zip"), asset("app-arm64-v8a.apk"), asset("app-arm64-v8a.apks"))
+        val picks = AssetPicker.rank(assets, DeviceProfile.ARM64_PHONE, AssetPolicy(archives = true))
+        assertEquals(listOf("app-arm64-v8a.apk", "app-arm64-v8a.apks", "app-arm64-v8a.zip"), picks.map { it.asset.name })
+        assertTrue(picks[1].score > picks[2].score)
+    }
+
+    @Test
+    fun anArchiveTheSourceKnowsToHoldTheAppIsRankedUnasked() {
+        val artifact = Asset(name = "app-release.zip", url = "https://example.com/artifacts/1/zip", holdsApps = true)
+        val picks = AssetPicker.rank(listOf(artifact, asset("sources.zip")), DeviceProfile.ARM64_PHONE, AssetPolicy())
+        assertEquals(listOf("app-release.zip"), picks.map { it.asset.name })
+        assertEquals(listOf(artifact), Release(id = "1", version = "1", assets = listOf(artifact, asset("sources.zip"))).installable)
+    }
+
+    @Test
+    fun theFilterForFilesInsideAnArchiveIsCheckedWithTheOthersAndApplied() {
+        val assets = listOf(asset("app.apk"))
+        assertThrows(AssetPolicyException::class.java) { AssetPicker.rank(assets, DeviceProfile.ARM64_PHONE, AssetPolicy(innerFilter = "(unclosed")) }
+        assertTrue(AssetPicker.installsInside(AssetPolicy(), "anything.apk"))
+        assertTrue(AssetPicker.installsInside(AssetPolicy(innerFilter = "arm64"), "app/app-arm64-v8a.apk"))
+        assertFalse(AssetPicker.installsInside(AssetPolicy(innerFilter = "arm64"), "app/app-x86.apk"))
+        assertThrows(AssetPolicyException::class.java) { AssetPicker.installsInside(AssetPolicy(innerFilter = "(unclosed"), "a.apk") }
+    }
+
+    @Test
+    fun tarballsOfEveryCommonKindAreArchives() {
+        for (name in listOf("a.zip", "a.tar", "a.tar.gz", "a.tgz", "a.tar.bz2", "a.tbz2", "a.tar.xz", "a.txz", "A.TAR.XZ?x=1")) {
+            assertEquals(name, AssetKind.ARCHIVE, Asset.kindOf(name))
+        }
+        assertEquals(AssetKind.OTHER, Asset.kindOf("a.tar.zst"))
+        assertEquals(AssetKind.APK, Asset.kindOf("a.apk"))
+    }
+
+    @Test
+    fun namedProcessorsAreReadInTheSpellingAndroidUses() {
+        assertEquals(listOf("arm64-v8a"), AssetPicker.abisIn("app-aarch64-release"))
+        assertEquals(listOf("armeabi-v7a", "x86_64"), AssetPicker.abisIn("app-armv7-x64.apk"))
+        assertTrue(AssetPicker.abisIn("app-universal.apk").isEmpty())
+        assertEquals("arm64-v8a", AssetPicker.canonical("ARM64"))
     }
 
     @Test

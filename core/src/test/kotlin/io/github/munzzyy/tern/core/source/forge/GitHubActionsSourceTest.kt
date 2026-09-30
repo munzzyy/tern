@@ -1,7 +1,12 @@
 package io.github.munzzyy.tern.core.source.forge
 
+import io.github.munzzyy.tern.core.engine.ReleaseSelector
 import io.github.munzzyy.tern.core.model.AssetKind
+import io.github.munzzyy.tern.core.model.AssetPolicy
+import io.github.munzzyy.tern.core.model.DeviceProfile
+import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.select.AssetPicker
 import io.github.munzzyy.tern.core.net.HttpResponse
 import io.github.munzzyy.tern.core.net.InMemoryValidatorStore
 import io.github.munzzyy.tern.core.net.RateLimitedException
@@ -77,6 +82,21 @@ class GitHubActionsSourceTest {
         assertEquals("app-debug.zip", asset.name)
         assertEquals(AssetKind.ARCHIVE, asset.kind)
         assertTrue(asset.needsAuth)
+    }
+
+    @Test
+    fun aRunsArtifactIsAFileTheAppCanBeInstalledFrom() {
+        val http = FakeHttp()
+            .resource(runsUrl, "forge/github_workflow_runs.json")
+            .resource(artifactsUrl, "forge/github_artifacts.json")
+        val release = (source.check(spec, context(http)) as CheckResult.Listing).listing.releases.single()
+        assertTrue(release.assets.single().holdsApps)
+        val picks = AssetPicker.rank(release.assets, DeviceProfile.ARM64_PHONE, AssetPolicy())
+        assertEquals("app-debug.zip", picks.single().asset.name)
+        val selection = ReleaseSelector.select(listOf(release), ReleasePolicy(includePrereleases = true), 0L) {
+            AssetPicker.rank(it.assets, DeviceProfile.ARM64_PHONE, AssetPolicy()).isNotEmpty()
+        }
+        assertEquals("555", selection.candidate?.id)
     }
 
     @Test

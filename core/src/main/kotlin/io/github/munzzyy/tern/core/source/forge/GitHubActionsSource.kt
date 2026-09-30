@@ -110,6 +110,7 @@ class GitHubActionsSource : Source {
             size = obj.long("size_in_bytes"),
             kind = AssetKind.ARCHIVE,
             needsAuth = true,
+            holdsApps = true,
         )
     }
 

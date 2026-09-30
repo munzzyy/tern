@@ -26,6 +26,15 @@ class SafePattern private constructor(private val regex: Regex, val pattern: Str
         group.takeIf { it.isNotEmpty() }
     }
 
+    /** The first match written out through [template]; null when nothing matches or the template gives nothing. */
+    fun extract(text: String?, template: MatchTemplate): String? = groups(text)?.let(template::fill)
+
+    /** The first match: the whole of it, then each group, null for a group that took no part. Null when nothing matches. */
+    fun groups(text: String?): List<String?>? = watched(pattern) {
+        val match = regex.find(metered(text)) ?: return@watched null
+        List(match.groups.size) { match.groups[it]?.value }
+    }
+
     private fun metered(text: String?): CharSequence = Metered(text.orEmpty().take(MAX_INPUT), Meter(maxSteps), pattern)
 
     private class OutOfSteps(val pattern: String) : RuntimeException()

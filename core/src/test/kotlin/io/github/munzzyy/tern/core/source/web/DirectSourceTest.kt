@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.core.source.web
 
+import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.AssetKind
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.net.Headers
@@ -7,9 +8,13 @@ import io.github.munzzyy.tern.core.net.HttpResponse
 import io.github.munzzyy.tern.core.net.InMemoryValidatorStore
 import io.github.munzzyy.tern.core.source.CheckContext
 import io.github.munzzyy.tern.core.source.CheckResult
+import io.github.munzzyy.tern.core.source.Download
+import io.github.munzzyy.tern.core.source.SourceErrorKind
 import io.github.munzzyy.tern.core.source.SourceException
+import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.testing.FakeHttp
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
@@ -149,6 +154,81 @@ class DirectSourceTest {
             fail("expected a failure")
         } catch (e: SourceException) {
             assertTrue(e.message.orEmpty().contains("no longer serves"))
+        }
+    }
+
+    private val file = "https://example.com/app.apk"
+
+    private fun release(http: FakeHttp, vararg options: Pair<String, String>) =
+        (source.check(SourceSpec(source.type, file, options.toMap()), context(http)) as CheckResult.Listing).listing.releases.single()
+
+    @Test
+    fun theHeadersGoWithEveryQuestionAndWithTheDownload() {
+        val headers = SourceOptions.HEADERS to """{"User-Agent": "Example/1.0"}"""
+        val http = FakeHttp().on(file) { request ->
+            if (request.method == "HEAD") HttpResponse.of(405, "", Headers.EMPTY, file) else HttpResponse.of(206, "x", Headers.of("ETag" to "\"v1\""), file)
+        }
+        release(http, headers)
+        assertEquals(listOf("HEAD", "GET"), http.requests.map { it.method })
+        assertTrue(http.requests.all { it.headers["User-Agent"] == "Example/1.0" })
+        val spec = SourceSpec(source.type, file, mapOf(headers))
+        assertEquals(Download(file, mapOf("User-Agent" to "Example/1.0")), source.resolve(spec, Asset("app.apk", file), context(http)))
+        assertEquals(Download(file), source.resolve(SourceSpec(source.type, file), Asset("app.apk", file), context(http)))
+    }
+
+    @Test
+    fun aRefusedHeaderFailsTheCheck() {
+        try {
+            release(FakeHttp(), SourceOptions.HEADERS to """{"Range": "bytes=0-"}""")
+            fail("expected a failure")
+        } catch (e: SourceException) {
+            assertEquals(SourceErrorKind.UNSUPPORTED, e.kind)
+        }
+    }
+
+    @Test
+    fun theFirstBytesCanTellFilesApartThatTheServerDoesNot() {
+        val same = Headers.of("ETag" to "\"same\"")
+        val first = ByteArray(3000) { 7 }
+        val changed = first.copyOf().also { it[100] = 8 }
+        val hash = SourceOptions.PSEUDO to "hash"
+        assertEquals(release(FakeHttp().bytes(file, first, same)).id, release(FakeHttp().bytes(file, changed, same)).id)
+        val one = release(FakeHttp().bytes(file, first, same), hash)
+        assertTrue(one.id.startsWith("sha256:"))
+        assertNotEquals(one.id, release(FakeHttp().bytes(file, changed, same), hash).id)
+        assertEquals(one.id, release(FakeHttp().bytes(file, first.copyOf(), same), hash).id)
+    }
+
+    @Test
+    fun theFinalAddressCanTellFilesApart() {
+        fun id(finalUrl: String): String {
+            val http = FakeHttp().on(file) { HttpResponse.of(200, "", Headers.of("ETag" to "\"same\"", "Content-Type" to ServedFile.APK_TYPE), finalUrl) }
+            return release(http, SourceOptions.PSEUDO to "link").id.also { assertEquals(1, http.requests.size) }
+        }
+        assertEquals(id("https://cdn.example.com/app-1.0.apk"), id("https://cdn.example.com/app-1.0.apk"))
+        assertNotEquals(id("https://cdn.example.com/app-1.0.apk"), id("https://cdn.example.com/app-1.1.apk"))
+    }
+
+    @Test
+    fun theEtagAloneIsRequiredWhenAskedFor() {
+        val http = FakeHttp().on(file) { HttpResponse.of(200, "", Headers.of("Last-Modified" to "Wed, 21 Oct 2015 07:28:00 GMT"), file) }
+        assertEquals("Wed, 21 Oct 2015 07:28:00 GMT", release(http).id)
+        try {
+            release(http, SourceOptions.PSEUDO to "etag")
+            fail("expected a failure")
+        } catch (e: SourceException) {
+            assertEquals(SourceErrorKind.NO_RELEASES, e.kind)
+        }
+        assertEquals("\"e\"", release(FakeHttp().on(file) { HttpResponse.of(200, "", Headers.of("ETag" to "\"e\""), file) }, SourceOptions.PSEUDO to "etag").id)
+    }
+
+    @Test
+    fun anUnknownWayToTellFilesApartIsUnsupported() {
+        try {
+            release(FakeHttp(), SourceOptions.PSEUDO to "ETag")
+            fail("expected a failure")
+        } catch (e: SourceException) {
+            assertEquals(SourceErrorKind.UNSUPPORTED, e.kind)
         }
     }
 }

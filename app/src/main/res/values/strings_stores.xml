@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_headers_help_own_agent">One a line, as Name: value. Never a password, a cookie or a User-Agent: Tern tells every site that it is Tern.</string>
+    <!-- %1$s is a store, such as APKPure. Shown on the Add preview, an app's page and after an import. -->
+    <string name="origin_republished_first">%1$s offers again what developers publish elsewhere, and is not the developer. Until the app is pinned to a certificate, the first file Tern installs from it decides which certificate every later update must carry.</string>
+    <!-- %1$s is a store, such as APKPure. -->
+    <string name="origin_republished_pinned">%1$s offers again what developers publish elsewhere, and is not the developer. Its files must carry the certificate this app is held to.</string>
+    <!-- %1$s is a store, such as Galaxy Store. -->
+    <string name="origin_store_first">%1$s is a store, not the developer\'s own site. Until the app is pinned to a certificate, the first file Tern installs from it decides which certificate every later update must carry.</string>
+    <!-- %1$s is a store, such as Galaxy Store. -->
+    <string name="origin_store_pinned">%1$s is a store, not the developer\'s own site. Its files must carry the certificate this app is held to.</string>
+</resources>

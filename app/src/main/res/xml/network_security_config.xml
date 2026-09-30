@@ -5,16 +5,4 @@
             <certificates src="system" />
         </trust-anchors>
     </base-config>
-    <!--
-        RuStore serves part of its addresses with a certificate of Russia's national authority,
-        which Android does not trust. It is trusted for RuStore's own addresses and for nothing
-        else, as Obtainium does; every file from there still passes every check.
-    -->
-    <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">rustore.ru</domain>
-        <trust-anchors>
-            <certificates src="system" />
-            <certificates src="@raw/russian_trusted_root" />
-        </trust-anchors>
-    </domain-config>
 </network-security-config>

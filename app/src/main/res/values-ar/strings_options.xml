@@ -70,10 +70,6 @@
     <string name="option_workflow">ملف سير العمل</string>
     <string name="option_workflow_help">مثل build.yml.</string>
     <string name="option_branch">الفرع</string>
-    <string name="option_device_model">طراز الجهاز</string>
-    <string name="option_device_model_help">يقدم Galaxy Store لكل طراز نسخته الخاصة، مثل SM-S948B.</string>
-    <string name="option_csc">رمز المنطقة (CSC)</string>
-    <string name="option_csc_help">ثلاثة أحرف، مثل DBT.</string>
     <string name="option_link_filter">فلتر روابط التنزيل</string>
     <string name="option_link_filter_help">الروابط المطابقة فقط تُحتسب كتنزيلات.</string>
     <string name="option_page_order">الإبقاء على ترتيب الصفحة</string>
@@ -84,7 +80,6 @@
     <string name="version_from_text">نص الرابط</string>
     <string name="version_from_page">الصفحة كاملة</string>
     <string name="option_headers">ترويسات الطلب</string>
-    <string name="option_headers_help">واحدة في كل سطر، بالشكل Name: value. لا تضع أبدًا كلمة مرور أو ملف تعريف ارتباط.</string>
     <string name="option_pseudo">عندما لا يوجد رقم إصدار</string>
     <string name="pseudo_default">تمييز الملفات كما يفعل الخادم</string>
     <string name="pseudo_hash">بتجزئة بداية الملف</string>

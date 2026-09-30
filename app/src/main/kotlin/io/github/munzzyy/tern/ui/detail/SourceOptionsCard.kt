@@ -34,19 +34,15 @@ import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.fingerprint
 
 /** The sources that have options a person may set. */
-val SOURCES_WITH_OPTIONS = setOf(SourceTypes.GITHUB, SourceTypes.FORGEJO, SourceTypes.GITHUB_ACTIONS, SourceTypes.HTML, SourceTypes.DIRECT, SourceTypes.SAMSUNG, SourceTypes.FARSROID)
+val SOURCES_WITH_OPTIONS = setOf(SourceTypes.GITHUB, SourceTypes.FORGEJO, SourceTypes.GITHUB_ACTIONS, SourceTypes.HTML, SourceTypes.DIRECT)
 
 private val WORKFLOW_NAME = Regex("^[A-Za-z0-9._-]{1,100}\\.ya?ml$")
 private val BRANCH_NAME = Regex("^[A-Za-z0-9._/-]{1,100}$")
-private val DEVICE_MODEL = Regex("^[A-Za-z0-9-]{2,40}$")
-private val CSC = Regex("^[A-Za-z0-9]{3}$")
 
 /** The text options of a source, and the pages a web page source goes through, edited together and saved with one button. */
 data class OptionsDraft(
     val workflow: String = "",
     val branch: String = "",
-    val deviceModel: String = "",
-    val csc: String = "",
     val linkFilter: String = "",
     val steps: List<HtmlStep> = emptyList(),
     val headers: String = "",
@@ -56,10 +52,6 @@ data class OptionsDraft(
         if (type == SourceTypes.GITHUB_ACTIONS) {
             if (workflow.isNotBlank() && !WORKFLOW_NAME.matches(workflow.trim())) add("workflow")
             if (branch.isNotBlank() && !BRANCH_NAME.matches(branch.trim())) add("branch")
-        }
-        if (type == SourceTypes.SAMSUNG) {
-            if (deviceModel.isNotBlank() && !DEVICE_MODEL.matches(deviceModel.trim())) add("deviceModel")
-            if (csc.isNotBlank() && !CSC.matches(csc.trim())) add("csc")
         }
         if (type == SourceTypes.HTML) {
             if (!isValidPattern(linkFilter)) add("linkFilter")
@@ -79,10 +71,6 @@ data class OptionsDraft(
                 put(SourceOptions.WORKFLOW, workflow.trim())
                 put(SourceOptions.BRANCH, branch.trim())
             }
-            SourceTypes.SAMSUNG -> {
-                put(SourceOptions.DEVICE_MODEL, deviceModel.trim())
-                put(SourceOptions.CSC, csc.trim().uppercase())
-            }
             SourceTypes.HTML -> {
                 put(SourceOptions.LINK_FILTER, linkFilter.trim())
                 put(SourceOptions.STEPS, HtmlStep.write(steps.map { it.copy(filter = it.filter.trim()) }.take(HtmlStep.MAX)))
@@ -97,8 +85,6 @@ data class OptionsDraft(
         fun of(spec: SourceSpec) = OptionsDraft(
             workflow = spec.option(SourceOptions.WORKFLOW).orEmpty(),
             branch = spec.option(SourceOptions.BRANCH).orEmpty(),
-            deviceModel = spec.option(SourceOptions.DEVICE_MODEL).orEmpty(),
-            csc = spec.option(SourceOptions.CSC).orEmpty(),
             linkFilter = spec.option(SourceOptions.LINK_FILTER).orEmpty(),
             steps = HtmlStep.parse(spec.option(SourceOptions.STEPS)).orEmpty(),
             headers = runCatching { RequestHeaders.parse(spec.option(SourceOptions.HEADERS)) }.getOrDefault(emptyMap())
@@ -163,12 +149,6 @@ fun SourceOptionsCard(id: String, spec: SourceSpec, save: ((SourceSpec) -> Sourc
                     onChange = { setFlag(SourceOptions.ASSET_DATE, it) },
                 )
             }
-            SourceTypes.FARSROID -> SwitchRow(
-                title = stringResource(R.string.option_file_version),
-                summary = stringResource(R.string.option_file_version_effect),
-                checked = flag(SourceOptions.FILE_VERSION),
-                onChange = { setFlag(SourceOptions.FILE_VERSION, it) },
-            )
             SourceTypes.HTML -> {
                 SwitchRow(
                     title = stringResource(R.string.option_link_text),
@@ -259,15 +239,12 @@ fun SourceOptionsCard(id: String, spec: SourceSpec, save: ((SourceSpec) -> Sourc
 private enum class OptionField(val key: String, val label: Int, val help: Int?, val lines: Boolean = false, val code: Boolean = false) {
     WORKFLOW("workflow", R.string.option_workflow, R.string.option_workflow_help),
     BRANCH("branch", R.string.option_branch, null),
-    DEVICE_MODEL("deviceModel", R.string.option_device_model, R.string.option_device_model_help),
-    CSC("csc", R.string.option_csc, R.string.option_csc_help),
     LINK_FILTER("linkFilter", R.string.option_link_filter, R.string.option_link_filter_help, code = true),
-    HEADERS("headers", R.string.option_headers, R.string.option_headers_help, lines = true, code = true),
+    HEADERS("headers", R.string.option_headers, R.string.option_headers_help_own_agent, lines = true, code = true),
 }
 
 private fun fieldsFor(type: String): List<OptionField> = when (type) {
     SourceTypes.GITHUB_ACTIONS -> listOf(OptionField.WORKFLOW, OptionField.BRANCH)
-    SourceTypes.SAMSUNG -> listOf(OptionField.DEVICE_MODEL, OptionField.CSC)
     SourceTypes.HTML -> listOf(OptionField.LINK_FILTER, OptionField.HEADERS)
     SourceTypes.DIRECT -> listOf(OptionField.HEADERS)
     else -> emptyList()
@@ -317,8 +294,6 @@ private fun OptionField(field: OptionField, draft: OptionsDraft, invalid: Boolea
     val value = when (field) {
         OptionField.WORKFLOW -> draft.workflow
         OptionField.BRANCH -> draft.branch
-        OptionField.DEVICE_MODEL -> draft.deviceModel
-        OptionField.CSC -> draft.csc
         OptionField.LINK_FILTER -> draft.linkFilter
         OptionField.HEADERS -> draft.headers
     }
@@ -327,8 +302,6 @@ private fun OptionField(field: OptionField, draft: OptionsDraft, invalid: Boolea
         when (field) {
             OptionField.WORKFLOW -> draft.copy(workflow = text)
             OptionField.BRANCH -> draft.copy(branch = text)
-            OptionField.DEVICE_MODEL -> draft.copy(deviceModel = text)
-            OptionField.CSC -> draft.copy(csc = text)
             OptionField.LINK_FILTER -> draft.copy(linkFilter = text)
             OptionField.HEADERS -> draft.copy(headers = text)
         }

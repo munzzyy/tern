@@ -36,7 +36,6 @@
     <string name="sources_repositories">軟體庫</string>
     <string name="sources_stores">商店</string>
     <string name="sources_mirrors">重新發佈應用程式的商店</string>
-    <string name="sources_modified">提供修改版應用程式的網站</string>
     <string name="sources_other">其他地方</string>
     <string name="sources_web_page">含有檔案連結的網頁</string>
     <string name="sources_direct">檔案的直接連結</string>
@@ -46,8 +45,6 @@
     <string name="shared_configs_title">Obtainium 使用者分享的設定</string>
     <string name="shared_configs_effect">提供現成應用程式設定的網站。在「設定」中開啟「開啟 Obtainium 連結」時，其連結會在 Tern 中開啟。</string>
     <string name="engine_inner_filter_nothing">壓縮檔內檔案的篩選器不符合此壓縮檔中的任何 APK。</string>
-    <string name="preview_republished">%1$s 會重新提供開發者在其他地方發佈的內容。一旦 Tern 知道開發者的憑證，其檔案就必須符合該憑證，因此請盡可能釘選一個憑證，或先從開發者那裡安裝。</string>
-    <string name="preview_modified">%1$s 提供由開發者以外的人修改過的應用程式。這些應用程式由修改者簽署，Tern 無法得知修改了什麼。</string>
     <string name="about_track_tern">讓 Tern 本身保持最新</string>
     <string name="about_track_tern_effect">將 Tern 自己的發行版本加入清單，並像其他應用程式一樣檢查與驗證。</string>
     <string name="engine_channel_tracked">追蹤中應用程式的新發行版本</string>

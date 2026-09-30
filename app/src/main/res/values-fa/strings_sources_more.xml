@@ -18,8 +18,6 @@
     <string name="step_arch">ترجیح پردازنده این دستگاه</string>
     <string name="step_add">افزودن یک صفحه</string>
     <string name="step_remove">حذف این صفحه</string>
-    <string name="option_file_version">استفاده از نام فایل به‌عنوان نسخه</string>
-    <string name="option_file_version_effect">در این صورت هر فایل یک انتشار جداگانه به حساب می‌آید.</string>
     <string name="github_proxy_title">GitHub از طریق hubproxy</string>
     <string name="github_proxy_effect">هر درخواست به GitHub به این میزبان می‌رود و میزبان همه آن‌ها را می‌بیند. هیچ توکنی از طریق آن ارسال نمی‌شود، بنابراین پروژه‌های خصوصی و GitHub Actions را نمی‌توان از این راه دنبال کرد.</string>
     <string name="github_proxy_host">میزبان hubproxy</string>

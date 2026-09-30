@@ -38,7 +38,6 @@
     <string name="sources_repositories">Repositorios</string>
     <string name="sources_stores">Tendas</string>
     <string name="sources_mirrors">Tendas que volven publicar aplicacións</string>
-    <string name="sources_modified">Sitios con aplicacións modificadas</string>
     <string name="sources_other">Outros lugares</string>
     <string name="sources_web_page">Unha páxina web con ligazóns a ficheiros</string>
     <string name="sources_direct">Unha ligazón directa a un ficheiro</string>
@@ -48,8 +47,6 @@
     <string name="shared_configs_title">Configuracións compartidas polos usuarios de Obtainium</string>
     <string name="shared_configs_effect">Un sitio con axustes xa preparados para aplicacións. As súas ligazóns ábrense en Tern cando Abrir ligazóns de Obtainium está activado en Axustes.</string>
     <string name="engine_inner_filter_nothing">O filtro de ficheiros dentro de arquivos non coincide con ningún dos APK deste.</string>
-    <string name="preview_republished">%1$s volve ofrecer o que os desenvolvedores publican noutros sitios. Tern esixe aos seus ficheiros o certificado do desenvolvedor en canto o coñece, así que fixa un ou instala primeiro desde o desenvolvedor cando poidas.</string>
-    <string name="preview_modified">%1$s ofrece aplicacións modificadas por alguén distinto do seu desenvolvedor. Están asinadas por quen as modificou, e Tern non pode saber que se cambiou.</string>
     <string name="about_track_tern">Manter o propio Tern ao día</string>
     <string name="about_track_tern_effect">Engade os lanzamentos de Tern á lista, comprobados e verificados coma calquera aplicación.</string>
     <string name="engine_channel_tracked">Novos lanzamentos das aplicacións seguidas</string>

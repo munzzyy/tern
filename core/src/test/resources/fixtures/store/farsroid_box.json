@@ -1,6 +1,0 @@
-{
-  "success": true,
-  "data": {
-    "content": "<ul class=\"download-links\">\n<li class=\"download-link\"><a class=\"download-btn\" href=\"https:\/\/dl2.farsroid.com\/app\/Example-App-2.1.0-arm64-v8a(www.farsroid.com).apk\"><span class=\"txt\">Download arm64-v8a<\/span><\/a><\/li>\n<li class=\"download-link\"><a class=\"download-btn\" href=\"https:\/\/dl2.farsroid.com\/app\/Example-App-2.1.0-armeabi-v7a(www.farsroid.com).apk\"><span class=\"txt\">Download armeabi-v7a<\/span><\/a><\/li>\n<li class=\"download-link\"><a href=\"\/app\/Example%20App%202.1.0%20(Mod).apk\">Mod<\/a><\/li>\n<li class=\"download-link\"><a href=\"https:\/\/dl2.farsroid.com\/app\/Example-App-Data(www.farsroid.com).zip\">Data<\/a><\/li>\n<li class=\"download-link\"><a href=\"https:\/\/files.example.org\/Example-App-2.1.0.apk\">Mirror<\/a><\/li>\n<li class=\"download-link\"><a href=\"http:\/\/dl2.farsroid.com\/app\/Example-App-2.1.0-x86(www.farsroid.com).apk\">x86<\/a><\/li>\n<li class=\"download-link\"><a href=\"https:\/\/dl2.farsroid.com\/app\/Example-App-2.1.0-arm64-v8a(www.farsroid.com).apk\">Again<\/a><\/li>\n<\/ul>"
-  }
-}

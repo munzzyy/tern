@@ -1,7 +1,9 @@
 package io.github.munzzyy.tern.core.interop
 
+import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.source.Refusal
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -52,5 +54,17 @@ class TernExportTest {
     @Test(expected = TernExportException::class)
     fun rejectsMissingAppsArray() {
         TernExport.read("""{"format":"tern-export","schema":1}""")
+    }
+
+    @Test
+    fun anAppOfASiteTernNoLongerReadsIsSkippedAndTheRestIsRead() {
+        val kept = AppConfigJson.encode(apps()[0])
+        val text = """{"format":"tern-export","schema":1,"apps":[
+            {"id":"ru","name":"Store App","source":{"type":"rustore","url":"https://www.rustore.ru/catalog/app/org.example"}},
+            {"id":"mod","name":"Page","customName":"Modded","source":{"type":"html","url":"https://liteapks.com/example.html"}},
+            ${Json.write(kept)}]}"""
+        val file = TernExport.readFile(text)
+        assertEquals(listOf(apps()[0]), file.apps)
+        assertEquals(listOf("Store App" to Refusal.IMPERSONATION, "Modded" to Refusal.MODIFIED_APPS), file.skipped.map { it.name to it.refusal })
     }
 }

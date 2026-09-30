@@ -60,10 +60,6 @@
     <string name="option_workflow">工作流文件</string>
     <string name="option_workflow_help">例如 build.yml。</string>
     <string name="option_branch">分支</string>
-    <string name="option_device_model">设备型号</string>
-    <string name="option_device_model_help">Galaxy Store 为每个型号提供单独的版本，例如 SM-S948B。</string>
-    <string name="option_csc">地区代码 (CSC)</string>
-    <string name="option_csc_help">三个字母，例如 DBT。</string>
     <string name="option_link_filter">下载链接过滤器</string>
     <string name="option_link_filter_help">仅匹配的链接算作下载。</string>
     <string name="option_page_order">保留页面上的顺序</string>
@@ -74,7 +70,6 @@
     <string name="version_from_text">链接文本</string>
     <string name="version_from_page">整个页面</string>
     <string name="option_headers">请求标头</string>
-    <string name="option_headers_help">每行一个，格式为 Name: value。绝不要填写密码或 Cookie。</string>
     <string name="option_pseudo">没有版本时</string>
     <string name="pseudo_default">按服务器的方式区分文件</string>
     <string name="pseudo_hash">按文件开头的哈希值</string>

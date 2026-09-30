@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.ui.add
 
+import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.source.SourceTypes
 import org.junit.Assert.assertEquals
@@ -8,11 +9,22 @@ import org.junit.Test
 
 class OriginNoteTest {
     @Test
-    fun aStoreThatRepublishesAndASiteThatModifiesAreToldApart() {
+    fun aStoreThatRepublishesAndAStoreDevelopersUploadToAreToldApart() {
         assertEquals(OriginNote.REPUBLISHED, originNote(SourceTypes.APKPURE))
-        assertEquals(OriginNote.MODIFIED, originNote(SourceTypes.LITEAPKS))
+        assertEquals(OriginNote.REPUBLISHED, originNote(SourceTypes.TENCENT))
+        assertEquals(OriginNote.STORE, originNote(SourceTypes.HUAWEI))
+        assertEquals(OriginNote.STORE, originNote(SourceTypes.SAMSUNG))
         assertNull(originNote(SourceTypes.GITHUB))
-        assertNull(originNote(SourceTypes.HUAWEI))
+        assertNull(originNote(SourceTypes.ITCHIO))
+        assertNull(originNote(SourceTypes.TELEGRAM))
+    }
+
+    @Test
+    fun theNoteSaysWhatTheFirstInstallDecidesUnlessAPinDoes() {
+        assertEquals(R.string.origin_republished_first, originText(OriginNote.REPUBLISHED, pinned = false))
+        assertEquals(R.string.origin_republished_pinned, originText(OriginNote.REPUBLISHED, pinned = true))
+        assertEquals(R.string.origin_store_first, originText(OriginNote.STORE, pinned = false))
+        assertEquals(R.string.origin_store_pinned, originText(OriginNote.STORE, pinned = true))
     }
 
     @Test

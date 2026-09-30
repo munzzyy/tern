@@ -38,7 +38,6 @@
     <string name="sources_repositories">Repositories</string>
     <string name="sources_stores">Stores</string>
     <string name="sources_mirrors">Stores die apps opnieuw publiceren</string>
-    <string name="sources_modified">Sites met aangepaste apps</string>
     <string name="sources_other">Andere plekken</string>
     <string name="sources_web_page">Een webpagina met links naar bestanden</string>
     <string name="sources_direct">Een directe link naar een bestand</string>
@@ -48,8 +47,6 @@
     <string name="shared_configs_title">Configuraties gedeeld door gebruikers van Obtainium</string>
     <string name="shared_configs_effect">Een site met kant-en-klare instellingen voor apps. De links openen in Tern wanneer Obtainium links openen aan staat in Instellingen.</string>
     <string name="engine_inner_filter_nothing">Het filter voor bestanden in archieven komt met geen enkele APK in dit archief overeen.</string>
-    <string name="preview_republished">%1$s biedt opnieuw aan wat ontwikkelaars elders publiceren. De bestanden worden aan het certificaat van de ontwikkelaar gehouden zodra Tern het kent, dus zet er een vast of installeer eerst van de ontwikkelaar als dat kan.</string>
-    <string name="preview_modified">%1$s biedt apps aan die zijn aangepast door iemand anders dan hun ontwikkelaar. Ze zijn ondertekend door wie ze heeft aangepast, en Tern kan niet zien wat er is veranderd.</string>
     <string name="about_track_tern">Tern zelf up-to-date houden</string>
     <string name="about_track_tern_effect">Voegt de eigen releases van Tern toe aan de lijst, gecontroleerd en geverifieerd zoals elke app.</string>
     <string name="engine_channel_tracked">Nieuwe releases van gevolgde apps</string>

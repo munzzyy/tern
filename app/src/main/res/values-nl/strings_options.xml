@@ -62,10 +62,6 @@
     <string name="option_workflow">Workflowbestand</string>
     <string name="option_workflow_help">Zoals build.yml.</string>
     <string name="option_branch">Branch</string>
-    <string name="option_device_model">Apparaatmodel</string>
-    <string name="option_device_model_help">De Galaxy Store geeft elk model een eigen build, zoals SM-S948B.</string>
-    <string name="option_csc">Regiocode (CSC)</string>
-    <string name="option_csc_help">Drie letters, zoals DBT.</string>
     <string name="option_link_filter">Filter voor downloadlinks</string>
     <string name="option_link_filter_help">Alleen links die overeenkomen, tellen als downloads.</string>
     <string name="option_page_order">De volgorde van de pagina behouden</string>
@@ -76,7 +72,6 @@
     <string name="version_from_text">De tekst van de link</string>
     <string name="version_from_page">De hele pagina</string>
     <string name="option_headers">Verzoekheaders</string>
-    <string name="option_headers_help">Eén per regel, als Name: value. Nooit een wachtwoord of een cookie.</string>
     <string name="option_pseudo">Als er geen versie is</string>
     <string name="pseudo_default">Bestanden onderscheiden zoals de server dat doet</string>
     <string name="pseudo_hash">Met een hash van het begin van het bestand</string>

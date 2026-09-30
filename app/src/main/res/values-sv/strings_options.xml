@@ -62,10 +62,6 @@
     <string name="option_workflow">Arbetsflödesfil</string>
     <string name="option_workflow_help">Till exempel build.yml.</string>
     <string name="option_branch">Gren</string>
-    <string name="option_device_model">Enhetsmodell</string>
-    <string name="option_device_model_help">Galaxy Store ger varje modell ett eget bygge, till exempel SM-S948B.</string>
-    <string name="option_csc">Regionkod (CSC)</string>
-    <string name="option_csc_help">Tre bokstäver, till exempel DBT.</string>
     <string name="option_link_filter">Filter för nedladdningslänkar</string>
     <string name="option_link_filter_help">Endast länkar som matchar räknas som nedladdningar.</string>
     <string name="option_page_order">Behåll sidans ordning</string>
@@ -76,7 +72,6 @@
     <string name="version_from_text">Länkens text</string>
     <string name="version_from_page">Hela sidan</string>
     <string name="option_headers">Förfrågningshuvuden</string>
-    <string name="option_headers_help">En per rad, som Name: value. Aldrig ett lösenord eller en cookie.</string>
     <string name="option_pseudo">När det inte finns någon version</string>
     <string name="pseudo_default">Skilj filer åt som servern gör</string>
     <string name="pseudo_hash">Efter en hash av filens början</string>

@@ -32,7 +32,7 @@ import io.github.munzzyy.tern.ui.theme.LocalLook
 const val SHARED_CONFIGS_URL = "https://apps.obtainium.imranr.dev/"
 
 /** The kinds of place Tern reads, in the order the list shows them. */
-enum class SourceKind { FORGES, REPOSITORIES, STORES, MIRRORS, MODIFIED, OTHER }
+enum class SourceKind { FORGES, REPOSITORIES, STORES, MIRRORS, OTHER }
 
 /** Every kind with the sources of it, each named as people know it. */
 fun sourcesByKind(): List<Pair<SourceKind, List<String>>> {
@@ -41,11 +41,8 @@ fun sourcesByKind(): List<Pair<SourceKind, List<String>>> {
         val kind = when (type) {
             SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS, SourceTypes.GITLAB, SourceTypes.FORGEJO -> SourceKind.FORGES
             SourceTypes.FDROID, SourceTypes.FDROID_REPO -> SourceKind.REPOSITORIES
-            in SourceTypes.MODIFIED -> SourceKind.MODIFIED
             in SourceTypes.REPUBLISHING -> SourceKind.MIRRORS
-            SourceTypes.HUAWEI, SourceTypes.SAMSUNG, SourceTypes.VIVO, SourceTypes.TENCENT, SourceTypes.RUSTORE,
-            SourceTypes.COOLAPK, SourceTypes.ITCHIO,
-            -> SourceKind.STORES
+            in SourceTypes.THIRD_PARTY_STORES -> SourceKind.STORES
             else -> SourceKind.OTHER
         }
         kinds.getOrPut(kind) { mutableListOf() } += type
@@ -119,7 +116,6 @@ private fun kindName(kind: SourceKind): String = stringResource(
         SourceKind.REPOSITORIES -> R.string.sources_repositories
         SourceKind.STORES -> R.string.sources_stores
         SourceKind.MIRRORS -> R.string.sources_mirrors
-        SourceKind.MODIFIED -> R.string.sources_modified
         SourceKind.OTHER -> R.string.sources_other
     },
 )

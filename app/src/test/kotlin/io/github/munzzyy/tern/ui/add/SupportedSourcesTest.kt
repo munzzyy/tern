@@ -14,7 +14,8 @@ class SupportedSourcesTest {
         assertTrue(SourceTypes.GITHUB in byKind.getValue(SourceKind.FORGES))
         assertTrue(SourceTypes.HUAWEI in byKind.getValue(SourceKind.STORES))
         assertTrue(SourceTypes.APKPURE in byKind.getValue(SourceKind.MIRRORS))
-        assertTrue(SourceTypes.LITEAPKS in byKind.getValue(SourceKind.MODIFIED))
+        assertTrue(SourceTypes.TENCENT in byKind.getValue(SourceKind.MIRRORS))
+        assertTrue(SourceTypes.ITCHIO in byKind.getValue(SourceKind.OTHER))
         assertTrue(SourceTypes.HTML in byKind.getValue(SourceKind.OTHER))
     }
 }

@@ -18,8 +18,6 @@
     <string name="step_arch">優先使用此裝置的處理器</string>
     <string name="step_add">新增頁面</string>
     <string name="step_remove">移除此頁面</string>
-    <string name="option_file_version">使用檔案名稱作為版本</string>
-    <string name="option_file_version_effect">這樣每個檔案都會視為獨立的發行版本。</string>
     <string name="github_proxy_title">透過 hubproxy 存取 GitHub</string>
     <string name="github_proxy_effect">每個對 GitHub 的請求都會送到此主機，該主機看得到每一個請求。權杖不會透過它傳送，因此無法用這種方式追蹤私有專案和 GitHub Actions。</string>
     <string name="github_proxy_host">hubproxy 主機</string>

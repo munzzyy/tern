@@ -104,13 +104,13 @@ class HuaweiSourceTest {
     }
 
     @Test
-    fun sendsASortedFormAsTheAppGalleryAppDoes() {
+    fun sendsASortedFormAsTern() {
         val http = serve(FakeHttp(), europe, detailStore())
         listing(HuaweiSource(), http)
         val detail = http.requests.single { method(it) == "client.appDetailById" }
         assertEquals("POST", detail.method)
         assertEquals("application/x-www-form-urlencoded", detail.headers["Content-Type"])
-        assertEquals("HiSpace##16.5.1.301##google##Pixel 8 Pro", detail.headers["User-Agent"])
+        assertEquals(setOf("Content-Type", "Accept"), detail.headers.keys)
         val fields = form(detail)
         assertEquals(fields.map { it.first }.sorted(), fields.map { it.first })
         val values = fields.toMap()
@@ -119,6 +119,18 @@ class HuaweiSourceTest {
         assertEquals(now.toString(), values["ts"])
         assertTrue(values["deviceId"]!!.matches(Regex("[0-9a-f]{64}")))
         assertEquals(values["deviceId"], form(http.requests.first()).toMap()["deviceId"])
+    }
+
+    @Test
+    fun saysNothingAboutTheDeviceAndDoesNotPassForTheAppGalleryApp() {
+        val http = serve(FakeHttp(), europe, detailStore())
+        listing(HuaweiSource(), http)
+        val allowed = setOf("ver", "locale", "serviceType", "ts", "deviceId", "deviceIdType", "method", "needServiceZone", "sign", "id")
+        for (request in http.requests) {
+            val fields = form(request).toMap()
+            assertEquals(emptySet<String>(), fields.keys - allowed)
+            assertTrue(request.headers.keys.none { it.equals("User-Agent", ignoreCase = true) })
+        }
     }
 
     @Test

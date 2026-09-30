@@ -58,13 +58,12 @@ class FilterAndReadingTest {
     }
 
     @Test
-    fun everyKindAPersonMayPickIsOfferedAndVivoAndCoolApkAreNot() {
+    fun everyKindAPersonMayPickIsOfferedAndVivoIsNot() {
         assertEquals(null, READ_AS_CHOICES.first())
         for (type in listOf(SourceTypes.HTML, SourceTypes.DIRECT, SourceTypes.GITHUB, SourceTypes.GITLAB, SourceTypes.FORGEJO, SourceTypes.FDROID_REPO, SourceTypes.JENKINS)) {
             assertTrue(type, type in READ_AS_CHOICES)
         }
         assertFalse(SourceTypes.VIVO in READ_AS_CHOICES)
-        assertFalse(SourceTypes.COOLAPK in READ_AS_CHOICES)
     }
 
     @Test

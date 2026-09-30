@@ -91,7 +91,7 @@ class PartsZipTest {
 
     @Test
     fun aSplitIsNamedForTheLastPartOfItsAddress() {
-        assertEquals("config.arm64_v8a.zip", PartsZip.nameOf("https://static.rustore.ru/2026/9/16/ab/config.arm64_v8a.zip"))
+        assertEquals("config.arm64_v8a.zip", PartsZip.nameOf("https://files.example.org/2026/9/16/ab/config.arm64_v8a.zip"))
         assertEquals("split.zip", PartsZip.nameOf("https://example.org/files/split.zip?token=abc#part"))
         assertEquals("split", PartsZip.nameOf("https://example.org/"))
         assertEquals("config.xxhdpi.apk", PartsZip.apkName("config.xxhdpi.zip"))

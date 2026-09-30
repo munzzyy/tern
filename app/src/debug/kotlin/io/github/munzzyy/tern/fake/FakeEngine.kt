@@ -647,7 +647,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override suspend fun fileSize(appId: String, releaseId: String, assetUrl: String): Long? = null
 
-    override val searchOrigins: List<String> = listOf("GitHub", "Codeberg", "GitLab", "F-Droid", "Aptoide", "Uptodown")
+    override val searchOrigins: List<String> = listOf("GitHub", "Codeberg", "GitLab", "F-Droid", "Aptoide", "vivo App Store")
 
     override fun renderNotes(text: String): List<NoteBlock> = io.github.munzzyy.tern.engine.real.NotesMapper.markdown(text)
 

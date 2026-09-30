@@ -122,11 +122,6 @@ object ObtainiumExport {
                 settings["appIdOrName"] = pkg
                 url = "$url?appId=${Urls.encodeSegment(pkg)}"
             }
-            SourceTypes.SAMSUNG -> {
-                app.source.option(SourceOptions.DEVICE_MODEL)?.let { settings["deviceId"] = it }
-                app.source.option(SourceOptions.CSC)?.let { settings["csc"] = it }
-            }
-            SourceTypes.FARSROID -> if (app.source.flag(SourceOptions.FILE_VERSION)) settings["releaseTitleAsVersion"] = true
         }
         return Json.obj(
             "id" to (app.packageName ?: temporaryId(app.source.url)),
@@ -220,19 +215,12 @@ object ObtainiumExport {
         SourceTypes.SAMSUNG to "SamsungGalaxyStore",
         SourceTypes.VIVO to "VivoAppStore",
         SourceTypes.TENCENT to "Tencent",
-        SourceTypes.RUSTORE to "RuStore",
-        SourceTypes.COOLAPK to "CoolApk",
         SourceTypes.ITCHIO to "ItchIO",
         SourceTypes.TELEGRAM to "TelegramApp",
         SourceTypes.NEUTRONCODE to "NeutronCode",
         SourceTypes.APKPURE to "APKPure",
         SourceTypes.APTOIDE to "Aptoide",
-        SourceTypes.UPTODOWN to "Uptodown",
         SourceTypes.APKCOMBO to "APKCombo",
         SourceTypes.APKMIRROR to "APKMirror",
-        SourceTypes.FARSROID to "Farsroid",
-        SourceTypes.LITEAPKS to "LiteAPKs",
-        SourceTypes.APK4FREE to "Apk4Free",
-        SourceTypes.ROCKMODS to "RockMods",
     )
 }

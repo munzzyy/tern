@@ -40,7 +40,6 @@
     <string name="sources_repositories">Repositoris</string>
     <string name="sources_stores">Botigues</string>
     <string name="sources_mirrors">Botigues que tornen a publicar aplicacions</string>
-    <string name="sources_modified">Llocs amb aplicacions modificades</string>
     <string name="sources_other">Altres llocs</string>
     <string name="sources_web_page">Una pàgina web amb enllaços a fitxers</string>
     <string name="sources_direct">Un enllaç directe a un fitxer</string>
@@ -50,8 +49,6 @@
     <string name="shared_configs_title">Configuracions compartides pels usuaris d\'Obtainium</string>
     <string name="shared_configs_effect">Un lloc de configuracions ja fetes per a aplicacions. Els seus enllaços s\'obren a Tern quan Obre enllaços d\'Obtainium està activat a la Configuració.</string>
     <string name="engine_inner_filter_nothing">El filtre de fitxers dins d\'arxius no coincideix amb cap dels APK d\'aquest.</string>
-    <string name="preview_republished">%1$s torna a oferir el que els desenvolupadors publiquen en altres llocs. Tern exigeix als seus fitxers el certificat del desenvolupador tan bon punt el coneix, així que fixa\'n un o instal·la primer des del desenvolupador quan puguis.</string>
-    <string name="preview_modified">%1$s ofereix aplicacions modificades per algú que no és el seu desenvolupador. Estan signades per qui les ha modificat, i Tern no pot saber què s\'ha canviat.</string>
     <string name="about_track_tern">Mantén actualitzat el mateix Tern</string>
     <string name="about_track_tern_effect">Afegeix els llançaments de Tern a la llista, comprovats i verificats com qualsevol aplicació.</string>
     <string name="engine_channel_tracked">Llançaments nous d\'aplicacions seguides</string>

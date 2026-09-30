@@ -11,7 +11,7 @@ import org.junit.Test
 class RequestHeadersTest {
     @Test
     fun readsAnObjectOfNamesAndValues() {
-        assertEquals(mapOf("User-Agent" to "Mozilla/5.0", "X-A" to "b"), RequestHeaders.parse("""{"User-Agent": " Mozilla/5.0 ", "X-A": "b"}"""))
+        assertEquals(mapOf("Referer" to "https://example.com/", "X-A" to "b"), RequestHeaders.parse("""{"Referer": " https://example.com/ ", "X-A": "b"}"""))
         assertEquals(emptyMap<String, String>(), RequestHeaders.parse(null))
         assertEquals(emptyMap<String, String>(), RequestHeaders.parse(" "))
     }
@@ -21,7 +21,9 @@ class RequestHeadersTest {
         for (name in listOf("Authorization", "proxy-authorization", "Proxy-Connection", "Cookie", "Host", "Content-Length", "Range", "If-None-Match", "if-modified-since", "Transfer-Encoding", "Accept-Encoding")) {
             assertNotNull(name, RequestHeaders.problem(name, "x"))
         }
-        assertNull(RequestHeaders.problem("User-Agent", "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36"))
+        assertNull(RequestHeaders.problem("Referer", "https://downloads.example.org/app/latest"))
+        assertEquals("The header User-Agent may not be set", RequestHeaders.problem("User-Agent", "Mozilla/5.0 (Linux; Android 10; K) Chrome/114.0.0.0 Mobile Safari/537.36"))
+        assertEquals("The header user-agent may not be set", RequestHeaders.problem("user-agent", "Example/1.0"))
         assertNull(RequestHeaders.problem("Referer", "https://example.com/"))
     }
 
@@ -55,7 +57,7 @@ class RequestHeadersTest {
 
     @Test
     fun readsWhatItWrites() {
-        val headers = mapOf("User-Agent" to "Example \"quoted\" \\ agent", "X-A" to "b")
+        val headers = mapOf("X-Note" to "Example \"quoted\" \\ note", "X-A" to "b")
         assertEquals(headers, RequestHeaders.parse(RequestHeaders.write(headers)))
     }
 }

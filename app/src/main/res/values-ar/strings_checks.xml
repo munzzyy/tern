@@ -46,7 +46,6 @@
     <string name="sources_repositories">المستودعات</string>
     <string name="sources_stores">المتاجر</string>
     <string name="sources_mirrors">متاجر تعيد نشر التطبيقات</string>
-    <string name="sources_modified">مواقع لتطبيقات معدّلة</string>
     <string name="sources_other">أماكن أخرى</string>
     <string name="sources_web_page">صفحة ويب بها روابط إلى ملفات</string>
     <string name="sources_direct">رابط مباشر إلى ملف</string>
@@ -56,8 +55,6 @@
     <string name="shared_configs_title">إعدادات يشاركها مستخدمو Obtainium</string>
     <string name="shared_configs_effect">موقع لإعدادات جاهزة للتطبيقات. تُفتح روابطه في Tern عند تشغيل «فتح روابط Obtainium» في الإعدادات.</string>
     <string name="engine_inner_filter_nothing">فلتر الملفات داخل الأرشيفات لا يطابق أيًا من ملفات APK في هذا الأرشيف.</string>
-    <string name="preview_republished">يعيد %1$s نشر ما ينشره المطورون في أماكن أخرى. تُلزَم ملفاته بشهادة المطور بمجرد أن يعرفها Tern، لذا متى استطعت، ثبّت شهادة أو قم أولًا بتثبيت التطبيق من مطوره.</string>
-    <string name="preview_modified">يقدم %1$s تطبيقات عدّلها شخص غير مطورها. وهي موقّعة ممن عدّلها، ولا يستطيع Tern معرفة ما الذي تم تغييره.</string>
     <string name="about_track_tern">إبقاء Tern نفسه محدثًا</string>
     <string name="about_track_tern_effect">يضيف إصدارات Tern نفسه إلى القائمة، تُفحص ويُتحقق منها مثل أي تطبيق.</string>
     <string name="engine_channel_tracked">إصدارات جديدة للتطبيقات المتابَعة</string>

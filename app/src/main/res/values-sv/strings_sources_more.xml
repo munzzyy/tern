@@ -18,8 +18,6 @@
     <string name="step_arch">Föredra denna enhets processor</string>
     <string name="step_add">Lägg till en sida</string>
     <string name="step_remove">Ta bort denna sida</string>
-    <string name="option_file_version">Använd filnamnet som version</string>
-    <string name="option_file_version_effect">Varje fil räknas då som en egen utgåva.</string>
     <string name="github_proxy_title">GitHub via en hubproxy</string>
     <string name="github_proxy_effect">Varje förfrågan till GitHub går till denna värd, som ser varenda en. Ingen token skickas genom den, så privata projekt och GitHub Actions kan inte följas på detta sätt.</string>
     <string name="github_proxy_host">Hubproxy-värd</string>

@@ -18,8 +18,6 @@
     <string name="step_arch">Preferir o procesador deste dispositivo</string>
     <string name="step_add">Engadir unha páxina</string>
     <string name="step_remove">Eliminar esta páxina</string>
-    <string name="option_file_version">Usar o nome do ficheiro como versión</string>
-    <string name="option_file_version_effect">Entón cada ficheiro conta como un lanzamento propio.</string>
     <string name="github_proxy_title">GitHub a través dun hubproxy</string>
     <string name="github_proxy_effect">Cada solicitude a GitHub vai a este servidor, que as ve todas. Non se envía ningún token a través del, polo que os proxectos privados e GitHub Actions non se poden seguir deste xeito.</string>
     <string name="github_proxy_host">Servidor do hubproxy</string>

@@ -16,7 +16,7 @@ data class FetchedPart(val name: String, val file: File)
 /**
  * Puts a base and its splits, fetched one by one, into one zip, so that they are chosen and checked
  * exactly as the APKs of a bundle are. A part that is an APK goes in under its own name, made to end
- * in .apk. A part that is a zip, as RuStore serves each file, gives the APKs it holds under their
+ * in .apk. A part that is a zip, as some stores serve each file, gives the APKs it holds under their
  * names there. Every name is data and never a path, and a name that comes twice is numbered.
  */
 object PartsZip {

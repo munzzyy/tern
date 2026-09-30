@@ -18,8 +18,6 @@
     <string name="step_arch">Upřednostnit procesor tohoto zařízení</string>
     <string name="step_add">Přidat stránku</string>
     <string name="step_remove">Odebrat tuto stránku</string>
-    <string name="option_file_version">Použít název souboru jako verzi</string>
-    <string name="option_file_version_effect">Každý soubor se pak počítá jako samostatné vydání.</string>
     <string name="github_proxy_title">GitHub přes hubproxy</string>
     <string name="github_proxy_effect">Každý požadavek na GitHub jde na tohoto hostitele, který vidí všechny požadavky. Přes něj se neposílá žádný token, takže soukromé projekty a GitHub Actions se tak sledovat nedají.</string>
     <string name="github_proxy_host">Hostitel hubproxy</string>

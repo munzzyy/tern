@@ -14,61 +14,58 @@ object SourceTypes {
     const val SOURCEHUT = "sourcehut"
     const val SOURCEFORGE = "sourceforge"
 
-    // Stores where developers publish their own apps.
+    // Stores that developers upload their own apps to.
     const val HUAWEI = "huawei"
     const val SAMSUNG = "samsung"
     const val VIVO = "vivo"
-    const val TENCENT = "tencent"
-    const val RUSTORE = "rustore"
-    const val COOLAPK = "coolapk"
-    const val ITCHIO = "itchio"
 
-    // The developer's own site, for one app.
+    // The developer's own channel, for one app or all of theirs.
+    const val ITCHIO = "itchio"
     const val TELEGRAM = "telegram"
     const val NEUTRONCODE = "neutroncode"
 
-    // Sites that republish apps somebody else built.
+    // Sites that republish apps somebody else built, and a store that hosts copies others upload.
     const val APKPURE = "apkpure"
     const val APTOIDE = "aptoide"
-    const val UPTODOWN = "uptodown"
     const val APKCOMBO = "apkcombo"
     const val APKMIRROR = "apkmirror"
-    const val FARSROID = "farsroid"
-    const val LITEAPKS = "liteapks"
-    const val APK4FREE = "apk4free"
-    const val ROCKMODS = "rockmods"
+    const val TENCENT = "tencent"
 
     /** Every type, in the order detection tries them. An export naming another type is refused. */
     val ALL: List<String> = listOf(
         GITHUB, GITHUB_ACTIONS, GITLAB, FORGEJO, FDROID, FDROID_REPO,
-        HUAWEI, SAMSUNG, VIVO, TENCENT, RUSTORE, COOLAPK, ITCHIO, TELEGRAM, NEUTRONCODE,
-        APKPURE, APTOIDE, UPTODOWN, APKCOMBO, APKMIRROR, FARSROID, LITEAPKS, APK4FREE, ROCKMODS,
+        HUAWEI, SAMSUNG, VIVO, TENCENT, ITCHIO, TELEGRAM, NEUTRONCODE,
+        APKPURE, APTOIDE, APKCOMBO, APKMIRROR,
         SOURCEFORGE, SOURCEHUT, JENKINS, DIRECT, HTML,
     )
 
-    /** Sites that offer apps changed by someone other than their developer. Said plainly before an app is added from one. */
-    val MODIFIED: Set<String> = setOf(LITEAPKS, APK4FREE, ROCKMODS)
-
     /**
      * Stores and mirrors that offer again what developers published elsewhere, each source of which
-     * says so through [Source.republishes]. Their files are held to the developer's certificate
-     * like any other, once one is known.
+     * says so through [Source.republishes]. The first file Tern installs from one decides the
+     * certificate later updates must carry, unless Tern already knows the developer's.
      */
-    val REPUBLISHING: Set<String> = setOf(APKPURE, APTOIDE, UPTODOWN, APKCOMBO, APKMIRROR, FARSROID) + MODIFIED
+    val REPUBLISHING: Set<String> = setOf(APKPURE, APTOIDE, APKCOMBO, APKMIRROR, TENCENT)
+
+    /**
+     * The stores behind the setting "Third-party stores", off until the person turns it on. Tern
+     * reads them through interfaces they made for their own apps and sites, not for others, and
+     * what they serve does not come from the developer.
+     */
+    val THIRD_PARTY_STORES: Set<String> = REPUBLISHING + setOf(HUAWEI, SAMSUNG, VIVO)
 
     /**
      * Sources that only tell of new releases and offer no file Tern may install, each of which says
      * so through [Source.trackOnly]. Every app of one is track-only, whatever it was made or saved with.
      */
-    val TRACK_ONLY: Set<String> = setOf(APKMIRROR, ROCKMODS)
+    val TRACK_ONLY: Set<String> = setOf(APKMIRROR)
 
     /**
      * The kinds a person may say an address is, in the order the Add screen offers them: the
      * general ones and those that are hosted anywhere first. Obtainium lets no address be read as
-     * vivo's or CoolApk's store, and neither does Tern.
+     * vivo's store, and neither does Tern.
      */
     val OVERRIDABLE: List<String> = listOf(HTML, DIRECT, GITHUB, GITHUB_ACTIONS, GITLAB, FORGEJO, FDROID_REPO, JENKINS, SOURCEHUT).let { first ->
-        first + ALL.filter { it !in first && it != VIVO && it != COOLAPK }
+        first + ALL.filter { it !in first && it != VIVO }
     }
 
     /**
@@ -93,20 +90,13 @@ object SourceTypes {
         SAMSUNG -> "Galaxy Store"
         VIVO -> "vivo App Store"
         TENCENT -> "Tencent App Store"
-        RUSTORE -> "RuStore"
-        COOLAPK -> "CoolApk"
         ITCHIO -> "itch.io"
         TELEGRAM -> "Telegram"
         NEUTRONCODE -> "Neutron Code"
         APKPURE -> "APKPure"
         APTOIDE -> "Aptoide"
-        UPTODOWN -> "Uptodown"
         APKCOMBO -> "APKCombo"
         APKMIRROR -> "APKMirror"
-        FARSROID -> "Farsroid"
-        LITEAPKS -> "LiteAPKs"
-        APK4FREE -> "APK4Free"
-        ROCKMODS -> "RockMods"
         else -> null
     }
 }
@@ -186,13 +176,4 @@ object SourceOptions {
      * taken, and the release it belongs to is marked as the latest.
      */
     const val SORT = "sort"
-
-    /** farsroid: "true" to take the name of each file as a version, each file then a release of its own. */
-    const val FILE_VERSION = "fileVersion"
-
-    /** samsung: the device model the store is asked for, such as "SM-S948B". */
-    const val DEVICE_MODEL = "deviceModel"
-
-    /** samsung: the country and carrier code the store is asked for, such as "DBT". */
-    const val CSC = "csc"
 }

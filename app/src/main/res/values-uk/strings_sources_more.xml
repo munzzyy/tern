@@ -18,8 +18,6 @@
     <string name="step_arch">Віддавати перевагу процесору цього пристрою</string>
     <string name="step_add">Додати сторінку</string>
     <string name="step_remove">Вилучити цю сторінку</string>
-    <string name="option_file_version">Використовувати назву файлу як версію</string>
-    <string name="option_file_version_effect">Тоді кожен файл вважається окремим випуском.</string>
     <string name="github_proxy_title">GitHub через hubproxy</string>
     <string name="github_proxy_effect">Кожен запит до GitHub іде на цей хост, який бачить усі запити. Маркер через нього не надсилається, тому приватні проєкти та GitHub Actions так відстежувати не можна.</string>
     <string name="github_proxy_host">Хост hubproxy</string>

@@ -76,14 +76,14 @@ class ConfigLinkTest {
 
     @Test
     fun aHeaderThatCouldHoldAKeyNeverGoesIntoALink() {
-        val headers = RequestHeaders.write(mapOf("User-Agent" to "Mozilla/5.0", "X-Api-Key" to "hunter2secret", "PRIVATE-TOKEN" to "glpat-abc"))
+        val headers = RequestHeaders.write(mapOf("Referer" to "https://example.com/", "X-Api-Key" to "hunter2secret", "PRIVATE-TOKEN" to "glpat-abc"))
         val direct = AppConfig("direct", SourceSpec(SourceTypes.DIRECT, "https://example.org/app.apk", mapOf(SourceOptions.HEADERS to headers)), "Direct")
         val link = ConfigLink.web(direct)!!
         assertFalse(link.contains("hunter2secret"))
         assertFalse(link.contains("glpat"))
         assertFalse(link.contains("creds"))
         val back = readBack(link)
-        assertEquals(mapOf("User-Agent" to "Mozilla/5.0"), RequestHeaders.of(back.source))
+        assertEquals(mapOf("Referer" to "https://example.com/"), RequestHeaders.of(back.source))
 
         val onlySecret = direct.copy(source = direct.source.copy(options = mapOf(SourceOptions.HEADERS to RequestHeaders.write(mapOf("X-Api-Key" to "hunter2secret")))))
         assertNull(readBack(ConfigLink.of(onlySecret)!!).source.option(SourceOptions.HEADERS))

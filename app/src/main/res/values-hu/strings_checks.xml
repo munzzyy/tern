@@ -38,7 +38,6 @@
     <string name="sources_repositories">Tárolók</string>
     <string name="sources_stores">Áruházak</string>
     <string name="sources_mirrors">Alkalmazásokat újra közzétevő áruházak</string>
-    <string name="sources_modified">Módosított alkalmazásokat kínáló oldalak</string>
     <string name="sources_other">Egyéb helyek</string>
     <string name="sources_web_page">Fájlokra mutató linkeket tartalmazó weboldal</string>
     <string name="sources_direct">Közvetlen link egy fájlra</string>
@@ -48,8 +47,6 @@
     <string name="shared_configs_title">Az Obtainium felhasználói által megosztott konfigurációk</string>
     <string name="shared_configs_effect">Kész alkalmazásbeállításokat tartalmazó oldal. A linkjei a Ternben nyílnak meg, ha az Obtainium linkek megnyitása be van kapcsolva a Beállításokban.</string>
     <string name="engine_inner_filter_nothing">Az archívumokon belüli fájlok szűrője ebben az archívumban egyik APK-ra sem illik.</string>
-    <string name="preview_republished">A(z) %1$s újra kínálja azt, amit a fejlesztők máshol tesznek közzé. A fájljait a Tern a fejlesztő tanúsítványához köti, amint ismeri azt, ezért ha teheti, rögzítsen egyet, vagy először a fejlesztőtől telepítsen.</string>
-    <string name="preview_modified">A(z) %1$s olyan alkalmazásokat kínál, amelyeket a fejlesztőjükön kívül valaki más módosított. Az írja alá őket, aki módosította őket, és a Tern nem tudja megállapítani, mi lett módosítva.</string>
     <string name="about_track_tern">Maga a Tern is legyen naprakész</string>
     <string name="about_track_tern_effect">Hozzáadja a Tern saját kiadásait a listához, ugyanúgy ellenőrizve és hitelesítve, mint bármely alkalmazást.</string>
     <string name="engine_channel_tracked">Követett alkalmazások új kiadásai</string>

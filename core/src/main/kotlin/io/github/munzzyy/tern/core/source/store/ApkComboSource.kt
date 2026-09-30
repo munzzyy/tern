@@ -34,6 +34,8 @@ class ApkComboSource : Source {
 
     override val republishes: Boolean get() = true
 
+    override val domains: Set<String> get() = setOf("apkcombo.com") + FILE_HOSTS
+
     override fun match(url: String): SourceSpec? {
         val uri = Urls.parseHttps(url) ?: return null
         val host = uri.host?.lowercase() ?: return null
@@ -196,8 +198,7 @@ class ApkComboSource : Source {
         private const val TABLE_WINDOW = 16 * 1024
         private const val MAX_VARIANTS = 20
 
-        /** What gets past APKCombo's shield. */
-        private val HEADERS = mapOf("User-Agent" to "curl/8.0.1", "Accept" to "*/*")
+        private val HEADERS = mapOf("Accept" to "*/*")
 
         /** The bucket APKCombo's signed file addresses point into. */
         val FILE_HOSTS = setOf("apks.39b7cb94d40914bac590886981b0ed6e.r2.cloudflarestorage.com")

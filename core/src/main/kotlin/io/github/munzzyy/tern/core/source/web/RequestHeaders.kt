@@ -8,11 +8,11 @@ import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.core.source.SourceOptions
 
 /**
- * Extra headers a person has a web page or a download address sent with, such as a browser's
- * User-Agent for a site that turns other clients away. They are stored in [SourceOptions.HEADERS]
- * as a JSON object of names to values and go with the page and the file alike. A header that
- * carries credentials or changes what a request means is refused, and so is any character a
- * header cannot carry.
+ * Extra headers a person has a web page or a download address sent with, such as a Referer a
+ * site asks for. They are stored in [SourceOptions.HEADERS] as a JSON object of names to values
+ * and go with the page and the file alike. A header that carries credentials or changes what a
+ * request means is refused, and so is any character a header cannot carry. So is User-Agent:
+ * Tern says who it is to every site, and does not pass for a browser or another app.
  */
 object RequestHeaders {
     const val MAX_HEADERS = 8
@@ -21,7 +21,7 @@ object RequestHeaders {
     const val MAX_LENGTH = 500
 
     private val REFUSED = setOf(
-        "authorization", "proxy-authorization", "cookie", "host", "content-length", "range",
+        "authorization", "proxy-authorization", "cookie", "host", "content-length", "range", "user-agent",
         "connection", "keep-alive", "transfer-encoding", "te", "trailer", "upgrade", "expect", "accept-encoding",
     )
     private val REFUSED_PREFIXES = listOf("if-", "proxy-")

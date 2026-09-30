@@ -18,8 +18,6 @@
     <string name="step_arch">Предпочитать процессор этого устройства</string>
     <string name="step_add">Добавить страницу</string>
     <string name="step_remove">Удалить эту страницу</string>
-    <string name="option_file_version">Использовать имя файла как версию</string>
-    <string name="option_file_version_effect">Тогда каждый файл считается отдельным релизом.</string>
     <string name="github_proxy_title">GitHub через hubproxy</string>
     <string name="github_proxy_effect">Каждый запрос к GitHub идет на этот хост, который видит все запросы. Токен через него не передается, поэтому приватные проекты и GitHub Actions так отслеживать нельзя.</string>
     <string name="github_proxy_host">Хост hubproxy</string>

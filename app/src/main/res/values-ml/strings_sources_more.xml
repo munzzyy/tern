@@ -18,8 +18,6 @@
     <string name="step_arch">ഈ ഉപകരണത്തിൻ്റെ പ്രോസസറിന് മുൻഗണന നൽകുക</string>
     <string name="step_add">ഒരു പേജ് ചേർക്കുക</string>
     <string name="step_remove">ഈ പേജ് നീക്കംചെയ്യുക</string>
-    <string name="option_file_version">ഫയലിൻ്റെ പേര് പതിപ്പായി ഉപയോഗിക്കുക</string>
-    <string name="option_file_version_effect">അപ്പോൾ ഓരോ ഫയലും സ്വന്തമായ ഒരു റിലീസായി കണക്കാക്കും.</string>
     <string name="github_proxy_title">hubproxy വഴി GitHub</string>
     <string name="github_proxy_effect">GitHub-ലേക്കുള്ള ഓരോ അഭ്യർത്ഥനയും ഈ ഹോസ്റ്റിലേക്ക് പോകുന്നു, ഇത് ഓരോന്നും കാണുന്നു. ഇതിലൂടെ ടോക്കൺ അയയ്ക്കില്ല, അതിനാൽ ഈ രീതിയിൽ സ്വകാര്യ പ്രോജക്റ്റുകൾ, GitHub Actions എന്നിവ പിന്തുടരാനാകില്ല.</string>
     <string name="github_proxy_host">hubproxy ഹോസ്റ്റ്</string>

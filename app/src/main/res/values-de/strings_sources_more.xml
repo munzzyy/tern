@@ -18,8 +18,6 @@
     <string name="step_arch">Prozessor dieses Geräts bevorzugen</string>
     <string name="step_add">Seite hinzufügen</string>
     <string name="step_remove">Diese Seite entfernen</string>
-    <string name="option_file_version">Dateinamen als Version verwenden</string>
-    <string name="option_file_version_effect">Jede Datei gilt dann als eigenes Release.</string>
     <string name="github_proxy_title">GitHub über einen hubproxy</string>
     <string name="github_proxy_effect">Jede Anfrage an GitHub geht an diesen Host, der jede einzelne sieht. Über ihn wird kein Token gesendet, daher können private Projekte und GitHub Actions auf diesem Weg nicht verfolgt werden.</string>
     <string name="github_proxy_host">Hubproxy-Host</string>

@@ -64,10 +64,6 @@
     <string name="option_workflow">Archivo de flujo de trabajo</string>
     <string name="option_workflow_help">Como build.yml.</string>
     <string name="option_branch">Rama</string>
-    <string name="option_device_model">Modelo de dispositivo</string>
-    <string name="option_device_model_help">Galaxy Store da a cada modelo su propia compilación, como SM-S948B.</string>
-    <string name="option_csc">Código de región (CSC)</string>
-    <string name="option_csc_help">Tres letras, como DBT.</string>
     <string name="option_link_filter">Filtro de enlaces de descarga</string>
     <string name="option_link_filter_help">Solo los enlaces que coinciden cuentan como descargas.</string>
     <string name="option_page_order">Mantener el orden de la página</string>
@@ -78,7 +74,6 @@
     <string name="version_from_text">El texto del enlace</string>
     <string name="version_from_page">Toda la página</string>
     <string name="option_headers">Cabeceras de la petición</string>
-    <string name="option_headers_help">Una por línea, como Name: value. Nunca una contraseña ni una cookie.</string>
     <string name="option_pseudo">Cuando no hay versión</string>
     <string name="pseudo_default">Distinguir los archivos como lo hace el servidor</string>
     <string name="pseudo_hash">Por un hash del inicio del archivo</string>

@@ -89,7 +89,7 @@ class ApkMirrorSourceTest {
         // The pages of the two releases that may be offered are asked for what they say; they cannot be read here.
         assertEquals(listOf(feed, betaPage, stablePage, page), http.requests.map { it.url })
         assertTrue(listing.releases.all { it.notes == null && it.fileSize == null })
-        assertTrue(http.requests.all { it.headers["User-Agent"] == "APKUpdater-v3.5.9 Tern" })
+        assertTrue("asked as Tern, which PoliteHttp names", http.requests.all { request -> request.headers.keys.none { it.equals("User-Agent", ignoreCase = true) } })
     }
 
     @Test

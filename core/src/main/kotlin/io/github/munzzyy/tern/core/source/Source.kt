@@ -146,6 +146,13 @@ interface Source {
      * the same checks, but the person should know the file does not come from the developer.
      */
     val republishes: Boolean get() = false
+
+    /**
+     * The domains this source asks, each with the hosts under it, for a store whose every request
+     * can be told by its host. While third-party stores are off none of them is asked, whatever an
+     * address is read as. Empty for the sources that may be anywhere.
+     */
+    val domains: Set<String> get() = emptySet()
 }
 
 /** A source that can be searched by name. Each search is one or two requests and stores nothing. */

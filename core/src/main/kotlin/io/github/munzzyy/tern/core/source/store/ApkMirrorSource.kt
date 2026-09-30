@@ -38,6 +38,8 @@ class ApkMirrorSource : Source {
 
     override val trackOnly: Boolean get() = true
 
+    override val domains: Set<String> get() = setOf("apkmirror.com")
+
     override fun match(url: String): SourceSpec? {
         val uri = Urls.parseHttps(url) ?: return null
         val host = uri.host?.lowercase()
@@ -53,7 +55,7 @@ class ApkMirrorSource : Source {
         val feedUrl = "${spec.url}/feed/"
         val key = validatorKey(spec, feedUrl)
         val conditional = context.validators.get(key)?.conditionalHeaders().orEmpty()
-        val (channel, validator) = context.http.execute(HttpRequest(feedUrl, headers = HEADERS + conditional)).use {
+        val (channel, validator) = context.http.execute(HttpRequest(feedUrl, headers = conditional)).use {
             if (it.isNotModified) return CheckResult.Unchanged
             if (it.status == 404) throw SourceException(SourceErrorKind.NOT_FOUND, "APKMirror has no app at ${spec.url}")
             if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${it.status} for $feedUrl")
@@ -110,7 +112,7 @@ class ApkMirrorSource : Source {
 
     /** A page of APKMirror, or null when it cannot be read: what it tells is never needed to follow the app. */
     private fun fetch(url: String, context: CheckContext): String? = try {
-        context.http.execute(HttpRequest(url, headers = HEADERS)).use { if (it.isSuccess) it.text(PAGE_CAP) else null }
+        context.http.execute(HttpRequest(url)).use { if (it.isSuccess) it.text(PAGE_CAP) else null }
     } catch (_: IOException) {
         null
     }
@@ -133,9 +135,6 @@ class ApkMirrorSource : Source {
         private const val FEED_CAP = 4 * 1024 * 1024
         private const val PAGE_CAP = 4 * 1024 * 1024
         private const val MAX_RELEASES = 30
-
-        /** APKMirror lets through only clients whose User-Agent names APKUpdater, as Obtainium's does; the rest is who asks. */
-        private val HEADERS = mapOf("User-Agent" to "APKUpdater-v3.5.9 Tern")
 
         private val HOSTS = setOf("www.apkmirror.com", "apkmirror.com")
         private val SLUG = Regex("[a-z0-9][a-z0-9._-]{0,199}")

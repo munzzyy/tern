@@ -62,10 +62,6 @@
     <string name="option_workflow">Workflow-fil</string>
     <string name="option_workflow_help">F.eks. build.yml.</string>
     <string name="option_branch">Gren</string>
-    <string name="option_device_model">Enhedsmodel</string>
-    <string name="option_device_model_help">Galaxy Store giver hver model sin egen version, f.eks. SM-S948B.</string>
-    <string name="option_csc">Regionskode (CSC)</string>
-    <string name="option_csc_help">Tre bogstaver, f.eks. DBT.</string>
     <string name="option_link_filter">Filter for downloadlinks</string>
     <string name="option_link_filter_help">Kun links, der matcher, tæller som downloads.</string>
     <string name="option_page_order">Behold sidens rækkefølge</string>
@@ -76,7 +72,6 @@
     <string name="version_from_text">Linkets tekst</string>
     <string name="version_from_page">Hele siden</string>
     <string name="option_headers">Anmodningsheadere</string>
-    <string name="option_headers_help">Én pr. linje, som Name: value. Aldrig en adgangskode eller en cookie.</string>
     <string name="option_pseudo">Når der ingen version er</string>
     <string name="pseudo_default">Skeln filer ad, som serveren gør</string>
     <string name="pseudo_hash">Efter en hash af filens start</string>

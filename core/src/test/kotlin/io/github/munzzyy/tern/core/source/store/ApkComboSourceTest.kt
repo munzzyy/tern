@@ -81,7 +81,7 @@ class ApkComboSourceTest {
         assertEquals(listOf(AssetKind.APK, AssetKind.BUNDLE), release.assets.map { it.kind })
 
         assertEquals(listOf(page, downloads), http.requests.map { it.url })
-        assertTrue(http.requests.all { it.headers["User-Agent"] == "curl/8.0.1" && it.headers["Accept"] == "*/*" })
+        assertTrue("asked as Tern, which PoliteHttp names", http.requests.all { it.headers == mapOf("Accept" to "*/*") })
     }
 
     @Test

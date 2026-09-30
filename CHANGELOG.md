@@ -48,7 +48,25 @@ Everything Obtainium does, and more.
   README, read from the forge when you ask for it.
 - The activity log can be shared as text, and Tern offers to keep itself up to
   date.
-- The top of an app's page takes the colour of its icon.
+- The top of an app's page takes the colour of its icon, and a deeper screen
+  slides in from the side text runs to.
+- The language can be chosen in Tern on every Android version.
+- How often to check is a slider from 15 minutes to 30 days. Install only on
+  Wi-Fi and only while charging hold back installs, not checks, and a switch
+  pauses every install the background would make. A check that failed on the
+  network is tried again, later each time, and a rate limit is waited out.
+- Your own colour can be typed as a colour code, and the scheme can be
+  standard, vibrant or expressive, each measured for contrast. A category's
+  colour can be any colour.
+- The kept export can be written in Obtainium's format under a name of your
+  own, and the export for Obtainium works on a TV too.
+- Certificate pinning for GitHub, GitLab and Codeberg, off by default as in
+  Obtainium. RuStore's addresses that use Russia's national authority work.
+- After an unexpected stop the next start shows what Tern was doing, to copy
+  or share. The log can be cut to its last days and is copied where nothing
+  takes a share.
+- About links to how Tern works, how it keeps you safe and its privacy page,
+  with a note on Android's developer verification.
 
 ## 0.1.0, 2026-09-29
 

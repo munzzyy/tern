@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">Ez az archívum olyan OBB-fájlt tartalmaz, amelynek a neve kivezethet az alkalmazás OBB-mappájából, vagy két azonos nevű OBB-fájlt. Semmi nem lett telepítve.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">%1$d OBB-fájl elhelyezve a(z) %2$s mappában.</item>
+        <item quantity="other">%1$d OBB-fájl elhelyezve a(z) %2$s mappában.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">Az OBB-fájlok nem lettek elhelyezve a(z) %1$s mappában, mert ott csak a Shizuku és a root telepítők tudnak írni. A kiadás fájljában (%2$s) vannak: %3$s.</string>
+    <string name="parts_obb_failed">Az OBB-fájlokat nem sikerült elhelyezni a(z) %1$s mappában: %2$s. A kiadás fájljában (%3$s) vannak: %4$s.</string>
+</resources>

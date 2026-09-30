@@ -1,2 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="files_other_title">A kiadás további fájljai</string>
+    <string name="files_source_code">Forráskód</string>
+    <string name="files_save_spoken">Mentés a Letöltések mappába: %1$s</string>
+    <string name="files_save_a_file">Fájl mentése</string>
+    <string name="files_pick_title_version">Fájl mentése ebből a verzióból: %1$s</string>
+    <string name="files_pick_title_app">Fájl mentése ebből az alkalmazásból: %1$s</string>
+    <string name="files_skip">Kihagyás</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">%1$d fájl mentése folyamatban. Értesítés jelzi, ha elkészült.</item>
+        <item quantity="other">%1$d fájl mentése folyamatban. Értesítés jelzi, ha mindegyik elkészült.</item>
+    </plurals>
+    <string name="files_channel_saved">Mentett fájlok</string>
+    <string name="files_notify_saved">Mentve: %1$s</string>
+    <string name="files_notify_saved_plain">Egy fájl mentve a Letöltések mappába</string>
+    <string name="files_notify_not_saved">Nem sikerült menteni: %1$s</string>
+    <string name="files_notify_not_saved_plain">Egy fájlt nem sikerült menteni</string>
+    <string name="files_notify_updated_to">A(z) %1$s frissítve erre: %2$s</string>
+    <string name="files_notify_installed_at">A(z) %1$s %2$s telepítve</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Mi ment félre</string>
+    <string name="files_problems_none">Ezek közül egyik alkalmazásnak sincs most problémája.</string>
+    <string name="files_setting_verifier">Új alkalmazások megmutatása előbb a Verified Apps alkalmazásnak</string>
+    <string name="files_setting_verifier_effect">Egy alkalmazás első telepítése előtt az ellenőrzött fájlja egy második pillantásra a Verified Apps vagy az AppVerifier alkalmazáshoz kerül, ha valamelyik telepítve van. A telepítés folytatódik, amint visszatér a Ternbe.</string>
+    <string name="files_verifier_about">A Verified Apps alkalmazásról</string>
+    <string name="files_verifier_card_effect">A(z) %1$s egy különálló alkalmazás. Összeveti ezt az alkalmazást azzal a tanúsítvánnyal, amelyhez a Tern köti, valamint a saját, általa ismert alkalmazások listájával.</string>
+    <string name="files_verifier_card_action">Ellenőrzés ezzel: %1$s</string>
+</resources>

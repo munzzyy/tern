@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">Categorieën</string>
+    <string name="settings_categories_effect">Geef ze een naam en elk een kleur, en hernoem of verwijder ze in één keer voor alle apps.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d categorie</item>
+        <item quantity="other">%d categorieën</item>
+    </plurals>
+    <string name="categories_none">Nog geen. Maak er hier een, of deel vanuit de lijst apps in onder een categorie.</string>
+    <string name="categories_new">Nieuwe categorie</string>
+    <string name="category_edit">Categorie bewerken</string>
+    <string name="category_name">Naam</string>
+    <string name="category_color">Kleur</string>
+    <string name="category_color_spoken">Kleur %1$d van %2$d</string>
+    <string name="category_exists">Er bestaat al een categorie met deze naam.</string>
+    <string name="category_delete">Verwijderen</string>
+    <string name="category_delete_effect">De apps erin blijven in de lijst; ze zijn alleen niet meer onder deze categorie ingedeeld.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d app</item>
+        <item quantity="other">%d apps</item>
+    </plurals>
+    <string name="action_close">Sluiten</string>
+    <string name="categories_new_short">Nieuw…</string>
+    <string name="app_notes_title">Notities</string>
+    <string name="app_notes_help">Markdown werkt: **vet**, *cursief*, lijsten en links.</string>
+    <string name="app_notes_add">Notitie toevoegen</string>
+    <string name="app_notes_add_effect">Alles wat het onthouden waard is over deze app. Het gaat mee in exports.</string>
+    <string name="app_notes_edit">Notitie bewerken</string>
+</resources>

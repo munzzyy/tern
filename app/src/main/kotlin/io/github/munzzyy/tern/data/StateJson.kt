@@ -34,6 +34,8 @@ object StateJson {
             "description" to state.description,
             "announcedReleaseId" to state.announcedReleaseId,
             "iconUrls" to state.iconUrls.take(IconAddresses.MAX_ADDRESSES),
+            "addedAtMs" to state.addedAtMs,
+            "seenInstalled" to state.seenInstalled,
         ),
     )
 
@@ -62,6 +64,8 @@ object StateJson {
             description = obj.string("description"),
             announcedReleaseId = obj.string("announcedReleaseId"),
             iconUrls = obj.array("iconUrls")?.strings().orEmpty().filter(Urls::isHttps).take(IconAddresses.MAX_ADDRESSES),
+            addedAtMs = obj.long("addedAtMs")?.takeIf { it > 0 },
+            seenInstalled = obj.bool("seenInstalled") ?: false,
         )
     }
 
@@ -112,15 +116,32 @@ object StateJson {
         "publishedAtMs" to r.publishedAtMs,
         "prerelease" to r.prerelease,
         "pageUrl" to r.pageUrl,
-        "assets" to JsonArray(
-            r.assets.map { a ->
-                Json.obj(
-                    "name" to a.name, "url" to a.url, "size" to a.size, "sha256" to a.sha256,
-                    "kind" to a.kind.name, "needsAuth" to a.needsAuth, "signers" to a.signers,
-                )
-            },
-        ),
+        "latest" to r.latest,
+        "fileSize" to r.fileSize,
+        "assets" to JsonArray(r.assets.map(::asset)),
+        "sourceArchives" to JsonArray(r.sourceArchives.map(::asset)),
     )
+
+    private fun asset(a: Asset): JsonObject = Json.obj(
+        "name" to a.name, "url" to a.url, "size" to a.size, "sha256" to a.sha256,
+        "kind" to a.kind.name, "needsAuth" to a.needsAuth, "signers" to a.signers, "holdsApps" to a.holdsApps,
+        "parts" to a.parts,
+    )
+
+    private fun asset(a: JsonObject): Asset? {
+        val name = a.string("name") ?: return null
+        return Asset(
+            name = name,
+            url = a.string("url") ?: return null,
+            size = a.long("size"),
+            sha256 = a.string("sha256"),
+            kind = enumOr(a.string("kind"), Asset.kindOf(name)),
+            needsAuth = a.bool("needsAuth") ?: false,
+            signers = a.array("signers")?.strings().orEmpty(),
+            holdsApps = a.bool("holdsApps") ?: false,
+            parts = a.array("parts")?.strings().orEmpty().take(Asset.MAX_PARTS),
+        )
+    }
 
     private fun release(obj: JsonObject): Release? = Release(
         id = obj.string("id") ?: return null,
@@ -132,18 +153,10 @@ object StateJson {
         publishedAtMs = obj.long("publishedAtMs"),
         prerelease = obj.bool("prerelease") ?: false,
         pageUrl = obj.string("pageUrl"),
-        assets = obj.array("assets")?.objects().orEmpty().mapNotNull { a ->
-            val name = a.string("name") ?: return@mapNotNull null
-            Asset(
-                name = name,
-                url = a.string("url") ?: return@mapNotNull null,
-                size = a.long("size"),
-                sha256 = a.string("sha256"),
-                kind = enumOr(a.string("kind"), Asset.kindOf(name)),
-                needsAuth = a.bool("needsAuth") ?: false,
-                signers = a.array("signers")?.strings().orEmpty(),
-            )
-        },
+        latest = obj.bool("latest") ?: false,
+        fileSize = obj.long("fileSize")?.takeIf { it > 0 },
+        assets = obj.array("assets")?.objects().orEmpty().mapNotNull(::asset),
+        sourceArchives = obj.array("sourceArchives")?.objects().orEmpty().mapNotNull(::asset),
     )
 
     private fun problem(p: Problem): JsonObject = Json.obj("kind" to p.kind.name, "message" to p.message, "retryAtMs" to p.retryAtMs)
@@ -169,7 +182,8 @@ object StateJson {
     private fun pending(p: PendingInstall): JsonObject = Json.obj(
         "sessionId" to p.sessionId, "packageName" to p.packageName, "releaseId" to p.releaseId, "version" to p.version, "versionCode" to p.versionCode,
         "fileSha256" to p.fileSha256, "fileSize" to p.fileSize, "assetUrl" to p.assetUrl,
-        "startedAtMs" to p.startedAtMs, "waitingForUser" to p.waitingForUser,
+        "startedAtMs" to p.startedAtMs, "waitingForUser" to p.waitingForUser, "signers" to p.signers,
+        "partUrls" to p.partUrls,
     )
 
     private fun pending(obj: JsonObject): PendingInstall? = PendingInstall(
@@ -183,6 +197,8 @@ object StateJson {
         assetUrl = obj.string("assetUrl") ?: "",
         startedAtMs = obj.long("startedAtMs") ?: 0L,
         waitingForUser = obj.bool("waitingForUser") ?: false,
+        signers = obj.array("signers")?.strings().orEmpty().mapNotNull(Fingerprints::normalize).take(8),
+        partUrls = obj.array("partUrls")?.strings().orEmpty().take(Asset.MAX_PARTS),
     )
 
     private inline fun <reified E : Enum<E>> enumOr(name: String?, fallback: E): E =

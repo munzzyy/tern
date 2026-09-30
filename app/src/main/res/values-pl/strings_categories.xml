@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">Kategorie</string>
+    <string name="settings_categories_effect">Nadaj im nazwy i kolory, a także zmieniaj ich nazwy lub usuwaj je naraz dla wszystkich aplikacji.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d kategoria</item>
+        <item quantity="few">%d kategorie</item>
+        <item quantity="many">%d kategorii</item>
+        <item quantity="other">%d kategorii</item>
+    </plurals>
+    <string name="categories_none">Jeszcze brak. Utwórz kategorię tutaj lub dodaj do kategorii aplikacje z listy.</string>
+    <string name="categories_new">Nowa kategoria</string>
+    <string name="category_edit">Edytuj kategorię</string>
+    <string name="category_name">Nazwa</string>
+    <string name="category_color">Kolor</string>
+    <string name="category_color_spoken">Kolor %1$d z %2$d</string>
+    <string name="category_exists">Kategoria o tej nazwie już istnieje.</string>
+    <string name="category_delete">Usuń</string>
+    <string name="category_delete_effect">Aplikacje z tej kategorii pozostają na liście, tylko nie są już do niej przypisane.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d aplikacja</item>
+        <item quantity="few">%d aplikacje</item>
+        <item quantity="many">%d aplikacji</item>
+        <item quantity="other">%d aplikacji</item>
+    </plurals>
+    <string name="action_close">Zamknij</string>
+    <string name="categories_new_short">Nowa…</string>
+    <string name="app_notes_title">Notatki</string>
+    <string name="app_notes_help">Działa Markdown: **pogrubienie**, *kursywa*, listy i linki.</string>
+    <string name="app_notes_add">Dodaj notatkę</string>
+    <string name="app_notes_add_effect">Wszystko, co warto zapamiętać o tej aplikacji. Notatka trafia do eksportów.</string>
+    <string name="app_notes_edit">Edytuj notatkę</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">Kérdés nélkül telepít és frissít az eszköztulajdonos Dhizuku segítségével. Előtte minden fájl ugyanazokon az ellenőrzéseken megy át. Az Android ekkor a Dhizukut nevezi meg telepítőként.</string>
+    <string name="installer_dhizuku_not_ready">Nem kész, addig semmi sem települ</string>
+    <string name="installer_dhizuku_unsupported">Az Android ezen verzióján a Tern nem tud a Dhizuku segítségével telepíteni.</string>
+    <string name="installer_dhizuku_not_installed">A Dhizuku nincs telepítve. Telepítse és tegye eszköztulajdonossá, majd térjen vissza.</string>
+    <string name="installer_dhizuku_not_owner">A Dhizuku nem az eszköztulajdonos. Tegye eszköztulajdonossá a Dhizuku alkalmazásban, majd térjen vissza.</string>
+    <string name="installer_dhizuku_not_answering">A Dhizuku nem válaszolt. Nyissa meg a Dhizuku alkalmazást, majd térjen vissza.</string>
+    <string name="installer_dhizuku_not_allowed">A Tern még nem használhatja a Dhizukut. Nyomja meg itt az engedélykéréshez.</string>
+    <string name="dhizuku_failed_not_installed">A Dhizuku nincs telepítve.</string>
+    <string name="dhizuku_failed_not_owner">A Dhizuku nem az eszköztulajdonos.</string>
+    <string name="dhizuku_failed_not_answering">A Dhizuku nem válaszolt.</string>
+    <string name="dhizuku_failed_not_allowed">A Dhizuku nem engedi, hogy a Tern használja.</string>
+    <string name="install_signer_changed">A most telepített alkalmazást más írta alá, mint a Tern által ellenőrzött fájlt, így a telepítés nem számít.</string>
+</resources>

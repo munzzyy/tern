@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">Tern does not know this kind of link.</string>
+    <string name="add_not_readable_as">This address cannot be read as %1$s.</string>
+    <string name="add_event_replaced">Its settings were replaced with the ones a file or a link held for it.</string>
+    <string name="search_miss_unreachable">%1$s could not be searched: it did not answer.</string>
+    <string name="search_miss_wait">%1$s could not be searched: it asks Tern to wait a while.</string>
+    <string name="search_miss_wait_until">%1$s could not be searched: it asks Tern to wait until %2$s.</string>
+    <string name="search_miss_refused">%1$s could not be searched: it refused the request.</string>
+    <string name="search_miss_status">%1$s could not be searched: it answered %2$d.</string>
+    <string name="search_miss_unreadable">%1$s could not be searched: its answer could not be read.</string>
+    <string name="add_options_title">Before adding</string>
+    <string name="add_options_auto">Tern finds out what the address is.</string>
+    <string name="add_options_forced">Read as %1$s</string>
+    <string name="add_read_as">Read the address as</string>
+    <string name="add_read_as_auto">Automatic</string>
+    <string name="add_read_as_forgejo">Forgejo or Gitea</string>
+    <string name="add_read_as_help">For a source Tern does not recognise by itself, such as one on a host of its own.</string>
+    <string name="add_package_label">Package name</string>
+    <string name="add_package_help">Every file has to be of this package. Left empty, Tern reads it from the app\'s file.</string>
+    <string name="add_package_invalid">This is not a package name, such as org.example.app.</string>
+    <string name="add_set_options">Set its options</string>
+    <string name="add_failed_options">Its options may tell Tern where to look. Set them above, then Tern checks again.</string>
+    <string name="add_replace">Replace its settings</string>
+    <string name="add_replace_explain">The link holds settings of its own for it. Replacing keeps the certificates it trusts and its package name, and does not make it install updates by itself.</string>
+    <string name="results_filter">Filter</string>
+    <string name="results_filter_help">Words or a pattern</string>
+    <string name="results_filter_none">Nothing in the list matches “%1$s”.</string>
+    <string name="repo_search_all">Search the whole repository for “%1$s”</string>
+    <string name="repo_show_all">Show all its apps</string>
+    <string name="repo_heading_within">Apps in %1$s with “%2$s”</string>
+    <string name="search_more">More was found than is shown. The filter narrows it down.</string>
+    <string name="search_forgejo_label">Forgejo or Gitea to search</string>
+    <string name="search_forgejo_help">Its address, such as codeberg.org. A token stored for it goes along.</string>
+    <string name="search_forgejo_invalid">This is not an address Tern can search.</string>
+    <string name="search_min_stars_label">Fewest stars</string>
+    <string name="search_min_stars_help">Projects on GitHub and on the Forgejo with fewer stars are left out.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">The file also holds other settings for %1$d app that is already in your list. They stay as they are unless you replace them.</item>
+        <item quantity="other">The file also holds other settings for %1$d apps that are already in your list. They stay as they are unless you replace them.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">Replace the settings of %1$d app</item>
+        <item quantity="other">Replace the settings of %1$d apps</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">The settings of %1$d app were replaced. The certificates it trusts stayed.</item>
+        <item quantity="other">The settings of %1$d apps were replaced. The certificates they trust stayed.</item>
+    </plurals>
+    <string name="import_settings_offered">The file also carries settings for Tern: the look, the list, notifications and checks. They are not taken unless you say so.</string>
+    <string name="import_take_settings">Take these settings</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">Tick the %1$d shown</item>
+        <item quantity="other">Tick all %1$d shown</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">Untick the %1$d shown</item>
+        <item quantity="other">Untick all %1$d shown</item>
+    </plurals>
+</resources>

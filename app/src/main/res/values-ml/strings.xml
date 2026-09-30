@@ -92,17 +92,6 @@
         <item quantity="other">%d തിരഞ്ഞെടുത്തു</item>
     </plurals>
     <string name="apps_select_hint">ലിസ്റ്റിൽ നിന്ന് ആപ്പുകൾ തിരഞ്ഞെടുക്കുക.</string>
-    <string name="action_add_to_category">കാറ്റഗറിയിലേക്ക് ചേർക്കുക</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">%d ആപ്പ് ഒരു കാറ്റഗറിയിലേക്ക് ചേർക്കുക</item>
-        <item quantity="other">%d ആപ്പുകൾ ഒരു കാറ്റഗറിയിലേക്ക് ചേർക്കുക</item>
-    </plurals>
-    <string name="bulk_category_field">കാറ്റഗറി</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">%2$s എന്നതിന് കീഴിൽ %1$d ആപ്പ് ചേർത്തു.</item>
-        <item quantity="other">%2$s എന്നതിന് കീഴിൽ %1$d ആപ്പുകൾ ചേർത്തു.</item>
-    </plurals>
-    <string name="bulk_category_existing">അല്ലെങ്കിൽ നിങ്ങൾ ഇതിനകം ഉപയോഗിക്കുന്ന ഒന്ന് തിരഞ്ഞെടുക്കുക:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">%d ആപ്പ് ഇപ്പോൾ പരിശോധിക്കണോ?</item>
         <item quantity="other">%d ആപ്പുകൾ ഇപ്പോൾ പരിശോധിക്കണോ?</item>
@@ -334,10 +323,6 @@
         <item quantity="one">ഓരോ %d മണിക്കൂറിലും</item>
         <item quantity="other">ഓരോ %d മണിക്കൂറിലും</item>
     </plurals>
-    <string name="settings_unmetered">അൺമീറ്റേർഡ് നെറ്റ്‌വർക്കുകളിൽ മാത്രം</string>
-    <string name="settings_unmetered_effect">മൊബൈൽ ഡാറ്റയിലും മീറ്റേർഡ് Wi-Fi ലും പരിശോധനകൾ ഒഴിവാക്കുക.</string>
-    <string name="settings_charging">ചാർജ് ചെയ്യുമ്പോൾ മാത്രം</string>
-    <string name="settings_charging_effect">ബാറ്ററിയിലായിരിക്കുമ്പോൾ പരിശോധനകൾ ഒഴിവാക്കുക.</string>
     <string name="settings_defaults">പുതിയ ആപ്പുകൾക്കുള്ള ഡിഫോൾട്ടുകൾ</string>
     <string name="settings_notifications">നോട്ടിഫിക്കേഷനുകൾ</string>
     <string name="settings_notify_updates">അപ്ഡേറ്റുകൾ കണ്ടെത്തുമ്പോൾ</string>
@@ -373,7 +358,6 @@
     <string name="proxy_port_invalid">1 മുതൽ 65535 വരെയുള്ള ഒരു സംഖ്യ</string>
     <string name="settings_appearance">രൂപം</string>
     <string name="settings_language">ഭാഷ</string>
-    <string name="settings_language_effect">ഈ ആപ്പിനായി Android-ൻ്റെ സെറ്റിംഗ്സിൽ തിരഞ്ഞെടുത്തത്.</string>
     <string name="settings_theme">തീം</string>
     <string name="theme_system">സിസ്റ്റം പിന്തുടരുക</string>
     <string name="theme_light">ലൈറ്റ്</string>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_share">Share</string>
+    <string name="action_release_page">Open the release page</string>
+    <string name="action_share_address">Share the address</string>
+    <string name="action_share_link">Share a link that opens it in Tern</string>
+    <string name="action_app_info">App info in Android</string>
+    <string name="detail_last_checked">Checked %1$s</string>
+    <string name="state_favorite">Favourite</string>
+    <string name="action_save_file">Save to Downloads</string>
+    <string name="file_saved">Saved as %1$s in %2$s, as it was downloaded. Tern checks a file when it installs it.</string>
+    <string name="action_save_files">Save files to Downloads</string>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d release marked as seen</item>
+        <item quantity="other">%d releases marked as seen</item>
+    </plurals>
+    <string name="project_page">Project page</string>
+    <string name="project_page_read">Read the project\'s page</string>
+    <string name="project_page_effect">Its README, shown as text. Nothing is asked of the forge until you open it.</string>
+    <string name="project_page_loading">Reading…</string>
+    <string name="project_page_none">The project keeps no page Tern can read.</string>
+    <string name="project_page_failed">The page could not be read. Tap to try again.</string>
+</resources>

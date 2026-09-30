@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parts_obb_name_refused">Detta arkiv innehåller en OBB-fil vars namn kan leda ut ur appens OBB-mapp, eller två OBB-filer med samma namn. Inget installerades.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">Lade %1$d OBB-fil i %2$s.</item>
+        <item quantity="other">Lade %1$d OBB-filer i %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">OBB-filerna lades inte i %1$s, eftersom bara installationsprogrammen Shizuku och root kan skriva där. De finns i %2$s, denna utgåvas fil: %3$s.</string>
+    <string name="parts_obb_failed">OBB-filerna kunde inte läggas i %1$s: %2$s. De finns i %3$s, denna utgåvas fil: %4$s.</string>
+</resources>

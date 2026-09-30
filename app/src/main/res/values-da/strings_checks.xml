@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Hvert %d minut</item>
+        <item quantity="other">Hvert %d. minut</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Hver %d dag</item>
+        <item quantity="other">Hver %d. dag</item>
+    </plurals>
+    <string name="settings_check_now">Kør baggrundstjekket nu</string>
+    <string name="settings_check_now_effect">Tjekker hver app og installerer det, der er sat til at opdatere af sig selv, ligesom baggrundstjekket gør.</string>
+    <string name="settings_check_now_running">Tjekker…</string>
+    <string name="settings_check_on_start">Tjek, når Tern åbner</string>
+    <string name="settings_check_on_open">Tjek en app, når dens side åbner</string>
+    <string name="settings_check_on_open_effect">Ikke igen inden for fem minutter efter sidste tjek.</string>
+    <string name="settings_only_installed">Tjek kun installerede apps</string>
+    <string name="settings_only_installed_effect">Apps, der kun spores, tjekkes også. En app, du åbner, tjekkes altid.</string>
+    <string name="settings_remove_uninstalled">Fjern apps, der er afinstalleret andetsteds</string>
+    <string name="settings_remove_uninstalled_effect">En app, du afinstallerer uden for Tern, forsvinder også fra listen.</string>
+    <string name="settings_file_filter">Filter for filer</string>
+    <string name="settings_file_filter_effect">Et mønster, som enhver app uden sit eget filter vælger sin fil efter.</string>
+    <string name="settings_file_filter_none">Intet</string>
+    <string name="settings_file_filter_invalid">Dette mønster kan ikke læses.</string>
+    <string name="settings_allow_downgrades">Tillad ældre versioner</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade er installeret, så Android må installere en ældre version oven på en nyere.</string>
+    <string name="settings_collapse_groups">Start med grupper foldet sammen</string>
+    <string name="settings_haptics">Haptisk feedback</string>
+    <string name="settings_haptics_effect">En let vibration, når et stryg eller et langt tryk gør noget.</string>
+    <string name="settings_phone_layout">Brug altid telefonlayoutet</string>
+    <string name="settings_phone_layout_effect">Én rude og en bjælke i bunden, uanset hvor bred skærmen er.</string>
+    <string name="density_minimal">Minimal</string>
+    <string name="search_in">Søg i</string>
+    <string name="activity_share">Del aktivitet</string>
+    <string name="sources_title">Hvad Tern kan læse</string>
+    <string name="sources_effect">Kodeplatforme, arkiver, butikker og websider, og hvilke af dem der kan søges i.</string>
+    <string name="sources_forges">Kodeplatforme</string>
+    <string name="sources_repositories">Arkiver</string>
+    <string name="sources_stores">Butikker</string>
+    <string name="sources_mirrors">Butikker, der genudgiver apps</string>
+    <string name="sources_modified">Websteder med ændrede apps</string>
+    <string name="sources_other">Andre steder</string>
+    <string name="sources_web_page">En webside med links til filer</string>
+    <string name="sources_direct">Et direkte link til en fil</string>
+    <string name="sources_searchable">kan søges i</string>
+    <string name="sources_track_only">kun sporing</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea og Jenkins på deres egen server genkendes på deres adresse.</string>
+    <string name="shared_configs_title">Konfigurationer delt af Obtainiums brugere</string>
+    <string name="shared_configs_effect">Et websted med færdige indstillinger til apps. Dets links åbner i Tern, når Åbn Obtainium-links er slået til i Indstillinger.</string>
+    <string name="engine_inner_filter_nothing">Filteret for filer i arkiver matcher ingen af APK\'erne i dette arkiv.</string>
+    <string name="preview_republished">%1$s tilbyder igen det, som udviklere udgiver andre steder. Dets filer holdes op imod udviklerens certifikat, når Tern kender det, så fastgør et, eller installer fra udvikleren først, når du kan.</string>
+    <string name="preview_modified">%1$s tilbyder apps, der er ændret af en anden end deres udvikler. De er signeret af den, der ændrede dem, og Tern kan ikke se, hvad der blev ændret.</string>
+    <string name="about_track_tern">Hold Tern selv opdateret</string>
+    <string name="about_track_tern_effect">Tilføjer Terns egne udgivelser til listen, tjekket og verificeret som enhver app.</string>
+    <string name="engine_channel_tracked">Nye udgivelser af sporede apps</string>
+    <string name="engine_channel_checking">Tjekker</string>
+    <string name="engine_notify_tracked_one">Ny udgivelse af %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d sporet app har en ny udgivelse</item>
+        <item quantity="other">%1$d sporede apps har nye udgivelser</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">Tjekker %1$d app</item>
+        <item quantity="other">Tjekker %1$d apps</item>
+    </plurals>
+    <string name="settings_notify_tracked">Når en sporet app har en ny udgivelse</string>
+    <string name="settings_notify_checking">Under tjek i baggrunden</string>
+    <string name="settings_notify_checking_effect">En stille notifikation, der forsvinder, når tjekket er færdigt.</string>
+    <string name="engine_event_removed_uninstalled">Fjernet fra listen, da den blev afinstalleret uden for Tern</string>
+</resources>

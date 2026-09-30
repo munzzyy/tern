@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">Ordna listan</string>
+    <string name="list_options_title">Ordna listan</string>
+    <string name="list_reverse">Vänd på ordningen</string>
+    <string name="list_updates_first">Uppdateringar överst</string>
+    <string name="list_bury_not_installed">Appar som inte är installerade längst ned</string>
+    <string name="sort_author">Efter utvecklare</string>
+    <string name="sort_added">Efter datum tillagd</string>
+    <string name="sort_released">Efter utgivningsdatum</string>
+    <string name="group_title">Gruppera efter</string>
+    <string name="group_none">Inget</string>
+    <string name="group_category">Kategori</string>
+    <string name="group_source">Källa</string>
+    <string name="group_category_effect">En app i flera kategorier visas i var och en av dem.</string>
+    <string name="group_other">Allt annat</string>
+    <string name="group_folded">Hopfälld</string>
+    <string name="group_open">Utfälld</string>
+    <string name="filter_favorites">Favoriter</string>
+    <string name="filter_track_only">Endast följning</string>
+    <string name="filter_problems">Problem</string>
+    <string name="action_done">Klar</string>
+    <string name="settings_swipe">Svep på rader för att agera</string>
+    <string name="settings_swipe_effect">Svep en app mot slutet för att uppdatera den, mot början för att ta bort den.</string>
+    <string name="action_favorite">Lägg till i favoriter</string>
+    <string name="action_unfavorite">Ta bort från favoriter</string>
+    <string name="action_set_mode">När uppdateringar hittas</string>
+    <string name="action_share_addresses">Dela adresser</string>
+    <string name="action_share_export">Dela som en fil</string>
+    <string name="action_uninstall">Avinstallera</string>
+    <string name="export_format_tern">En Tern-fil</string>
+    <string name="export_format_obtainium">En fil för Obtainium</string>
+    <string name="bulk_uninstall_text">Android frågar om varje app i tur och ordning. Tern fortsätter att följa dem tills du tar bort dem här.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d app är nu en favorit</item>
+        <item quantity="other">%1$d appar är nu favoriter</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d app är inte längre en favorit</item>
+        <item quantity="other">%1$d appar är inte längre favoriter</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">När en uppdatering av %1$d app hittas</item>
+        <item quantity="other">När uppdateringar av %1$d appar hittas</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">Avinstallera %1$d app?</item>
+        <item quantity="other">Avinstallera %1$d appar?</item>
+    </plurals>
+</resources>

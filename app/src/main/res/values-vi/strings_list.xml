@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">Sắp xếp danh sách</string>
+    <string name="list_options_title">Sắp xếp danh sách</string>
+    <string name="list_reverse">Đảo ngược thứ tự</string>
+    <string name="list_updates_first">Bản cập nhật ở trên cùng</string>
+    <string name="list_bury_not_installed">Ứng dụng chưa cài đặt ở dưới cùng</string>
+    <string name="sort_author">Theo nhà phát triển</string>
+    <string name="sort_added">Theo ngày thêm</string>
+    <string name="sort_released">Theo ngày phát hành</string>
+    <string name="group_title">Nhóm theo</string>
+    <string name="group_none">Không nhóm</string>
+    <string name="group_category">Danh mục</string>
+    <string name="group_source">Nguồn</string>
+    <string name="group_category_effect">Ứng dụng thuộc nhiều danh mục sẽ xuất hiện trong từng danh mục.</string>
+    <string name="group_other">Mọi thứ khác</string>
+    <string name="group_folded">Đã thu gọn</string>
+    <string name="group_open">Đang mở</string>
+    <string name="filter_favorites">Yêu thích</string>
+    <string name="filter_track_only">Chỉ theo dõi</string>
+    <string name="filter_problems">Sự cố</string>
+    <string name="action_done">Xong</string>
+    <string name="settings_swipe">Vuốt hàng để thao tác</string>
+    <string name="settings_swipe_effect">Vuốt ứng dụng về phía cuối để cập nhật, về phía đầu để xóa.</string>
+    <string name="action_favorite">Thêm vào yêu thích</string>
+    <string name="action_unfavorite">Xóa khỏi yêu thích</string>
+    <string name="action_set_mode">Khi có bản cập nhật</string>
+    <string name="action_share_addresses">Chia sẻ địa chỉ</string>
+    <string name="action_share_export">Chia sẻ dưới dạng tệp</string>
+    <string name="action_uninstall">Gỡ cài đặt</string>
+    <string name="export_format_tern">Tệp Tern</string>
+    <string name="export_format_obtainium">Tệp cho Obtainium</string>
+    <string name="bulk_uninstall_text">Android sẽ hỏi lần lượt về từng ứng dụng. Tern tiếp tục theo dõi chúng cho đến khi bạn xóa chúng ở đây.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="other">%1$d ứng dụng đã được thêm vào yêu thích</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="other">%1$d ứng dụng không còn trong yêu thích</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="other">Khi có bản cập nhật cho %1$d ứng dụng</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="other">Gỡ cài đặt %1$d ứng dụng?</item>
+    </plurals>
+</resources>

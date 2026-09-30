@@ -4,9 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInstaller
-import android.util.Log
 import androidx.core.content.IntentCompat
 import io.github.munzzyy.tern.engine.real.RealEngine
+import io.github.munzzyy.tern.log.TernLog
 import kotlinx.coroutines.launch
 
 /** Where PackageInstaller reports how a session ended. Not exported; only our own PendingIntent reaches it. */
@@ -18,7 +18,7 @@ class InstallReceiver : BroadcastReceiver() {
         val sessionId = intent.getIntExtra(PackageInstaller.EXTRA_SESSION_ID, -1)
         val message = intent.getStringExtra(PackageInstaller.EXTRA_STATUS_MESSAGE)
         val confirm = IntentCompat.getParcelableExtra(intent, Intent.EXTRA_INTENT, Intent::class.java)
-        Log.i(TAG, "Session $sessionId for $appId ended with status $status: $message")
+        TernLog.i(TAG, "Session $sessionId for $appId ended with status $status: $message")
         val engine = RealEngine.obtain(context)
         val done = goAsync()
         engine.scope.launch {

@@ -55,10 +55,19 @@ class StatusTest {
     fun busyAppOffersCancelOnly() {
         val row = testRow(status = AppStatus.UPDATE_AVAILABLE, progress = Progress(Phase.DOWNLOADING, 1, 10))
         assertEquals(RowAction.CANCEL, primaryAction(row))
-        assertNull(inlineAction(row))
+        assertEquals(RowAction.CANCEL, inlineAction(row))
         assertFalse(canUpdateNow(row))
         assertFalse(canSkip(row))
         assertTrue(canSkip(row.copy(progress = null)))
+    }
+
+    @Test
+    fun aDownloadIsStoppedFromItsRowUntilTheInstallerHasTheFile() {
+        val row = testRow(status = AppStatus.UPDATE_AVAILABLE)
+        for (phase in listOf(Phase.QUEUED, Phase.DOWNLOADING, Phase.VERIFYING)) {
+            assertEquals(phase.name, RowAction.CANCEL, inlineAction(row.copy(progress = Progress(phase))))
+        }
+        assertNull(inlineAction(row.copy(progress = Progress(Phase.INSTALLING))))
     }
 
     @Test
@@ -81,11 +90,15 @@ class StatusTest {
     }
 
     @Test
-    fun trackOnlyNeverInstalls() {
+    fun trackOnlyNeverInstallsAndIsMarkedAsSeenFromItsRow() {
         val row = testRow(status = AppStatus.NEW_RELEASE, trackOnly = true)
         assertEquals(RowAction.MARK_SEEN, primaryAction(row))
-        assertNull(inlineAction(row))
+        assertEquals(RowAction.MARK_SEEN, inlineAction(row))
         assertTrue(isUpdate(row))
+        assertFalse(canUpdateNow(row))
+        assertFalse(canInstallNow(row.copy(status = AppStatus.NOT_INSTALLED, installed = null)))
+        assertNull(inlineAction(row.copy(status = AppStatus.UP_TO_DATE)))
+        assertNull(inlineAction(row.copy(status = AppStatus.NOT_INSTALLED, installed = null)))
     }
 
     @Test

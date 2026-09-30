@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parts_obb_name_refused">Ĉi tiu arkivo tenas OBB-dosieron, kies nomo povus eliri el la OBB-dosierujo de la aplikaĵo, aŭ du OBB-dosierojn kun la sama nomo. Nenio estis instalita.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">Metis %1$d OBB-dosieron en %2$s.</item>
+        <item quantity="other">Metis %1$d OBB-dosierojn en %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">La OBB-dosieroj ne estis metitaj en %1$s, ĉar nur la instaliloj Shizuku kaj root povas skribi tie. Ili estas en %2$s, la dosiero de ĉi tiu eldono: %3$s.</string>
+    <string name="parts_obb_failed">La OBB-dosieroj ne povis esti metitaj en %1$s: %2$s. Ili estas en %3$s, la dosiero de ĉi tiu eldono: %4$s.</string>
+</resources>

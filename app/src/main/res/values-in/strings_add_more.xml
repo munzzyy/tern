@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">Tern tidak mengenali jenis tautan ini.</string>
+    <string name="add_not_readable_as">Alamat ini tidak dapat dibaca sebagai %1$s.</string>
+    <string name="add_event_replaced">Setelannya diganti dengan setelan yang dimuat file atau tautan untuknya.</string>
+    <string name="search_miss_unreachable">%1$s tidak dapat dicari: tidak menjawab.</string>
+    <string name="search_miss_wait">%1$s tidak dapat dicari: meminta Tern menunggu beberapa saat.</string>
+    <string name="search_miss_wait_until">%1$s tidak dapat dicari: meminta Tern menunggu hingga %2$s.</string>
+    <string name="search_miss_refused">%1$s tidak dapat dicari: menolak permintaan.</string>
+    <string name="search_miss_status">%1$s tidak dapat dicari: menjawab %2$d.</string>
+    <string name="search_miss_unreadable">%1$s tidak dapat dicari: jawabannya tidak dapat dibaca.</string>
+    <string name="add_options_title">Sebelum menambahkan</string>
+    <string name="add_options_auto">Tern mencari tahu jenis alamat ini.</string>
+    <string name="add_options_forced">Dibaca sebagai %1$s</string>
+    <string name="add_read_as">Baca alamat sebagai</string>
+    <string name="add_read_as_auto">Otomatis</string>
+    <string name="add_read_as_forgejo">Forgejo atau Gitea</string>
+    <string name="add_read_as_help">Untuk sumber yang tidak dikenali Tern sendiri, misalnya yang ada di host tersendiri.</string>
+    <string name="add_package_label">Nama paket</string>
+    <string name="add_package_help">Setiap file harus berasal dari paket ini. Jika dikosongkan, Tern membacanya dari file aplikasi.</string>
+    <string name="add_package_invalid">Ini bukan nama paket. Nama paket berbentuk seperti org.example.app.</string>
+    <string name="add_set_options">Atur opsinya</string>
+    <string name="add_failed_options">Opsinya mungkin memberi tahu Tern ke mana harus mencari. Atur di atas, lalu Tern memeriksa lagi.</string>
+    <string name="add_replace">Ganti setelannya</string>
+    <string name="add_replace_explain">Tautan memuat setelan tersendiri untuknya. Penggantian mempertahankan sertifikat yang dipercayainya dan nama paketnya, dan tidak membuatnya menginstal pembaruan dengan sendirinya.</string>
+    <string name="results_filter">Filter</string>
+    <string name="results_filter_help">Kata atau pola</string>
+    <string name="results_filter_none">Tidak ada yang cocok dengan \"%1$s\" di daftar.</string>
+    <string name="repo_search_all">Cari \"%1$s\" di seluruh repositori</string>
+    <string name="repo_show_all">Tampilkan semua aplikasinya</string>
+    <string name="repo_heading_within">Aplikasi di %1$s dengan \"%2$s\"</string>
+    <string name="search_more">Ditemukan lebih banyak daripada yang ditampilkan. Filter mempersempitnya.</string>
+    <string name="search_forgejo_label">Forgejo atau Gitea yang dicari</string>
+    <string name="search_forgejo_help">Alamatnya, misalnya codeberg.org. Token yang disimpan untuknya ikut dikirim.</string>
+    <string name="search_forgejo_invalid">Ini bukan alamat yang dapat dicari Tern.</string>
+    <string name="search_min_stars_label">Bintang paling sedikit</string>
+    <string name="search_min_stars_help">Proyek di GitHub dan di Forgejo dengan bintang lebih sedikit tidak disertakan.</string>
+    <plurals name="import_replaceable">
+        <item quantity="other">File ini juga memuat setelan lain untuk %1$d aplikasi yang sudah ada di daftar Anda. Setelan itu tetap seperti semula kecuali Anda menggantinya.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="other">Ganti setelan %1$d aplikasi</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="other">Setelan %1$d aplikasi telah diganti. Sertifikat yang mereka percayai tetap ada.</item>
+    </plurals>
+    <string name="import_settings_offered">File ini juga membawa setelan untuk Tern: tampilan, daftar, notifikasi, dan pemeriksaan. Setelan ini tidak diambil kecuali Anda menyetujuinya.</string>
+    <string name="import_take_settings">Ambil setelan ini</string>
+    <plurals name="import_pick_shown">
+        <item quantity="other">Centang semua %1$d yang ditampilkan</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="other">Hapus centang semua %1$d yang ditampilkan</item>
+    </plurals>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">من قائمة عناوين</string>
+    <string name="import_addresses_explain">الصق عناوين التطبيقات، عنوانًا في كل سطر أو في أي مكان من النص، أو اقرأها من ملف مثل قائمة OPML. تتم معاينة كل عنوان وإضافته كما يُضاف رابط منفرد.</string>
+    <string name="import_addresses_field">العناوين</string>
+    <string name="import_addresses_show">عرض محتواها</string>
+    <string name="import_addresses_file">قراءة ملف</string>
+    <string name="import_addresses_none">لا يوجد فيها أي عنوان https.</string>
+    <string name="import_addresses_other">قائمة أخرى</string>
+    <string name="import_addresses_unreadable">تعذرت قراءة ذلك الملف.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="zero">%1$d عنوان. أزل العلامة عما لا تريده، ثم أضف.</item>
+        <item quantity="one">عنوان واحد (%1$d). أزل العلامة عما لا تريده، ثم أضف.</item>
+        <item quantity="two">عنوانان (%1$d). أزل العلامة عما لا تريده، ثم أضف.</item>
+        <item quantity="few">%1$d عناوين. أزل العلامة عما لا تريده، ثم أضف.</item>
+        <item quantity="many">%1$d عنوانًا. أزل العلامة عما لا تريده، ثم أضف.</item>
+        <item quantity="other">%1$d عنوان. أزل العلامة عما لا تريده، ثم أضف.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="zero">جاء %1$d تطبيق في هذا الرابط. اطّلع عليه لترى إعداداته قبل أن تضيفه.</item>
+        <item quantity="one">جاء تطبيق واحد (%1$d) في هذا الرابط. اطّلع عليه لترى إعداداته قبل أن تضيفه.</item>
+        <item quantity="two">جاء تطبيقان (%1$d) في هذا الرابط. اطّلع على كل منهما لترى إعداداته قبل أن تضيفه.</item>
+        <item quantity="few">جاءت %1$d تطبيقات في هذا الرابط. اطّلع على كل منها لترى إعداداته قبل أن تضيفه.</item>
+        <item quantity="many">جاء %1$d تطبيقًا في هذا الرابط. اطّلع على كل منها لترى إعداداته قبل أن تضيفه.</item>
+        <item quantity="other">جاء %1$d تطبيق في هذا الرابط. اطّلع على كل منها لترى إعداداته قبل أن تضيفه.</item>
+    </plurals>
+    <string name="settings_export_obtainium">تصدير لـ Obtainium</string>
+    <string name="settings_export_obtainium_effect">ملف يستورده Obtainium، لقائمة تنتقل إليه. ما ليس له إعداد في Obtainium يبقى هنا.</string>
+    <string name="settings_export_installed_only">تصدير التطبيقات المثبتة فقط</string>
+    <string name="settings_export_settings">تضمين الإعدادات في ملفات التصدير</string>
+    <string name="settings_export_settings_effect">المظهر، والقائمة، والإشعارات، والفحوصات. لا يُضمَّن أبدًا أي رمز، ولا الوكيل، ولا أداة التثبيت.</string>
+    <string name="settings_kept_export">إبقاء ملف تصدير محدثًا</string>
+    <string name="settings_kept_export_effect">بعد لحظة من أي تغيير في القائمة، يكتب Tern ملف التصدير من جديد.</string>
+    <string name="settings_kept_export_written">كُتب في %1$s</string>
+    <string name="settings_kept_export_folder">مكان حفظه</string>
+    <string name="import_settings_taken">تم أخذ الإعدادات الموجودة في الملف أيضًا.</string>
+</resources>

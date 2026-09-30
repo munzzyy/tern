@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">通过作为设备所有者的 Dhizuku 无提示安装和更新。每个文件都会先经过相同的检查。随后 Android 会将 Dhizuku 显示为安装程序。</string>
+    <string name="installer_dhizuku_not_ready">未就绪，就绪之前不会安装任何内容</string>
+    <string name="installer_dhizuku_unsupported">在此版本的 Android 上，Tern 无法通过 Dhizuku 安装。</string>
+    <string name="installer_dhizuku_not_installed">未安装 Dhizuku。请安装它并将其设为设备所有者，然后返回。</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku 不是设备所有者。请在 Dhizuku 应用中将其设为设备所有者，然后返回。</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku 未响应。请打开 Dhizuku 应用，然后返回。</string>
+    <string name="installer_dhizuku_not_allowed">Tern 尚未获准使用 Dhizuku。点按此处请求授权。</string>
+    <string name="dhizuku_failed_not_installed">未安装 Dhizuku。</string>
+    <string name="dhizuku_failed_not_owner">Dhizuku 不是设备所有者。</string>
+    <string name="dhizuku_failed_not_answering">Dhizuku 未响应。</string>
+    <string name="dhizuku_failed_not_allowed">Dhizuku 不允许 Tern 使用它。</string>
+    <string name="install_signer_changed">当前已安装的应用，其签名者与 Tern 检查过的文件的签名者不同，因此此次安装无效。</string>
+</resources>

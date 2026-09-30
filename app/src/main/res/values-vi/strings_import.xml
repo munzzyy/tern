@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">Từ danh sách địa chỉ</string>
+    <string name="import_addresses_explain">Dán địa chỉ của ứng dụng, mỗi dòng một địa chỉ hoặc ở bất kỳ đâu trong văn bản, hoặc đọc từ tệp như danh sách OPML. Mỗi địa chỉ được xem xét và thêm giống như một liên kết đơn lẻ.</string>
+    <string name="import_addresses_field">Địa chỉ</string>
+    <string name="import_addresses_show">Hiện nội dung</string>
+    <string name="import_addresses_file">Đọc tệp</string>
+    <string name="import_addresses_none">Không có địa chỉ https nào trong đó.</string>
+    <string name="import_addresses_other">Danh sách khác</string>
+    <string name="import_addresses_unreadable">Không thể đọc tệp đó.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="other">%1$d địa chỉ. Bỏ chọn những gì bạn không muốn, rồi thêm.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="other">Liên kết này có %1$d ứng dụng. Hãy xem từng ứng dụng để biết thiết lập trước khi thêm.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Xuất cho Obtainium</string>
+    <string name="settings_export_obtainium_effect">Tệp mà Obtainium có thể nhập, dành cho danh sách chuyển sang đó. Những gì Obtainium không có thiết lập tương ứng sẽ bị bỏ lại.</string>
+    <string name="settings_export_installed_only">Chỉ xuất ứng dụng đã cài đặt</string>
+    <string name="settings_export_settings">Đưa cài đặt vào tệp xuất</string>
+    <string name="settings_export_settings_effect">Giao diện, danh sách, thông báo và kiểm tra. Không bao giờ có mã thông báo, proxy hay trình cài đặt.</string>
+    <string name="settings_kept_export">Luôn cập nhật một bản xuất</string>
+    <string name="settings_kept_export_effect">Ngay sau khi có bất kỳ thay đổi nào trong danh sách, Tern sẽ ghi lại bản xuất.</string>
+    <string name="settings_kept_export_written">Đã ghi lúc %1$s</string>
+    <string name="settings_kept_export_folder">Nơi lưu</string>
+    <string name="import_settings_taken">Các cài đặt trong tệp cũng đã được áp dụng.</string>
+</resources>

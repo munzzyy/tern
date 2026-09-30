@@ -38,6 +38,17 @@ object Urls {
         return "https://$host$portPart$path$query"
     }
 
+    /**
+     * The address as typed, with https:// put in front when it names no scheme, for the stores
+     * whose pages route after a '#', as in appgallery.huawei.com/#/app/C100000000, which
+     * [normalize] would cut off. Null when there is no such route.
+     */
+    fun hashRouted(input: String): String? {
+        val trimmed = input.trim()
+        if (trimmed.length > MAX_LENGTH || !trimmed.contains("/#")) return null
+        return if (SCHEME.containsMatchIn(trimmed)) trimmed else "https://$trimmed"
+    }
+
     /** [normalize], handed back as a URI for callers that need its parts. */
     fun parseHttps(input: String): URI? = normalize(input)?.let {
         try {
@@ -144,6 +155,9 @@ object Urls {
 
     fun encodeSegment(text: String): String =
         URLEncoder.encode(text, "UTF-8").replace("+", "%20")
+
+    /** [text] with its percent escapes read as UTF-8 and a plus left as it is; the text as it was when an escape is broken. */
+    fun decode(text: String): String = decodeOrNull(text.replace("+", "%2B")) ?: text
 
     fun queryParam(url: String, name: String): String? {
         val query = try {

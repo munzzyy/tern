@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">Tern은 이런 종류의 링크를 인식하지 못합니다.</string>
+    <string name="add_not_readable_as">이 주소는 %1$s(으)로 읽을 수 없습니다.</string>
+    <string name="add_event_replaced">파일이나 링크에 들어 있던 설정으로 이 앱의 설정을 교체했습니다.</string>
+    <string name="search_miss_unreachable">%1$s을(를) 검색할 수 없었습니다: 응답하지 않았습니다.</string>
+    <string name="search_miss_wait">%1$s을(를) 검색할 수 없었습니다: 잠시 기다려 달라고 Tern에게 요청합니다.</string>
+    <string name="search_miss_wait_until">%1$s을(를) 검색할 수 없었습니다: %2$s까지 기다려 달라고 Tern에게 요청합니다.</string>
+    <string name="search_miss_refused">%1$s을(를) 검색할 수 없었습니다: 요청을 거부했습니다.</string>
+    <string name="search_miss_status">%1$s을(를) 검색할 수 없었습니다: %2$d 응답을 반환했습니다.</string>
+    <string name="search_miss_unreadable">%1$s을(를) 검색할 수 없었습니다: 응답을 읽을 수 없었습니다.</string>
+    <string name="add_options_title">추가하기 전에</string>
+    <string name="add_options_auto">Tern이 주소가 무엇인지 알아냅니다.</string>
+    <string name="add_options_forced">%1$s(으)로 읽기</string>
+    <string name="add_read_as">주소를 읽는 방식</string>
+    <string name="add_read_as_auto">자동</string>
+    <string name="add_read_as_forgejo">Forgejo 또는 Gitea</string>
+    <string name="add_read_as_help">Tern이 스스로 인식하지 못하는 소스용입니다. 예를 들어 자체 호스트에 있는 소스입니다.</string>
+    <string name="add_package_label">패키지 이름</string>
+    <string name="add_package_help">모든 파일이 이 패키지여야 합니다. 비워 두면 Tern이 앱 파일에서 읽어 옵니다.</string>
+    <string name="add_package_invalid">패키지 이름이 아닙니다. org.example.app 형식이어야 합니다.</string>
+    <string name="add_set_options">옵션 설정</string>
+    <string name="add_failed_options">옵션으로 Tern에게 찾을 위치를 알려 줄 수 있습니다. 위에서 설정하면 Tern이 다시 확인합니다.</string>
+    <string name="add_replace">설정 교체</string>
+    <string name="add_replace_explain">이 링크에는 이 앱에 대한 자체 설정이 들어 있습니다. 교체해도 신뢰하는 인증서와 패키지 이름은 유지되며, 업데이트를 자동으로 설치하도록 바뀌지는 않습니다.</string>
+    <string name="results_filter">필터</string>
+    <string name="results_filter_help">단어 또는 패턴</string>
+    <string name="results_filter_none">목록에서 “%1$s”와(과) 일치하는 항목이 없습니다.</string>
+    <string name="repo_search_all">저장소 전체에서 “%1$s” 검색</string>
+    <string name="repo_show_all">모든 앱 표시</string>
+    <string name="repo_heading_within">%1$s의 앱 중 “%2$s” 포함</string>
+    <string name="search_more">표시된 것보다 더 많은 결과가 발견되었습니다. 필터로 범위를 좁힐 수 있습니다.</string>
+    <string name="search_forgejo_label">검색할 Forgejo 또는 Gitea</string>
+    <string name="search_forgejo_help">해당 주소입니다(예: codeberg.org). 저장된 토큰이 있으면 함께 전송됩니다.</string>
+    <string name="search_forgejo_invalid">Tern이 검색할 수 있는 주소가 아닙니다.</string>
+    <string name="search_min_stars_label">최소 별 수</string>
+    <string name="search_min_stars_help">GitHub와 Forgejo의 프로젝트 중 별이 이보다 적은 것은 제외됩니다.</string>
+    <plurals name="import_replaceable">
+        <item quantity="other">이 파일에는 이미 목록에 있는 앱 %1$d개에 대한 다른 설정도 들어 있습니다. 교체하지 않으면 그대로 유지됩니다.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="other">앱 %1$d개의 설정 교체</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="other">앱 %1$d개의 설정을 교체했습니다. 신뢰하는 인증서는 그대로 유지되었습니다.</item>
+    </plurals>
+    <string name="import_settings_offered">이 파일에는 Tern의 설정(모양, 목록, 알림, 확인)도 들어 있습니다. 사용자가 요청하지 않으면 가져오지 않습니다.</string>
+    <string name="import_take_settings">이 설정 가져오기</string>
+    <plurals name="import_pick_shown">
+        <item quantity="other">표시된 %1$d개 모두 선택</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="other">표시된 %1$d개 모두 선택 해제</item>
+    </plurals>
+</resources>

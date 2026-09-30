@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">Sa spiska adresa</string>
+    <string name="import_addresses_explain">Zalijepite adrese aplikacija, jednu po redu ili bilo gdje u tekstu, ili ih pročitajte iz datoteke kao što je OPML spisak. Svaka se pregleda i doda na isti način kao pojedinačni link.</string>
+    <string name="import_addresses_field">Adrese</string>
+    <string name="import_addresses_show">Prikaži šta je u njemu</string>
+    <string name="import_addresses_file">Pročitaj datoteku</string>
+    <string name="import_addresses_none">U njemu nema nijedne https adrese.</string>
+    <string name="import_addresses_other">Drugi spisak</string>
+    <string name="import_addresses_unreadable">Ta datoteka se nije mogla pročitati.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d adresa. Odznačite ono što ne želite, pa dodajte.</item>
+        <item quantity="few">%1$d adrese. Odznačite ono što ne želite, pa dodajte.</item>
+        <item quantity="other">%1$d adresa. Odznačite ono što ne želite, pa dodajte.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">U ovom linku je stigla %1$d aplikacija. Pogledajte je da vidite njene postavke prije nego što je dodate.</item>
+        <item quantity="few">U ovom linku su stigle %1$d aplikacije. Pogledajte svaku da vidite njene postavke prije nego što je dodate.</item>
+        <item quantity="other">U ovom linku je stiglo %1$d aplikacija. Pogledajte svaku da vidite njene postavke prije nego što je dodate.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Izvoz za Obtainium</string>
+    <string name="settings_export_obtainium_effect">Datoteka koju Obtainium uvozi, za spisak koji prelazi tamo. Ono za šta Obtainium nema postavku ostaje ovdje.</string>
+    <string name="settings_export_installed_only">Izvezi samo instalirane aplikacije</string>
+    <string name="settings_export_settings">Stavi postavke u izvoze</string>
+    <string name="settings_export_settings_effect">Izgled, spisak, obavijesti i provjere. Nikada token, proxy ili instalator.</string>
+    <string name="settings_kept_export">Održavaj izvoz ažurnim</string>
+    <string name="settings_kept_export_effect">Trenutak nakon bilo kakve promjene na spisku, Tern ponovo zapisuje izvoz.</string>
+    <string name="settings_kept_export_written">Zapisano u %1$s</string>
+    <string name="settings_kept_export_folder">Gdje se čuva</string>
+    <string name="import_settings_taken">Postavke iz datoteke su također preuzete.</string>
+</resources>

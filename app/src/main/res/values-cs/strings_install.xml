@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_installer">Instalovat pomocí</string>
+    <string name="installer_system">Instalátor Androidu</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">Jiná aplikace</string>
+    <string name="installer_system_effect">Android se ptá před první instalací a před aktualizací tam, kde to vyžaduje.</string>
+    <string name="installer_shizuku_effect">Instaluje a aktualizuje bez ptaní, přes Shizuku nebo Sui. Každý soubor nejdřív projde stejnými kontrolami.</string>
+    <string name="installer_root_effect">Instaluje a aktualizuje bez ptaní, přes su. Každý soubor nejdřív projde stejnými kontrolami.</string>
+    <string name="installer_other_app_effect">Předá každý zkontrolovaný soubor instalační aplikaci, kterou vyberete. Ta se vždy ptá, takže se nic neinstaluje na pozadí.</string>
+    <string name="installer_ready">Připraveno</string>
+    <string name="installer_not_ready">Nepřipraveno, mezitím se používá instalátor Androidu</string>
+    <string name="installer_shizuku_not_running">Shizuku neběží. Spusťte ho v aplikaci Shizuku a vraťte se.</string>
+    <string name="installer_shizuku_too_old">Tato verze Shizuku je pro Tern příliš stará. Aktualizujte Shizuku.</string>
+    <string name="installer_shizuku_not_allowed">Tern zatím nesmí používat Shizuku. Stiskněte zde a požádejte o to.</string>
+    <string name="installer_no_root">Tern nemá přístup root. Stiskněte zde a požádejte o něj znovu.</string>
+    <string name="installer_no_other_app">Není vybrána žádná instalační aplikace, nebo vybraná už není k dispozici.</string>
+    <string name="installer_pick_app">Instalační aplikace</string>
+    <string name="installer_pick_app_none">Nic nevybráno</string>
+    <string name="installer_no_apps">V tomto zařízení není žádná jiná instalační aplikace.</string>
+    <string name="installer_play">Uvádět, že aplikace nainstaloval Google Play</string>
+    <string name="installer_play_effect">Některé aplikace fungují, jen když věří, že je nainstaloval Google Play. Tern se pak už nezobrazuje jako jejich instalátor.</string>
+    <string name="install_other_app_signer">Instalační aplikace nainstalovala něco, co podepsal někdo jiný než soubor, který Tern zkontroloval, takže se instalace nepočítá.</string>
+</resources>

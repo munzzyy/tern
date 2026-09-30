@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="install_archive_zstd_unsupported">Цей архів стиснуто за допомогою zstd, який Tern не вміє відкривати. Виберіть файл .zip або .tar цього випуску чи файл, стиснутий за допомогою gzip, bzip2 або xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s з %2$s</string>
+    <string name="install_setting_one_download">Одне завантаження за раз</string>
+    <string name="install_setting_one_download_effect">Завантаження чекають одне одного, а не йдуть паралельно.</string>
+    <string name="install_file_foreign_host">Цей файл розташований на %1$s, а це не сайт джерела цієї програми. Він перевіряється так само, як і будь-який інший файл.</string>
+    <string name="install_file_picked">Ваш вибір</string>
+    <string name="install_file_automatic">Нехай Tern знову вибирає файл</string>
+    <string name="install_file_picked_kept">Оновлення дотримуються вибраного вами файлу, %1$s.</string>
+    <string name="install_file_picked_missing">У цьому випуску немає файлу, схожого на вибраний вами (%1$s), тому Tern вибрав файл сам.</string>
+</resources>

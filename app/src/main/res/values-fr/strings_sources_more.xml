@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">Les applis de %1$s peuvent seulement être suivies, car cette source ne propose aucun fichier à installer.</string>
+    <string name="min_age_global">Comme défini pour toutes les applis : %1$s</string>
+    <string name="setting_min_age_global_effect">Les applis sans attente propre attendent ce laps de temps avant qu\'une nouvelle version soit proposée, afin de pouvoir retirer les mauvaises en premier.</string>
+    <string name="option_link_text">Filtrer les liens selon leur texte</string>
+    <string name="option_link_text_effect">Le filtre s\'applique au texte d\'un lien plutôt qu\'à son adresse.</string>
+    <string name="option_take_first">Prendre le premier lien</string>
+    <string name="option_take_first_effect">Sinon, le dernier lien dans l\'ordre est pris.</string>
+    <string name="option_natural_order_effect">Sinon, les liens sont triés selon l\'ordre naturel de leur adresse, les nombres étant lus comme des nombres.</string>
+    <string name="option_by_last_segment">Se baser sur la fin de l\'adresse</string>
+    <string name="option_by_last_segment_effect">Les liens sont triés, et les versions lues, d\'après la partie qui suit la dernière barre oblique.</string>
+    <string name="option_steps_title">Pages à parcourir d\'abord</string>
+    <string name="option_steps_order_help">Sur chaque page, les liens qui correspondent sont triés et le dernier est suivi.</string>
+    <string name="step_title">Page %1$d</string>
+    <string name="step_filter">Lien à suivre</string>
+    <string name="step_text">Comparer avec le texte du lien</string>
+    <string name="step_arch">Préférer le processeur de cet appareil</string>
+    <string name="step_add">Ajouter une page</string>
+    <string name="step_remove">Supprimer cette page</string>
+    <string name="option_file_version">Utiliser le nom du fichier comme version</string>
+    <string name="option_file_version_effect">Chaque fichier compte alors comme une version à part.</string>
+    <string name="github_proxy_title">GitHub via un hubproxy</string>
+    <string name="github_proxy_effect">Chaque requête vers GitHub est envoyée à cet hôte, qui les voit toutes. Aucun jeton n\'est envoyé par ce biais, donc les projets privés et GitHub Actions ne peuvent pas être suivis ainsi.</string>
+    <string name="github_proxy_host">Hôte du hubproxy</string>
+    <string name="github_proxy_help">Un nom d\'hôte seul, comme gh-proxy.com. Tern s\'y connecte en HTTPS.</string>
+    <string name="github_proxy_invalid">Ce n\'est pas un nom d\'hôte que Tern peut utiliser</string>
+    <string name="github_proxy_in_use">Les requêtes vers GitHub passent par %1$s</string>
+    <string name="github_proxy_remove">Ne plus utiliser le hubproxy</string>
+</resources>

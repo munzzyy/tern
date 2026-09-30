@@ -11,7 +11,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.Uri
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import io.github.munzzyy.tern.BuildConfig
@@ -22,7 +21,14 @@ import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.ReleasePolicy
+import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.net.GitHubProxy
+import io.github.munzzyy.tern.core.net.GitHubProxyHttp
+import io.github.munzzyy.tern.core.net.InMemoryValidatorStore
+import io.github.munzzyy.tern.core.net.ValidatorStore
+import io.github.munzzyy.tern.core.source.CheckContext
+import io.github.munzzyy.tern.data.FileFacts
 import io.github.munzzyy.tern.core.net.HttpClient
 import io.github.munzzyy.tern.core.net.PoliteHttp
 import io.github.munzzyy.tern.core.net.RateLimiter
@@ -40,20 +46,28 @@ import io.github.munzzyy.tern.data.StoredApp
 import io.github.munzzyy.tern.data.TokenVault
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.CheckCause
+import io.github.munzzyy.tern.engine.CheckCount
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.engine.EventKind
+import io.github.munzzyy.tern.engine.ExportFormat
+import io.github.munzzyy.tern.engine.ExportStatus
 import io.github.munzzyy.tern.engine.Handoff
 import io.github.munzzyy.tern.engine.HandoffEnd
 import io.github.munzzyy.tern.engine.OrbotState
+import io.github.munzzyy.tern.engine.Phase
 import io.github.munzzyy.tern.engine.ImportSummary
+import io.github.munzzyy.tern.engine.InstallerChoice
+import io.github.munzzyy.tern.engine.InstallerReadiness
 import io.github.munzzyy.tern.engine.NoteBlock
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemException
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.Progress
 import io.github.munzzyy.tern.engine.ProxyMode
+import io.github.munzzyy.tern.engine.Reading
 import io.github.munzzyy.tern.engine.Received
 import io.github.munzzyy.tern.engine.SavedFile
 import io.github.munzzyy.tern.engine.SearchHit
@@ -64,10 +78,13 @@ import io.github.munzzyy.tern.install.Downloader
 import io.github.munzzyy.tern.install.Gate
 import io.github.munzzyy.tern.install.InstallGate
 import io.github.munzzyy.tern.install.Installer
+import io.github.munzzyy.tern.install.OtherAppInstaller
 import io.github.munzzyy.tern.install.PackageManagerArchiveReader
-import io.github.munzzyy.tern.install.SessionInstaller
+import io.github.munzzyy.tern.log.Journal
+import io.github.munzzyy.tern.log.TernLog
 import io.github.munzzyy.tern.net.Orbot
 import io.github.munzzyy.tern.net.ProxyChoice
+import io.github.munzzyy.tern.net.PinChoice
 import io.github.munzzyy.tern.net.ProxyDoor
 import io.github.munzzyy.tern.net.ProxyProbe
 import io.github.munzzyy.tern.net.UrlConnectionHttp
@@ -83,11 +100,14 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withContext
 
 /**
@@ -113,20 +133,22 @@ class RealEngine(
     private val vault = TokenVault(this.context, prefsPrefix + TokenVault.DEFAULT_NAME)
     internal val texts = Texts(this.context)
     internal val device = Device(this.context)
-    internal val tokens = TokenProvider { host -> vault.tokenFor(host) }
-    internal val http: HttpClient = PoliteHttp(transport, RateLimiter(nowMs), "Tern/${BuildConfig.VERSION_NAME}")
+    /** No token for GitHub while its requests go through a hubproxy, which must never see one. */
+    internal val tokens = TokenProvider { host -> if (_settings.value.githubProxy != null && GitHubProxy.isGitHubHost(host)) null else vault.tokenFor(host) }
+    internal val http: HttpClient = PoliteHttp(GitHubProxyHttp(transport) { _settings.value.githubProxy }, RateLimiter(nowMs), "Tern/${BuildConfig.VERSION_NAME}")
     internal val registry = SourceRegistry.standard(::trackedInRepository)
     internal val inspector = FileInspector(http, store, tokens, device.sdk)
     internal val builtIn = BuiltInPins(catalog)
-    internal val evaluator = Evaluator(texts, device.profile, builtIn, nowMs)
+    internal val evaluator = Evaluator(texts, device.profile, builtIn, nowMs, { _settings.value.globalFileFilter }) { _settings.value.minAgeDaysByDefault }
     internal val downloader = Downloader(http, downloadsDir ?: File(this.context.filesDir, "downloads"), texts)
     internal val gate: Gate = gate ?: InstallGate(archiveReader ?: PackageManagerArchiveReader(this.context.packageManager), texts)
-    internal val installer: Installer = installer ?: SessionInstaller(this.context)
+    private val installers = Installers(this)
+    internal val installer: Installer = installer ?: installers.routing
     internal val notifier = Notifier(this.context, texts) { _settings.value.notifyNames }
     internal val staging = File(this.context.cacheDir, "staging")
 
     internal val scope = CoroutineScope(
-        SupervisorJob() + Dispatchers.Default + CoroutineExceptionHandler { _, e -> Log.e(TAG, "Engine task failed", e) },
+        SupervisorJob() + Dispatchers.Default + CoroutineExceptionHandler { _, e -> TernLog.e(TAG, "Engine task failed", e) },
     )
 
     internal val stored = ConcurrentHashMap<String, StoredApp>()
@@ -135,17 +157,36 @@ class RealEngine(
     internal val checking: MutableSet<String> = ConcurrentHashMap.newKeySet()
     internal val deviceApps = ConcurrentHashMap<String, DeviceSlot>()
     internal val userTransfers: MutableSet<String> = ConcurrentHashMap.newKeySet()
+    internal val saves = Saves()
 
     private val _apps = MutableStateFlow<List<AppRow>>(emptyList())
     private val _events = MutableStateFlow<List<Event>>(emptyList())
     private val _settings = MutableStateFlow(settingsStore.load())
     private val _checkingAll = MutableStateFlow(false)
+    private val _checkCount = MutableStateFlow<CheckCount?>(null)
     private val _transfers = MutableStateFlow<Map<String, Progress>>(emptyMap())
+
+    /**
+     * Keeps Tern's own messages in the log while the setting says so, one after another on the
+     * store's thread. What goes wrong there is said to Android's log alone, and kept nowhere.
+     */
+    private val journal = Journal({ _settings.value.keepOwnMessages }) { kind, text ->
+        val at = nowMs()
+        scope.launch(store.dispatcher) {
+            try {
+                store.addEvent(at, null, null, kind, text)
+                publishEvents()
+            } catch (e: RuntimeException) {
+                TernLog.i(TAG, "A message of Tern's own could not be kept: ${e.javaClass.simpleName}")
+            }
+        }
+    }.also { TernLog.journal = it }
 
     override val apps get() = _apps.asStateFlow()
     override val events: StateFlow<List<Event>> get() = _events.asStateFlow()
     override val settings: StateFlow<Settings> get() = _settings.asStateFlow()
     override val checkingAll: StateFlow<Boolean> get() = _checkingAll.asStateFlow()
+    override val checkCount: StateFlow<CheckCount?> get() = _checkCount.asStateFlow()
 
     /** Downloads the user started, which keep the transfer service in the foreground. */
     val transfers: StateFlow<Map<String, Progress>> get() = _transfers.asStateFlow()
@@ -183,21 +224,30 @@ class RealEngine(
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val pkg = intent.data?.schemeSpecificPart ?: return
+            val gone = intent.action == Intent.ACTION_PACKAGE_REMOVED && !intent.getBooleanExtra(Intent.EXTRA_REPLACING, false)
             orbotLink.packageChanged(pkg)
-            scope.launch(Dispatchers.IO) { checks.onPackageChanged(pkg) }
+            scope.launch(Dispatchers.IO) {
+                checks.onPackageChanged(pkg)
+                installs.onPackageChanged(pkg)
+                if (gone) dropUninstalled(pkg)
+            }
         }
     }
 
     private val startup = scope.launch(Dispatchers.IO) {
         notifier.ensureChannels()
+        installers.start()
+        interop.kept.start()
         Scheduler.apply(this@RealEngine.context, _settings.value)
         setObtainiumLinks(_settings.value.openObtainiumLinks)
         if (_settings.value.proxy == ProxyMode.ORBOT) orbotLink.ask()
         store.apps().forEach { stored[it.config.id] = it }
         _events.value = store.events()
+        noteUnreadable()
         installs.reconcile()
         for (id in stored.keys) checks.reevaluate(id, network = false)
         publish()
+        dropUninstalled()
     }
 
     init {
@@ -246,10 +296,10 @@ class RealEngine(
         val rows = stored.values.map(::row)
         _apps.value = rows.sortedWith(
             compareBy<AppRow> { if (it.status == AppStatus.UPDATE_AVAILABLE || it.status == AppStatus.NEW_RELEASE) 0 else 1 }
-                .thenBy { it.config.name.lowercase() }
+                .thenBy { it.config.shownName.lowercase() }
                 .thenBy { it.id },
         )
-        _transfers.value = progress.filterKeys { it in userTransfers }
+        _transfers.value = progress.filterKeys { it in userTransfers } + saves.all()
     }
 
     @Synchronized
@@ -273,13 +323,27 @@ class RealEngine(
             progress = progress[id],
             problem = eval.problem,
             lastCheckedMs = entry.state.lastCheckedMs,
-            silentUpdate = if (installed == null) null else device.silentUpdateLikely(installed, eval.facts?.targetSdk),
+            silentUpdate = if (installed == null) null else installers.silent() ?: device.silentUpdateLikely(installed, eval.facts?.targetSdk),
             checking = id in checking,
             movedTo = Moves.suggestion(entry.state),
+            addedAtMs = entry.state.addedAtMs,
+            description = entry.state.description,
         )
     }
 
     internal fun packageOf(config: AppConfig, eval: Evaluation? = evaluations[config.id]): String? = config.packageName ?: eval?.facts?.packageName
+
+    /** For asking a source where a file is now; what it learns is not kept. */
+    internal fun sourceContext(): CheckContext = CheckContext(http, InMemoryValidatorStore(), tokens, nowMs, device.profile)
+
+    /** For a check of [app], or of an address before there is an app when null; validators go to [validators]. */
+    internal fun checkContext(app: AppConfig?, validators: ValidatorStore = InMemoryValidatorStore()): CheckContext =
+        CheckContext(http, validators, tokens, nowMs, device.profile, app)
+
+    /** Reads a file of an app of [spec] from the server, fetched from where the source says it is now. */
+    internal fun inspectorFor(spec: SourceSpec): (Asset, String) -> FileFacts? = { asset, releaseId ->
+        inspector.inspect(asset, releaseId) { registry.resolve(spec, asset, sourceContext()) }
+    }
 
     /** Reads the app from PackageManager now; the cache is only for drawing rows. */
     internal fun readInstalled(packageName: String?): DeviceApp? {
@@ -300,8 +364,17 @@ class RealEngine(
         store.update(id, change)?.also { stored[id] = it }
     }
 
+    /** An app that cannot be read is said once in the log, and kept: a newer Tern may read it. */
+    private fun noteUnreadable() {
+        val said = _events.value.mapTo(HashSet()) { it.message }
+        for (where in store.unreadableApps()) {
+            val message = texts.unreadableApp(where)
+            if (message !in said) event(null, EventKind.CHECK_FAILED, message)
+        }
+    }
+
     internal fun event(appId: String?, kind: EventKind, message: String) {
-        val name = appId?.let { stored[it]?.config?.name }
+        val name = appId?.let { stored[it]?.config?.shownName }
         store.addEvent(nowMs(), appId, name, kind, message)
         publishEvents()
     }
@@ -316,16 +389,26 @@ class RealEngine(
         return detector.detect(input)
     }
 
+    override suspend fun detect(input: String, reading: Reading): Detection {
+        ready()
+        return detector.detect(input, reading)
+    }
+
+    override suspend fun replaceSettings(found: Detection.Found): String {
+        ready()
+        val id = found.alreadyTracked?.takeIf { stored.containsKey(it) } ?: findBySpec(found.spec) ?: return add(found, install = false)
+        found.carried?.let { interop.replace(id, it) }
+        return id
+    }
+
     override fun proposedConfig(found: Detection.Found): AppConfig {
         val s = _settings.value
         val base = found.carried ?: AppConfig(
             id = "",
             source = found.spec,
             name = "",
-            releases = ReleasePolicy(
-                includePrereleases = s.includePrereleasesByDefault || found.release?.countsAsPrerelease == true,
-                minAgeDays = s.minAgeDaysByDefault,
-            ),
+            // No wait of its own: a new app follows the setting for all apps, also when that changes.
+            releases = ReleasePolicy(includePrereleases = s.includePrereleasesByDefault || found.release?.countsAsPrerelease == true),
             updates = s.defaultUpdateMode,
         )
         return validated(
@@ -334,7 +417,7 @@ class RealEngine(
                 source = found.spec,
                 name = found.name.take(200).ifBlank { found.spec.url.take(200) },
                 author = found.author?.take(200),
-                packageName = found.verification?.packageName ?: base.packageName ?: found.installed?.packageName,
+                packageName = found.packageName ?: found.verification?.packageName ?: base.packageName ?: found.installed?.packageName,
                 pinnedSigners = builtIn.orElse(found.spec.url, base.pinnedSigners.ifEmpty { found.installed?.signers.orEmpty() }),
             ),
         )
@@ -350,17 +433,18 @@ class RealEngine(
                 releases = listOfNotNull(found.release),
                 description = found.description?.take(1000),
                 iconUrls = IconAddresses.accepted(found.spec.url, found.iconUrls),
+                addedAtMs = nowMs(),
             )
             store.putApp(config, state)
             stored[config.id] = StoredApp(config, state)
             event(config.id, EventKind.ADDED, texts.eventAdded(found.spec.url))
         }
-        checks.checkOne(config.id)
+        checks.run(listOf(config.id), CheckCause.ADDED)
         if (install) install(config.id)
         return config.id
     }
 
-    override suspend fun check(appId: String?) {
+    override suspend fun check(appId: String?, cause: CheckCause) {
         ready()
         if (!_online.value) {
             offline(appId)
@@ -368,35 +452,71 @@ class RealEngine(
         }
         _lastRunProblem.value = null
         if (appId != null) {
-            checks.checkOne(appId)
+            checks.run(listOf(appId), cause)
             return
         }
+        val ids = stored.values.filter { inWholeListCheck(it.config) }.map { it.config.id }
+        _checkCount.value = CheckCount(0, ids.size)
         _checkingAll.value = true
         try {
-            checks.checkMany(stored.keys.toList())
+            checks.run(ids, cause) { _checkCount.update { it?.copy(done = it.done + 1) } }
         } finally {
             _checkingAll.value = false
+            _checkCount.value = null
         }
     }
+
+    /** Whether a check of the whole list looks at [config]; one asked for by itself always does. */
+    internal fun inWholeListCheck(config: AppConfig): Boolean =
+        !_settings.value.onlyCheckInstalled || config.trackOnly || readInstalled(packageOf(config)) != null
 
     override fun install(appId: String, releaseId: String?, assetUrl: String?) {
         installs.start(appId, releaseId, assetUrl, userStarted = true)
     }
 
     override fun installAllUpdates() {
-        for (row in _apps.value) {
-            if (row.status == AppStatus.UPDATE_AVAILABLE && !row.config.trackOnly && row.progress == null) install(row.id)
-        }
+        val rows = _apps.value.filter { it.status == AppStatus.UPDATE_AVAILABLE && !it.config.trackOnly && it.progress == null }
+        // Tern's own update comes last, and waits for the others: once it is in, Android restarts Tern.
+        for (row in rows.sortedBy { isSelf(it.config) }) install(row.id)
     }
+
+    /** Whether [config] is Tern itself, which Android restarts once its update is installed. */
+    internal fun isSelf(config: AppConfig): Boolean = packageOf(config) == context.packageName
 
     override fun cancel(appId: String) = installs.cancel(appId)
 
+    /** Stops every download the person started that has not reached the installer yet, as the Cancel of its notification asks. */
+    fun cancelDownloads() {
+        for (id in userTransfers.toList()) {
+            if (progress[id]?.phase in CANCELLABLE) cancel(id)
+        }
+        saves.cancelAll()
+    }
+
     override suspend fun remove(appId: String) {
         ready()
+        drop(appId, texts.eventRemoved())
+    }
+
+    /**
+     * With the setting on, takes out of the list the apps that were seen installed and are not any
+     * more, or only those of [packageName]. Nothing is taken while an install of it is under way.
+     */
+    internal suspend fun dropUninstalled(packageName: String? = null) {
+        if (!_settings.value.removeUninstalled) return
+        for (app in stored.values.toList()) {
+            val pkg = packageOf(app.config) ?: continue
+            if (packageName != null && pkg != packageName) continue
+            if (!app.state.seenInstalled || app.state.pending != null || progress.containsKey(app.config.id)) continue
+            if (readInstalled(pkg) == null) drop(app.config.id, texts.eventRemovedUninstalled())
+        }
+    }
+
+    private suspend fun drop(appId: String, why: String) {
         withContext(Dispatchers.IO) {
             val app = stored[appId] ?: return@withContext
             installs.cancel(appId)
-            event(appId, EventKind.REMOVED, texts.eventRemoved())
+            event(appId, EventKind.REMOVED, why)
             store.deleteApp(appId)
             store.removeValidators("${app.config.source.type}|${app.config.source.url}|")
             downloader.discardAll(appId)
@@ -420,14 +540,45 @@ class RealEngine(
         return true
     }
 
-    override fun mayInstall(): Boolean = device.mayInstall()
+    override fun mayInstall(): Boolean = installers.mayInstall()
+
+    /** Whether an install may start with nobody there to answer: never through another installer app. */
+    internal fun mayInstallUnattended(): Boolean = installers.mayInstallUnattended()
+
+    override val installerReadiness: StateFlow<InstallerReadiness> get() = installers.readiness
+
+    override fun recheckInstaller() = installers.recheck()
+
+    override fun askShizuku(): Boolean = installers.askShizuku()
+
+    override fun askDhizuku(): Boolean = installers.askDhizuku()
+
+    override fun installerChoices(): List<InstallerChoice> = installers.choices()
+
+    override suspend fun installerIcon(choice: InstallerChoice, sizePx: Int): Bitmap? = withContext(Dispatchers.IO) {
+        val size = sizePx.coerceIn(1, 1024)
+        OtherAppInstaller.icon(context, choice)?.toBitmap(size, size)
+    }
 
     override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
         ready()
         withContext(Dispatchers.IO) {
-            saveApp(appId) { it.copy(config = validated(change(it.config).copy(id = appId))) } ?: return@withContext
+            val previous = stored[appId]?.config
+            val before = previous?.source
+            val saved = saveApp(appId) {
+                val config = validated(change(it.config).copy(id = appId))
+                // Another package has not been seen installed yet, so it is not taken for one that was uninstalled.
+                val state = if (config.packageName != it.config.packageName) it.state.copy(seenInstalled = false) else it.state
+                it.copy(config = config, state = state)
+            } ?: return@withContext
             checks.reevaluate(appId, network = false)
             publish()
+            // Options of the source change what a page or a listing means, and so does what the app asks of its
+            // source, so what the server said before is not reused.
+            if (before != null && (before.options != saved.config.source.options || asksAnew(previous, saved.config))) {
+                store.removeValidators("${before.type}|${before.url}|")
+                if (_online.value) scope.launch { checks.run(listOf(appId), CheckCause.CHANGED) }
+            }
         }
     }
 
@@ -474,6 +625,15 @@ class RealEngine(
             Scheduler.apply(context, loaded)
             setObtainiumLinks(loaded.openObtainiumLinks)
             if (loaded.proxy == ProxyMode.ORBOT && before.proxy != ProxyMode.ORBOT) orbotLink.ask()
+            if (loaded.installer != before.installer || loaded.otherInstaller != before.otherInstaller) installers.recheck()
+            if (loaded.globalFileFilter != before.globalFileFilter || loaded.minAgeDaysByDefault != before.minAgeDaysByDefault) {
+                for (id in stored.keys) checks.reevaluate(id, network = false)
+                publish()
+            }
+            if (loaded.removeUninstalled && !before.removeUninstalled) scope.launch { dropUninstalled() }
+            val keeping = loaded.autoExport && (!before.autoExport || loaded.exportFolder != before.exportFolder ||
+                loaded.exportInstalledOnly != before.exportInstalledOnly || loaded.exportSettings != before.exportSettings)
+            if (keeping) scope.launch { interop.kept.write() }
         }
     }
 
@@ -488,9 +648,9 @@ class RealEngine(
 
     override fun hasFilePicker(): Boolean = device.hasFilePicker()
 
-    override suspend fun exportToFolder(): SavedFile {
+    override suspend fun exportToFolder(format: ExportFormat): SavedFile {
         ready()
-        return interop.exportToFolder()
+        return interop.exportToFolder(format)
     }
 
     override suspend fun importableFiles(): List<SavedFile> = interop.importableFiles()
@@ -508,6 +668,11 @@ class RealEngine(
     override suspend fun importReceived(file: Received.ExportFile): ImportSummary {
         ready()
         return interop.importBytes(file.bytes)
+    }
+
+    override suspend fun finishImport(offer: String, replace: Boolean, takeSettings: Boolean): ImportSummary {
+        ready()
+        return interop.finish(offer, replace, takeSettings)
     }
 
     override fun suggestions(): List<Suggestion> = Suggestions.list(device.profile.television, catalog, context::getString)
@@ -545,9 +710,58 @@ class RealEngine(
         return stars.starredBy(user)
     }
 
-    override suspend fun exportTo(uri: Uri): Int {
+    override suspend fun exportTo(uri: Uri, format: ExportFormat): Int {
         ready()
-        return interop.exportTo(uri)
+        return interop.exportTo(uri, format)
+    }
+
+    override suspend fun shareableExport(appIds: Collection<String>?, format: ExportFormat): Uri {
+        ready()
+        return interop.shareable(appIds, format)
+    }
+
+    override val exportStatus: StateFlow<ExportStatus?> get() = interop.kept.status
+
+    override suspend fun takeExportFolder(folder: Uri) = interop.kept.choose(folder)
+
+    override suspend fun runBackgroundCheck() = runScheduledCheck(cause = CheckCause.ASKED)
+
+    override suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile {
+        ready()
+        // In the engine's own scope: a page that is left stops waiting, and the file is saved all the same.
+        val saving = scope.async { interop.saveFile(appId, releaseId, assetUrl) }
+        saves.track(saving)
+        return saving.await()
+    }
+
+    override suspend fun fileSize(appId: String, releaseId: String, assetUrl: String): Long? {
+        ready()
+        return interop.fileSize(appId, releaseId, assetUrl)
+    }
+
+    override val searchOrigins: List<String> get() = detector.searchOrigins
+
+    override fun renderNotes(text: String): List<NoteBlock> = NotesMapper.markdown(text)
+
+    private val pages = ProjectPages(http, tokens)
+
+    override fun hasProjectPage(row: AppRow): Boolean = row.config.source.type in PROJECT_PAGE_SOURCES
+
+    override suspend fun projectPage(appId: String): List<NoteBlock> {
+        ready()
+        val spec = stored[appId]?.config?.source ?: return emptyList()
+        return try {
+            runInterruptible(Dispatchers.IO) { pages.read(spec) }.orEmpty()
+        } catch (e: IOException) {
+            throw ProblemException(Problem(ProblemKind.NETWORK, texts.checkNetwork(e.message)))
+        }
+    }
+
+    override fun canDowngrade(): Boolean = device.read(LET_ME_DOWNGRADE) != null
+
+    override suspend fun writeKeptExport() {
+        ready()
+        interop.kept.write()
     }
 
     override suspend fun clearEvents() = withContext(Dispatchers.IO) {
@@ -572,7 +786,8 @@ class RealEngine(
         val size = sizePx.coerceIn(1, 1024)
         val pm = context.packageManager
         val pkg = row.installed?.packageName
-        val kept = if (pkg == null) row.file?.asset?.url?.let { downloader.kept(row.id, it) } else null
+        val release = row.latest?.id
+        val kept = if (pkg == null && release != null) row.file?.asset?.url?.let { downloader.kept(row.id, Downloader.key(release, it)) } else null
         val drawable = if (pkg != null) {
             try {
                 pm.getApplicationIcon(pkg)
@@ -592,15 +807,32 @@ class RealEngine(
     }
 
     /** The background check: every app not set to manual, then automatic installs where Android allows them. */
-    suspend fun runScheduledCheck() {
+    /**
+     * The background check: of [only] or of every app it looks at. Updates that install by
+     * themselves wait while the settings hold them back, and a job installs them once the network
+     * and the charger allow it. Apps that could not be checked for a passing reason are checked
+     * again a few times, each time later, and a rate limit is waited out, as in Obtainium.
+     * [cause] is what Tern's own messages in the log say started it.
+     */
+    suspend fun runScheduledCheck(attempt: Int = 0, only: Set<String>? = null, cause: CheckCause = if (only == null) CheckCause.SCHEDULE else CheckCause.RETRY) {
         ready()
         if (!_online.value) {
             offline(null)
             return
         }
         _lastRunProblem.value = null
-        installs.runScheduled(_settings.value)
+        val settings = _settings.value
+        val installsNow = settings.autoInstalls &&
+            (!settings.onlyOnUnmetered || device.onUnmeteredNetwork()) &&
+            (!settings.onlyWhileCharging || device.isCharging())
+        val run = installs.runScheduled(settings, installsNow, only, cause)
+        if (run.waited && settings.autoInstalls) Scheduler.waitForInstalls(context, settings)
+        retryDelay(run.failed, attempt, nowMs())?.let { (again, delay) -> Scheduler.retry(context, again, attempt + 1, delay) }
     }
+
+    /** Which of [failed] to check again and how long to wait first, or null for none. */
+    internal fun retryDelay(failed: List<String>, attempt: Int, now: Long): Pair<List<String>, Long>? =
+        Retries.plan(failed.mapNotNull { id -> stored[id]?.state?.checkProblem?.let { id to it } }, attempt, now)
 
     /** Every package the user follows in one repository, so a single index download serves them all. */
     private fun trackedInRepository(repositoryUrl: String): Set<String> = stored.values.asSequence()
@@ -610,21 +842,34 @@ class RealEngine(
         .toSet()
 
     internal fun findBySpec(spec: SourceSpec): String? =
-        stored.values.firstOrNull { it.config.source.type == spec.type && it.config.source.url.equals(spec.url, ignoreCase = true) }?.config?.id
+        stored.values.firstOrNull { sameSource(it.config.source, spec) }?.config?.id
 
     internal fun newId(): String = UUID.randomUUID().toString().replace("-", "").take(16)
 
     /** Stable per source, so the id shown before adding is the id that gets stored, and unlike any other tracked app's. */
     private fun idFor(spec: SourceSpec): String {
-        val base = Fingerprints.sha256("${spec.type}|${spec.url.lowercase()}".toByteArray())
+        // The apps of one repository share its address and are told apart by their package.
+        val pkg = spec.option(SourceOptions.PACKAGE)?.takeIf { spec.type == SourceTypes.FDROID_REPO }?.let { "|$it" }.orEmpty()
+        val base = Fingerprints.sha256("${spec.type}|${spec.url.lowercase()}$pkg".toByteArray())
         var length = 16
         while (length < base.length) {
             val id = base.take(length)
             val holder = stored[id]?.config?.source
-            if (holder == null || (holder.type == spec.type && holder.url.equals(spec.url, ignoreCase = true))) return id
+            if (holder == null || sameSource(holder, spec)) return id
             length += 4
         }
         return base
+    }
+
+    /**
+     * Whether [after] asks something else of its source than [before]: a forge lists tags for an
+     * app that is only tracked, and a web page is read with the app's version pattern.
+     */
+    private fun asksAnew(before: AppConfig?, after: AppConfig): Boolean {
+        if (before == null) return false
+        if (before.trackOnly != after.trackOnly) return true
+        return after.source.type in SourceTypes.READS_OWN_VERSIONS &&
+            (before.releases.versionExtract != after.releases.versionExtract || before.releases.matchGroup != after.releases.matchGroup)
     }
 
     internal fun validated(config: AppConfig): AppConfig = try {
@@ -639,23 +884,25 @@ class RealEngine(
         try {
             context.packageManager.setComponentEnabledSetting(component, state, PackageManager.DONT_KILL_APP)
         } catch (e: IllegalArgumentException) {
-            Log.w(TAG, "Could not switch Obtainium links: ${e.message}")
+            TernLog.w(TAG, "Could not switch Obtainium links: ${e.message}")
         }
     }
 
     override fun close() {
+        if (TernLog.journal === journal) TernLog.journal = null
         scope.cancel()
         handoffs.shutDown()
         orbotLink.close()
+        installers.stop()
         try {
             connectivity.unregisterNetworkCallback(networkCallback)
         } catch (e: IllegalArgumentException) {
-            Log.w(TAG, "Network callback was not registered: ${e.message}")
+            TernLog.w(TAG, "Network callback was not registered: ${e.message}")
         }
         try {
             context.unregisterReceiver(packageReceiver)
         } catch (e: IllegalArgumentException) {
-            Log.w(TAG, "Package receiver was not registered: ${e.message}")
+            TernLog.w(TAG, "Package receiver was not registered: ${e.message}")
         }
         store.close()
         if (current === this) current = null
@@ -667,6 +914,20 @@ class RealEngine(
     companion object {
         private const val TAG = "TernEngine"
         private const val OBTAINIUM_ALIAS = "io.github.munzzyy.tern.ObtainiumLinks"
+
+        /** The module that lets Android put an older version of an app over a newer one. */
+        internal const val LET_ME_DOWNGRADE = "com.berdik.letmedowngrade"
+
+        /** Where a download stands until its file is handed to the installer. */
+        private val CANCELLABLE = setOf(Phase.QUEUED, Phase.DOWNLOADING, Phase.VERIFYING)
+
+        /** The sources whose projects keep a README Tern reads for an app's page. */
+        private val PROJECT_PAGE_SOURCES = setOf(SourceTypes.GITHUB, SourceTypes.GITHUB_ACTIONS, SourceTypes.GITLAB, SourceTypes.FORGEJO)
+
+        /** Whether [a] and [b] are one app's source: one kind at one address, and in a repository of many apps, one package. */
+        internal fun sameSource(a: SourceSpec, b: SourceSpec): Boolean =
+            a.type == b.type && a.url.equals(b.url, ignoreCase = true) &&
+                (a.type != SourceTypes.FDROID_REPO || a.option(SourceOptions.PACKAGE) == b.option(SourceOptions.PACKAGE))
 
         @Volatile
         internal var current: RealEngine? = null
@@ -681,8 +942,10 @@ class RealEngine(
         fun shared(context: Context): RealEngine {
             shared?.let { return it }
             val door = ProxyDoor()
-            val engine = RealEngine(context, UrlConnectionHttp(proxy = door::proxy, proxyAnswers = ProxyProbe::answers))
+            val pins = PinChoice()
+            val engine = RealEngine(context, UrlConnectionHttp(proxy = door::proxy, proxyAnswers = ProxyProbe::answers, pinning = pins::on))
             door.follow(engine::proxy)
+            pins.follow { engine.settings.value.pinCertificates }
             shared = engine
             return engine
         }

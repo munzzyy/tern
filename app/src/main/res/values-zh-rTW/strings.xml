@@ -89,15 +89,6 @@
         <item quantity="other">已選取 %d 個</item>
     </plurals>
     <string name="apps_select_hint">從清單中挑選應用程式。</string>
-    <string name="action_add_to_category">新增至分類</string>
-    <plurals name="bulk_category_title">
-        <item quantity="other">將 %d 個應用程式新增至分類</item>
-    </plurals>
-    <string name="bulk_category_field">分類</string>
-    <plurals name="bulk_category_done">
-        <item quantity="other">已將 %1$d 個應用程式歸類至 %2$s。</item>
-    </plurals>
-    <string name="bulk_category_existing">或挑選您已在使用的分類：</string>
     <plurals name="bulk_check_title">
         <item quantity="other">立即檢查 %d 個應用程式？</item>
     </plurals>
@@ -317,10 +308,6 @@
     <plurals name="interval_hours">
         <item quantity="other">每 %d 小時</item>
     </plurals>
-    <string name="settings_unmetered">僅在非計費網路上</string>
-    <string name="settings_unmetered_effect">使用行動數據和計費 Wi-Fi 時略過檢查。</string>
-    <string name="settings_charging">僅在充電時</string>
-    <string name="settings_charging_effect">使用電池時略過檢查。</string>
     <string name="settings_defaults">新應用程式的預設值</string>
     <string name="settings_notifications">通知</string>
     <string name="settings_notify_updates">找到更新時</string>
@@ -356,7 +343,6 @@
     <string name="proxy_port_invalid">1 到 65535 之間的數字</string>
     <string name="settings_appearance">外觀</string>
     <string name="settings_language">語言</string>
-    <string name="settings_language_effect">在 Android 針對此應用程式的設定中選擇。</string>
     <string name="settings_theme">主題</string>
     <string name="theme_system">跟隨系統</string>
     <string name="theme_light">淺色</string>

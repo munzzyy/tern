@@ -84,7 +84,7 @@ class OrbotAnswerTest {
     @Test
     fun aForgedAnswerCannotMoveTheProxyOffThisDevice() = runBlocking {
         engine("orbot-there") { true }.use { engine ->
-            engine.saveSettings(engine.settings.value.copy(checkEveryHours = 0, proxy = ProxyMode.ORBOT))
+            engine.saveSettings(engine.settings.value.copy(checkEveryMinutes = 0, proxy = ProxyMode.ORBOT))
             assertEquals("127.0.0.1:9050", proxyOf(engine))
 
             assertEquals("127.0.0.1:9050", engine.afterAnswer("10.0.0.1", 9999))
@@ -103,7 +103,7 @@ class OrbotAnswerTest {
     @Test
     fun aForgedAnswerCannotMakeARequestGoDirect() = runBlocking {
         engine("orbot-there") { true }.use { engine ->
-            engine.saveSettings(engine.settings.value.copy(checkEveryHours = 0, proxy = ProxyMode.ORBOT))
+            engine.saveSettings(engine.settings.value.copy(checkEveryMinutes = 0, proxy = ProxyMode.ORBOT))
             for (status in listOf(Orbot.STATUS_OFF, Orbot.STATUS_STOPPING, Orbot.STATUS_STARTS_DISABLED)) {
                 engine.afterAnswer("127.0.0.1", 9150)
                 send(status, "127.0.0.1", 9150)
@@ -122,7 +122,7 @@ class OrbotAnswerTest {
     fun withoutOrbotOnTheDeviceNoAnswerIsTaken() = runBlocking {
         engine("orbot-there") { true }.use { witness ->
             engine("orbot-absent", null).use { engine ->
-                for (one in listOf(witness, engine)) one.saveSettings(one.settings.value.copy(checkEveryHours = 0, proxy = ProxyMode.ORBOT))
+                for (one in listOf(witness, engine)) one.saveSettings(one.settings.value.copy(checkEveryMinutes = 0, proxy = ProxyMode.ORBOT))
                 waitUntil(10_000, "the engine to find no Orbot") { engine.orbot.value == OrbotState.NOT_INSTALLED }
 
                 assertEquals("127.0.0.1:9150", witness.afterAnswer("127.0.0.1", 9150))
@@ -138,7 +138,7 @@ class OrbotAnswerTest {
     @Test
     fun anAnswerDoesNothingToAnotherSetting() = runBlocking {
         engine("orbot-there") { true }.use { engine ->
-            engine.saveSettings(engine.settings.value.copy(checkEveryHours = 0, proxy = ProxyMode.ORBOT))
+            engine.saveSettings(engine.settings.value.copy(checkEveryMinutes = 0, proxy = ProxyMode.ORBOT))
             engine.afterAnswer("127.0.0.1", 9150)
 
             engine.saveSettings(engine.settings.value.copy(proxy = ProxyMode.CUSTOM, proxyHost = "127.0.0.1", proxyPort = 1080))

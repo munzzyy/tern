@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">Check</string>
+    <string name="shortcut_check_long">Check for updates</string>
+    <string name="shortcut_update_all_long">Update every app</string>
+    <string name="shortcut_add_short">Add</string>
+    <string name="shortcut_add_long">Add an app</string>
+    <string name="tile_check">Check for updates</string>
+    <string name="tile_checking">Checking…</string>
+    <string name="tile_up_to_date">Up to date</string>
+    <string name="widget_label">Updates</string>
+    <string name="widget_description">How many apps have an update, with a button to check and one to update them all.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d update</item>
+        <item quantity="other">%d updates</item>
+    </plurals>
+    <string name="widget_up_to_date">Everything is up to date</string>
+    <string name="widget_checked">Checked at %1$s</string>
+    <string name="widget_never_checked">Not checked yet</string>
+    <string name="widget_check">Check</string>
+</resources>

@@ -1,0 +1,17 @@
+{
+  "appId": 2063000001,
+  "versionCode": 6850,
+  "versionId": 2064000002,
+  "downloadUrls": [
+    {
+      "url": "https://static-m.rustore.ru/2026/9/29/2d/185fd5c7-0000-4000-8000-000000000001.zip",
+      "size": 76695293,
+      "hash": "e2db97d670d5637d"
+    }
+  ],
+  "preApproveInfo": {
+    "label": "Example App",
+    "locale": "ru-RU"
+  },
+  "detailsCode": null
+}

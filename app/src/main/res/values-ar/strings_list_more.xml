@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">تصفية القائمة</string>
+    <string name="filter_state_on">الفلاتر مفعّلة</string>
+    <string name="filter_name">الاسم</string>
+    <string name="filter_author">المطور</string>
+    <string name="filter_package">اسم الحزمة</string>
+    <string name="filter_show_up_to_date">التطبيقات المحدثة</string>
+    <string name="filter_show_not_installed">التطبيقات غير المثبتة</string>
+    <string name="filter_show_tracked">التطبيقات التي تُتابَع فقط</string>
+    <string name="filter_categories">في أي من هذه الفئات</string>
+    <string name="filter_sources">من أي من هذه المصادر</string>
+    <string name="filter_clear">مسح الفلاتر</string>
+    <plurals name="filter_shown">
+        <item quantity="zero">عُرض %1$d من %2$d تطبيق</item>
+        <item quantity="one">عُرض %1$d من تطبيق واحد (%2$d)</item>
+        <item quantity="two">عُرض %1$d من تطبيقين (%2$d)</item>
+        <item quantity="few">عُرض %1$d من %2$d تطبيقات</item>
+        <item quantity="many">عُرض %1$d من %2$d تطبيقًا</item>
+        <item quantity="other">عُرض %1$d من %2$d تطبيق</item>
+    </plurals>
+    <string name="checking_count">جارٍ فحص %1$d من %2$d</string>
+    <string name="row_moved">انتقل إلى %1$s</string>
+    <string name="row_released">صدر بتاريخ %1$s</string>
+    <string name="row_changes">التغييرات</string>
+    <string name="action_show_changes">إظهار التغييرات</string>
+    <string name="action_install_all">تثبيت الكل</string>
+    <string name="action_install_update_all">تثبيت وتحديث الكل</string>
+    <plurals name="apps_section_installs">
+        <item quantity="zero">%d تطبيق لم يُثبَّت بعد</item>
+        <item quantity="one">تطبيق واحد (%d) لم يُثبَّت بعد</item>
+        <item quantity="two">تطبيقان (%d) لم يُثبَّتا بعد</item>
+        <item quantity="few">%d تطبيقات لم تُثبَّت بعد</item>
+        <item quantity="many">%d تطبيقًا لم تُثبَّت بعد</item>
+        <item quantity="other">%d تطبيق لم تُثبَّت بعد</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="zero">تثبيت وتحديث %d تطبيق؟</item>
+        <item quantity="one">تثبيت وتحديث تطبيق واحد (%d)؟</item>
+        <item quantity="two">تثبيت وتحديث تطبيقين (%d)؟</item>
+        <item quantity="few">تثبيت وتحديث %d تطبيقات؟</item>
+        <item quantity="many">تثبيت وتحديث %d تطبيقًا؟</item>
+        <item quantity="other">تثبيت وتحديث %d تطبيق؟</item>
+    </plurals>
+    <string name="settings_update_all">زر «تحديث الكل»</string>
+    <string name="update_all_updates">التحديثات فقط</string>
+    <string name="update_all_all">التحديثات والتطبيقات التي لم تُثبَّت بعد</string>
+    <string name="update_all_none">غير معروض</string>
+    <string name="settings_confirm_update_all">السؤال قبل «تحديث الكل»</string>
+    <string name="settings_confirm_update_all_effect">يذكر عدد التطبيقات التي سيثبّتها أو يحدّثها وينتظر موافقتك.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="zero">تثبيت %d تطبيق؟</item>
+        <item quantity="one">تثبيت تطبيق واحد (%d)؟</item>
+        <item quantity="two">تثبيت تطبيقين (%d)؟</item>
+        <item quantity="few">تثبيت %d تطبيقات؟</item>
+        <item quantity="many">تثبيت %d تطبيقًا؟</item>
+        <item quantity="other">تثبيت %d تطبيق؟</item>
+    </plurals>
+    <string name="bulk_install_text">يتم تنزيل كل ملف وفحصه قبل أن يُطلب من Android تثبيته. يحتفظ Tern بالشهادة التي وُقِّع بها كل تطبيق جديد، ويُلزم كل تحديث لاحق بها.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="zero">%d من التطبيقات المختارة ليس لها ما يُثبَّت الآن وتُركت كما هي.</item>
+        <item quantity="one">%d من التطبيقات المختارة ليس له ما يُثبَّت الآن وتُرك كما هو.</item>
+        <item quantity="two">%d من التطبيقات المختارة ليس لها ما يُثبَّت الآن وتُركت كما هي.</item>
+        <item quantity="few">%d من التطبيقات المختارة ليس لها ما يُثبَّت الآن وتُركت كما هي.</item>
+        <item quantity="many">%d من التطبيقات المختارة ليس لها ما يُثبَّت الآن وتُركت كما هي.</item>
+        <item quantity="other">%d من التطبيقات المختارة ليس لها ما يُثبَّت الآن وتُركت كما هي.</item>
+    </plurals>
+    <string name="action_change_categories">تغيير الفئات</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="zero">فئات %d تطبيق</item>
+        <item quantity="one">فئات تطبيق واحد (%d)</item>
+        <item quantity="two">فئات تطبيقين (%d)</item>
+        <item quantity="few">فئات %d تطبيقات</item>
+        <item quantity="many">فئات %d تطبيقًا</item>
+        <item quantity="other">فئات %d تطبيق</item>
+    </plurals>
+    <string name="bulk_categories_help">علامة الصح تصنّف كل التطبيقات المختارة ضمن فئة، والمربع الفارغ يخرجها منها كلها. أما الشرطة فتترك كل تطبيق كما هو.</string>
+    <string name="categories_filed_all">كل التطبيقات المختارة</string>
+    <string name="categories_filed_some">بعض التطبيقات المختارة</string>
+    <string name="categories_filed_none">لا تطبيق من التطبيقات المختارة</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="zero">تم تغيير فئات %d تطبيق.</item>
+        <item quantity="one">تم تغيير فئات تطبيق واحد (%d).</item>
+        <item quantity="two">تم تغيير فئات تطبيقين (%d).</item>
+        <item quantity="few">تم تغيير فئات %d تطبيقات.</item>
+        <item quantity="many">تم تغيير فئات %d تطبيقًا.</item>
+        <item quantity="other">تم تغيير فئات %d تطبيق.</item>
+    </plurals>
+    <string name="action_share_config_link">مشاركة رابط بإعداداته</string>
+    <string name="action_share_config_links">مشاركة روابط بإعداداتها</string>
+    <string name="share_link_none">لا يمكن لأي رابط أن يحمل إعدادات هذا التطبيق. شاركه كملف بدلًا من ذلك.</string>
+    <plurals name="share_links_left">
+        <item quantity="zero">%d تطبيق مُستبعد، لأنه لا يمكن لأي رابط أن يحمل إعداداته.</item>
+        <item quantity="one">تطبيق واحد (%d) مُستبعد، لأنه لا يمكن لأي رابط أن يحمل إعداداته.</item>
+        <item quantity="two">تطبيقان (%d) مُستبعدان، لأنه لا يمكن لأي رابط أن يحمل إعداداتهما.</item>
+        <item quantity="few">%d تطبيقات مُستبعدة، لأنه لا يمكن لأي رابط أن يحمل إعداداتها.</item>
+        <item quantity="many">%d تطبيقًا مُستبعدة، لأنه لا يمكن لأي رابط أن يحمل إعداداتها.</item>
+        <item quantity="other">%d تطبيق مُستبعدة، لأنه لا يمكن لأي رابط أن يحمل إعداداتها.</item>
+    </plurals>
+</resources>

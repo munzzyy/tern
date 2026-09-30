@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">ലിസ്റ്റ് ഫിൽട്ടർ ചെയ്യുക</string>
+    <string name="filter_state_on">ഫിൽട്ടറുകൾ ഓണാണ്</string>
+    <string name="filter_name">പേര്</string>
+    <string name="filter_author">ഡെവലപ്പർ</string>
+    <string name="filter_package">പാക്കേജിൻ്റെ പേര്</string>
+    <string name="filter_show_up_to_date">ഏറ്റവും പുതിയ അവസ്ഥയിലുള്ള ആപ്പുകൾ</string>
+    <string name="filter_show_not_installed">ഇൻസ്റ്റാൾ ചെയ്യാത്ത ആപ്പുകൾ</string>
+    <string name="filter_show_tracked">പിന്തുടരുക മാത്രം ചെയ്യുന്ന ആപ്പുകൾ</string>
+    <string name="filter_categories">ഈ കാറ്റഗറികളിൽ ഏതിലെങ്കിലും</string>
+    <string name="filter_sources">ഈ ഉറവിടങ്ങളിൽ ഏതിൽ നിന്നെങ്കിലും</string>
+    <string name="filter_clear">ഫിൽട്ടറുകൾ മായ്ക്കുക</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%2$d ആപ്പുകളിൽ %1$d എണ്ണം കാണിക്കുന്നു</item>
+        <item quantity="other">%2$d ആപ്പുകളിൽ %1$d എണ്ണം കാണിക്കുന്നു</item>
+    </plurals>
+    <string name="checking_count">%2$d ൽ %1$d പരിശോധിക്കുന്നു</string>
+    <string name="row_moved">%1$s-ലേക്ക് മാറി</string>
+    <string name="row_released">റിലീസ് തീയതി: %1$s</string>
+    <string name="row_changes">മാറ്റങ്ങൾ</string>
+    <string name="action_show_changes">മാറ്റങ്ങൾ കാണിക്കുക</string>
+    <string name="action_install_all">എല്ലാം ഇൻസ്റ്റാൾ ചെയ്യുക</string>
+    <string name="action_install_update_all">എല്ലാം ഇൻസ്റ്റാൾ ചെയ്ത് അപ്ഡേറ്റ് ചെയ്യുക</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d ആപ്പ് ഇതുവരെ ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല</item>
+        <item quantity="other">%d ആപ്പുകൾ ഇതുവരെ ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">%d ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്ത് അപ്ഡേറ്റ് ചെയ്യണോ?</item>
+        <item quantity="other">%d ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്ത് അപ്ഡേറ്റ് ചെയ്യണോ?</item>
+    </plurals>
+    <string name="settings_update_all">“എല്ലാം അപ്ഡേറ്റ് ചെയ്യുക” ബട്ടൺ</string>
+    <string name="update_all_updates">അപ്ഡേറ്റുകൾ മാത്രം</string>
+    <string name="update_all_all">അപ്ഡേറ്റുകളും ഇതുവരെ ഇൻസ്റ്റാൾ ചെയ്യാത്ത ആപ്പുകളും</string>
+    <string name="update_all_none">കാണിക്കേണ്ട</string>
+    <string name="settings_confirm_update_all">“എല്ലാം അപ്ഡേറ്റ് ചെയ്യുക” എന്നതിന് മുമ്പ് ചോദിക്കുക</string>
+    <string name="settings_confirm_update_all_effect">എത്ര ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യുകയോ അപ്ഡേറ്റ് ചെയ്യുകയോ ചെയ്യുമെന്ന് പറയുകയും, ഒരു സമ്മതത്തിനായി കാത്തിരിക്കുകയും ചെയ്യുന്നു.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">%d ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യണോ?</item>
+        <item quantity="other">%d ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്യണോ?</item>
+    </plurals>
+    <string name="bulk_install_text">Android-നോട് ഇൻസ്റ്റാൾ ചെയ്യാൻ ആവശ്യപ്പെടുന്നതിന് മുമ്പ് ഓരോ ഫയലും ഡൗൺലോഡ് ചെയ്ത് പരിശോധിക്കുന്നു. ഓരോ പുതിയ ആപ്പും ഒപ്പിട്ട സർട്ടിഫിക്കറ്റ് Tern സൂക്ഷിക്കുകയും, തുടർന്നുള്ള ഓരോ അപ്ഡേറ്റും അതേ സർട്ടിഫിക്കറ്റുള്ളതാണെന്ന് ഉറപ്പാക്കുകയും ചെയ്യുന്നു.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">തിരഞ്ഞെടുത്ത ആപ്പുകളിൽ %d എണ്ണത്തിന് ഇപ്പോൾ ഇൻസ്റ്റാൾ ചെയ്യാൻ ഒന്നുമില്ല, അത് അതുപോലെ തന്നെ വിട്ടിരിക്കുന്നു.</item>
+        <item quantity="other">തിരഞ്ഞെടുത്ത ആപ്പുകളിൽ %d എണ്ണത്തിന് ഇപ്പോൾ ഇൻസ്റ്റാൾ ചെയ്യാൻ ഒന്നുമില്ല, അവ അതുപോലെ തന്നെ വിട്ടിരിക്കുന്നു.</item>
+    </plurals>
+    <string name="action_change_categories">കാറ്റഗറികൾ മാറ്റുക</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">%d ആപ്പിൻ്റെ കാറ്റഗറികൾ</item>
+        <item quantity="other">%d ആപ്പുകളുടെ കാറ്റഗറികൾ</item>
+    </plurals>
+    <string name="bulk_categories_help">ടിക്ക് ചെയ്താൽ തിരഞ്ഞെടുത്ത എല്ലാ ആപ്പുകളും ഒരു കാറ്റഗറിയിൽ ചേർക്കും, ശൂന്യമായ ബോക്സ് അവയെയെല്ലാം അതിൽ നിന്ന് ഒഴിവാക്കും. തിരശ്ചീന വര ഓരോ ആപ്പിനെയും അതുപോലെ തന്നെ വിടും.</string>
+    <string name="categories_filed_all">തിരഞ്ഞെടുത്ത എല്ലാ ആപ്പുകളും</string>
+    <string name="categories_filed_some">തിരഞ്ഞെടുത്ത ആപ്പുകളിൽ ചിലത്</string>
+    <string name="categories_filed_none">തിരഞ്ഞെടുത്ത ആപ്പുകളിൽ ഒന്നുമില്ല</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">%d ആപ്പിൻ്റെ കാറ്റഗറികൾ മാറ്റി.</item>
+        <item quantity="other">%d ആപ്പുകളുടെ കാറ്റഗറികൾ മാറ്റി.</item>
+    </plurals>
+    <string name="action_share_config_link">ഇതിൻ്റെ സെറ്റിംഗ്‌സ് ഉള്ള ഒരു ലിങ്ക് പങ്കിടുക</string>
+    <string name="action_share_config_links">സെറ്റിംഗ്‌സ് ഉള്ള ലിങ്കുകൾ പങ്കിടുക</string>
+    <string name="share_link_none">ഈ ആപ്പിൻ്റെ സെറ്റിംഗ്‌സ് ഉൾക്കൊള്ളാൻ ഒരു ലിങ്കിനും കഴിയില്ല. പകരം ഇത് ഒരു ഫയലായി പങ്കിടുക.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d ആപ്പ് ഒഴിവാക്കി, കാരണം അതിൻ്റെ സെറ്റിംഗ്‌സ് ഉൾക്കൊള്ളാൻ ഒരു ലിങ്കിനും കഴിയില്ല.</item>
+        <item quantity="other">%d ആപ്പുകൾ ഒഴിവാക്കി, കാരണം അവയുടെ സെറ്റിംഗ്‌സ് ഉൾക്കൊള്ളാൻ ഒരു ലിങ്കിനും കഴിയില്ല.</item>
+    </plurals>
+</resources>

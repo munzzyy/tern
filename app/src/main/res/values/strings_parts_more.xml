@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- OBB files are the large data files some apps, often games, keep beside the app in the folder Android/obb. -->
+    <string name="parts_obb_name_refused">This archive holds an OBB file whose name could leave the app\'s OBB folder, or two OBB files of the same name. Nothing was installed.</string>
+    <!-- %2$s is a folder, such as Android/obb/org.example.game. -->
+    <plurals name="parts_obb_placed">
+        <item quantity="one">Put %1$d OBB file in %2$s.</item>
+        <item quantity="other">Put %1$d OBB files in %2$s.</item>
+    </plurals>
+    <!-- %1$s is a folder, such as Android/obb/org.example.game. %2$s is the name of the file the release offers, such as game-1.2.xapk. %3$s names the OBB files, such as main.3.org.example.game.obb. -->
+    <string name="parts_obb_not_placed">The OBB files were not put in %1$s, as only the Shizuku and root installers can write there. They are in %2$s, the file of this release: %3$s.</string>
+    <!-- %1$s is a folder, such as Android/obb/org.example.game. %2$s is what went wrong, as the system said it. %3$s is the name of the file the release offers, such as game-1.2.xapk. %4$s names the OBB files. -->
+    <string name="parts_obb_failed">The OBB files could not be put in %1$s: %2$s. They are in %3$s, the file of this release: %4$s.</string>
+</resources>

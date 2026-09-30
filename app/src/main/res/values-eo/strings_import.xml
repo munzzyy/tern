@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">El listo de adresoj</string>
+    <string name="import_addresses_explain">Algluu adresojn de aplikaĵoj, po unu en linio aŭ ie ajn en la teksto, aŭ legu ilin el dosiero kiel OPML-listo. Ĉiu estas serĉata kaj aldonata same kiel unuopa ligilo.</string>
+    <string name="import_addresses_field">Adresoj</string>
+    <string name="import_addresses_show">Montri kio estas en ĝi</string>
+    <string name="import_addresses_file">Legi dosieron</string>
+    <string name="import_addresses_none">Estas neniu https-adreso en ĝi.</string>
+    <string name="import_addresses_other">Alia listo</string>
+    <string name="import_addresses_unreadable">Tiu dosiero ne povis esti legita.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d adreso. Malmarku tion, kion vi ne volas, poste aldonu.</item>
+        <item quantity="other">%1$d adresoj. Malmarku tion, kion vi ne volas, poste aldonu.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">%1$d aplikaĵo venis en ĉi tiu ligilo. Rigardu ĝin por vidi ĝiajn agordojn antaŭ ol vi aldonas ĝin.</item>
+        <item quantity="other">%1$d aplikaĵoj venis en ĉi tiu ligilo. Rigardu ĉiun por vidi ĝiajn agordojn antaŭ ol vi aldonas ĝin.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Eksporti por Obtainium</string>
+    <string name="settings_export_obtainium_effect">Dosiero kiun Obtainium importas, por listo kiu transloĝiĝas tien. Tio, por kio Obtainium havas neniun agordon, restas malantaŭe.</string>
+    <string name="settings_export_installed_only">Eksporti nur instalitajn aplikaĵojn</string>
+    <string name="settings_export_settings">Meti la agordojn en eksportojn</string>
+    <string name="settings_export_settings_effect">La aspekto, la listo, sciigoj kaj kontroloj. Neniam ĵetono, la prokurilo aŭ la instalilo.</string>
+    <string name="settings_kept_export">Teni eksporton ĝisdata</string>
+    <string name="settings_kept_export_effect">Iom post kiam io ajn en la listo ŝanĝiĝas, Tern skribas la eksporton denove.</string>
+    <string name="settings_kept_export_written">Skribita je %1$s</string>
+    <string name="settings_kept_export_folder">Kie ĝi estas konservata</string>
+    <string name="import_settings_taken">La agordoj en la dosiero ankaŭ estis transprenitaj.</string>
+</resources>

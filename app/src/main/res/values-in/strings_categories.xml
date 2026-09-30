@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">Kategori</string>
+    <string name="settings_categories_effect">Beri nama dan warna untuk masing-masing, lalu ganti nama atau hapus untuk semua aplikasi sekaligus.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="other">%d kategori</item>
+    </plurals>
+    <string name="categories_none">Belum ada. Buat di sini, atau masukkan aplikasi ke kategori dari daftar.</string>
+    <string name="categories_new">Kategori baru</string>
+    <string name="category_edit">Edit kategori</string>
+    <string name="category_name">Nama</string>
+    <string name="category_color">Warna</string>
+    <string name="category_color_spoken">Warna %1$d dari %2$d</string>
+    <string name="category_exists">Kategori dengan nama ini sudah ada.</string>
+    <string name="category_delete">Hapus</string>
+    <string name="category_delete_effect">Aplikasi di dalamnya tetap ada di daftar; aplikasi tersebut hanya tidak lagi dimasukkan ke kategori ini.</string>
+    <plurals name="category_apps">
+        <item quantity="other">%d aplikasi</item>
+    </plurals>
+    <string name="action_close">Tutup</string>
+    <string name="categories_new_short">Baru…</string>
+    <string name="app_notes_title">Catatan</string>
+    <string name="app_notes_help">Markdown berfungsi: **tebal**, *miring*, daftar, dan tautan.</string>
+    <string name="app_notes_add">Tambahkan catatan</string>
+    <string name="app_notes_add_effect">Apa pun yang perlu diingat tentang aplikasi ini. Catatan ikut dalam ekspor.</string>
+    <string name="app_notes_edit">Edit catatan</string>
+</resources>

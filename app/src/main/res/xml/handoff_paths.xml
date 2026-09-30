@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Only these are ever handed to another app, read-only: copies for an installer app, and exports the person shares. -->
+<paths>
+    <cache-path name="handoff" path="handoff/" />
+    <cache-path name="share" path="share/" />
+</paths>

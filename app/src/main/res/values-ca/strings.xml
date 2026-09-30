@@ -95,19 +95,6 @@
         <item quantity="other">%d seleccionades</item>
     </plurals>
     <string name="apps_select_hint">Tria aplicacions de la llista.</string>
-    <string name="action_add_to_category">Afegeix a una categoria</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Afegeix %d aplicació a una categoria</item>
-        <item quantity="many">Afegeix %d aplicacions a una categoria</item>
-        <item quantity="other">Afegeix %d aplicacions a una categoria</item>
-    </plurals>
-    <string name="bulk_category_field">Categoria</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">S\'ha arxivat %1$d aplicació a %2$s.</item>
-        <item quantity="many">S\'han arxivat %1$d aplicacions a %2$s.</item>
-        <item quantity="other">S\'han arxivat %1$d aplicacions a %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">O tria\'n una que ja usis:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Vols comprovar %d aplicació ara?</item>
         <item quantity="many">Vols comprovar %d aplicacions ara?</item>
@@ -351,10 +338,6 @@
         <item quantity="many">Cada %d hores</item>
         <item quantity="other">Cada %d hores</item>
     </plurals>
-    <string name="settings_unmetered">Només en xarxes no mesurades</string>
-    <string name="settings_unmetered_effect">Omet les comprovacions amb dades mòbils i Wi-Fi mesurada.</string>
-    <string name="settings_charging">Només mentre es carrega</string>
-    <string name="settings_charging_effect">Omet les comprovacions mentre s\'usa la bateria.</string>
     <string name="settings_defaults">Valors per defecte per a noves aplicacions</string>
     <string name="settings_notifications">Notificacions</string>
     <string name="settings_notify_updates">Quan es troben actualitzacions</string>
@@ -390,7 +373,6 @@
     <string name="proxy_port_invalid">Un número de l\'1 al 65535</string>
     <string name="settings_appearance">Aparença</string>
     <string name="settings_language">Idioma</string>
-    <string name="settings_language_effect">Triat a la configuració d\'Android per a aquesta aplicació.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Segueix el sistema</string>
     <string name="theme_light">Clar</string>

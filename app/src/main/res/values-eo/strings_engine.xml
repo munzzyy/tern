@@ -9,7 +9,6 @@
     <string name="engine_no_space">Ne estas sufiĉe da libera spaco: ĉi tio bezonas %1$s kaj %2$s estas liberaj.</string>
     <string name="engine_download_cut">La elŝuto haltis post %1$s el %2$s. Provu denove por daŭrigi ĝin.</string>
     <string name="engine_checksum_mismatch">La dosiero ne kongruas kun la kontrolsumo, kiun la eldonisto donis, do ĝi estis forigita. Ĝi eble estis difektita aŭ anstataŭigita.</string>
-    <string name="engine_tar_unsupported">Ĉi tiu eldono estas tar-arkivo, kiun Tern ne malfermas. Elektu alian dosieron.</string>
     <string name="engine_not_an_apk">Ĉi tiu dosiero ne estas APK aŭ arkivo, kiun Tern povas legi (%1$s).</string>
     <string name="engine_archive_no_apk">La arkivo tenas neniun APK.</string>
     <string name="engine_archive_no_base">La arkivo tenas disigitajn APK-ojn sed neniun bazan APK.</string>
@@ -57,7 +56,6 @@
     <string name="engine_warn_no_file">Neniu dosiero en ĉi tiu eldono taŭgas por ĉi tiu aparato.</string>
     <string name="engine_warn_prerelease">Nur antaŭeldono estas publikigita.</string>
     <string name="engine_warn_moved">La projekto ŝajnas esti movita al %1$s.</string>
-    <string name="engine_several_apps">Ĉi tiu ligilo tenas plurajn aplikaĵojn. Importu ĝin el agordoj anstataŭe.</string>
     <string name="engine_not_a_source">Tern trovis neniujn eldonojn je ĉi tiu adreso.</string>
     <string name="engine_move_gone">Ĉi tiu aplikaĵo ne plu estas en la listo.</string>
     <string name="engine_move_nothing">Ekzistas neniu nova adreso por sekvi.</string>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_package_effect">Hver fil skal høre til denne pakke, og den app, der er installeret under den, er den, Tern kigger på. Hvis feltet er tomt, læser Tern navnet fra appens fil.</string>
+</resources>

@@ -8,9 +8,12 @@ import androidx.lifecycle.viewModelScope
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.AppRow
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.NoteBlock
 import io.github.munzzyy.tern.engine.Problem
+import io.github.munzzyy.tern.engine.ProblemException
+import io.github.munzzyy.tern.engine.SavedFile
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -49,6 +52,16 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
     init {
         viewModelScope.launch {
             row.map { it?.lastCheckedMs to it?.latest?.id }.distinctUntilChanged().collect { loadReleases() }
+        }
+        if (checksOnOpen(engine.settings.value.checkOnOpen, row.value, System.currentTimeMillis())) {
+            viewModelScope.launch {
+                try {
+                    engine.check(appId, CheckCause.PAGE)
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (_: Exception) {
+                }
+            }
         }
     }
 
@@ -127,6 +140,34 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
         save({ d.applyTo(it) }, onFailed)
     }
 
+    /** The size of a file whose source names none, as its server says; null when it does not say or cannot be asked. */
+    suspend fun fileSize(releaseId: String, assetUrl: String): Long? = try {
+        engine.fileSize(appId, releaseId, assetUrl)
+    } catch (e: CancellationException) {
+        throw e
+    } catch (_: Exception) {
+        null
+    }
+
+    /**
+     * Hands back the copy that was saved, or else why not, while the page is there to say so.
+     * The save itself runs in the engine and goes on when the page is left.
+     */
+    fun saveFile(releaseId: String, assetUrl: String, onDone: (SavedFile?, String?) -> Unit) {
+        viewModelScope.launch {
+            val (file, problem) = try {
+                engine.saveFile(appId, releaseId, assetUrl) to null
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: ProblemException) {
+                null to e.problem.message
+            } catch (e: Exception) {
+                null to (e.message ?: "")
+            }
+            onDone(file, problem)
+        }
+    }
+
     /** Saves at once; the list flow brings the change back to the screen. */
     fun save(change: (AppConfig) -> AppConfig, onFailed: () -> Unit) {
         val config = row.value?.config ?: return
@@ -141,4 +182,14 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
             }
         }
     }
+}
+
+/** How long after a check opening the page does not check again, so going back and forth costs nothing. */
+const val OPEN_CHECK_QUIET_MS = 5 * 60 * 1000L
+
+/** Whether opening the page of [row] checks it now, as the setting asks, unless it is being checked or was a moment ago. */
+fun checksOnOpen(setting: Boolean, row: AppRow?, nowMs: Long): Boolean {
+    if (!setting || row == null || row.checking) return false
+    val last = row.lastCheckedMs ?: return true
+    return nowMs - last >= OPEN_CHECK_QUIET_MS
 }

@@ -9,7 +9,6 @@
     <string name="engine_no_space">മതിയായ ഫ്രീ സ്പേസില്ല: ഇതിന് %1$s ആവശ്യമാണ്, കൂടാതെ %2$s ഫ്രീ ആണ്.</string>
     <string name="engine_download_cut">%2$s-ൽ %1$s-ന് ശേഷം ഡൗൺലോഡ് നിലച്ചു. പുനരാരംഭിക്കാൻ വീണ്ടും ശ്രമിക്കുക.</string>
     <string name="engine_checksum_mismatch">പ്രസാധകൻ നൽകിയ ചെക്ക്സമുമായി ഫയൽ പൊരുത്തപ്പെടുന്നില്ല, അതിനാൽ അത് ഇല്ലാതാക്കി. അത് കേടാവുകയോ മാറ്റി സ്ഥാപിക്കുകയോ ചെയ്തിരിക്കാം.</string>
-    <string name="engine_tar_unsupported">ഈ റിലീസ് ഒരു tar ആർക്കൈവ് ആണ്, അത് Tern തുറക്കില്ല. മറ്റൊരു ഫയൽ തിരഞ്ഞെടുക്കുക.</string>
     <string name="engine_not_an_apk">ഈ ഫയൽ ഒരു APK-യോ Tern-ന് വായിക്കാൻ കഴിയുന്ന ഒരു ആർക്കൈവോ അല്ല (%1$s).</string>
     <string name="engine_archive_no_apk">ആർക്കൈവിൽ APK ഇല്ല.</string>
     <string name="engine_archive_no_base">ആർക്കൈവിൽ സ്പ്ലിറ്റ് APK-കൾ ഉണ്ട്, എന്നാൽ ബേസ് APK ഇല്ല.</string>
@@ -57,7 +56,6 @@
     <string name="engine_warn_no_file">ഈ റിലീസിലെ ഫയലുകളൊന്നും ഈ ഉപകരണത്തിന് അനുയോജ്യമല്ല.</string>
     <string name="engine_warn_prerelease">ഒരു പ്രീ-റിലീസ് മാത്രമാണ് പ്രസിദ്ധീകരിക്കുന്നത്.</string>
     <string name="engine_warn_moved">പ്രോജക്റ്റ് %1$s ലേക്ക് മാറിയതായി തോന്നുന്നു.</string>
-    <string name="engine_several_apps">ഈ ലിങ്കിൽ നിരവധി ആപ്പുകളുണ്ട്. പകരം സെറ്റിംഗ്‌സിൽ നിന്ന് ഇത് ഇംപോർട്ട് ചെയ്യുക.</string>
     <string name="engine_not_a_source">ഈ വിലാസത്തിൽ Tern റിലീസുകളൊന്നും കണ്ടെത്തിയില്ല.</string>
     <string name="engine_move_gone">ഈ ആപ്പ് ഇപ്പോൾ ലിസ്റ്റിലില്ല.</string>
     <string name="engine_move_nothing">പിന്തുടരാൻ പുതിയ വിലാസമില്ല.</string>

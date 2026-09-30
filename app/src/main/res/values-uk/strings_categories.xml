@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">Категорії</string>
+    <string name="settings_categories_effect">Дайте їм назви й кольори, перейменовуйте або видаляйте їх одразу для всіх програм.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d категорія</item>
+        <item quantity="few">%d категорії</item>
+        <item quantity="many">%d категорій</item>
+        <item quantity="other">%d категорії</item>
+    </plurals>
+    <string name="categories_none">Ще немає. Створіть категорію тут або додайте до категорії програми зі списку.</string>
+    <string name="categories_new">Нова категорія</string>
+    <string name="category_edit">Змінити категорію</string>
+    <string name="category_name">Назва</string>
+    <string name="category_color">Колір</string>
+    <string name="category_color_spoken">Колір %1$d з %2$d</string>
+    <string name="category_exists">Категорія з такою назвою вже існує.</string>
+    <string name="category_delete">Видалити</string>
+    <string name="category_delete_effect">Програми з неї залишаються в списку, вони лише більше не належать до цієї категорії.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d програма</item>
+        <item quantity="few">%d програми</item>
+        <item quantity="many">%d програм</item>
+        <item quantity="other">%d програми</item>
+    </plurals>
+    <string name="action_close">Закрити</string>
+    <string name="categories_new_short">Нова…</string>
+    <string name="app_notes_title">Нотатки</string>
+    <string name="app_notes_help">Працює Markdown: **жирний**, *курсив*, списки й посилання.</string>
+    <string name="app_notes_add">Додати нотатку</string>
+    <string name="app_notes_add_effect">Усе, що варто пам\'ятати про цю програму. Нотатка потрапляє в експорт.</string>
+    <string name="app_notes_edit">Змінити нотатку</string>
+</resources>

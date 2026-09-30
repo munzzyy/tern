@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Protokol aktivity</string>
+    <string name="journal_keep_own">Ponechat vlastní zprávy aplikace Tern v protokolu</string>
+    <string name="journal_keep_own_effect">Varování a chyby aplikace Tern a také začátek a konec každé kontroly. Cokoli, co by mohlo být heslem nebo tokenem, se vynechává, a protokol zůstává na tomto zařízení, pokud jej nesdílíte.</string>
+    <string name="journal_filter_own">Zprávy aplikace Tern</string>
+    <string name="journal_mark_note">Poznámka od Tern</string>
+    <string name="journal_mark_warning">Varování od Tern</string>
+    <string name="journal_mark_error">Chyba od Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Začala kontrola %1$d aplikace.</item>
+        <item quantity="few">Začala kontrola %1$d aplikací.</item>
+        <item quantity="many">Začala kontrola %1$d aplikace.</item>
+        <item quantity="other">Začala kontrola %1$d aplikací.</item>
+    </plurals>
+    <string name="journal_check_started_one">Začala kontrola %1$s.</string>
+    <string name="journal_cause_asked">Byla vyžádána v Tern.</string>
+    <string name="journal_cause_opening">Tern byl otevřen.</string>
+    <string name="journal_cause_page">Byla otevřena stránka aplikace.</string>
+    <string name="journal_cause_link">Vyžádal si ji odkaz.</string>
+    <string name="journal_cause_shortcut">Vyžádala si ji zkratka.</string>
+    <string name="journal_cause_widget">Vyžádal si ji widget.</string>
+    <string name="journal_cause_tile">Vyžádala si ji dlaždice Rychlého nastavení.</string>
+    <string name="journal_cause_schedule">Spustil ji časový plán.</string>
+    <string name="journal_cause_retry">Zkouší to znovu tam, kde předchozí kontrola selhala.</string>
+    <string name="journal_cause_added">Aplikace byla právě přidána.</string>
+    <string name="journal_cause_imported">Aplikace byly právě importovány.</string>
+    <string name="journal_cause_changed">Změnilo se nastavení aplikace.</string>
+    <string name="journal_cause_install">Aplikace se chystá k instalaci a nejdřív se kontroluje.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">Kontrola %1$d aplikace skončila po %2$s.</item>
+        <item quantity="few">Kontrola %1$d aplikací skončila po %2$s.</item>
+        <item quantity="many">Kontrola %1$d aplikace skončila po %2$s.</item>
+        <item quantity="other">Kontrola %1$d aplikací skončila po %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Kontrola %1$s skončila po %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Nalezena %1$d aktualizace.</item>
+        <item quantity="few">Nalezeny %1$d aktualizace.</item>
+        <item quantity="many">Nalezeno %1$d aktualizace.</item>
+        <item quantity="other">Nalezeno %1$d aktualizací.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d aplikaci se nepodařilo zkontrolovat.</item>
+        <item quantity="few">%1$d aplikace se nepodařilo zkontrolovat.</item>
+        <item quantity="many">%1$d aplikace se nepodařilo zkontrolovat.</item>
+        <item quantity="other">%1$d aplikací se nepodařilo zkontrolovat.</item>
+    </plurals>
+    <string name="journal_check_stopped">Kontrola se zastavila po %1$s, než byla dokončena.</string>
+</resources>

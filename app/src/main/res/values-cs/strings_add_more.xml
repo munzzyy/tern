@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">Tern tento druh odkazu nezná.</string>
+    <string name="add_not_readable_as">Tuto adresu nelze číst jako %1$s.</string>
+    <string name="add_event_replaced">Nastavení bylo nahrazeno nastavením, které pro ni obsahoval soubor nebo odkaz.</string>
+    <string name="search_miss_unreachable">%1$s se nepodařilo prohledat: zdroj neodpověděl.</string>
+    <string name="search_miss_wait">%1$s se nepodařilo prohledat: zdroj žádá Tern, aby chvíli počkal.</string>
+    <string name="search_miss_wait_until">%1$s se nepodařilo prohledat: zdroj žádá Tern, aby počkal do %2$s.</string>
+    <string name="search_miss_refused">%1$s se nepodařilo prohledat: zdroj požadavek odmítl.</string>
+    <string name="search_miss_status">%1$s se nepodařilo prohledat: zdroj odpověděl %2$d.</string>
+    <string name="search_miss_unreadable">%1$s se nepodařilo prohledat: odpověď zdroje se nepodařilo přečíst.</string>
+    <string name="add_options_title">Před přidáním</string>
+    <string name="add_options_auto">Tern si sám zjistí, o jakou adresu jde.</string>
+    <string name="add_options_forced">Číst jako: %1$s</string>
+    <string name="add_read_as">Číst adresu jako</string>
+    <string name="add_read_as_auto">Automaticky</string>
+    <string name="add_read_as_forgejo">Forgejo nebo Gitea</string>
+    <string name="add_read_as_help">Pro zdroj, který Tern sám nepozná, například na vlastním serveru.</string>
+    <string name="add_package_label">Název balíčku</string>
+    <string name="add_package_help">Každý soubor musí patřit k tomuto balíčku. Když pole zůstane prázdné, Tern název přečte ze souboru aplikace.</string>
+    <string name="add_package_invalid">To není název balíčku. Vypadá takto: org.example.app.</string>
+    <string name="add_set_options">Nastavit možnosti</string>
+    <string name="add_failed_options">Možnosti mohou Tern napovědět, kde hledat. Nastavte je výše a Tern zkontroluje znovu.</string>
+    <string name="add_replace">Nahradit nastavení</string>
+    <string name="add_replace_explain">Odkaz obsahuje pro tuto aplikaci vlastní nastavení. Nahrazení zachová certifikáty, kterým aplikace důvěřuje, i název jejího balíčku a nezapne samostatné instalování aktualizací.</string>
+    <string name="results_filter">Filtr</string>
+    <string name="results_filter_help">Slova nebo vzor</string>
+    <string name="results_filter_none">V seznamu nic neodpovídá „%1$s“.</string>
+    <string name="repo_search_all">Hledat „%1$s“ v celém repozitáři</string>
+    <string name="repo_show_all">Ukázat všechny aplikace repozitáře</string>
+    <string name="repo_heading_within">Aplikace v %1$s odpovídající „%2$s“</string>
+    <string name="search_more">Bylo nalezeno víc, než se zobrazuje. Filtr výběr zúží.</string>
+    <string name="search_forgejo_label">Forgejo nebo Gitea k prohledání</string>
+    <string name="search_forgejo_help">Jeho adresa, například codeberg.org. Token uložený pro něj se odešle spolu s požadavkem.</string>
+    <string name="search_forgejo_invalid">Tuto adresu Tern nedokáže prohledat.</string>
+    <string name="search_min_stars_label">Nejméně hvězdiček</string>
+    <string name="search_min_stars_help">Projekty na GitHub a na uvedeném Forgejo s méně hvězdičkami se vynechají.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">Soubor obsahuje i další nastavení pro %1$d aplikaci, která už je ve vašem seznamu. Zůstanou, jaká jsou, dokud je nenahradíte.</item>
+        <item quantity="few">Soubor obsahuje i další nastavení pro %1$d aplikace, které už jsou ve vašem seznamu. Zůstanou, jaká jsou, dokud je nenahradíte.</item>
+        <item quantity="many">Soubor obsahuje i další nastavení pro %1$d aplikací, které už jsou ve vašem seznamu. Zůstanou, jaká jsou, dokud je nenahradíte.</item>
+        <item quantity="other">Soubor obsahuje i další nastavení pro %1$d aplikací, které už jsou ve vašem seznamu. Zůstanou, jaká jsou, dokud je nenahradíte.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">Nahradit nastavení %1$d aplikace</item>
+        <item quantity="few">Nahradit nastavení %1$d aplikací</item>
+        <item quantity="many">Nahradit nastavení %1$d aplikací</item>
+        <item quantity="other">Nahradit nastavení %1$d aplikací</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">Nastavení %1$d aplikace bylo nahrazeno. Certifikáty, kterým důvěřuje, zůstaly.</item>
+        <item quantity="few">Nastavení %1$d aplikací bylo nahrazeno. Certifikáty, kterým důvěřují, zůstaly.</item>
+        <item quantity="many">Nastavení %1$d aplikací bylo nahrazeno. Certifikáty, kterým důvěřují, zůstaly.</item>
+        <item quantity="other">Nastavení %1$d aplikací bylo nahrazeno. Certifikáty, kterým důvěřují, zůstaly.</item>
+    </plurals>
+    <string name="import_settings_offered">Soubor nese i nastavení samotného Tern: vzhled, seznam, oznámení a kontroly. Nepřevezmou se, dokud to sami nepotvrdíte.</string>
+    <string name="import_take_settings">Převzít tato nastavení</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">Zaškrtnout %1$d zobrazený</item>
+        <item quantity="few">Zaškrtnout všechny %1$d zobrazené</item>
+        <item quantity="many">Zaškrtnout všech %1$d zobrazených</item>
+        <item quantity="other">Zaškrtnout všech %1$d zobrazených</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">Zrušit zaškrtnutí u %1$d zobrazeného</item>
+        <item quantity="few">Zrušit zaškrtnutí u všech %1$d zobrazených</item>
+        <item quantity="many">Zrušit zaškrtnutí u všech %1$d zobrazených</item>
+        <item quantity="other">Zrušit zaškrtnutí u všech %1$d zobrazených</item>
+    </plurals>
+</resources>

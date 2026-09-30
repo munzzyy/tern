@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">活動紀錄</string>
+    <string name="journal_keep_own">在紀錄中保留 Tern 自己的訊息</string>
+    <string name="journal_keep_own_effect">Tern 的警告和錯誤，以及每次檢查開始和結束的時間。任何可能是密碼或權杖的內容都會被排除。除非由您分享，否則紀錄只會保留在這個裝置上。</string>
+    <string name="journal_filter_own">Tern 的訊息</string>
+    <string name="journal_mark_note">來自 Tern 的提示</string>
+    <string name="journal_mark_warning">來自 Tern 的警告</string>
+    <string name="journal_mark_error">來自 Tern 的錯誤</string>
+    <plurals name="journal_check_started">
+        <item quantity="other">已開始檢查 %1$d 個應用程式。</item>
+    </plurals>
+    <string name="journal_check_started_one">已開始檢查 %1$s。</string>
+    <string name="journal_cause_asked">檢查是在 Tern 中發起的。</string>
+    <string name="journal_cause_opening">Tern 已開啟。</string>
+    <string name="journal_cause_page">該應用程式的頁面已開啟。</string>
+    <string name="journal_cause_link">檢查由連結發起。</string>
+    <string name="journal_cause_shortcut">檢查由捷徑發起。</string>
+    <string name="journal_cause_widget">檢查由小工具發起。</string>
+    <string name="journal_cause_tile">檢查由快速設定圖塊發起。</string>
+    <string name="journal_cause_schedule">檢查依排程啟動。</string>
+    <string name="journal_cause_retry">檢查會重試上次失敗的部分。</string>
+    <string name="journal_cause_added">剛剛新增了該應用程式。</string>
+    <string name="journal_cause_imported">剛剛匯入了這些應用程式。</string>
+    <string name="journal_cause_changed">該應用程式的設定已變更。</string>
+    <string name="journal_cause_install">該應用程式即將安裝，會先進行檢查。</string>
+    <plurals name="journal_check_ended">
+        <item quantity="other">%1$d 個應用程式的檢查在 %2$s後結束。</item>
+    </plurals>
+    <string name="journal_check_ended_one">%1$s 的檢查在 %2$s後結束。</string>
+    <plurals name="journal_check_updates">
+        <item quantity="other">發現了 %1$d 個更新。</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="other">%1$d 個應用程式無法檢查。</item>
+    </plurals>
+    <string name="journal_check_stopped">檢查在 %1$s後停止，未能完成。</string>
+</resources>

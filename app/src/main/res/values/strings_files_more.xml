@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Saving any file of a release. -->
+    <string name="files_other_title">Other files of this release</string>
+    <string name="files_source_code">Source code</string>
+    <string name="files_save_spoken">Save %1$s to Downloads</string>
+    <string name="files_save_a_file">Save a file</string>
+    <string name="files_pick_title_version">Save a file of version %1$s</string>
+    <string name="files_pick_title_app">Save a file of %1$s</string>
+    <string name="files_skip">Skip</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">Saving %1$d file. A notification says when it is done.</item>
+        <item quantity="other">Saving %1$d files. A notification says when each is done.</item>
+    </plurals>
+
+    <!-- Notifications. -->
+    <string name="files_channel_saved">Saved files</string>
+    <string name="files_notify_saved">Saved %1$s</string>
+    <string name="files_notify_saved_plain">A file was saved to Downloads</string>
+    <string name="files_notify_not_saved">Could not save %1$s</string>
+    <string name="files_notify_not_saved_plain">A file could not be saved</string>
+    <!-- An app's name, then the version it now has. -->
+    <string name="files_notify_updated_to">%1$s was updated to %2$s</string>
+    <string name="files_notify_installed_at">%1$s %2$s was installed</string>
+    <!-- The names of the apps, then what went wrong for them. -->
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">What went wrong</string>
+    <string name="files_problems_none">None of these apps has a problem now.</string>
+
+    <!-- Verified Apps, which was called AppVerifier, is the name of an app. -->
+    <string name="files_setting_verifier">Show new apps to Verified Apps first</string>
+    <string name="files_setting_verifier_effect">Before an app is installed for the first time, its checked file goes to Verified Apps or AppVerifier, where one is installed, for a second look. The install goes on once you are back in Tern.</string>
+    <string name="files_verifier_about">About Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s is a separate app. It compares this app with the certificate Tern holds it to, and with its own list of apps it knows.</string>
+    <string name="files_verifier_card_action">Check with %1$s</string>
+</resources>

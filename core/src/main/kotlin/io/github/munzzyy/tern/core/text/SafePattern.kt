@@ -16,17 +16,37 @@ class PatternException(val pattern: String, message: String, cause: Throwable? =
  * the match runs on a thread of its own, and when the deadline passes the caller gets an error and
  * the thread is left behind to finish or die with the process.
  */
-class SafePattern private constructor(private val regex: Regex, val pattern: String, private val maxSteps: Int) {
+class SafePattern private constructor(
+    private val regex: Regex,
+    val pattern: String,
+    private val maxSteps: Int,
+    private val maxInput: Int,
+) {
     fun matches(text: String?): Boolean = watched(pattern) { regex.containsMatchIn(metered(text)) }
 
-    /** First capture group when the pattern has one, else the whole match. */
+    /**
+     * The first capture group of the last match when the pattern has one, else the whole of that
+     * match. The last match, because Obtainium takes that one, so a version pattern means the same
+     * in both.
+     */
     fun extract(text: String?): String? = watched(pattern) {
-        val match = regex.find(metered(text)) ?: return@watched null
+        val match = lastMatch(text) ?: return@watched null
         val group = if (match.groupValues.size > 1) match.groupValues[1] else match.value
         group.takeIf { it.isNotEmpty() }
     }
 
-    private fun metered(text: String?): CharSequence = Metered(text.orEmpty().take(MAX_INPUT), Meter(maxSteps), pattern)
+    /** The last match written out through [template]; null when nothing matches or the template gives nothing. */
+    fun extract(text: String?, template: MatchTemplate): String? = groups(text)?.let(template::fill)
+
+    /** The last match: the whole of it, then each group, null for a group that took no part. Null when nothing matches. */
+    fun groups(text: String?): List<String?>? = watched(pattern) {
+        val match = lastMatch(text) ?: return@watched null
+        List(match.groups.size) { match.groups[it]?.value }
+    }
+
+    private fun lastMatch(text: String?): MatchResult? = regex.findAll(metered(text)).lastOrNull()
+
+    private fun metered(text: String?): CharSequence = Metered(text.orEmpty().take(maxInput), Meter(maxSteps), pattern)
 
     private class OutOfSteps(val pattern: String) : RuntimeException()
 
@@ -49,6 +69,10 @@ class SafePattern private constructor(private val regex: Regex, val pattern: Str
         const val MAX_INPUT = 4000
         const val MAX_PATTERN = 500
         const val MAX_STEPS = 2_000_000
+
+        /** How much of a whole web page a pattern made by [compileForPages] reads. */
+        const val MAX_PAGE = 1_000_000
+        const val MAX_PAGE_STEPS = 20_000_000
         const val SINGLE_TIMEOUT_MS = 500L
         const val BATCH_TIMEOUT_MS = 2_000L
 
@@ -57,10 +81,13 @@ class SafePattern private constructor(private val regex: Regex, val pattern: Str
 
         fun compile(pattern: String): SafePattern = compile(pattern, MAX_STEPS)
 
-        internal fun compile(pattern: String, maxSteps: Int): SafePattern {
+        /** For text as long as a whole web page: it reads up to [MAX_PAGE] characters, with the steps that takes. */
+        fun compileForPages(pattern: String): SafePattern = compile(pattern, MAX_PAGE_STEPS, MAX_PAGE)
+
+        internal fun compile(pattern: String, maxSteps: Int, maxInput: Int = MAX_INPUT): SafePattern {
             if (pattern.length > MAX_PATTERN) throw PatternException(pattern.take(40), "A pattern may be at most $MAX_PATTERN characters long")
             try {
-                return SafePattern(Regex(pattern, RegexOption.IGNORE_CASE), pattern, maxSteps)
+                return SafePattern(Regex(pattern, RegexOption.IGNORE_CASE), pattern, maxSteps, maxInput)
             } catch (e: IllegalArgumentException) {
                 throw PatternException(pattern, "Not a valid pattern: $pattern", e)
             }

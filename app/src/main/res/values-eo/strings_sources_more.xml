@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">Aplikaĵoj de %1$s povas esti nur sekvataj, ĉar tie estas ofertata neniu dosiero por instali.</string>
+    <string name="min_age_global">Laŭ la agordo por ĉiuj aplikaĵoj: %1$s</string>
+    <string name="setting_min_age_global_effect">Aplikaĵoj sen propra atendo atendas tiom da tempo antaŭ ol nova eldono estas ofertata, por ke malbona eldono estu unue retirita.</string>
+    <string name="option_link_text">Filtri ligilojn laŭ ilia teksto</string>
+    <string name="option_link_text_effect">La teksto de ligilo, anstataŭ ĝia adreso, estas kontrolata kontraŭ la filtrilo.</string>
+    <string name="option_take_first">Preni la unuan ligilon</string>
+    <string name="option_take_first_effect">Alie la lasta ligilo laŭ la ordo estas prenata.</string>
+    <string name="option_natural_order_effect">Alie ligiloj estas metataj en natura ordo laŭ sia adreso, kun nombroj legataj kiel nombroj.</string>
+    <string name="option_by_last_segment">Gvidiĝi laŭ la fino de la adreso</string>
+    <string name="option_by_last_segment_effect">Ligiloj estas ordigataj, kaj versioj legataj, laŭ la parto post la lasta oblikva streko.</string>
+    <string name="option_steps_title">Paĝoj por trairi unue</string>
+    <string name="option_steps_order_help">Sur ĉiu paĝo, la kongruantaj ligiloj estas ordigataj kaj la lasta estas sekvata.</string>
+    <string name="step_title">Paĝo %1$d</string>
+    <string name="step_filter">Ligilo por sekvi</string>
+    <string name="step_text">Kongrui kun la teksto de la ligilo</string>
+    <string name="step_arch">Preferi la procesoron de ĉi tiu aparato</string>
+    <string name="step_add">Aldoni paĝon</string>
+    <string name="step_remove">Forigi ĉi tiun paĝon</string>
+    <string name="option_file_version">Uzi la dosiernomon kiel version</string>
+    <string name="option_file_version_effect">Ĉiu dosiero tiam validas kiel propra eldono.</string>
+    <string name="github_proxy_title">GitHub tra hubproxy</string>
+    <string name="github_proxy_effect">Ĉiu peto al GitHub iras al ĉi tiu gastiganto, kiu vidas ĉiun. Neniu ĵetono estas sendata tra ĝi, do privataj projektoj kaj GitHub Actions ne povas esti sekvataj tiel.</string>
+    <string name="github_proxy_host">Gastiganto de hubproxy</string>
+    <string name="github_proxy_help">Nur gastignomo, ekzemple gh-proxy.com. Tern atingas ĝin per HTTPS.</string>
+    <string name="github_proxy_invalid">Tio ne estas gastignomo, kiun Tern povas uzi</string>
+    <string name="github_proxy_in_use">GitHub-petoj iras tra %1$s</string>
+    <string name="github_proxy_remove">Ne plu uzi la hubproxy</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="install_archive_zstd_unsupported">Arsip ini dikompresi dengan zstd, yang tidak dapat dibuka Tern. Pilih file .zip atau .tar dari rilis ini, atau yang dikompresi dengan gzip, bzip2, atau xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s dari %2$s</string>
+    <string name="install_setting_one_download">Satu unduhan dalam satu waktu</string>
+    <string name="install_setting_one_download_effect">Unduhan saling menunggu, tidak berjalan bersamaan.</string>
+    <string name="install_file_foreign_host">File ini berasal dari %1$s, yang bukan situs sumber aplikasi ini. File ini diperiksa seperti file lainnya.</string>
+    <string name="install_file_picked">Pilihan Anda</string>
+    <string name="install_file_automatic">Biarkan Tern memilih file lagi</string>
+    <string name="install_file_picked_kept">Pembaruan tetap memakai file yang Anda pilih, %1$s.</string>
+    <string name="install_file_picked_missing">Rilis ini tidak memiliki file seperti yang Anda pilih, %1$s, jadi Tern memilihkan satu.</string>
+</resources>

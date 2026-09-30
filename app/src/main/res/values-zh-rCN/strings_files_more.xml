@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_other_title">此发布的其他文件</string>
+    <string name="files_source_code">源代码</string>
+    <string name="files_save_spoken">将 %1$s 保存到下载文件夹</string>
+    <string name="files_save_a_file">保存文件</string>
+    <string name="files_pick_title_version">保存版本 %1$s 的文件</string>
+    <string name="files_pick_title_app">保存 %1$s 的文件</string>
+    <string name="files_skip">跳过</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="other">正在保存 %1$d 个文件。每个文件完成时，通知会告诉您。</item>
+    </plurals>
+    <string name="files_channel_saved">已保存的文件</string>
+    <string name="files_notify_saved">已保存 %1$s</string>
+    <string name="files_notify_saved_plain">文件已保存到下载文件夹</string>
+    <string name="files_notify_not_saved">无法保存 %1$s</string>
+    <string name="files_notify_not_saved_plain">无法保存文件</string>
+    <string name="files_notify_updated_to">%1$s 已更新至 %2$s</string>
+    <string name="files_notify_installed_at">已安装 %1$s %2$s</string>
+    <string name="files_notify_problem_line">%1$s：%2$s</string>
+    <string name="files_problems_title">出了什么问题</string>
+    <string name="files_problems_none">这些应用现在都没有问题。</string>
+    <string name="files_setting_verifier">先让 Verified Apps 查看新应用</string>
+    <string name="files_setting_verifier_effect">首次安装应用前，已检查的文件会交给 Verified Apps 或 AppVerifier（以设备上已安装的为准）进行二次检查。您回到 Tern 后，安装会继续。</string>
+    <string name="files_verifier_about">关于 Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s 是一个独立的应用。它会将此应用与 Tern 为此应用保存的证书进行比对，并与它自己所知的应用列表进行比对。</string>
+    <string name="files_verifier_card_action">使用 %1$s 检查</string>
+</resources>

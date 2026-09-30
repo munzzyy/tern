@@ -98,21 +98,6 @@
         <item quantity="other">%d вибрано</item>
     </plurals>
     <string name="apps_select_hint">Виберіть програми зі списку.</string>
-    <string name="action_add_to_category">Додати до категорії</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Додати %d програму до категорії</item>
-        <item quantity="few">Додати %d програми до категорії</item>
-        <item quantity="many">Додати %d програм до категорії</item>
-        <item quantity="other">Додати %d програм до категорії</item>
-    </plurals>
-    <string name="bulk_category_field">Категорія</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">Додано %1$d програму до %2$s.</item>
-        <item quantity="few">Додано %1$d програми до %2$s.</item>
-        <item quantity="many">Додано %1$d програм до %2$s.</item>
-        <item quantity="other">Додано %1$d програм до %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Або виберіть ту, яку вже використовуєте:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Перевірити %d програму зараз?</item>
         <item quantity="few">Перевірити %d програми зараз?</item>
@@ -368,10 +353,6 @@
         <item quantity="many">Кожні %d годин</item>
         <item quantity="other">Кожні %d години</item>
     </plurals>
-    <string name="settings_unmetered">Лише в мережах без тарифікації</string>
-    <string name="settings_unmetered_effect">Пропускати перевірки через мобільні дані та Wi-Fi з тарифікацією.</string>
-    <string name="settings_charging">Лише під час заряджання</string>
-    <string name="settings_charging_effect">Пропускати перевірки під час роботи від батареї.</string>
     <string name="settings_defaults">Типові для нових програм</string>
     <string name="settings_notifications">Сповіщення</string>
     <string name="settings_notify_updates">Коли знайдено оновлення</string>
@@ -407,7 +388,6 @@
     <string name="proxy_port_invalid">Число від 1 до 65535</string>
     <string name="settings_appearance">Вигляд</string>
     <string name="settings_language">Мова</string>
-    <string name="settings_language_effect">Вибрано в налаштуваннях Android для цієї програми.</string>
     <string name="settings_theme">Тема</string>
     <string name="theme_system">Як у системі</string>
     <string name="theme_light">Світла</string>

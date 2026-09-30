@@ -4,7 +4,10 @@ set -euo pipefail
 APK="${1:?usage: check-apk.sh <apk>}"
 SDK="${ANDROID_HOME:-$HOME/Android/Sdk}"
 AAPT=$(ls "$SDK"/build-tools/*/aapt2 | sort -V | tail -1)
-MAX_BYTES=$((5 * 1024 * 1024))
+# 7 MiB: every source Obtainium reads, the Shizuku and root installers and the widget took the
+# app past 5 MiB, and the rest of Obtainium's features, Tern's own bzip2 and xz readers and their
+# words in 29 languages past 6. It is still about a quarter of Obtainium's APK for one architecture.
+MAX_BYTES=$((7 * 1024 * 1024))
 fail=0
 
 expected=$(sort <<'LIST'
@@ -19,6 +22,8 @@ android.permission.RECEIVE_BOOT_COMPLETED
 android.permission.REQUEST_DELETE_PACKAGES
 android.permission.REQUEST_INSTALL_PACKAGES
 android.permission.UPDATE_PACKAGES_WITHOUT_USER_ACTION
+com.rosan.dhizuku.permission.API
+moe.shizuku.manager.permission.API_V23
 LIST
 )
 actual=$("$AAPT" dump permissions "$APK" | sed -n "s/^uses-permission: name='\([^']*\)'.*/\1/p" | grep -v 'DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION$' | sort -u)

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">بدون پرسش، از طریق Dhizuku به‌عنوان مالک دستگاه نصب و به‌روزرسانی می‌کند. هر فایل ابتدا از همان بررسی‌ها عبور می‌کند. Android سپس Dhizuku را به‌عنوان نصب‌کننده ثبت می‌کند.</string>
+    <string name="installer_dhizuku_not_ready">آماده نیست، تا زمانی که آماده نشود چیزی نصب نمی‌شود</string>
+    <string name="installer_dhizuku_unsupported">Tern در این نسخه از Android نمی‌تواند از طریق Dhizuku نصب کند.</string>
+    <string name="installer_dhizuku_not_installed">Dhizuku نصب نشده است. آن را نصب کنید و به‌عنوان مالک دستگاه تنظیم کنید، سپس برگردید.</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku مالک دستگاه نیست. آن را در برنامه Dhizuku به‌عنوان مالک دستگاه تنظیم کنید، سپس برگردید.</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku پاسخ نداد. برنامه Dhizuku را باز کنید، سپس برگردید.</string>
+    <string name="installer_dhizuku_not_allowed">Tern هنوز اجازه استفاده از Dhizuku را ندارد. برای درخواست، اینجا را فشار دهید.</string>
+    <string name="dhizuku_failed_not_installed">Dhizuku نصب نشده است.</string>
+    <string name="dhizuku_failed_not_owner">Dhizuku مالک دستگاه نیست.</string>
+    <string name="dhizuku_failed_not_answering">Dhizuku پاسخ نداد.</string>
+    <string name="dhizuku_failed_not_allowed">Dhizuku به Tern اجازه استفاده از خود را نمی‌دهد.</string>
+    <string name="install_signer_changed">برنامه‌ای که اکنون نصب است توسط شخصی غیر از امضاکننده فایلی که Tern بررسی کرده بود امضا شده است، بنابراین این نصب حساب نمی‌شود.</string>
+</resources>

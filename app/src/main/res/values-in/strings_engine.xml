@@ -9,7 +9,6 @@
     <string name="engine_no_space">Tidak cukup ruang kosong: ini membutuhkan %1$s dan %2$s tersedia.</string>
     <string name="engine_download_cut">Unduhan berhenti setelah %1$s dari %2$s. Coba lagi untuk melanjutkannya.</string>
     <string name="engine_checksum_mismatch">File tidak cocok dengan checksum yang diberikan penerbit, sehingga dihapus. File tersebut mungkin rusak atau diganti.</string>
-    <string name="engine_tar_unsupported">Rilis ini adalah arsip tar, yang tidak dibuka oleh Tern. Pilih file lain.</string>
     <string name="engine_not_an_apk">File ini bukan APK atau arsip yang dapat dibaca Tern (%1$s).</string>
     <string name="engine_archive_no_apk">Arsip tidak menyimpan APK.</string>
     <string name="engine_archive_no_base">Arsip menyimpan APK terpisah tetapi tidak ada APK dasar.</string>
@@ -57,7 +56,6 @@
     <string name="engine_warn_no_file">Tidak ada file di rilis ini yang cocok untuk perangkat ini.</string>
     <string name="engine_warn_prerelease">Hanya pra-rilis yang diterbitkan.</string>
     <string name="engine_warn_moved">Proyek tampaknya telah dipindahkan ke %1$s.</string>
-    <string name="engine_several_apps">Tautan ini menyimpan beberapa aplikasi. Impor dari setelan saja.</string>
     <string name="engine_not_a_source">Tern tidak menemukan rilis di alamat ini.</string>
     <string name="engine_move_gone">Aplikasi ini tidak lagi ada di daftar.</string>
     <string name="engine_move_nothing">Tidak ada alamat baru untuk diikuti.</string>

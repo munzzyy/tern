@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">Desde unha lista de enderezos</string>
+    <string name="import_addresses_explain">Pega enderezos de aplicacións, un por liña ou en calquera parte do texto, ou léos dun ficheiro como unha lista OPML. Cada un examínase e engádese igual que unha ligazón soa.</string>
+    <string name="import_addresses_field">Enderezos</string>
+    <string name="import_addresses_show">Amosar o que contén</string>
+    <string name="import_addresses_file">Ler un ficheiro</string>
+    <string name="import_addresses_none">Non contén ningún enderezo https.</string>
+    <string name="import_addresses_other">Outra lista</string>
+    <string name="import_addresses_unreadable">Non se puido ler ese ficheiro.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d enderezo. Desmarca o que non queiras e despois engade.</item>
+        <item quantity="other">%1$d enderezos. Desmarca o que non queiras e despois engade.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">Esta ligazón trae %1$d aplicación. Míraa para ver os seus axustes antes de engadila.</item>
+        <item quantity="other">Esta ligazón trae %1$d aplicacións. Mira cada unha para ver os seus axustes antes de engadila.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Exportar para Obtainium</string>
+    <string name="settings_export_obtainium_effect">Un ficheiro que Obtainium importa, para unha lista que se muda alí. Os axustes que Obtainium non ten quedan atrás.</string>
+    <string name="settings_export_installed_only">Exportar só as aplicacións instaladas</string>
+    <string name="settings_export_settings">Incluír os axustes nas exportacións</string>
+    <string name="settings_export_settings_effect">A aparencia, a lista, as notificacións e as comprobacións. Nunca un token, o proxy nin o instalador.</string>
+    <string name="settings_kept_export">Manter unha exportación ao día</string>
+    <string name="settings_kept_export_effect">Pouco despois de que cambie algo na lista, Tern volve escribir a exportación.</string>
+    <string name="settings_kept_export_written">Escrita ás %1$s</string>
+    <string name="settings_kept_export_folder">Onde se garda</string>
+    <string name="import_settings_taken">Tamén se aplicaron os axustes do ficheiro.</string>
+</resources>

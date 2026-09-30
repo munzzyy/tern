@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">Filtrar a lista</string>
+    <string name="filter_state_on">Filtros ativados</string>
+    <string name="filter_name">Nome</string>
+    <string name="filter_author">Desenvolvedor</string>
+    <string name="filter_package">Nome do pacote</string>
+    <string name="filter_show_up_to_date">Apps atualizados</string>
+    <string name="filter_show_not_installed">Apps não instalados</string>
+    <string name="filter_show_tracked">Apps apenas acompanhados</string>
+    <string name="filter_categories">Em qualquer uma destas categorias</string>
+    <string name="filter_sources">De qualquer uma destas fontes</string>
+    <string name="filter_clear">Limpar filtros</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%1$d de %2$d app mostrado</item>
+        <item quantity="many">%1$d de %2$d apps mostrados</item>
+        <item quantity="other">%1$d de %2$d apps mostrados</item>
+    </plurals>
+    <string name="checking_count">Verificando %1$d de %2$d</string>
+    <string name="row_moved">Mudou para %1$s</string>
+    <string name="row_released">Publicado em %1$s</string>
+    <string name="row_changes">Alterações</string>
+    <string name="action_show_changes">Mostrar as alterações</string>
+    <string name="action_install_all">Instalar todos</string>
+    <string name="action_install_update_all">Instalar e atualizar todos</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d app ainda não está instalado</item>
+        <item quantity="many">%d apps ainda não estão instalados</item>
+        <item quantity="other">%d apps ainda não estão instalados</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Instalar e atualizar %d app?</item>
+        <item quantity="many">Instalar e atualizar %d apps?</item>
+        <item quantity="other">Instalar e atualizar %d apps?</item>
+    </plurals>
+    <string name="settings_update_all">O botão Atualizar todos</string>
+    <string name="update_all_updates">Apenas atualizações</string>
+    <string name="update_all_all">Atualizações e apps ainda não instalados</string>
+    <string name="update_all_none">Não mostrado</string>
+    <string name="settings_confirm_update_all">Perguntar antes de atualizar todos</string>
+    <string name="settings_confirm_update_all_effect">Diz quantos apps serão instalados ou atualizados e espera por um sim.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Instalar %d app?</item>
+        <item quantity="many">Instalar %d apps?</item>
+        <item quantity="other">Instalar %d apps?</item>
+    </plurals>
+    <string name="bulk_install_text">Cada arquivo é baixado e verificado antes de pedir ao Android para instalá-lo. O Tern guarda o certificado com que cada app novo é assinado e exige o mesmo para cada atualização posterior.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d dos apps escolhidos não tem nada para instalar agora e fica como está.</item>
+        <item quantity="many">%d dos apps escolhidos não têm nada para instalar agora e ficam como estão.</item>
+        <item quantity="other">%d dos apps escolhidos não têm nada para instalar agora e ficam como estão.</item>
+    </plurals>
+    <string name="action_change_categories">Alterar categorias</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Categorias de %d app</item>
+        <item quantity="many">Categorias de %d apps</item>
+        <item quantity="other">Categorias de %d apps</item>
+    </plurals>
+    <string name="bulk_categories_help">Uma marca arquiva cada app escolhido em uma categoria, e uma caixa vazia tira todos dela. Um traço deixa cada app como está.</string>
+    <string name="categories_filed_all">Todos os apps escolhidos</string>
+    <string name="categories_filed_some">Alguns dos apps escolhidos</string>
+    <string name="categories_filed_none">Nenhum dos apps escolhidos</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">As categorias de %d app foram alteradas.</item>
+        <item quantity="many">As categorias de %d apps foram alteradas.</item>
+        <item quantity="other">As categorias de %d apps foram alteradas.</item>
+    </plurals>
+    <string name="action_share_config_link">Compartilhar um link com as configurações dele</string>
+    <string name="action_share_config_links">Compartilhar links com as configurações deles</string>
+    <string name="share_link_none">Nenhum link consegue conter as configurações deste app. Compartilhe-o como arquivo em vez disso.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d app fica de fora, porque nenhum link consegue conter as configurações dele.</item>
+        <item quantity="many">%d apps ficam de fora, porque nenhum link consegue conter as configurações deles.</item>
+        <item quantity="other">%d apps ficam de fora, porque nenhum link consegue conter as configurações deles.</item>
+    </plurals>
+</resources>

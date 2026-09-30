@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="install_archive_zstd_unsupported">ഈ ആർക്കൈവ് zstd ഉപയോഗിച്ച് കംപ്രസ് ചെയ്തതാണ്, Tern-ന് ഇത് തുറക്കാനാകില്ല. ഈ റിലീസിൻ്റെ .zip അല്ലെങ്കിൽ .tar ഫയൽ, അല്ലെങ്കിൽ gzip, bzip2 അല്ലെങ്കിൽ xz ഉപയോഗിച്ച് കംപ്രസ് ചെയ്തത് തിരഞ്ഞെടുക്കുക.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%2$s-ൽ %1$s</string>
+    <string name="install_setting_one_download">ഒരു സമയം ഒരു ഡൗൺലോഡ്</string>
+    <string name="install_setting_one_download_effect">ഡൗൺലോഡുകൾ ഒരുമിച്ച് പ്രവർത്തിക്കുന്നതിന് പകരം പരസ്പരം കാത്തിരിക്കുന്നു.</string>
+    <string name="install_file_foreign_host">ഈ ഫയൽ %1$s-ൽ നിന്നാണ് വരുന്നത്, ഇത് ഈ ആപ്പിൻ്റെ ഉറവിടത്തിൻ്റെ സൈറ്റല്ല. മറ്റേതൊരു ഫയലും പോലെ ഇതും പരിശോധിക്കുന്നു.</string>
+    <string name="install_file_picked">നിങ്ങളുടെ തിരഞ്ഞെടുപ്പ്</string>
+    <string name="install_file_automatic">ഫയൽ വീണ്ടും Tern-നെ തിരഞ്ഞെടുക്കാൻ അനുവദിക്കുക</string>
+    <string name="install_file_picked_kept">അപ്ഡേറ്റുകൾ നിങ്ങൾ തിരഞ്ഞെടുത്ത ഫയലായ %1$s തന്നെ ഉപയോഗിക്കുന്നത് തുടരും.</string>
+    <string name="install_file_picked_missing">ഈ റിലീസിൽ നിങ്ങൾ തിരഞ്ഞെടുത്ത %1$s പോലുള്ള ഫയലൊന്നുമില്ല, അതിനാൽ Tern ഒരെണ്ണം തിരഞ്ഞെടുത്തു.</string>
+</resources>

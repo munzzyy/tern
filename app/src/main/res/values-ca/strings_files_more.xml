@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_other_title">Altres fitxers d\'aquest llançament</string>
+    <string name="files_source_code">Codi font</string>
+    <string name="files_save_spoken">Desa %1$s a Baixades</string>
+    <string name="files_save_a_file">Desa un fitxer</string>
+    <string name="files_pick_title_version">Desa un fitxer de la versió %1$s</string>
+    <string name="files_pick_title_app">Desa un fitxer de %1$s</string>
+    <string name="files_skip">Omet</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">S\'està desant %1$d fitxer. Una notificació avisa quan ha acabat.</item>
+        <item quantity="many">S\'estan desant %1$d fitxers. Una notificació avisa quan ha acabat cadascun.</item>
+        <item quantity="other">S\'estan desant %1$d fitxers. Una notificació avisa quan ha acabat cadascun.</item>
+    </plurals>
+    <string name="files_channel_saved">Fitxers desats</string>
+    <string name="files_notify_saved">S\'ha desat %1$s</string>
+    <string name="files_notify_saved_plain">S\'ha desat un fitxer a Baixades</string>
+    <string name="files_notify_not_saved">No s\'ha pogut desar %1$s</string>
+    <string name="files_notify_not_saved_plain">No s\'ha pogut desar un fitxer</string>
+    <string name="files_notify_updated_to">S\'ha actualitzat %1$s a %2$s</string>
+    <string name="files_notify_installed_at">S\'ha instal·lat %1$s %2$s</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Què ha anat malament</string>
+    <string name="files_problems_none">Cap d\'aquestes aplicacions té cap problema ara.</string>
+    <string name="files_setting_verifier">Mostra primer les aplicacions noves a Verified Apps</string>
+    <string name="files_setting_verifier_effect">Abans d\'instal·lar una aplicació per primera vegada, el seu fitxer comprovat s\'envia a Verified Apps o a AppVerifier, si alguna de les dues està instal·lada, per a una segona ullada. La instal·lació continua quan tornes a Tern.</string>
+    <string name="files_verifier_about">Quant a Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s és una aplicació a part. Compara aquesta aplicació amb el certificat que Tern li exigeix i amb la seva pròpia llista d\'aplicacions conegudes.</string>
+    <string name="files_verifier_card_action">Comprova amb %1$s</string>
+</resources>

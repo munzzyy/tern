@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">دسته‌ها</string>
+    <string name="settings_categories_effect">برایشان نام بگذارید، به هر کدام رنگی بدهید، و آن‌ها را یک‌جا برای همه برنامه‌ها تغییر نام دهید یا حذف کنید.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d دسته</item>
+        <item quantity="other">%d دسته</item>
+    </plurals>
+    <string name="categories_none">هنوز هیچ دسته‌ای نیست. یکی را اینجا بسازید، یا از لیست برنامه‌ها را در یک دسته قرار دهید.</string>
+    <string name="categories_new">دسته جدید</string>
+    <string name="category_edit">ویرایش دسته</string>
+    <string name="category_name">نام</string>
+    <string name="category_color">رنگ</string>
+    <string name="category_color_spoken">رنگ %1$d از %2$d</string>
+    <string name="category_exists">دسته‌ای با این نام از قبل وجود دارد.</string>
+    <string name="category_delete">حذف</string>
+    <string name="category_delete_effect">برنامه‌های درون آن در لیست باقی می‌مانند؛ فقط دیگر در این دسته قرار ندارند.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d برنامه</item>
+        <item quantity="other">%d برنامه</item>
+    </plurals>
+    <string name="action_close">بستن</string>
+    <string name="categories_new_short">جدید…</string>
+    <string name="app_notes_title">یادداشت‌ها</string>
+    <string name="app_notes_help">Markdown کار می‌کند: **پررنگ**، *کج*، لیست‌ها و پیوندها.</string>
+    <string name="app_notes_add">افزودن یادداشت</string>
+    <string name="app_notes_add_effect">هر چیزی که درباره این برنامه ارزش به خاطر سپردن دارد. همراه برون‌ریزی‌ها منتقل می‌شود.</string>
+    <string name="app_notes_edit">ویرایش یادداشت</string>
+</resources>

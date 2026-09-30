@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Registro de actividad</string>
+    <string name="journal_keep_own">Mantener los propios mensajes de Tern en el registro</string>
+    <string name="journal_keep_own_effect">Sus advertencias y errores, y cuándo empieza y termina cada comprobación. Todo lo que pueda ser una contraseña o un token se deja fuera, y el registro se queda en este dispositivo a menos que lo compartas.</string>
+    <string name="journal_filter_own">Mensajes de Tern</string>
+    <string name="journal_mark_note">Nota de Tern</string>
+    <string name="journal_mark_warning">Advertencia de Tern</string>
+    <string name="journal_mark_error">Error de Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Empezó una comprobación de %1$d aplicación.</item>
+        <item quantity="many">Empezó una comprobación de %1$d aplicaciones.</item>
+        <item quantity="other">Empezó una comprobación de %1$d aplicaciones.</item>
+    </plurals>
+    <string name="journal_check_started_one">Empezó una comprobación de %1$s.</string>
+    <string name="journal_cause_asked">Se pidió en Tern.</string>
+    <string name="journal_cause_opening">Se abrió Tern.</string>
+    <string name="journal_cause_page">Se abrió su página.</string>
+    <string name="journal_cause_link">La pidió un enlace.</string>
+    <string name="journal_cause_shortcut">La pidió un acceso directo.</string>
+    <string name="journal_cause_widget">La pidió el widget.</string>
+    <string name="journal_cause_tile">La pidió el recuadro de Ajustes rápidos.</string>
+    <string name="journal_cause_schedule">La inició la programación.</string>
+    <string name="journal_cause_retry">Vuelve a intentarlo donde falló la última comprobación.</string>
+    <string name="journal_cause_added">Acaba de añadirse.</string>
+    <string name="journal_cause_imported">Acaban de importarse.</string>
+    <string name="journal_cause_changed">Sus ajustes cambiaron.</string>
+    <string name="journal_cause_install">Está a punto de instalarse, y antes se comprueba.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">La comprobación de %1$d aplicación terminó tras %2$s.</item>
+        <item quantity="many">La comprobación de %1$d aplicaciones terminó tras %2$s.</item>
+        <item quantity="other">La comprobación de %1$d aplicaciones terminó tras %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">La comprobación de %1$s terminó tras %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Encontró %1$d actualización.</item>
+        <item quantity="many">Encontró %1$d actualizaciones.</item>
+        <item quantity="other">Encontró %1$d actualizaciones.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d aplicación no se pudo comprobar.</item>
+        <item quantity="many">%1$d aplicaciones no se pudieron comprobar.</item>
+        <item quantity="other">%1$d aplicaciones no se pudieron comprobar.</item>
+    </plurals>
+    <string name="journal_check_stopped">La comprobación se detuvo tras %1$s, antes de terminar.</string>
+</resources>

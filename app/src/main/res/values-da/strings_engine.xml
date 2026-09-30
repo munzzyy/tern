@@ -9,7 +9,6 @@
     <string name="engine_no_space">Ikke nok ledig plads: dette kræver %1$s og %2$s er ledig.</string>
     <string name="engine_download_cut">Downloaden stoppede efter %1$s af %2$s. Prøv igen for at genoptage den.</string>
     <string name="engine_checksum_mismatch">Filen matcher ikke den kontrolsum, udgiveren angav, så den blev slettet. Den kan være blevet beskadiget eller udskiftet.</string>
-    <string name="engine_tar_unsupported">Denne udgivelse er et tar-arkiv, som Tern ikke åbner. Vælg en anden fil.</string>
     <string name="engine_not_an_apk">Denne fil er ikke en APK eller et arkiv, Tern kan læse (%1$s).</string>
     <string name="engine_archive_no_apk">Arkivet indeholder ingen APK.</string>
     <string name="engine_archive_no_base">Arkivet indeholder delte APK\'er, men ingen basis-APK.</string>
@@ -57,7 +56,6 @@
     <string name="engine_warn_no_file">Ingen fil i denne udgivelse passer til denne enhed.</string>
     <string name="engine_warn_prerelease">Kun en forhåndsudgivelse er udgivet.</string>
     <string name="engine_warn_moved">Projektet ser ud til at være flyttet til %1$s.</string>
-    <string name="engine_several_apps">Dette link indeholder flere apps. Importer det fra indstillinger i stedet.</string>
     <string name="engine_not_a_source">Tern fandt ingen udgivelser på denne adresse.</string>
     <string name="engine_move_gone">Denne app er ikke længere på listen.</string>
     <string name="engine_move_nothing">Der er ingen ny adresse at følge.</string>

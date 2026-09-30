@@ -4,7 +4,7 @@ import io.github.munzzyy.tern.core.engine.InstallRecord
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.Problem
 
-/** An install handed to the system installer whose answer has not arrived yet. */
+/** An install handed to an installer whose answer has not arrived yet. */
 data class PendingInstall(
     val sessionId: Int,
     val packageName: String,
@@ -16,6 +16,14 @@ data class PendingInstall(
     val assetUrl: String,
     val startedAtMs: Long,
     val waitingForUser: Boolean = false,
+    /**
+     * SHA-256 of the certificates the gate verified in the file handed over. The install must end
+     * with an app signed by exactly these, or it does not count: another installer app or Dhizuku
+     * could change what it was given.
+     */
+    val signers: List<String> = emptyList(),
+    /** The addresses of the splits fetched beside the file at [assetUrl], whose kept copies go with it. */
+    val partUrls: List<String> = emptyList(),
 )
 
 /** A refusal tied to one file of one release, so a new release clears it by itself. */
@@ -42,4 +50,8 @@ data class AppState(
     val announcedReleaseId: String? = null,
     /** Where the source says the icon can be had, the best first. */
     val iconUrls: List<String> = emptyList(),
+    /** When the app was added. Older apps have none. */
+    val addedAtMs: Long? = null,
+    /** The app was seen installed on this device while in the list; only such an app can be taken as uninstalled. */
+    val seenInstalled: Boolean = false,
 )

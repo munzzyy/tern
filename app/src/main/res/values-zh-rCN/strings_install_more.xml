@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="install_archive_zstd_unsupported">此压缩包使用 zstd 压缩，Tern 无法打开。请选择此发布的 .zip 或 .tar 文件，或使用 gzip、bzip2 或 xz 压缩的文件。</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s，共 %2$s</string>
+    <string name="install_setting_one_download">一次只下载一个</string>
+    <string name="install_setting_one_download_effect">下载会相互等待，而不是同时进行。</string>
+    <string name="install_file_foreign_host">此文件来自 %1$s，它不是此应用来源的网站。它会像其他文件一样接受检查。</string>
+    <string name="install_file_picked">您的选择</string>
+    <string name="install_file_automatic">让 Tern 重新选择文件</string>
+    <string name="install_file_picked_kept">更新会继续使用您选择的文件 %1$s。</string>
+    <string name="install_file_picked_missing">此发布中没有与您选择的文件 %1$s 类似的文件，因此 Tern 选了一个。</string>
+</resources>

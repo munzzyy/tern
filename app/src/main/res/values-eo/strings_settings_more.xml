@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_system">Sama kiel la sistemo</string>
+    <string name="interval_more_often">Kontroli pli ofte</string>
+    <string name="interval_less_often">Kontroli malpli ofte</string>
+    <string name="about_help">Kiel Tern funkcias</string>
+    <string name="about_help_effect">Kion Tern kontrolas kaj kiel aldoni, ĝisdatigi kaj movi aplikaĵojn, en la paĝo de la projekto.</string>
+    <string name="about_security">Kiel Tern protektas vin</string>
+    <string name="about_privacy">Privateco</string>
+    <string name="verification_title">Kontrolo de programistoj de Android</string>
+    <string name="verification_text">Google anoncis, ke atestitaj Android-aparatoj instalos nur aplikaĵojn de programistoj, kiuj registriĝis ĉe Google, komencante en kelkaj landoj ekde septembro 2026 kaj poste en pliaj landoj.\n\nKie tio validas, Android povas rifuzi aplikaĵon de programisto, kiu ne registriĝis, aŭ peti pli de vi antaŭ ol instali ĝin, kiel ajn rezultas la propraj kontroloj de Tern. Tern ne povas ŝanĝi tion, kaj ĝi diras al vi, kiam Android rifuzas.\n\nAparatoj sen atestado de Google ne estas tuŝitaj.</string>
+    <string name="verification_more">La paĝo de Google pri tio</string>
+    <string name="kept_export_format">Formato</string>
+    <string name="kept_export_format_tern">La formato de Tern, kiu enhavas ĉion</string>
+    <string name="kept_export_format_obtainium">La formato de Obtainium, kiun ankaŭ Obtainium povas legi</string>
+    <string name="kept_export_name">Dosiernomo</string>
+    <string name="kept_export_name_usual">Lasu ĝin malplena por %1$s.</string>
+    <string name="look_style">Stilo</string>
+    <string name="style_standard">Norma</string>
+    <string name="style_vibrant">Vigla</string>
+    <string name="style_expressive">Esprimiva</string>
+    <string name="look_style_effect">Vigla estas pli kolora ĉie. Esprimiva turnas la duan kaj trian kolorojn pli for de la unua.</string>
+    <string name="look_color_code">Kolorkodo</string>
+    <string name="look_color_code_effect">Tern prenas la nuancon kaj forton de ĉi tiu koloro kaj elektas el ĝi la tonojn, kiuj restas facile legeblaj.</string>
+    <string name="look_color_code_invalid">Ses deksesumaj ciferoj, ekzemple #3D5A80.</string>
+    <string name="crash_title">Tern haltis neatendite</string>
+    <string name="crash_text">Jen kion Tern faris, kiam ĝi haltis. La raporto restas en ĉi tiu aparato; kunhavigu ĝin kun la programisto, se vi volas, ke oni rigardu ĝin.</string>
+    <string name="crash_share">Kunhavigi</string>
+    <string name="crash_copied">Kopiita</string>
+    <string name="activity_range">Montri</string>
+    <string name="activity_range_all">Ĉiuj tagoj</string>
+    <plurals name="activity_range_days">
+        <item quantity="one">La lasta %d tago</item>
+        <item quantity="other">La lastaj %d tagoj</item>
+    </plurals>
+    <string name="activity_copied">La protokolo estis kopiita</string>
+    <string name="settings_auto_installs">Ĝisdatigoj instaliĝas memstare</string>
+    <string name="settings_auto_installs_effect">Aplikaĵoj agorditaj ĝisdatiĝi memstare faras tion post fona kontrolo. Malŝaltite, ili nur diras, ke ĝisdatigo estas disponebla, kaj ĉiu konservas sian propran elekton por poste.</string>
+    <string name="settings_unmetered_installs">Instali nur per Wi-Fi</string>
+    <string name="settings_unmetered_installs_effect">Kontroloj funkcias en iu ajn reto. Ĝisdatigo, kiu instaliĝus memstare, atendas Wi-Fi aŭ retkablon, kiel en Obtainium.</string>
+    <string name="settings_charging_installs">Instali nur dum ŝargado</string>
+    <string name="settings_charging_installs_effect">Kontroloj funkcias ankaŭ per baterio. Ĝisdatigo, kiu instaliĝus memstare, atendas ĝis la aparato ŝargiĝas.</string>
+    <string name="engine_unreadable_app">La konservita aplikaĵo %1$s ne povis esti legita, do ĝi estas preterlasita el la listo. Nenio estis forigita: pli nova versio de Tern eble legos ĝin.</string>
+    <string name="settings_pin_certificates">Alpingli la atestilojn de la kodgastigejoj</string>
+    <string name="settings_pin_certificates_effect">GitHub, GitLab kaj Codeberg devas montri atestilon de la atestila aŭtoritato, pri kiu oni scias, ke ĉiu el ili uzas ĝin, kiel en Obtainium. Atestilo, kiun alia atestila aŭtoritato estis igita eldoni, estas tiam rifuzita. Se kodgastigejo ŝanĝas sian atestilan aŭtoritaton, kontroloj tie malsukcesas ĝis tio estas malŝaltita.</string>
+</resources>

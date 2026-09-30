@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Registo de atividade</string>
+    <string name="journal_keep_own">Manter no registo as mensagens do próprio Tern</string>
+    <string name="journal_keep_own_effect">Os avisos e erros do Tern, e quando cada verificação começa e termina. Tudo o que possa ser uma palavra-passe ou um token fica de fora, e o registo permanece neste dispositivo, a menos que o partilhe.</string>
+    <string name="journal_filter_own">Mensagens do Tern</string>
+    <string name="journal_mark_note">Nota do Tern</string>
+    <string name="journal_mark_warning">Aviso do Tern</string>
+    <string name="journal_mark_error">Erro do Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Começou uma verificação de %1$d aplicação.</item>
+        <item quantity="many">Começou uma verificação de %1$d aplicações.</item>
+        <item quantity="other">Começou uma verificação de %1$d aplicações.</item>
+    </plurals>
+    <string name="journal_check_started_one">Começou uma verificação de %1$s.</string>
+    <string name="journal_cause_asked">Foi pedida no Tern.</string>
+    <string name="journal_cause_opening">O Tern foi aberto.</string>
+    <string name="journal_cause_page">A página da aplicação foi aberta.</string>
+    <string name="journal_cause_link">Foi pedida por uma ligação.</string>
+    <string name="journal_cause_shortcut">Foi pedida por um atalho.</string>
+    <string name="journal_cause_widget">Foi pedida pelo widget.</string>
+    <string name="journal_cause_tile">Foi pedida pelo mosaico das Definições rápidas.</string>
+    <string name="journal_cause_schedule">Foi iniciada pelo agendamento.</string>
+    <string name="journal_cause_retry">Tenta novamente onde a última verificação falhou.</string>
+    <string name="journal_cause_added">Acabou de ser adicionada.</string>
+    <string name="journal_cause_imported">Acabaram de ser importadas.</string>
+    <string name="journal_cause_changed">As definições da aplicação mudaram.</string>
+    <string name="journal_cause_install">Está prestes a ser instalada e é verificada primeiro.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">A verificação de %1$d aplicação terminou após %2$s.</item>
+        <item quantity="many">A verificação de %1$d aplicações terminou após %2$s.</item>
+        <item quantity="other">A verificação de %1$d aplicações terminou após %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">A verificação de %1$s terminou após %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Encontrou %1$d atualização.</item>
+        <item quantity="many">Encontrou %1$d atualizações.</item>
+        <item quantity="other">Encontrou %1$d atualizações.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d aplicação não pôde ser verificada.</item>
+        <item quantity="many">%1$d aplicações não puderam ser verificadas.</item>
+        <item quantity="other">%1$d aplicações não puderam ser verificadas.</item>
+    </plurals>
+    <string name="journal_check_stopped">A verificação parou após %1$s, antes de terminar.</string>
+</resources>

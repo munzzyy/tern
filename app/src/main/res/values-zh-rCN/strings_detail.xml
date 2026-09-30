@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_share">分享</string>
+    <string name="action_release_page">打开发布页面</string>
+    <string name="action_share_address">分享地址</string>
+    <string name="action_share_link">分享可在 Tern 中打开的链接</string>
+    <string name="action_app_info">Android 中的应用信息</string>
+    <string name="detail_last_checked">上次检查：%1$s</string>
+    <string name="state_favorite">已收藏</string>
+    <string name="action_save_file">保存到下载文件夹</string>
+    <string name="file_saved">已按下载时的原样保存为 %1$s，位于 %2$s。Tern 会在安装文件时检查它。</string>
+    <string name="action_save_files">将文件保存到下载文件夹</string>
+    <plurals name="bulk_marked_seen">
+        <item quantity="other">已将 %d 个发布标记为已读</item>
+    </plurals>
+    <string name="project_page">项目页面</string>
+    <string name="project_page_read">阅读项目页面</string>
+    <string name="project_page_effect">以文本显示其 README。在您打开之前，不会向代码托管平台发出任何请求。</string>
+    <string name="project_page_loading">正在读取…</string>
+    <string name="project_page_none">此项目没有 Tern 可以读取的页面。</string>
+    <string name="project_page_failed">无法读取页面。点击重试。</string>
+</resources>

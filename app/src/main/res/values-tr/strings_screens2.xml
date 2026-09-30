@@ -39,7 +39,7 @@
     <string name="orbot_off">Orbot yüklü ve bağlı değil.</string>
     <string name="orbot_open">Orbot\'u aç</string>
     <string name="orbot_starting">Orbot başlatılıyor.</string>
-    <string name="orbot_on">Orbot çalışıyor. Tern\'ın gönderdiği her şey Tor üzerinden gider.</string>
+    <string name="orbot_on">Orbot çalışıyor. Tern\'in gönderdiği her şey Tor üzerinden gider.</string>
     <string name="orbot_unknown">Orbot henüz yanıt vermedi.</string>
     <string name="orbot_ask_again">Tekrar sor</string>
     <string name="orbot_note">Orbot seçiliyken ve çalışmıyorken, Tern hiçbir şeye ulaşamaz. Asla proxy etrafından dolaşmaz.</string>
@@ -50,7 +50,7 @@
     <string name="door_export_done">%2$s içinde %1$s olarak kaydedildi</string>
     <string name="door_explain">Tern veya Obtainium\'dan bir dışa aktarımı getirin. Hiçbir şey yüklenmez; uygulamalar listenize eklenir ve denetlenir.</string>
     <string name="door_files">Bu cihazdan içe aktar</string>
-    <string name="door_files_effect">Tern\'ın kendi kaydettiği dışa aktarımlar ve kendi içe aktarma klasöründeki dosyalar.</string>
+    <string name="door_files_effect">Tern\'in kendi kaydettiği dışa aktarımlar ve kendi içe aktarma klasöründeki dosyalar.</string>
     <string name="door_files_loading">Dışa aktarım dosyaları aranıyor</string>
     <string name="door_no_files">Hiçbir dışa aktarım dosyası bulunamadı. Tern, kendi kaydettiği dosyaları ve kendi içe aktarma klasörüne yerleştirilen dosyaları okuyabilir.</string>
     <string name="door_file_line">%1$s, %2$s, %3$s</string>
@@ -59,11 +59,11 @@
     <string name="door_link_label">Bir dışa aktarım dosyasına bağlantı</string>
     <string name="door_link_help">Dosyayı sunan bir https adresi.</string>
     <string name="door_link_working">Dosya getiriliyor</string>
-    <string name="permit_manual_body">Android, bir uygulamanın diğerini yüklemesinden önce bir kez sorar ve bu cihazda Tern\'ın sizin için açabileceği bir sayfa yoktur. Cihazın ayarlarında Bilinmeyen kaynaklar veya Bilinmeyen uygulamaları yükle adlı bir listeyi bulun ve oradan Tern\'ı açın.</string>
+    <string name="permit_manual_body">Android, bir uygulamanın diğerini yüklemesinden önce bir kez sorar ve bu cihazda Tern\'in sizin için açabileceği bir sayfa yoktur. Cihazın ayarlarında Bilinmeyen kaynaklar veya Bilinmeyen uygulamaları yükle adlı bir listeyi bulun ve oradan Tern\'i açın.</string>
     <string name="permit_where_android_tv">Android TV ve Google TV: Ayarlar, Uygulamalar, Güvenlik ve kısıtlamalar, Bilinmeyen kaynaklar</string>
     <string name="permit_where_fire_tv">Fire TV: Ayarlar, My Fire TV, Geliştirici seçenekleri, Bilinmeyen uygulamaları yükle</string>
     <string name="permit_done">Bunu yaptım</string>
     <string name="permit_row">Uygulama yükleme izni</string>
-    <string name="permit_row_given">Verildi. Android, Tern\'ın bu cihazda uygulama yüklemesine izin veriyor.</string>
+    <string name="permit_row_given">Verildi. Android, Tern\'in bu cihazda uygulama yüklemesine izin veriyor.</string>
     <string name="permit_row_missing">Henüz verilmedi. Android, bir uygulamanın diğerini yüklemesine izin vermeden önce bir kez sorar.</string>
 </resources>

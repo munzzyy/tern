@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">Фільтрувати список</string>
+    <string name="filter_state_on">Фільтри ввімкнено</string>
+    <string name="filter_name">Назва</string>
+    <string name="filter_author">Розробник</string>
+    <string name="filter_package">Назва пакета</string>
+    <string name="filter_show_up_to_date">Програми з актуальною версією</string>
+    <string name="filter_show_not_installed">Не встановлені програми</string>
+    <string name="filter_show_tracked">Програми, які лише відстежуються</string>
+    <string name="filter_categories">У будь-якій із цих категорій</string>
+    <string name="filter_sources">З будь-якого з цих джерел</string>
+    <string name="filter_clear">Скинути фільтри</string>
+    <plurals name="filter_shown">
+        <item quantity="one">Показано %1$d з %2$d програми</item>
+        <item quantity="few">Показано %1$d з %2$d програм</item>
+        <item quantity="many">Показано %1$d з %2$d програм</item>
+        <item quantity="other">Показано %1$d з %2$d програми</item>
+    </plurals>
+    <string name="checking_count">Перевірка %1$d з %2$d</string>
+    <string name="row_moved">Переміщено до %1$s</string>
+    <string name="row_released">Випущено %1$s</string>
+    <string name="row_changes">Зміни</string>
+    <string name="action_show_changes">Показати зміни</string>
+    <string name="action_install_all">Встановити всі</string>
+    <string name="action_install_update_all">Встановити й оновити всі</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d програма ще не встановлена</item>
+        <item quantity="few">%d програми ще не встановлені</item>
+        <item quantity="many">%d програм ще не встановлено</item>
+        <item quantity="other">%d програми ще не встановлено</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Встановити й оновити %d програму?</item>
+        <item quantity="few">Встановити й оновити %d програми?</item>
+        <item quantity="many">Встановити й оновити %d програм?</item>
+        <item quantity="other">Встановити й оновити %d програми?</item>
+    </plurals>
+    <string name="settings_update_all">Кнопка «Оновити всі»</string>
+    <string name="update_all_updates">Лише оновлення</string>
+    <string name="update_all_all">Оновлення та ще не встановлені програми</string>
+    <string name="update_all_none">Не показувати</string>
+    <string name="settings_confirm_update_all">Запитувати перед «Оновити всі»</string>
+    <string name="settings_confirm_update_all_effect">Повідомляє, скільки програм буде встановлено або оновлено, і чекає на вашу згоду.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Встановити %d програму?</item>
+        <item quantity="few">Встановити %d програми?</item>
+        <item quantity="many">Встановити %d програм?</item>
+        <item quantity="other">Встановити %d програми?</item>
+    </plurals>
+    <string name="bulk_install_text">Кожен файл завантажується та перевіряється, перш ніж Android отримає запит на його встановлення. Tern запам\'ятовує сертифікат, яким підписано кожну нову програму, і вимагає його для всіх наступних оновлень.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">Для %d з вибраних програм зараз нічого встановлювати, вона залишається як є.</item>
+        <item quantity="few">Для %d з вибраних програм зараз нічого встановлювати, вони залишаються як є.</item>
+        <item quantity="many">Для %d з вибраних програм зараз нічого встановлювати, вони залишаються як є.</item>
+        <item quantity="other">Для %d з вибраних програм зараз нічого встановлювати, вони залишаються як є.</item>
+    </plurals>
+    <string name="action_change_categories">Змінити категорії</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Категорії %d програми</item>
+        <item quantity="few">Категорії %d програм</item>
+        <item quantity="many">Категорії %d програм</item>
+        <item quantity="other">Категорії %d програми</item>
+    </plurals>
+    <string name="bulk_categories_help">Позначка додає всі вибрані програми до категорії, а порожній прапорець прибирає їх із неї. Риска залишає кожну програму як є.</string>
+    <string name="categories_filed_all">Усі вибрані програми</string>
+    <string name="categories_filed_some">Деякі з вибраних програм</string>
+    <string name="categories_filed_none">Жодна з вибраних програм</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Змінено категорії %d програми.</item>
+        <item quantity="few">Змінено категорії %d програм.</item>
+        <item quantity="many">Змінено категорії %d програм.</item>
+        <item quantity="other">Змінено категорії %d програми.</item>
+    </plurals>
+    <string name="action_share_config_link">Поділитися посиланням із налаштуваннями</string>
+    <string name="action_share_config_links">Поділитися посиланнями з налаштуваннями</string>
+    <string name="share_link_none">Жодне посилання не вмістить налаштування цієї програми. Поділіться нею як файлом.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">Пропущено %d програму, бо її налаштування не вмістить жодне посилання.</item>
+        <item quantity="few">Пропущено %d програми, бо їхні налаштування не вмістить жодне посилання.</item>
+        <item quantity="many">Пропущено %d програм, бо їхні налаштування не вмістить жодне посилання.</item>
+        <item quantity="other">Пропущено %d програми, бо її налаштування не вмістить жодне посилання.</item>
+    </plurals>
+</resources>

@@ -39,7 +39,10 @@ class RemoteWalkTest {
     fun downFromTheTopBarGoesIntoTheList() {
         launch("default").use {
             compose.assertFocusOn(row, "the list opens with focus on its first app")
-            compose.moveTo(hasContentDescription("Search your apps") or hasContentDescription("Check all apps now") or hasContentDescription("More options"), KEYCODE_DPAD_UP)
+            compose.moveTo(
+                hasContentDescription("Search your apps") or hasContentDescription("Filter the list") or hasContentDescription("Check all apps now") or hasContentDescription("More options"),
+                KEYCODE_DPAD_UP,
+            )
             compose.press(KEYCODE_DPAD_DOWN)
             compose.assertFocusOn(hasSetTextAction() or hasText("Confirm"), "down from the top bar lands on what is right under it, the banner or the search field")
         }

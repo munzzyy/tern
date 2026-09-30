@@ -13,12 +13,20 @@ import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.CheckCause
+import io.github.munzzyy.tern.engine.CheckCount
 import io.github.munzzyy.tern.engine.ChecksumState
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.engine.EventKind
+import io.github.munzzyy.tern.engine.EventLimits
+import io.github.munzzyy.tern.engine.ExportFormat
+import io.github.munzzyy.tern.engine.ExportStatus
 import io.github.munzzyy.tern.engine.ImportSummary
+import io.github.munzzyy.tern.engine.InstallerChoice
+import io.github.munzzyy.tern.engine.InstallerMode
+import io.github.munzzyy.tern.engine.InstallerReadiness
 import io.github.munzzyy.tern.engine.Suggestion
 import io.github.munzzyy.tern.engine.SavedFile
 import io.github.munzzyy.tern.engine.Received
@@ -31,6 +39,7 @@ import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemException
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.Progress
+import io.github.munzzyy.tern.engine.Reading
 import io.github.munzzyy.tern.engine.SearchHit
 import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.ui.Scenarios
@@ -87,6 +96,9 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     private val _checkingAll = MutableStateFlow(false)
     override val checkingAll: StateFlow<Boolean> = _checkingAll.asStateFlow()
 
+    private val _checkCount = MutableStateFlow<CheckCount?>(null)
+    override val checkCount: StateFlow<CheckCount?> = _checkCount.asStateFlow()
+
     private val _online = MutableStateFlow(true)
     private val _handoff = MutableStateFlow<Handoff?>(null)
     override val handoff: StateFlow<Handoff?> = _handoff.asStateFlow()
@@ -136,6 +148,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         _apps.value = ordered(rows)
         _events.value = events
         _checkingAll.value = false
+        _checkCount.value = null
         _settings.value = Settings()
         _online.value = name != "offline"
         nothingWaits = false
@@ -185,12 +198,30 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     private fun log(row: AppRow?, kind: EventKind, message: String) {
         val e = Event(eventIds.incrementAndGet(), System.currentTimeMillis(), row?.id, row?.config?.name, kind, message)
-        _events.update { (listOf(e) + it).take(500) }
+        _events.update { EventLimits.kept(listOf(e) + it) }
     }
 
     override suspend fun detect(input: String): Detection {
         delay(detectDelayMs)
         return fakeDetect(input, Invent(System.currentTimeMillis()))
+    }
+
+    override suspend fun detect(input: String, reading: Reading): Detection {
+        delay(detectDelayMs)
+        return fakeDetect(input, Invent(System.currentTimeMillis()), reading)
+    }
+
+    override suspend fun replaceSettings(found: Detection.Found): String {
+        val id = found.alreadyTracked ?: return add(found, install = false)
+        val carried = found.carried ?: return id
+        delay(stepMs)
+        edit(id) { r -> r.copy(config = carried.copy(id = id, source = r.config.source, name = r.config.name, pinnedSigners = r.config.pinnedSigners.ifEmpty { carried.pinnedSigners })) }
+        return id
+    }
+
+    override suspend fun finishImport(offer: String, replace: Boolean, takeSettings: Boolean): ImportSummary {
+        delay(stepMs * 4)
+        return ImportSummary(0, 0, emptyList(), settingsTaken = takeSettings, replaced = if (replace) 2 else 0, offer = offer)
     }
 
     override fun proposedConfig(found: Detection.Found): AppConfig {
@@ -244,14 +275,22 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         return id
     }
 
-    override suspend fun check(appId: String?) {
+    override suspend fun check(appId: String?, cause: CheckCause) {
         if (!_online.value) return
         val ids = appId?.let { listOf(it) } ?: _apps.value.map { it.id }
-        if (appId == null) _checkingAll.value = true
+        // Tern's own messages about the check, as the real engine keeps them while the setting is on.
+        val keep = _settings.value.keepOwnMessages
+        if (keep) log(null, EventKind.OWN_NOTE, "A check of ${ids.size} apps started. It was asked for in Tern.")
+        if (appId == null) {
+            _checkCount.value = CheckCount(0, ids.size)
+            _checkingAll.value = true
+        }
         ids.forEach { id -> edit(id) { it.copy(checking = true) } }
-        delay(stepMs * 8)
-        val now = System.currentTimeMillis()
+        // The apps are done one after another, in the time one check took before.
+        val each = stepMs * 8 / ids.size.coerceAtLeast(1)
         ids.forEach { id ->
+            delay(each)
+            val now = System.currentTimeMillis()
             edit(id) { r ->
                 val known = if (r.status == AppStatus.UNKNOWN) {
                     val release = Invent(now).release(r.id, "1.0.0", 1)
@@ -263,8 +302,13 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
                 val stale = nothingWaits && known.progress?.phase == Phase.WAITING_FOR_USER
                 known.copy(checking = false, lastCheckedMs = now, progress = if (stale) null else known.progress)
             }
+            if (appId == null) _checkCount.update { it?.copy(done = it.done + 1) }
         }
-        if (appId == null) _checkingAll.value = false
+        if (keep) log(null, EventKind.OWN_NOTE, "The check of ${ids.size} apps ended.")
+        if (appId == null) {
+            _checkingAll.value = false
+            _checkCount.value = null
+        }
     }
 
     override fun install(appId: String, releaseId: String?, assetUrl: String?) {
@@ -344,6 +388,42 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     @Volatile var installsAllowed = true
 
     override fun mayInstall(): Boolean = installsAllowed
+
+    private val _installerReadiness = MutableStateFlow(InstallerReadiness.READY)
+    override val installerReadiness: StateFlow<InstallerReadiness> = _installerReadiness.asStateFlow()
+
+    /** The stand-in has Shizuku and Dhizuku running and waiting for a yes, root refused, and one installer app. */
+    override fun recheckInstaller() {
+        _installerReadiness.value = when (_settings.value.installer) {
+            InstallerMode.SYSTEM -> InstallerReadiness.READY
+            InstallerMode.SHIZUKU -> if (shizukuAllowed) InstallerReadiness.READY else InstallerReadiness.SHIZUKU_NOT_ALLOWED
+            InstallerMode.DHIZUKU -> if (dhizukuAllowed) InstallerReadiness.READY else InstallerReadiness.DHIZUKU_NOT_ALLOWED
+            InstallerMode.ROOT -> InstallerReadiness.NO_ROOT
+            InstallerMode.OTHER_APP ->
+                if (_settings.value.otherInstaller == null) InstallerReadiness.NO_OTHER_APP else InstallerReadiness.READY
+        }
+    }
+
+    @Volatile private var shizukuAllowed = false
+
+    override fun askShizuku(): Boolean {
+        shizukuAllowed = true
+        recheckInstaller()
+        return true
+    }
+
+    @Volatile private var dhizukuAllowed = false
+
+    override fun askDhizuku(): Boolean {
+        dhizukuAllowed = true
+        recheckInstaller()
+        return true
+    }
+
+    override fun installerChoices(): List<InstallerChoice> =
+        listOf(InstallerChoice("org.example.installer", "Example Installer"))
+
+    override suspend fun installerIcon(choice: InstallerChoice, sizePx: Int): Bitmap? = null
 
     override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
         edit(appId) { it.copy(config = change(it.config).copy(id = appId)) }
@@ -439,9 +519,10 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override fun hasFilePicker(): Boolean = filePicker
 
-    override suspend fun exportToFolder(): SavedFile {
+    override suspend fun exportToFolder(format: ExportFormat): SavedFile {
         delay(stepMs * 6)
-        return SavedFile("tern-apps-2026-09-29.json", "Download/Tern", "/storage/emulated/0/Download/Tern/tern-apps-2026-09-29.json", System.currentTimeMillis(), 18_432)
+        val name = if (format == ExportFormat.OBTAINIUM) "obtainium-export-2026-09-29.json" else "tern-apps-2026-09-29.json"
+        return SavedFile(name, "Download/Tern", "/storage/emulated/0/Download/Tern/$name", System.currentTimeMillis(), 18_432)
     }
 
     /** Switched off by a test to stand for a device that holds no export file. */
@@ -547,11 +628,47 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     private fun tool(n: Int) = SearchHit("tool-$n", "example", "A command line tool with no Android build.", "${FakeLinks.NO_FILE_PREFIX}$n", "GitHub", n * 3)
 
-    override suspend fun exportTo(uri: Uri): Int {
+    override suspend fun exportTo(uri: Uri, format: ExportFormat): Int {
         val rows = _apps.value
         val json = rows.joinToString(",", "{\"apps\":[", "]}") { "{\"id\":\"${it.id}\"}" }
         context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) } ?: error("No output")
         return rows.size
+    }
+
+    private val _exportStatus = MutableStateFlow<ExportStatus?>(null)
+    override val exportStatus: StateFlow<ExportStatus?> = _exportStatus.asStateFlow()
+
+    override suspend fun takeExportFolder(folder: Uri) = Unit
+
+    override suspend fun runBackgroundCheck() = check(null)
+
+    override suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile =
+        SavedFile(assetUrl.substringAfterLast('/'), "Download/Tern", "/storage/emulated/0/Download/Tern/" + assetUrl.substringAfterLast('/'), System.currentTimeMillis(), 0)
+
+    override suspend fun fileSize(appId: String, releaseId: String, assetUrl: String): Long? = null
+
+    override val searchOrigins: List<String> = listOf("GitHub", "Codeberg", "GitLab", "F-Droid", "Aptoide", "Uptodown")
+
+    override fun renderNotes(text: String): List<NoteBlock> = io.github.munzzyy.tern.engine.real.NotesMapper.markdown(text)
+
+    override fun hasProjectPage(row: AppRow): Boolean = row.config.source.type == "github"
+
+    override suspend fun projectPage(appId: String): List<NoteBlock> =
+        renderNotes("# About\n\nA stand-in page for trying out the project page.\n\n- It has a list\n- And a [link](https://example.org)")
+
+    override fun canDowngrade(): Boolean = false
+
+    override suspend fun writeKeptExport() {
+        _exportStatus.value = ExportStatus(System.currentTimeMillis(), null)
+    }
+
+    /** The stand-in writes its ids to the share folder, as the real engine writes a whole export there. */
+    override suspend fun shareableExport(appIds: Collection<String>?, format: ExportFormat): Uri {
+        val rows = _apps.value.filter { appIds == null || it.id in appIds }
+        val dir = java.io.File(context.cacheDir, "share").apply { mkdirs() }
+        val file = java.io.File(dir, if (format == ExportFormat.OBTAINIUM) "obtainium-export.json" else "tern-apps.json")
+        file.writeText(rows.joinToString(",", "{\"apps\":[", "]}") { "{\"id\":\"${it.id}\"}" })
+        return androidx.core.content.FileProvider.getUriForFile(context, "${context.packageName}.handoff", file)
     }
 
     override suspend fun clearEvents() {

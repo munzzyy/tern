@@ -16,6 +16,16 @@
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
+    <!-- Dhizuku lists the apps that name this among those it can let in. It grants nothing by itself. -->
+    <uses-permission android:name="com.rosan.dhizuku.permission.API" />
+
+    <!-- Dhizuku's provider and the way to it, as Dhizuku's own library declares them. -->
+    <queries>
+        <provider android:authorities="com.rosan.dhizuku.server.provider" />
+        <intent>
+            <action android:name="com.rosan.dhizuku.server.provider" />
+        </intent>
+    </queries>
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -50,7 +60,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
+                <!-- Any text, as Obtainium takes it: the first https address in it is looked at. -->
+                <data android:mimeType="text/*" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -77,6 +88,54 @@
         <receiver
             android:name=".install.InstallReceiver"
             android:exported="false" />
+
+        <receiver
+            android:name=".work.NotificationActions"
+            android:exported="false" />
+
+        <receiver
+            android:name=".widget.UpdatesWidget"
+            android:exported="false"
+            android:label="@string/widget_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/updates_widget_info" />
+        </receiver>
+
+        <!-- Only the system may bind the tile, which only reads the list and starts a check. -->
+        <service
+            android:name=".widget.CheckTile"
+            android:exported="true"
+            android:icon="@drawable/ic_stat_update"
+            android:label="@string/tile_check"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <!-- Hands a checked file, read-only, to the installer app the person chose. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.handoff"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/handoff_paths" />
+        </provider>
+
+        <!-- Where Shizuku and Sui hand over their binder. Only the system and they may call it. -->
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
         <receiver
             android:name=".work.RescheduleReceiver"

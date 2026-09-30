@@ -154,8 +154,27 @@ fun minutesUntil(atMs: Long, nowMs: Long): Long {
     return (diff + 59_999) / 60_000
 }
 
-fun intervalChoices(current: Int): List<Int> =
-    (listOf(0, 1, 3, 6, 12, 24) + current).filter { it >= 0 }.distinct().sorted()
+/**
+ * Minutes between background checks the slider stops at: off, then a quarter of an hour to a
+ * month, in round numbers that lie closer together where a difference is felt.
+ */
+val INTERVAL_STOPS: List<Int> = listOf(
+    0, 15, 20, 30, 45, 60, 90, 120, 180, 240, 300, 360, 480, 600, 720, 960,
+    1440, 2160, 2880, 4320, 5760, 7200, 8640, 10080, 14400, 20160, 30240, 43200,
+)
+
+/** [INTERVAL_STOPS], with the interval chosen now among them when it is not one already. */
+fun intervalStops(current: Int): List<Int> = (INTERVAL_STOPS + current).filter { it >= 0 }.distinct().sorted()
+
+/** How an interval of [minutes] is named: in days, hours or minutes, whichever divides it evenly. */
+enum class IntervalUnit { OFF, MINUTES, HOURS, DAYS }
+
+fun intervalUnit(minutes: Int): Pair<IntervalUnit, Int> = when {
+    minutes <= 0 -> IntervalUnit.OFF to 0
+    minutes % (24 * 60) == 0 -> IntervalUnit.DAYS to minutes / (24 * 60)
+    minutes % 60 == 0 -> IntervalUnit.HOURS to minutes / 60
+    else -> IntervalUnit.MINUTES to minutes
+}
 
 fun formatDate(ms: Long, zone: ZoneId = ZoneId.systemDefault(), locale: Locale = Locale.getDefault()): String =
     DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale).format(Instant.ofEpochMilli(ms).atZone(zone))

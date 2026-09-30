@@ -1,10 +1,14 @@
 package io.github.munzzyy.tern.engine.real
 
 import android.content.Context
+import android.icu.text.MeasureFormat
+import android.icu.util.Measure
+import android.icu.util.MeasureUnit
 import android.text.format.DateFormat
 import android.text.format.Formatter
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.select.PickReason
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.net.isProxySilent
 import java.io.IOException
 import java.util.Date
@@ -24,6 +28,7 @@ class Texts(context: Context) : ImportTexts {
 
 
     fun cannotWrite() = s(R.string.engine_cannot_write)
+    fun unreadableApp(where: String) = s(R.string.engine_unreadable_app, ltr(where))
     fun proxySilent() = s(R.string.engine_proxy_silent)
     fun downloadFailed(e: IOException) = if (e.isProxySilent()) proxySilent() else downloadFailed(e.message)
     fun downloadFailed(detail: String?) = if (detail.isNullOrBlank()) s(R.string.engine_download_failed_plain) else s(R.string.engine_download_failed, detail)
@@ -34,7 +39,10 @@ class Texts(context: Context) : ImportTexts {
     fun downloadCut(got: Long, total: Long) = s(R.string.engine_download_cut, bytes(got), bytes(total))
 
     fun checksumMismatch() = s(R.string.engine_checksum_mismatch)
-    fun tarUnsupported() = s(R.string.engine_tar_unsupported)
+    fun archiveCompressionUnsupported() = s(R.string.install_archive_zstd_unsupported)
+    fun onlyFilteredVersions() = s(R.string.engine_only_filtered_versions)
+    fun stayingBehind() = s(R.string.engine_staying_behind)
+    fun innerFilterMatchesNothing() = s(R.string.engine_inner_filter_nothing)
     fun notAnApk(detail: String?) = s(R.string.engine_not_an_apk, detail.orEmpty().take(200))
     fun archiveHasNoApk() = s(R.string.engine_archive_no_apk)
     fun archiveHasNoBase() = s(R.string.engine_archive_no_base)
@@ -50,6 +58,7 @@ class Texts(context: Context) : ImportTexts {
     fun warnBuiltInPin() = s(R.string.engine_warn_built_in_pin)
     fun splitSignerMismatch() = s(R.string.engine_split_signer_mismatch)
     fun partNotSigned() = s(R.string.engine4_part_not_signed)
+    fun otherAppSigner() = s(R.string.install_other_app_signer)
     fun downgrade(installed: String?, offered: String?) = s(R.string.engine_downgrade, installed ?: "?", offered ?: "?")
     fun testOnly() = s(R.string.engine_test_only)
     fun needsNewerAndroid(minSdk: Int) = s(R.string.engine_needs_newer_android, minSdk)
@@ -116,12 +125,12 @@ class Texts(context: Context) : ImportTexts {
     fun warnNoFile() = s(R.string.engine_warn_no_file)
     fun warnPrerelease() = s(R.string.engine_warn_prerelease)
     fun warnMoved(url: String) = s(R.string.engine_warn_moved, url)
-    fun severalApps() = s(R.string.engine_several_apps)
     fun notASource() = s(R.string.engine_not_a_source)
     fun nothingToSearch() = s(R.string.engine_nothing_to_search)
 
     fun eventAdded(from: String) = s(R.string.engine_event_added, ltr(from))
     fun eventRemoved() = s(R.string.engine_event_removed)
+    fun eventRemovedUninstalled() = s(R.string.engine_event_removed_uninstalled)
     fun eventImported() = s(R.string.engine_event_imported)
     fun eventUpdateFound(version: String) = s(R.string.engine_event_update_found, version)
     fun eventDownloaded(size: Long) = s(R.string.engine_event_downloaded, bytes(size))
@@ -138,6 +147,12 @@ class Texts(context: Context) : ImportTexts {
     fun channelInstalled() = s(R.string.engine_channel_installed)
     fun channelAttention() = s(R.string.engine_channel_attention)
     fun channelTransfers() = s(R.string.engine_channel_transfers)
+    fun channelTracked() = s(R.string.engine_channel_tracked)
+    fun channelChecking() = s(R.string.engine_channel_checking)
+    fun notifyTracked(count: Int, onlyName: String?) = if (count == 1 && onlyName != null) s(R.string.engine_notify_tracked_one, onlyName) else q(R.plurals.engine_notify_tracked_count, count)
+    fun notifyChecking(count: Int) = q(R.plurals.engine_notify_checking, count)
+    fun actionUpdate() = s(R.string.action_update)
+    fun actionUpdateAll() = s(R.string.action_update_all)
     fun notifyUpdates(count: Int, onlyName: String?) = if (count == 1 && onlyName != null) s(R.string.engine_notify_update_one, onlyName) else q(R.plurals.engine_notify_updates_count, count)
     fun notifyInstalled(count: Int, onlyName: String?) = if (count == 1 && onlyName != null) s(R.string.engine_notify_installed_one, onlyName) else q(R.plurals.engine_notify_installed_count, count)
     fun notifyConfirm(name: String) = s(R.string.engine_notify_confirm, name)
@@ -156,7 +171,82 @@ class Texts(context: Context) : ImportTexts {
         PickReason.Kind.UNSIGNED -> s(R.string.engine_pick_unsigned)
     }
     fun notifyDownloading(name: String) = s(R.string.engine_notify_downloading, name)
+    fun notifyBytes(done: Long, total: Long?) = if (total == null) s(R.string.install_notify_bytes, bytes(done)) else s(R.string.install_notify_bytes_of, bytes(done), bytes(total))
+    fun actionCancel() = s(R.string.action_cancel)
     fun notifyDownloadingPlain() = s(R.string.notify_downloading_plain)
 
+    fun linkUnknown() = s(R.string.add_link_unknown)
+    fun notReadableAs(source: String) = s(R.string.add_not_readable_as, ltr(source))
+    fun eventReplaced() = s(R.string.add_event_replaced)
+    fun searchMiss(miss: Search.Miss): String {
+        val place = ltr(miss.origin)
+        return when (miss.why) {
+            Search.Why.UNREACHABLE -> s(R.string.search_miss_unreachable, place)
+            Search.Why.WAIT -> miss.retryAtMs?.let { s(R.string.search_miss_wait_until, place, time(it)) } ?: s(R.string.search_miss_wait, place)
+            Search.Why.REFUSED -> s(R.string.search_miss_refused, place)
+            Search.Why.STATUS -> s(R.string.search_miss_status, place, miss.status ?: 0)
+            Search.Why.UNREADABLE -> s(R.string.search_miss_unreadable, place)
+        }
+    }
+
     private fun time(ms: Long): String = DateFormat.getTimeFormat(c).format(Date(ms))
+
+    fun obbNameRefused() = s(R.string.parts_obb_name_refused)
+    fun obbPlaced(count: Int, folder: String): String = c.resources.getQuantityString(R.plurals.parts_obb_placed, count, count, ltr(folder))
+    fun obbNotPlaced(folder: String, archive: String, names: String) =
+        s(R.string.parts_obb_not_placed, ltr(folder), ltr(archive.take(300)), ltr(names.take(1000)))
+    fun obbFailed(folder: String, detail: String?, archive: String, names: String) =
+        s(R.string.parts_obb_failed, ltr(folder), detail.orEmpty().take(300), ltr(archive.take(300)), ltr(names.take(1000)))
+    fun channelSaved() = s(R.string.files_channel_saved)
+    fun notifySaved(name: String) = s(R.string.files_notify_saved, ltr(name))
+    fun notifySavedPlain() = s(R.string.files_notify_saved_plain)
+    fun notifyNotSaved(name: String) = s(R.string.files_notify_not_saved, ltr(name))
+    fun notifyNotSavedPlain() = s(R.string.files_notify_not_saved_plain)
+    fun notifyUpdatedTo(name: String, version: String) = s(R.string.files_notify_updated_to, name, ltr(version))
+    fun notifyInstalledAt(name: String, version: String) = s(R.string.files_notify_installed_at, name, ltr(version))
+    fun notifyProblemLine(names: String, reason: String) = s(R.string.files_notify_problem_line, names, reason)
+    fun installedSignerDiffers() = s(R.string.install_signer_changed)
+
+    /** How a check began, for the log: of [app] by its name when it is one app, else of [count] apps, and what started it. */
+    fun checkStarted(count: Int, app: String?, cause: CheckCause): String {
+        val began = if (app != null) s(R.string.journal_check_started_one, app) else q(R.plurals.journal_check_started, count)
+        return began + " " + s(causeWords(cause))
+    }
+
+    /** How a check ended, for the log: how long it took, how many of its apps have an update, and how many it could not check. */
+    fun checkEnded(count: Int, app: String?, tookMs: Long, updates: Int, failed: Int): String {
+        val took = took(tookMs)
+        val ended = if (app != null) s(R.string.journal_check_ended_one, app, took) else c.resources.getQuantityString(R.plurals.journal_check_ended, count, count, took)
+        val found = q(R.plurals.journal_check_updates, updates)
+        return if (failed == 0) "$ended $found" else "$ended $found " + q(R.plurals.journal_check_failures, failed)
+    }
+
+    fun checkStopped(tookMs: Long) = s(R.string.journal_check_stopped, took(tookMs))
+
+    private fun causeWords(cause: CheckCause): Int = when (cause) {
+        CheckCause.ASKED -> R.string.journal_cause_asked
+        CheckCause.OPENING -> R.string.journal_cause_opening
+        CheckCause.PAGE -> R.string.journal_cause_page
+        CheckCause.LINK -> R.string.journal_cause_link
+        CheckCause.SHORTCUT -> R.string.journal_cause_shortcut
+        CheckCause.WIDGET -> R.string.journal_cause_widget
+        CheckCause.TILE -> R.string.journal_cause_tile
+        CheckCause.SCHEDULE -> R.string.journal_cause_schedule
+        CheckCause.RETRY -> R.string.journal_cause_retry
+        CheckCause.ADDED -> R.string.journal_cause_added
+        CheckCause.IMPORTED -> R.string.journal_cause_imported
+        CheckCause.CHANGED -> R.string.journal_cause_changed
+        CheckCause.INSTALL -> R.string.journal_cause_install
+    }
+
+    /** A time something took, in the words of the language: tenths of a second under ten seconds, then whole seconds and minutes. */
+    private fun took(ms: Long): String {
+        val format = MeasureFormat.getInstance(c.resources.configuration.locales[0], MeasureFormat.FormatWidth.SHORT)
+        val seconds = ms.coerceAtLeast(0) / 1000.0
+        return when {
+            seconds < 10 -> format.format(Measure(Math.round(seconds * 10) / 10.0, MeasureUnit.SECOND))
+            seconds < 60 -> format.format(Measure(Math.round(seconds), MeasureUnit.SECOND))
+            else -> format.formatMeasures(Measure(ms / 60_000, MeasureUnit.MINUTE), Measure(ms / 1000 % 60, MeasureUnit.SECOND))
+        }
+    }
 }

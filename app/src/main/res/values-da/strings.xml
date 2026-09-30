@@ -92,17 +92,6 @@
         <item quantity="other">%d valgt</item>
     </plurals>
     <string name="apps_select_hint">Vælg apps fra listen.</string>
-    <string name="action_add_to_category">Tilføj til kategori</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Tilføj %d app til en kategori</item>
-        <item quantity="other">Tilføj %d apps til en kategori</item>
-    </plurals>
-    <string name="bulk_category_field">Kategori</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">Lagde %1$d app under %2$s.</item>
-        <item quantity="other">Lagde %1$d apps under %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Eller vælg en, du allerede bruger:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Tjek %d app nu?</item>
         <item quantity="other">Tjek %d apps nu?</item>
@@ -334,10 +323,6 @@
         <item quantity="one">Hver %d time</item>
         <item quantity="other">Hver %d. time</item>
     </plurals>
-    <string name="settings_unmetered">Kun på ubegrænsede netværk</string>
-    <string name="settings_unmetered_effect">Spring tjek over på mobildata og Wi-Fi med forbrugsafregning.</string>
-    <string name="settings_charging">Kun under opladning</string>
-    <string name="settings_charging_effect">Spring tjek over på batteri.</string>
     <string name="settings_defaults">Standarder for nye apps</string>
     <string name="settings_notifications">Notifikationer</string>
     <string name="settings_notify_updates">Når opdateringer findes</string>
@@ -373,7 +358,6 @@
     <string name="proxy_port_invalid">Et tal fra 1 til 65535</string>
     <string name="settings_appearance">Udseende</string>
     <string name="settings_language">Sprog</string>
-    <string name="settings_language_effect">Valgt i Androids indstillinger for denne app.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Følg systemet</string>
     <string name="theme_light">Lyst</string>

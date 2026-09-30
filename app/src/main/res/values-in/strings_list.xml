@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">Atur daftar</string>
+    <string name="list_options_title">Atur daftar</string>
+    <string name="list_reverse">Balik urutan</string>
+    <string name="list_updates_first">Pembaruan di atas</string>
+    <string name="list_bury_not_installed">Aplikasi yang tidak terinstal di bawah</string>
+    <string name="sort_author">Berdasarkan pengembang</string>
+    <string name="sort_added">Berdasarkan tanggal ditambahkan</string>
+    <string name="sort_released">Berdasarkan tanggal rilis</string>
+    <string name="group_title">Kelompokkan menurut</string>
+    <string name="group_none">Tidak ada</string>
+    <string name="group_category">Kategori</string>
+    <string name="group_source">Sumber</string>
+    <string name="group_category_effect">Aplikasi dalam beberapa kategori muncul di setiap kategori tersebut.</string>
+    <string name="group_other">Lainnya</string>
+    <string name="group_folded">Terlipat</string>
+    <string name="group_open">Terbuka</string>
+    <string name="filter_favorites">Favorit</string>
+    <string name="filter_track_only">Hanya ikuti</string>
+    <string name="filter_problems">Masalah</string>
+    <string name="action_done">Selesai</string>
+    <string name="settings_swipe">Geser baris untuk bertindak</string>
+    <string name="settings_swipe_effect">Geser aplikasi ke arah akhir untuk memperbaruinya, ke arah awal untuk menghapusnya.</string>
+    <string name="action_favorite">Tambahkan ke favorit</string>
+    <string name="action_unfavorite">Hapus dari favorit</string>
+    <string name="action_set_mode">Bila ada pembaruan</string>
+    <string name="action_share_addresses">Bagikan alamat</string>
+    <string name="action_share_export">Bagikan sebagai file</string>
+    <string name="action_uninstall">Uninstal</string>
+    <string name="export_format_tern">File Tern</string>
+    <string name="export_format_obtainium">File untuk Obtainium</string>
+    <string name="bulk_uninstall_text">Android bertanya tentang setiap aplikasi secara bergantian. Tern tetap mengikutinya sampai Anda menghapusnya di sini.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="other">%1$d aplikasi kini menjadi favorit</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="other">%1$d aplikasi tidak lagi menjadi favorit</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="other">Bila ada pembaruan untuk %1$d aplikasi</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="other">Uninstal %1$d aplikasi?</item>
+    </plurals>
+</resources>

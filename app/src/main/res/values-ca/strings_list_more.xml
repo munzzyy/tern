@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">Filtra la llista</string>
+    <string name="filter_state_on">Filtres activats</string>
+    <string name="filter_name">Nom</string>
+    <string name="filter_author">Desenvolupador</string>
+    <string name="filter_package">Nom del paquet</string>
+    <string name="filter_show_up_to_date">Aplicacions actualitzades</string>
+    <string name="filter_show_not_installed">Aplicacions no instal·lades</string>
+    <string name="filter_show_tracked">Aplicacions que només se segueixen</string>
+    <string name="filter_categories">En qualsevol d\'aquestes categories</string>
+    <string name="filter_sources">De qualsevol d\'aquests orígens</string>
+    <string name="filter_clear">Neteja els filtres</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%1$d de %2$d aplicació mostrada</item>
+        <item quantity="many">%1$d de %2$d aplicacions mostrades</item>
+        <item quantity="other">%1$d de %2$d aplicacions mostrades</item>
+    </plurals>
+    <string name="checking_count">Comprovant %1$d de %2$d</string>
+    <string name="row_moved">Mogut a %1$s</string>
+    <string name="row_released">Publicat el %1$s</string>
+    <string name="row_changes">Canvis</string>
+    <string name="action_show_changes">Mostra els canvis</string>
+    <string name="action_install_all">Instal·la-ho tot</string>
+    <string name="action_install_update_all">Instal·la i actualitza-ho tot</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d aplicació encara no està instal·lada</item>
+        <item quantity="many">%d aplicacions encara no estan instal·lades</item>
+        <item quantity="other">%d aplicacions encara no estan instal·lades</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Vols instal·lar i actualitzar %d aplicació?</item>
+        <item quantity="many">Vols instal·lar i actualitzar %d aplicacions?</item>
+        <item quantity="other">Vols instal·lar i actualitzar %d aplicacions?</item>
+    </plurals>
+    <string name="settings_update_all">El botó Actualitza-ho tot</string>
+    <string name="update_all_updates">Només actualitzacions</string>
+    <string name="update_all_all">Actualitzacions i aplicacions encara no instal·lades</string>
+    <string name="update_all_none">No es mostra</string>
+    <string name="settings_confirm_update_all">Pregunta abans d\'actualitzar-ho tot</string>
+    <string name="settings_confirm_update_all_effect">Indica quantes aplicacions s\'instal·len o s\'actualitzen, i espera un sí.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Vols instal·lar %d aplicació?</item>
+        <item quantity="many">Vols instal·lar %d aplicacions?</item>
+        <item quantity="other">Vols instal·lar %d aplicacions?</item>
+    </plurals>
+    <string name="bulk_install_text">Cada fitxer es baixa i es comprova abans de demanar a Android que l\'instal·li. Tern recorda el certificat amb què està signada cada aplicació nova, i exigeix el mateix a cada actualització posterior.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d de les aplicacions triades no té res per instal·lar ara i es deixa com està.</item>
+        <item quantity="many">%d de les aplicacions triades no tenen res per instal·lar ara i es deixen com estan.</item>
+        <item quantity="other">%d de les aplicacions triades no tenen res per instal·lar ara i es deixen com estan.</item>
+    </plurals>
+    <string name="action_change_categories">Canvia les categories</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Categories de %d aplicació</item>
+        <item quantity="many">Categories de %d aplicacions</item>
+        <item quantity="other">Categories de %d aplicacions</item>
+    </plurals>
+    <string name="bulk_categories_help">Una marca arxiva cada aplicació triada en una categoria, i una casella buida les treu totes d\'aquesta. Un guió deixa cada aplicació com està.</string>
+    <string name="categories_filed_all">Totes les aplicacions triades</string>
+    <string name="categories_filed_some">Algunes de les aplicacions triades</string>
+    <string name="categories_filed_none">Cap de les aplicacions triades</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">S\'han canviat les categories de %d aplicació.</item>
+        <item quantity="many">S\'han canviat les categories de %d aplicacions.</item>
+        <item quantity="other">S\'han canviat les categories de %d aplicacions.</item>
+    </plurals>
+    <string name="action_share_config_link">Comparteix un enllaç amb la seva configuració</string>
+    <string name="action_share_config_links">Comparteix enllaços amb les seves configuracions</string>
+    <string name="share_link_none">Cap enllaç pot portar la configuració d\'aquesta aplicació. Comparteix-la com a fitxer en lloc d\'això.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d aplicació es deixa fora, perquè cap enllaç pot portar la seva configuració.</item>
+        <item quantity="many">%d aplicacions es deixen fora, perquè cap enllaç pot portar les seves configuracions.</item>
+        <item quantity="other">%d aplicacions es deixen fora, perquè cap enllaç pot portar les seves configuracions.</item>
+    </plurals>
+</resources>

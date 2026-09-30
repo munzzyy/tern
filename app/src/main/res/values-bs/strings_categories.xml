@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">Kategorije</string>
+    <string name="settings_categories_effect">Dajte im imena i boje, te ih preimenujte ili izbrišite za sve aplikacije odjednom.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d kategorija</item>
+        <item quantity="few">%d kategorije</item>
+        <item quantity="other">%d kategorija</item>
+    </plurals>
+    <string name="categories_none">Još nijedna. Napravite kategoriju ovdje ili stavite aplikacije pod nju sa spiska.</string>
+    <string name="categories_new">Nova kategorija</string>
+    <string name="category_edit">Uredi kategoriju</string>
+    <string name="category_name">Naziv</string>
+    <string name="category_color">Boja</string>
+    <string name="category_color_spoken">Boja %1$d od %2$d</string>
+    <string name="category_exists">Kategorija s ovim nazivom već postoji.</string>
+    <string name="category_delete">Izbriši</string>
+    <string name="category_delete_effect">Aplikacije u njoj ostaju na spisku; samo više nisu stavljene pod nju.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d aplikacija</item>
+        <item quantity="few">%d aplikacije</item>
+        <item quantity="other">%d aplikacija</item>
+    </plurals>
+    <string name="action_close">Zatvori</string>
+    <string name="categories_new_short">Nova…</string>
+    <string name="app_notes_title">Bilješke</string>
+    <string name="app_notes_help">Markdown radi: **podebljano**, *kurziv*, liste i linkovi.</string>
+    <string name="app_notes_add">Dodaj bilješku</string>
+    <string name="app_notes_add_effect">Sve što vrijedi zapamtiti o ovoj aplikaciji. Ide zajedno s izvozima.</string>
+    <string name="app_notes_edit">Uredi bilješku</string>
+</resources>

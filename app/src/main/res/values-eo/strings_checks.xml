@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Ĉiun %d minuton</item>
+        <item quantity="other">Ĉiujn %d minutojn</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Ĉiun %d tagon</item>
+        <item quantity="other">Ĉiujn %d tagojn</item>
+    </plurals>
+    <string name="settings_check_now">Ruli la fonan kontrolon nun</string>
+    <string name="settings_check_now_effect">Kontrolas ĉiun aplikaĵon kaj instalas tion, kio estas agordita ĝisdatiĝi memstare, kiel la fona kontrolo faras.</string>
+    <string name="settings_check_now_running">Kontrolas…</string>
+    <string name="settings_check_on_start">Kontroli kiam Tern malfermiĝas</string>
+    <string name="settings_check_on_open">Kontroli aplikaĵon kiam ĝia paĝo malfermiĝas</string>
+    <string name="settings_check_on_open_effect">Ne denove ene de kvin minutoj post la lasta kontrolo.</string>
+    <string name="settings_only_installed">Kontroli nur instalitajn aplikaĵojn</string>
+    <string name="settings_only_installed_effect">Aplikaĵoj kiuj estas nur sekvataj ankaŭ estas kontrolataj. Aplikaĵo kiun vi malfermas ĉiam estas kontrolata.</string>
+    <string name="settings_remove_uninstalled">Forigi aplikaĵojn malinstalitajn aliloke</string>
+    <string name="settings_remove_uninstalled_effect">Aplikaĵo kiun vi malinstalas ekster Tern ankaŭ forlasas la liston.</string>
+    <string name="settings_file_filter">Filtrilo por dosieroj</string>
+    <string name="settings_file_filter_effect">Ŝablono laŭ kiu ĉiu aplikaĵo sen propra filtrilo elektas sian dosieron.</string>
+    <string name="settings_file_filter_none">Neniu</string>
+    <string name="settings_file_filter_invalid">Ĉi tiu ŝablono ne povas esti legita.</string>
+    <string name="settings_allow_downgrades">Permesi pli malnovajn versiojn</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade estas instalita, do Android rajtas meti pli malnovan version super pli nova.</string>
+    <string name="settings_collapse_groups">Komenci kun falditaj grupoj</string>
+    <string name="settings_haptics">Haptika reago</string>
+    <string name="settings_haptics_effect">Malpeza vibro kiam ŝovo aŭ longa premo faras ion.</string>
+    <string name="settings_phone_layout">Ĉiam uzi la telefonan aranĝon</string>
+    <string name="settings_phone_layout_effect">Unu panelo kaj breto malsupre, kiom ajn larĝa estas la ekrano.</string>
+    <string name="density_minimal">Minimuma</string>
+    <string name="search_in">Serĉi en</string>
+    <string name="activity_share">Kunhavigi agadon</string>
+    <string name="sources_title">Kion Tern povas legi</string>
+    <string name="sources_effect">Kodgastigejoj, deponejoj, vendejoj kaj retpaĝoj, kaj kiuj el ili estas serĉeblaj.</string>
+    <string name="sources_forges">Kodgastigejoj</string>
+    <string name="sources_repositories">Deponejoj</string>
+    <string name="sources_stores">Vendejoj</string>
+    <string name="sources_mirrors">Vendejoj kiuj reeldonas aplikaĵojn</string>
+    <string name="sources_modified">Retejoj kun ŝanĝitaj aplikaĵoj</string>
+    <string name="sources_other">Aliaj lokoj</string>
+    <string name="sources_web_page">Retpaĝo kun ligiloj al dosieroj</string>
+    <string name="sources_direct">Rekta ligilo al dosiero</string>
+    <string name="sources_searchable">serĉebla</string>
+    <string name="sources_track_only">nur sekvado</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea kaj Jenkins sur propra servilo estas rekonataj laŭ sia adreso.</string>
+    <string name="shared_configs_title">Agordaroj kunhavigitaj de la uzantoj de Obtainium</string>
+    <string name="shared_configs_effect">Retejo kun pretaj agordoj por aplikaĵoj. Ĝiaj ligiloj malfermiĝas en Tern kiam Malfermi Obtainium-ligilojn estas ŝaltita en Agordoj.</string>
+    <string name="engine_inner_filter_nothing">La filtrilo por dosieroj en arkivoj kongruas kun neniu el la APK-oj en ĉi tiu arkivo.</string>
+    <string name="preview_republished">%1$s reofertas tion, kion programistoj eldonas aliloke. Ĝiaj dosieroj estas tenataj al la atestilo de la programisto tuj kiam Tern konas ĝin, do alpinglu unu aŭ unue instalu de la programisto kiam vi povas.</string>
+    <string name="preview_modified">%1$s ofertas aplikaĵojn ŝanĝitajn de iu alia ol ilia programisto. Ili estas subskribitaj de tiu, kiu ŝanĝis ilin, kaj Tern ne povas diri, kio estis ŝanĝita.</string>
+    <string name="about_track_tern">Teni Tern mem ĝisdata</string>
+    <string name="about_track_tern_effect">Aldonas la proprajn eldonojn de Tern al la listo, kontrolitajn kaj konfirmitajn kiel iu ajn aplikaĵo.</string>
+    <string name="engine_channel_tracked">Novaj eldonoj de sekvataj aplikaĵoj</string>
+    <string name="engine_channel_checking">Kontrolado</string>
+    <string name="engine_notify_tracked_one">Nova eldono de %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d sekvata aplikaĵo havas novan eldonon</item>
+        <item quantity="other">%1$d sekvataj aplikaĵoj havas novajn eldonojn</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">Kontrolas %1$d aplikaĵon</item>
+        <item quantity="other">Kontrolas %1$d aplikaĵojn</item>
+    </plurals>
+    <string name="settings_notify_tracked">Kiam sekvata aplikaĵo havas novan eldonon</string>
+    <string name="settings_notify_checking">Dum kontrolado en la fono</string>
+    <string name="settings_notify_checking_effect">Kvieta sciigo kiu malaperas kiam la kontrolo finiĝas.</string>
+    <string name="engine_event_removed_uninstalled">Forigita el la listo, ĉar ĝi estis malinstalita ekster Tern</string>
+</resources>

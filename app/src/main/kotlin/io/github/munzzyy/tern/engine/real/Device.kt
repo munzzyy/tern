@@ -5,14 +5,16 @@ import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.BatteryManager
 import android.os.Build
 import android.provider.Settings
-import android.util.Log
 import io.github.munzzyy.tern.core.engine.InstalledApp
 import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.text.Shown
 import io.github.munzzyy.tern.install.PackageManagerArchiveReader
+import io.github.munzzyy.tern.log.TernLog
 
 /** An installed app as PackageManager reports it, with what silent updates depend on. */
 data class DeviceApp(
@@ -77,15 +79,20 @@ class Device(context: Context) {
             pm.getInstallerPackageName(packageName) to null
         }
     } catch (e: PackageManager.NameNotFoundException) {
-        Log.w(TAG, "No install source for $packageName: ${e.message}")
+        TernLog.w(TAG, "No install source for $packageName: ${e.message}")
         null to null
     } catch (e: IllegalArgumentException) {
-        Log.w(TAG, "No install source for $packageName: ${e.message}")
+        TernLog.w(TAG, "No install source for $packageName: ${e.message}")
         null to null
     }
 
     /** Whether Android lets this app install others. The user says so once, in the system settings. */
     fun mayInstall(): Boolean = pm.canRequestPackageInstalls()
+
+    /** Whether the network in use costs nothing by the byte, as Wi-Fi and cables usually do. */
+    fun onUnmeteredNetwork(): Boolean = c.getSystemService(ConnectivityManager::class.java)?.isActiveNetworkMetered == false
+
+    fun isCharging(): Boolean = c.getSystemService(BatteryManager::class.java)?.isCharging == true
 
     /** A television answers the file picker's intent with a screen that only says no app can do this. */
     fun hasFilePicker(): Boolean =

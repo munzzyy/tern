@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parts_obb_name_refused">Arsip ini berisi file OBB yang namanya dapat keluar dari folder OBB aplikasi, atau dua file OBB dengan nama yang sama. Tidak ada yang diinstal.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="other">%1$d file OBB ditempatkan di %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">File OBB tidak ditempatkan di %1$s karena hanya penginstal Shizuku dan root yang dapat menulis ke sana. File itu ada di %2$s, file dari rilis ini: %3$s.</string>
+    <string name="parts_obb_failed">File OBB tidak dapat ditempatkan di %1$s: %2$s. File itu ada di %3$s, file dari rilis ini: %4$s.</string>
+</resources>

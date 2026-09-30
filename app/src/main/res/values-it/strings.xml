@@ -95,19 +95,6 @@
         <item quantity="other">%d selezionate</item>
     </plurals>
     <string name="apps_select_hint">Scegli le app dalla lista.</string>
-    <string name="action_add_to_category">Aggiungi alla categoria</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Aggiungi %d app a una categoria</item>
-        <item quantity="many">Aggiungi %d app a una categoria</item>
-        <item quantity="other">Aggiungi %d app a una categoria</item>
-    </plurals>
-    <string name="bulk_category_field">Categoria</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">Aggiunta %1$d app in %2$s.</item>
-        <item quantity="many">Aggiunte %1$d app in %2$s.</item>
-        <item quantity="other">Aggiunte %1$d app in %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">O scegline una che usi già:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Controllare %d app ora?</item>
         <item quantity="many">Controllare %d app ora?</item>
@@ -351,10 +338,6 @@
         <item quantity="many">Ogni %d ore</item>
         <item quantity="other">Ogni %d ore</item>
     </plurals>
-    <string name="settings_unmetered">Solo su reti non a consumo</string>
-    <string name="settings_unmetered_effect">Salta i controlli su rete mobile e Wi-Fi a consumo.</string>
-    <string name="settings_charging">Solo in carica</string>
-    <string name="settings_charging_effect">Salta i controlli mentre è a batteria.</string>
     <string name="settings_defaults">Predefinite per nuove app</string>
     <string name="settings_notifications">Notifiche</string>
     <string name="settings_notify_updates">Quando si trovano aggiornamenti</string>
@@ -390,7 +373,6 @@
     <string name="proxy_port_invalid">Un numero da 1 a 65535</string>
     <string name="settings_appearance">Aspetto</string>
     <string name="settings_language">Lingua</string>
-    <string name="settings_language_effect">Scelta nelle impostazioni di Android per questa app.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Segui il sistema</string>
     <string name="theme_light">Chiaro</string>

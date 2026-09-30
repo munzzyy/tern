@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parts_obb_name_refused">このアーカイブには、名前がアプリのOBBフォルダの外に出てしまうおそれのあるOBBファイル、または同じ名前のOBBファイルが2つ含まれています。何もインストールされませんでした。</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="other">OBBファイル %1$d 個を %2$s に配置しました。</item>
+    </plurals>
+    <string name="parts_obb_not_placed">OBBファイルは %1$s に配置されませんでした。そこに書き込めるのはShizukuとrootのインストーラーだけです。OBBファイルは、このリリースのファイルである %2$s の中にあります: %3$s。</string>
+    <string name="parts_obb_failed">OBBファイルを %1$s に配置できませんでした: %2$s。OBBファイルは、このリリースのファイルである %3$s の中にあります: %4$s。</string>
+</resources>

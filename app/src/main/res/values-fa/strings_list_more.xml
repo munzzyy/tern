@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">فیلتر کردن لیست</string>
+    <string name="filter_state_on">فیلترها فعال هستند</string>
+    <string name="filter_name">نام</string>
+    <string name="filter_author">توسعه‌دهنده</string>
+    <string name="filter_package">نام بسته</string>
+    <string name="filter_show_up_to_date">برنامه‌های به‌روز</string>
+    <string name="filter_show_not_installed">برنامه‌های نصب‌نشده</string>
+    <string name="filter_show_tracked">برنامه‌هایی که فقط دنبال می‌شوند</string>
+    <string name="filter_categories">در هر یک از این دسته‌ها</string>
+    <string name="filter_sources">از هر یک از این منبع‌ها</string>
+    <string name="filter_clear">پاک کردن فیلترها</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%1$d از %2$d برنامه نشان داده می‌شود</item>
+        <item quantity="other">%1$d از %2$d برنامه نشان داده می‌شود</item>
+    </plurals>
+    <string name="checking_count">در حال بررسی %1$d از %2$d</string>
+    <string name="row_moved">به %1$s منتقل شد</string>
+    <string name="row_released">منتشر شده در %1$s</string>
+    <string name="row_changes">تغییرات</string>
+    <string name="action_show_changes">نمایش تغییرات</string>
+    <string name="action_install_all">نصب همه</string>
+    <string name="action_install_update_all">نصب و به‌روزرسانی همه</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d برنامه هنوز نصب نشده است</item>
+        <item quantity="other">%d برنامه هنوز نصب نشده‌اند</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">%d برنامه نصب و به‌روزرسانی شود؟</item>
+        <item quantity="other">%d برنامه نصب و به‌روزرسانی شوند؟</item>
+    </plurals>
+    <string name="settings_update_all">دکمه «به‌روزرسانی همه»</string>
+    <string name="update_all_updates">فقط به‌روزرسانی‌ها</string>
+    <string name="update_all_all">به‌روزرسانی‌ها و برنامه‌هایی که هنوز نصب نشده‌اند</string>
+    <string name="update_all_none">نمایش داده نمی‌شود</string>
+    <string name="settings_confirm_update_all">پرسش پیش از «به‌روزرسانی همه»</string>
+    <string name="settings_confirm_update_all_effect">می‌گوید چند برنامه را نصب یا به‌روزرسانی می‌کند و منتظر تأیید شما می‌ماند.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">%d برنامه نصب شود؟</item>
+        <item quantity="other">%d برنامه نصب شوند؟</item>
+    </plurals>
+    <string name="bulk_install_text">هر فایل پیش از درخواست نصب از Android، دانلود و بررسی می‌شود. Tern گواهی‌ای را که هر برنامه جدید با آن امضا شده به خاطر می‌سپارد و هر به‌روزرسانی بعدی را ملزم به داشتن همان گواهی می‌کند.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d مورد از برنامه‌های انتخابی اکنون چیزی برای نصب ندارد و به همان شکل باقی می‌ماند.</item>
+        <item quantity="other">%d مورد از برنامه‌های انتخابی اکنون چیزی برای نصب ندارند و به همان شکل باقی می‌مانند.</item>
+    </plurals>
+    <string name="action_change_categories">تغییر دسته‌ها</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">دسته‌های %d برنامه</item>
+        <item quantity="other">دسته‌های %d برنامه</item>
+    </plurals>
+    <string name="bulk_categories_help">تیک، همه برنامه‌های انتخابی را در یک دسته قرار می‌دهد و کادر خالی همه آن‌ها را از آن بیرون می‌آورد. خط تیره، هر برنامه را همان‌طور که هست می‌گذارد.</string>
+    <string name="categories_filed_all">همه برنامه‌های انتخابی</string>
+    <string name="categories_filed_some">بعضی از برنامه‌های انتخابی</string>
+    <string name="categories_filed_none">هیچ‌کدام از برنامه‌های انتخابی</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">دسته‌های %d برنامه تغییر کرد.</item>
+        <item quantity="other">دسته‌های %d برنامه تغییر کرد.</item>
+    </plurals>
+    <string name="action_share_config_link">اشتراک‌گذاری پیوند همراه با تنظیمات آن</string>
+    <string name="action_share_config_links">اشتراک‌گذاری پیوندها همراه با تنظیمات آن‌ها</string>
+    <string name="share_link_none">هیچ پیوندی نمی‌تواند تنظیمات این برنامه را در خود جای دهد. در عوض، آن را به‌صورت فایل به اشتراک بگذارید.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d برنامه کنار گذاشته شد، چون هیچ پیوندی نمی‌تواند تنظیماتش را در خود جای دهد.</item>
+        <item quantity="other">%d برنامه کنار گذاشته شدند، چون هیچ پیوندی نمی‌تواند تنظیمات آن‌ها را در خود جای دهد.</item>
+    </plurals>
+</resources>

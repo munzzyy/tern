@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">篩選清單</string>
+    <string name="filter_state_on">篩選器已開啟</string>
+    <string name="filter_name">名稱</string>
+    <string name="filter_author">開發者</string>
+    <string name="filter_package">套件名稱</string>
+    <string name="filter_show_up_to_date">已是最新版本的應用程式</string>
+    <string name="filter_show_not_installed">未安裝的應用程式</string>
+    <string name="filter_show_tracked">僅追蹤的應用程式</string>
+    <string name="filter_categories">屬於以下任一分類</string>
+    <string name="filter_sources">來自以下任一來源</string>
+    <string name="filter_clear">清除篩選器</string>
+    <plurals name="filter_shown">
+        <item quantity="other">顯示 %2$d 個應用程式中的 %1$d 個</item>
+    </plurals>
+    <string name="checking_count">正在檢查 %1$d / %2$d</string>
+    <string name="row_moved">已移至 %1$s</string>
+    <string name="row_released">發行於 %1$s</string>
+    <string name="row_changes">更新內容</string>
+    <string name="action_show_changes">顯示更新內容</string>
+    <string name="action_install_all">全部安裝</string>
+    <string name="action_install_update_all">全部安裝並更新</string>
+    <plurals name="apps_section_installs">
+        <item quantity="other">%d 個應用程式尚未安裝</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="other">要安裝並更新 %d 個應用程式嗎？</item>
+    </plurals>
+    <string name="settings_update_all">「全部更新」按鈕</string>
+    <string name="update_all_updates">僅更新</string>
+    <string name="update_all_all">更新及尚未安裝的應用程式</string>
+    <string name="update_all_none">不顯示</string>
+    <string name="settings_confirm_update_all">「全部更新」前先詢問</string>
+    <string name="settings_confirm_update_all_effect">會說明將安裝或更新多少個應用程式，並等待您確認。</string>
+    <plurals name="bulk_install_title">
+        <item quantity="other">要安裝 %d 個應用程式嗎？</item>
+    </plurals>
+    <string name="bulk_install_text">每個檔案都會先下載並檢查，然後才要求 Android 進行安裝。Tern 會記住每個新應用程式的簽署憑證，並要求之後的每個更新都使用該憑證。</string>
+    <plurals name="bulk_install_left">
+        <item quantity="other">挑選的應用程式中有 %d 個目前沒有可安裝的內容，將維持原狀。</item>
+    </plurals>
+    <string name="action_change_categories">變更分類</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="other">%d 個應用程式的分類</item>
+    </plurals>
+    <string name="bulk_categories_help">勾選會將所有挑選的應用程式歸入該分類，空框會將它們全部移出該分類。短橫線則讓每個應用程式維持不變。</string>
+    <string name="categories_filed_all">所有挑選的應用程式</string>
+    <string name="categories_filed_some">部分挑選的應用程式</string>
+    <string name="categories_filed_none">沒有挑選的應用程式</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="other">已變更 %d 個應用程式的分類。</item>
+    </plurals>
+    <string name="action_share_config_link">分享帶有其設定的連結</string>
+    <string name="action_share_config_links">分享帶有各自設定的連結</string>
+    <string name="share_link_none">沒有任何連結能攜帶此應用程式的設定。請改以檔案分享。</string>
+    <plurals name="share_links_left">
+        <item quantity="other">有 %d 個應用程式未包含在內，因為沒有任何連結能攜帶它們的設定。</item>
+    </plurals>
+</resources>

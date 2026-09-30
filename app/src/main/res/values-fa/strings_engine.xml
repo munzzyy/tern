@@ -9,7 +9,6 @@
     <string name="engine_no_space">فضای خالی کافی نیست: این فایل به %1$s نیاز دارد و %2$s آزاد است.</string>
     <string name="engine_download_cut">دانلود پس از %1$s از %2$s متوقف شد. برای ادامه دوباره تلاش کنید.</string>
     <string name="engine_checksum_mismatch">فایل با چک‌سامی که ناشر ارائه کرده است مطابقت ندارد، بنابراین حذف شد. ممکن است آسیب دیده یا جایگزین شده باشد.</string>
-    <string name="engine_tar_unsupported">این انتشار یک آرشیو tar است که Tern آن را باز نمی‌کند. فایل دیگری را انتخاب کنید.</string>
     <string name="engine_not_an_apk">این فایل یک APK یا آرشیوی نیست که Tern بتواند آن را بخواند (%1$s).</string>
     <string name="engine_archive_no_apk">آرشیو هیچ APKای ندارد.</string>
     <string name="engine_archive_no_base">آرشیو حاوی APKهای چندبخشی است اما APK پایه را ندارد.</string>
@@ -57,7 +56,6 @@
     <string name="engine_warn_no_file">هیچ فایلی در این انتشار مناسب این دستگاه نیست.</string>
     <string name="engine_warn_prerelease">فقط یک پیش‌انتشار منتشر شده است.</string>
     <string name="engine_warn_moved">به نظر می‌رسد پروژه به %1$s منتقل شده است.</string>
-    <string name="engine_several_apps">این پیوند حاوی چندین برنامه است. به‌جای آن، آن را از تنظیمات درون‌ریزی کنید.</string>
     <string name="engine_not_a_source">Tern هیچ انتشاری در این آدرس پیدا نکرد.</string>
     <string name="engine_move_gone">این برنامه دیگر در لیست نیست.</string>
     <string name="engine_move_nothing">هیچ آدرس جدیدی برای دنبال کردن وجود ندارد.</string>

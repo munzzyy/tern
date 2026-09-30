@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parts_obb_name_refused">این آرشیو حاوی یک فایل OBB است که نام آن می‌تواند آن را از پوشه OBB برنامه بیرون ببرد، یا دو فایل OBB با نام یکسان. چیزی نصب نشد.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">%1$d فایل OBB در %2$s قرار داده شد.</item>
+        <item quantity="other">%1$d فایل OBB در %2$s قرار داده شد.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">فایل‌های OBB در %1$s قرار داده نشدند، چون فقط نصب‌کننده‌های Shizuku و root می‌توانند در آنجا بنویسند. آن‌ها در %2$s، فایل این انتشار، قرار دارند: %3$s.</string>
+    <string name="parts_obb_failed">قرار دادن فایل‌های OBB در %1$s ممکن نشد: %2$s. آن‌ها در %3$s، فایل این انتشار، قرار دارند: %4$s.</string>
+</resources>

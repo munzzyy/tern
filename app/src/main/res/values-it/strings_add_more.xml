@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">Tern non conosce questo tipo di link.</string>
+    <string name="add_not_readable_as">Questo indirizzo non può essere letto come %1$s.</string>
+    <string name="add_event_replaced">Le sue impostazioni sono state sostituite con quelle che un file o un link conteneva per essa.</string>
+    <string name="search_miss_unreachable">Impossibile cercare in %1$s: non ha risposto.</string>
+    <string name="search_miss_wait">Impossibile cercare in %1$s: chiede a Tern di aspettare un po\'.</string>
+    <string name="search_miss_wait_until">Impossibile cercare in %1$s: chiede a Tern di aspettare fino alle %2$s.</string>
+    <string name="search_miss_refused">Impossibile cercare in %1$s: ha rifiutato la richiesta.</string>
+    <string name="search_miss_status">Impossibile cercare in %1$s: ha risposto %2$d.</string>
+    <string name="search_miss_unreadable">Impossibile cercare in %1$s: non è stato possibile leggere la sua risposta.</string>
+    <string name="add_options_title">Prima di aggiungere</string>
+    <string name="add_options_auto">Tern scopre da solo cos\'è l\'indirizzo.</string>
+    <string name="add_options_forced">Letto come: %1$s</string>
+    <string name="add_read_as">Leggi l\'indirizzo come</string>
+    <string name="add_read_as_auto">Automatico</string>
+    <string name="add_read_as_forgejo">Forgejo o Gitea</string>
+    <string name="add_read_as_help">Per un\'origine che Tern non riconosce da solo, come una su un server proprio.</string>
+    <string name="add_package_label">Nome pacchetto</string>
+    <string name="add_package_help">Ogni file deve essere di questo pacchetto. Se lasciato vuoto, Tern lo legge dal file dell\'app.</string>
+    <string name="add_package_invalid">Questo non è un nome di pacchetto, come org.example.app.</string>
+    <string name="add_set_options">Imposta le sue opzioni</string>
+    <string name="add_failed_options">Le sue opzioni possono dire a Tern dove cercare. Impostale qui sopra, poi Tern controlla di nuovo.</string>
+    <string name="add_replace">Sostituisci le sue impostazioni</string>
+    <string name="add_replace_explain">Il link contiene impostazioni proprie per questa app. Sostituirle mantiene i certificati di cui si fida e il nome del pacchetto, e non le fa installare gli aggiornamenti da sola.</string>
+    <string name="results_filter">Filtro</string>
+    <string name="results_filter_help">Parole o un pattern</string>
+    <string name="results_filter_none">Nulla nella lista corrisponde a “%1$s”.</string>
+    <string name="repo_search_all">Cerca “%1$s” in tutto il repository</string>
+    <string name="repo_show_all">Mostra tutte le sue app</string>
+    <string name="repo_heading_within">App in %1$s con “%2$s”</string>
+    <string name="search_more">È stato trovato più di quanto viene mostrato. Il filtro lo restringe.</string>
+    <string name="search_forgejo_label">Forgejo o Gitea in cui cercare</string>
+    <string name="search_forgejo_help">Il suo indirizzo, come codeberg.org. Un token salvato per quell\'host viene inviato con la richiesta.</string>
+    <string name="search_forgejo_invalid">Questo non è un indirizzo in cui Tern può cercare.</string>
+    <string name="search_min_stars_label">Minimo di stelle</string>
+    <string name="search_min_stars_help">I progetti su GitHub e sul Forgejo con meno stelle vengono esclusi.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">Il file contiene anche altre impostazioni per %1$d app già presente nella tua lista. Restano come sono a meno che tu non le sostituisca.</item>
+        <item quantity="many">Il file contiene anche altre impostazioni per %1$d app già presenti nella tua lista. Restano come sono a meno che tu non le sostituisca.</item>
+        <item quantity="other">Il file contiene anche altre impostazioni per %1$d app già presenti nella tua lista. Restano come sono a meno che tu non le sostituisca.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">Sostituisci le impostazioni di %1$d app</item>
+        <item quantity="many">Sostituisci le impostazioni di %1$d app</item>
+        <item quantity="other">Sostituisci le impostazioni di %1$d app</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">Le impostazioni di %1$d app sono state sostituite. I certificati di cui si fida sono rimasti.</item>
+        <item quantity="many">Le impostazioni di %1$d app sono state sostituite. I certificati di cui si fidano sono rimasti.</item>
+        <item quantity="other">Le impostazioni di %1$d app sono state sostituite. I certificati di cui si fidano sono rimasti.</item>
+    </plurals>
+    <string name="import_settings_offered">Il file contiene anche impostazioni per Tern: l\'aspetto, la lista, le notifiche e i controlli. Non vengono applicate a meno che tu non lo dica.</string>
+    <string name="import_take_settings">Applica queste impostazioni</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">Spunta %1$d mostrato</item>
+        <item quantity="many">Spunta tutti i %1$d mostrati</item>
+        <item quantity="other">Spunta tutti i %1$d mostrati</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">Togli la spunta a %1$d mostrato</item>
+        <item quantity="many">Togli la spunta a tutti i %1$d mostrati</item>
+        <item quantity="other">Togli la spunta a tutti i %1$d mostrati</item>
+    </plurals>
+</resources>

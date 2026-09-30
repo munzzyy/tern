@@ -1,5 +1,119 @@
 # Changelog
 
+## Unreleased
+
+Everything Obtainium does, and more.
+
+- Reads the stores and sites Obtainium reads: APKPure, Aptoide, Uptodown,
+  APKCombo, APKMirror (tracking only), Farsroid, Huawei AppGallery, Samsung
+  Galaxy Store, vivo, Tencent, CoolApk, RuStore, itch.io, Telegram,
+  NeutronCode, LiteAPKs, Apk4Free and RockMods (tracking only). The Add screen
+  says when a store offers again what developers publish elsewhere, and when a
+  site offers apps changed by someone else. Every file is still held to the
+  certificate of the first install.
+- Fetches each file from where its source says it is at the moment of the
+  download, for stores whose addresses expire.
+- Searches F-Droid, Aptoide, Uptodown, AppGallery, the vivo store and RuStore
+  as well as GitHub, Codeberg and GitLab, in the places ticked under "Search in".
+- Installs through Shizuku, Dhizuku, root or another installer app. Google
+  Play can be named as the installer, for every app or for one, and with Let Me
+  Downgrade installed an older version can go in over a newer one.
+- Every per-app option Obtainium has: pre-releases, falling back to older
+  releases, a minimum age, filters on titles, notes and versions, the version
+  read from the tag, the title or the date with a match group, the order of
+  releases, staying some releases behind the newest, zip and tar archives with a filter
+  inside them, a name and author of your own, muted notifications, refreshing
+  before a download, and the options of each source, from the steps through a
+  web page to the device model the Galaxy Store is asked as. Both import and
+  export carry all of them.
+- Checks as often as every 15 minutes or as seldom as every 30 days, on start
+  and on opening an app if wanted, only installed apps if wanted, with a filter
+  for every app's files, and forgets apps removed from the phone if wanted.
+- The list can be sorted, grouped by category or source with groups that fold,
+  filtered, and swiped. Favourites stay on top, each app's categories show as
+  a coloured stripe, and a double tap on an icon opens the app. A minimal
+  density, haptics and an always-phone layout are settings.
+- Categories have colours, and can be renamed or deleted for every app at once.
+- Notifications carry Update and Update all buttons. Releases of tracked apps
+  have their own channel, and a quiet notification can show a check running.
+- Imports a list of addresses from any text, and `obtainium://apps` links of
+  several apps. `tern://refresh` and `obtainium://refresh` check from a link.
+- Keeps an export up to date in a folder you pick, can carry settings in it,
+  and writes a file Obtainium can import.
+- A home-screen widget with the number of updates and Check and Update all
+  buttons, a Quick Settings tile, and launcher shortcuts.
+- Saves any file a release offers to Downloads, and the source code of GitHub,
+  GitLab and Forgejo releases, from an app's page, one of its versions or many
+  apps at once. Saving goes on after the page is left and says when each file
+  is saved; sizes are asked of the server where a source lists none. Many
+  tracked releases can be marked as seen at once.
+- The notification after an install names the version, and one about problems
+  names each app with its reason, a tap away from what went wrong.
+- New apps can be shown to Verified Apps first, as in Obtainium. The installer
+  app is picked from a list with icons, with the way in it takes.
+- Dhizuku's state shows in Settings: not installed, not the device owner, not
+  allowed yet, or ready. Every install, whichever installer made it, counts
+  only when the installed app carries the certificate the checks verified.
+- The activity log can keep Tern's own messages: warnings, errors, and each
+  check's start and end, with what started it, how many apps, what it found and
+  how long it took. Off at first. They are marked and coloured by level, have a
+  filter of their own, and lose addresses' queries, tokens, passwords and email
+  addresses before they are kept.
+- Notes of your own and category chips on an app's page, and the project's
+  README, read from the forge when you ask for it.
+- The activity log can be shared as text, and Tern offers to keep itself up to
+  date.
+- The top of an app's page takes the colour of its icon, and a deeper screen
+  slides in from the side text runs to.
+- The language can be chosen in Tern on every Android version.
+- How often to check is a slider from 15 minutes to 30 days. Install only on
+  Wi-Fi and only while charging hold back installs, not checks, and a switch
+  pauses every install the background would make. A check that failed on the
+  network is tried again, later each time, and a rate limit is waited out.
+- Your own colour can be typed as a colour code, and the scheme can be
+  standard, vibrant or expressive, each measured for contrast. A category's
+  colour can be any colour.
+- The kept export can be written in Obtainium's format under a name of your
+  own, and the export for Obtainium works on a TV too.
+- Certificate pinning for GitHub, GitLab and Codeberg, off by default as in
+  Obtainium. RuStore's addresses that use Russia's national authority work.
+- After an unexpected stop the next start shows what Tern was doing, to copy
+  or share. The log can be cut to its last days and is copied where nothing
+  takes a share.
+- About links to how Tern works, how it keeps you safe and its privacy page,
+  with a note on Android's developer verification.
+- The list's filters combine: name, developer, package, sources, several
+  categories, up to date, not installed, tracked only. Each row shows when its
+  release came out with its changes a tap away, dims the icon of an app not
+  installed, marks a tracked release as seen, and says when a project moved.
+- Many apps can be installed, filed under categories or shared at once. Update
+  all can take first installs too, or be hidden, and can ask first. A check of
+  the whole list shows how far it got.
+- An app's settings can be shared as a link that Obtainium opens too, and Tern
+  reads such links back; they never carry a token.
+- Read as: the Add screen can force how an address is read, with the source's
+  options and a package name set before adding. Search names what failed,
+  searches any Forgejo, takes a fewest-stars limit, filters its results and
+  searches a repository by words. Imports offer to replace apps already there
+  and never change them unasked.
+- Releases are picked as Obtainium picks them: web pages in its link order with
+  up to ten steps, the version from a link or the whole page, last matches,
+  tags for tracked projects without releases, a minimum age that can follow the
+  setting for all apps. Private GitHub projects download with their token, and
+  GitHub can be reached through a hubproxy.
+- Tar archives compressed with bzip2 or xz are opened. Downloads can be
+  cancelled from the list and the notification, are tried again on a network
+  failure, and can go one at a time. The file picked to install is kept for
+  later updates. Tern updates itself last.
+- RuStore apps that come as a base and splits install as one, every part held
+  to the base's signer. The OBB files of an XAPK are put in `Android/obb` with
+  Shizuku or root, under the package the checks verified.
+- F-Droid apps show their author and changelog, APKMirror apps what changed
+  and the size of the file, and a SourceForge project can be followed in one
+  folder. The package name can be set on an app's page as well as when adding.
+  An app without one leaves in Obtainium's format with an id Obtainium replaces
+  at the first install, and comes back without one.
+
 ## 0.1.0, 2026-09-29
 
 The first version.

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="install_archive_zstd_unsupported">Tento archiv je komprimován pomocí zstd, který Tern otevřít neumí. Vyberte soubor .zip nebo .tar tohoto vydání, nebo soubor komprimovaný pomocí gzip, bzip2 či xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s z %2$s</string>
+    <string name="install_setting_one_download">Jedno stahování najednou</string>
+    <string name="install_setting_one_download_effect">Stahování na sebe čekají a neběží vedle sebe.</string>
+    <string name="install_file_foreign_host">Tento soubor pochází z %1$s, což není web zdroje této aplikace. Kontroluje se jako každý jiný soubor.</string>
+    <string name="install_file_picked">Vaše volba</string>
+    <string name="install_file_automatic">Nechat Tern znovu vybrat soubor</string>
+    <string name="install_file_picked_kept">Aktualizace se drží vámi vybraného souboru, %1$s.</string>
+    <string name="install_file_picked_missing">Toto vydání nemá soubor podobný tomu, který jste vybrali (%1$s), a proto Tern vybral jiný soubor.</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">Apps from %1$s can only be tracked, because it offers no file to install.</string>
+    <string name="min_age_global">As set for all apps: %1$s</string>
+    <string name="setting_min_age_global_effect">Apps without a wait of their own wait this long before a new release is offered, so a bad one can be pulled first.</string>
+    <string name="option_link_text">Filter links by what they say</string>
+    <string name="option_link_text_effect">The filter is matched against the text of a link instead of its address.</string>
+    <string name="option_take_first">Take the first link</string>
+    <string name="option_take_first_effect">Otherwise the last link in order is taken.</string>
+    <string name="option_natural_order_effect">Otherwise links are put in natural order of their address, with numbers read as numbers.</string>
+    <string name="option_by_last_segment">Go by the end of the address</string>
+    <string name="option_by_last_segment_effect">Links are put in order, and versions read, by the part after the last slash.</string>
+    <string name="option_steps_title">Pages to go through first</string>
+    <string name="option_steps_order_help">On each page, the links that match are put in order and the last one is followed.</string>
+    <string name="step_title">Page %1$d</string>
+    <string name="step_filter">Link to follow</string>
+    <string name="step_text">Match what the link says</string>
+    <string name="step_arch">Prefer this device\'s processor</string>
+    <string name="step_add">Add a page</string>
+    <string name="step_remove">Remove this page</string>
+    <string name="option_file_version">Use the file name as the version</string>
+    <string name="option_file_version_effect">Each file then counts as a release of its own.</string>
+    <string name="github_proxy_title">GitHub through a hubproxy</string>
+    <string name="github_proxy_effect">Every request to GitHub goes to this host, which sees each one. No token is sent through it, so private projects and GitHub Actions cannot be followed this way.</string>
+    <string name="github_proxy_host">Hubproxy host</string>
+    <string name="github_proxy_help">A host name alone, such as gh-proxy.com. Tern reaches it over HTTPS.</string>
+    <string name="github_proxy_invalid">That is not a host name Tern can use</string>
+    <string name="github_proxy_in_use">GitHub requests go through %1$s</string>
+    <string name="github_proxy_remove">Stop using the hubproxy</string>
+</resources>

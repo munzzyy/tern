@@ -47,10 +47,17 @@ object AssetPicker {
     private const val VARIANT_MISMATCH_PENALTY = 400
     private const val DEBUG_PENALTY = 300
     private const val APK_OVER_BUNDLE_BONUS = 40
+    private const val ARCHIVE_PENALTY = 20
 
+    /**
+     * APKs and bundles, best first. Archives are ranked too where [AssetPolicy.archives] asks for
+     * them or the source knows one holds the app ([Asset.holdsApps]), each below an APK or bundle
+     * whose name scores the same.
+     */
     fun rank(assets: List<Asset>, device: DeviceProfile, policy: AssetPolicy): List<Pick> {
         val include = compile(policy.include)
         val exclude = compile(policy.exclude)
+        compile(policy.innerFilter)
         val deviceAbis = device.abis.map { canonicalAbi(it.lowercase()) }
         val deviceVariant = when {
             device.television -> "tv"
@@ -62,7 +69,7 @@ object AssetPicker {
         val picks = try {
             SafePattern.watched("file filters") {
                 assets
-                    .filter { it.kind == AssetKind.APK || it.kind == AssetKind.BUNDLE }
+                    .filter { it.kind == AssetKind.APK || it.kind == AssetKind.BUNDLE || (it.kind == AssetKind.ARCHIVE && (policy.archives || it.holdsApps)) }
                     .mapNotNull { asset -> rankOne(asset, deviceAbis, deviceVariant, policy, include, exclude) }
             }
         } catch (e: PatternException) {
@@ -133,9 +140,39 @@ object AssetPicker {
         if (asset.kind == AssetKind.APK) {
             score += APK_OVER_BUNDLE_BONUS
         }
+        if (asset.kind == AssetKind.ARCHIVE) {
+            score -= ARCHIVE_PENALTY
+        }
 
         return Pick(asset, score, reasons)
     }
+
+    /**
+     * Whether the file named [name] inside an archive or bundle may be installed: any may, unless
+     * [AssetPolicy.innerFilter] is set, and then those it matches. A broken filter is an
+     * [AssetPolicyException], as in [rank].
+     */
+    fun installsInside(policy: AssetPolicy, name: String): Boolean {
+        val filter = compile(policy.innerFilter) ?: return true
+        return try {
+            filter.matches(name.take(MAX_NAME_LENGTH))
+        } catch (e: PatternException) {
+            throw AssetPolicyException(e.message ?: "The file filter could not be applied")
+        }
+    }
+
+    /** The processors [name] names, as Android calls them, such as arm64-v8a; a universal build names none. */
+    internal fun abisIn(name: String): List<String> =
+        tokenize(name.take(MAX_NAME_LENGTH)).mapNotNull { ABI_ALIASES[it] }.filter { it != "any" }.distinct()
+
+    /** [abi] as Android calls it, whichever common spelling it comes in. */
+    internal fun canonical(abi: String): String = canonicalAbi(abi.lowercase())
+
+    /** The words of [name] in lowercase, a processor name that holds a dash or an underscore kept as one. */
+    internal fun tokens(name: String): List<String> = tokenize(name.take(MAX_NAME_LENGTH))
+
+    /** True for a word that names a processor type; a word for a universal build is not one. */
+    internal fun isAbiToken(token: String): Boolean = ABI_ALIASES[token].let { it != null && it != "any" }
 
     private fun canonicalAbi(abi: String): String = ABI_ALIASES[abi] ?: abi
 

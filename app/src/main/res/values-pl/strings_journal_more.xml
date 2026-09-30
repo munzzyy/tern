@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Log aktywności</string>
+    <string name="journal_keep_own">Zachowaj w logu własne komunikaty Tern</string>
+    <string name="journal_keep_own_effect">Ostrzeżenia i błędy Tern oraz początek i koniec każdego sprawdzania. Wszystko, co mogłoby być hasłem lub tokenem, jest pomijane, a log zostaje na tym urządzeniu, chyba że go udostępnisz.</string>
+    <string name="journal_filter_own">Komunikaty Tern</string>
+    <string name="journal_mark_note">Notatka od Tern</string>
+    <string name="journal_mark_warning">Ostrzeżenie od Tern</string>
+    <string name="journal_mark_error">Błąd od Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Rozpoczęło się sprawdzanie %1$d aplikacji.</item>
+        <item quantity="few">Rozpoczęło się sprawdzanie %1$d aplikacji.</item>
+        <item quantity="many">Rozpoczęło się sprawdzanie %1$d aplikacji.</item>
+        <item quantity="other">Rozpoczęło się sprawdzanie %1$d aplikacji.</item>
+    </plurals>
+    <string name="journal_check_started_one">Rozpoczęło się sprawdzanie %1$s.</string>
+    <string name="journal_cause_asked">Sprawdzanie zainicjowano w Tern.</string>
+    <string name="journal_cause_opening">Tern został otwarty.</string>
+    <string name="journal_cause_page">Otwarto stronę aplikacji.</string>
+    <string name="journal_cause_link">Sprawdzanie zainicjował link.</string>
+    <string name="journal_cause_shortcut">Sprawdzanie zainicjował skrót.</string>
+    <string name="journal_cause_widget">Sprawdzanie zainicjował widżet.</string>
+    <string name="journal_cause_tile">Sprawdzanie zainicjował kafelek Szybkich ustawień.</string>
+    <string name="journal_cause_schedule">Sprawdzanie uruchomił harmonogram.</string>
+    <string name="journal_cause_retry">Ponawia próbę tam, gdzie poprzednie sprawdzanie nie powiodło się.</string>
+    <string name="journal_cause_added">Aplikacja została właśnie dodana.</string>
+    <string name="journal_cause_imported">Aplikacje zostały właśnie zaimportowane.</string>
+    <string name="journal_cause_changed">Zmieniły się ustawienia aplikacji.</string>
+    <string name="journal_cause_install">Aplikacja zaraz zostanie zainstalowana i najpierw jest sprawdzana.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">Sprawdzanie %1$d aplikacji zakończyło się po %2$s.</item>
+        <item quantity="few">Sprawdzanie %1$d aplikacji zakończyło się po %2$s.</item>
+        <item quantity="many">Sprawdzanie %1$d aplikacji zakończyło się po %2$s.</item>
+        <item quantity="other">Sprawdzanie %1$d aplikacji zakończyło się po %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Sprawdzanie %1$s zakończyło się po %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Znaleziono %1$d aktualizację.</item>
+        <item quantity="few">Znaleziono %1$d aktualizacje.</item>
+        <item quantity="many">Znaleziono %1$d aktualizacji.</item>
+        <item quantity="other">Znaleziono %1$d aktualizacji.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">Nie udało się sprawdzić %1$d aplikacji.</item>
+        <item quantity="few">Nie udało się sprawdzić %1$d aplikacji.</item>
+        <item quantity="many">Nie udało się sprawdzić %1$d aplikacji.</item>
+        <item quantity="other">Nie udało się sprawdzić %1$d aplikacji.</item>
+    </plurals>
+    <string name="journal_check_stopped">Sprawdzanie zatrzymało się po %1$s, zanim się zakończyło.</string>
+</resources>

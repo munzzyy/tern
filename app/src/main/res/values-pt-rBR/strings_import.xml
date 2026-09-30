@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">De uma lista de endereços</string>
+    <string name="import_addresses_explain">Cole endereços de apps, um por linha ou em qualquer parte do texto, ou leia de um arquivo, como uma lista OPML. Cada um é analisado e adicionado do mesmo jeito que um link sozinho.</string>
+    <string name="import_addresses_field">Endereços</string>
+    <string name="import_addresses_show">Mostrar o conteúdo</string>
+    <string name="import_addresses_file">Ler um arquivo</string>
+    <string name="import_addresses_none">Não tem nenhum endereço https.</string>
+    <string name="import_addresses_other">Outra lista</string>
+    <string name="import_addresses_unreadable">Esse arquivo não pôde ser lido.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d endereço. Desmarque o que não quiser e depois adicione.</item>
+        <item quantity="many">%1$d endereços. Desmarque o que não quiser e depois adicione.</item>
+        <item quantity="other">%1$d endereços. Desmarque o que não quiser e depois adicione.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">%1$d app veio neste link. Veja-o para conhecer as configurações dele antes de adicioná-lo.</item>
+        <item quantity="many">%1$d apps vieram neste link. Veja cada um para conhecer as configurações dele antes de adicioná-lo.</item>
+        <item quantity="other">%1$d apps vieram neste link. Veja cada um para conhecer as configurações dele antes de adicioná-lo.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Exportar para o Obtainium</string>
+    <string name="settings_export_obtainium_effect">Um arquivo que o Obtainium importa, para uma lista que vai para lá. O que o Obtainium não tem como configuração fica para trás.</string>
+    <string name="settings_export_installed_only">Exportar apenas apps instalados</string>
+    <string name="settings_export_settings">Incluir as configurações nas exportações</string>
+    <string name="settings_export_settings_effect">A aparência, a lista, as notificações e as verificações. Nunca um token, o proxy ou o instalador.</string>
+    <string name="settings_kept_export">Manter uma exportação atualizada</string>
+    <string name="settings_kept_export_effect">Pouco depois de qualquer mudança na lista, o Tern grava a exportação de novo.</string>
+    <string name="settings_kept_export_written">Gravada às %1$s</string>
+    <string name="settings_kept_export_folder">Onde ela fica</string>
+    <string name="import_settings_taken">As configurações do arquivo também foram aplicadas.</string>
+</resources>

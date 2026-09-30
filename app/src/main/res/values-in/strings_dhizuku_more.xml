@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">Menginstal dan memperbarui tanpa konfirmasi, melalui Dhizuku sebagai pemilik perangkat. Setiap file melewati pemeriksaan yang sama terlebih dahulu. Android lalu menyebut Dhizuku sebagai penginstal.</string>
+    <string name="installer_dhizuku_not_ready">Belum siap, tidak ada yang diinstal sampai siap</string>
+    <string name="installer_dhizuku_unsupported">Tern tidak dapat menginstal melalui Dhizuku di versi Android ini.</string>
+    <string name="installer_dhizuku_not_installed">Dhizuku tidak terinstal. Instal aplikasinya dan jadikan sebagai pemilik perangkat, lalu kembali.</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku bukan pemilik perangkat. Jadikan sebagai pemilik perangkat di aplikasi Dhizuku, lalu kembali.</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku tidak menjawab. Buka aplikasi Dhizuku, lalu kembali.</string>
+    <string name="installer_dhizuku_not_allowed">Tern belum boleh menggunakan Dhizuku. Tekan di sini untuk meminta izin.</string>
+    <string name="dhizuku_failed_not_installed">Dhizuku tidak terinstal.</string>
+    <string name="dhizuku_failed_not_owner">Dhizuku bukan pemilik perangkat.</string>
+    <string name="dhizuku_failed_not_answering">Dhizuku tidak menjawab.</string>
+    <string name="dhizuku_failed_not_allowed">Dhizuku tidak mengizinkan Tern menggunakannya.</string>
+    <string name="install_signer_changed">Aplikasi yang kini terinstal ditandatangani oleh pihak selain penandatangan file yang diperiksa Tern, jadi instalasi ini tidak dihitung.</string>
+</resources>

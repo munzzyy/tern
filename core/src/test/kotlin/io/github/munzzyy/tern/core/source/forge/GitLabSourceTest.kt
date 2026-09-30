@@ -137,6 +137,19 @@ class GitLabSourceTest {
     }
 
     @Test
+    fun theSourceOfEachReleaseIsOfferedAsGitLabNamesIt() {
+        val body = """[{"tag_name":"v1.0.0","name":"v1.0.0","description":null,"created_at":"2026-01-01T00:00:00.000Z","upcoming_release":false,
+            "assets":{"count":3,"links":[],"sources":[
+            {"format":"zip","url":"https://gitlab.com/group/app/-/archive/v1.0.0/app-v1.0.0.zip"},
+            {"format":"tar.gz","url":"https://gitlab.com/group/app/-/archive/v1.0.0/app-v1.0.0.tar.gz"},
+            {"format":"tar","url":"https://elsewhere.example/app-v1.0.0.tar"}]}}]"""
+        val http = FakeHttp().text(releasesUrl, body)
+        val release = (source.check(SourceSpec(SourceTypes.GITLAB, "https://gitlab.com/group/app"), context(http)) as CheckResult.Listing).listing.releases.single()
+        assertTrue(release.assets.isEmpty())
+        assertEquals(listOf("app-v1.0.0.zip", "app-v1.0.0.tar.gz"), release.sourceArchives.map { it.name })
+    }
+
+    @Test
     fun tokenIsSentOnlyToExactHost() {
         val http = FakeHttp().resource(releasesUrl, "forge/gitlab_releases.json")
         source.check(SourceSpec(SourceTypes.GITLAB, "https://gitlab.com/group/app"), context(http, token = "secret"))

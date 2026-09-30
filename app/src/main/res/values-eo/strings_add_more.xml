@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">Tern ne konas ĉi tiun specon de ligilo.</string>
+    <string name="add_not_readable_as">Ĉi tiu adreso ne povas esti legata kiel %1$s.</string>
+    <string name="add_event_replaced">Ĝiaj agordoj estis anstataŭigitaj per tiuj, kiujn dosiero aŭ ligilo enhavis por ĝi.</string>
+    <string name="search_miss_unreachable">Ne eblis serĉi en %1$s: ĝi ne respondis.</string>
+    <string name="search_miss_wait">Ne eblis serĉi en %1$s: ĝi petas al Tern atendi iom.</string>
+    <string name="search_miss_wait_until">Ne eblis serĉi en %1$s: ĝi petas al Tern atendi ĝis %2$s.</string>
+    <string name="search_miss_refused">Ne eblis serĉi en %1$s: ĝi rifuzis la peton.</string>
+    <string name="search_miss_status">Ne eblis serĉi en %1$s: ĝi respondis %2$d.</string>
+    <string name="search_miss_unreadable">Ne eblis serĉi en %1$s: ĝia respondo ne povis esti legita.</string>
+    <string name="add_options_title">Antaŭ aldono</string>
+    <string name="add_options_auto">Tern mem eltrovas, kio estas la adreso.</string>
+    <string name="add_options_forced">Legata kiel %1$s</string>
+    <string name="add_read_as">Legi la adreson kiel</string>
+    <string name="add_read_as_auto">Aŭtomate</string>
+    <string name="add_read_as_forgejo">Forgejo aŭ Gitea</string>
+    <string name="add_read_as_help">Por fonto, kiun Tern ne rekonas mem, ekzemple unu sur propra servilo.</string>
+    <string name="add_package_label">Pakaĵnomo</string>
+    <string name="add_package_help">Ĉiu dosiero devas apartenti al ĉi tiu pakaĵo. Se la kampo restas malplena, Tern legas la nomon el la dosiero de la aplikaĵo.</string>
+    <string name="add_package_invalid">Tio ne estas pakaĵnomo kiel org.example.app.</string>
+    <string name="add_set_options">Agordi la opciojn</string>
+    <string name="add_failed_options">La opcioj de la fonto povas diri al Tern, kie serĉi. Agordu ilin supre, poste Tern kontrolos denove.</string>
+    <string name="add_replace">Anstataŭigi ĝiajn agordojn</string>
+    <string name="add_replace_explain">La ligilo enhavas proprajn agordojn por ĝi. Anstataŭigo konservas la atestilojn, kiujn ĝi fidas, kaj ĝian pakaĵnomon, kaj ne igas ĝin instali ĝisdatigojn memstare.</string>
+    <string name="results_filter">Filtrilo</string>
+    <string name="results_filter_help">Vortoj aŭ ŝablono</string>
+    <string name="results_filter_none">Nenio en la listo kongruas kun “%1$s”.</string>
+    <string name="repo_search_all">Serĉi “%1$s” en la tuta deponejo</string>
+    <string name="repo_show_all">Montri ĉiujn ĝiajn aplikaĵojn</string>
+    <string name="repo_heading_within">Aplikaĵoj en %1$s kun “%2$s”</string>
+    <string name="search_more">Pli estis trovita ol estas montrata. La filtrilo malvastigas ĝin.</string>
+    <string name="search_forgejo_label">Forgejo aŭ Gitea por serĉi</string>
+    <string name="search_forgejo_help">Ĝia adreso, ekzemple codeberg.org. Ĵetono konservita por ĝi estas sendata kune.</string>
+    <string name="search_forgejo_invalid">Tio ne estas adreso, kiun Tern povas serĉi.</string>
+    <string name="search_min_stars_label">Minimuma nombro de steloj</string>
+    <string name="search_min_stars_help">Projektoj en GitHub kaj en la Forgejo kun malpli da steloj estas preterlasataj.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">La dosiero ankaŭ enhavas aliajn agordojn por %1$d aplikaĵo, kiu jam estas en via listo. Ili restas kiel ili estas, krom se vi anstataŭigas ilin.</item>
+        <item quantity="other">La dosiero ankaŭ enhavas aliajn agordojn por %1$d aplikaĵoj, kiuj jam estas en via listo. Ili restas kiel ili estas, krom se vi anstataŭigas ilin.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">Anstataŭigi la agordojn de %1$d aplikaĵo</item>
+        <item quantity="other">Anstataŭigi la agordojn de %1$d aplikaĵoj</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">La agordoj de %1$d aplikaĵo estis anstataŭigitaj. La atestiloj, kiujn ĝi fidas, restis.</item>
+        <item quantity="other">La agordoj de %1$d aplikaĵoj estis anstataŭigitaj. La atestiloj, kiujn ili fidas, restis.</item>
+    </plurals>
+    <string name="import_settings_offered">La dosiero portas ankaŭ agordojn por Tern: la aspekton, la liston, sciigojn kaj kontrolojn. Ili ne estas transprenataj, krom se vi diras tion.</string>
+    <string name="import_take_settings">Transpreni ĉi tiujn agordojn</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">Marki la %1$d montratan</item>
+        <item quantity="other">Marki ĉiujn %1$d montratajn</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">Malmarki la %1$d montratan</item>
+        <item quantity="other">Malmarki ĉiujn %1$d montratajn</item>
+    </plurals>
+</resources>

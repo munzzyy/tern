@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_system">Isto kao sistem</string>
+    <string name="interval_more_often">Provjeravaj češće</string>
+    <string name="interval_less_often">Provjeravaj rjeđe</string>
+    <string name="about_help">Kako Tern radi</string>
+    <string name="about_help_effect">Šta Tern provjerava i kako dodavati, ažurirati i premještati aplikacije, na stranici projekta.</string>
+    <string name="about_security">Kako vas Tern štiti</string>
+    <string name="about_privacy">Privatnost</string>
+    <string name="verification_title">Verifikacija programera u Androidu</string>
+    <string name="verification_text">Kompanija Google je objavila da će certificirani Android uređaji instalirati samo aplikacije programera koji su se kod nje registrirali: od septembra 2026. u nekoliko zemalja, a nakon toga u više njih.\n\nTamo gdje se ovo primjenjuje, Android može odbiti aplikaciju programera koji se nije registrirao ili od vas zatražiti nešto više prije njene instalacije, bez obzira na ishod Ternovih vlastitih provjera. Tern to ne može promijeniti i obavještava vas kada Android odbije aplikaciju.\n\nOvo se ne odnosi na uređaje bez Googleove certifikacije.</string>
+    <string name="verification_more">Googleova stranica o tome</string>
+    <string name="kept_export_format">Format</string>
+    <string name="kept_export_format_tern">Ternov format, koji sadrži sve</string>
+    <string name="kept_export_format_obtainium">Obtainiumov format, koji može pročitati i Obtainium</string>
+    <string name="kept_export_name">Naziv datoteke</string>
+    <string name="kept_export_name_usual">Ostavite prazno za %1$s.</string>
+    <string name="look_style">Stil</string>
+    <string name="style_standard">Standardni</string>
+    <string name="style_vibrant">Živahni</string>
+    <string name="style_expressive">Izražajni</string>
+    <string name="look_style_effect">Živahni je šareniji u cijeloj paleti. Izražajni pomiče drugu i treću boju dalje od prve.</string>
+    <string name="look_color_code">Kod boje</string>
+    <string name="look_color_code_effect">Tern uzima nijansu i zasićenost ove boje i bira njene tonove koji ostaju lako čitljivi.</string>
+    <string name="look_color_code_invalid">Šest heksadecimalnih cifara, kao što je #3D5A80.</string>
+    <string name="crash_title">Tern se neočekivano zaustavio</string>
+    <string name="crash_text">Ovo je ono što je Tern radio kada se zaustavio. Zapis ostaje na ovom uređaju; podijelite ga s programerom ako želite da ga neko pogleda.</string>
+    <string name="crash_share">Podijeli</string>
+    <string name="crash_copied">Kopirano</string>
+    <string name="activity_range">Prikaži</string>
+    <string name="activity_range_all">Svi dani</string>
+    <plurals name="activity_range_days">
+        <item quantity="one">Posljednji %d dan</item>
+        <item quantity="few">Posljednja %d dana</item>
+        <item quantity="other">Posljednjih %d dana</item>
+    </plurals>
+    <string name="activity_copied">Dnevnik je kopiran</string>
+    <string name="settings_auto_installs">Ažuriranja se instaliraju sama</string>
+    <string name="settings_auto_installs_effect">Aplikacije postavljene da se same ažuriraju to rade nakon provjere u pozadini. Isključeno, samo javljaju da ažuriranje postoji, a svaka zadržava svoj izbor za kasnije.</string>
+    <string name="settings_unmetered_installs">Instaliraj samo na Wi-Fi mreži</string>
+    <string name="settings_unmetered_installs_effect">Provjere rade na bilo kojoj mreži. Ažuriranje koje bi se instaliralo samo čeka Wi-Fi ili kabl, kao u Obtainiumu.</string>
+    <string name="settings_charging_installs">Instaliraj samo dok se puni</string>
+    <string name="settings_charging_installs_effect">Provjere rade i na bateriji. Ažuriranje koje bi se instaliralo samo čeka dok se uređaj ne počne puniti.</string>
+    <string name="engine_unreadable_app">Sačuvana aplikacija %1$s nije se mogla pročitati, pa je izostavljena sa spiska. Ništa nije izbrisano: novija verzija Terna može je pročitati.</string>
+    <string name="settings_pin_certificates">Prikvači certifikate platformi za kod</string>
+    <string name="settings_pin_certificates_effect">Kao u Obtainiumu, GitHub, GitLab i Codeberg moraju pokazati certifikat izdavača za kojeg se zna da ga svaki od njih koristi. Certifikat koji je drugi izdavač bio primoran izdati tada se odbija. Ako platforma za kod promijeni izdavača, provjere tamo ne uspijevaju dok se ovo ne isključi.</string>
+</resources>

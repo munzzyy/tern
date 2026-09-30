@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.munzzyy.tern.engine.Engine
+import io.github.munzzyy.tern.engine.ExportFormat
+import io.github.munzzyy.tern.engine.ExportStatus
 import io.github.munzzyy.tern.engine.ProblemException
 import io.github.munzzyy.tern.engine.SavedFile
 import io.github.munzzyy.tern.engine.Settings
@@ -45,23 +47,56 @@ class SettingsViewModel(private val engine: Engine) : ViewModel() {
         }
     }
 
-    fun export(uri: Uri, onDone: (Int?) -> Unit) {
+    fun export(uri: Uri, format: ExportFormat = ExportFormat.TERN, onDone: (Int?) -> Unit) {
         if (_exporting.value) return
         _exporting.value = true
         viewModelScope.launch {
-            val count = attempt { engine.exportTo(uri) }
+            val count = attempt { engine.exportTo(uri, format) }
             _exporting.value = false
             onDone(count)
         }
     }
 
+    val exportStatus: StateFlow<ExportStatus?> = engine.exportStatus
+
+    private val _runningCheck = MutableStateFlow(false)
+    val runningCheck: StateFlow<Boolean> = _runningCheck.asStateFlow()
+
+    /** Whether Let Me Downgrade is installed; read once, as the screen opens. */
+    val canDowngrade: Boolean = engine.canDowngrade()
+
+    fun runBackgroundCheck() {
+        if (_runningCheck.value) return
+        _runningCheck.value = true
+        viewModelScope.launch {
+            try {
+                attempt { engine.runBackgroundCheck() }
+            } finally {
+                _runningCheck.value = false
+            }
+        }
+    }
+
+    /** Keeps the export up to date in [folder] from now on; Android's grant of it is taken first. */
+    fun keepIn(folder: Uri, onFailed: () -> Unit) {
+        viewModelScope.launch {
+            val taken = attempt { engine.takeExportFolder(folder) } != null
+            val next = settings.value.copy(exportFolder = folder.toString(), autoExport = true)
+            if (!taken || attempt { engine.saveSettings(next) } == null) onFailed()
+        }
+    }
+
+    fun writeKept() {
+        viewModelScope.launch { attempt { engine.writeKeptExport() } }
+    }
+
     /** Hands back the file that was written, or else the engine's sentence about why not, which is null when it gave none. */
-    fun exportToFolder(onDone: (SavedFile?, String?) -> Unit) {
+    fun exportToFolder(format: ExportFormat = ExportFormat.TERN, onDone: (SavedFile?, String?) -> Unit) {
         if (_exporting.value) return
         _exporting.value = true
         viewModelScope.launch {
             val (saved, problem) = try {
-                engine.exportToFolder() to null
+                engine.exportToFolder(format) to null
             } catch (e: CancellationException) {
                 throw e
             } catch (e: ProblemException) {

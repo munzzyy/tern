@@ -22,6 +22,8 @@ class HttpRangeSource(
     private val url: String,
     private val authorization: String? = null,
     private val budgetBytes: Long = DEFAULT_BUDGET,
+    /** What the source asks every request for the file to carry, such as the page it is linked from. */
+    private val extraHeaders: Map<String, String> = emptyMap(),
 ) : RandomAccessSource {
     override val size: Long
 
@@ -114,6 +116,7 @@ class HttpRangeSource(
     private fun send(to: String, start: Long, end: Long): HttpResponse {
         requestCount++
         val headers = buildMap {
+            putAll(extraHeaders)
             put("Range", "bytes=$start-$end")
             put("Accept-Encoding", "identity")
             ifRange?.let { put("If-Range", it) }

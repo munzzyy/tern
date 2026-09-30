@@ -117,18 +117,7 @@
         <item quantity="other">%d selected</item>
     </plurals>
     <string name="apps_select_hint">Pick apps from the list.</string>
-    <string name="action_add_to_category">Add to category</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Add %d app to a category</item>
-        <item quantity="other">Add %d apps to a category</item>
-    </plurals>
-    <string name="bulk_category_field">Category</string>
     <!-- %1$d is how many apps, %2$s the category name. -->
-    <plurals name="bulk_category_done">
-        <item quantity="one">Filed %1$d app under %2$s.</item>
-        <item quantity="other">Filed %1$d apps under %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Or pick one you already use:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Check %d app now?</item>
         <item quantity="other">Check %d apps now?</item>
@@ -394,10 +383,6 @@
         <item quantity="one">Every hour</item>
         <item quantity="other">Every %d hours</item>
     </plurals>
-    <string name="settings_unmetered">Only on unmetered networks</string>
-    <string name="settings_unmetered_effect">Skip checks on mobile data and metered Wi-Fi.</string>
-    <string name="settings_charging">Only while charging</string>
-    <string name="settings_charging_effect">Skip checks while on battery.</string>
     <string name="settings_defaults">Defaults for new apps</string>
     <string name="settings_notifications">Notifications</string>
     <string name="settings_notify_updates">When updates are found</string>
@@ -436,7 +421,6 @@
     <string name="proxy_port_invalid">A number from 1 to 65535</string>
     <string name="settings_appearance">Appearance</string>
     <string name="settings_language">Language</string>
-    <string name="settings_language_effect">Chosen in Android\'s settings for this app.</string>
     <string name="settings_theme">Theme</string>
     <string name="theme_system">Follow the system</string>
     <string name="theme_light">Light</string>

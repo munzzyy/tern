@@ -17,15 +17,21 @@ import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 
 data class Downloaded(val file: File, val sha256: String, val size: Long, val reused: Boolean)
 
+/** A download that failed on the way, as a network does now and then; it is worth another try. */
+class PassingFailure(val failure: StepFailure) : Exception(failure.message)
+
 /**
  * Downloads into one folder per app. A partial file is resumed with Range plus If-Range, a finished
  * file is kept until [discard] so a failed install can be retried without downloading again.
  * A download that ends for want of space, or because the file is too large, leaves nothing behind.
+ * One that fails on the way is tried again, three more times five seconds apart, each time from
+ * where the server lets it go on.
  */
 class Downloader(
     private val http: HttpClient,
@@ -33,22 +39,32 @@ class Downloader(
     private val texts: Texts,
     private val freeBytes: (File) -> Long = { StatFs(it.path).availableBytes },
     private val nowMs: () -> Long = System::currentTimeMillis,
+    private val pause: suspend (Long) -> Unit = { delay(it) },
 ) {
+    /**
+     * The file [key] names, fetched from [url]. They differ for a source whose links expire: the
+     * key stays the same from one attempt to the next, so a download cut short resumes from a
+     * fresh link, and the file kept is found again. [headers] are what the source asks for.
+     */
     suspend fun fetch(
         appId: String,
+        key: String,
         url: String,
         authorization: String?,
+        headers: Map<String, String> = emptyMap(),
         onProgress: (done: Long, total: Long?) -> Unit,
     ): Downloaded = withContext(Dispatchers.IO) {
-        val files = FilesFor(folder(appId), url)
+        val files = FilesFor(folder(appId), key)
         reuse(files)?.let { return@withContext it }
         try {
-            try {
-                attempt(files, url, authorization, onProgress, allowResume = true)
-            } catch (_: RestartFromZero) {
-                files.part.delete()
-                files.meta.delete()
-                attempt(files, url, authorization, onProgress, allowResume = false)
+            retrying(RETRIES, { pause(RETRY_WAIT_MS) }) {
+                try {
+                    attempt(files, key, url, authorization, headers, onProgress, allowResume = true)
+                } catch (_: RestartFromZero) {
+                    files.part.delete()
+                    files.meta.delete()
+                    attempt(files, key, url, authorization, headers, onProgress, allowResume = false)
+                }
             }
         } catch (e: StepFailure) {
             if (e.kind == ProblemKind.STORAGE) {
@@ -61,11 +77,11 @@ class Downloader(
 
     fun folder(appId: String): File = File(root, Fingerprints.sha256(appId.toByteArray()).take(20))
 
-    /** The finished file for [url], if one is kept. */
-    fun kept(appId: String, url: String): File? = FilesFor(folder(appId), url).done.takeIf { it.isFile }
+    /** The finished file [key] names, if one is kept. */
+    fun kept(appId: String, key: String): File? = FilesFor(folder(appId), key).done.takeIf { it.isFile }
 
-    fun discard(appId: String, url: String) {
-        val files = FilesFor(folder(appId), url)
+    fun discard(appId: String, key: String) {
+        val files = FilesFor(folder(appId), key)
         files.done.delete()
         files.part.delete()
         files.meta.delete()
@@ -77,8 +93,8 @@ class Downloader(
 
     private class RestartFromZero : Exception()
 
-    private class FilesFor(val dir: File, url: String) {
-        private val base = Fingerprints.sha256(url.toByteArray()).take(24)
+    private class FilesFor(val dir: File, key: String) {
+        private val base = Fingerprints.sha256(key.toByteArray()).take(24)
         val part = File(dir, "$base.part")
         val done = File(dir, "$base.bin")
         val meta = File(dir, "$base.meta")
@@ -113,17 +129,20 @@ class Downloader(
 
     private suspend fun attempt(
         files: FilesFor,
+        key: String,
         url: String,
         authorization: String?,
+        extraHeaders: Map<String, String>,
         onProgress: (Long, Long?) -> Unit,
         allowResume: Boolean,
     ): Downloaded {
         if (!files.dir.isDirectory && !files.dir.mkdirs()) throw StepFailure(ProblemKind.STORAGE, texts.cannotWrite())
         val meta = readMeta(files)
-        val resumeFrom = if (allowResume && meta != null && meta.url == url && meta.validator != null && files.part.isFile) files.part.length() else 0L
+        val resumeFrom = if (allowResume && meta != null && meta.url == key && meta.validator != null && files.part.isFile) files.part.length() else 0L
         if (resumeFrom == 0L) files.part.delete()
 
         val headers = buildMap {
+            putAll(extraHeaders)
             put("Accept-Encoding", "identity")
             if (resumeFrom > 0) {
                 put("Range", "bytes=$resumeFrom-")
@@ -133,15 +152,15 @@ class Downloader(
         val response = try {
             http.execute(HttpRequest(url, headers = headers, authorization = authorization))
         } catch (e: IOException) {
-            throw StepFailure(ProblemKind.NETWORK, texts.downloadFailed(e))
+            throw PassingFailure(StepFailure(ProblemKind.NETWORK, texts.downloadFailed(e)))
         }
-        return response.use { copy(it, files, url, resumeFrom, meta?.validator, onProgress) }
+        return response.use { copy(it, files, key, resumeFrom, meta?.validator, onProgress) }
     }
 
     private suspend fun copy(
         response: HttpResponse,
         files: FilesFor,
-        url: String,
+        key: String,
         requestedFrom: Long,
         storedValidator: String?,
         onProgress: (Long, Long?) -> Unit,
@@ -167,7 +186,10 @@ class Downloader(
             416 -> throw RestartFromZero()
             401, 403 -> throw StepFailure(ProblemKind.AUTH, texts.serverStatus(response.status))
             404, 410 -> throw StepFailure(ProblemKind.NOT_FOUND, texts.serverStatus(response.status))
-            else -> throw StepFailure(ProblemKind.NETWORK, texts.serverStatus(response.status))
+            else -> {
+                val failure = StepFailure(ProblemKind.NETWORK, texts.serverStatus(response.status))
+                throw if (passing(response.status)) PassingFailure(failure) else failure
+            }
         }
         val encoding = response.headers["Content-Encoding"]
         if (encoding != null && !encoding.equals("identity", ignoreCase = true)) throw StepFailure(ProblemKind.NETWORK, texts.encodedDownload(encoding))
@@ -180,7 +202,7 @@ class Downloader(
         }
         val validator = response.headers["ETag"]?.takeIf { it.isNotBlank() && !it.startsWith("W/") }
             ?: response.headers["Last-Modified"]?.takeIf { it.isNotBlank() }
-        writeMeta(files, Meta(url, validator, total, null))
+        writeMeta(files, Meta(key, validator, total, null))
 
         val digest = MessageDigest.getInstance("SHA-256")
         if (start > 0) hashInto(digest, files.part) else files.part.delete()
@@ -194,11 +216,11 @@ class Downloader(
                 throw e
             }
         }
-        if (total != null && written != total) throw StepFailure(ProblemKind.NETWORK, texts.downloadCut(written, total))
+        if (total != null && written != total) throw PassingFailure(StepFailure(ProblemKind.NETWORK, texts.downloadCut(written, total)))
         val sha = Fingerprints.toHex(digest.digest())
         files.done.delete()
         if (!files.part.renameTo(files.done)) throw StepFailure(ProblemKind.STORAGE, texts.cannotWrite())
-        writeMeta(files, Meta(url, validator, written, sha))
+        writeMeta(files, Meta(key, validator, written, sha))
         return Downloaded(files.done, sha, written, reused = false)
     }
 
@@ -220,7 +242,7 @@ class Downloader(
                         response.body.read(buffer)
                     } catch (e: IOException) {
                         ensureActive()
-                        throw StepFailure(ProblemKind.NETWORK, texts.downloadFailed(e))
+                        throw PassingFailure(StepFailure(ProblemKind.NETWORK, texts.downloadFailed(e)))
                     }
                     if (n < 0) break
                     done += n
@@ -268,6 +290,32 @@ class Downloader(
     }
 
     companion object {
+        /** What names one file of one release, whatever link it is fetched from at the moment. */
+        fun key(releaseId: String, assetUrl: String): String = "$releaseId|$assetUrl"
+
+        /** Tries after the first, as Obtainium makes them. */
+        const val RETRIES = 3
+        const val RETRY_WAIT_MS = 5_000L
+
+        /** An answer that says the server is busy or struggling now, not that the file cannot be had. */
+        fun passing(status: Int): Boolean = status == 408 || status == 429 || status in 500..599
+
+        /**
+         * Runs [block], and again after [wait] each time it fails in passing, [tries] more times at
+         * the most. The last failure is the one given.
+         */
+        suspend fun <T> retrying(tries: Int, wait: suspend () -> Unit, block: suspend () -> T): T {
+            var left = tries
+            while (true) {
+                try {
+                    return block()
+                } catch (e: PassingFailure) {
+                    if (left-- <= 0) throw e.failure
+                    wait()
+                }
+            }
+        }
+
         const val MAX_BYTES = 4L * 1024 * 1024 * 1024
         const val SPACE_FACTOR = 2.2
 

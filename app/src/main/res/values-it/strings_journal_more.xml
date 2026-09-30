@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Registro attività</string>
+    <string name="journal_keep_own">Mantieni nel registro i messaggi di Tern stesso</string>
+    <string name="journal_keep_own_effect">I suoi avvisi ed errori, e quando ogni controllo inizia e finisce. Tutto ciò che potrebbe essere una password o un token viene escluso, e il registro resta su questo dispositivo a meno che tu non lo condivida.</string>
+    <string name="journal_filter_own">Messaggi di Tern</string>
+    <string name="journal_mark_note">Nota di Tern</string>
+    <string name="journal_mark_warning">Avviso di Tern</string>
+    <string name="journal_mark_error">Errore di Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">È iniziato un controllo di %1$d app.</item>
+        <item quantity="many">È iniziato un controllo di %1$d app.</item>
+        <item quantity="other">È iniziato un controllo di %1$d app.</item>
+    </plurals>
+    <string name="journal_check_started_one">È iniziato un controllo di %1$s.</string>
+    <string name="journal_cause_asked">È stato richiesto in Tern.</string>
+    <string name="journal_cause_opening">Tern è stato aperto.</string>
+    <string name="journal_cause_page">È stata aperta la sua pagina.</string>
+    <string name="journal_cause_link">L\'ha richiesto un link.</string>
+    <string name="journal_cause_shortcut">L\'ha richiesto una scorciatoia.</string>
+    <string name="journal_cause_widget">L\'ha richiesto il widget.</string>
+    <string name="journal_cause_tile">L\'ha richiesto il riquadro delle Impostazioni rapide.</string>
+    <string name="journal_cause_schedule">L\'ha avviato la pianificazione.</string>
+    <string name="journal_cause_retry">Riprova dove l\'ultimo controllo è fallito.</string>
+    <string name="journal_cause_added">È stata appena aggiunta.</string>
+    <string name="journal_cause_imported">Sono state appena importate.</string>
+    <string name="journal_cause_changed">Le sue impostazioni sono cambiate.</string>
+    <string name="journal_cause_install">Sta per essere installata e prima viene controllata.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">Il controllo di %1$d app è terminato dopo %2$s.</item>
+        <item quantity="many">Il controllo di %1$d app è terminato dopo %2$s.</item>
+        <item quantity="other">Il controllo di %1$d app è terminato dopo %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Il controllo di %1$s è terminato dopo %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Ha trovato %1$d aggiornamento.</item>
+        <item quantity="many">Ha trovato %1$d aggiornamenti.</item>
+        <item quantity="other">Ha trovato %1$d aggiornamenti.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">Non è stato possibile controllare %1$d app.</item>
+        <item quantity="many">Non è stato possibile controllare %1$d app.</item>
+        <item quantity="other">Non è stato possibile controllare %1$d app.</item>
+    </plurals>
+    <string name="journal_check_stopped">Il controllo si è fermato dopo %1$s, prima di finire.</string>
+</resources>

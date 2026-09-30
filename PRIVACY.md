@@ -6,10 +6,31 @@ sends no crash reports, because there is nobody for it to report to.
 ## What leaves the device
 
 Requests go to the sources you add, to check for releases and to download
-files: GitHub, GitLab, Codeberg, F-Droid, a repository, a developer's site. Each
-of those sees what any web server sees, which is your address, the time, and
-the project you asked about. A search on the Add screen asks GitHub, Codeberg
-and gitlab.com for the words you typed.
+files: GitHub, GitLab, Codeberg, F-Droid, a repository, a developer's site, or
+a store such as APKPure or the Galaxy Store. Each of those sees what any web
+server sees, which is your address, the time, and the project you asked about.
+A search on the Add screen asks the places ticked under "Search in" for the
+words you typed: GitHub, Codeberg, gitlab.com and F-Droid until you choose
+others, and Aptoide, Uptodown, AppGallery, the vivo store or RuStore only when
+you tick them.
+
+A store serves a different file to different phones, so a few of them are told
+what the file has to run on. APKPure, RuStore and the Galaxy Store are told
+the Android version; RuStore also the processors, the screen density and
+whether this is a TV; the Galaxy Store and Tencent whether the phone runs
+64-bit code. None of them is told the phone's model, its name or any
+identifier of it. The Galaxy Store is asked as a fixed model, which you can
+change for an app, and RuStore as a made-up phone with an id drawn at random.
+
+For an app from F-Droid's own repository, a check that finds a new answer also
+reads the app's entry in F-Droid's data on gitlab.com, for its author and
+changes, and the changelog file on GitHub or GitLab when that entry names one.
+For an app from APKMirror it reads the pages of the newest releases on
+www.apkmirror.com, for what changed and the size of the file. None of these
+carries a token or a cookie.
+
+Where a source lists no size for a file, opening the app's page asks the file's
+host for one byte of it, to learn the size.
 
 The list of well known apps is part of Tern. Showing it asks nobody
 anything. A request goes out when you press Look on one of them, to that app's
@@ -21,7 +42,9 @@ project keeps with its store listing, and where there is none a second one to
 avatars.githubusercontent.com. For an app from GitLab, Codeberg, another
 Forgejo or Gitea server, F-Droid, IzzyOnDroid or a repository in F-Droid's
 format, the request goes to the host the app comes from, and follows a redirect
-from there only over HTTPS. It carries no token and no cookie, and an icon that
+from there only over HTTPS. For an app from a store it goes to the store, or to
+the one server the store keeps its pictures on, such as image.winudf.com for
+APKPure; `core/.../icon/IconAddresses.kt` lists each of them. It carries no token and no cookie, and an icon that
 was fetched is kept for seven days before it is asked for again. The setting
 for icons from the source turns all of this off, and rows then show a letter.
 
@@ -36,11 +59,22 @@ older Orbot to start. That stays on the device.
 A stored access token is sent to the host it was stored for and to no other.
 
 Links to VirusTotal, a release page or a project page open in your browser,
-under your browser's rules.
+under your browser's rules. "Read the project's page" on an app's page asks
+the forge's API for the project's README, with the token stored for that host
+if there is one, and only when you press it.
 
-"Check with AppVerifier" hands the package name of an app and the certificate
-Tern holds it to to AppVerifier, another app on this device, and only when you
-press it. Nothing goes over the network for that.
+"Check with Verified Apps" hands the package name of an app and the certificate
+Tern holds it to to Verified Apps or AppVerifier, another app on this device,
+and only when you press it. With "Show new apps to Verified Apps first" on,
+which it is at first as in Obtainium, the checked file of an app's first install
+goes to that app too, read-only, before the installer gets it. Nothing goes
+over the network for that.
+
+With another app chosen as the installer, Tern hands that app each file once
+the file has passed its checks, and that app alone may read it. With Shizuku
+or root chosen, the file goes to Android's package manager through them. With
+Dhizuku chosen, the file goes to Android's package manager in a session that
+Dhizuku holds for Tern. None of this leaves the device.
 
 ## Send from a phone
 
@@ -77,7 +111,30 @@ many.
 An export contains your app list and settings, and never tokens. On a device
 without a file picker, such as a television, the export is written to
 `Download/Tern/` on the shared storage, where other apps with access to your
-files can read it.
+files can read it. With automatic export on, the same file is written again to
+the folder you picked whenever the list changes.
+
+The widget and the Quick Settings tile show how many updates there are, and
+the widget names none of the apps.
+
+With "Keep Tern's own messages in the log" on, which it is not at first, the
+activity log also keeps Tern's own warnings and errors, an error with its kind,
+its message and at most five lines of Tern's code, and the start and end of
+each check: what started it, how many apps, how many updates, how long. Before
+anything is kept, addresses lose their query, their fragment and any name and
+password, and tokens, passwords, keys, email addresses and the device's own
+network address become "…". Such an entry can name apps, packages and the
+addresses of sources, as the rest of the log does. At most 500 are kept, and
+Clear removes them. Nothing of it leaves the device unless you share or copy
+the log.
+
+If Tern stops unexpectedly, it writes what it was doing, a technical report
+with the version of Tern and of Android, into a file of its own. The next
+start shows it once, to read, copy or share; closing it deletes the file.
+Nothing is sent unless you share it.
+
+On Android 10 to 12, the language chosen in Tern's settings is kept by Tern.
+From Android 13 on, Android keeps it.
 
 ## Permissions
 
@@ -91,6 +148,8 @@ files can read it.
 | Notifications | To tell you about updates |
 | Run at startup | To put the background check back after a reboot |
 | Foreground service, data sync | To keep a download you started alive when you leave the app |
+| Shizuku (`moe.shizuku.manager.permission.API_V23`) | To install through Shizuku, when you choose it as the installer. Shizuku asks you before it lets Tern in |
+| Dhizuku (`com.rosan.dhizuku.permission.API`) | To install through Dhizuku, when you choose it as the installer. It lets Dhizuku list Tern among the apps it may let in; Dhizuku asks you before it does |
 
 `tools/check-apk.sh` fails the build if the APK asks for anything that is not in
 this table.

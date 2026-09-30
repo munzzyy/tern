@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_other_title">Autres fichiers de cette version</string>
+    <string name="files_source_code">Code source</string>
+    <string name="files_save_spoken">Enregistrer %1$s dans Téléchargements</string>
+    <string name="files_save_a_file">Enregistrer un fichier</string>
+    <string name="files_pick_title_version">Enregistrer un fichier de la version %1$s</string>
+    <string name="files_pick_title_app">Enregistrer un fichier de %1$s</string>
+    <string name="files_skip">Passer</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">Enregistrement de %1$d fichier. Une notification indique quand il est terminé.</item>
+        <item quantity="many">Enregistrement de %1$d fichiers. Une notification indique quand chacun est terminé.</item>
+        <item quantity="other">Enregistrement de %1$d fichiers. Une notification indique quand chacun est terminé.</item>
+    </plurals>
+    <string name="files_channel_saved">Fichiers enregistrés</string>
+    <string name="files_notify_saved">%1$s enregistré</string>
+    <string name="files_notify_saved_plain">Un fichier a été enregistré dans Téléchargements</string>
+    <string name="files_notify_not_saved">Impossible d\'enregistrer %1$s</string>
+    <string name="files_notify_not_saved_plain">Un fichier n\'a pas pu être enregistré</string>
+    <string name="files_notify_updated_to">« %1$s » a été mis à jour vers %2$s</string>
+    <string name="files_notify_installed_at">« %1$s » a été installé en version %2$s</string>
+    <string name="files_notify_problem_line">%1$s : %2$s</string>
+    <string name="files_problems_title">Ce qui n\'a pas fonctionné</string>
+    <string name="files_problems_none">Aucune de ces applis n\'a de problème à présent.</string>
+    <string name="files_setting_verifier">Montrer d\'abord les nouvelles applis à Verified Apps</string>
+    <string name="files_setting_verifier_effect">Avant qu\'une appli soit installée pour la première fois, son fichier vérifié est envoyé à Verified Apps ou à AppVerifier, si l\'une des deux est installée, pour un second regard. L\'installation se poursuit dès que vous revenez dans Tern.</string>
+    <string name="files_verifier_about">À propos de Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s est une appli distincte. Elle compare cette appli avec le certificat que Tern exige pour elle, et avec sa propre liste d\'applis connues.</string>
+    <string name="files_verifier_card_action">Vérifier avec %1$s</string>
+</resources>

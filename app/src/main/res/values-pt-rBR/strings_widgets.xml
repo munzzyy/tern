@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">Verificar</string>
+    <string name="shortcut_check_long">Verificar atualizações</string>
+    <string name="shortcut_update_all_long">Atualizar todos os apps</string>
+    <string name="shortcut_add_short">Adicionar</string>
+    <string name="shortcut_add_long">Adicionar um app</string>
+    <string name="tile_check">Verificar atualizações</string>
+    <string name="tile_checking">Verificando…</string>
+    <string name="tile_up_to_date">Atualizado</string>
+    <string name="widget_label">Atualizações</string>
+    <string name="widget_description">Quantos apps têm uma atualização, com um botão para verificar e outro para atualizar todos.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d atualização</item>
+        <item quantity="many">%d atualizações</item>
+        <item quantity="other">%d atualizações</item>
+    </plurals>
+    <string name="widget_up_to_date">Tudo está atualizado</string>
+    <string name="widget_checked">Verificado às %1$s</string>
+    <string name="widget_never_checked">Ainda não verificado</string>
+    <string name="widget_check">Verificar</string>
+</resources>

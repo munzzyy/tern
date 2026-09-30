@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_system">Samma som systemet</string>
+    <string name="interval_more_often">Kontrollera oftare</string>
+    <string name="interval_less_often">Kontrollera mer sällan</string>
+    <string name="about_help">Så fungerar Tern</string>
+    <string name="about_help_effect">Vad Tern kontrollerar och hur man lägger till, uppdaterar och flyttar appar, på projektets sida.</string>
+    <string name="about_security">Så skyddar Tern dig</string>
+    <string name="about_privacy">Integritet</string>
+    <string name="verification_title">Androids utvecklarverifiering</string>
+    <string name="verification_text">Google har meddelat att certifierade Android-enheter bara kommer att installera appar från utvecklare som har registrerat sig hos Google, med start i några länder från september 2026 och i fler länder därefter.\n\nDär detta gäller kan Android avvisa en app från en utvecklare som inte har registrerat sig, eller kräva mer av dig innan den installeras, oavsett hur Terns egna kontroller faller ut. Tern kan inte ändra det, och den berättar för dig när Android avvisar.\n\nEnheter utan Googles certifiering berörs inte.</string>
+    <string name="verification_more">Googles sida om det</string>
+    <string name="kept_export_format">Format</string>
+    <string name="kept_export_format_tern">Terns format, som rymmer allt</string>
+    <string name="kept_export_format_obtainium">Obtainiums format, som Obtainium också kan läsa</string>
+    <string name="kept_export_name">Filnamn</string>
+    <string name="kept_export_name_usual">Lämna tomt för %1$s.</string>
+    <string name="look_style">Stil</string>
+    <string name="style_standard">Standard</string>
+    <string name="style_vibrant">Livfull</string>
+    <string name="style_expressive">Uttrycksfull</string>
+    <string name="look_style_effect">Livfull är genomgående färgstarkare. Uttrycksfull vrider den andra och tredje färgen längre bort från den första.</string>
+    <string name="look_color_code">Färgkod</string>
+    <string name="look_color_code_effect">Tern tar nyansen och styrkan hos denna färg och väljer de toner av den som förblir lätta att läsa.</string>
+    <string name="look_color_code_invalid">Sex hexadecimala siffror, till exempel #3D5A80.</string>
+    <string name="crash_title">Tern stoppades oväntat</string>
+    <string name="crash_text">Detta var vad Tern gjorde när den stoppades. Rapporten stannar på denna enhet; dela den med utvecklaren om du vill att någon tittar på den.</string>
+    <string name="crash_share">Dela</string>
+    <string name="crash_copied">Kopierat</string>
+    <string name="activity_range">Visa</string>
+    <string name="activity_range_all">Alla dagar</string>
+    <plurals name="activity_range_days">
+        <item quantity="one">Den senaste %d dagen</item>
+        <item quantity="other">De senaste %d dagarna</item>
+    </plurals>
+    <string name="activity_copied">Loggen kopierades</string>
+    <string name="settings_auto_installs">Uppdateringar installeras av sig själva</string>
+    <string name="settings_auto_installs_effect">Appar som är inställda på att uppdatera sig själva gör det efter en bakgrundskontroll. När det är av säger de bara att en uppdatering finns, och var och en behåller sitt eget val till senare.</string>
+    <string name="settings_unmetered_installs">Installera endast på Wi-Fi</string>
+    <string name="settings_unmetered_installs_effect">Kontroller körs på alla nätverk. En uppdatering som skulle installeras av sig själv väntar på Wi-Fi eller en nätverkskabel, som i Obtainium.</string>
+    <string name="settings_charging_installs">Installera endast under laddning</string>
+    <string name="settings_charging_installs_effect">Kontroller körs även på batteri. En uppdatering som skulle installeras av sig själv väntar tills enheten laddas.</string>
+    <string name="engine_unreadable_app">Den sparade appen %1$s kunde inte läsas, så den lämnas utanför listan. Inget har raderats: en nyare version av Tern kan kanske läsa den.</string>
+    <string name="settings_pin_certificates">Fäst kodplattformarnas certifikat</string>
+    <string name="settings_pin_certificates_effect">GitHub, GitLab och Codeberg måste visa ett certifikat från den certifikatutfärdare som var och en är känd för att använda, som i Obtainium. Ett certifikat som en annan utfärdare har förmåtts att utfärda avvisas då. Om en kodplattform byter utfärdare misslyckas kontroller där tills detta är av.</string>
+</resources>

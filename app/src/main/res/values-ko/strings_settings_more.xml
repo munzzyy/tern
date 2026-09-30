@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_system">시스템과 동일</string>
+    <string name="interval_more_often">더 자주 확인</string>
+    <string name="interval_less_often">덜 자주 확인</string>
+    <string name="about_help">Tern 작동 방식</string>
+    <string name="about_help_effect">Tern이 확인하는 항목과 앱을 추가, 업데이트, 이전하는 방법을 프로젝트 페이지에서 안내합니다.</string>
+    <string name="about_security">Tern이 사용자를 안전하게 지키는 방법</string>
+    <string name="about_privacy">개인정보 보호</string>
+    <string name="verification_title">Android 개발자 인증</string>
+    <string name="verification_text">Google은 인증된 Android 기기에서 Google에 등록한 개발자의 앱만 설치할 수 있게 된다고 발표했습니다. 2026년 9월부터 일부 국가에서 시작되며, 이후 더 많은 국가로 확대됩니다.\n\n이 정책이 적용되는 곳에서는 Tern의 자체 확인 결과와 관계없이 Android가 등록하지 않은 개발자의 앱을 거부하거나, 설치 전에 사용자에게 추가 절차를 요구할 수 있습니다. Tern은 이를 바꿀 수 없으며, Android가 거부하면 그 사실을 알려줍니다.\n\nGoogle 인증을 받지 않은 기기는 영향을 받지 않습니다.</string>
+    <string name="verification_more">Google의 안내 페이지</string>
+    <string name="kept_export_format">형식</string>
+    <string name="kept_export_format_tern">Tern 형식 (모든 내용 포함)</string>
+    <string name="kept_export_format_obtainium">Obtainium 형식 (Obtainium에서도 읽을 수 있음)</string>
+    <string name="kept_export_name">파일 이름</string>
+    <string name="kept_export_name_usual">비워 두면 %1$s(으)로 저장됩니다.</string>
+    <string name="look_style">스타일</string>
+    <string name="style_standard">표준</string>
+    <string name="style_vibrant">비비드</string>
+    <string name="style_expressive">익스프레시브</string>
+    <string name="look_style_effect">비비드는 전체적으로 더 다채롭습니다. 익스프레시브는 두 번째와 세 번째 색의 색조를 첫 번째 색에서 더 멀어지게 합니다.</string>
+    <string name="look_color_code">색상 코드</string>
+    <string name="look_color_code_effect">Tern은 이 색상의 색조와 채도를 가져와, 그 색상의 음영 중 읽기 쉬운 상태가 유지되는 것을 선택합니다.</string>
+    <string name="look_color_code_invalid">16진수 6자리 (예: #3D5A80).</string>
+    <string name="crash_title">Tern이 예기치 않게 중지되었습니다</string>
+    <string name="crash_text">중지되었을 때 하고 있던 작업입니다. 이 기기에 남아 있으며, 살펴봐 주기를 원하시면 개발자에게 공유해 주세요.</string>
+    <string name="crash_share">공유</string>
+    <string name="crash_copied">복사됨</string>
+    <string name="activity_range">표시</string>
+    <string name="activity_range_all">전체 기간</string>
+    <plurals name="activity_range_days">
+        <item quantity="other">최근 %d일</item>
+    </plurals>
+    <string name="activity_copied">기록을 복사했습니다</string>
+    <string name="settings_auto_installs">업데이트 자동 설치</string>
+    <string name="settings_auto_installs_effect">자동으로 업데이트하도록 설정된 앱은 백그라운드 확인 후 업데이트됩니다. 끄면 업데이트가 있다고 알리기만 하며, 각 앱의 선택은 나중을 위해 그대로 유지됩니다.</string>
+    <string name="settings_unmetered_installs">Wi-Fi에서만 설치</string>
+    <string name="settings_unmetered_installs_effect">확인은 모든 네트워크에서 실행됩니다. 자동으로 설치될 업데이트는 Obtainium과 마찬가지로 Wi-Fi나 유선 연결이 될 때까지 기다립니다.</string>
+    <string name="settings_charging_installs">충전 중일 때만 설치</string>
+    <string name="settings_charging_installs_effect">확인은 배터리 사용 중에도 실행됩니다. 자동으로 설치될 업데이트는 기기가 충전될 때까지 기다립니다.</string>
+    <string name="engine_unreadable_app">저장된 앱 %1$s을(를) 읽을 수 없어 목록에서 제외했습니다. 삭제된 것은 없습니다. 더 최신 버전의 Tern은 읽을 수도 있습니다.</string>
+    <string name="settings_pin_certificates">코드 호스팅 인증서 고정</string>
+    <string name="settings_pin_certificates_effect">GitHub, GitLab, Codeberg는 Obtainium과 마찬가지로 각각 사용하는 것으로 알려진 인증 기관의 인증서를 제시해야 합니다. 다른 인증 기관이 발급하도록 강제된 인증서는 거부됩니다. 코드 호스팅이 인증 기관을 바꾸면, 이 설정을 끌 때까지 해당 사이트에 대한 확인이 실패합니다.</string>
+</resources>

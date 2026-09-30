@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">Bir adres listesinden</string>
+    <string name="import_addresses_explain">Uygulama adreslerini her satıra bir tane olacak şekilde veya metnin herhangi bir yerine yapıştırın ya da OPML listesi gibi bir dosyadan okuyun. Her biri tek bir bağlantı gibi incelenir ve eklenir.</string>
+    <string name="import_addresses_field">Adresler</string>
+    <string name="import_addresses_show">İçindekileri göster</string>
+    <string name="import_addresses_file">Bir dosya oku</string>
+    <string name="import_addresses_none">İçinde hiç https adresi yok.</string>
+    <string name="import_addresses_other">Başka bir liste</string>
+    <string name="import_addresses_unreadable">O dosya okunamadı.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d adres. İstemediklerinizin işaretini kaldırın, sonra ekleyin.</item>
+        <item quantity="other">%1$d adres. İstemediklerinizin işaretini kaldırın, sonra ekleyin.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">Bu bağlantıyla %1$d uygulama geldi. Eklemeden önce ayarlarını görmek için inceleyin.</item>
+        <item quantity="other">Bu bağlantıyla %1$d uygulama geldi. Eklemeden önce ayarlarını görmek için her birini inceleyin.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Obtainium için dışa aktar</string>
+    <string name="settings_export_obtainium_effect">Oraya taşınan bir liste için Obtainium\'un içe aktardığı bir dosya. Obtainium\'da ayarı olmayanlar geride kalır.</string>
+    <string name="settings_export_installed_only">Yalnızca yüklü uygulamaları dışa aktar</string>
+    <string name="settings_export_settings">Ayarları dışa aktarımlara ekle</string>
+    <string name="settings_export_settings_effect">Görünüm, liste, bildirimler ve denetimler. Belirteç, proxy ve yükleyici asla dahil edilmez.</string>
+    <string name="settings_kept_export">Bir dışa aktarımı güncel tut</string>
+    <string name="settings_kept_export_effect">Listede herhangi bir şey değiştikten kısa süre sonra Tern dışa aktarımı yeniden yazar.</string>
+    <string name="settings_kept_export_written">%1$s saatinde yazıldı</string>
+    <string name="settings_kept_export_folder">Saklandığı yer</string>
+    <string name="import_settings_taken">Dosyadaki ayarlar da alındı.</string>
+</resources>

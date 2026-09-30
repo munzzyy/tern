@@ -17,16 +17,16 @@ class ListStateTest {
 
     @Test
     fun rowsOfOneKindGetNoFilters() {
-        assertEquals(emptyList<AppFilter>(), offeredFilters(listOf(upToDate, testRow("z", "Zeta")), emptyList(), AppFilter.All))
-        assertEquals(emptyList<AppFilter>(), offeredFilters(emptyList(), emptyList(), AppFilter.All))
+        assertEquals(emptyList<AppFilter>(), offeredFilters(listOf(upToDate, testRow("z", "Zeta")), emptyList(), ListFilter()))
+        assertEquals(emptyList<AppFilter>(), offeredFilters(emptyList(), emptyList(), ListFilter()))
     }
 
     @Test
     fun onlyFiltersThatTellRowsApartAreOffered() {
-        assertEquals(listOf(AppFilter.All, AppFilter.Updates), offeredFilters(listOf(upToDate, update), emptyList(), AppFilter.All))
+        assertEquals(listOf(AppFilter.All, AppFilter.Updates), offeredFilters(listOf(upToDate, update), emptyList(), ListFilter()))
         assertEquals(
             listOf(AppFilter.All, AppFilter.Updates, AppFilter.Installed, AppFilter.NotInstalled),
-            offeredFilters(listOf(upToDate, update, notInstalled), emptyList(), AppFilter.All),
+            offeredFilters(listOf(upToDate, update, notInstalled), emptyList(), ListFilter()),
         )
     }
 
@@ -34,14 +34,14 @@ class ListStateTest {
     fun aCategoryIsOfferedUnlessEveryRowIsInIt() {
         val tools = upToDate.copy(config = upToDate.config.copy(categories = listOf("Tools")))
         val alsoTools = testRow("z", "Zeta", categories = listOf("Tools"))
-        assertEquals(listOf(AppFilter.All, AppFilter.Category("Tools")), offeredFilters(listOf(tools, testRow("y", "Yew")), listOf("Tools"), AppFilter.All))
-        assertEquals(emptyList<AppFilter>(), offeredFilters(listOf(tools, alsoTools), listOf("Tools"), AppFilter.All))
+        assertEquals(listOf(AppFilter.All, AppFilter.Category("Tools")), offeredFilters(listOf(tools, testRow("y", "Yew")), listOf("Tools"), ListFilter()))
+        assertEquals(emptyList<AppFilter>(), offeredFilters(listOf(tools, alsoTools), listOf("Tools"), ListFilter()))
     }
 
     @Test
     fun theFilterInUseStaysSoItCanBeLeft() {
         val rows = listOf(upToDate, testRow("z", "Zeta"))
-        assertEquals(listOf(AppFilter.All, AppFilter.Updates), offeredFilters(rows, emptyList(), AppFilter.Updates))
+        assertEquals(listOf(AppFilter.All, AppFilter.Updates), offeredFilters(rows, emptyList(), ListFilter(updates = true)))
     }
 
     @Test
@@ -59,13 +59,13 @@ class ListStateTest {
     fun installsThatWaitAreNamedWhateverTheSearchHides() {
         val rows = listOf(upToDate, waiting, update)
         assertEquals(listOf("Dune"), listState(rows, ListQuery(), emptySet()).waiting.map { it.config.name })
-        assertEquals(listOf("Dune"), listState(rows, ListQuery(text = "alder", filter = AppFilter.Installed), emptySet()).waiting.map { it.config.name })
+        assertEquals(listOf("Dune"), listState(rows, ListQuery(text = "alder", filter = ListFilter(installed = true)), emptySet()).waiting.map { it.config.name })
         assertEquals(emptyList<String>(), listState(rows, ListQuery(), setOf("d")).waiting.map { it.config.name })
     }
 
     @Test
     fun aCategoryThatIsGoneFallsBackToAll() {
-        val state = listState(listOf(upToDate, update), ListQuery(filter = AppFilter.Category("Gone")), emptySet())
+        val state = listState(listOf(upToDate, update), ListQuery(filter = ListFilter(categories = setOf("Gone"))), emptySet())
         assertEquals(2, state.sections.updates.size + state.sections.others.size)
     }
 

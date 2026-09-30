@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_other_title">File lain dari rilis ini</string>
+    <string name="files_source_code">Kode sumber</string>
+    <string name="files_save_spoken">Simpan %1$s ke Unduhan</string>
+    <string name="files_save_a_file">Simpan file</string>
+    <string name="files_pick_title_version">Simpan file dari versi %1$s</string>
+    <string name="files_pick_title_app">Simpan file dari %1$s</string>
+    <string name="files_skip">Lewati</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="other">Menyimpan %1$d file. Notifikasi akan memberi tahu saat masing-masing selesai.</item>
+    </plurals>
+    <string name="files_channel_saved">File tersimpan</string>
+    <string name="files_notify_saved">%1$s disimpan</string>
+    <string name="files_notify_saved_plain">Sebuah file disimpan ke Unduhan</string>
+    <string name="files_notify_not_saved">%1$s tidak dapat disimpan</string>
+    <string name="files_notify_not_saved_plain">Sebuah file tidak dapat disimpan</string>
+    <string name="files_notify_updated_to">%1$s telah diperbarui ke %2$s</string>
+    <string name="files_notify_installed_at">%1$s %2$s telah diinstal</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Apa yang salah</string>
+    <string name="files_problems_none">Tidak satu pun dari aplikasi ini yang bermasalah saat ini.</string>
+    <string name="files_setting_verifier">Tunjukkan aplikasi baru ke Verified Apps lebih dulu</string>
+    <string name="files_setting_verifier_effect">Sebelum aplikasi diinstal untuk pertama kali, file yang sudah diperiksa dikirim ke Verified Apps atau AppVerifier (mana yang terinstal) untuk pemeriksaan kedua. Proses instal dilanjutkan setelah Anda kembali ke Tern.</string>
+    <string name="files_verifier_about">Tentang Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s adalah aplikasi terpisah. Aplikasi itu membandingkan aplikasi ini dengan sertifikat yang disimpan Tern untuknya, dan dengan daftar aplikasi yang dikenalnya sendiri.</string>
+    <string name="files_verifier_card_action">Periksa dengan %1$s</string>
+</resources>

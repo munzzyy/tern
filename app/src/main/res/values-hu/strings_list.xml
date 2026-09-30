@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">Lista rendezése</string>
+    <string name="list_options_title">Lista rendezése</string>
+    <string name="list_reverse">Sorrend megfordítása</string>
+    <string name="list_updates_first">Frissítések felül</string>
+    <string name="list_bury_not_installed">Nem telepített alkalmazások alul</string>
+    <string name="sort_author">Fejlesztő szerint</string>
+    <string name="sort_added">Hozzáadás dátuma szerint</string>
+    <string name="sort_released">Kiadás dátuma szerint</string>
+    <string name="group_title">Csoportosítás</string>
+    <string name="group_none">Nincs</string>
+    <string name="group_category">Kategória</string>
+    <string name="group_source">Forrás</string>
+    <string name="group_category_effect">A több kategóriába tartozó alkalmazás mindegyikben megjelenik.</string>
+    <string name="group_other">Minden más</string>
+    <string name="group_folded">Összecsukva</string>
+    <string name="group_open">Kinyitva</string>
+    <string name="filter_favorites">Kedvencek</string>
+    <string name="filter_track_only">Csak követés</string>
+    <string name="filter_problems">Problémák</string>
+    <string name="action_done">Kész</string>
+    <string name="settings_swipe">Műveletek sorok elhúzásával</string>
+    <string name="settings_swipe_effect">Húzzon el egy alkalmazást a vége felé a frissítéséhez, az eleje felé az eltávolításához.</string>
+    <string name="action_favorite">Hozzáadás a kedvencekhez</string>
+    <string name="action_unfavorite">Eltávolítás a kedvencek közül</string>
+    <string name="action_set_mode">Ha frissítés található</string>
+    <string name="action_share_addresses">Címek megosztása</string>
+    <string name="action_share_export">Megosztás fájlként</string>
+    <string name="action_uninstall">Eltávolítás az eszközről</string>
+    <string name="export_format_tern">Tern-fájl</string>
+    <string name="export_format_obtainium">Fájl az Obtainiumhoz</string>
+    <string name="bulk_uninstall_text">Az Android sorban minden alkalmazásra rákérdez. A Tern továbbra is követi őket, amíg itt el nem távolítja őket.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d alkalmazás mostantól kedvenc</item>
+        <item quantity="other">%1$d alkalmazás mostantól kedvenc</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d alkalmazás már nem kedvenc</item>
+        <item quantity="other">%1$d alkalmazás már nem kedvenc</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">Ha %1$d alkalmazáshoz frissítés található</item>
+        <item quantity="other">Ha %1$d alkalmazáshoz frissítés található</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">%1$d alkalmazás eltávolítása az eszközről?</item>
+        <item quantity="other">%1$d alkalmazás eltávolítása az eszközről?</item>
+    </plurals>
+</resources>

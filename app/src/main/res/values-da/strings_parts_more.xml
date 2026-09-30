@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parts_obb_name_refused">Dette arkiv indeholder en OBB-fil, hvis navn kunne føre ud af appens OBB-mappe, eller to OBB-filer med samme navn. Intet blev installeret.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">Lagde %1$d OBB-fil i %2$s.</item>
+        <item quantity="other">Lagde %1$d OBB-filer i %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">OBB-filerne blev ikke lagt i %1$s, da kun installationsprogrammerne Shizuku og root kan skrive der. De ligger i %2$s, denne udgivelses fil: %3$s.</string>
+    <string name="parts_obb_failed">OBB-filerne kunne ikke lægges i %1$s: %2$s. De ligger i %3$s, denne udgivelses fil: %4$s.</string>
+</resources>

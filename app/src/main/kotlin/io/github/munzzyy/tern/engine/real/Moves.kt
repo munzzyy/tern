@@ -79,7 +79,7 @@ internal class Moves(private val e: RealEngine) {
         val expected = app.config.packageName ?: installed?.app?.packageName
             ?: return Problem(ProblemKind.PACKAGE_MISMATCH, e.texts.moveUnknownApp())
         val state = AppState(releases = listing.releases, lastCheckedMs = e.nowMs())
-        val facts = e.evaluator.evaluate(config, state, installed, e.inspector::inspect).facts
+        val facts = e.evaluator.evaluate(config, state, installed, e.inspectorFor(config.source)).facts
         val offered = facts?.packageName ?: listing.packageName?.takeIf { BinaryManifest.isValidName(it) }
             ?: return Problem(ProblemKind.PACKAGE_MISMATCH, e.texts.moveUnreadable())
         if (offered != expected) return Problem(ProblemKind.PACKAGE_MISMATCH, e.texts.moveOtherApp(expected, offered))

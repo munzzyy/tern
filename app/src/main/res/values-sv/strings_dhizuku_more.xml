@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">Installerar och uppdaterar utan att fråga, via Dhizuku som enhetsägare. Varje fil går igenom samma kontroller först. Android anger då Dhizuku som installationskälla.</string>
+    <string name="installer_dhizuku_not_ready">Inte redo, inget installeras förrän dess</string>
+    <string name="installer_dhizuku_unsupported">Tern kan inte installera via Dhizuku på denna version av Android.</string>
+    <string name="installer_dhizuku_not_installed">Dhizuku är inte installerat. Installera det, gör det till enhetsägare och kom sedan tillbaka.</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku är inte enhetsägare. Gör det till enhetsägare i Dhizuku-appen och kom sedan tillbaka.</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku svarade inte. Öppna Dhizuku-appen och kom sedan tillbaka.</string>
+    <string name="installer_dhizuku_not_allowed">Tern får inte använda Dhizuku än. Tryck här för att fråga.</string>
+    <string name="dhizuku_failed_not_installed">Dhizuku är inte installerat.</string>
+    <string name="dhizuku_failed_not_owner">Dhizuku är inte enhetsägare.</string>
+    <string name="dhizuku_failed_not_answering">Dhizuku svarade inte.</string>
+    <string name="dhizuku_failed_not_allowed">Dhizuku låter inte Tern använda det.</string>
+    <string name="install_signer_changed">Appen som nu är installerad är signerad av någon annan än filen Tern kontrollerade, så installationen räknas inte.</string>
+</resources>

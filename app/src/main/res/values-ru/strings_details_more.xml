@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_package_effect">Каждый файл должен относиться к этому пакету, и Tern смотрит на приложение, установленное под этим именем. Если оставить поле пустым, Tern возьмет имя из файла приложения.</string>
+</resources>

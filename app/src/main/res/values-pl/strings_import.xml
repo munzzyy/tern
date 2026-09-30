@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">Z listy adresów</string>
+    <string name="import_addresses_explain">Wklej adresy aplikacji, po jednym w wierszu lub w dowolnym miejscu tekstu, albo odczytaj je z pliku, na przykład z listy OPML. Każdy jest sprawdzany i dodawany tak jak pojedynczy link.</string>
+    <string name="import_addresses_field">Adresy</string>
+    <string name="import_addresses_show">Pokaż, co zawiera</string>
+    <string name="import_addresses_file">Odczytaj plik</string>
+    <string name="import_addresses_none">Nie ma w nim adresu https.</string>
+    <string name="import_addresses_other">Inna lista</string>
+    <string name="import_addresses_unreadable">Nie udało się odczytać tego pliku.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d adres. Odznacz to, czego nie chcesz, a potem dodaj.</item>
+        <item quantity="few">%1$d adresy. Odznacz to, czego nie chcesz, a potem dodaj.</item>
+        <item quantity="many">%1$d adresów. Odznacz to, czego nie chcesz, a potem dodaj.</item>
+        <item quantity="other">%1$d adresu. Odznacz to, czego nie chcesz, a potem dodaj.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">W tym linku jest %1$d aplikacja. Obejrzyj ją, aby zobaczyć jej ustawienia, zanim ją dodasz.</item>
+        <item quantity="few">W tym linku są %1$d aplikacje. Obejrzyj każdą, aby zobaczyć jej ustawienia, zanim ją dodasz.</item>
+        <item quantity="many">W tym linku jest %1$d aplikacji. Obejrzyj każdą, aby zobaczyć jej ustawienia, zanim ją dodasz.</item>
+        <item quantity="other">W tym linku jest %1$d aplikacji. Obejrzyj każdą, aby zobaczyć jej ustawienia, zanim ją dodasz.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Eksport dla Obtainium</string>
+    <string name="settings_export_obtainium_effect">Plik, który Obtainium zaimportuje, gdy przenosisz tam listę. Ustawienia, których Obtainium nie ma, nie są przenoszone.</string>
+    <string name="settings_export_installed_only">Eksportuj tylko zainstalowane aplikacje</string>
+    <string name="settings_export_settings">Dołączaj ustawienia do eksportów</string>
+    <string name="settings_export_settings_effect">Wygląd, lista, powiadomienia i sprawdzanie. Nigdy token dostępu, serwer proxy ani instalator.</string>
+    <string name="settings_kept_export">Utrzymuj aktualny eksport</string>
+    <string name="settings_kept_export_effect">Chwilę po każdej zmianie na liście Tern ponownie zapisuje eksport.</string>
+    <string name="settings_kept_export_written">Zapisano o %1$s</string>
+    <string name="settings_kept_export_folder">Gdzie jest przechowywany</string>
+    <string name="import_settings_taken">Ustawienia z pliku również zostały przejęte.</string>
+</resources>

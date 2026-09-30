@@ -2,12 +2,15 @@ package io.github.munzzyy.tern.core.engine
 
 import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.Release
+import io.github.munzzyy.tern.core.model.ReleaseOrder
 import io.github.munzzyy.tern.core.model.ReleasePolicy
+import io.github.munzzyy.tern.core.model.VersionFrom
 import io.github.munzzyy.tern.core.text.PatternException
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
 import org.junit.Test
+import java.time.Instant
 
 class ReleaseSelectorTest {
     private val day = 24L * 60 * 60 * 1000
@@ -62,6 +65,23 @@ class ReleaseSelectorTest {
         val candidate = picked.candidate!!
         assertEquals("1.10.0", candidate.version)
         assertEquals("build-80-v1.10.0", candidate.id)
+    }
+
+    @Test
+    fun aReleaseWithoutATitleIsFilteredByItsTag() {
+        val releases = listOf(release("nightly-5", title = " "), release("android-v4.2"), release("android-v4.1", title = "Desktop"))
+        assertEquals("android-v4.2", pick(releases, ReleasePolicy(titleFilter = "^android")).candidate!!.id)
+    }
+
+    @Test
+    fun theLastReleasesOldEnoughStayWhileEveryNewOneIsTooYoung() {
+        val old = release("v1.0", daysAgo = 10)
+        val young = release("v1.1", daysAgo = 1)
+        assertEquals(listOf("v1.1", "v1.0"), ReleaseSelector.keptUntilOldEnough(listOf(young), listOf(old), 3, now).map { it.id })
+        assertEquals(listOf("v1.1"), ReleaseSelector.keptUntilOldEnough(listOf(young), listOf(old), 0, now).map { it.id })
+        assertEquals(listOf("v1.2", "v1.1"), ReleaseSelector.keptUntilOldEnough(listOf(release("v1.2", daysAgo = 5), young), listOf(old), 3, now).map { it.id })
+        assertEquals(listOf("v1.1", "v1.0"), ReleaseSelector.keptUntilOldEnough(listOf(young), listOf(young, old), 3, now).map { it.id })
+        assertEquals("v1.0", pick(ReleaseSelector.keptUntilOldEnough(listOf(young), listOf(old), 3, now), ReleasePolicy(minAgeDays = 3)).candidate!!.id)
     }
 
     @Test
@@ -132,5 +152,126 @@ class ReleaseSelectorTest {
         val releases = listOf(release("v2.0.0"), release("v1.9.0"))
         val picked = ReleaseSelector.select(releases, ReleasePolicy(), now) { it.installable.isNotEmpty() }
         assertEquals("v2.0.0", picked.candidate!!.id)
+    }
+
+    /** Every release in the order the selector tried them, found by letting none of them be usable. */
+    private fun tried(releases: List<Release>, policy: ReleasePolicy) = ReleaseSelector.select(releases, policy, now) { false }.rejected.map { it.first.id }
+
+    @Test
+    fun aMatchGroupChoosesWhichPartOfTheMatchBecomesTheVersion() {
+        val releases = listOf(release("build-80-v1.10.0"))
+        val extract = ReleasePolicy(versionExtract = "build-(\\d+)-v(\\d+)\\.(\\d+)\\.(\\d+)")
+        fun version(group: String?) = pick(releases, extract.copy(matchGroup = group)).candidate!!.version
+        assertEquals("80", version(null))
+        assertEquals("1", version("2"))
+        assertEquals("1", version("$2"))
+        assertEquals("build-80-v1.10.0", version("0"))
+        assertEquals("1.10.0+80", version("$2.$3.$4+$1"))
+        assertEquals("$80", version("\\$$1"))
+    }
+
+    @Test
+    fun aMatchGroupThePatternLacksCountsAsNoMatch() {
+        val releases = listOf(release("build-80-v1.10.0"))
+        val policy = ReleasePolicy(versionExtract = "v(\\d+)\\.(\\d+)")
+        assertEquals("build-80-v1.10.0", pick(releases, policy.copy(matchGroup = "$3")).candidate!!.version)
+        assertEquals("build-80-v1.10.0", pick(releases, policy.copy(matchGroup = "$1.$3")).candidate!!.version)
+        assertEquals("build-80-v1.10.0", pick(releases, policy.copy(matchGroup = "version")).candidate!!.version)
+        assertEquals("1.10", pick(releases, policy.copy(matchGroup = "$1.$2")).candidate!!.version)
+    }
+
+    @Test
+    fun theTitleCanBeTheVersionWhereThereIsOne() {
+        val releases = listOf(release("v81", title = "Example 2.0.0"), release("v90", title = "Example 1.9.0"))
+        val picked = pick(releases, ReleasePolicy(versionFrom = VersionFrom.TITLE)).candidate!!
+        assertEquals("v81", picked.id)
+        assertEquals("Example 2.0.0", picked.version)
+        assertEquals("v90", pick(releases).candidate!!.id)
+        val untitled = pick(listOf(release("v3.0.0", title = " ")), ReleasePolicy(versionFrom = VersionFrom.TITLE)).candidate!!
+        assertEquals("v3.0.0", untitled.version)
+    }
+
+    @Test
+    fun theDateCanBeTheVersionAndComparesAsOne() {
+        fun at(text: String) = Instant.parse(text).toEpochMilli()
+        val releases = listOf(
+            Release(id = "a", version = "continuous", publishedAtMs = at("2026-01-02T09:30:00Z"), assets = apk),
+            Release(id = "b", version = "continuous", publishedAtMs = at("2026-01-02T14:05:00Z"), assets = apk),
+            Release(id = "c", version = "continuous", publishedAtMs = at("2025-12-31T23:59:00Z"), assets = apk),
+            Release(id = "d", version = "continuous", assets = apk),
+        )
+        val policy = ReleasePolicy(versionFrom = VersionFrom.DATE)
+        val picked = pick(releases, policy).candidate!!
+        assertEquals("b", picked.id)
+        assertEquals("2026.01.02.1405", picked.version)
+        assertEquals(listOf("b", "a", "c", "d"), tried(releases, policy))
+        assertEquals("continuous", pick(listOf(releases[3]), policy).candidate!!.version)
+        assertEquals("2026", pick(releases, policy.copy(versionExtract = "^(\\d{4})")).candidate!!.version)
+    }
+
+    @Test
+    fun releasesCanBeOrderedByDate() {
+        val releases = listOf(release("v2.0.0", daysAgo = 30), release("v1.9.1", daysAgo = 2), release("v1.9.0").copy(publishedAtMs = null), release("v1.8.0", daysAgo = 40))
+        val policy = ReleasePolicy(order = ReleaseOrder.DATE)
+        assertEquals("v1.9.1", pick(releases, policy).candidate!!.id)
+        assertEquals(listOf("v1.9.1", "v2.0.0", "v1.8.0", "v1.9.0"), tried(releases, policy))
+    }
+
+    @Test
+    fun releasesCanKeepTheOrderTheSourceGave() {
+        val releases = listOf(release("v1.0.0"), release("v3.0.0"), release("v2.0.0"))
+        assertEquals("v1.0.0", pick(releases, ReleasePolicy(order = ReleaseOrder.SOURCE)).candidate!!.id)
+        assertEquals(listOf("v1.0.0", "v3.0.0", "v2.0.0"), tried(releases, ReleasePolicy(order = ReleaseOrder.SOURCE)))
+        assertEquals("v3.0.0", pick(releases).candidate!!.id)
+    }
+
+    @Test
+    fun releasesCanBeOrderedByNameWithNumbersReadAsNumbers() {
+        val releases = listOf(release("x-2"), release("y-9"), release("Y-10"), release("z"))
+        assertEquals(listOf("z", "Y-10", "y-9", "x-2"), tried(releases, ReleasePolicy(order = ReleaseOrder.NAME)))
+        assertEquals(listOf("Y-10", "y-9", "x-2", "z"), tried(releases, ReleasePolicy()))
+    }
+
+    @Test
+    fun theReleaseTheSourceMarksAsLatestComesFirstInEveryOrder() {
+        val releases = listOf(release("v3.0.0", daysAgo = 1), release("v2.5.0", daysAgo = 10).copy(latest = true), release("v2.0.0", daysAgo = 20))
+        for (order in ReleaseOrder.entries) {
+            assertEquals(order.name, "v2.5.0", pick(releases, ReleasePolicy(order = order)).candidate!!.id)
+        }
+        assertEquals("v3.0.0", pick(releases.map { it.copy(latest = false) }).candidate!!.id)
+        assertEquals("v3.0.0", pick(releases, ReleasePolicy(tagFilter = "^v3")).candidate!!.id)
+    }
+
+    @Test
+    fun staysBehindTheNewestReleasesThatWouldOtherwiseBeChosen() {
+        val releases = listOf(release("v4.0.0", assets = emptyList()), release("v3.0.0"), release("v2.0.0"), release("v1.0.0"))
+        val one = pick(releases, ReleasePolicy(stayBehind = 1))
+        assertEquals("v2.0.0", one.candidate!!.id)
+        assertEquals(listOf(Rejection.NO_USABLE_FILE, Rejection.STAY_BEHIND), one.rejected.map { it.second })
+        assertEquals("v1.0.0", pick(releases, ReleasePolicy(stayBehind = 2)).candidate!!.id)
+        assertNull(pick(releases, ReleasePolicy(stayBehind = 3)).candidate)
+        assertEquals("v3.0.0", pick(releases, ReleasePolicy(stayBehind = -1)).candidate!!.id)
+
+        val many = (9 downTo 1).map { release("v$it.0.0") }
+        assertEquals("v4.0.0", pick(many, ReleasePolicy(stayBehind = 50)).candidate!!.id)
+    }
+
+    @Test
+    fun stayingBehindStillKeepsToNoFallback() {
+        val releases = listOf(release("v3.0.0"), release("v2.0.0", assets = emptyList()), release("v1.0.0"))
+        val strict = pick(releases, ReleasePolicy(stayBehind = 1, fallbackToOlder = false))
+        assertNull(strict.candidate)
+        assertEquals(listOf(Rejection.STAY_BEHIND, Rejection.NO_USABLE_FILE), strict.rejected.map { it.second })
+        assertEquals("v1.0.0", pick(releases, ReleasePolicy(stayBehind = 1)).candidate!!.id)
+    }
+
+    @Test
+    fun theVersionFilterIsAppliedToTheExtractedVersion() {
+        val releases = listOf(release("build-3-v2.1.0"), release("build-2-v2.0.0"), release("build-1-v1.9.0"))
+        val picked = pick(releases, ReleasePolicy(versionExtract = "v(\\d+\\.\\d+\\.\\d+)", versionFilter = "^2\\.0\\."))
+        assertEquals("build-2-v2.0.0", picked.candidate!!.id)
+        assertEquals(listOf(Rejection.VERSION_FILTER, Rejection.VERSION_FILTER), picked.rejected.map { it.second })
+        assertNull(pick(releases, ReleasePolicy(versionFilter = "^2\\.0\\.")).candidate)
+        assertThrows(PatternException::class.java) { pick(releases, ReleasePolicy(versionFilter = "(unclosed")) }
     }
 }

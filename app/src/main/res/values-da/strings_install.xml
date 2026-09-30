@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_installer">Installer med</string>
+    <string name="installer_system">Androids installationsprogram</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">En anden app</string>
+    <string name="installer_system_effect">Android spørger før en første installation og før en opdatering, hvor den vil.</string>
+    <string name="installer_shizuku_effect">Installerer og opdaterer uden at spørge, via Shizuku eller Sui. Hver fil gennemgår de samme tjek først.</string>
+    <string name="installer_root_effect">Installerer og opdaterer uden at spørge, via su. Hver fil gennemgår de samme tjek først.</string>
+    <string name="installer_other_app_effect">Giver hver tjekket fil til den installationsapp, du vælger. Den app spørger altid, så intet installeres i baggrunden.</string>
+    <string name="installer_ready">Klar</string>
+    <string name="installer_not_ready">Ikke klar, Androids installationsprogram bruges imens</string>
+    <string name="installer_shizuku_not_running">Shizuku kører ikke. Start det i Shizuku-appen, og kom så tilbage.</string>
+    <string name="installer_shizuku_too_old">Denne version af Shizuku er for gammel til Tern. Opdater Shizuku.</string>
+    <string name="installer_shizuku_not_allowed">Tern må ikke bruge Shizuku endnu. Tryk her for at spørge.</string>
+    <string name="installer_no_root">Tern har ingen root-adgang. Tryk her for at spørge om den igen.</string>
+    <string name="installer_no_other_app">Ingen installationsapp er valgt, eller den valgte er væk.</string>
+    <string name="installer_pick_app">Installationsapp</string>
+    <string name="installer_pick_app_none">Ingen valgt</string>
+    <string name="installer_no_apps">Der er ingen anden installationsapp på denne enhed.</string>
+    <string name="installer_play">Sig, at Google Play installerede apps</string>
+    <string name="installer_play_effect">Nogle apps virker kun, når de tror, at Google Play installerede dem. Tern vises så ikke længere som deres installationskilde.</string>
+    <string name="install_other_app_signer">Installationsappen installerede noget, der er signeret af en anden end den fil, Tern tjekkede, så installationen tæller ikke.</string>
+</resources>

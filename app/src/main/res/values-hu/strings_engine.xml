@@ -9,7 +9,6 @@
     <string name="engine_no_space">Nincs elég szabad tárhely: ehhez %1$s szükséges, és %2$s szabad.</string>
     <string name="engine_download_cut">A letöltés megszakadt %1$s / %2$s után. Próbálja újra a folytatáshoz.</string>
     <string name="engine_checksum_mismatch">A fájl nem egyezik a kiadó által megadott ellenőrző összeggel, ezért törölve lett. Lehet, hogy megsérült vagy kicserélték.</string>
-    <string name="engine_tar_unsupported">Ez a kiadás egy tar archívum, amit a Tern nem nyit meg. Válasszon egy másik fájlt.</string>
     <string name="engine_not_an_apk">Ez a fájl nem egy APK vagy a Tern által olvasható archívum (%1$s).</string>
     <string name="engine_archive_no_apk">Az archívum nem tartalmaz APK-t.</string>
     <string name="engine_archive_no_base">Az archívum tartalmaz osztott APK-kat, de nincs alap APK.</string>
@@ -57,7 +56,6 @@
     <string name="engine_warn_no_file">Ebben a kiadásban nincs olyan fájl, amely megfelelne ennek az eszköznek.</string>
     <string name="engine_warn_prerelease">Csak előzetes kiadás lett közzétéve.</string>
     <string name="engine_warn_moved">Úgy tűnik, hogy a projekt ide költözött: %1$s.</string>
-    <string name="engine_several_apps">Ez a link több alkalmazást tartalmaz. Importálja inkább a beállításokból.</string>
     <string name="engine_not_a_source">A Tern nem talált kiadásokat ezen a címen.</string>
     <string name="engine_move_gone">Ez az alkalmazás már nincs a listán.</string>
     <string name="engine_move_nothing">Nincs követhető új cím.</string>

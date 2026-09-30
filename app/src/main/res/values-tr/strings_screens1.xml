@@ -26,9 +26,9 @@
     <string name="explain_package">Her Android uygulamasının asla değişmeyen bir adı vardır. Başka bir isim taşıyan bir dosya, kendisine ne ad verirse versin farklı bir uygulama olurdu.</string>
     <string name="explain_signer_installed">Bir geliştirici her sürümü yalnızca kendi elinde tuttuğu bir anahtarla imzalar. Tern, bu dosyanın imzasını bu cihazdaki uygulamayla ve ilk yüklemede hatırladığı sertifikayla karşılaştırır. Doğru adresten gelse bile, başka biri tarafından imzalanmış bir dosya reddedilir.</string>
     <string name="explain_signer_first">Henüz karşılaştırılacak bir şey yok. Dosya kendisini kimin imzaladığını söylüyor, Android yüklerken bunu onaylıyor ve bundan sonra Tern her güncellemeyi aynı sertifikaya tabi tutuyor.</string>
-    <string name="explain_checksum_matched">Sağlama toplamı, dosyanın kendisinin bir parmak izidir. Yayıncı bir tane verdi ve Tern\'ın indirdiği dosya aynı parmak izine sahip, yani yayınlandığı gibi ulaştı.</string>
+    <string name="explain_checksum_matched">Sağlama toplamı, dosyanın kendisinin bir parmak izidir. Yayıncı bir tane verdi ve Tern\'in indirdiği dosya aynı parmak izine sahip, yani yayınlandığı gibi ulaştı.</string>
     <string name="explain_checksum_pending">Sağlama toplamı, dosyanın kendisinin bir parmak izidir. Yayıncı bir tane verdi ve Tern, dosya indirilir indirilmez onu dosyayla karşılaştırır.</string>
-    <string name="explain_checksum_mismatch">Sağlama toplamı, dosyanın kendisinin bir parmak izidir. Yayıncı bir tane verdi ve Tern\'ın indirdiği dosya başka bir tanesine sahip, yani yayınlanan dosya değil.</string>
+    <string name="explain_checksum_mismatch">Sağlama toplamı, dosyanın kendisinin bir parmak izidir. Yayıncı bir tane verdi ve Tern\'in indirdiği dosya başka bir tanesine sahip, yani yayınlanan dosya değil.</string>
     <string name="explain_checksum_none">Bu yayıncı hiçbir sağlama toplamı sunmuyor. İmza hala denetlenir ve ikisi arasında daha güçlü olanıdır.</string>
     <string name="explain_permissions">Bu sürümün, yüklü olanın yapmadığı neyi yapmasına izin verilmesini istediği.</string>
     <string name="explain_virustotal">Tarayıcınızda bu tam dosyanın VirusTotal\'daki sayfasını açar. Tern oraya hiçbir şey göndermez.</string>

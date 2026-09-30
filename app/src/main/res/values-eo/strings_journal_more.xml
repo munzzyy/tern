@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Agada protokolo</string>
+    <string name="journal_keep_own">Konservi proprajn mesaĝojn de Tern en la protokolo</string>
+    <string name="journal_keep_own_effect">Avertoj kaj eraroj de Tern, kaj kiam ĉiu kontrolo komenciĝas kaj finiĝas. Ĉio, kio povus esti pasvorto aŭ ĵetono, estas preterlasita, kaj la protokolo restas sur ĉi tiu aparato, krom se vi kunhavigas ĝin.</string>
+    <string name="journal_filter_own">Mesaĝoj de Tern</string>
+    <string name="journal_mark_note">Noto de Tern</string>
+    <string name="journal_mark_warning">Averto de Tern</string>
+    <string name="journal_mark_error">Eraro de Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Kontrolo de %1$d aplikaĵo komenciĝis.</item>
+        <item quantity="other">Kontrolo de %1$d aplikaĵoj komenciĝis.</item>
+    </plurals>
+    <string name="journal_check_started_one">Kontrolo de %1$s komenciĝis.</string>
+    <string name="journal_cause_asked">Oni petis ĝin en Tern.</string>
+    <string name="journal_cause_opening">Tern estis malfermita.</string>
+    <string name="journal_cause_page">La paĝo de la aplikaĵo estis malfermita.</string>
+    <string name="journal_cause_link">Ligilo petis ĝin.</string>
+    <string name="journal_cause_shortcut">Ŝparvojo petis ĝin.</string>
+    <string name="journal_cause_widget">La fenestraĵo petis ĝin.</string>
+    <string name="journal_cause_tile">La kahelo de Rapidaj agordoj petis ĝin.</string>
+    <string name="journal_cause_schedule">La horaro lanĉis ĝin.</string>
+    <string name="journal_cause_retry">Ĝi provas denove tie, kie la lasta kontrolo malsukcesis.</string>
+    <string name="journal_cause_added">La aplikaĵo ĵus estis aldonita.</string>
+    <string name="journal_cause_imported">La aplikaĵoj ĵus estis importitaj.</string>
+    <string name="journal_cause_changed">La agordoj de la aplikaĵo ŝanĝiĝis.</string>
+    <string name="journal_cause_install">La aplikaĵo tuj estos instalita, kaj ĝi estas kontrolata unue.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">La kontrolo de %1$d aplikaĵo finiĝis post %2$s.</item>
+        <item quantity="other">La kontrolo de %1$d aplikaĵoj finiĝis post %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">La kontrolo de %1$s finiĝis post %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Ĝi trovis %1$d ĝisdatigon.</item>
+        <item quantity="other">Ĝi trovis %1$d ĝisdatigojn.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d aplikaĵo ne povis esti kontrolita.</item>
+        <item quantity="other">%1$d aplikaĵoj ne povis esti kontrolitaj.</item>
+    </plurals>
+    <string name="journal_check_stopped">La kontrolo haltis post %1$s, antaŭ ol ĝi finiĝis.</string>
+</resources>

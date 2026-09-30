@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_package_effect">Mọi tệp phải thuộc gói này, và ứng dụng được cài đặt với gói này là ứng dụng Tern xem xét. Nếu để trống, Tern sẽ đọc từ tệp của ứng dụng.</string>
+</resources>

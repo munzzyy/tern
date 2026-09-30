@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="install_archive_zstd_unsupported">هذا الأرشيف مضغوط بـ zstd، وهو ما لا يستطيع Tern فتحه. اختر ملف .zip أو .tar لهذا الإصدار، أو ملفًا مضغوطًا بـ gzip أو bzip2 أو xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s من %2$s</string>
+    <string name="install_setting_one_download">تنزيل واحد في كل مرة</string>
+    <string name="install_setting_one_download_effect">تنتظر التنزيلات بعضها بعضًا بدلًا من أن تعمل جنبًا إلى جنب.</string>
+    <string name="install_file_foreign_host">يأتي هذا الملف من %1$s، وهو ليس موقع مصدر هذا التطبيق. يُفحص كأي ملف آخر.</string>
+    <string name="install_file_picked">اختيارك</string>
+    <string name="install_file_automatic">السماح لـ Tern باختيار الملف من جديد</string>
+    <string name="install_file_picked_kept">تلتزم التحديثات بالملف الذي اخترته، %1$s.</string>
+    <string name="install_file_picked_missing">لا يوجد في هذا الإصدار ملف مثل الذي اخترته، %1$s، لذا اختار Tern ملفًا.</string>
+</resources>

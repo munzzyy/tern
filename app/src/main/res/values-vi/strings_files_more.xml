@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_other_title">Các tệp khác của bản phát hành này</string>
+    <string name="files_source_code">Mã nguồn</string>
+    <string name="files_save_spoken">Lưu %1$s vào Tải xuống</string>
+    <string name="files_save_a_file">Lưu một tệp</string>
+    <string name="files_pick_title_version">Lưu một tệp của phiên bản %1$s</string>
+    <string name="files_pick_title_app">Lưu một tệp của %1$s</string>
+    <string name="files_skip">Bỏ qua</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="other">Đang lưu %1$d tệp. Thông báo sẽ cho bạn biết khi từng tệp hoàn tất.</item>
+    </plurals>
+    <string name="files_channel_saved">Tệp đã lưu</string>
+    <string name="files_notify_saved">Đã lưu %1$s</string>
+    <string name="files_notify_saved_plain">Đã lưu một tệp vào Tải xuống</string>
+    <string name="files_notify_not_saved">Không thể lưu %1$s</string>
+    <string name="files_notify_not_saved_plain">Không thể lưu một tệp</string>
+    <string name="files_notify_updated_to">%1$s đã được cập nhật lên %2$s</string>
+    <string name="files_notify_installed_at">Đã cài đặt %1$s %2$s</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Đã xảy ra sự cố gì</string>
+    <string name="files_problems_none">Hiện không có ứng dụng nào trong số này gặp sự cố.</string>
+    <string name="files_setting_verifier">Cho Verified Apps xem ứng dụng mới trước</string>
+    <string name="files_setting_verifier_effect">Trước khi cài đặt một ứng dụng lần đầu, tệp đã kiểm tra của nó được chuyển đến Verified Apps hoặc AppVerifier (nếu máy có cài một trong hai) để kiểm tra lần hai. Việc cài đặt sẽ tiếp tục khi bạn quay lại Tern.</string>
+    <string name="files_verifier_about">Giới thiệu về Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s là một ứng dụng riêng. Nó đối chiếu ứng dụng này với chứng chỉ Tern đang giữ cho ứng dụng này, và với danh sách ứng dụng mà nó biết.</string>
+    <string name="files_verifier_card_action">Kiểm tra bằng %1$s</string>
+</resources>

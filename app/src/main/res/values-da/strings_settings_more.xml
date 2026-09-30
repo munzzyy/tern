@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_system">Samme som systemet</string>
+    <string name="interval_more_often">Tjek oftere</string>
+    <string name="interval_less_often">Tjek sjældnere</string>
+    <string name="about_help">Sådan fungerer Tern</string>
+    <string name="about_help_effect">Hvad Tern tjekker, og hvordan man tilføjer, opdaterer og flytter apps, på projektets side.</string>
+    <string name="about_security">Sådan beskytter Tern dig</string>
+    <string name="about_privacy">Privatliv</string>
+    <string name="verification_title">Androids udviklerverificering</string>
+    <string name="verification_text">Google har annonceret, at certificerede Android-enheder kun vil installere apps fra udviklere, der har registreret sig hos Google, med start i nogle få lande fra september 2026 og i flere lande derefter.\n\nHvor dette gælder, kan Android afvise en app fra en udvikler, der ikke har registreret sig, eller kræve mere af dig, før den installeres, uanset hvordan Terns egne tjek falder ud. Tern kan ikke ændre det, og den fortæller dig, når Android afviser.\n\nEnheder uden Googles certificering påvirkes ikke.</string>
+    <string name="verification_more">Googles side om det</string>
+    <string name="kept_export_format">Format</string>
+    <string name="kept_export_format_tern">Terns format, som rummer alt</string>
+    <string name="kept_export_format_obtainium">Obtainiums format, som Obtainium også kan læse</string>
+    <string name="kept_export_name">Filnavn</string>
+    <string name="kept_export_name_usual">Lad feltet stå tomt for at bruge %1$s.</string>
+    <string name="look_style">Stil</string>
+    <string name="style_standard">Standard</string>
+    <string name="style_vibrant">Livlig</string>
+    <string name="style_expressive">Udtryksfuld</string>
+    <string name="look_style_effect">Livlig er mere farverig hele vejen igennem. Udtryksfuld drejer den anden og tredje farve længere væk fra den første.</string>
+    <string name="look_color_code">Farvekode</string>
+    <string name="look_color_code_effect">Tern tager nuancen og styrken af denne farve og vælger de toner af den, der forbliver lette at læse.</string>
+    <string name="look_color_code_invalid">Seks hexadecimale cifre, f.eks. #3D5A80.</string>
+    <string name="crash_title">Tern stoppede uventet</string>
+    <string name="crash_text">Her er, hvad Tern lavede, da den stoppede. Rapporten bliver på denne enhed; del den med udvikleren, hvis du vil have, at der bliver kigget på den.</string>
+    <string name="crash_share">Del</string>
+    <string name="crash_copied">Kopieret</string>
+    <string name="activity_range">Vis</string>
+    <string name="activity_range_all">Alle dage</string>
+    <plurals name="activity_range_days">
+        <item quantity="one">Den sidste %d dag</item>
+        <item quantity="other">De sidste %d dage</item>
+    </plurals>
+    <string name="activity_copied">Loggen blev kopieret</string>
+    <string name="settings_auto_installs">Opdateringer installeres af sig selv</string>
+    <string name="settings_auto_installs_effect">Apps, der er sat til at opdatere sig selv, gør det efter et baggrundstjek. Når det er slået fra, giver de kun besked om, at der er en opdatering, og hver enkelt beholder sit eget valg til senere.</string>
+    <string name="settings_unmetered_installs">Installer kun på Wi-Fi</string>
+    <string name="settings_unmetered_installs_effect">Tjek kører på ethvert netværk. En opdatering, der ellers ville installere sig selv, venter på Wi-Fi eller et netværkskabel, som i Obtainium.</string>
+    <string name="settings_charging_installs">Installer kun under opladning</string>
+    <string name="settings_charging_installs_effect">Tjek kører også på batteri. En opdatering, der ellers ville installere sig selv, venter, til enheden lader op.</string>
+    <string name="engine_unreadable_app">Den gemte app %1$s kunne ikke læses, så den er udeladt fra listen. Intet blev slettet: en nyere version af Tern kan måske læse den.</string>
+    <string name="settings_pin_certificates">Fastgør kodeplatformenes certifikater</string>
+    <string name="settings_pin_certificates_effect">GitHub, GitLab og Codeberg skal vise et certifikat fra den certificeringsmyndighed, som hver af dem er kendt for at bruge, som i Obtainium. Et certifikat, som en anden myndighed er blevet bragt til at udstede, afvises så. Hvis en kodeplatform skifter myndighed, mislykkes tjek der, indtil dette er slået fra.</string>
+</resources>

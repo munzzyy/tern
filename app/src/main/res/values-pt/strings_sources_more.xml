@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">As aplicações de %1$s apenas podem ser seguidas, porque não oferece nenhum ficheiro para instalar.</string>
+    <string name="min_age_global">Como definido para todas as aplicações: %1$s</string>
+    <string name="setting_min_age_global_effect">As aplicações sem uma espera própria aguardam este tempo antes de um novo lançamento ser oferecido, para que um mau lançamento possa ser retirado primeiro.</string>
+    <string name="option_link_text">Filtrar as ligações pelo seu texto</string>
+    <string name="option_link_text_effect">O filtro é aplicado ao texto de uma ligação em vez de ao seu endereço.</string>
+    <string name="option_take_first">Usar a primeira ligação</string>
+    <string name="option_take_first_effect">Caso contrário, é usada a última ligação da ordem.</string>
+    <string name="option_natural_order_effect">Caso contrário, as ligações são ordenadas pela ordem natural do seu endereço, lendo os números como números.</string>
+    <string name="option_by_last_segment">Guiar-se pelo fim do endereço</string>
+    <string name="option_by_last_segment_effect">As ligações são ordenadas, e as versões lidas, pela parte a seguir à última barra.</string>
+    <string name="option_steps_title">Páginas a percorrer primeiro</string>
+    <string name="option_steps_order_help">Em cada página, as ligações correspondentes são ordenadas e é seguida a última.</string>
+    <string name="step_title">Página %1$d</string>
+    <string name="step_filter">Ligação a seguir</string>
+    <string name="step_text">Corresponder ao texto da ligação</string>
+    <string name="step_arch">Preferir o processador deste dispositivo</string>
+    <string name="step_add">Adicionar uma página</string>
+    <string name="step_remove">Remover esta página</string>
+    <string name="option_file_version">Usar o nome do ficheiro como versão</string>
+    <string name="option_file_version_effect">Cada ficheiro conta então como um lançamento próprio.</string>
+    <string name="github_proxy_title">GitHub através de um hubproxy</string>
+    <string name="github_proxy_effect">Cada pedido ao GitHub vai para este anfitrião, que vê cada um deles. Nenhum token é enviado por ele, por isso os projetos privados e o GitHub Actions não podem ser seguidos desta forma.</string>
+    <string name="github_proxy_host">Anfitrião do hubproxy</string>
+    <string name="github_proxy_help">Apenas um nome de anfitrião, como gh-proxy.com. O Tern liga-se a ele por HTTPS.</string>
+    <string name="github_proxy_invalid">Isso não é um nome de anfitrião que o Tern possa usar</string>
+    <string name="github_proxy_in_use">Os pedidos ao GitHub passam por %1$s</string>
+    <string name="github_proxy_remove">Deixar de usar o hubproxy</string>
+</resources>

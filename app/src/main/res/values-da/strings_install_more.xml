@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="install_archive_zstd_unsupported">Dette arkiv er komprimeret med zstd, som Tern ikke kan åbne. Vælg en .zip- eller .tar-fil fra denne udgivelse, eller en, der er komprimeret med gzip, bzip2 eller xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s af %2$s</string>
+    <string name="install_setting_one_download">Én download ad gangen</string>
+    <string name="install_setting_one_download_effect">Downloads venter på hinanden i stedet for at køre side om side.</string>
+    <string name="install_file_foreign_host">Denne fil kommer fra %1$s, som ikke er webstedet for denne apps kilde. Den tjekkes som enhver anden fil.</string>
+    <string name="install_file_picked">Dit valg</string>
+    <string name="install_file_automatic">Lad Tern vælge filen igen</string>
+    <string name="install_file_picked_kept">Opdateringer holder sig til den fil, du valgte: %1$s.</string>
+    <string name="install_file_picked_missing">Denne udgivelse har ingen fil som den, du valgte (%1$s), så Tern valgte en.</string>
+</resources>

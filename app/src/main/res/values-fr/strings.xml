@@ -95,19 +95,6 @@
         <item quantity="other">%d sélectionnées</item>
     </plurals>
     <string name="apps_select_hint">Choisissez des applis dans la liste.</string>
-    <string name="action_add_to_category">Ajouter à la catégorie</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Ajouter %d appli à une catégorie</item>
-        <item quantity="many">Ajouter %d applis à une catégorie</item>
-        <item quantity="other">Ajouter %d applis à une catégorie</item>
-    </plurals>
-    <string name="bulk_category_field">Catégorie</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">%1$d appli classée dans %2$s.</item>
-        <item quantity="many">%1$d applis classées dans %2$s.</item>
-        <item quantity="other">%1$d applis classées dans %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Ou choisissez-en une existante :</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Vérifier %d appli maintenant ?</item>
         <item quantity="many">Vérifier %d applis maintenant ?</item>
@@ -351,10 +338,6 @@
         <item quantity="many">Toutes les %d heures</item>
         <item quantity="other">Toutes les %d heures</item>
     </plurals>
-    <string name="settings_unmetered">Seulement sur réseaux non mesurés</string>
-    <string name="settings_unmetered_effect">Ignorer les vérifications sur les données mobiles et le Wi-Fi facturé à l\'usage.</string>
-    <string name="settings_charging">Seulement en charge</string>
-    <string name="settings_charging_effect">Ignorer les vérifications sur batterie.</string>
     <string name="settings_defaults">Défauts pour les nouvelles applis</string>
     <string name="settings_notifications">Notifications</string>
     <string name="settings_notify_updates">Quand des mises à jour sont trouvées</string>
@@ -390,7 +373,6 @@
     <string name="proxy_port_invalid">Un nombre de 1 à 65535</string>
     <string name="settings_appearance">Apparence</string>
     <string name="settings_language">Langue</string>
-    <string name="settings_language_effect">Choisie dans les paramètres d\'Android pour cette appli.</string>
     <string name="settings_theme">Thème</string>
     <string name="theme_system">Suivre le système</string>
     <string name="theme_light">Clair</string>

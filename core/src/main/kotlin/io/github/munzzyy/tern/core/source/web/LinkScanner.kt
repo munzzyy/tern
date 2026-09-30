@@ -1,12 +1,18 @@
 package io.github.munzzyy.tern.core.source.web
 
+import io.github.munzzyy.tern.core.json.Json
+import io.github.munzzyy.tern.core.json.JsonArray
+import io.github.munzzyy.tern.core.json.JsonObject
+import io.github.munzzyy.tern.core.json.JsonString
+import io.github.munzzyy.tern.core.json.JsonValue
 import io.github.munzzyy.tern.core.xml.XmlScanner
 
 internal data class AnchorLink(val href: String, val text: String)
 
 /**
- * Tolerant scanner for `<a href=...>text</a>` in real-world, not-necessarily-well-formed HTML.
- * Bounded windows keep it linear even on crafted input with no closing tags.
+ * Tolerant scanner for `<a href=...>text</a>`, and for addresses outside such tags, in real-world,
+ * not-necessarily-well-formed HTML. Bounded windows keep it linear even on crafted input with no
+ * closing tags.
  */
 internal object LinkScanner {
     private const val TAG_WINDOW = 4000
@@ -66,7 +72,82 @@ internal object LinkScanner {
         return sb.toString()
     }
 
-    private fun attribute(attrs: String, name: String): String? {
+    /**
+     * Addresses outside `<a>` tags, in the order found: string values when the page is JSON, bare
+     * http(s) addresses in its text, and attribute values of any tag that are absolute or start
+     * with a slash. None has link text.
+     */
+    fun addresses(html: String): List<AnchorLink> {
+        val out = LinkedHashSet<String>()
+        for (value in jsonStrings(html)) {
+            if (out.size >= MAX_LINKS) break
+            BARE_ADDRESS.findAll(value).forEach { out.add(trimPunctuation(it.value)) }
+            if (value.startsWith("/")) out.add(value.trim())
+        }
+        for (match in BARE_ADDRESS.findAll(html)) {
+            if (out.size >= MAX_LINKS) break
+            out.add(trimPunctuation(XmlScanner.decode(match.value)))
+        }
+        attributeAddresses(html, out)
+        return out.filter { it.isNotEmpty() }.take(MAX_LINKS).map { AnchorLink(it, "") }
+    }
+
+    private val BARE_ADDRESS = Regex("""https?://[^\s"'<>()\[\]{}\\]+""", RegexOption.IGNORE_CASE)
+
+    /** A full stop or comma after an address in running text belongs to the sentence. */
+    private fun trimPunctuation(address: String): String = address.trimEnd('.', ',', ';', ':', '!', '?')
+
+    private fun jsonStrings(text: String): List<String> {
+        val start = text.trimStart()
+        if (!start.startsWith("{") && !start.startsWith("[")) return emptyList()
+        val root = try {
+            Json.parse(text)
+        } catch (_: Exception) {
+            return emptyList()
+        }
+        val out = ArrayList<String>()
+        fun collect(value: JsonValue) {
+            when (value) {
+                is JsonString -> out.add(value.value)
+                is JsonArray -> value.items.forEach(::collect)
+                is JsonObject -> value.fields.values.forEach(::collect)
+                else -> Unit
+            }
+        }
+        collect(root)
+        return out
+    }
+
+    /** Every search here only moves forward, the one for the next `>` included, so crafted input costs one pass. */
+    private fun attributeAddresses(html: String, out: MutableSet<String>) {
+        var pos = 0
+        var gt = html.indexOf('>')
+        while (pos < html.length && out.size < MAX_LINKS) {
+            val lt = html.indexOf('<', pos)
+            if (lt == -1) break
+            if (gt != -1 && gt <= lt) gt = html.indexOf('>', lt + 1)
+            if (gt == -1) break
+            if (gt - lt > TAG_WINDOW || !html[lt + 1].isLetter()) {
+                pos = lt + 1
+                continue
+            }
+            var nameEnd = lt + 1
+            while (nameEnd < gt && !html[nameEnd].isWhitespace() && html[nameEnd] != '/') nameEnd++
+            for ((_, value) in attributes(html.substring(nameEnd, gt))) {
+                val decoded = XmlScanner.decode(value).trim()
+                if (decoded.startsWith("/") || decoded.startsWith("https://", ignoreCase = true) || decoded.startsWith("http://", ignoreCase = true)) {
+                    out.add(decoded)
+                }
+            }
+            pos = gt + 1
+        }
+    }
+
+    private fun attribute(attrs: String, name: String): String? = attributes(attrs).firstOrNull { it.first.equals(name, ignoreCase = true) }?.second
+
+    /** Every attribute that has a value, in order, names as written. */
+    private fun attributes(attrs: String): List<Pair<String, String>> {
+        val out = ArrayList<Pair<String, String>>()
         var i = 0
         while (i < attrs.length) {
             while (i < attrs.length && (attrs[i].isWhitespace() || attrs[i] == '/')) i++
@@ -96,9 +177,9 @@ internal object LinkScanner {
                     value = attrs.substring(start, i)
                 }
             }
-            if (attrName.equals(name, ignoreCase = true) && value != null) return value
+            if (value != null) out.add(attrName to value)
         }
-        return null
+        return out
     }
 
     fun title(html: String): String? {

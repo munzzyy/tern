@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_system">مثل النظام</string>
+    <string name="interval_more_often">فحص أكثر تكرارًا</string>
+    <string name="interval_less_often">فحص أقل تكرارًا</string>
+    <string name="about_help">كيف يعمل Tern</string>
+    <string name="about_help_effect">ما يفحصه Tern وكيفية إضافة التطبيقات وتحديثها ونقلها، في صفحة المشروع.</string>
+    <string name="about_security">كيف يحافظ Tern على أمانك</string>
+    <string name="about_privacy">الخصوصية</string>
+    <string name="verification_title">التحقق من المطورين في Android</string>
+    <string name="verification_text">أعلنت Google أن أجهزة Android المعتمدة ستثبّت فقط التطبيقات من المطورين الذين سجّلوا لدى Google، بدءًا من عدد قليل من الدول في سبتمبر 2026، ثم في المزيد منها بعد ذلك.\n\nحيثما ينطبق ذلك، قد يرفض Android تطبيقًا من مطور لم يسجّل، أو يطلب منك المزيد قبل أن يثبّته، مهما كانت نتيجة فحوصات Tern الخاصة. لا يستطيع Tern تغيير ذلك، ويخبرك عندما يرفض Android التثبيت.\n\nالأجهزة التي لا تحمل اعتماد Google لا تتأثر.</string>
+    <string name="verification_more">صفحة Google عن هذا الموضوع</string>
+    <string name="kept_export_format">الصيغة</string>
+    <string name="kept_export_format_tern">صيغة Tern التي تحتوي على كل شيء</string>
+    <string name="kept_export_format_obtainium">صيغة Obtainium، التي يستطيع Obtainium قراءتها أيضًا</string>
+    <string name="kept_export_name">اسم الملف</string>
+    <string name="kept_export_name_usual">اتركه فارغًا لاستخدام %1$s.</string>
+    <string name="look_style">النمط</string>
+    <string name="style_standard">قياسي</string>
+    <string name="style_vibrant">نابض بالحياة</string>
+    <string name="style_expressive">تعبيري</string>
+    <string name="look_style_effect">النابض بالحياة أكثر ألوانًا في كل موضع. التعبيري يُبعد اللونين الثاني والثالث أكثر عن الأول.</string>
+    <string name="look_color_code">رمز اللون</string>
+    <string name="look_color_code_effect">يأخذ Tern درجة هذا اللون وشدّته، ويختار منه التدرجات التي تبقى سهلة القراءة.</string>
+    <string name="look_color_code_invalid">ستة أرقام ست عشرية، مثل #3D5A80.</string>
+    <string name="crash_title">توقف Tern بشكل غير متوقع</string>
+    <string name="crash_text">هذا ما كان يفعله Tern عندما توقف. يبقى على هذا الجهاز؛ شاركه مع المطور إذا أردت أن يُلقي نظرة عليه.</string>
+    <string name="crash_share">مشاركة</string>
+    <string name="crash_copied">تم النسخ</string>
+    <string name="activity_range">عرض</string>
+    <string name="activity_range_all">كل الأيام</string>
+    <plurals name="activity_range_days">
+        <item quantity="zero">آخر %d يوم</item>
+        <item quantity="one">آخر يوم (%d)</item>
+        <item quantity="two">آخر يومين (%d)</item>
+        <item quantity="few">آخر %d أيام</item>
+        <item quantity="many">آخر %d يومًا</item>
+        <item quantity="other">آخر %d يوم</item>
+    </plurals>
+    <string name="activity_copied">تم نسخ السجل</string>
+    <string name="settings_auto_installs">تثبيت التحديثات تلقائيًا</string>
+    <string name="settings_auto_installs_effect">التطبيقات المضبوطة على التحديث تلقائيًا تتحدث بعد فحص في الخلفية. عند إيقاف التشغيل، تكتفي بالإشارة إلى وجود تحديث، ويحتفظ كل منها باختياره الخاص لوقت لاحق.</string>
+    <string name="settings_unmetered_installs">التثبيت عبر Wi-Fi فقط</string>
+    <string name="settings_unmetered_installs_effect">تعمل الفحوصات على أي شبكة. التحديث الذي كان سيُثبَّت من تلقاء نفسه ينتظر شبكة Wi-Fi أو كابل شبكة، كما في Obtainium.</string>
+    <string name="settings_charging_installs">التثبيت أثناء الشحن فقط</string>
+    <string name="settings_charging_installs_effect">تعمل الفحوصات على البطارية أيضًا. التحديث الذي كان سيُثبَّت من تلقاء نفسه ينتظر حتى يبدأ الجهاز بالشحن.</string>
+    <string name="engine_unreadable_app">تعذرت قراءة التطبيق المحفوظ %1$s، لذلك تُرك خارج القائمة. لم يُحذف شيء: قد يتمكن إصدار أحدث من Tern من قراءته.</string>
+    <string name="settings_pin_certificates">تثبيت شهادات منصات الشيفرة</string>
+    <string name="settings_pin_certificates_effect">يجب أن تقدم GitHub وGitLab وCodeberg شهادة من جهة إصدار الشهادات المعروف أن كلًا منها يستخدمها، كما في Obtainium. وتُرفض حينئذٍ شهادة أُجبرت جهة أخرى على إصدارها. إذا غيّرت منصة شيفرة جهتها، فستفشل الفحوصات عليها إلى أن يُوقَف هذا الخيار.</string>
+</resources>

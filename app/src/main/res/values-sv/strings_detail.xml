@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_share">Dela</string>
+    <string name="action_release_page">Öppna utgåvans sida</string>
+    <string name="action_share_address">Dela adressen</string>
+    <string name="action_share_link">Dela en länk som öppnar den i Tern</string>
+    <string name="action_app_info">Appinfo i Android</string>
+    <string name="detail_last_checked">Senast kontrollerad: %1$s</string>
+    <string name="state_favorite">Favorit</string>
+    <string name="action_save_file">Spara i mappen Nedladdningar</string>
+    <string name="file_saved">Sparades som %1$s i %2$s, som den laddades ned. Tern kontrollerar en fil när den installerar den.</string>
+    <string name="action_save_files">Spara filer i mappen Nedladdningar</string>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d utgåva markerad som sedd</item>
+        <item quantity="other">%d utgåvor markerade som sedda</item>
+    </plurals>
+    <string name="project_page">Projektsida</string>
+    <string name="project_page_read">Läs projektets sida</string>
+    <string name="project_page_effect">Dess README, visad som text. Kodplattformen tillfrågas inte förrän du öppnar sidan.</string>
+    <string name="project_page_loading">Läser…</string>
+    <string name="project_page_none">Projektet har ingen sida som Tern kan läsa.</string>
+    <string name="project_page_failed">Sidan kunde inte läsas. Tryck för att försöka igen.</string>
+</resources>

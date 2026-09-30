@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">Ứng dụng từ %1$s chỉ có thể được theo dõi, vì nguồn này không cung cấp tệp để cài đặt.</string>
+    <string name="min_age_global">Như đã đặt cho mọi ứng dụng: %1$s</string>
+    <string name="setting_min_age_global_effect">Ứng dụng không có thời gian chờ riêng sẽ chờ khoảng thời gian này trước khi được đề xuất bản phát hành mới, để tránh bản lỗi.</string>
+    <string name="option_link_text">Lọc liên kết theo văn bản của chúng</string>
+    <string name="option_link_text_effect">Bộ lọc được so khớp với văn bản của liên kết thay vì địa chỉ.</string>
+    <string name="option_take_first">Lấy liên kết đầu tiên</string>
+    <string name="option_take_first_effect">Nếu tắt, liên kết cuối cùng theo thứ tự sẽ được lấy.</string>
+    <string name="option_natural_order_effect">Nếu tắt, các liên kết được xếp theo thứ tự tự nhiên của địa chỉ, với các số được đọc như số.</string>
+    <string name="option_by_last_segment">Dựa vào phần cuối của địa chỉ</string>
+    <string name="option_by_last_segment_effect">Liên kết được xếp thứ tự, và phiên bản được đọc, theo phần sau dấu gạch chéo cuối cùng.</string>
+    <string name="option_steps_title">Các trang cần đi qua trước</string>
+    <string name="option_steps_order_help">Trên mỗi trang, các liên kết khớp được xếp thứ tự và liên kết cuối cùng sẽ được theo.</string>
+    <string name="step_title">Trang %1$d</string>
+    <string name="step_filter">Liên kết cần theo</string>
+    <string name="step_text">Khớp với văn bản của liên kết</string>
+    <string name="step_arch">Ưu tiên bộ xử lý của thiết bị này</string>
+    <string name="step_add">Thêm trang</string>
+    <string name="step_remove">Xóa trang này</string>
+    <string name="option_file_version">Dùng tên tệp làm phiên bản</string>
+    <string name="option_file_version_effect">Khi đó mỗi tệp được tính là một bản phát hành riêng.</string>
+    <string name="github_proxy_title">GitHub qua hubproxy</string>
+    <string name="github_proxy_effect">Mọi yêu cầu đến GitHub đều đi tới máy chủ này, và máy chủ thấy từng yêu cầu. Không có mã thông báo nào được gửi qua nó, nên không thể theo dõi dự án riêng tư và GitHub Actions theo cách này.</string>
+    <string name="github_proxy_host">Máy chủ hubproxy</string>
+    <string name="github_proxy_help">Chỉ tên máy chủ, ví dụ gh-proxy.com. Tern kết nối tới nó qua HTTPS.</string>
+    <string name="github_proxy_invalid">Đây không phải tên máy chủ mà Tern có thể dùng</string>
+    <string name="github_proxy_in_use">Các yêu cầu GitHub đi qua %1$s</string>
+    <string name="github_proxy_remove">Ngừng dùng hubproxy</string>
+</resources>

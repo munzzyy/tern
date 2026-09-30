@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">Tern ne poznaje ovu vrstu linka.</string>
+    <string name="add_not_readable_as">Ova adresa se ne može pročitati kao %1$s.</string>
+    <string name="add_event_replaced">Njene postavke su zamijenjene onima koje je za nju sadržavala datoteka ili link.</string>
+    <string name="search_miss_unreachable">Pretraga %1$s nije uspjela: izvor nije odgovorio.</string>
+    <string name="search_miss_wait">Pretraga %1$s nije uspjela: izvor traži da Tern malo pričeka.</string>
+    <string name="search_miss_wait_until">Pretraga %1$s nije uspjela: izvor traži da Tern pričeka do %2$s.</string>
+    <string name="search_miss_refused">Pretraga %1$s nije uspjela: izvor je odbio zahtjev.</string>
+    <string name="search_miss_status">Pretraga %1$s nije uspjela: izvor je odgovorio %2$d.</string>
+    <string name="search_miss_unreadable">Pretraga %1$s nije uspjela: odgovor izvora se nije mogao pročitati.</string>
+    <string name="add_options_title">Prije dodavanja</string>
+    <string name="add_options_auto">Tern sam utvrđuje o kakvoj se adresi radi.</string>
+    <string name="add_options_forced">Čitaj kao: %1$s</string>
+    <string name="add_read_as">Čitaj adresu kao</string>
+    <string name="add_read_as_auto">Automatski</string>
+    <string name="add_read_as_forgejo">Forgejo ili Gitea</string>
+    <string name="add_read_as_help">Za izvor koji Tern sam ne prepoznaje, na primjer na vlastitom serveru.</string>
+    <string name="add_package_label">Naziv paketa</string>
+    <string name="add_package_help">Svaka datoteka mora biti iz ovog paketa. Ako polje ostane prazno, Tern naziv čita iz datoteke aplikacije.</string>
+    <string name="add_package_invalid">Ovo nije naziv paketa. Izgleda ovako: org.example.app.</string>
+    <string name="add_set_options">Postavi opcije</string>
+    <string name="add_failed_options">Opcije mogu pokazati gdje Tern treba tražiti. Postavite ih iznad, pa Tern ponovo provjerava.</string>
+    <string name="add_replace">Zamijeni postavke</string>
+    <string name="add_replace_explain">Link sadrži vlastite postavke za ovu aplikaciju. Zamjena zadržava certifikate kojima vjeruje i naziv njenog paketa, a ne uključuje samostalno instaliranje ažuriranja.</string>
+    <string name="results_filter">Filter</string>
+    <string name="results_filter_help">Riječi ili obrazac</string>
+    <string name="results_filter_none">Ništa na spisku ne odgovara \"%1$s\".</string>
+    <string name="repo_search_all">Pretraži cijeli repozitorij za \"%1$s\"</string>
+    <string name="repo_show_all">Prikaži sve aplikacije repozitorija</string>
+    <string name="repo_heading_within">Aplikacije u %1$s koje odgovaraju \"%2$s\"</string>
+    <string name="search_more">Nađeno je više nego što je prikazano. Filter sužava izbor.</string>
+    <string name="search_forgejo_label">Forgejo ili Gitea za pretragu</string>
+    <string name="search_forgejo_help">Njegova adresa, na primjer codeberg.org. Token sačuvan za njega šalje se zajedno sa zahtjevom.</string>
+    <string name="search_forgejo_invalid">Tern ne može pretraživati ovu adresu.</string>
+    <string name="search_min_stars_label">Najmanje zvjezdica</string>
+    <string name="search_min_stars_help">Projekti na GitHubu i na navedenom Forgejo s manje zvjezdica izostavljaju se.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">Datoteka sadrži i druge postavke za %1$d aplikaciju koja je već na vašem spisku. One ostaju kakve jesu dok ih ne zamijenite.</item>
+        <item quantity="few">Datoteka sadrži i druge postavke za %1$d aplikacije koje su već na vašem spisku. One ostaju kakve jesu dok ih ne zamijenite.</item>
+        <item quantity="other">Datoteka sadrži i druge postavke za %1$d aplikacija koje su već na vašem spisku. One ostaju kakve jesu dok ih ne zamijenite.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">Zamijeni postavke za %1$d aplikaciju</item>
+        <item quantity="few">Zamijeni postavke za %1$d aplikacije</item>
+        <item quantity="other">Zamijeni postavke za %1$d aplikacija</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">Postavke %1$d aplikacije su zamijenjene. Certifikati kojima vjeruje su ostali.</item>
+        <item quantity="few">Postavke %1$d aplikacije su zamijenjene. Certifikati kojima vjeruju su ostali.</item>
+        <item quantity="other">Postavke %1$d aplikacija su zamijenjene. Certifikati kojima vjeruju su ostali.</item>
+    </plurals>
+    <string name="import_settings_offered">Datoteka nosi i postavke za sam Tern: izgled, spisak, obavijesti i provjere. Ne preuzimaju se dok to ne potvrdite.</string>
+    <string name="import_take_settings">Preuzmi ove postavke</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">Označi %1$d prikazani</item>
+        <item quantity="few">Označi sva %1$d prikazana</item>
+        <item quantity="other">Označi svih %1$d prikazanih</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">Odznači %1$d prikazani</item>
+        <item quantity="few">Odznači sva %1$d prikazana</item>
+        <item quantity="other">Odznači svih %1$d prikazanih</item>
+    </plurals>
+</resources>

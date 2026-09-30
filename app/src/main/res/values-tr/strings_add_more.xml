@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">Tern bu tür bir bağlantıyı tanımıyor.</string>
+    <string name="add_not_readable_as">Bu adres %1$s olarak okunamaz.</string>
+    <string name="add_event_replaced">Ayarları, bir dosyanın veya bağlantının onun için içerdiği ayarlarla değiştirildi.</string>
+    <string name="search_miss_unreachable">%1$s içinde aranamadı: yanıt vermedi.</string>
+    <string name="search_miss_wait">%1$s içinde aranamadı: Tern\'den bir süre beklemesini istiyor.</string>
+    <string name="search_miss_wait_until">%1$s içinde aranamadı: Tern\'den %2$s saatine kadar beklemesini istiyor.</string>
+    <string name="search_miss_refused">%1$s içinde aranamadı: isteği reddetti.</string>
+    <string name="search_miss_status">%1$s içinde aranamadı: %2$d yanıtı verdi.</string>
+    <string name="search_miss_unreadable">%1$s içinde aranamadı: yanıtı okunamadı.</string>
+    <string name="add_options_title">Eklemeden önce</string>
+    <string name="add_options_auto">Tern, adresin ne olduğunu kendisi bulur.</string>
+    <string name="add_options_forced">%1$s olarak okunur</string>
+    <string name="add_read_as">Adresi şu olarak oku</string>
+    <string name="add_read_as_auto">Otomatik</string>
+    <string name="add_read_as_forgejo">Forgejo veya Gitea</string>
+    <string name="add_read_as_help">Tern\'in kendiliğinden tanımadığı bir kaynak için, örneğin kendi sunucusunda bulunan bir kaynak.</string>
+    <string name="add_package_label">Paket adı</string>
+    <string name="add_package_help">Her dosya bu pakete ait olmalıdır. Boş bırakılırsa Tern adı uygulamanın dosyasından okur.</string>
+    <string name="add_package_invalid">Bu, org.example.app gibi bir paket adı değil.</string>
+    <string name="add_set_options">Seçenekleri ayarla</string>
+    <string name="add_failed_options">Kaynağın seçenekleri Tern\'e nereye bakacağını söyleyebilir. Bunları yukarıdan ayarlayın, sonra Tern tekrar denetler.</string>
+    <string name="add_replace">Ayarlarını değiştir</string>
+    <string name="add_replace_explain">Bağlantı, bu uygulama için kendi ayarlarını içeriyor. Değiştirmek, uygulamanın güvendiği sertifikaları ve paket adını korur; uygulamanın güncellemeleri kendiliğinden yüklemesini sağlamaz.</string>
+    <string name="results_filter">Filtre</string>
+    <string name="results_filter_help">Sözcükler veya bir kalıp</string>
+    <string name="results_filter_none">Listede “%1$s” ile eşleşen bir şey yok.</string>
+    <string name="repo_search_all">Tüm depoda “%1$s” ara</string>
+    <string name="repo_show_all">Depodaki tüm uygulamaları göster</string>
+    <string name="repo_heading_within">%1$s içindeki “%2$s” ile eşleşen uygulamalar</string>
+    <string name="search_more">Gösterilenden fazlası bulundu. Filtre bunu daraltır.</string>
+    <string name="search_forgejo_label">Aranacak Forgejo veya Gitea</string>
+    <string name="search_forgejo_help">Adresi, örneğin codeberg.org. Bunun için kaydedilmiş bir belirteç varsa birlikte gönderilir.</string>
+    <string name="search_forgejo_invalid">Bu, Tern\'in arayabileceği bir adres değil.</string>
+    <string name="search_min_stars_label">En az yıldız</string>
+    <string name="search_min_stars_help">GitHub\'daki ve Forgejo\'daki daha az yıldızlı projeler dışarıda bırakılır.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">Dosya, listenizde zaten bulunan %1$d uygulama için başka ayarlar da içeriyor. Siz değiştirmedikçe bunlar olduğu gibi kalır.</item>
+        <item quantity="other">Dosya, listenizde zaten bulunan %1$d uygulama için başka ayarlar da içeriyor. Siz değiştirmedikçe bunlar olduğu gibi kalır.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">%1$d uygulamanın ayarlarını değiştir</item>
+        <item quantity="other">%1$d uygulamanın ayarlarını değiştir</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">%1$d uygulamanın ayarları değiştirildi. Güvendiği sertifikalar korundu.</item>
+        <item quantity="other">%1$d uygulamanın ayarları değiştirildi. Güvendikleri sertifikalar korundu.</item>
+    </plurals>
+    <string name="import_settings_offered">Dosya, Tern için ayarlar da taşıyor: görünüm, liste, bildirimler ve denetimler. Siz istemedikçe alınmazlar.</string>
+    <string name="import_take_settings">Bu ayarları al</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">Gösterilen %1$d öğeyi işaretle</item>
+        <item quantity="other">Gösterilen tüm %1$d öğeyi işaretle</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">Gösterilen %1$d öğenin işaretini kaldır</item>
+        <item quantity="other">Gösterilen tüm %1$d öğenin işaretini kaldır</item>
+    </plurals>
+</resources>

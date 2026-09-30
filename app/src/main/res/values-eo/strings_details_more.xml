@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_package_effect">Ĉiu dosiero devas apartenti al ĉi tiu pakaĵo, kaj la aplikaĵo instalita sub ĝi estas tiu, kiun Tern rigardas. Se la kampo restas malplena, Tern legas la nomon el la dosiero de la aplikaĵo.</string>
+</resources>

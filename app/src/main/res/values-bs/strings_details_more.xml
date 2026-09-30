@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_package_effect">Svaka datoteka mora biti iz ovog paketa, a Tern gleda aplikaciju instaliranu pod ovim nazivom. Ako polje ostane prazno, Tern naziv čita iz datoteke aplikacije.</string>
+</resources>

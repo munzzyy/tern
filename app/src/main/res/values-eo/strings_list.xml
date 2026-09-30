@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">Aranĝi la liston</string>
+    <string name="list_options_title">Aranĝi la liston</string>
+    <string name="list_reverse">Inversigi la ordon</string>
+    <string name="list_updates_first">Ĝisdatigoj supre</string>
+    <string name="list_bury_not_installed">Neinstalitaj aplikaĵoj malsupre</string>
+    <string name="sort_author">Laŭ programisto</string>
+    <string name="sort_added">Laŭ dato de aldono</string>
+    <string name="sort_released">Laŭ eldondato</string>
+    <string name="group_title">Grupigi laŭ</string>
+    <string name="group_none">Nenio</string>
+    <string name="group_category">Kategorio</string>
+    <string name="group_source">Fonto</string>
+    <string name="group_category_effect">Aplikaĵo en pluraj kategorioj aperas en ĉiu el ili.</string>
+    <string name="group_other">Ĉio alia</string>
+    <string name="group_folded">Faldita</string>
+    <string name="group_open">Malfaldita</string>
+    <string name="filter_favorites">Preferataj</string>
+    <string name="filter_track_only">Nur sekvi</string>
+    <string name="filter_problems">Problemoj</string>
+    <string name="action_done">Farite</string>
+    <string name="settings_swipe">Ŝovi vicojn por agi</string>
+    <string name="settings_swipe_effect">Ŝovu aplikaĵon al la fino por ĝisdatigi ĝin, al la komenco por forigi ĝin.</string>
+    <string name="action_favorite">Aldoni al preferataj</string>
+    <string name="action_unfavorite">Forigi el preferataj</string>
+    <string name="action_set_mode">Kiam ĝisdatigoj estas trovitaj</string>
+    <string name="action_share_addresses">Kunhavigi adresojn</string>
+    <string name="action_share_export">Kunhavigi kiel dosieron</string>
+    <string name="action_uninstall">Malinstali</string>
+    <string name="export_format_tern">Tern-dosiero</string>
+    <string name="export_format_obtainium">Dosiero por Obtainium</string>
+    <string name="bulk_uninstall_text">Android demandas pri ĉiu aplikaĵo laŭvice. Tern daŭre sekvas ilin ĝis vi forigas ilin ĉi tie.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d aplikaĵo nun estas preferata</item>
+        <item quantity="other">%1$d aplikaĵoj nun estas preferataj</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d aplikaĵo ne plu estas preferata</item>
+        <item quantity="other">%1$d aplikaĵoj ne plu estas preferataj</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">Kiam ĝisdatigo de %1$d aplikaĵo estas trovita</item>
+        <item quantity="other">Kiam ĝisdatigoj de %1$d aplikaĵoj estas trovitaj</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">Ĉu malinstali %1$d aplikaĵon?</item>
+        <item quantity="other">Ĉu malinstali %1$d aplikaĵojn?</item>
+    </plurals>
+</resources>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">Liste filtern</string>
+    <string name="filter_state_on">Filter sind an</string>
+    <string name="filter_name">Name</string>
+    <string name="filter_author">Entwickler</string>
+    <string name="filter_package">Paketname</string>
+    <string name="filter_show_up_to_date">Apps, die aktuell sind</string>
+    <string name="filter_show_not_installed">Apps, die nicht installiert sind</string>
+    <string name="filter_show_tracked">Apps, die nur verfolgt werden</string>
+    <string name="filter_categories">In einer dieser Kategorien</string>
+    <string name="filter_sources">Aus einer dieser Quellen</string>
+    <string name="filter_clear">Filter löschen</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%1$d von %2$d App angezeigt</item>
+        <item quantity="other">%1$d von %2$d Apps angezeigt</item>
+    </plurals>
+    <string name="checking_count">Prüfe %1$d von %2$d</string>
+    <string name="row_moved">Umgezogen nach %1$s</string>
+    <string name="row_released">Veröffentlicht am %1$s</string>
+    <string name="row_changes">Änderungen</string>
+    <string name="action_show_changes">Änderungen anzeigen</string>
+    <string name="action_install_all">Alle installieren</string>
+    <string name="action_install_update_all">Alle installieren und aktualisieren</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d App ist noch nicht installiert</item>
+        <item quantity="other">%d Apps sind noch nicht installiert</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">%d App installieren und aktualisieren?</item>
+        <item quantity="other">%d Apps installieren und aktualisieren?</item>
+    </plurals>
+    <string name="settings_update_all">Die Schaltfläche „Alle aktualisieren“</string>
+    <string name="update_all_updates">Nur Updates</string>
+    <string name="update_all_all">Updates und noch nicht installierte Apps</string>
+    <string name="update_all_none">Nicht angezeigt</string>
+    <string name="settings_confirm_update_all">Vor „Alle aktualisieren“ nachfragen</string>
+    <string name="settings_confirm_update_all_effect">Nennt, wie viele Apps installiert oder aktualisiert werden, und wartet auf ein Ja.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">%d App installieren?</item>
+        <item quantity="other">%d Apps installieren?</item>
+    </plurals>
+    <string name="bulk_install_text">Jede Datei wird heruntergeladen und geprüft, bevor Android gebeten wird, sie zu installieren. Tern merkt sich das Zertifikat, mit dem jede neue App signiert ist, und bindet jedes spätere Update daran.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d der ausgewählten Apps hat jetzt nichts zu installieren und bleibt wie sie ist.</item>
+        <item quantity="other">%d der ausgewählten Apps haben jetzt nichts zu installieren und bleiben wie sie sind.</item>
+    </plurals>
+    <string name="action_change_categories">Kategorien ändern</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Kategorien von %d App</item>
+        <item quantity="other">Kategorien von %d Apps</item>
+    </plurals>
+    <string name="bulk_categories_help">Ein Haken legt jede ausgewählte App unter der Kategorie ab, und ein leeres Kästchen nimmt sie alle daraus heraus. Ein Strich lässt jede App, wie sie ist.</string>
+    <string name="categories_filed_all">Jede ausgewählte App</string>
+    <string name="categories_filed_some">Einige der ausgewählten Apps</string>
+    <string name="categories_filed_none">Keine der ausgewählten Apps</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Kategorien von %d App geändert.</item>
+        <item quantity="other">Kategorien von %d Apps geändert.</item>
+    </plurals>
+    <string name="action_share_config_link">Einen Link mit den Einstellungen der App teilen</string>
+    <string name="action_share_config_links">Links mit den Einstellungen der Apps teilen</string>
+    <string name="share_link_none">Kein Link kann die Einstellungen dieser App enthalten. Teile sie stattdessen als Datei.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d App wird ausgelassen, da kein Link ihre Einstellungen enthalten kann.</item>
+        <item quantity="other">%d Apps werden ausgelassen, da kein Link ihre Einstellungen enthalten kann.</item>
+    </plurals>
+</resources>

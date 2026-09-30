@@ -15,6 +15,9 @@ import io.github.munzzyy.tern.core.source.SourceListing
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.guarded
 import io.github.munzzyy.tern.core.xml.XmlScanner
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 class SourceHutSource : Source {
     override val type: String = SourceTypes.SOURCEHUT
@@ -22,9 +25,18 @@ class SourceHutSource : Source {
     override fun match(url: String): SourceSpec? {
         val uri = Urls.parseHttps(url) ?: return null
         if (uri.host?.lowercase() != "git.sr.ht") return null
-        val path = uri.path?.trimEnd('/') ?: return null
+        // The refs page of a repository names the repository too, as Obtainium reads it.
+        val path = uri.path?.trimEnd('/')?.removeSuffix("/refs") ?: return null
         if (!REPO_PATH.matches(path)) return null
         return SourceSpec(type, "https://git.sr.ht$path")
+    }
+
+    /** A repository on a SourceHut of any host, such as one a project runs for itself. */
+    override fun matchForced(url: String, context: CheckContext): SourceSpec? {
+        val uri = Urls.parseHttps(url) ?: return null
+        val path = uri.path?.trimEnd('/') ?: return null
+        if (!REPO_PATH.matches(path)) return null
+        return SourceSpec(type, "https://${uri.authority}$path")
     }
 
     override fun check(spec: SourceSpec, context: CheckContext): CheckResult = guarded(context) { checkOnce(spec, it) }
@@ -44,16 +56,24 @@ class SourceHutSource : Source {
                 throw SourceException(SourceErrorKind.PARSE, "Could not read the refs feed", cause = e)
             }
             val channel = root.child("channel") ?: root
-            val items = channel.children("item").take(3)
+            val items = channel.children("item").take(MAX_REFS)
             if (items.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No refs at ${spec.url}")
             val releases = items.mapNotNull { item ->
-                val tag = item.childText("title") ?: return@mapNotNull null
-                val link = item.childText("link") ?: return@mapNotNull null
-                val refUrl = Urls.parseHttps(link)?.toString() ?: return@mapNotNull null
-                Release(id = tag, version = tag, pageUrl = refUrl, assets = fetchArtifacts(refUrl, context))
+                val tag = item.childText("title")?.trim()?.takeIf { it.isNotEmpty() } ?: return@mapNotNull null
+                val link = item.childText("link") ?: item.childText("guid") ?: return@mapNotNull null
+                // Only a page of this repository's refs is fetched, never an address the feed names elsewhere.
+                val refUrl = Urls.normalize(link)?.takeIf { it.startsWith("${spec.url}/refs/") } ?: return@mapNotNull null
+                Release(id = tag, version = tag, publishedAtMs = item.childText("pubDate")?.let(::parseDate), pageUrl = refUrl, assets = fetchArtifacts(refUrl, context))
             }
-            return CheckResult.Listing(SourceListing(releases = releases))
+            val author = items.firstNotNullOfOrNull { it.childText("author")?.trim()?.takeIf { a -> a.isNotEmpty() } } ?: Urls.segments(spec.url).firstOrNull()
+            return CheckResult.Listing(SourceListing(releases = releases, name = Urls.segments(spec.url).lastOrNull(), author = author))
         }
+    }
+
+    private fun parseDate(text: String): Long? = try {
+        ZonedDateTime.parse(text.trim(), DateTimeFormatter.RFC_1123_DATE_TIME).toInstant().toEpochMilli()
+    } catch (_: DateTimeParseException) {
+        null
     }
 
     private fun fetchArtifacts(refUrl: String, context: CheckContext): List<Asset> {
@@ -74,6 +94,8 @@ class SourceHutSource : Source {
     }
 
     companion object {
+        /** Obtainium reads the six newest refs. */
+        private const val MAX_REFS = 6
         private val REPO_PATH = Regex("/~[^/]+/[^/]+")
         private val INSTALLABLE = listOf(".apk", ".xapk", ".apks", ".apkm")
     }

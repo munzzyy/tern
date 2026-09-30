@@ -1,0 +1,29 @@
+{
+  "rtnCode": 0,
+  "detailInfo": [
+    {
+      "permission": [],
+      "name": "Example App",
+      "stars": "4.0",
+      "description": "An app for trying things out.\n\nIt does very little.",
+      "briefDescription": "An app for trying things out",
+      "developer": "Example Labs",
+      "developerId": "890971000000000001",
+      "releaseDate": "2026-09-26",
+      "price": "0",
+      "id": "C100000001",
+      "size": "4827848",
+      "sizeDesc": "4.6 MB",
+      "url": "https://appdlc-dre.hispace.dbankcloud.com/dl/appdl/application/apk/64/0123456789abcdef0123456789abcdef/org.example.app.2609261043.apk?maple=0&trackId=0&distOpEntity=HWSW",
+      "icoUri": "https://appimg-dra.dbankcdn.com/application/icon144/65/0123456789abcdef0123456789abcdef.webp",
+      "hashCode": "0123456789ABCDEF0123456789ABCDEF",
+      "kindName": "Tools",
+      "sha256": "DBEF1F8845A8B0588CF67FF41F6FCDF188BD6744C64CECCA93A75B25DD04B228",
+      "sSha2": ["a2d34975306151296fd37a042311228ad8a5733868323303a85f28acc69fca0a"],
+      "versionCode": "20260926",
+      "versionName": "8.4.0",
+      "fullSize": 4827848,
+      "package": "org.example.app"
+    }
+  ]
+}

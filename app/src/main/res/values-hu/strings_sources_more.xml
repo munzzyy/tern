@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">A(z) %1$s alkalmazásai csak követhetők, mert ott nem érhető el telepíthető fájl.</string>
+    <string name="min_age_global">Az összes alkalmazásra beállítva: %1$s</string>
+    <string name="setting_min_age_global_effect">A saját várakozással nem rendelkező alkalmazásoknál egy új kiadást csak ennyi idő után kínálunk fel, így egy rossz kiadás előbb visszavonható.</string>
+    <string name="option_link_text">Linkek szűrése a szövegük alapján</string>
+    <string name="option_link_text_effect">A szűrőt a link szövegével vetjük össze a címe helyett.</string>
+    <string name="option_take_first">Az első link használata</string>
+    <string name="option_take_first_effect">Egyébként a sorrend szerinti utolsó linket használjuk.</string>
+    <string name="option_natural_order_effect">Egyébként a linkeket a címük természetes sorrendjében rendezzük, a számokat számként olvasva.</string>
+    <string name="option_by_last_segment">Igazodás a cím végéhez</string>
+    <string name="option_by_last_segment_effect">A linkeket az utolsó perjel utáni rész szerint rendezzük, és a verziókat is abból olvassuk ki.</string>
+    <string name="option_steps_title">Előbb bejárandó oldalak</string>
+    <string name="option_steps_order_help">Minden oldalon az egyező linkeket sorba rendezzük, és az utolsót követjük.</string>
+    <string name="step_title">%1$d. oldal</string>
+    <string name="step_filter">Követendő link</string>
+    <string name="step_text">Egyezés a link szövegével</string>
+    <string name="step_arch">Az eszköz processzorának előnyben részesítése</string>
+    <string name="step_add">Oldal hozzáadása</string>
+    <string name="step_remove">Oldal eltávolítása</string>
+    <string name="option_file_version">A fájlnév használata verzióként</string>
+    <string name="option_file_version_effect">Ekkor minden fájl külön kiadásnak számít.</string>
+    <string name="github_proxy_title">GitHub egy hubproxyn keresztül</string>
+    <string name="github_proxy_effect">A GitHubra irányuló minden kérés ehhez a gazdagéphez megy, amely mindegyiket látja. Rajta keresztül nem megy token, így a privát projektek és a GitHub Actions ilyen módon nem követhetők.</string>
+    <string name="github_proxy_host">Hubproxy gazdagép</string>
+    <string name="github_proxy_help">Csak egy gazdagépnév, például gh-proxy.com. A Tern HTTPS-en keresztül éri el.</string>
+    <string name="github_proxy_invalid">Ez nem olyan gazdagépnév, amelyet a Tern használni tud</string>
+    <string name="github_proxy_in_use">A GitHub-kérések ezen keresztül mennek: %1$s</string>
+    <string name="github_proxy_remove">A hubproxy használatának leállítása</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_other_title">Ostale datoteke ovog izdanja</string>
+    <string name="files_source_code">Izvorni kod</string>
+    <string name="files_save_spoken">Sačuvaj %1$s u Preuzimanja</string>
+    <string name="files_save_a_file">Sačuvaj datoteku</string>
+    <string name="files_pick_title_version">Sačuvaj datoteku verzije %1$s</string>
+    <string name="files_pick_title_app">Sačuvaj datoteku aplikacije %1$s</string>
+    <string name="files_skip">Preskoči</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">Čuva se %1$d datoteka. Obavijest javlja kada je čuvanje završeno.</item>
+        <item quantity="few">Čuvaju se %1$d datoteke. Obavijest javlja kada je završeno čuvanje svake datoteke.</item>
+        <item quantity="other">Čuva se %1$d datoteka. Obavijest javlja kada je završeno čuvanje svake datoteke.</item>
+    </plurals>
+    <string name="files_channel_saved">Sačuvane datoteke</string>
+    <string name="files_notify_saved">Sačuvano %1$s</string>
+    <string name="files_notify_saved_plain">Datoteka je sačuvana u Preuzimanja</string>
+    <string name="files_notify_not_saved">Nije se moglo sačuvati %1$s</string>
+    <string name="files_notify_not_saved_plain">Datoteka se nije mogla sačuvati</string>
+    <string name="files_notify_updated_to">Aplikacija %1$s je ažurirana na %2$s</string>
+    <string name="files_notify_installed_at">Aplikacija %1$s %2$s je instalirana</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Šta je pošlo po zlu</string>
+    <string name="files_problems_none">Nijedna od ovih aplikacija sada nema problem.</string>
+    <string name="files_setting_verifier">Prvo prikaži nove aplikacije u Verified Apps</string>
+    <string name="files_setting_verifier_effect">Prije prve instalacije aplikacije njena provjerena datoteka ide u Verified Apps ili AppVerifier, ako je neka od njih instalirana, na drugu provjeru. Instalacija se nastavlja kada se vratite u Tern.</string>
+    <string name="files_verifier_about">O Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s je zasebna aplikacija. Upoređuje ovu aplikaciju s certifikatom koji Tern ima za nju i s vlastitim spiskom aplikacija koje poznaje.</string>
+    <string name="files_verifier_card_action">Provjeri pomoću %1$s</string>
+</resources>

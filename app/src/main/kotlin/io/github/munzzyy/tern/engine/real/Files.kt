@@ -6,6 +6,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemException
 import io.github.munzzyy.tern.engine.ProblemKind
@@ -19,19 +20,25 @@ import java.nio.file.StandardOpenOption
 import java.time.Instant
 import java.time.ZoneId
 
-/** The name of an export: tern-apps-2026-09-29.json, and tern-apps-2026-09-29-2.json for the second of that day. */
+/**
+ * The name of an export: tern-apps-2026-09-29.json, and tern-apps-2026-09-29-2.json for the second
+ * of that day. An export in Obtainium's format is named as Obtainium names its own.
+ */
 internal object ExportNames {
-    private const val PREFIX = "tern-apps-"
+    const val PREFIX = "tern-apps-"
+    private const val OBTAINIUM_PREFIX = "obtainium-export-"
     private const val SUFFIX = ".json"
     private const val MAX_PER_DAY = 500
 
-    fun forDay(nowMs: Long, zone: ZoneId, taken: Collection<String>): String {
+    fun prefixOf(format: ExportFormat): String = if (format == ExportFormat.OBTAINIUM) OBTAINIUM_PREFIX else PREFIX
+
+    fun forDay(nowMs: Long, zone: ZoneId, taken: Collection<String>, prefix: String = PREFIX): String {
         val day = Instant.ofEpochMilli(nowMs).atZone(zone).toLocalDate()
         val used = taken.mapTo(HashSet()) { it.lowercase() }
-        val plain = "$PREFIX$day$SUFFIX"
+        val plain = "$prefix$day$SUFFIX"
         if (plain !in used) return plain
         for (number in 2..MAX_PER_DAY) {
-            val numbered = "$PREFIX$day-$number$SUFFIX"
+            val numbered = "$prefix$day-$number$SUFFIX"
             if (numbered !in used) return numbered
         }
         return plain
@@ -74,9 +81,9 @@ internal class Files(context: Context, private val texts: Texts, private val now
 
     private class Entry(val file: SavedFile, val uri: Uri?)
 
-    fun save(text: String): SavedFile {
+    fun save(text: String, fixedName: String? = null, prefix: String = ExportNames.PREFIX): SavedFile {
         val bytes = text.toByteArray(Charsets.UTF_8)
-        val name = ExportNames.forDay(nowMs(), ZoneId.systemDefault(), asked { exports() }.orEmpty().map { it.file.name })
+        val name = fixedName ?: ExportNames.forDay(nowMs(), ZoneId.systemDefault(), asked { exports() }.orEmpty().map { it.file.name }, prefix)
         val values = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, Device.EXPORT_TYPE)
@@ -98,6 +105,53 @@ internal class Files(context: Context, private val texts: Texts, private val now
         // MediaStore gives the file another name when one of that name exists that this app cannot see.
         val written = asked { exports(uri) }?.firstOrNull()?.file ?: SavedFile(name, PLACE, File(shared, "$PLACE/$name").path, nowMs(), 0)
         return written.copy(sizeBytes = bytes.size.toLong())
+    }
+
+    /**
+     * Copies [source] into Download/Tern as [name], for the person to keep or pass on. MediaStore
+     * picks another name when one of that name is there already.
+     */
+    fun saveCopy(source: File, name: String, mime: String): SavedFile {
+        val values = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, mime)
+            put(MediaStore.MediaColumns.RELATIVE_PATH, PLACE)
+            put(MediaStore.MediaColumns.IS_PENDING, 1)
+        }
+        val uri = asked { resolver.insert(downloads, values) } ?: throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportNoPlace()))
+        try {
+            val out = resolver.openOutputStream(uri, "w") ?: throw IOException("MediaStore opened no file")
+            out.use { target -> source.inputStream().use { it.copyTo(target) } }
+            resolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.IS_PENDING, 0) }, null, null)
+        } catch (ex: IOException) {
+            asked { resolver.delete(uri, null, null) }
+            throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportFailed(ex.message)))
+        } catch (ex: RuntimeException) {
+            asked { resolver.delete(uri, null, null) }
+            throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportFailed(ex.message)))
+        }
+        val written = asked {
+            resolver.query(uri, arrayOf(MediaStore.MediaColumns.DISPLAY_NAME), null, null, null)?.use { if (it.moveToFirst()) it.getString(0) else null }
+        } ?: name
+        return SavedFile(written, PLACE, File(shared, "$PLACE/$written").path, nowMs(), source.length())
+    }
+
+    /**
+     * Writes [text] as [name] in Download/Tern, over the file of that name this app made before,
+     * so a kept export stays one file instead of one a day.
+     */
+    fun keep(name: String, text: String): SavedFile {
+        val existing = asked { exports() }.orEmpty().firstOrNull { it.file.name == name && it.uri != null }
+        val uri = existing?.uri ?: return save(text, name)
+        try {
+            val out = resolver.openOutputStream(uri, "wt") ?: throw IOException("MediaStore opened no file")
+            out.use { it.write(text.toByteArray(Charsets.UTF_8)) }
+        } catch (ex: IOException) {
+            throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportFailed(ex.message)))
+        } catch (ex: RuntimeException) {
+            throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportFailed(ex.message)))
+        }
+        return existing.file
     }
 
     fun list(): List<SavedFile> = entries().map { it.file }

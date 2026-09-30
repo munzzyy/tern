@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">Из списка адресов</string>
+    <string name="import_addresses_explain">Вставьте адреса приложений, по одному на строку или в любом месте текста, или прочитайте их из файла, например из списка OPML. Каждый адрес просматривается и добавляется так же, как одна ссылка.</string>
+    <string name="import_addresses_field">Адреса</string>
+    <string name="import_addresses_show">Показать, что в нем</string>
+    <string name="import_addresses_file">Прочитать файл</string>
+    <string name="import_addresses_none">В нем нет адресов https.</string>
+    <string name="import_addresses_other">Другой список</string>
+    <string name="import_addresses_unreadable">Не удалось прочитать этот файл.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d адрес. Снимите отметки с ненужных, затем добавьте.</item>
+        <item quantity="few">%1$d адреса. Снимите отметки с ненужных, затем добавьте.</item>
+        <item quantity="many">%1$d адресов. Снимите отметки с ненужных, затем добавьте.</item>
+        <item quantity="other">%1$d адреса. Снимите отметки с ненужных, затем добавьте.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">В этой ссылке %1$d приложение. Посмотрите его настройки, прежде чем добавить его.</item>
+        <item quantity="few">В этой ссылке %1$d приложения. Посмотрите настройки каждого, прежде чем добавить его.</item>
+        <item quantity="many">В этой ссылке %1$d приложений. Посмотрите настройки каждого, прежде чем добавить его.</item>
+        <item quantity="other">В этой ссылке %1$d приложения. Посмотрите настройки каждого, прежде чем добавить его.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Экспорт для Obtainium</string>
+    <string name="settings_export_obtainium_effect">Файл, который импортирует Obtainium, чтобы перенести туда список. То, для чего в Obtainium нет настройки, не переносится.</string>
+    <string name="settings_export_installed_only">Экспортировать только установленные приложения</string>
+    <string name="settings_export_settings">Включать настройки в экспорт</string>
+    <string name="settings_export_settings_effect">Внешний вид, список, уведомления и проверки. Токены, прокси и установщик не включаются никогда.</string>
+    <string name="settings_kept_export">Поддерживать экспорт актуальным</string>
+    <string name="settings_kept_export_effect">Вскоре после любого изменения в списке Tern заново записывает экспорт.</string>
+    <string name="settings_kept_export_written">Записано в %1$s</string>
+    <string name="settings_kept_export_folder">Где он хранится</string>
+    <string name="import_settings_taken">Настройки из файла тоже применены.</string>
+</resources>

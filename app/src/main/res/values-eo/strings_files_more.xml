@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_other_title">Aliaj dosieroj de ĉi tiu eldono</string>
+    <string name="files_source_code">Fontkodo</string>
+    <string name="files_save_spoken">Konservi %1$s en la dosierujo Download</string>
+    <string name="files_save_a_file">Konservi dosieron</string>
+    <string name="files_pick_title_version">Konservi dosieron de versio %1$s</string>
+    <string name="files_pick_title_app">Konservi dosieron de %1$s</string>
+    <string name="files_skip">Pretersalti</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">Konservas %1$d dosieron. Sciigo diros, kiam ĝi finiĝos.</item>
+        <item quantity="other">Konservas %1$d dosierojn. Sciigo diros, kiam ĉiu finiĝos.</item>
+    </plurals>
+    <string name="files_channel_saved">Konservitaj dosieroj</string>
+    <string name="files_notify_saved">Konservis %1$s</string>
+    <string name="files_notify_saved_plain">Dosiero estis konservita en la dosierujo Download</string>
+    <string name="files_notify_not_saved">Ne povis konservi %1$s</string>
+    <string name="files_notify_not_saved_plain">Dosiero ne povis esti konservita</string>
+    <string name="files_notify_updated_to">%1$s estis ĝisdatigita al %2$s</string>
+    <string name="files_notify_installed_at">%1$s %2$s estis instalita</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Kio misfunkciis</string>
+    <string name="files_problems_none">Neniu el ĉi tiuj aplikaĵoj havas problemon nun.</string>
+    <string name="files_setting_verifier">Unue montri novajn aplikaĵojn al Verified Apps</string>
+    <string name="files_setting_verifier_effect">Antaŭ ol aplikaĵo estas instalata la unuan fojon, ĝia kontrolita dosiero iras al Verified Apps aŭ AppVerifier, se unu el ili estas instalita, por dua rigardo. La instalo daŭras kiam vi revenas al Tern.</string>
+    <string name="files_verifier_about">Pri Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s estas aparta aplikaĵo. Ĝi komparas ĉi tiun aplikaĵon kun la atestilo, al kiu Tern tenas ĝin, kaj kun sia propra listo de aplikaĵoj, kiujn ĝi konas.</string>
+    <string name="files_verifier_card_action">Kontroli per %1$s</string>
+</resources>

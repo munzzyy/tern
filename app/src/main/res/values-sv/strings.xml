@@ -92,17 +92,6 @@
         <item quantity="other">%d valda</item>
     </plurals>
     <string name="apps_select_hint">Välj appar från listan.</string>
-    <string name="action_add_to_category">Lägg i kategori</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Lägg till %d app i en kategori</item>
-        <item quantity="other">Lägg till %d appar i en kategori</item>
-    </plurals>
-    <string name="bulk_category_field">Kategori</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">Lade till %1$d app under %2$s.</item>
-        <item quantity="other">Lade till %1$d appar under %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Eller välj en du redan använder:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Kontrollera %d app nu?</item>
         <item quantity="other">Kontrollera %d appar nu?</item>
@@ -334,10 +323,6 @@
         <item quantity="one">Var %d timme</item>
         <item quantity="other">Var %d:e timme</item>
     </plurals>
-    <string name="settings_unmetered">Endast på obegränsade nätverk</string>
-    <string name="settings_unmetered_effect">Hoppa över kontroller på mobildata och begränsat Wi-Fi.</string>
-    <string name="settings_charging">Endast vid laddning</string>
-    <string name="settings_charging_effect">Hoppa över kontroller på batteridrift.</string>
     <string name="settings_defaults">Standardval för nya appar</string>
     <string name="settings_notifications">Aviseringar</string>
     <string name="settings_notify_updates">När uppdateringar hittas</string>
@@ -373,7 +358,6 @@
     <string name="proxy_port_invalid">Ett nummer från 1 till 65535</string>
     <string name="settings_appearance">Utseende</string>
     <string name="settings_language">Språk</string>
-    <string name="settings_language_effect">Väljs i Androids inställningar för denna app.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Följ systemet</string>
     <string name="theme_light">Ljust</string>

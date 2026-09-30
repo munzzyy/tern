@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">കാറ്റഗറികൾ</string>
+    <string name="settings_categories_effect">അവയ്ക്ക് പേര് നൽകുക, ഓരോന്നിനും ഒരു നിറം നൽകുക, എല്ലാ ആപ്പുകൾക്കും ഒറ്റയടിക്ക് അവ പുനർനാമകരണം ചെയ്യുകയോ ഇല്ലാതാക്കുകയോ ചെയ്യുക.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d കാറ്റഗറി</item>
+        <item quantity="other">%d കാറ്റഗറികൾ</item>
+    </plurals>
+    <string name="categories_none">ഇതുവരെ ഒന്നുമില്ല. ഇവിടെ ഒരെണ്ണം ഉണ്ടാക്കുക, അല്ലെങ്കിൽ ലിസ്റ്റിൽ നിന്ന് ആപ്പുകൾ ഒരു കാറ്റഗറിയിലേക്ക് ചേർക്കുക.</string>
+    <string name="categories_new">പുതിയ കാറ്റഗറി</string>
+    <string name="category_edit">കാറ്റഗറി എഡിറ്റ് ചെയ്യുക</string>
+    <string name="category_name">പേര്</string>
+    <string name="category_color">നിറം</string>
+    <string name="category_color_spoken">%2$d-ൽ %1$d-ാമത്തെ നിറം</string>
+    <string name="category_exists">ഈ പേരിൽ ഒരു കാറ്റഗറി ഇതിനകം നിലവിലുണ്ട്.</string>
+    <string name="category_delete">ഇല്ലാതാക്കുക</string>
+    <string name="category_delete_effect">ഇതിലെ ആപ്പുകൾ ലിസ്റ്റിൽ തുടരും; അവ ഇനി ഇതിന് കീഴിൽ വരില്ല എന്ന് മാത്രം.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d ആപ്പ്</item>
+        <item quantity="other">%d ആപ്പുകൾ</item>
+    </plurals>
+    <string name="action_close">അടയ്ക്കുക</string>
+    <string name="categories_new_short">പുതിയത്…</string>
+    <string name="app_notes_title">കുറിപ്പുകൾ</string>
+    <string name="app_notes_help">Markdown പ്രവർത്തിക്കും: **ബോൾഡ്**, *ഇറ്റാലിക്*, ലിസ്റ്റുകൾ, ലിങ്കുകൾ.</string>
+    <string name="app_notes_add">ഒരു കുറിപ്പ് ചേർക്കുക</string>
+    <string name="app_notes_add_effect">ഈ ആപ്പിനെക്കുറിച്ച് ഓർത്തിരിക്കേണ്ട എന്തും. ഇത് എക്സ്പോർട്ടുകളോടൊപ്പം പോകുന്നു.</string>
+    <string name="app_notes_edit">കുറിപ്പ് എഡിറ്റ് ചെയ്യുക</string>
+</resources>

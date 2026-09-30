@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">기기 소유자인 Dhizuku를 통해 묻지 않고 설치하고 업데이트합니다. 모든 파일은 먼저 같은 확인을 거칩니다. 그런 다음 Android는 Dhizuku를 설치 프로그램으로 표시합니다.</string>
+    <string name="installer_dhizuku_not_ready">준비되지 않음, 준비될 때까지 아무것도 설치되지 않습니다</string>
+    <string name="installer_dhizuku_unsupported">이 버전의 Android에서는 Tern이 Dhizuku를 통해 설치할 수 없습니다.</string>
+    <string name="installer_dhizuku_not_installed">Dhizuku가 설치되어 있지 않습니다. 설치하고 기기 소유자로 설정한 후 돌아오세요.</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku가 기기 소유자가 아닙니다. Dhizuku 앱에서 기기 소유자로 설정한 후 돌아오세요.</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku가 응답하지 않았습니다. Dhizuku 앱을 연 후 돌아오세요.</string>
+    <string name="installer_dhizuku_not_allowed">Tern은 아직 Dhizuku를 사용할 수 없습니다. 여기를 눌러 권한을 요청하세요.</string>
+    <string name="dhizuku_failed_not_installed">Dhizuku가 설치되어 있지 않습니다.</string>
+    <string name="dhizuku_failed_not_owner">Dhizuku가 기기 소유자가 아닙니다.</string>
+    <string name="dhizuku_failed_not_answering">Dhizuku가 응답하지 않았습니다.</string>
+    <string name="dhizuku_failed_not_allowed">Dhizuku가 Tern의 사용을 허용하지 않습니다.</string>
+    <string name="install_signer_changed">현재 설치된 앱은 Tern이 확인한 파일에 서명한 사람과 다른 사람이 서명했으므로, 이 설치는 인정되지 않습니다.</string>
+</resources>

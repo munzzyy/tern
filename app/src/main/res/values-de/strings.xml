@@ -92,17 +92,6 @@
         <item quantity="other">%d ausgewählt</item>
     </plurals>
     <string name="apps_select_hint">Wähle Apps aus der Liste.</string>
-    <string name="action_add_to_category">Zu Kategorie hinzufügen</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">%d App zu Kategorie hinzufügen</item>
-        <item quantity="other">%d Apps zu Kategorie hinzufügen</item>
-    </plurals>
-    <string name="bulk_category_field">Kategorie</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">%1$d App unter %2$s abgelegt.</item>
-        <item quantity="other">%1$d Apps unter %2$s abgelegt.</item>
-    </plurals>
-    <string name="bulk_category_existing">Oder wähle eine bereits genutzte:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">%d App jetzt prüfen?</item>
         <item quantity="other">%d Apps jetzt prüfen?</item>
@@ -334,10 +323,6 @@
         <item quantity="one">Alle %d Stunde</item>
         <item quantity="other">Alle %d Stunden</item>
     </plurals>
-    <string name="settings_unmetered">Nur in ungetakteten Netzwerken</string>
-    <string name="settings_unmetered_effect">Prüfungen bei mobilen Daten und getaktetem WLAN überspringen.</string>
-    <string name="settings_charging">Nur beim Laden</string>
-    <string name="settings_charging_effect">Prüfungen im Akkubetrieb überspringen.</string>
     <string name="settings_defaults">Standards für neue Apps</string>
     <string name="settings_notifications">Benachrichtigungen</string>
     <string name="settings_notify_updates">Wenn Updates gefunden werden</string>
@@ -373,7 +358,6 @@
     <string name="proxy_port_invalid">Eine Zahl von 1 bis 65535</string>
     <string name="settings_appearance">Erscheinungsbild</string>
     <string name="settings_language">Sprache</string>
-    <string name="settings_language_effect">In den Android-Einstellungen für diese App ausgewählt.</string>
     <string name="settings_theme">Design</string>
     <string name="theme_system">Systemstandard</string>
     <string name="theme_light">Hell</string>

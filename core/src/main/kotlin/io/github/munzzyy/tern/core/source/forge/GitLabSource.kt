@@ -29,6 +29,13 @@ class GitLabSource : Source {
         return projectSpec(normalized, "gitlab.com")
     }
 
+    /** A project on a GitLab of any host, read without asking first whether one answers there, as some only do for a token. */
+    override fun matchForced(url: String, context: CheckContext): SourceSpec? {
+        val normalized = Urls.normalize(url) ?: return null
+        val at = Urls.authority(normalized).takeIf { it.isNotEmpty() } ?: return null
+        return projectSpec(normalized, at)
+    }
+
     override fun probe(url: String, context: CheckContext): SourceSpec? {
         val normalized = Urls.normalize(url) ?: return null
         val host = Urls.host(normalized)
@@ -100,11 +107,62 @@ class GitLabSource : Source {
                 .mapNotNull { obj -> mapRelease(obj, spec.url) }
                 .take(MAX_RELEASES)
                 .toList()
-            if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $projectPath")
+            if (releases.isEmpty()) {
+                if (context.app?.trackOnly == true) return tags(spec, context, token)
+                throw SourceException(SourceErrorKind.NO_RELEASES, "No releases for $projectPath")
+            }
 
             context.validators.put(key, Validator.from(it.headers))
-            val listing = SourceListing(releases = releases, name = segments.last(), author = segments.dropLast(1).joinToString("/"))
-            return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.gitLab(at, projectPath, context, token?.let { t -> "Bearer $t" })))
+            context.validators.remove(validatorKey(spec, "tags"))
+            return listed(spec, releases, context, token)
+        }
+    }
+
+    private fun listed(spec: SourceSpec, releases: List<Release>, context: CheckContext, token: String?): CheckResult {
+        val segments = Urls.segments(spec.url)
+        val at = Urls.authority(spec.url)
+        val listing = SourceListing(releases = releases, name = segments.last(), author = segments.dropLast(1).joinToString("/"))
+        return CheckResult.Listing(listing.withIcons(spec.url, ForgeIcons.gitLab(at, segments.joinToString("/"), context, token?.let { t -> "Bearer $t" })))
+    }
+
+    /**
+     * The tags of a project that has no releases, for an app that is only tracked, as Obtainium
+     * lists them: each one a release, with no file, dated by its commit.
+     */
+    private fun tags(spec: SourceSpec, context: CheckContext, token: String?): CheckResult {
+        val projectPath = Urls.segments(spec.url).joinToString("/")
+        val url = "https://${Urls.authority(spec.url)}/api/v4/projects/${Urls.encodeSegment(projectPath)}/repository/tags?per_page=20"
+        val key = validatorKey(spec, "tags")
+        val stored = context.validators.get(key)
+        val response = try {
+            context.http.execute(HttpRequest(url, headers = stored?.conditionalHeaders().orEmpty(), authorization = token?.let { "Bearer $it" }))
+        } catch (e: RateLimitedException) {
+            throw SourceException(SourceErrorKind.RATE_LIMITED, "Rate limited by ${e.host}", e.retryAtMs, e)
+        } catch (e: IOException) {
+            throw SourceException(SourceErrorKind.NETWORK, "Failed to fetch $url", cause = e)
+        }
+        response.use {
+            if (it.isNotModified) return CheckResult.Unchanged
+            if (it.status == 404) throw SourceException(SourceErrorKind.NOT_FOUND, "Project not found: $projectPath")
+            if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "GitLab returned ${it.status} for the tags of $projectPath")
+            val json = try {
+                Json.parseArray(it.text())
+            } catch (e: Exception) {
+                throw SourceException(SourceErrorKind.PARSE, "Malformed GitLab tags JSON for $projectPath", cause = e)
+            }
+            val releases = json.objects().asSequence().mapNotNull { tag ->
+                val name = tag.string("name")?.takeIf { n -> n.isNotBlank() } ?: return@mapNotNull null
+                val commit = tag.obj("commit")
+                Release(
+                    id = name,
+                    version = name,
+                    publishedAtMs = (commit?.string("created_at") ?: commit?.string("committed_date"))?.let(Iso8601::parseMs),
+                    pageUrl = "${spec.url}/-/tags/${Urls.encodeSegment(name)}",
+                )
+            }.take(MAX_RELEASES).toList()
+            if (releases.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "No releases or tags for $projectPath")
+            context.validators.put(key, Validator.from(it.headers))
+            return listed(spec, releases, context, token)
         }
     }
 
@@ -127,14 +185,26 @@ class GitLabSource : Source {
 
     private fun mapRelease(obj: JsonObject, projectUrl: String): Release? {
         val tag = obj.string("tag_name") ?: return null
+        val host = Urls.authority(projectUrl)
         val linkAssets = obj.obj("assets")?.array("links")?.objects().orEmpty().mapNotNull { link ->
             val label = link.string("name") ?: return@mapNotNull null
-            val assetUrl = link.string("direct_asset_url") ?: link.string("url") ?: return@mapNotNull null
-            if (!Urls.isHttps(assetUrl) || Urls.normalize(assetUrl) == null) return@mapNotNull null
-            Asset(name = fileName(label, assetUrl), url = assetUrl)
+            val named = link.string("direct_asset_url") ?: link.string("url") ?: return@mapNotNull null
+            if (!Urls.isHttps(named) || Urls.normalize(named) == null) return@mapNotNull null
+            val assetUrl = rawArtifact(named, projectUrl)
+            val name = fileName(label, assetUrl)
+            // A package link need not end in .apk; one whose name or address says apk is taken as one, as Obtainium does.
+            val kind = if (link.string("link_type") == "package" && Asset.kindOf(name) == AssetKind.OTHER && (APK_WORD.containsMatchIn(label) || APK_WORD.containsMatchIn(assetUrl))) AssetKind.APK else Asset.kindOf(name)
+            // The token for this GitLab goes with a download from it, and from nowhere else.
+            Asset(name = name, url = assetUrl, kind = kind, needsAuth = Urls.authority(assetUrl) == host)
         }
         val description = obj.string("description")
-        val uploadAssets = description?.let { extractUploadLinks(it, projectUrl) }.orEmpty()
+        val uploadAssets = description?.let { extractUploadLinks(it, projectUrl) }.orEmpty().map { it.copy(needsAuth = true) }
+        // The archives of the project's source that GitLab packs for the release, named as its own page names them.
+        val sources = obj.obj("assets")?.array("sources")?.objects().orEmpty().mapNotNull { source ->
+            val url = source.string("url") ?: return@mapNotNull null
+            val name = Urls.segments(url).lastOrNull()?.takeIf { it.isNotBlank() } ?: return@mapNotNull null
+            SourceArchives.archive(name, url, needsAuth = true) { Urls.authority(it) == host }
+        }
 
         return Release(
             id = tag,
@@ -146,6 +216,7 @@ class GitLabSource : Source {
             prerelease = false,
             pageUrl = obj.obj("_links")?.string("self")?.takeIf(Urls::isHttps) ?: "$projectUrl/-/releases/${Urls.encodeSegment(tag)}",
             assets = linkAssets + uploadAssets,
+            sourceArchives = sources,
         )
     }
 
@@ -154,6 +225,13 @@ class GitLabSource : Source {
         if (Asset.kindOf(label) != AssetKind.OTHER) return label
         val fromUrl = Urls.segments(url).lastOrNull() ?: return label
         return if (Asset.kindOf(fromUrl) != AssetKind.OTHER) fromUrl else label
+    }
+
+    /** A job's artifact as its file itself: /-/jobs/N/artifacts/file/X shows a page, /raw/X is the file. */
+    private fun rawArtifact(url: String, projectUrl: String): String {
+        val prefix = "$projectUrl/-/jobs/"
+        if (!url.startsWith(prefix)) return url
+        return if (JOB_FILE.matches(url.substring(prefix.length))) url.replaceFirst("/artifacts/file/", "/artifacts/raw/") else url
     }
 
     private fun extractUploadLinks(markdown: String, projectUrl: String): List<Asset> =
@@ -167,5 +245,7 @@ class GitLabSource : Source {
         const val MAX_RELEASES = 20
         const val MAX_MARKDOWN_LENGTH = 20_000
         val UPLOAD_LINK = Regex("""\[[^\]]*]\(/uploads/([0-9a-fA-F]{32})/([^)\s]+)\)""")
+        val JOB_FILE = Regex("^[0-9]+/artifacts/file/.+")
+        val APK_WORD = Regex("(^|[^a-z])apk([^a-z]|$)", RegexOption.IGNORE_CASE)
     }
 }

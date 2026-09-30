@@ -31,10 +31,13 @@ import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.NoteBlock
 import io.github.munzzyy.tern.ui.LocalEngine
+import io.github.munzzyy.tern.ui.LocalOnline
 import io.github.munzzyy.tern.ui.common.QuietButton
+import io.github.munzzyy.tern.ui.common.SaveFileDialog
 import io.github.munzzyy.tern.ui.common.TonalButton
 import io.github.munzzyy.tern.ui.notes.NotesView
 import io.github.munzzyy.tern.ui.text.canPickInstall
+import io.github.munzzyy.tern.ui.text.formatBytes
 import io.github.munzzyy.tern.ui.text.formatDate
 import io.github.munzzyy.tern.ui.text.isInstalledRelease
 import io.github.munzzyy.tern.ui.text.isolate
@@ -118,6 +121,8 @@ private fun ReleaseEntry(vm: DetailViewModel, row: AppRow, release: Release) {
         Text(version ?: stringResource(R.string.version_unknown_short), style = MaterialTheme.typography.titleSmall.figures())
         val meta = listOfNotNull(
             release.publishedAtMs?.let { isolate(formatDate(it)) },
+            // The size a store that is only followed states for the file it keeps to itself.
+            release.fileSize?.let { isolate(formatBytes(it)) },
             if (release.prerelease) stringResource(R.string.prerelease) else null,
             if (release.id == row.latest?.id) stringResource(R.string.version_offered) else null,
             if (isInstalledRelease(release, row.installed)) stringResource(R.string.version_installed) else null,
@@ -148,7 +153,27 @@ private fun ReleaseEntry(vm: DetailViewModel, row: AppRow, release: Release) {
                 },
                 modifier = if (installable) Modifier else Modifier.offset(x = -quietInset()),
             )
+            if (release.savable.isNotEmpty()) SaveAFile(vm, row, release, version)
         }
         if (open) NotesState(notes[release.id])
     }
+}
+
+/** Any file of [release] to save, picked from all of them, the archives of its source among them. */
+@Composable
+private fun SaveAFile(vm: DetailViewModel, row: AppRow, release: Release, version: String?) {
+    var picking by rememberSaveable(release.id) { mutableStateOf(false) }
+    val saveFile = rememberFileSaver(vm)
+    QuietButton(stringResource(R.string.files_save_a_file), onClick = { picking = true }, enabled = LocalOnline.current)
+    if (!picking) return
+    SaveFileDialog(
+        title = version?.let { stringResource(R.string.files_pick_title_version, isolate(it)) } ?: stringResource(R.string.files_pick_title_app, row.config.shownName),
+        release = release,
+        preselected = row.file?.asset?.url?.takeIf { release.id == row.latest?.id },
+        onSave = { file ->
+            picking = false
+            saveFile(release.id, file.url)
+        },
+        onDismiss = { picking = false },
+    )
 }

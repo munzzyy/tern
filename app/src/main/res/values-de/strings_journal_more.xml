@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Aktivitätsprotokoll</string>
+    <string name="journal_keep_own">Eigene Meldungen von Tern im Protokoll behalten</string>
+    <string name="journal_keep_own_effect">Warnungen und Fehler von Tern sowie Beginn und Ende jeder Prüfung. Alles, was ein Passwort oder ein Token sein könnte, wird weggelassen, und das Protokoll bleibt auf diesem Gerät, es sei denn, du teilst es.</string>
+    <string name="journal_filter_own">Meldungen von Tern</string>
+    <string name="journal_mark_note">Hinweis von Tern</string>
+    <string name="journal_mark_warning">Warnung von Tern</string>
+    <string name="journal_mark_error">Fehler von Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Eine Prüfung von %1$d App hat begonnen.</item>
+        <item quantity="other">Eine Prüfung von %1$d Apps hat begonnen.</item>
+    </plurals>
+    <string name="journal_check_started_one">Eine Prüfung von %1$s hat begonnen.</string>
+    <string name="journal_cause_asked">Sie wurde in Tern angefordert.</string>
+    <string name="journal_cause_opening">Tern wurde geöffnet.</string>
+    <string name="journal_cause_page">Die Seite der App wurde geöffnet.</string>
+    <string name="journal_cause_link">Ein Link hat sie angefordert.</string>
+    <string name="journal_cause_shortcut">Eine Verknüpfung hat sie angefordert.</string>
+    <string name="journal_cause_widget">Das Widget hat sie angefordert.</string>
+    <string name="journal_cause_tile">Die Kachel in den Schnelleinstellungen hat sie angefordert.</string>
+    <string name="journal_cause_schedule">Der Zeitplan hat sie gestartet.</string>
+    <string name="journal_cause_retry">Sie versucht es dort erneut, wo die letzte Prüfung fehlgeschlagen ist.</string>
+    <string name="journal_cause_added">Die App wurde gerade hinzugefügt.</string>
+    <string name="journal_cause_imported">Die Apps wurden gerade importiert.</string>
+    <string name="journal_cause_changed">Die Einstellungen der App wurden geändert.</string>
+    <string name="journal_cause_install">Die App wird gleich installiert und zuerst geprüft.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">Die Prüfung von %1$d App endete nach %2$s.</item>
+        <item quantity="other">Die Prüfung von %1$d Apps endete nach %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Die Prüfung von %1$s endete nach %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Sie hat %1$d Update gefunden.</item>
+        <item quantity="other">Sie hat %1$d Updates gefunden.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d App konnte nicht geprüft werden.</item>
+        <item quantity="other">%1$d Apps konnten nicht geprüft werden.</item>
+    </plurals>
+    <string name="journal_check_stopped">Die Prüfung wurde nach %1$s abgebrochen, bevor sie fertig war.</string>
+</resources>

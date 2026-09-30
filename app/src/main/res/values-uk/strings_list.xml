@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">Упорядкувати список</string>
+    <string name="list_options_title">Упорядкувати список</string>
+    <string name="list_reverse">Зворотний порядок</string>
+    <string name="list_updates_first">Оновлення вгорі</string>
+    <string name="list_bury_not_installed">Не встановлені програми внизу</string>
+    <string name="sort_author">За розробником</string>
+    <string name="sort_added">За датою додавання</string>
+    <string name="sort_released">За датою випуску</string>
+    <string name="group_title">Групування</string>
+    <string name="group_none">Немає</string>
+    <string name="group_category">Категорія</string>
+    <string name="group_source">Джерело</string>
+    <string name="group_category_effect">Програма з кількох категорій з\'являється в кожній із них.</string>
+    <string name="group_other">Усе інше</string>
+    <string name="group_folded">Згорнуто</string>
+    <string name="group_open">Розгорнуто</string>
+    <string name="filter_favorites">Вибране</string>
+    <string name="filter_track_only">Лише відстеження</string>
+    <string name="filter_problems">Проблеми</string>
+    <string name="action_done">Готово</string>
+    <string name="settings_swipe">Дії свайпом по рядках</string>
+    <string name="settings_swipe_effect">Проведіть програму до кінця рядка, щоб оновити її, або до початку, щоб вилучити.</string>
+    <string name="action_favorite">Додати до вибраного</string>
+    <string name="action_unfavorite">Вилучити з вибраного</string>
+    <string name="action_set_mode">Коли знайдено оновлення</string>
+    <string name="action_share_addresses">Поділитися адресами</string>
+    <string name="action_share_export">Поділитися файлом</string>
+    <string name="action_uninstall">Видалити з пристрою</string>
+    <string name="export_format_tern">Файл Tern</string>
+    <string name="export_format_obtainium">Файл для Obtainium</string>
+    <string name="bulk_uninstall_text">Android запитає про кожну програму по черзі. Tern і далі стежитиме за ними, доки ви не вилучите їх тут.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d програма тепер у вибраному</item>
+        <item quantity="few">%1$d програми тепер у вибраному</item>
+        <item quantity="many">%1$d програм тепер у вибраному</item>
+        <item quantity="other">%1$d програми тепер у вибраному</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d програма більше не у вибраному</item>
+        <item quantity="few">%1$d програми більше не у вибраному</item>
+        <item quantity="many">%1$d програм більше не у вибраному</item>
+        <item quantity="other">%1$d програми більше не у вибраному</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">Коли знайдено оновлення %1$d програми</item>
+        <item quantity="few">Коли знайдено оновлення %1$d програм</item>
+        <item quantity="many">Коли знайдено оновлення %1$d програм</item>
+        <item quantity="other">Коли знайдено оновлення %1$d програми</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">Видалити %1$d програму з пристрою?</item>
+        <item quantity="few">Видалити %1$d програми з пристрою?</item>
+        <item quantity="many">Видалити %1$d програм з пристрою?</item>
+        <item quantity="other">Видалити %1$d програми з пристрою?</item>
+    </plurals>
+</resources>

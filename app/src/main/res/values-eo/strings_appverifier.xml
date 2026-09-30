@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="appverifier_title">Dua kontrolo</string>
-    <string name="appverifier_effect">AppVerifier estas aparta aplikaĵo. Ĝi komparas ĉi tiun aplikaĵon kun la atestilo al kiu Tern tenas ĝin, kaj kun sia propra listo de aplikaĵoj kiujn ĝi konas.</string>
-    <string name="appverifier_action">Kontroli per AppVerifier</string>
 </resources>

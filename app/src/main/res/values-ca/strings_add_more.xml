@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">Tern no coneix aquest tipus d\'enllaç.</string>
+    <string name="add_not_readable_as">Aquesta adreça no es pot llegir com a %1$s.</string>
+    <string name="add_event_replaced">S\'ha reemplaçat la seva configuració per la que un fitxer o un enllaç tenia per a ella.</string>
+    <string name="search_miss_unreachable">No s\'ha pogut cercar a %1$s: no ha respost.</string>
+    <string name="search_miss_wait">No s\'ha pogut cercar a %1$s: demana a Tern que esperi una estona.</string>
+    <string name="search_miss_wait_until">No s\'ha pogut cercar a %1$s: demana a Tern que esperi fins a les %2$s.</string>
+    <string name="search_miss_refused">No s\'ha pogut cercar a %1$s: ha rebutjat la petició.</string>
+    <string name="search_miss_status">No s\'ha pogut cercar a %1$s: ha respost %2$d.</string>
+    <string name="search_miss_unreadable">No s\'ha pogut cercar a %1$s: no s\'ha pogut llegir la seva resposta.</string>
+    <string name="add_options_title">Abans d\'afegir</string>
+    <string name="add_options_auto">Tern esbrina què és l\'adreça.</string>
+    <string name="add_options_forced">Llegida com a: %1$s</string>
+    <string name="add_read_as">Llegeix l\'adreça com a</string>
+    <string name="add_read_as_auto">Automàtic</string>
+    <string name="add_read_as_forgejo">Forgejo o Gitea</string>
+    <string name="add_read_as_help">Per a un origen que Tern no reconeix per si mateix, com ara un en un servidor propi.</string>
+    <string name="add_package_label">Nom del paquet</string>
+    <string name="add_package_help">Tots els fitxers han de ser d\'aquest paquet. Si es deixa buit, Tern el llegeix del fitxer de l\'aplicació.</string>
+    <string name="add_package_invalid">Això no és un nom de paquet, com ara org.example.app.</string>
+    <string name="add_set_options">Configura\'n les opcions</string>
+    <string name="add_failed_options">Les seves opcions poden dir a Tern on cercar. Configura-les a dalt i després Tern ho tornarà a comprovar.</string>
+    <string name="add_replace">Reemplaça la seva configuració</string>
+    <string name="add_replace_explain">L\'enllaç conté una configuració pròpia per a aquesta aplicació. En reemplaçar-la es mantenen els certificats en què confia i el nom del seu paquet, i no fa que instal·li les actualitzacions per si sola.</string>
+    <string name="results_filter">Filtre</string>
+    <string name="results_filter_help">Paraules o un patró</string>
+    <string name="results_filter_none">Res de la llista coincideix amb “%1$s”.</string>
+    <string name="repo_search_all">Cerca “%1$s” a tot el repositori</string>
+    <string name="repo_show_all">Mostra totes les seves aplicacions</string>
+    <string name="repo_heading_within">Aplicacions a %1$s amb “%2$s”</string>
+    <string name="search_more">S\'ha trobat més del que es mostra. El filtre ho redueix.</string>
+    <string name="search_forgejo_label">Forgejo o Gitea on cercar</string>
+    <string name="search_forgejo_help">La seva adreça, com ara codeberg.org. Un token desat per a aquest amfitrió s\'envia amb la petició.</string>
+    <string name="search_forgejo_invalid">Aquesta no és una adreça on Tern pugui cercar.</string>
+    <string name="search_min_stars_label">Mínim d\'estrelles</string>
+    <string name="search_min_stars_help">Es deixen fora els projectes de GitHub i del Forgejo amb menys estrelles.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">El fitxer també porta altres configuracions per a %1$d aplicació que ja és a la teva llista. Es queden com estan, tret que les reemplacis.</item>
+        <item quantity="many">El fitxer també porta altres configuracions per a %1$d aplicacions que ja són a la teva llista. Es queden com estan, tret que les reemplacis.</item>
+        <item quantity="other">El fitxer també porta altres configuracions per a %1$d aplicacions que ja són a la teva llista. Es queden com estan, tret que les reemplacis.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">Reemplaça la configuració de %1$d aplicació</item>
+        <item quantity="many">Reemplaça la configuració de %1$d aplicacions</item>
+        <item quantity="other">Reemplaça la configuració de %1$d aplicacions</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">S\'ha reemplaçat la configuració de %1$d aplicació. Els certificats en què confia s\'han mantingut.</item>
+        <item quantity="many">S\'ha reemplaçat la configuració de %1$d aplicacions. Els certificats en què confien s\'han mantingut.</item>
+        <item quantity="other">S\'ha reemplaçat la configuració de %1$d aplicacions. Els certificats en què confien s\'han mantingut.</item>
+    </plurals>
+    <string name="import_settings_offered">El fitxer també porta la configuració de Tern: l\'aspecte, la llista, les notificacions i les comprovacions. No s\'apliquen, tret que ho diguis.</string>
+    <string name="import_take_settings">Aplica aquesta configuració</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">Marca %1$d mostrat</item>
+        <item quantity="many">Marca tots els %1$d mostrats</item>
+        <item quantity="other">Marca tots els %1$d mostrats</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">Desmarca %1$d mostrat</item>
+        <item quantity="many">Desmarca tots els %1$d mostrats</item>
+        <item quantity="other">Desmarca tots els %1$d mostrats</item>
+    </plurals>
+</resources>

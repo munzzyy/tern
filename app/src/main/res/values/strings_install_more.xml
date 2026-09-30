@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- zstd, gzip, bzip2 and xz are names of compression formats. -->
+    <string name="install_archive_zstd_unsupported">This archive is compressed with zstd, which Tern cannot open. Choose a .zip or .tar file of this release, or one compressed with gzip, bzip2 or xz.</string>
+    <!-- How much of a download is done, such as "12 MB". -->
+    <string name="install_notify_bytes">%1$s</string>
+    <!-- How much of a download is done, such as "12 MB of 40 MB". -->
+    <string name="install_notify_bytes_of">%1$s of %2$s</string>
+    <string name="install_setting_one_download">One download at a time</string>
+    <string name="install_setting_one_download_effect">Downloads wait for each other instead of running side by side.</string>
+    <!-- %1$s is a host name, such as downloads.example.org. -->
+    <string name="install_file_foreign_host">This file comes from %1$s, which is not the site of this app\'s source. It is checked like any other file.</string>
+    <string name="install_file_picked">Your choice</string>
+    <string name="install_file_automatic">Let Tern choose the file again</string>
+    <!-- %1$s is the name of the file the person picked. -->
+    <string name="install_file_picked_kept">Updates keep to the file you picked, %1$s.</string>
+    <!-- %1$s is the name of the file the person picked. -->
+    <string name="install_file_picked_missing">This release has no file like the one you picked, %1$s, so Tern chose one.</string>
+</resources>

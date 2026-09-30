@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">Tern không nhận ra loại liên kết này.</string>
+    <string name="add_not_readable_as">Không thể đọc địa chỉ này dưới dạng %1$s.</string>
+    <string name="add_event_replaced">Cài đặt của ứng dụng đã được thay bằng cài đặt mà tệp hoặc liên kết chứa cho nó.</string>
+    <string name="search_miss_unreachable">Không thể tìm kiếm %1$s: không có phản hồi.</string>
+    <string name="search_miss_wait">Không thể tìm kiếm %1$s: nó yêu cầu Tern chờ một lúc.</string>
+    <string name="search_miss_wait_until">Không thể tìm kiếm %1$s: nó yêu cầu Tern chờ đến %2$s.</string>
+    <string name="search_miss_refused">Không thể tìm kiếm %1$s: nó đã từ chối yêu cầu.</string>
+    <string name="search_miss_status">Không thể tìm kiếm %1$s: nó phản hồi %2$d.</string>
+    <string name="search_miss_unreadable">Không thể tìm kiếm %1$s: không đọc được phản hồi của nó.</string>
+    <string name="add_options_title">Trước khi thêm</string>
+    <string name="add_options_auto">Tern tự tìm hiểu địa chỉ này là gì.</string>
+    <string name="add_options_forced">Đọc dưới dạng %1$s</string>
+    <string name="add_read_as">Đọc địa chỉ dưới dạng</string>
+    <string name="add_read_as_auto">Tự động</string>
+    <string name="add_read_as_forgejo">Forgejo hoặc Gitea</string>
+    <string name="add_read_as_help">Dành cho nguồn mà Tern không tự nhận ra, chẳng hạn nguồn trên máy chủ riêng.</string>
+    <string name="add_package_label">Tên gói</string>
+    <string name="add_package_help">Mọi tệp phải thuộc gói này. Nếu để trống, Tern sẽ đọc từ tệp của ứng dụng.</string>
+    <string name="add_package_invalid">Đây không phải tên gói. Tên gói có dạng như org.example.app.</string>
+    <string name="add_set_options">Đặt tùy chọn</string>
+    <string name="add_failed_options">Các tùy chọn có thể chỉ cho Tern nơi cần tìm. Hãy đặt chúng ở trên, rồi Tern sẽ kiểm tra lại.</string>
+    <string name="add_replace">Thay thế cài đặt của ứng dụng</string>
+    <string name="add_replace_explain">Liên kết chứa cài đặt riêng cho ứng dụng này. Việc thay thế giữ lại các chứng chỉ mà ứng dụng tin cậy và tên gói, và không khiến ứng dụng tự cài đặt bản cập nhật.</string>
+    <string name="results_filter">Bộ lọc</string>
+    <string name="results_filter_help">Từ hoặc một mẫu</string>
+    <string name="results_filter_none">Không có mục nào trong danh sách khớp với \"%1$s\".</string>
+    <string name="repo_search_all">Tìm \"%1$s\" trong toàn bộ kho lưu trữ</string>
+    <string name="repo_show_all">Hiện tất cả ứng dụng trong kho lưu trữ</string>
+    <string name="repo_heading_within">Ứng dụng trong %1$s có \"%2$s\"</string>
+    <string name="search_more">Tìm thấy nhiều hơn số đang hiển thị. Hãy dùng bộ lọc để thu hẹp.</string>
+    <string name="search_forgejo_label">Forgejo hoặc Gitea để tìm kiếm</string>
+    <string name="search_forgejo_help">Địa chỉ của nó, ví dụ codeberg.org. Mã thông báo đã lưu cho nó sẽ được gửi kèm.</string>
+    <string name="search_forgejo_invalid">Đây không phải địa chỉ mà Tern có thể tìm kiếm.</string>
+    <string name="search_min_stars_label">Số sao tối thiểu</string>
+    <string name="search_min_stars_help">Các dự án trên GitHub và trên Forgejo có ít sao hơn sẽ bị loại.</string>
+    <plurals name="import_replaceable">
+        <item quantity="other">Tệp này còn chứa các cài đặt khác cho %1$d ứng dụng đã có trong danh sách của bạn. Chúng được giữ nguyên trừ khi bạn thay thế.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="other">Thay thế cài đặt của %1$d ứng dụng</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="other">Đã thay thế cài đặt của %1$d ứng dụng. Các chứng chỉ mà chúng tin cậy vẫn được giữ nguyên.</item>
+    </plurals>
+    <string name="import_settings_offered">Tệp này cũng mang các cài đặt cho Tern: giao diện, danh sách, thông báo và kiểm tra. Chúng sẽ không được áp dụng trừ khi bạn đồng ý.</string>
+    <string name="import_take_settings">Áp dụng các cài đặt này</string>
+    <plurals name="import_pick_shown">
+        <item quantity="other">Đánh dấu tất cả %1$d mục đang hiển thị</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="other">Bỏ chọn tất cả %1$d mục đang hiển thị</item>
+    </plurals>
+</resources>

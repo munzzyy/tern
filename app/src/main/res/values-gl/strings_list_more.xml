@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">Filtrar a lista</string>
+    <string name="filter_state_on">Filtros activados</string>
+    <string name="filter_name">Nome</string>
+    <string name="filter_author">Desenvolvedor</string>
+    <string name="filter_package">Nome do paquete</string>
+    <string name="filter_show_up_to_date">Aplicacións ao día</string>
+    <string name="filter_show_not_installed">Aplicacións sen instalar</string>
+    <string name="filter_show_tracked">Aplicacións que só se seguen</string>
+    <string name="filter_categories">En calquera destas categorías</string>
+    <string name="filter_sources">De calquera destas orixes</string>
+    <string name="filter_clear">Limpar os filtros</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%1$d de %2$d aplicación amosada</item>
+        <item quantity="other">%1$d de %2$d aplicacións amosadas</item>
+    </plurals>
+    <string name="checking_count">Comprobando %1$d de %2$d</string>
+    <string name="row_moved">Movido a %1$s</string>
+    <string name="row_released">Publicado o %1$s</string>
+    <string name="row_changes">Cambios</string>
+    <string name="action_show_changes">Amosar os cambios</string>
+    <string name="action_install_all">Instalar todo</string>
+    <string name="action_install_update_all">Instalar e actualizar todo</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d aplicación aínda non está instalada</item>
+        <item quantity="other">%d aplicacións aínda non están instaladas</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Instalar e actualizar %d aplicación?</item>
+        <item quantity="other">Instalar e actualizar %d aplicacións?</item>
+    </plurals>
+    <string name="settings_update_all">O botón Actualizar todo</string>
+    <string name="update_all_updates">Só actualizacións</string>
+    <string name="update_all_all">Actualizacións e aplicacións aínda sen instalar</string>
+    <string name="update_all_none">Non se amosa</string>
+    <string name="settings_confirm_update_all">Preguntar antes de actualizar todo</string>
+    <string name="settings_confirm_update_all_effect">Indica cantas aplicacións se instalan ou se actualizan, e agarda un si.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Instalar %d aplicación?</item>
+        <item quantity="other">Instalar %d aplicacións?</item>
+    </plurals>
+    <string name="bulk_install_text">Cada ficheiro descárgase e compróbase antes de pedirlle a Android que o instale. Tern lembra o certificado co que está asinada cada aplicación nova e esíxelle o mesmo a cada actualización posterior.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d das aplicacións escollidas non ten nada que instalar agora e déixase como está.</item>
+        <item quantity="other">%d das aplicacións escollidas non teñen nada que instalar agora e déixanse como están.</item>
+    </plurals>
+    <string name="action_change_categories">Cambiar as categorías</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Categorías de %d aplicación</item>
+        <item quantity="other">Categorías de %d aplicacións</item>
+    </plurals>
+    <string name="bulk_categories_help">Unha marca garda cada aplicación escollida nunha categoría, e unha caixa baleira sácaas todas dela. Un guión deixa cada aplicación como está.</string>
+    <string name="categories_filed_all">Todas as aplicacións escollidas</string>
+    <string name="categories_filed_some">Algunhas das aplicacións escollidas</string>
+    <string name="categories_filed_none">Ningunha das aplicacións escollidas</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Cambiáronse as categorías de %d aplicación.</item>
+        <item quantity="other">Cambiáronse as categorías de %d aplicacións.</item>
+    </plurals>
+    <string name="action_share_config_link">Compartir unha ligazón cos seus axustes</string>
+    <string name="action_share_config_links">Compartir ligazóns cos seus axustes</string>
+    <string name="share_link_none">Ningunha ligazón pode levar os axustes desta aplicación. Compártea como ficheiro en vez diso.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d aplicación queda fóra, porque ningunha ligazón pode levar os seus axustes.</item>
+        <item quantity="other">%d aplicacións quedan fóra, porque ningunha ligazón pode levar os seus axustes.</item>
+    </plurals>
+</resources>

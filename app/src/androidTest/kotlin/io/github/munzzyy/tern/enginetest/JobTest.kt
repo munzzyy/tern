@@ -8,6 +8,7 @@ import io.github.munzzyy.tern.work.Scheduler
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -32,14 +33,16 @@ class JobTest {
             val id = h.addFixture()
             assertNull(scheduler.getPendingJob(Scheduler.JOB_ID))
 
-            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryHours = 6, onlyOnUnmetered = true))
+            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 360, onlyOnUnmetered = true))
             val job = checkNotNull(scheduler.getPendingJob(Scheduler.JOB_ID)) { "apply() scheduled nothing" }
             assertTrue(job.isPeriodic)
             assertEquals(6 * 60 * 60 * 1000L, job.intervalMillis)
             assertTrue(job.isPersisted)
             assertTrue(job.isRequireBatteryNotLow)
+            // Wi-Fi only holds back installs; the check itself runs on any network, as in Obtainium.
             @Suppress("DEPRECATION")
-            assertEquals(JobInfo.NETWORK_TYPE_UNMETERED, job.networkType)
+            assertEquals(JobInfo.NETWORK_TYPE_ANY, job.networkType)
+            assertFalse(job.isRequireCharging)
 
             val listingsBefore = h.forge.requests.count { it.url.contains("/releases") }
             val out = shell("cmd jobscheduler run -f -u 0 ${targetContext.packageName} ${Scheduler.JOB_ID}")
@@ -49,7 +52,7 @@ class JobTest {
             assertTrue(h.forge.requests.count { it.url.contains("/releases") } > listingsBefore)
             assertNotNull("the periodic job is gone after a forced run", scheduler.getPendingJob(Scheduler.JOB_ID))
 
-            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryHours = 0))
+            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 0))
             assertNull(scheduler.getPendingJob(Scheduler.JOB_ID))
         }
     }

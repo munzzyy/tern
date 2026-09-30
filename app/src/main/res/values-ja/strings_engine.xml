@@ -9,7 +9,6 @@
     <string name="engine_no_space">空き容量が不足しています: これには %1$s が必要ですが、空きは %2$s です。</string>
     <string name="engine_download_cut">ダウンロードは %2$s 中 %1$s で停止しました。再試行して再開してください。</string>
     <string name="engine_checksum_mismatch">ファイルが提供元のチェックサムと一致しないため、削除されました。破損したか置き換えられた可能性があります。</string>
-    <string name="engine_tar_unsupported">このリリースはtarアーカイブであり、Ternはこれを開きません。別のファイルを選択してください。</string>
     <string name="engine_not_an_apk">このファイルはAPKでも、Ternが読めるアーカイブでもありません (%1$s)。</string>
     <string name="engine_archive_no_apk">アーカイブにAPKが含まれていません。</string>
     <string name="engine_archive_no_base">アーカイブに分割APKはありますが、ベースAPKがありません。</string>
@@ -57,7 +56,6 @@
     <string name="engine_warn_no_file">このリリースにはこの端末に合うファイルがありません。</string>
     <string name="engine_warn_prerelease">プレリリースのみ公開されています。</string>
     <string name="engine_warn_moved">プロジェクトは %1$s に移動したようです。</string>
-    <string name="engine_several_apps">このリンクには複数のアプリが含まれています。設定からインポートしてください。</string>
     <string name="engine_not_a_source">Ternはこのアドレスにリリースを見つけられませんでした。</string>
     <string name="engine_move_gone">このアプリはもうリストにありません。</string>
     <string name="engine_move_nothing">追跡する新しいアドレスはありません。</string>

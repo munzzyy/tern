@@ -1,0 +1,15 @@
+<result>
+<appId>org.example.missing</appId>
+<resultCode>0</resultCode>
+<resultMsg>Application is not approved as stub</resultMsg>
+<downloadURI><![CDATA[]]></downloadURI>
+<contentSize>0</contentSize>
+<versionCode></versionCode>
+<versionName></versionName>
+<productId></productId>
+<productName><![CDATA[]]></productName>
+<signature></signature>
+<timeInfo>260930005906</timeInfo>
+<cacheInfo></cacheInfo>
+<serverType>PRD</serverType>
+</result>

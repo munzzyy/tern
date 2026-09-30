@@ -9,7 +9,6 @@
     <string name="engine_no_space">Non hai espazo libre abondo: precisa %1$s e hai %2$s libres.</string>
     <string name="engine_download_cut">A descarga parou despois de %1$s de %2$s. Téntao de novo para retomala.</string>
     <string name="engine_checksum_mismatch">O ficheiro non coincide coa suma de comprobación que deu o editor, polo que se eliminou. Pode que se danase ou o substituísen.</string>
-    <string name="engine_tar_unsupported">Este lanzamento é un arquivo tar, que Tern non abre. Escolle outro ficheiro.</string>
     <string name="engine_not_an_apk">Este ficheiro non é un APK nin un arquivo que Tern poida ler (%1$s).</string>
     <string name="engine_archive_no_apk">O arquivo non contén ningún APK.</string>
     <string name="engine_archive_no_base">O arquivo contén APKs divididos pero ningún APK base.</string>
@@ -57,7 +56,6 @@
     <string name="engine_warn_no_file">Ningún ficheiro deste lanzamento serve para este dispositivo.</string>
     <string name="engine_warn_prerelease">Só se publicou unha versión preliminar.</string>
     <string name="engine_warn_moved">Semella que o proxecto se moveu a %1$s.</string>
-    <string name="engine_several_apps">Esta ligazón contén varias aplicacións. Impórtaa desde os axustes.</string>
     <string name="engine_not_a_source">Tern non atopou lanzamentos neste enderezo.</string>
     <string name="engine_move_gone">Esta aplicación xa non está na lista.</string>
     <string name="engine_move_nothing">Non hai ningún novo enderezo que seguir.</string>

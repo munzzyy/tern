@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="install_archive_zstd_unsupported">Ova arhiva je komprimirana pomoću zstd, koji Tern ne može otvoriti. Odaberite .zip ili .tar datoteku ovog izdanja, ili onu komprimiranu pomoću gzip, bzip2 ili xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s od %2$s</string>
+    <string name="install_setting_one_download">Jedno preuzimanje odjednom</string>
+    <string name="install_setting_one_download_effect">Preuzimanja čekaju jedno drugo umjesto da rade uporedo.</string>
+    <string name="install_file_foreign_host">Ova datoteka dolazi s %1$s, što nije stranica izvora ove aplikacije. Provjerava se kao i svaka druga datoteka.</string>
+    <string name="install_file_picked">Vaš izbor</string>
+    <string name="install_file_automatic">Neka Tern ponovo odabere datoteku</string>
+    <string name="install_file_picked_kept">Ažuriranja se drže datoteke koju ste odabrali, %1$s.</string>
+    <string name="install_file_picked_missing">Ovo izdanje nema datoteku sličnu onoj koju ste odabrali (%1$s), pa je Tern odabrao drugu.</string>
+</resources>

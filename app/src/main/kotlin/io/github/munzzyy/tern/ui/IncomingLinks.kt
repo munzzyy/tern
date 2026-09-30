@@ -18,6 +18,28 @@ fun incomingAddInput(action: String?, data: String?, sharedText: String?): Strin
     else -> null
 }
 
+/**
+ * A link that asks for a check: tern://refresh for every app, and Obtainium's
+ * obtainium://refresh or obtainium://refresh?id=<package> for every app or one. Null for any
+ * other link. A check only reads the sources; it adds, installs and removes nothing.
+ */
+sealed interface RefreshLink {
+    data object All : RefreshLink
+
+    /** Obtainium names an app by its package. */
+    data class One(val packageName: String) : RefreshLink
+}
+
+fun refreshLink(raw: String?): RefreshLink? {
+    if (raw == null || raw.length > MAX_INCOMING_CHARS) return null
+    val scheme = raw.substringBefore(':', "").lowercase()
+    if (scheme != "tern" && scheme != "obtainium") return null
+    val rest = raw.substringAfter(':', "").removePrefix("//")
+    if (!rest.substringBefore('?').trimEnd('/').equals("refresh", ignoreCase = true)) return null
+    val id = rest.substringAfter('?', "").split('&').firstOrNull { it.startsWith("id=") }?.removePrefix("id=")?.let(::decode)
+    return if (id.isNullOrBlank()) RefreshLink.All else RefreshLink.One(id.take(255))
+}
+
 const val ACTION_SEND = "android.intent.action.SEND"
 const val ACTION_VIEW = "android.intent.action.VIEW"
 
@@ -53,30 +75,46 @@ fun fromLink(raw: String): String? {
     val scheme = raw.substringBefore(':', "").lowercase()
     val rest = raw.substringAfter(':', "").removePrefix("//")
     return when (scheme) {
-        "tern" -> ternLink(rest)
+        "tern" -> ternLink(raw, rest)
         "obtainium" -> obtainiumLink(raw, rest)
         else -> null
     }
 }
 
-private fun ternLink(rest: String): String? {
-    if (!rest.substringBefore('?').trimEnd('/').equals("add", ignoreCase = true)) return null
+/** The action a tern:// or obtainium:// link asks for, such as "add". */
+private fun actionOf(rest: String): String = rest.substringBefore('/').substringBefore('?').substringBefore('#').lowercase()
+
+/**
+ * A link that asks for something neither Tern nor Obtainium's links it takes know. It goes to the
+ * Add screen whole, which says that Tern does not know it, instead of being dropped without a word.
+ */
+private fun unknownLink(raw: String, action: String): String? = raw.takeUnless { action in KNOWN_ACTIONS }
+
+private val KNOWN_ACTIONS = setOf("add", "app", "apps", "refresh")
+
+private fun ternLink(raw: String, rest: String): String? {
+    if (actionOf(rest) != "add") return unknownLink(raw, actionOf(rest))
     val query = rest.substringAfter('?', "").substringBefore('#')
     val encoded = query.split('&').firstOrNull { it.startsWith("url=") }?.removePrefix("url=") ?: return null
     return decode(encoded)?.takeIf(::isHttps)
 }
 
 private fun obtainiumLink(raw: String, rest: String): String? {
-    val kind = rest.substringBefore('/').lowercase()
-    val payload = rest.substringAfter('/', "")
-    if (payload.isEmpty()) return null
-    return when (kind) {
+    val action = actionOf(rest)
+    return when (action) {
+        // obtainium://add/<address>, raw or encoded, and obtainium://add?url=<address>.
         "add" -> {
+            val payload = if (rest.substring(action.length).startsWith("?")) {
+                rest.substringAfter('?').substringBefore('#').split('&').firstOrNull { it.startsWith("url=") }?.removePrefix("url=") ?: return null
+            } else {
+                rest.substringAfter('/', "")
+            }
+            if (payload.isEmpty()) return null
             val decoded = if (payload.startsWith(HTTPS, ignoreCase = true)) payload else decode(payload)
             decoded?.takeIf(::isHttps)
         }
-        "app", "apps" -> raw
-        else -> null
+        "app", "apps" -> raw.takeIf { rest.substringAfter('/', "").isNotEmpty() }
+        else -> unknownLink(raw, action)
     }
 }
 

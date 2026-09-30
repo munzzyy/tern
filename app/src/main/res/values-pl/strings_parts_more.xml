@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parts_obb_name_refused">To archiwum zawiera plik OBB, którego nazwa może wyprowadzić go poza folder OBB aplikacji, albo dwa pliki OBB o tej samej nazwie. Nic nie zostało zainstalowane.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">Umieszczono %1$d plik OBB w %2$s.</item>
+        <item quantity="few">Umieszczono %1$d pliki OBB w %2$s.</item>
+        <item quantity="many">Umieszczono %1$d plików OBB w %2$s.</item>
+        <item quantity="other">Umieszczono %1$d pliku OBB w %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">Pliki OBB nie zostały umieszczone w %1$s, ponieważ zapisywać tam mogą tylko instalatory Shizuku i root. Są w %2$s, pliku tego wydania: %3$s.</string>
+    <string name="parts_obb_failed">Nie udało się umieścić plików OBB w %1$s: %2$s. Są w %3$s, pliku tego wydania: %4$s.</string>
+</resources>

@@ -7,8 +7,8 @@ import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
-import android.util.Log
 import io.github.munzzyy.tern.engine.real.RealEngine
+import io.github.munzzyy.tern.log.TernLog
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
@@ -29,7 +29,8 @@ class TransferService : Service() {
         if (watcher?.isActive == true) return START_NOT_STICKY
         watcher = engine.scope.launch {
             engine.transfers.takeWhile { it.isNotEmpty() }.collect { transfers ->
-                val names = transfers.keys.mapNotNull { id -> engine.apps.value.firstOrNull { it.id == id }?.config?.name }
+                // Apps by their names, and files on their way to Downloads by theirs.
+                val names = transfers.keys.mapNotNull { id -> engine.apps.value.firstOrNull { it.id == id }?.config?.shownName ?: engine.saves.name(id) }
                 val done = transfers.values.sumOf { it.bytesDone }
                 val total = transfers.values.takeIf { v -> v.all { it.bytesTotal != null } }?.sumOf { it.bytesTotal ?: 0 }
                 notifier.show(Notifier.ID_TRANSFER, notifier.transfer(names, done, total))
@@ -54,7 +55,7 @@ class TransferService : Service() {
                 context.startForegroundService(Intent(context, TransferService::class.java))
             } catch (e: IllegalStateException) {
                 if (Build.VERSION.SDK_INT >= 31 && e is ForegroundServiceStartNotAllowedException) {
-                    Log.w(TAG, "Not allowed to start the transfer service now: ${e.message}")
+                    TernLog.w(TAG, "Not allowed to start the transfer service now: ${e.message}")
                 } else {
                     throw e
                 }

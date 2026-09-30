@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_installer">ഇതുപയോഗിച്ച് ഇൻസ്റ്റാൾ ചെയ്യുക</string>
+    <string name="installer_system">Android-ൻ്റെ ഇൻസ്റ്റാളർ</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">റൂട്ട്</string>
+    <string name="installer_other_app">മറ്റൊരു ആപ്പ്</string>
+    <string name="installer_system_effect">ആദ്യ ഇൻസ്റ്റാളിന് മുമ്പും, Android ആഗ്രഹിക്കുന്നപക്ഷം ഒരു അപ്ഡേറ്റിന് മുമ്പും Android ചോദിക്കുന്നു.</string>
+    <string name="installer_shizuku_effect">Shizuku അല്ലെങ്കിൽ Sui വഴി, ഒരു പ്രോംപ്റ്റ് ഇല്ലാതെ ഇൻസ്റ്റാൾ ചെയ്യുകയും അപ്ഡേറ്റ് ചെയ്യുകയും ചെയ്യുന്നു. ഓരോ ഫയലും ആദ്യം ഇതേ പരിശോധനകൾ പാസാകുന്നു.</string>
+    <string name="installer_root_effect">su വഴി, ഒരു പ്രോംപ്റ്റ് ഇല്ലാതെ ഇൻസ്റ്റാൾ ചെയ്യുകയും അപ്ഡേറ്റ് ചെയ്യുകയും ചെയ്യുന്നു. ഓരോ ഫയലും ആദ്യം ഇതേ പരിശോധനകൾ പാസാകുന്നു.</string>
+    <string name="installer_other_app_effect">പരിശോധിച്ച ഓരോ ഫയലും നിങ്ങൾ തിരഞ്ഞെടുക്കുന്ന ഇൻസ്റ്റാളർ ആപ്പിന് കൈമാറുന്നു. ആ ആപ്പ് എപ്പോഴും ചോദിക്കും, അതിനാൽ ഒന്നും പശ്ചാത്തലത്തിൽ ഇൻസ്റ്റാൾ ആകില്ല.</string>
+    <string name="installer_ready">തയ്യാറാണ്</string>
+    <string name="installer_not_ready">തയ്യാറല്ല, അതുവരെ Android-ൻ്റെ ഇൻസ്റ്റാളർ ഉപയോഗിക്കുന്നു</string>
+    <string name="installer_shizuku_not_running">Shizuku പ്രവർത്തിക്കുന്നില്ല. Shizuku ആപ്പിൽ ഇത് ആരംഭിക്കുക, തുടർന്ന് തിരികെ വരിക.</string>
+    <string name="installer_shizuku_too_old">Shizuku-വിൻ്റെ ഈ പതിപ്പ് Tern-ന് വളരെ പഴയതാണ്. Shizuku അപ്ഡേറ്റ് ചെയ്യുക.</string>
+    <string name="installer_shizuku_not_allowed">Tern-ന് ഇതുവരെ Shizuku ഉപയോഗിക്കാൻ അനുമതിയില്ല. ചോദിക്കാൻ ഇവിടെ അമർത്തുക.</string>
+    <string name="installer_no_root">Tern-ന് റൂട്ട് ആക്സസ് ഇല്ല. അത് വീണ്ടും ചോദിക്കാൻ ഇവിടെ അമർത്തുക.</string>
+    <string name="installer_no_other_app">ഇൻസ്റ്റാളർ ആപ്പൊന്നും തിരഞ്ഞെടുത്തിട്ടില്ല, അല്ലെങ്കിൽ തിരഞ്ഞെടുത്തത് ഇപ്പോൾ ഇല്ല.</string>
+    <string name="installer_pick_app">ഇൻസ്റ്റാളർ ആപ്പ്</string>
+    <string name="installer_pick_app_none">ഒന്നും തിരഞ്ഞെടുത്തിട്ടില്ല</string>
+    <string name="installer_no_apps">ഈ ഉപകരണത്തിൽ മറ്റ് ഇൻസ്റ്റാളർ ആപ്പുകളൊന്നുമില്ല.</string>
+    <string name="installer_play">Google Play ആണ് ആപ്പുകൾ ഇൻസ്റ്റാൾ ചെയ്തതെന്ന് പറയുക</string>
+    <string name="installer_play_effect">Google Play ആണ് ഇൻസ്റ്റാൾ ചെയ്തതെന്ന് വിശ്വസിക്കുമ്പോൾ മാത്രമേ ചില ആപ്പുകൾ പ്രവർത്തിക്കൂ. അപ്പോൾ Tern അവയുടെ ഇൻസ്റ്റാളറായി കാണിക്കില്ല.</string>
+    <string name="install_other_app_signer">Tern പരിശോധിച്ച ഫയൽ ഒപ്പിട്ടയാളല്ലാത്ത മറ്റാരോ ഒപ്പിട്ട ഒന്നാണ് ഇൻസ്റ്റാളർ ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തത്, അതിനാൽ ഈ ഇൻസ്റ്റാൾ കണക്കാക്കില്ല.</string>
+</resources>

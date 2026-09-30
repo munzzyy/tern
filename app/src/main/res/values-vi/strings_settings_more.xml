@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language_system">Giống hệ thống</string>
+    <string name="interval_more_often">Kiểm tra thường xuyên hơn</string>
+    <string name="interval_less_often">Kiểm tra ít thường xuyên hơn</string>
+    <string name="about_help">Cách Tern hoạt động</string>
+    <string name="about_help_effect">Những gì Tern kiểm tra và cách thêm, cập nhật, di chuyển ứng dụng, có trên trang của dự án.</string>
+    <string name="about_security">Cách Tern giữ an toàn cho bạn</string>
+    <string name="about_privacy">Quyền riêng tư</string>
+    <string name="verification_title">Xác minh nhà phát triển Android</string>
+    <string name="verification_text">Google đã thông báo rằng các thiết bị Android được chứng nhận sẽ chỉ cài đặt ứng dụng của những nhà phát triển đã đăng ký với Google, bắt đầu từ tháng 9 năm 2026 ở một số quốc gia và sau đó ở nhiều quốc gia hơn.\n\nỞ nơi quy định này được áp dụng, Android có thể từ chối ứng dụng của nhà phát triển chưa đăng ký, hoặc yêu cầu bạn làm thêm trước khi cài đặt, dù các bước kiểm tra riêng của Tern cho kết quả thế nào. Tern không thể thay đổi điều đó, và sẽ cho bạn biết khi Android từ chối.\n\nCác thiết bị không có chứng nhận của Google không bị ảnh hưởng.</string>
+    <string name="verification_more">Trang của Google về vấn đề này</string>
+    <string name="kept_export_format">Định dạng</string>
+    <string name="kept_export_format_tern">Định dạng của Tern, chứa toàn bộ</string>
+    <string name="kept_export_format_obtainium">Định dạng của Obtainium, Obtainium cũng đọc được</string>
+    <string name="kept_export_name">Tên tệp</string>
+    <string name="kept_export_name_usual">Để trống để dùng %1$s.</string>
+    <string name="look_style">Phong cách</string>
+    <string name="style_standard">Tiêu chuẩn</string>
+    <string name="style_vibrant">Sống động</string>
+    <string name="style_expressive">Biểu cảm</string>
+    <string name="look_style_effect">Sống động có màu sắc rực rỡ hơn về tổng thể. Biểu cảm xoay sắc thái của màu thứ hai và màu thứ ba ra xa màu thứ nhất hơn.</string>
+    <string name="look_color_code">Mã màu</string>
+    <string name="look_color_code_effect">Tern lấy sắc thái và độ bão hòa của màu này, rồi chọn những tông màu của nó vẫn dễ đọc.</string>
+    <string name="look_color_code_invalid">Sáu chữ số thập lục phân, ví dụ #3D5A80.</string>
+    <string name="crash_title">Tern đã dừng đột ngột</string>
+    <string name="crash_text">Đây là những gì Tern đang làm khi dừng. Nó vẫn ở trên thiết bị này; hãy chia sẻ với nhà phát triển nếu bạn muốn họ xem xét.</string>
+    <string name="crash_share">Chia sẻ</string>
+    <string name="crash_copied">Đã sao chép</string>
+    <string name="activity_range">Hiển thị</string>
+    <string name="activity_range_all">Mọi ngày</string>
+    <plurals name="activity_range_days">
+        <item quantity="other">%d ngày gần nhất</item>
+    </plurals>
+    <string name="activity_copied">Đã sao chép nhật ký</string>
+    <string name="settings_auto_installs">Tự động cài đặt bản cập nhật</string>
+    <string name="settings_auto_installs_effect">Ứng dụng được đặt tự cập nhật sẽ cập nhật sau khi kiểm tra trong nền. Khi tắt, chúng chỉ báo là có bản cập nhật, và mỗi ứng dụng vẫn giữ lựa chọn riêng để dùng sau.</string>
+    <string name="settings_unmetered_installs">Chỉ cài đặt trên Wi-Fi</string>
+    <string name="settings_unmetered_installs_effect">Việc kiểm tra chạy trên mọi mạng. Bản cập nhật lẽ ra sẽ tự cài đặt sẽ chờ đến khi có Wi-Fi hoặc cáp mạng, giống như Obtainium.</string>
+    <string name="settings_charging_installs">Chỉ cài đặt khi đang sạc</string>
+    <string name="settings_charging_installs_effect">Việc kiểm tra cũng chạy khi dùng pin. Bản cập nhật lẽ ra sẽ tự cài đặt sẽ chờ đến khi thiết bị đang sạc.</string>
+    <string name="engine_unreadable_app">Không thể đọc ứng dụng đã lưu %1$s, nên nó bị loại khỏi danh sách. Không có gì bị xóa: phiên bản Tern mới hơn có thể đọc được nó.</string>
+    <string name="settings_pin_certificates">Ghim chứng chỉ của các nền tảng mã nguồn</string>
+    <string name="settings_pin_certificates_effect">GitHub, GitLab và Codeberg phải xuất trình chứng chỉ từ tổ chức cấp chứng chỉ mà mỗi nền tảng được biết là đang dùng, giống như Obtainium. Chứng chỉ mà một tổ chức khác bị buộc phải cấp sẽ bị từ chối. Nếu một nền tảng mã nguồn đổi tổ chức cấp chứng chỉ, việc kiểm tra ở đó sẽ thất bại cho đến khi tắt tùy chọn này.</string>
+</resources>

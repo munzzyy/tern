@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_package_effect">Elk bestand moet bij dit pakket horen, en de app die eronder is geïnstalleerd, is degene waar Tern naar kijkt. Blijft het veld leeg, dan leest Tern de naam uit het bestand van de app.</string>
+</resources>

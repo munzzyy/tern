@@ -98,21 +98,6 @@
         <item quantity="other">Выбрано %d</item>
     </plurals>
     <string name="apps_select_hint">Выберите приложения из списка.</string>
-    <string name="action_add_to_category">Добавить в категорию</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Добавить %d приложение в категорию</item>
-        <item quantity="few">Добавить %d приложения в категорию</item>
-        <item quantity="many">Добавить %d приложений в категорию</item>
-        <item quantity="other">Добавить %d приложений в категорию</item>
-    </plurals>
-    <string name="bulk_category_field">Категория</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">В %2$s добавлено %1$d приложение.</item>
-        <item quantity="few">В %2$s добавлено %1$d приложения.</item>
-        <item quantity="many">В %2$s добавлено %1$d приложений.</item>
-        <item quantity="other">В %2$s добавлено %1$d приложений.</item>
-    </plurals>
-    <string name="bulk_category_existing">Или выберите из существующих:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Проверить %d приложение сейчас?</item>
         <item quantity="few">Проверить %d приложения сейчас?</item>
@@ -368,10 +353,6 @@
         <item quantity="many">Каждые %d часов</item>
         <item quantity="other">Каждые %d часа</item>
     </plurals>
-    <string name="settings_unmetered">Только в безлимитных сетях</string>
-    <string name="settings_unmetered_effect">Пропускать проверки через мобильный интернет и лимитный Wi-Fi.</string>
-    <string name="settings_charging">Только при зарядке</string>
-    <string name="settings_charging_effect">Пропускать проверки при работе от батареи.</string>
     <string name="settings_defaults">По умолчанию для новых</string>
     <string name="settings_notifications">Уведомления</string>
     <string name="settings_notify_updates">Когда найдены обновления</string>
@@ -407,7 +388,6 @@
     <string name="proxy_port_invalid">Число от 1 до 65535</string>
     <string name="settings_appearance">Внешний вид</string>
     <string name="settings_language">Язык</string>
-    <string name="settings_language_effect">Выбирается в настройках Android для этого приложения.</string>
     <string name="settings_theme">Тема</string>
     <string name="theme_system">Как в системе</string>
     <string name="theme_light">Светлая</string>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">リストの並べ方</string>
+    <string name="list_options_title">リストの並べ方</string>
+    <string name="list_reverse">順序を逆にする</string>
+    <string name="list_updates_first">更新を上に表示</string>
+    <string name="list_bury_not_installed">未インストールのアプリを下に表示</string>
+    <string name="sort_author">開発者順</string>
+    <string name="sort_added">追加日順</string>
+    <string name="sort_released">リリース日順</string>
+    <string name="group_title">グループ化</string>
+    <string name="group_none">なし</string>
+    <string name="group_category">カテゴリ</string>
+    <string name="group_source">提供元</string>
+    <string name="group_category_effect">複数のカテゴリに属するアプリは、それぞれのカテゴリに表示されます。</string>
+    <string name="group_other">その他</string>
+    <string name="group_folded">折りたたみ</string>
+    <string name="group_open">展開</string>
+    <string name="filter_favorites">お気に入り</string>
+    <string name="filter_track_only">追跡のみ</string>
+    <string name="filter_problems">問題</string>
+    <string name="action_done">完了</string>
+    <string name="settings_swipe">行をスワイプして操作</string>
+    <string name="settings_swipe_effect">アプリを末尾側にスワイプすると更新、先頭側にスワイプすると削除します。</string>
+    <string name="action_favorite">お気に入りに追加</string>
+    <string name="action_unfavorite">お気に入りから削除</string>
+    <string name="action_set_mode">更新が見つかったとき</string>
+    <string name="action_share_addresses">アドレスを共有</string>
+    <string name="action_share_export">ファイルとして共有</string>
+    <string name="action_uninstall">アンインストール</string>
+    <string name="export_format_tern">Ternファイル</string>
+    <string name="export_format_obtainium">Obtainium用ファイル</string>
+    <string name="bulk_uninstall_text">Androidがアプリごとに順番に確認します。ここで削除するまで、Ternはそれらの追跡を続けます。</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="other">%1$d 個のアプリをお気に入りにしました</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="other">%1$d 個のアプリをお気に入りから外しました</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="other">%1$d 個のアプリの更新が見つかったとき</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="other">%1$d 個のアプリをアンインストールしますか？</item>
+    </plurals>
+</resources>

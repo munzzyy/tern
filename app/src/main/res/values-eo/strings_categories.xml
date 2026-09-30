@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">Kategorioj</string>
+    <string name="settings_categories_effect">Nomu ilin, donu al ĉiu koloron, kaj renomu aŭ forigu ilin por ĉiuj aplikaĵoj samtempe.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d kategorio</item>
+        <item quantity="other">%d kategorioj</item>
+    </plurals>
+    <string name="categories_none">Ankoraŭ neniuj. Kreu unu ĉi tie, aŭ metu aplikaĵojn sub unu el la listo.</string>
+    <string name="categories_new">Nova kategorio</string>
+    <string name="category_edit">Redakti kategorion</string>
+    <string name="category_name">Nomo</string>
+    <string name="category_color">Koloro</string>
+    <string name="category_color_spoken">Koloro %1$d el %2$d</string>
+    <string name="category_exists">Kategorio kun ĉi tiu nomo jam ekzistas.</string>
+    <string name="category_delete">Forigi</string>
+    <string name="category_delete_effect">La aplikaĵoj en ĝi restas en la listo; ili nur ne plu estas metitaj sub ĝi.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d aplikaĵo</item>
+        <item quantity="other">%d aplikaĵoj</item>
+    </plurals>
+    <string name="action_close">Fermi</string>
+    <string name="categories_new_short">Nova…</string>
+    <string name="app_notes_title">Notoj</string>
+    <string name="app_notes_help">Markdown funkcias: **grasa**, *kursiva*, listoj kaj ligiloj.</string>
+    <string name="app_notes_add">Aldoni noton</string>
+    <string name="app_notes_add_effect">Io ajn memorinda pri ĉi tiu aplikaĵo. Ĝi estas inkluzivita en eksportoj.</string>
+    <string name="app_notes_edit">Redakti la noton</string>
+</resources>

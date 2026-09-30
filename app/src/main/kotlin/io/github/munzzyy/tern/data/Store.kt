@@ -3,7 +3,6 @@ package io.github.munzzyy.tern.data
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.util.Log
 import io.github.munzzyy.tern.core.interop.AppConfigJson
 import io.github.munzzyy.tern.core.interop.AppConfigJsonException
 import io.github.munzzyy.tern.core.json.Json
@@ -13,10 +12,17 @@ import io.github.munzzyy.tern.core.net.Validator
 import io.github.munzzyy.tern.core.net.ValidatorStore
 import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.engine.EventKind
+import io.github.munzzyy.tern.engine.EventLimits
+import io.github.munzzyy.tern.engine.isOwn
+import io.github.munzzyy.tern.log.TernLog
 import java.io.Closeable
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
 import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 data class StoredApp(val config: AppConfig, val state: AppState)
 
@@ -44,12 +50,37 @@ class Store(context: Context, name: String = DEFAULT_NAME) : ValidatorStore, Clo
         }
     }
 
+    /**
+     * The stored apps that cannot be read, which [apps] leaves out: each by the address it follows
+     * where that much can be read, or by its id. They are kept as they are.
+     */
+    fun unreadableApps(): List<String> = reader.rawQuery("SELECT id, config, state FROM apps", null).use { c ->
+        buildList {
+            while (c.moveToNext()) {
+                val id = c.getString(0)
+                if (decodeApp(id, c.getString(1), c.getString(2)) == null) add(addressIn(c.getString(1)) ?: id)
+            }
+        }
+    }
+
+    private fun addressIn(config: String): String? = try {
+        Json.parseObject(config).obj("source")?.string("url")?.take(MAX_ADDRESS)
+    } catch (_: JsonException) {
+        null
+    }
+
     fun app(id: String): StoredApp? = reader.rawQuery("SELECT id, config, state FROM apps WHERE id = ?", arrayOf(id)).use { c ->
         if (c.moveToFirst()) decodeApp(c.getString(0), c.getString(1), c.getString(2)) else null
     }
 
+    private val _configChanges = MutableStateFlow(0L)
+
+    /** Counts every change to the list or to an app's settings, but not to what a check or an install learned. */
+    val configChanges: StateFlow<Long> get() = _configChanges.asStateFlow()
+
     fun putApp(config: AppConfig, state: AppState) = write { db ->
         db.insertWithOnConflict("apps", null, appValues(config, state), SQLiteDatabase.CONFLICT_REPLACE)
+        _configChanges.update { it + 1 }
         Unit
     }
 
@@ -58,6 +89,7 @@ class Store(context: Context, name: String = DEFAULT_NAME) : ValidatorStore, Clo
         val current = app(id) ?: return@write null
         val next = change(current)
         db.update("apps", appValues(next.config, next.state), "id = ?", arrayOf(id))
+        if (next.config != current.config) _configChanges.update { it + 1 }
         next
     }
 
@@ -65,6 +97,7 @@ class Store(context: Context, name: String = DEFAULT_NAME) : ValidatorStore, Clo
 
     fun deleteApp(id: String) = write { db ->
         db.delete("apps", "id = ?", arrayOf(id))
+        _configChanges.update { it + 1 }
         Unit
     }
 
@@ -102,19 +135,22 @@ class Store(context: Context, name: String = DEFAULT_NAME) : ValidatorStore, Clo
             put("message", message.take(MAX_MESSAGE))
         }
         val id = db.insert("events", null, values)
-        db.execSQL("DELETE FROM events WHERE id NOT IN (SELECT id FROM events ORDER BY id DESC LIMIT $MAX_EVENTS)")
+        // Tern's own messages are counted apart, so that many of them never push out what happened to apps.
+        val group = if (kind.isOwn) "kind IN ($OWN_KINDS)" else "kind NOT IN ($OWN_KINDS)"
+        val cap = if (kind.isOwn) EventLimits.OWN else EventLimits.APPS
+        db.execSQL("DELETE FROM events WHERE $group AND id NOT IN (SELECT id FROM events WHERE $group ORDER BY id DESC LIMIT $cap)")
         Event(id, atMs, appId, appName, kind, message.take(MAX_MESSAGE))
     }
 
     fun events(): List<Event> =
-        reader.rawQuery("SELECT id, at, app_id, app_name, kind, message FROM events ORDER BY id DESC LIMIT $MAX_EVENTS", null).use { c ->
+        reader.rawQuery("SELECT id, at, app_id, app_name, kind, message FROM events ORDER BY id DESC LIMIT ${EventLimits.APPS + EventLimits.OWN}", null).use { c ->
             buildList {
                 while (c.moveToNext()) {
                     val kind = EventKind.entries.firstOrNull { it.name == c.getString(4) } ?: continue
                     add(Event(c.getLong(0), c.getLong(1), c.getString(2), c.getString(3), kind, c.getString(5)))
                 }
             }
-        }
+        }.let(EventLimits::kept)
 
     fun clearEvents() = write { db ->
         db.delete("events", null, null)
@@ -156,18 +192,21 @@ class Store(context: Context, name: String = DEFAULT_NAME) : ValidatorStore, Clo
     private fun decodeApp(id: String, config: String, state: String): StoredApp? = try {
         StoredApp(AppConfigJson.decode(Json.parseObject(config)), StateJson.decode(state))
     } catch (e: AppConfigJsonException) {
-        Log.e(TAG, "Stored app $id is unreadable: ${e.message}")
+        TernLog.e(TAG, "Stored app $id is unreadable: ${e.message}")
         null
     } catch (e: JsonException) {
-        Log.e(TAG, "Stored app $id is unreadable: ${e.message}")
+        TernLog.e(TAG, "Stored app $id is unreadable: ${e.message}")
         null
     }
 
     companion object {
         const val DEFAULT_NAME = "tern.db"
-        const val MAX_EVENTS = 500
         const val MAX_INSPECTIONS = 2000
         private const val MAX_MESSAGE = 2000
+        private const val MAX_ADDRESS = 300
         private const val TAG = "TernStore"
+
+        /** The kinds of Tern's own messages, as the events table names them. */
+        private val OWN_KINDS = EventKind.entries.filter { it.isOwn }.joinToString { "'${it.name}'" }
     }
 }

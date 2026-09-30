@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="install_archive_zstd_unsupported">Este arquivo compactado usa zstd, que o Tern não consegue abrir. Escolha um arquivo .zip ou .tar deste lançamento, ou um compactado com gzip, bzip2 ou xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s de %2$s</string>
+    <string name="install_setting_one_download">Um download de cada vez</string>
+    <string name="install_setting_one_download_effect">Os downloads esperam uns pelos outros em vez de rodarem lado a lado.</string>
+    <string name="install_file_foreign_host">Este arquivo vem de %1$s, que não é o site da fonte deste app. Ele é verificado como qualquer outro arquivo.</string>
+    <string name="install_file_picked">Sua escolha</string>
+    <string name="install_file_automatic">Deixar o Tern escolher o arquivo de novo</string>
+    <string name="install_file_picked_kept">As atualizações ficam com o arquivo que você escolheu, %1$s.</string>
+    <string name="install_file_picked_missing">Este lançamento não tem um arquivo como o que você escolheu, %1$s, então o Tern escolheu um.</string>
+</resources>

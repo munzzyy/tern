@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">വിലാസങ്ങളുടെ ഒരു ലിസ്റ്റിൽ നിന്ന്</string>
+    <string name="import_addresses_explain">ആപ്പുകളുടെ വിലാസങ്ങൾ ഒട്ടിക്കുക, ഓരോ വരിയിലും ഒന്ന് വീതമോ ടെക്സ്റ്റിൽ എവിടെയെങ്കിലുമോ, അല്ലെങ്കിൽ OPML ലിസ്റ്റ് പോലുള്ള ഒരു ഫയലിൽ നിന്ന് അവ വായിക്കുക. ഓരോന്നും ഒരൊറ്റ ലിങ്ക് ചേർക്കുന്ന അതേ രീതിയിൽ പരിശോധിച്ച് ചേർക്കുന്നു.</string>
+    <string name="import_addresses_field">വിലാസങ്ങൾ</string>
+    <string name="import_addresses_show">ഇതിലുള്ളത് കാണിക്കുക</string>
+    <string name="import_addresses_file">ഒരു ഫയൽ വായിക്കുക</string>
+    <string name="import_addresses_none">ഇതിൽ https വിലാസമൊന്നുമില്ല.</string>
+    <string name="import_addresses_other">മറ്റൊരു ലിസ്റ്റ്</string>
+    <string name="import_addresses_unreadable">ആ ഫയൽ വായിക്കാനായില്ല.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d വിലാസം. നിങ്ങൾക്ക് വേണ്ടാത്തവയുടെ ടിക്ക് മാറ്റുക, തുടർന്ന് ചേർക്കുക.</item>
+        <item quantity="other">%1$d വിലാസങ്ങൾ. നിങ്ങൾക്ക് വേണ്ടാത്തവയുടെ ടിക്ക് മാറ്റുക, തുടർന്ന് ചേർക്കുക.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">ഈ ലിങ്കിൽ %1$d ആപ്പ് വന്നു. ചേർക്കുന്നതിന് മുമ്പ് അതിൻ്റെ സെറ്റിംഗ്‌സ് കാണാൻ അത് തുറന്ന് നോക്കുക.</item>
+        <item quantity="other">ഈ ലിങ്കിൽ %1$d ആപ്പുകൾ വന്നു. ചേർക്കുന്നതിന് മുമ്പ് ഓരോന്നിൻ്റെയും സെറ്റിംഗ്‌സ് കാണാൻ അവ തുറന്ന് നോക്കുക.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Obtainium-നായി എക്സ്പോർട്ട് ചെയ്യുക</string>
+    <string name="settings_export_obtainium_effect">Obtainium ഇംപോർട്ട് ചെയ്യുന്ന ഒരു ഫയൽ, അങ്ങോട്ട് മാറ്റുന്ന ഒരു ലിസ്റ്റിനായി. Obtainium-ൽ സെറ്റിംഗ് ഇല്ലാത്തവ ഇവിടെത്തന്നെ നിൽക്കും.</string>
+    <string name="settings_export_installed_only">ഇൻസ്റ്റാൾ ചെയ്ത ആപ്പുകൾ മാത്രം എക്സ്പോർട്ട് ചെയ്യുക</string>
+    <string name="settings_export_settings">എക്സ്പോർട്ടുകളിൽ സെറ്റിംഗ്‌സ് ഉൾപ്പെടുത്തുക</string>
+    <string name="settings_export_settings_effect">രൂപം, ലിസ്റ്റ്, നോട്ടിഫിക്കേഷനുകൾ, പരിശോധനകൾ. ടോക്കൺ, പ്രോക്സി, ഇൻസ്റ്റാളർ എന്നിവ ഒരിക്കലും ഉൾപ്പെടുത്തില്ല.</string>
+    <string name="settings_kept_export">ഒരു എക്സ്പോർട്ട് ഏറ്റവും പുതിയതായി നിലനിർത്തുക</string>
+    <string name="settings_kept_export_effect">ലിസ്റ്റിൽ എന്തെങ്കിലും മാറിയാൽ അൽപ്പസമയത്തിനുള്ളിൽ Tern എക്സ്പോർട്ട് വീണ്ടും എഴുതുന്നു.</string>
+    <string name="settings_kept_export_written">%1$s-ന് എഴുതി</string>
+    <string name="settings_kept_export_folder">ഇത് സൂക്ഷിക്കുന്ന ഇടം</string>
+    <string name="import_settings_taken">ഫയലിലെ സെറ്റിംഗ്‌സും എടുത്തു.</string>
+</resources>

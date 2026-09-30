@@ -14,6 +14,7 @@ import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.Proxy
 import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 class TooManyRedirectsException(url: String) : IOException("Too many redirects starting at $url")
 
@@ -22,7 +23,8 @@ class LocalRedirectException(url: String) : IOException("Refusing a redirect fro
 
 /**
  * The platform's HttpURLConnection with redirects followed by hand, so every hop is checked for
- * HTTPS and the Authorization header never follows a redirect to another host.
+ * HTTPS and the Authorization header never follows a redirect to another host. While [pinning] is
+ * on, every connection is also held to [Pins].
  * [cleartextHostsForTests] lets tests reach a local server over http; it is empty everywhere else.
  */
 class UrlConnectionHttp(
@@ -32,21 +34,33 @@ class UrlConnectionHttp(
     private val readTimeoutMs: Int = 30_000,
     private val isLocal: (host: String) -> Boolean = Urls::isLocal,
     private val proxyAnswers: (Proxy) -> Boolean = { true },
+    private val pinning: () -> Boolean = { false },
 ) : HttpClient {
     override fun execute(request: HttpRequest): HttpResponse {
         var url = checked(request.url, request.url)
         val originalHost = url.host.lowercase()
         var authorization = request.authorization
         var method = request.method
+        var body = request.body
         repeat(MAX_REDIRECTS + 1) {
             val connection = open(url, method, request.headers, authorization)
+            if (body != null) {
+                try {
+                    connection.doOutput = true
+                    connection.setFixedLengthStreamingMode(body.size)
+                    connection.outputStream.use { it.write(body) }
+                } catch (e: IOException) {
+                    connection.disconnect()
+                    throw silentProxy(e)
+                }
+            }
             val status = try {
                 connection.responseCode
             } catch (e: IOException) {
                 connection.disconnect()
                 throw silentProxy(e)
             }
-            if (status in REDIRECTS) {
+            if (status in REDIRECTS && request.followRedirects) {
                 val location = connection.getHeaderField("Location")
                 connection.disconnect()
                 if (location.isNullOrBlank()) throw IOException("Redirect without a Location from $url")
@@ -58,7 +72,11 @@ class UrlConnectionHttp(
                 url = checked(next.toString(), request.url)
                 if (isLocal(url.host) && !isLocal(originalHost)) throw LocalRedirectException(request.url)
                 if (!url.host.equals(originalHost, ignoreCase = true)) authorization = null
-                if (status == 303 && method != "HEAD") method = "GET"
+                // 307 and 308 repeat the request as it was; the others turn it into a GET without a body.
+                if (status in 301..303 && method != "HEAD" && method != "GET") {
+                    method = "GET"
+                    body = null
+                }
                 return@repeat
             }
             return respond(connection, status, url)
@@ -78,6 +96,7 @@ class UrlConnectionHttp(
 
     private fun open(url: URL, method: String, headers: Map<String, String>, authorization: String?): HttpURLConnection {
         val connection = url.openConnection(proxy()) as HttpURLConnection
+        if (connection is HttpsURLConnection && pinning()) connection.sslSocketFactory = PinningTrustManager.sockets
         connection.instanceFollowRedirects = false
         connection.connectTimeout = connectTimeoutMs
         connection.readTimeout = readTimeoutMs

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_share">Поділитися</string>
+    <string name="action_release_page">Відкрити сторінку випуску</string>
+    <string name="action_share_address">Поділитися адресою</string>
+    <string name="action_share_link">Поділитися посиланням, що відкриє її в Tern</string>
+    <string name="action_app_info">Відомості про програму в Android</string>
+    <string name="detail_last_checked">Перевірено %1$s</string>
+    <string name="state_favorite">У вибраному</string>
+    <string name="action_save_file">Зберегти в Завантаження</string>
+    <string name="file_saved">Збережено як %1$s у %2$s, у тому вигляді, у якому файл завантажено. Tern перевіряє файл, коли встановлює його.</string>
+    <string name="action_save_files">Зберегти файли в Завантаження</string>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d випуск позначено переглянутим</item>
+        <item quantity="few">%d випуски позначено переглянутими</item>
+        <item quantity="many">%d випусків позначено переглянутими</item>
+        <item quantity="other">%d випуску позначено переглянутими</item>
+    </plurals>
+    <string name="project_page">Сторінка проєкту</string>
+    <string name="project_page_read">Прочитати сторінку проєкту</string>
+    <string name="project_page_effect">Його README у вигляді тексту. У хостингу коду нічого не запитується, доки ви її не відкриєте.</string>
+    <string name="project_page_loading">Читання…</string>
+    <string name="project_page_none">Проєкт не має сторінки, яку Tern може прочитати.</string>
+    <string name="project_page_failed">Не вдалося прочитати сторінку. Торкніться, щоб спробувати знову.</string>
+</resources>

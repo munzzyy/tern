@@ -9,7 +9,6 @@
     <string name="engine_no_space">可用空间不足：需要 %1$s，剩余 %2$s。</string>
     <string name="engine_download_cut">下载在 %1$s（共 %2$s）处中断。重试以继续。</string>
     <string name="engine_checksum_mismatch">文件与发布者提供的校验和不符，已被删除。文件可能已损坏或被替换。</string>
-    <string name="engine_tar_unsupported">此发布版是 tar 压缩包，Tern 无法打开。请选择其他文件。</string>
     <string name="engine_not_an_apk">此文件不是 APK，也不是 Tern 可以读取的压缩包 (%1$s)。</string>
     <string name="engine_archive_no_apk">该压缩包内没有 APK。</string>
     <string name="engine_archive_no_base">该压缩包包含拆分 APK，但没有基础 APK。</string>
@@ -57,7 +56,6 @@
     <string name="engine_warn_no_file">此发布版中没有适合此设备的文件。</string>
     <string name="engine_warn_prerelease">仅提供了预发布版。</string>
     <string name="engine_warn_moved">项目似乎已移至 %1$s。</string>
-    <string name="engine_several_apps">此链接包含多个应用。请改为在设置中导入。</string>
     <string name="engine_not_a_source">Tern 在此地址未找到发布。</string>
     <string name="engine_move_gone">此应用已不在列表中。</string>
     <string name="engine_move_nothing">没有可跟踪的新地址。</string>

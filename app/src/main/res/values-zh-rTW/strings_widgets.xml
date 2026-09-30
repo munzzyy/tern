@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">檢查</string>
+    <string name="shortcut_check_long">檢查更新</string>
+    <string name="shortcut_update_all_long">更新所有應用程式</string>
+    <string name="shortcut_add_short">新增</string>
+    <string name="shortcut_add_long">新增應用程式</string>
+    <string name="tile_check">檢查更新</string>
+    <string name="tile_checking">檢查中…</string>
+    <string name="tile_up_to_date">已是最新版本</string>
+    <string name="widget_label">更新</string>
+    <string name="widget_description">顯示有更新的應用程式數量，並提供檢查按鈕和全部更新按鈕。</string>
+    <plurals name="widget_updates">
+        <item quantity="other">%d 個更新</item>
+    </plurals>
+    <string name="widget_up_to_date">全部都是最新版本</string>
+    <string name="widget_checked">檢查於 %1$s</string>
+    <string name="widget_never_checked">尚未檢查</string>
+    <string name="widget_check">檢查</string>
+</resources>

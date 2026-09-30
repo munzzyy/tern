@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">Filtri la liston</string>
+    <string name="filter_state_on">Filtriloj estas ŝaltitaj</string>
+    <string name="filter_name">Nomo</string>
+    <string name="filter_author">Programisto</string>
+    <string name="filter_package">Pakaĵnomo</string>
+    <string name="filter_show_up_to_date">Aplikaĵoj, kiuj estas ĝisdataj</string>
+    <string name="filter_show_not_installed">Aplikaĵoj, kiuj ne estas instalitaj</string>
+    <string name="filter_show_tracked">Aplikaĵoj, kiuj estas nur sekvataj</string>
+    <string name="filter_categories">En iu el ĉi tiuj kategorioj</string>
+    <string name="filter_sources">El iu el ĉi tiuj fontoj</string>
+    <string name="filter_clear">Vakigi filtrilojn</string>
+    <plurals name="filter_shown">
+        <item quantity="one">%1$d el %2$d aplikaĵo montrata</item>
+        <item quantity="other">%1$d el %2$d aplikaĵoj montrataj</item>
+    </plurals>
+    <string name="checking_count">Kontrolas %1$d el %2$d</string>
+    <string name="row_moved">Movita al %1$s</string>
+    <string name="row_released">Eldonita %1$s</string>
+    <string name="row_changes">Ŝanĝoj</string>
+    <string name="action_show_changes">Montri la ŝanĝojn</string>
+    <string name="action_install_all">Instali ĉiujn</string>
+    <string name="action_install_update_all">Instali kaj ĝisdatigi ĉiujn</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d aplikaĵo ankoraŭ ne estas instalita</item>
+        <item quantity="other">%d aplikaĵoj ankoraŭ ne estas instalitaj</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Ĉu instali kaj ĝisdatigi %d aplikaĵon?</item>
+        <item quantity="other">Ĉu instali kaj ĝisdatigi %d aplikaĵojn?</item>
+    </plurals>
+    <string name="settings_update_all">La butono Ĝisdatigi ĉiujn</string>
+    <string name="update_all_updates">Nur ĝisdatigoj</string>
+    <string name="update_all_all">Ĝisdatigoj kaj aplikaĵoj ankoraŭ ne instalitaj</string>
+    <string name="update_all_none">Ne montrata</string>
+    <string name="settings_confirm_update_all">Demandi antaŭ Ĝisdatigi ĉiujn</string>
+    <string name="settings_confirm_update_all_effect">Diras, kiom da aplikaĵoj ĝi instalas aŭ ĝisdatigas, kaj atendas jesan respondon.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Ĉu instali %d aplikaĵon?</item>
+        <item quantity="other">Ĉu instali %d aplikaĵojn?</item>
+    </plurals>
+    <string name="bulk_install_text">Ĉiu dosiero estas elŝutata kaj kontrolata antaŭ ol Android estas petata instali ĝin. Tern memoras la atestilon, per kiu ĉiu nova aplikaĵo estas subskribita, kaj tenas ĉiun postan ĝisdatigon al ĝi.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d el la elektitaj aplikaĵoj havas nenion por instali nun kaj estas lasita tia, kia ĝi estas.</item>
+        <item quantity="other">%d el la elektitaj aplikaĵoj havas nenion por instali nun kaj estas lasitaj tiaj, kiaj ili estas.</item>
+    </plurals>
+    <string name="action_change_categories">Ŝanĝi kategoriojn</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Kategorioj de %d aplikaĵo</item>
+        <item quantity="other">Kategorioj de %d aplikaĵoj</item>
+    </plurals>
+    <string name="bulk_categories_help">Marko metas ĉiun elektitan aplikaĵon sub kategorion, kaj malplena kesto forigas ilin ĉiujn el ĝi. Streko lasas ĉiun aplikaĵon kiel ĝi estas.</string>
+    <string name="categories_filed_all">Ĉiu elektita aplikaĵo</string>
+    <string name="categories_filed_some">Kelkaj el la elektitaj aplikaĵoj</string>
+    <string name="categories_filed_none">Neniu el la elektitaj aplikaĵoj</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Ŝanĝis la kategoriojn de %d aplikaĵo.</item>
+        <item quantity="other">Ŝanĝis la kategoriojn de %d aplikaĵoj.</item>
+    </plurals>
+    <string name="action_share_config_link">Kunhavigi ligilon kun ĝiaj agordoj</string>
+    <string name="action_share_config_links">Kunhavigi ligilojn kun iliaj agordoj</string>
+    <string name="share_link_none">Neniu ligilo povas porti la agordojn de ĉi tiu aplikaĵo. Kunhavigu ĝin anstataŭe kiel dosieron.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d aplikaĵo estas preterlasita, ĉar neniu ligilo povas porti ĝiajn agordojn.</item>
+        <item quantity="other">%d aplikaĵoj estas preterlasitaj, ĉar neniu ligilo povas porti iliajn agordojn.</item>
+    </plurals>
+</resources>

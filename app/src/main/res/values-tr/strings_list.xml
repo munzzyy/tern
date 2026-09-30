@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">Listeyi düzenle</string>
+    <string name="list_options_title">Listeyi düzenle</string>
+    <string name="list_reverse">Sırayı ters çevir</string>
+    <string name="list_updates_first">Güncellemeler üstte</string>
+    <string name="list_bury_not_installed">Yüklü olmayan uygulamalar altta</string>
+    <string name="sort_author">Geliştiriciye göre</string>
+    <string name="sort_added">Eklenme tarihine göre</string>
+    <string name="sort_released">Sürüm tarihine göre</string>
+    <string name="group_title">Şuna göre grupla</string>
+    <string name="group_none">Hiçbiri</string>
+    <string name="group_category">Kategori</string>
+    <string name="group_source">Kaynak</string>
+    <string name="group_category_effect">Birden fazla kategorideki bir uygulama her birinde görünür.</string>
+    <string name="group_other">Diğer her şey</string>
+    <string name="group_folded">Daraltılmış</string>
+    <string name="group_open">Genişletilmiş</string>
+    <string name="filter_favorites">Favoriler</string>
+    <string name="filter_track_only">Yalnızca izlenenler</string>
+    <string name="filter_problems">Sorunlar</string>
+    <string name="action_done">Bitti</string>
+    <string name="settings_swipe">Satırları kaydırarak işlem yap</string>
+    <string name="settings_swipe_effect">Güncellemek için bir uygulamayı sona doğru, kaldırmak için başa doğru kaydırın.</string>
+    <string name="action_favorite">Favorilere ekle</string>
+    <string name="action_unfavorite">Favorilerden kaldır</string>
+    <string name="action_set_mode">Güncellemeler bulunduğunda</string>
+    <string name="action_share_addresses">Adresleri paylaş</string>
+    <string name="action_share_export">Dosya olarak paylaş</string>
+    <string name="action_uninstall">Cihazdan kaldır</string>
+    <string name="export_format_tern">Bir Tern dosyası</string>
+    <string name="export_format_obtainium">Obtainium için bir dosya</string>
+    <string name="bulk_uninstall_text">Android her uygulamayı sırayla sorar. Siz buradan kaldırana kadar Tern onları izlemeye devam eder.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d uygulama artık favori</item>
+        <item quantity="other">%1$d uygulama artık favori</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d uygulama artık favori değil</item>
+        <item quantity="other">%1$d uygulama artık favori değil</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">%1$d uygulamanın güncellemesi bulunduğunda</item>
+        <item quantity="other">%1$d uygulamanın güncellemesi bulunduğunda</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">%1$d uygulama cihazdan kaldırılsın mı?</item>
+        <item quantity="other">%1$d uygulama cihazdan kaldırılsın mı?</item>
+    </plurals>
+</resources>

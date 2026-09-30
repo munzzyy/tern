@@ -14,7 +14,7 @@ interface Engine {
     /** Apps with updates first, then the rest by name. Emits on every change, including progress. */
     val apps: StateFlow<List<AppRow>>
 
-    /** Newest first, at most 500. */
+    /** Newest first: at most 500 of what happened to apps, and at most 500 of Tern's own messages. */
     val events: StateFlow<List<Event>>
 
     val settings: StateFlow<Settings>
@@ -22,11 +22,43 @@ interface Engine {
     /** True while a check of the whole list is running. */
     val checkingAll: StateFlow<Boolean>
 
+    /** How far the running check of the whole list has got; null while none runs. */
+    val checkCount: StateFlow<CheckCount?>
+
     /** False while the device has no working internet connection. */
     val online: StateFlow<Boolean>
 
     /** Looks at what the user typed, pasted or shared: a link is resolved, anything else is searched. */
     suspend fun detect(input: String): Detection
+
+    /**
+     * [detect], with the address read the way [reading] says: as the kind of source the person
+     * picked, with the options and the package name they gave, or the apps of a repository
+     * searched for words.
+     */
+    suspend fun detect(input: String, reading: Reading): Detection
+
+    /**
+     * Replaces the settings of the app in the list that [found] names with those it carried, as a
+     * link or a file sets them. Its pins stay where it has any, it keeps a package name it has, and
+     * it does not start to install by itself. Returns the app's id.
+     */
+    suspend fun replaceSettings(found: Detection.Found): String
+
+    /** Every place a search can look, by the name each goes by; [Settings.searchIn] picks among them. */
+    val searchOrigins: List<String>
+
+    /** [text] written in Markdown, such as an app's notes, as blocks to show. Links go only to web addresses. */
+    fun renderNotes(text: String): List<NoteBlock>
+
+    /** Whether the app's source keeps a project page Tern can read: a README on GitHub, GitLab or a Forgejo. */
+    fun hasProjectPage(row: AppRow): Boolean
+
+    /**
+     * The app's project page, its README, as blocks to show; empty when the project keeps none.
+     * Throws [ProblemException] when it cannot be read now.
+     */
+    suspend fun projectPage(appId: String): List<NoteBlock>
 
     /**
      * The configuration [add] would store for [found]. An app that arrives by link or import can
@@ -40,8 +72,11 @@ interface Engine {
      */
     suspend fun add(found: Detection.Found, install: Boolean): String
 
-    /** Checks one app, or all of them when [appId] is null. Returns when the check is finished. */
-    suspend fun check(appId: String? = null)
+    /**
+     * Checks one app, or all of them when [appId] is null. Returns when the check is finished.
+     * [cause] is what Tern's own messages in the log say started it.
+     */
+    suspend fun check(appId: String? = null, cause: CheckCause = CheckCause.ASKED)
 
     /**
      * Downloads, verifies and installs. Returns at once; progress and the outcome arrive through
@@ -56,6 +91,24 @@ interface Engine {
      * as cancelled, so the screens ask first.
      */
     fun mayInstall(): Boolean
+
+    /** Whether the installer chosen in settings can be used now. Until it can, Android's own installer is used. */
+    val installerReadiness: StateFlow<InstallerReadiness>
+
+    /** Asks the chosen installer again. For root this runs su, which may show the root manager's own question. */
+    fun recheckInstaller()
+
+    /** Asks Shizuku to let Tern use it; the answer arrives through [installerReadiness]. False when Shizuku cannot be asked. */
+    fun askShizuku(): Boolean
+
+    /** Opens Dhizuku's own question whether Tern may use it; the answer arrives through [installerReadiness]. False when there is no Dhizuku to ask. */
+    fun askDhizuku(): Boolean
+
+    /** Apps on this device that take an APK to install, for [InstallerMode.OTHER_APP]; an app with several ways in has a choice for each. */
+    fun installerChoices(): List<InstallerChoice>
+
+    /** The icon of [choice], as the installer app shows it. Null when it has none. */
+    suspend fun installerIcon(choice: InstallerChoice, sizePx: Int): Bitmap?
 
     fun installAllUpdates()
 
@@ -120,7 +173,7 @@ interface Engine {
     fun hasFilePicker(): Boolean
 
     /** Writes the export where a file manager can find it and returns where that is. Tokens are never exported. */
-    suspend fun exportToFolder(): SavedFile
+    suspend fun exportToFolder(format: ExportFormat = ExportFormat.TERN): SavedFile
 
     /** Export files this app may read without a picker, newest first. */
     suspend fun importableFiles(): List<SavedFile>
@@ -131,6 +184,14 @@ interface Engine {
     suspend fun importFromLink(url: String): ImportSummary
 
     suspend fun importReceived(file: Received.ExportFile): ImportSummary
+
+    /**
+     * Does what an import only offered, for the import [offer] names: [replace] replaces the
+     * settings of the apps in the list with the file's, under the rules of [replaceSettings], and
+     * [takeSettings] takes the settings the file carries. Nothing is done twice. Returns all that
+     * has been done for the offer.
+     */
+    suspend fun finishImport(offer: String, replace: Boolean, takeSettings: Boolean): ImportSummary
 
     /** Well known apps to start from, those for a television first when this device is one. */
     fun suggestions(): List<Suggestion>
@@ -174,7 +235,42 @@ interface Engine {
     suspend fun starredBy(user: String): List<SearchHit>
 
     /** Returns how many apps were written. Tokens are never exported. */
-    suspend fun exportTo(uri: Uri): Int
+    suspend fun exportTo(uri: Uri, format: ExportFormat = ExportFormat.TERN): Int
+
+    /**
+     * The apps in [appIds], or every app when it is null, written in [format] to a file another
+     * app may read through the returned address, for sharing. Tokens are never in it.
+     */
+    suspend fun shareableExport(appIds: Collection<String>?, format: ExportFormat): Uri
+
+    /** How the kept export stands, null before it was first written in this run. */
+    val exportStatus: StateFlow<ExportStatus?>
+
+    /** Keeps Android's grant of the folder the person picked for the kept export. Store the folder with [saveSettings] after. */
+    suspend fun takeExportFolder(folder: Uri)
+
+    /** Writes the kept export now. */
+    suspend fun writeKeptExport()
+
+    /**
+     * Downloads [assetUrl] of the release [releaseId] of the app, any of its files or of its
+     * [Release.sourceArchives], and puts a copy in Download/Tern, as it came. Nothing is checked or
+     * installed. The save goes on when the caller stops waiting, and notifications say how far it
+     * is and when it is done. Throws [ProblemException] when it cannot.
+     */
+    suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile
+
+    /**
+     * The size of a file of the app whose source names none, asked of the server once, or null
+     * when the server does not say. The token goes only where it would go for the download.
+     */
+    suspend fun fileSize(appId: String, releaseId: String, assetUrl: String): Long?
+
+    /** Runs the background check now, installs of apps set to update by themselves included. */
+    suspend fun runBackgroundCheck()
+
+    /** True when Let Me Downgrade is installed, without which Android refuses an older version over a newer one. */
+    fun canDowngrade(): Boolean
 
     suspend fun clearEvents()
 

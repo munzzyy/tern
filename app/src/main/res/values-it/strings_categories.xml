@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">Categorie</string>
+    <string name="settings_categories_effect">Dai loro un nome, assegna un colore a ciascuna, e rinominale o eliminale per tutte le app in una volta.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d categoria</item>
+        <item quantity="many">%d categorie</item>
+        <item quantity="other">%d categorie</item>
+    </plurals>
+    <string name="categories_none">Ancora nessuna. Creane una qui, o aggiungi delle app a una categoria dalla lista.</string>
+    <string name="categories_new">Nuova categoria</string>
+    <string name="category_edit">Modifica categoria</string>
+    <string name="category_name">Nome</string>
+    <string name="category_color">Colore</string>
+    <string name="category_color_spoken">Colore %1$d di %2$d</string>
+    <string name="category_exists">Esiste già una categoria con questo nome.</string>
+    <string name="category_delete">Elimina</string>
+    <string name="category_delete_effect">Le app al suo interno restano nella lista; semplicemente non sono più in questa categoria.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d app</item>
+        <item quantity="many">%d app</item>
+        <item quantity="other">%d app</item>
+    </plurals>
+    <string name="action_close">Chiudi</string>
+    <string name="categories_new_short">Nuova…</string>
+    <string name="app_notes_title">Note</string>
+    <string name="app_notes_help">Si può usare Markdown: **grassetto**, *corsivo*, elenchi e link.</string>
+    <string name="app_notes_add">Aggiungi una nota</string>
+    <string name="app_notes_add_effect">Tutto ciò che vale la pena ricordare su questa app. La nota viene inclusa nelle esportazioni.</string>
+    <string name="app_notes_edit">Modifica la nota</string>
+</resources>

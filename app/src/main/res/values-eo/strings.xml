@@ -92,17 +92,6 @@
         <item quantity="other">%d elektitaj</item>
     </plurals>
     <string name="apps_select_hint">Elektu aplikaĵojn el la listo.</string>
-    <string name="action_add_to_category">Aldoni al kategorio</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Aldoni %d aplikaĵon al kategorio</item>
-        <item quantity="other">Aldoni %d aplikaĵojn al kategorio</item>
-    </plurals>
-    <string name="bulk_category_field">Kategorio</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">Metis %1$d aplikaĵon sub %2$s.</item>
-        <item quantity="other">Metis %1$d aplikaĵojn sub %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Aŭ elektu unu kiun vi jam uzas:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Kontroli %d aplikaĵon nun?</item>
         <item quantity="other">Kontroli %d aplikaĵojn nun?</item>
@@ -334,10 +323,6 @@
         <item quantity="one">Ĉiun %d horon</item>
         <item quantity="other">Ĉiujn %d horojn</item>
     </plurals>
-    <string name="settings_unmetered">Nur sur senlimaj retoj</string>
-    <string name="settings_unmetered_effect">Pretersalti kontrolojn per poŝtelefonaj datumoj kaj limigita Wi-Fi.</string>
-    <string name="settings_charging">Nur dum ŝargado</string>
-    <string name="settings_charging_effect">Pretersalti kontrolojn kiam sur baterio.</string>
     <string name="settings_defaults">Defaŭltoj por novaj aplikaĵoj</string>
     <string name="settings_notifications">Sciigoj</string>
     <string name="settings_notify_updates">Kiam ĝisdatigoj estas trovitaj</string>
@@ -373,7 +358,6 @@
     <string name="proxy_port_invalid">Nombro de 1 ĝis 65535</string>
     <string name="settings_appearance">Aspekto</string>
     <string name="settings_language">Lingvo</string>
-    <string name="settings_language_effect">Elektita en la agordoj de Android por ĉi tiu aplikaĵo.</string>
     <string name="settings_theme">Etoso</string>
     <string name="theme_system">Sekvi la sistemon</string>
     <string name="theme_light">Hela</string>

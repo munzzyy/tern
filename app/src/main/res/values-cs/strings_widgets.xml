@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">Kontrola</string>
+    <string name="shortcut_check_long">Zkontrolovat aktualizace</string>
+    <string name="shortcut_update_all_long">Aktualizovat všechny aplikace</string>
+    <string name="shortcut_add_short">Přidat</string>
+    <string name="shortcut_add_long">Přidat aplikaci</string>
+    <string name="tile_check">Zkontrolovat aktualizace</string>
+    <string name="tile_checking">Kontroluje se…</string>
+    <string name="tile_up_to_date">Aktuální</string>
+    <string name="widget_label">Aktualizace</string>
+    <string name="widget_description">Kolik aplikací má aktualizaci, s tlačítkem pro kontrolu a dalším pro aktualizaci všech.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d aktualizace</item>
+        <item quantity="few">%d aktualizace</item>
+        <item quantity="many">%d aktualizace</item>
+        <item quantity="other">%d aktualizací</item>
+    </plurals>
+    <string name="widget_up_to_date">Vše je aktuální</string>
+    <string name="widget_checked">Zkontrolováno v %1$s</string>
+    <string name="widget_never_checked">Zatím nekontrolováno</string>
+    <string name="widget_check">Zkontrolovat</string>
+</resources>

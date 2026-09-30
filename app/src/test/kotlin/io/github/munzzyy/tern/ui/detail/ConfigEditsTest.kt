@@ -2,6 +2,8 @@ package io.github.munzzyy.tern.ui.detail
 
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.ui.add.isPackageName
+import io.github.munzzyy.tern.ui.apps.cleanCategory
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -35,20 +37,57 @@ class ConfigEditsTest {
     }
 
     @Test
+    fun aMatchGroupIsANumberOrATemplateOfGroups() {
+        assertTrue(isValidMatchGroup(""))
+        assertTrue(isValidMatchGroup("2"))
+        assertTrue(isValidMatchGroup("$1.$2"))
+        assertFalse(isValidMatchGroup("first"))
+        assertEquals(setOf("matchGroup", "versionFilter"), PatternDraft(matchGroup = "x", versionFilter = "(").invalid)
+    }
+
+    @Test
+    fun theNewFieldsGoIntoTheAppAndBlankOnesStayUnset() {
+        val config = AppConfig("id", SourceSpec("github", "https://github.com/example/app"), "App")
+        val saved = PatternDraft.of(config).copy(customName = "  Mine ", customAuthor = " ", matchGroup = "1", versionFilter = "^2", innerFilter = "arm").applyTo(config)
+        assertEquals("Mine", saved.customName)
+        assertNull(saved.customAuthor)
+        assertEquals("Mine", saved.shownName)
+        assertEquals("1", saved.releases.matchGroup)
+        assertEquals("^2", saved.releases.versionFilter)
+        assertEquals("arm", saved.assets.innerFilter)
+        assertEquals(PatternDraft.of(saved), PatternDraft.of(saved.copy()))
+    }
+
+    @Test
+    fun aPackageNameIsCheckedBeforeItIsSaved() {
+        assertEquals("org.example.app", packageEntry(" org.example .app\n"))
+        assertEquals(255, packageEntry("a".repeat(300)).length)
+        assertTrue(isPackageName(packageEntry("org.example.app")))
+        assertTrue(isPackageName(""))
+        assertFalse(isPackageName("example"))
+        assertFalse(isPackageName("org.1example"))
+        assertFalse(isPackageName("org..example"))
+        assertFalse(isPackageName("org.example-app"))
+        assertEquals("org.example.app", packageNameOf("org.example.app"))
+        // An empty field takes the name away, and Tern reads it from the app's file again.
+        assertNull(packageNameOf(""))
+    }
+
+    @Test
     fun categoriesAreTrimmedAndCapped() {
-        assertEquals(listOf("Maps", "Tools"), parseCategories(" Maps, ,Tools,Maps "))
-        assertEquals(20, parseCategories((1..50).joinToString(",") { "c$it" }).size)
-        assertEquals(40, parseCategories("x".repeat(100)).single().length)
+        assertEquals("Maps", cleanCategory("  Maps "))
+        assertEquals(40, cleanCategory("x".repeat(100))?.length)
+        assertNull(cleanCategory("   "))
     }
 
     @Test
     fun draftRoundTripsAndBlankMeansUnset() {
         val config = AppConfig("id", SourceSpec("github", "https://github.com/example/app"), "App", categories = listOf("A"))
-        val draft = PatternDraft.of(config).copy(include = "  arm64 ", exclude = "   ", categories = "A, B")
+        val draft = PatternDraft.of(config).copy(include = "  arm64 ", exclude = "   ")
         val saved = draft.applyTo(config)
         assertEquals("arm64", saved.assets.include)
         assertNull(saved.assets.exclude)
-        assertEquals(listOf("A", "B"), saved.categories)
+        assertEquals(listOf("A"), saved.categories)
         assertEquals(PatternDraft.of(saved), PatternDraft.of(saved.copy()))
         assertEquals(config, PatternDraft.of(config).applyTo(config))
     }

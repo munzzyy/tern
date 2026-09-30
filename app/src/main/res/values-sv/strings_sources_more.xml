@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">Appar från %1$s kan bara följas, eftersom ingen fil att installera erbjuds där.</string>
+    <string name="min_age_global">Som inställt för alla appar: %1$s</string>
+    <string name="setting_min_age_global_effect">Appar utan egen väntetid väntar så här länge innan en ny utgåva erbjuds, så att en dålig kan dras tillbaka först.</string>
+    <string name="option_link_text">Filtrera länkar efter deras text</string>
+    <string name="option_link_text_effect">Filtret matchas mot länkens text i stället för dess adress.</string>
+    <string name="option_take_first">Ta den första länken</string>
+    <string name="option_take_first_effect">Annars tas den sista länken i ordningen.</string>
+    <string name="option_natural_order_effect">Annars läggs länkar i naturlig ordning efter sin adress, där tal läses som tal.</string>
+    <string name="option_by_last_segment">Gå efter slutet av adressen</string>
+    <string name="option_by_last_segment_effect">Länkar ordnas, och versioner läses, efter delen efter sista snedstrecket.</string>
+    <string name="option_steps_title">Sidor att gå igenom först</string>
+    <string name="option_steps_order_help">På varje sida ordnas de länkar som matchar, och den sista följs.</string>
+    <string name="step_title">Sida %1$d</string>
+    <string name="step_filter">Länk att följa</string>
+    <string name="step_text">Matcha länkens text</string>
+    <string name="step_arch">Föredra denna enhets processor</string>
+    <string name="step_add">Lägg till en sida</string>
+    <string name="step_remove">Ta bort denna sida</string>
+    <string name="option_file_version">Använd filnamnet som version</string>
+    <string name="option_file_version_effect">Varje fil räknas då som en egen utgåva.</string>
+    <string name="github_proxy_title">GitHub via en hubproxy</string>
+    <string name="github_proxy_effect">Varje förfrågan till GitHub går till denna värd, som ser varenda en. Ingen token skickas genom den, så privata projekt och GitHub Actions kan inte följas på detta sätt.</string>
+    <string name="github_proxy_host">Hubproxy-värd</string>
+    <string name="github_proxy_help">Enbart ett värdnamn, till exempel gh-proxy.com. Tern når den via HTTPS.</string>
+    <string name="github_proxy_invalid">Det är inte ett värdnamn som Tern kan använda</string>
+    <string name="github_proxy_in_use">GitHub-förfrågningar går via %1$s</string>
+    <string name="github_proxy_remove">Sluta använda hubproxyn</string>
+</resources>

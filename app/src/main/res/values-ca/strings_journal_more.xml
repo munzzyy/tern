@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Registre d\'activitat</string>
+    <string name="journal_keep_own">Conserva els propis missatges de Tern al registre</string>
+    <string name="journal_keep_own_effect">Els seus avisos i errors, i quan comença i acaba cada comprovació. Tot el que pugui ser una contrasenya o un token es deixa fora, i el registre es queda en aquest dispositiu tret que el comparteixis.</string>
+    <string name="journal_filter_own">Missatges de Tern</string>
+    <string name="journal_mark_note">Nota de Tern</string>
+    <string name="journal_mark_warning">Avís de Tern</string>
+    <string name="journal_mark_error">Error de Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Ha començat una comprovació de %1$d aplicació.</item>
+        <item quantity="many">Ha començat una comprovació de %1$d aplicacions.</item>
+        <item quantity="other">Ha començat una comprovació de %1$d aplicacions.</item>
+    </plurals>
+    <string name="journal_check_started_one">Ha començat una comprovació de l\'aplicació %1$s.</string>
+    <string name="journal_cause_asked">S\'ha demanat des de Tern.</string>
+    <string name="journal_cause_opening">S\'ha obert Tern.</string>
+    <string name="journal_cause_page">S\'ha obert la seva pàgina.</string>
+    <string name="journal_cause_link">L\'ha demanada un enllaç.</string>
+    <string name="journal_cause_shortcut">L\'ha demanada una drecera.</string>
+    <string name="journal_cause_widget">L\'ha demanada el widget.</string>
+    <string name="journal_cause_tile">L\'ha demanada la icona de Configuració ràpida.</string>
+    <string name="journal_cause_schedule">L\'ha iniciada la programació.</string>
+    <string name="journal_cause_retry">Torna a provar-ho on va fallar l\'última comprovació.</string>
+    <string name="journal_cause_added">Acaba d\'afegir-se.</string>
+    <string name="journal_cause_imported">Acaben d\'importar-se.</string>
+    <string name="journal_cause_changed">La seva configuració ha canviat.</string>
+    <string name="journal_cause_install">Està a punt d\'instal·lar-se, i abans es comprova.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">La comprovació de %1$d aplicació ha acabat després de %2$s.</item>
+        <item quantity="many">La comprovació de %1$d aplicacions ha acabat després de %2$s.</item>
+        <item quantity="other">La comprovació de %1$d aplicacions ha acabat després de %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">La comprovació de l\'aplicació %1$s ha acabat després de %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Ha trobat %1$d actualització.</item>
+        <item quantity="many">Ha trobat %1$d actualitzacions.</item>
+        <item quantity="other">Ha trobat %1$d actualitzacions.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d aplicació no s\'ha pogut comprovar.</item>
+        <item quantity="many">%1$d aplicacions no s\'han pogut comprovar.</item>
+        <item quantity="other">%1$d aplicacions no s\'han pogut comprovar.</item>
+    </plurals>
+    <string name="journal_check_stopped">La comprovació s\'ha aturat després de %1$s, abans d\'acabar.</string>
+</resources>

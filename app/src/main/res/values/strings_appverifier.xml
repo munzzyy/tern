@@ -2,6 +2,4 @@
 <resources>
     <!-- AppVerifier is the name of an app. -->
     <string name="appverifier_title">A second check</string>
-    <string name="appverifier_effect">AppVerifier is a separate app. It compares this app with the certificate Tern holds it to, and with its own list of apps it knows.</string>
-    <string name="appverifier_action">Check with AppVerifier</string>
 </resources>

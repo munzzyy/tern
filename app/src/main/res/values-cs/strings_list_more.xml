@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">Filtrovat seznam</string>
+    <string name="filter_state_on">Filtry jsou zapnuty</string>
+    <string name="filter_name">Název</string>
+    <string name="filter_author">Vývojář</string>
+    <string name="filter_package">Název balíčku</string>
+    <string name="filter_show_up_to_date">Aktuální aplikace</string>
+    <string name="filter_show_not_installed">Nenainstalované aplikace</string>
+    <string name="filter_show_tracked">Aplikace, které se jen sledují</string>
+    <string name="filter_categories">V kterékoli z těchto kategorií</string>
+    <string name="filter_sources">Z kteréhokoli z těchto zdrojů</string>
+    <string name="filter_clear">Vymazat filtry</string>
+    <plurals name="filter_shown">
+        <item quantity="one">Zobrazeno %1$d z %2$d aplikace</item>
+        <item quantity="few">Zobrazeno %1$d z %2$d aplikací</item>
+        <item quantity="many">Zobrazeno %1$d z %2$d aplikací</item>
+        <item quantity="other">Zobrazeno %1$d z %2$d aplikací</item>
+    </plurals>
+    <string name="checking_count">Kontroluje se %1$d z %2$d</string>
+    <string name="row_moved">Přesunuto na %1$s</string>
+    <string name="row_released">Vydáno %1$s</string>
+    <string name="row_changes">Změny</string>
+    <string name="action_show_changes">Ukázat změny</string>
+    <string name="action_install_all">Nainstalovat vše</string>
+    <string name="action_install_update_all">Nainstalovat a aktualizovat vše</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d aplikace ještě není nainstalována</item>
+        <item quantity="few">%d aplikace ještě nejsou nainstalovány</item>
+        <item quantity="many">%d aplikací ještě není nainstalováno</item>
+        <item quantity="other">%d aplikací ještě není nainstalováno</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Nainstalovat a aktualizovat %d aplikaci?</item>
+        <item quantity="few">Nainstalovat a aktualizovat %d aplikace?</item>
+        <item quantity="many">Nainstalovat a aktualizovat %d aplikací?</item>
+        <item quantity="other">Nainstalovat a aktualizovat %d aplikací?</item>
+    </plurals>
+    <string name="settings_update_all">Tlačítko „Aktualizovat vše“</string>
+    <string name="update_all_updates">Jen aktualizace</string>
+    <string name="update_all_all">Aktualizace a dosud nenainstalované aplikace</string>
+    <string name="update_all_none">Nezobrazovat</string>
+    <string name="settings_confirm_update_all">Ptát se před „Aktualizovat vše“</string>
+    <string name="settings_confirm_update_all_effect">Řekne, kolik aplikací nainstaluje nebo aktualizuje, a počká na vaše potvrzení.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="one">Nainstalovat %d aplikaci?</item>
+        <item quantity="few">Nainstalovat %d aplikace?</item>
+        <item quantity="many">Nainstalovat %d aplikací?</item>
+        <item quantity="other">Nainstalovat %d aplikací?</item>
+    </plurals>
+    <string name="bulk_install_text">Každý soubor se předtím, než je Android požádán o jeho instalaci, stáhne a zkontroluje. Tern si zapamatuje certifikát, kterým je každá nová aplikace podepsána, a u každé další aktualizace vyžaduje tentýž certifikát.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d z vybraných aplikací teď nemá nic k instalaci a zůstane beze změny.</item>
+        <item quantity="few">%d z vybraných aplikací teď nemají nic k instalaci a zůstanou beze změny.</item>
+        <item quantity="many">%d z vybraných aplikací teď nemá nic k instalaci a zůstane beze změny.</item>
+        <item quantity="other">%d z vybraných aplikací teď nemá nic k instalaci a zůstane beze změny.</item>
+    </plurals>
+    <string name="action_change_categories">Změnit kategorie</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Kategorie %d aplikace</item>
+        <item quantity="few">Kategorie %d aplikací</item>
+        <item quantity="many">Kategorie %d aplikací</item>
+        <item quantity="other">Kategorie %d aplikací</item>
+    </plurals>
+    <string name="bulk_categories_help">Zaškrtnutí zařadí všechny vybrané aplikace do kategorie a prázdné políčko je z ní odebere. Pomlčka nechá každou aplikaci, jak je.</string>
+    <string name="categories_filed_all">Každá vybraná aplikace</string>
+    <string name="categories_filed_some">Některé z vybraných aplikací</string>
+    <string name="categories_filed_none">Žádná z vybraných aplikací</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Změněny kategorie %d aplikace.</item>
+        <item quantity="few">Změněny kategorie %d aplikací.</item>
+        <item quantity="many">Změněny kategorie %d aplikací.</item>
+        <item quantity="other">Změněny kategorie %d aplikací.</item>
+    </plurals>
+    <string name="action_share_config_link">Sdílet odkaz s nastavením</string>
+    <string name="action_share_config_links">Sdílet odkazy s nastavením</string>
+    <string name="share_link_none">Žádný odkaz nemůže nést nastavení této aplikace. Sdílejte ji raději jako soubor.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d aplikace je vynechána, protože její nastavení žádný odkaz nepojme.</item>
+        <item quantity="few">%d aplikace jsou vynechány, protože jejich nastavení žádný odkaz nepojme.</item>
+        <item quantity="many">%d aplikací je vynecháno, protože jejich nastavení žádný odkaz nepojme.</item>
+        <item quantity="other">%d aplikací je vynecháno, protože jejich nastavení žádný odkaz nepojme.</item>
+    </plurals>
+</resources>

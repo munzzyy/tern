@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">Periksa</string>
+    <string name="shortcut_check_long">Periksa pembaruan</string>
+    <string name="shortcut_update_all_long">Perbarui semua aplikasi</string>
+    <string name="shortcut_add_short">Tambah</string>
+    <string name="shortcut_add_long">Tambah aplikasi</string>
+    <string name="tile_check">Periksa pembaruan</string>
+    <string name="tile_checking">Memeriksa…</string>
+    <string name="tile_up_to_date">Terbaru</string>
+    <string name="widget_label">Pembaruan</string>
+    <string name="widget_description">Berapa banyak aplikasi yang memiliki pembaruan, dengan tombol untuk memeriksa dan tombol untuk memperbarui semuanya.</string>
+    <plurals name="widget_updates">
+        <item quantity="other">%d pembaruan</item>
+    </plurals>
+    <string name="widget_up_to_date">Semuanya sudah terbaru</string>
+    <string name="widget_checked">Diperiksa pukul %1$s</string>
+    <string name="widget_never_checked">Belum diperiksa</string>
+    <string name="widget_check">Periksa</string>
+</resources>

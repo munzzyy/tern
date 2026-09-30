@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="appverifier_title">Друга перевірка</string>
-    <string name="appverifier_effect">AppVerifier є окремою програмою. Вона порівнює цю програму із сертифікатом, який для неї зберігає Tern, та зі своїм власним списком знайомих їй програм.</string>
-    <string name="appverifier_action">Перевірити через AppVerifier</string>
 </resources>

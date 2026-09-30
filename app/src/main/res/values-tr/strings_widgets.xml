@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">Denetle</string>
+    <string name="shortcut_check_long">Güncellemeleri denetle</string>
+    <string name="shortcut_update_all_long">Tüm uygulamaları güncelle</string>
+    <string name="shortcut_add_short">Ekle</string>
+    <string name="shortcut_add_long">Uygulama ekle</string>
+    <string name="tile_check">Güncellemeleri denetle</string>
+    <string name="tile_checking">Denetleniyor…</string>
+    <string name="tile_up_to_date">Güncel</string>
+    <string name="widget_label">Güncellemeler</string>
+    <string name="widget_description">Kaç uygulamanın güncellemesi olduğu, denetlemek için bir düğme ve tümünü güncellemek için bir düğmeyle.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d güncelleme</item>
+        <item quantity="other">%d güncelleme</item>
+    </plurals>
+    <string name="widget_up_to_date">Her şey güncel</string>
+    <string name="widget_checked">%1$s saatinde denetlendi</string>
+    <string name="widget_never_checked">Henüz denetlenmedi</string>
+    <string name="widget_check">Denetle</string>
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">分类</string>
+    <string name="settings_categories_effect">为分类命名并设置颜色，重命名或删除会一次性应用到所有应用。</string>
+    <plurals name="settings_categories_count">
+        <item quantity="other">%d 个分类</item>
+    </plurals>
+    <string name="categories_none">尚无分类。在此创建一个，或从列表中将应用归入某个分类。</string>
+    <string name="categories_new">新建分类</string>
+    <string name="category_edit">编辑分类</string>
+    <string name="category_name">名称</string>
+    <string name="category_color">颜色</string>
+    <string name="category_color_spoken">第 %1$d 种颜色，共 %2$d 种</string>
+    <string name="category_exists">已存在同名分类。</string>
+    <string name="category_delete">删除</string>
+    <string name="category_delete_effect">其中的应用仍保留在列表中，只是不再归入此分类。</string>
+    <plurals name="category_apps">
+        <item quantity="other">%d 个应用</item>
+    </plurals>
+    <string name="action_close">关闭</string>
+    <string name="categories_new_short">新建…</string>
+    <string name="app_notes_title">备注</string>
+    <string name="app_notes_help">支持 Markdown：**粗体**、*斜体*、列表和链接。</string>
+    <string name="app_notes_add">添加备注</string>
+    <string name="app_notes_add_effect">关于此应用值得记住的任何内容。导出时会一并带上。</string>
+    <string name="app_notes_edit">编辑备注</string>
+</resources>

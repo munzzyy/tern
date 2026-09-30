@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_other_title">ملفات أخرى لهذا الإصدار</string>
+    <string name="files_source_code">كود المصدر</string>
+    <string name="files_save_spoken">حفظ %1$s في التنزيلات</string>
+    <string name="files_save_a_file">حفظ ملف</string>
+    <string name="files_pick_title_version">حفظ ملف من الإصدار %1$s</string>
+    <string name="files_pick_title_app">حفظ ملف من %1$s</string>
+    <string name="files_skip">تخطي</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="zero">جارٍ حفظ %1$d ملف. يخبرك إشعار عند انتهاء حفظ كل ملف.</item>
+        <item quantity="one">جارٍ حفظ ملف واحد (%1$d). يخبرك إشعار عند انتهاء حفظه.</item>
+        <item quantity="two">جارٍ حفظ ملفين (%1$d). يخبرك إشعار عند انتهاء حفظ كل ملف.</item>
+        <item quantity="few">جارٍ حفظ %1$d ملفات. يخبرك إشعار عند انتهاء حفظ كل ملف.</item>
+        <item quantity="many">جارٍ حفظ %1$d ملفًا. يخبرك إشعار عند انتهاء حفظ كل ملف.</item>
+        <item quantity="other">جارٍ حفظ %1$d ملف. يخبرك إشعار عند انتهاء حفظ كل ملف.</item>
+    </plurals>
+    <string name="files_channel_saved">الملفات المحفوظة</string>
+    <string name="files_notify_saved">تم حفظ %1$s</string>
+    <string name="files_notify_saved_plain">تم حفظ ملف في التنزيلات</string>
+    <string name="files_notify_not_saved">تعذر حفظ %1$s</string>
+    <string name="files_notify_not_saved_plain">تعذر حفظ ملف</string>
+    <string name="files_notify_updated_to">تم تحديث %1$s إلى %2$s</string>
+    <string name="files_notify_installed_at">تم تثبيت %1$s %2$s</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">ما الخطأ الذي حدث</string>
+    <string name="files_problems_none">لا يعاني أي من هذه التطبيقات من مشكلة الآن.</string>
+    <string name="files_setting_verifier">عرض التطبيقات الجديدة على Verified Apps أولًا</string>
+    <string name="files_setting_verifier_effect">قبل تثبيت تطبيق للمرة الأولى، يُرسَل ملفه المفحوص إلى Verified Apps أو AppVerifier، إن كان أحدهما مثبتًا، لإجراء فحص ثانٍ. يستمر التثبيت بمجرد عودتك إلى Tern.</string>
+    <string name="files_verifier_about">حول Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s تطبيق منفصل. يقارن هذا التطبيق بالشهادة التي يحتفظ بها Tern له، وبقائمته الخاصة من التطبيقات التي يعرفها.</string>
+    <string name="files_verifier_card_action">الفحص باستخدام %1$s</string>
+</resources>

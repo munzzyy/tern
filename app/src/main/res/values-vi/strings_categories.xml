@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">Danh mục</string>
+    <string name="settings_categories_effect">Đặt tên, gán màu cho từng danh mục, rồi đổi tên hoặc xóa chúng cho mọi ứng dụng cùng lúc.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="other">%d danh mục</item>
+    </plurals>
+    <string name="categories_none">Chưa có. Hãy tạo một danh mục ở đây, hoặc xếp ứng dụng vào danh mục từ danh sách.</string>
+    <string name="categories_new">Danh mục mới</string>
+    <string name="category_edit">Sửa danh mục</string>
+    <string name="category_name">Tên</string>
+    <string name="category_color">Màu</string>
+    <string name="category_color_spoken">Màu %1$d trên %2$d</string>
+    <string name="category_exists">Đã có danh mục với tên này.</string>
+    <string name="category_delete">Xóa</string>
+    <string name="category_delete_effect">Các ứng dụng trong danh mục vẫn ở trong danh sách; chúng chỉ không còn được xếp vào danh mục này.</string>
+    <plurals name="category_apps">
+        <item quantity="other">%d ứng dụng</item>
+    </plurals>
+    <string name="action_close">Đóng</string>
+    <string name="categories_new_short">Mới…</string>
+    <string name="app_notes_title">Ghi chú</string>
+    <string name="app_notes_help">Hỗ trợ Markdown: **đậm**, *nghiêng*, danh sách và liên kết.</string>
+    <string name="app_notes_add">Thêm ghi chú</string>
+    <string name="app_notes_add_effect">Bất cứ điều gì đáng nhớ về ứng dụng này. Ghi chú đi kèm khi xuất.</string>
+    <string name="app_notes_edit">Sửa ghi chú</string>
+</resources>

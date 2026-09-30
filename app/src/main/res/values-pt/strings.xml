@@ -95,19 +95,6 @@
         <item quantity="other">%d selecionadas</item>
     </plurals>
     <string name="apps_select_hint">Escolha aplicações da lista.</string>
-    <string name="action_add_to_category">Adicionar à categoria</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Adicionar %d aplicação a uma categoria</item>
-        <item quantity="many">Adicionar %d aplicações a uma categoria</item>
-        <item quantity="other">Adicionar %d aplicações a uma categoria</item>
-    </plurals>
-    <string name="bulk_category_field">Categoria</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">%1$d aplicação adicionada a %2$s.</item>
-        <item quantity="many">%1$d aplicações adicionadas a %2$s.</item>
-        <item quantity="other">%1$d aplicações adicionadas a %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Ou escolha uma que já usa:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Verificar %d aplicação agora?</item>
         <item quantity="many">Verificar %d aplicações agora?</item>
@@ -351,10 +338,6 @@
         <item quantity="many">A cada %d horas</item>
         <item quantity="other">A cada %d horas</item>
     </plurals>
-    <string name="settings_unmetered">Apenas em redes não taxadas</string>
-    <string name="settings_unmetered_effect">Ignorar verificações nos dados móveis e Wi-Fi taxado.</string>
-    <string name="settings_charging">Apenas a carregar</string>
-    <string name="settings_charging_effect">Ignorar verificações quando estiver na bateria.</string>
     <string name="settings_defaults">Predefinições para novas aplicações</string>
     <string name="settings_notifications">Notificações</string>
     <string name="settings_notify_updates">Quando atualizações são encontradas</string>
@@ -390,7 +373,6 @@
     <string name="proxy_port_invalid">Um número de 1 a 65535</string>
     <string name="settings_appearance">Aspeto</string>
     <string name="settings_language">Idioma</string>
-    <string name="settings_language_effect">Escolhido nas definições do Android para esta aplicação.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Seguir o sistema</string>
     <string name="theme_light">Claro</string>

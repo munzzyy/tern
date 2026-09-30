@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">Apps fra %1$s kan kun spores, fordi der ikke tilbydes nogen fil at installere.</string>
+    <string name="min_age_global">Som indstillet for alle apps: %1$s</string>
+    <string name="setting_min_age_global_effect">Apps uden egen ventetid venter så længe, før en ny udgivelse tilbydes, så en dårlig kan trækkes tilbage først.</string>
+    <string name="option_link_text">Filtrer links efter deres tekst</string>
+    <string name="option_link_text_effect">Filteret matches mod teksten i et link i stedet for dets adresse.</string>
+    <string name="option_take_first">Tag det første link</string>
+    <string name="option_take_first_effect">Ellers tages det sidste link i rækkefølgen.</string>
+    <string name="option_natural_order_effect">Ellers sorteres links i naturlig rækkefølge efter deres adresse, hvor tal læses som tal.</string>
+    <string name="option_by_last_segment">Gå ud fra slutningen af adressen</string>
+    <string name="option_by_last_segment_effect">Links sorteres, og versioner læses, efter den del, der kommer efter den sidste skråstreg.</string>
+    <string name="option_steps_title">Sider, der skal gennemgås først</string>
+    <string name="option_steps_order_help">På hver side sættes de links, der matcher, i rækkefølge, og det sidste følges.</string>
+    <string name="step_title">Side %1$d</string>
+    <string name="step_filter">Link, der skal følges</string>
+    <string name="step_text">Match linkets tekst</string>
+    <string name="step_arch">Foretræk denne enheds processor</string>
+    <string name="step_add">Tilføj en side</string>
+    <string name="step_remove">Fjern denne side</string>
+    <string name="option_file_version">Brug filnavnet som version</string>
+    <string name="option_file_version_effect">Hver fil tæller så som en udgivelse for sig.</string>
+    <string name="github_proxy_title">GitHub gennem en hubproxy</string>
+    <string name="github_proxy_effect">Hver anmodning til GitHub går til denne vært, som ser hver eneste. Intet token sendes gennem den, så private projekter og GitHub Actions kan ikke følges på denne måde.</string>
+    <string name="github_proxy_host">Hubproxy-vært</string>
+    <string name="github_proxy_help">Kun et værtsnavn, f.eks. gh-proxy.com. Tern når den via HTTPS.</string>
+    <string name="github_proxy_invalid">Det er ikke et værtsnavn, Tern kan bruge</string>
+    <string name="github_proxy_in_use">GitHub-anmodninger går gennem %1$s</string>
+    <string name="github_proxy_remove">Stop med at bruge hubproxyen</string>
+</resources>

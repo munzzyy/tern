@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">%1$s kaynağındaki uygulamalar yalnızca izlenebilir, çünkü orada yüklenecek dosya sunulmuyor.</string>
+    <string name="min_age_global">Tüm uygulamalar için ayarlandığı gibi: %1$s</string>
+    <string name="setting_min_age_global_effect">Kendi bekleme süresi olmayan uygulamalar için yeni bir sürüm, kötü bir sürümün geri çekilmesine fırsat vermek amacıyla bu süre dolana kadar sunulmaz.</string>
+    <string name="option_link_text">Bağlantıları metinlerine göre filtrele</string>
+    <string name="option_link_text_effect">Filtre, bağlantının adresi yerine metniyle eşleştirilir.</string>
+    <string name="option_take_first">İlk bağlantıyı al</string>
+    <string name="option_take_first_effect">Aksi halde sıradaki son bağlantı alınır.</string>
+    <string name="option_natural_order_effect">Aksi halde bağlantılar adreslerinin doğal sırasına göre dizilir, sayılar sayı olarak okunur.</string>
+    <string name="option_by_last_segment">Adresin sonunu esas al</string>
+    <string name="option_by_last_segment_effect">Bağlantılar son eğik çizgiden sonraki kısma göre sıralanır ve sürümler oradan okunur.</string>
+    <string name="option_steps_title">Önce geçilecek sayfalar</string>
+    <string name="option_steps_order_help">Her sayfada eşleşen bağlantılar sıralanır ve sonuncusu izlenir.</string>
+    <string name="step_title">Sayfa %1$d</string>
+    <string name="step_filter">İzlenecek bağlantı</string>
+    <string name="step_text">Bağlantının metniyle eşleştir</string>
+    <string name="step_arch">Bu cihazın işlemcisini tercih et</string>
+    <string name="step_add">Sayfa ekle</string>
+    <string name="step_remove">Bu sayfayı kaldır</string>
+    <string name="option_file_version">Dosya adını sürüm olarak kullan</string>
+    <string name="option_file_version_effect">Böylece her dosya ayrı bir sürüm sayılır.</string>
+    <string name="github_proxy_title">GitHub, bir hubproxy üzerinden</string>
+    <string name="github_proxy_effect">GitHub\'a giden her istek, hepsini gören bu sunucuya gider. Üzerinden hiçbir belirteç gönderilmez, bu yüzden gizli projeler ve GitHub Actions bu yolla izlenemez.</string>
+    <string name="github_proxy_host">Hubproxy sunucusu</string>
+    <string name="github_proxy_help">Yalnızca bir sunucu adı, örneğin gh-proxy.com. Tern ona HTTPS üzerinden ulaşır.</string>
+    <string name="github_proxy_invalid">Bu, Tern\'in kullanabileceği bir sunucu adı değil</string>
+    <string name="github_proxy_in_use">GitHub istekleri %1$s üzerinden geçiyor</string>
+    <string name="github_proxy_remove">Hubproxy kullanmayı bırak</string>
+</resources>

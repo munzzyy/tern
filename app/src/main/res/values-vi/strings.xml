@@ -89,15 +89,6 @@
         <item quantity="other">Đã chọn %d</item>
     </plurals>
     <string name="apps_select_hint">Chọn ứng dụng từ danh sách.</string>
-    <string name="action_add_to_category">Thêm vào danh mục</string>
-    <plurals name="bulk_category_title">
-        <item quantity="other">Thêm %d ứng dụng vào danh mục</item>
-    </plurals>
-    <string name="bulk_category_field">Danh mục</string>
-    <plurals name="bulk_category_done">
-        <item quantity="other">Đã xếp %1$d ứng dụng vào %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Hoặc chọn danh mục bạn đã dùng:</string>
     <plurals name="bulk_check_title">
         <item quantity="other">Kiểm tra %d ứng dụng ngay?</item>
     </plurals>
@@ -317,10 +308,6 @@
     <plurals name="interval_hours">
         <item quantity="other">Mỗi %d giờ</item>
     </plurals>
-    <string name="settings_unmetered">Chỉ trên mạng không tính phí</string>
-    <string name="settings_unmetered_effect">Bỏ qua kiểm tra trên dữ liệu di động và Wi-Fi có đo lượng dữ liệu.</string>
-    <string name="settings_charging">Chỉ khi đang sạc</string>
-    <string name="settings_charging_effect">Bỏ qua kiểm tra khi dùng pin.</string>
     <string name="settings_defaults">Mặc định cho ứng dụng mới</string>
     <string name="settings_notifications">Thông báo</string>
     <string name="settings_notify_updates">Khi có bản cập nhật</string>
@@ -356,7 +343,6 @@
     <string name="proxy_port_invalid">Một số từ 1 đến 65535</string>
     <string name="settings_appearance">Giao diện</string>
     <string name="settings_language">Ngôn ngữ</string>
-    <string name="settings_language_effect">Được chọn trong cài đặt Android cho ứng dụng này.</string>
     <string name="settings_theme">Chủ đề</string>
     <string name="theme_system">Theo hệ thống</string>
     <string name="theme_light">Sáng</string>

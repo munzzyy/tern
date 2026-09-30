@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:atom="http://www.w3.org/2005/Atom"
+    >
+    <channel>
+        <title>Download Example App APKs for Android - APKMirror</title>
+        <atom:link href="https://www.apkmirror.com/apk/example-labs/example-app/feed/" rel="self" type="application/rss+xml" />
+        <link>https://www.apkmirror.com/apk/example-labs/example-app/</link>
+        <description>Free and safe Android APK downloads</description>
+        <lastBuildDate>Wed, 30 Sep 2026 00:32:02 +0000</lastBuildDate>
+        <item>
+            <title>Example App 2.2.0 beta 1 by Example Labs</title>
+            <link>https://www.apkmirror.com/apk/example-labs/example-app/example-app-2-2-0-beta-1-release/</link>
+            <pubDate>Sat, 26 Sep 2026 08:00:00 +0000</pubDate>
+            <dc:creator><![CDATA[]]></dc:creator>
+            <guid isPermaLink="false">http://www.apkmirror.com/?p=1000003</guid>
+            <description><![CDATA[<p>The <a href="https://www.apkmirror.com/apk/example-labs/example-app/example-app-2-2-0-beta-1-release/">Example App 2.2.0 beta 1 by Example Labs</a> APK appeared first on <a href="https://www.apkmirror.com">APKMirror</a>.</p>]]></description>
+            <content:encoded><![CDATA[<p><img width="384" height="384" src="https://downloadr2.apkmirror.com/wp-content/uploads/2026/09/0a1b2c3d4e5f6-384x384.png"></p><p>The Example App 2.2.0 beta 1 APK appeared first.</p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Example App 2.1.0 (arm64-v8a) (Android 8.0+) by Example Labs</title>
+            <link>https://www.apkmirror.com/apk/example-labs/example-app/example-app-2-1-0-release/</link>
+            <pubDate>Fri, 25 Sep 2026 19:51:09 +0000</pubDate>
+            <guid isPermaLink="false">http://www.apkmirror.com/?p=1000002</guid>
+            <content:encoded><![CDATA[<p>The Example App 2.1.0 APK appeared first.</p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Example App 2.0.0 [0] by Example Labs &amp; Friends</title>
+            <link>https://evil.example.org/apk/example-labs/example-app/example-app-2-0-0-release/</link>
+            <pubDate>not a date</pubDate>
+            <guid isPermaLink="false">http://www.apkmirror.com/?p=1000001</guid>
+        </item>
+    </channel>
+</rss>

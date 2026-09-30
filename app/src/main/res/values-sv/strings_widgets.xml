@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">Kontrollera</string>
+    <string name="shortcut_check_long">Leta efter uppdateringar</string>
+    <string name="shortcut_update_all_long">Uppdatera alla appar</string>
+    <string name="shortcut_add_short">Lägg till</string>
+    <string name="shortcut_add_long">Lägg till en app</string>
+    <string name="tile_check">Leta efter uppdateringar</string>
+    <string name="tile_checking">Kontrollerar…</string>
+    <string name="tile_up_to_date">Uppdaterad</string>
+    <string name="widget_label">Uppdateringar</string>
+    <string name="widget_description">Hur många appar som har en uppdatering, med en knapp för att kontrollera och en för att uppdatera alla.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d uppdatering</item>
+        <item quantity="other">%d uppdateringar</item>
+    </plurals>
+    <string name="widget_up_to_date">Allt är uppdaterat</string>
+    <string name="widget_checked">Kontrollerad klockan %1$s</string>
+    <string name="widget_never_checked">Inte kontrollerad än</string>
+    <string name="widget_check">Kontrollera</string>
+</resources>

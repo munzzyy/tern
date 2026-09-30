@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">Зі списку адрес</string>
+    <string name="import_addresses_explain">Вставте адреси програм, по одній на рядок або будь-де в тексті, чи прочитайте їх із файлу, наприклад зі списку OPML. Кожну адресу переглядають і додають так само, як окреме посилання.</string>
+    <string name="import_addresses_field">Адреси</string>
+    <string name="import_addresses_show">Показати, що в ньому</string>
+    <string name="import_addresses_file">Прочитати файл</string>
+    <string name="import_addresses_none">У ньому немає адрес https.</string>
+    <string name="import_addresses_other">Інший список</string>
+    <string name="import_addresses_unreadable">Не вдалося прочитати цей файл.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d адреса. Зніміть позначки з непотрібних, а потім додайте.</item>
+        <item quantity="few">%1$d адреси. Зніміть позначки з непотрібних, а потім додайте.</item>
+        <item quantity="many">%1$d адрес. Зніміть позначки з непотрібних, а потім додайте.</item>
+        <item quantity="other">%1$d адреси. Зніміть позначки з непотрібних, а потім додайте.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">У цьому посиланні %1$d програма. Перегляньте її налаштування, перш ніж додати її.</item>
+        <item quantity="few">У цьому посиланні %1$d програми. Перегляньте налаштування кожної, перш ніж додати її.</item>
+        <item quantity="many">У цьому посиланні %1$d програм. Перегляньте налаштування кожної, перш ніж додати її.</item>
+        <item quantity="other">У цьому посиланні %1$d програми. Перегляньте налаштування кожної, перш ніж додати її.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Експорт для Obtainium</string>
+    <string name="settings_export_obtainium_effect">Файл, який імпортує Obtainium, щоб перенести туди список. Те, для чого в Obtainium немає налаштування, не переноситься.</string>
+    <string name="settings_export_installed_only">Експортувати лише встановлені програми</string>
+    <string name="settings_export_settings">Включати налаштування в експорт</string>
+    <string name="settings_export_settings_effect">Вигляд, список, сповіщення та перевірки. Маркери, проксі й інсталятор не включаються ніколи.</string>
+    <string name="settings_kept_export">Підтримувати експорт актуальним</string>
+    <string name="settings_kept_export_effect">Невдовзі після будь-якої зміни в списку Tern знову записує експорт.</string>
+    <string name="settings_kept_export_written">Записано о %1$s</string>
+    <string name="settings_kept_export_folder">Де він зберігається</string>
+    <string name="import_settings_taken">Налаштування з файлу теж застосовано.</string>
+</resources>

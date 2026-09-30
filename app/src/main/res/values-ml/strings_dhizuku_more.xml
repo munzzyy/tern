@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">ഉപകരണ ഉടമയായ Dhizuku വഴി, ഒരു പ്രോംപ്റ്റ് ഇല്ലാതെ ഇൻസ്റ്റാൾ ചെയ്യുകയും അപ്ഡേറ്റ് ചെയ്യുകയും ചെയ്യുന്നു. ഓരോ ഫയലും ആദ്യം ഇതേ പരിശോധനകൾ പാസാകുന്നു. തുടർന്ന് Android, Dhizuku-വിനെ ഇൻസ്റ്റാളറായി കാണിക്കുന്നു.</string>
+    <string name="installer_dhizuku_not_ready">തയ്യാറല്ല, തയ്യാറാകുന്നതുവരെ ഒന്നും ഇൻസ്റ്റാൾ ആകില്ല</string>
+    <string name="installer_dhizuku_unsupported">Android-ൻ്റെ ഈ പതിപ്പിൽ Dhizuku വഴി ഇൻസ്റ്റാൾ ചെയ്യാൻ Tern-ന് കഴിയില്ല.</string>
+    <string name="installer_dhizuku_not_installed">Dhizuku ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല. ഇത് ഇൻസ്റ്റാൾ ചെയ്ത് ഉപകരണ ഉടമയാക്കുക, തുടർന്ന് തിരികെ വരിക.</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku ഉപകരണ ഉടമയല്ല. Dhizuku ആപ്പിൽ ഇതിനെ ഉപകരണ ഉടമയാക്കുക, തുടർന്ന് തിരികെ വരിക.</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku മറുപടി നൽകിയില്ല. Dhizuku ആപ്പ് തുറക്കുക, തുടർന്ന് തിരികെ വരിക.</string>
+    <string name="installer_dhizuku_not_allowed">Tern-ന് ഇതുവരെ Dhizuku ഉപയോഗിക്കാൻ അനുമതിയില്ല. ചോദിക്കാൻ ഇവിടെ അമർത്തുക.</string>
+    <string name="dhizuku_failed_not_installed">Dhizuku ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല.</string>
+    <string name="dhizuku_failed_not_owner">Dhizuku ഉപകരണ ഉടമയല്ല.</string>
+    <string name="dhizuku_failed_not_answering">Dhizuku മറുപടി നൽകിയില്ല.</string>
+    <string name="dhizuku_failed_not_allowed">Tern-ന് ഇത് ഉപയോഗിക്കാൻ Dhizuku അനുമതി നൽകുന്നില്ല.</string>
+    <string name="install_signer_changed">ഇപ്പോൾ ഇൻസ്റ്റാൾ ചെയ്തിരിക്കുന്ന ആപ്പ്, Tern പരിശോധിച്ച ഫയൽ ഒപ്പിട്ടയാളല്ലാത്ത മറ്റാരോ ഒപ്പിട്ടതാണ്, അതിനാൽ ഈ ഇൻസ്റ്റാൾ കണക്കാക്കില്ല.</string>
+</resources>

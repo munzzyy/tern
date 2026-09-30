@@ -4,19 +4,19 @@
     <string name="engine_import_empty">Bu dosya hiçbir uygulama barındırmıyor.</string>
     <string name="engine_import_local_address">Adresi yerel bir ağda. Size aitse elle ekleyin.</string>
     <string name="engine_warn_local_address">Bu adres kendi ağınızda. Tern, güncellemeleri her denetlediğinde bu adresi sorgular.</string>
-    <string name="engine_import_unreadable_export">Tern\'dan gelen bu dışa aktarım okunamadı (%1$s). Daha yeni bir Tern sürümünden geliyorsa, bu cihazdaki Tern\'ı güncelleyip tekrar deneyin.</string>
+    <string name="engine_import_unreadable_export">Tern\'den gelen bu dışa aktarım okunamadı (%1$s). Daha yeni bir Tern sürümünden geliyorsa, bu cihazdaki Tern\'i güncelleyip tekrar deneyin.</string>
     <string name="engine_import_too_large">Dosya %1$d MiB\'tan büyük, ki bu bir uygulama listesinin kapladığı alandan fazla, bu yüzden Tern onu okumadı.</string>
     <string name="engine_import_file_gone">O dosya artık orada değil. Dosya listesini tekrar açın.</string>
     <string name="engine_link_not_https">Yalnızca https:// ile başlayan adresler kabul edilir.</string>
-    <string name="engine_link_not_an_address">Bu, Tern\'ın açabileceği bir web adresi değil. https://example.org/tern-apps.json gibi görünmelidir.</string>
-    <string name="engine_link_leaves_https">Bu adres Tern\'ı HTTPS olmayan bir adrese yönlendiriyor, bu yüzden hiçbir şey getirilmedi.</string>
+    <string name="engine_link_not_an_address">Bu, Tern\'in açabileceği bir web adresi değil. https://example.org/tern-apps.json gibi görünmelidir.</string>
+    <string name="engine_link_leaves_https">Bu adres Tern\'i HTTPS olmayan bir adrese yönlendiriyor, bu yüzden hiçbir şey getirilmedi.</string>
     <string name="engine_link_not_found">Bu adreste hiçbir dosya yok. Yazım hatası olup olmadığını kontrol edin.</string>
     <string name="engine_link_refused">Sunucu dosyayı dağıtmayı reddetti (%1$d yanıtını verdi). Tern bu istekle birlikte hiçbir oturum açma bilgisi göndermez, bu yüzden dosya adresi bilen herkes tarafından okunabilir olmalıdır.</string>
     <string name="engine_link_unreachable">Adrese ulaşılamadı: %1$s</string>
     <string name="engine_link_unreachable_plain">Adrese ulaşılamadı. Bağlantıyı ve adresi kontrol edip tekrar deneyin.</string>
     <string name="engine_link_too_slow">Sunucunun dosyayı göndermesi bir dakikadan uzun sürdü, bu yüzden Tern beklemeyi bıraktı. Daha sonra tekrar deneyin.</string>
     <string name="engine_link_not_an_export">Bu adresteki şey Tern veya Obtainium\'dan dışa aktarılmış bir uygulama listesi değil. Adres, dosyayı gösteren bir sayfaya değil, dosyanın kendisine yönlendirmelidir.</string>
-    <string name="engine_export_no_place">Bu cihazda Tern\'ın yazabileceği hiçbir paylaşılan depolama alanı yok.</string>
+    <string name="engine_export_no_place">Bu cihazda Tern\'in yazabileceği hiçbir paylaşılan depolama alanı yok.</string>
     <string name="engine_export_failed">Dışa aktarım yazılamadı: %1$s</string>
     <string name="engine_export_failed_plain">Dışa aktarım yazılamadı.</string>
 </resources>

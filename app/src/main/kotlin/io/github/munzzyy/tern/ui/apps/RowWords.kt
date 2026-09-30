@@ -8,6 +8,8 @@ import io.github.munzzyy.tern.engine.Phase
 import io.github.munzzyy.tern.engine.Progress
 import io.github.munzzyy.tern.ui.text.VersionChange
 import io.github.munzzyy.tern.ui.text.formatBytes
+import io.github.munzzyy.tern.ui.text.formatDate
+import io.github.munzzyy.tern.ui.text.shortUrl
 import io.github.munzzyy.tern.ui.LocalOnline
 import io.github.munzzyy.tern.ui.text.isolate
 import io.github.munzzyy.tern.ui.text.quietOffline
@@ -48,8 +50,12 @@ fun progressText(progress: Progress): String? {
 @Composable
 fun rowDescription(row: AppRow): String {
     val online = LocalOnline.current
-    val parts = mutableListOf(row.config.name, stringResource(statusLabel(row, online).text))
+    val parts = mutableListOf(row.config.shownName)
+    if (row.config.favorite) parts += stringResource(R.string.state_favorite)
+    parts += stringResource(statusLabel(row, online).text)
     versionChange(row)?.let { parts += spokenVersion(it) }
+    row.movedTo?.let { parts += stringResource(R.string.row_moved, shortUrl(it)) }
+    if (row.movedTo == null && row.progress == null) row.latest?.publishedAtMs?.let { parts += stringResource(R.string.row_released, formatDate(it)) }
     row.progress?.let { p -> progressText(p)?.let { parts += it } }
     row.problem?.takeUnless { quietOffline(row, online) }?.let { parts += it.message }
     return parts.joinToString(". ") { it.trimEnd('.') } + "."

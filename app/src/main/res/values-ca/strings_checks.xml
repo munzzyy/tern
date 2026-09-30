@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Cada %d minut</item>
+        <item quantity="many">Cada %d minuts</item>
+        <item quantity="other">Cada %d minuts</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Cada %d dia</item>
+        <item quantity="many">Cada %d dies</item>
+        <item quantity="other">Cada %d dies</item>
+    </plurals>
+    <string name="settings_check_now">Executa ara la comprovació en segon pla</string>
+    <string name="settings_check_now_effect">Comprova totes les aplicacions i instal·la el que està configurat per actualitzar-se sol, com fa la comprovació en segon pla.</string>
+    <string name="settings_check_now_running">Comprovant…</string>
+    <string name="settings_check_on_start">Comprova quan s\'obre Tern</string>
+    <string name="settings_check_on_open">Comprova una aplicació quan se n\'obre la pàgina</string>
+    <string name="settings_check_on_open_effect">No es torna a fer dins dels cinc minuts posteriors a l\'última comprovació.</string>
+    <string name="settings_only_installed">Comprova només les aplicacions instal·lades</string>
+    <string name="settings_only_installed_effect">Les aplicacions que només se segueixen també es comproven. Una aplicació que obres sempre es comprova.</string>
+    <string name="settings_remove_uninstalled">Suprimeix les aplicacions desinstal·lades fora de Tern</string>
+    <string name="settings_remove_uninstalled_effect">Una aplicació que desinstal·les fora de Tern també surt de la llista.</string>
+    <string name="settings_file_filter">Filtre de fitxers</string>
+    <string name="settings_file_filter_effect">Un patró amb què cada aplicació sense filtre propi tria el seu fitxer.</string>
+    <string name="settings_file_filter_none">Cap</string>
+    <string name="settings_file_filter_invalid">Aquest patró no es pot llegir.</string>
+    <string name="settings_allow_downgrades">Permet versions anteriors</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade està instal·lat, així que Android pot posar una versió més antiga per sobre d\'una de més nova.</string>
+    <string name="settings_collapse_groups">Comença amb els grups plegats</string>
+    <string name="settings_haptics">Resposta hàptica</string>
+    <string name="settings_haptics_effect">Una vibració lleugera quan un lliscament o una pulsació llarga fa alguna cosa.</string>
+    <string name="settings_phone_layout">Usa sempre la disposició de telèfon</string>
+    <string name="settings_phone_layout_effect">Un sol plafó i una barra a baix, sigui quina sigui l\'amplada de la pantalla.</string>
+    <string name="density_minimal">Mínima</string>
+    <string name="search_in">Cerca a</string>
+    <string name="activity_share">Comparteix l\'activitat</string>
+    <string name="sources_title">Què pot llegir Tern</string>
+    <string name="sources_effect">Forges, repositoris, botigues i pàgines web, i en quins es pot cercar.</string>
+    <string name="sources_forges">Forges</string>
+    <string name="sources_repositories">Repositoris</string>
+    <string name="sources_stores">Botigues</string>
+    <string name="sources_mirrors">Botigues que tornen a publicar aplicacions</string>
+    <string name="sources_modified">Llocs amb aplicacions modificades</string>
+    <string name="sources_other">Altres llocs</string>
+    <string name="sources_web_page">Una pàgina web amb enllaços a fitxers</string>
+    <string name="sources_direct">Un enllaç directe a un fitxer</string>
+    <string name="sources_searchable">s\'hi pot cercar</string>
+    <string name="sources_track_only">només seguiment</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea i Jenkins en un servidor propi es reconeixen per la seva adreça.</string>
+    <string name="shared_configs_title">Configuracions compartides pels usuaris d\'Obtainium</string>
+    <string name="shared_configs_effect">Un lloc de configuracions ja fetes per a aplicacions. Els seus enllaços s\'obren a Tern quan Obre enllaços d\'Obtainium està activat a la Configuració.</string>
+    <string name="engine_inner_filter_nothing">El filtre de fitxers dins d\'arxius no coincideix amb cap dels APK d\'aquest.</string>
+    <string name="preview_republished">%1$s torna a oferir el que els desenvolupadors publiquen en altres llocs. Tern exigeix als seus fitxers el certificat del desenvolupador tan bon punt el coneix, així que fixa\'n un o instal·la primer des del desenvolupador quan puguis.</string>
+    <string name="preview_modified">%1$s ofereix aplicacions modificades per algú que no és el seu desenvolupador. Estan signades per qui les ha modificat, i Tern no pot saber què s\'ha canviat.</string>
+    <string name="about_track_tern">Mantén actualitzat el mateix Tern</string>
+    <string name="about_track_tern_effect">Afegeix els llançaments de Tern a la llista, comprovats i verificats com qualsevol aplicació.</string>
+    <string name="engine_channel_tracked">Llançaments nous d\'aplicacions seguides</string>
+    <string name="engine_channel_checking">Comprovant</string>
+    <string name="engine_notify_tracked_one">Nou llançament de %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d aplicació seguida té un nou llançament</item>
+        <item quantity="many">%1$d aplicacions seguides tenen llançaments nous</item>
+        <item quantity="other">%1$d aplicacions seguides tenen llançaments nous</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">Comprovant %1$d aplicació</item>
+        <item quantity="many">Comprovant %1$d aplicacions</item>
+        <item quantity="other">Comprovant %1$d aplicacions</item>
+    </plurals>
+    <string name="settings_notify_tracked">Quan una aplicació seguida té un nou llançament</string>
+    <string name="settings_notify_checking">Mentre es comprova en segon pla</string>
+    <string name="settings_notify_checking_effect">Una notificació discreta que desapareix quan acaba la comprovació.</string>
+    <string name="engine_event_removed_uninstalled">S\'ha suprimit de la llista, perquè s\'ha desinstal·lat fora de Tern</string>
+</resources>

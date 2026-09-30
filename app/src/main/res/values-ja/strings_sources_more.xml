@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">%1$s のアプリは、インストールするファイルが提供されないため、追跡のみ可能です。</string>
+    <string name="min_age_global">すべてのアプリの設定どおり: %1$s</string>
+    <string name="setting_min_age_global_effect">独自の待機期間がないアプリは、新しいリリースを提案するまでにこの期間待機します。問題のあるリリースが先に取り下げられるようにするためです。</string>
+    <string name="option_link_text">リンクのテキストでフィルター</string>
+    <string name="option_link_text_effect">フィルターは、リンクのアドレスではなく、リンクのテキストと照合されます。</string>
+    <string name="option_take_first">最初のリンクを使用</string>
+    <string name="option_take_first_effect">オフの場合は、並べた順で最後のリンクを使用します。</string>
+    <string name="option_natural_order_effect">オフの場合は、リンクをアドレスの自然順に並べます。数字は数値として扱われます。</string>
+    <string name="option_by_last_segment">アドレスの末尾を基準にする</string>
+    <string name="option_by_last_segment_effect">リンクの並べ替えとバージョンの読み取りを、最後のスラッシュより後の部分で行います。</string>
+    <string name="option_steps_title">先にたどるページ</string>
+    <string name="option_steps_order_help">各ページで、一致するリンクを並べ替え、最後のリンクをたどります。</string>
+    <string name="step_title">ページ %1$d</string>
+    <string name="step_filter">たどるリンク</string>
+    <string name="step_text">リンクのテキストと照合</string>
+    <string name="step_arch">この端末のプロセッサを優先</string>
+    <string name="step_add">ページを追加</string>
+    <string name="step_remove">このページを削除</string>
+    <string name="option_file_version">ファイル名をバージョンとして使用</string>
+    <string name="option_file_version_effect">この場合、各ファイルが独立したリリースとして扱われます。</string>
+    <string name="github_proxy_title">hubproxy経由のGitHub</string>
+    <string name="github_proxy_effect">GitHubへのすべてのリクエストがこのホストに送られ、ホストはそのすべてを見ることができます。トークンはこのホストを通して送信されないため、この方法では非公開プロジェクトやGitHub Actionsを追跡できません。</string>
+    <string name="github_proxy_host">hubproxyのホスト</string>
+    <string name="github_proxy_help">ホスト名のみ（例: gh-proxy.com）。TernはHTTPSで接続します。</string>
+    <string name="github_proxy_invalid">これはTernが使用できるホスト名ではありません</string>
+    <string name="github_proxy_in_use">GitHubへのリクエストは %1$s を経由します</string>
+    <string name="github_proxy_remove">hubproxyの使用を停止</string>
+</resources>

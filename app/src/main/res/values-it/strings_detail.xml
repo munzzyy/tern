@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_share">Condividi</string>
+    <string name="action_release_page">Apri la pagina della release</string>
+    <string name="action_share_address">Condividi l\'indirizzo</string>
+    <string name="action_share_link">Condividi un link che la apre in Tern</string>
+    <string name="action_app_info">Info app in Android</string>
+    <string name="detail_last_checked">Controllata %1$s</string>
+    <string name="state_favorite">Preferita</string>
+    <string name="action_save_file">Salva in Download</string>
+    <string name="file_saved">Salvato come %1$s in %2$s, così come è stato scaricato. Tern controlla un file quando lo installa.</string>
+    <string name="action_save_files">Salva i file in Download</string>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d release segnata come vista</item>
+        <item quantity="many">%d release segnate come viste</item>
+        <item quantity="other">%d release segnate come viste</item>
+    </plurals>
+    <string name="project_page">Pagina del progetto</string>
+    <string name="project_page_read">Leggi la pagina del progetto</string>
+    <string name="project_page_effect">Il suo README, mostrato come testo. Alla forge non viene chiesto nulla finché non la apri.</string>
+    <string name="project_page_loading">Lettura in corso…</string>
+    <string name="project_page_none">Il progetto non ha una pagina che Tern possa leggere.</string>
+    <string name="project_page_failed">Impossibile leggere la pagina. Tocca per riprovare.</string>
+</resources>

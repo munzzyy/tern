@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">De lijst ordenen</string>
+    <string name="list_options_title">De lijst ordenen</string>
+    <string name="list_reverse">De volgorde omkeren</string>
+    <string name="list_updates_first">Updates bovenaan</string>
+    <string name="list_bury_not_installed">Niet-geïnstalleerde apps onderaan</string>
+    <string name="sort_author">Op ontwikkelaar</string>
+    <string name="sort_added">Op datum van toevoegen</string>
+    <string name="sort_released">Op releasedatum</string>
+    <string name="group_title">Groeperen op</string>
+    <string name="group_none">Niets</string>
+    <string name="group_category">Categorie</string>
+    <string name="group_source">Bron</string>
+    <string name="group_category_effect">Een app in meerdere categorieën verschijnt in elk ervan.</string>
+    <string name="group_other">Al het andere</string>
+    <string name="group_folded">Ingeklapt</string>
+    <string name="group_open">Uitgeklapt</string>
+    <string name="filter_favorites">Favorieten</string>
+    <string name="filter_track_only">Alleen volgen</string>
+    <string name="filter_problems">Problemen</string>
+    <string name="action_done">Klaar</string>
+    <string name="settings_swipe">Veeg over rijen voor acties</string>
+    <string name="settings_swipe_effect">Veeg een app naar het einde om hem te updaten, naar het begin om hem te verwijderen.</string>
+    <string name="action_favorite">Aan favorieten toevoegen</string>
+    <string name="action_unfavorite">Uit favorieten verwijderen</string>
+    <string name="action_set_mode">Als updates worden gevonden</string>
+    <string name="action_share_addresses">Adressen delen</string>
+    <string name="action_share_export">Delen als bestand</string>
+    <string name="action_uninstall">De-installeren</string>
+    <string name="export_format_tern">Een Tern-bestand</string>
+    <string name="export_format_obtainium">Een bestand voor Obtainium</string>
+    <string name="bulk_uninstall_text">Android vraagt het voor elke app om de beurt. Tern blijft ze volgen totdat je ze hier verwijdert.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d app is nu een favoriet</item>
+        <item quantity="other">%1$d apps zijn nu favorieten</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d app is geen favoriet meer</item>
+        <item quantity="other">%1$d apps zijn geen favorieten meer</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">Als een update van %1$d app wordt gevonden</item>
+        <item quantity="other">Als updates van %1$d apps worden gevonden</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">%1$d app de-installeren?</item>
+        <item quantity="other">%1$d apps de-installeren?</item>
+    </plurals>
+</resources>

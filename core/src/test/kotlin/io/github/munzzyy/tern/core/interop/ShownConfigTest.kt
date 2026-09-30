@@ -53,6 +53,19 @@ class ShownConfigTest {
     }
 
     @Test
+    fun theNamesThePersonChoseAreMadeFitToBeShownLikeTheOthers() {
+        val chosen = hostile.copy(customName = "Chosen$turn  Name$hidden", customAuthor = hidden)
+        val read = TernExport.read(TernExport.write(listOf(chosen), 1L, "0.1.0")).single()
+        assertEquals("Chosen Name", read.customName)
+        assertNull(read.customAuthor)
+        val imported = ObtainiumImport.read(
+            Json.write(Json.obj("apps" to listOf(Json.obj("url" to "https://github.com/example/app", "additionalSettings" to Json.write(Json.obj("appName" to "My$turn App", "appAuthor" to "Me$hidden")))))),
+        ).apps.single()
+        assertEquals("My App", imported.customName)
+        assertEquals("Me", imported.customAuthor)
+    }
+
+    @Test
     fun aNameWithNothingToShowFallsBackToTheAddress() {
         val read = TernExport.read(TernExport.write(listOf(hostile.copy(name = "$turn$hidden", author = hidden)), 1L, "0.1.0")).single()
         assertEquals("https://github.com/example/app", read.name)

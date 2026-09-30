@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">Tern känner inte till denna sorts länk.</string>
+    <string name="add_not_readable_as">Denna adress kan inte läsas som %1$s.</string>
+    <string name="add_event_replaced">Dess inställningar ersattes med de som en fil eller en länk hade för den.</string>
+    <string name="search_miss_unreachable">Det gick inte att söka i %1$s: källan svarade inte.</string>
+    <string name="search_miss_wait">Det gick inte att söka i %1$s: källan ber Tern att vänta en stund.</string>
+    <string name="search_miss_wait_until">Det gick inte att söka i %1$s: källan ber Tern att vänta till klockan %2$s.</string>
+    <string name="search_miss_refused">Det gick inte att söka i %1$s: källan nekade förfrågan.</string>
+    <string name="search_miss_status">Det gick inte att söka i %1$s: källan svarade %2$d.</string>
+    <string name="search_miss_unreadable">Det gick inte att söka i %1$s: svaret kunde inte läsas.</string>
+    <string name="add_options_title">Innan du lägger till</string>
+    <string name="add_options_auto">Tern tar reda på vad adressen är.</string>
+    <string name="add_options_forced">Läses som %1$s</string>
+    <string name="add_read_as">Läs adressen som</string>
+    <string name="add_read_as_auto">Automatiskt</string>
+    <string name="add_read_as_forgejo">Forgejo eller Gitea</string>
+    <string name="add_read_as_help">För en källa som Tern inte känner igen av sig själv, till exempel en på en egen server.</string>
+    <string name="add_package_label">Paketnamn</string>
+    <string name="add_package_help">Varje fil måste tillhöra detta paket. Om fältet lämnas tomt läser Tern namnet från appens fil.</string>
+    <string name="add_package_invalid">Detta är inte ett paketnamn som org.example.app.</string>
+    <string name="add_set_options">Ange alternativen</string>
+    <string name="add_failed_options">Källans alternativ kan tala om för Tern var den ska leta. Ange dem ovan, så kontrollerar Tern igen.</string>
+    <string name="add_replace">Ersätt dess inställningar</string>
+    <string name="add_replace_explain">Länken har egna inställningar för den. Ersättningen behåller de certifikat den litar på och dess paketnamn, och gör inte att den installerar uppdateringar av sig själv.</string>
+    <string name="results_filter">Filter</string>
+    <string name="results_filter_help">Ord eller ett mönster</string>
+    <string name="results_filter_none">Inget i listan matchar ”%1$s”.</string>
+    <string name="repo_search_all">Sök i hela lagringsplatsen efter ”%1$s”</string>
+    <string name="repo_show_all">Visa alla dess appar</string>
+    <string name="repo_heading_within">Appar i %1$s med ”%2$s”</string>
+    <string name="search_more">Fler hittades än vad som visas. Filtret begränsar dem.</string>
+    <string name="search_forgejo_label">Forgejo eller Gitea att söka i</string>
+    <string name="search_forgejo_help">Dess adress, till exempel codeberg.org. En token som sparats för den skickas med.</string>
+    <string name="search_forgejo_invalid">Detta är inte en adress som Tern kan söka i.</string>
+    <string name="search_min_stars_label">Minsta antal stjärnor</string>
+    <string name="search_min_stars_help">Projekt på GitHub och på Forgejo med färre stjärnor utelämnas.</string>
+    <plurals name="import_replaceable">
+        <item quantity="one">Filen har också andra inställningar för %1$d app som redan finns i din lista. De förblir som de är om du inte ersätter dem.</item>
+        <item quantity="other">Filen har också andra inställningar för %1$d appar som redan finns i din lista. De förblir som de är om du inte ersätter dem.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="one">Ersätt inställningarna för %1$d app</item>
+        <item quantity="other">Ersätt inställningarna för %1$d appar</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="one">Inställningarna för %1$d app ersattes. De certifikat den litar på blev kvar.</item>
+        <item quantity="other">Inställningarna för %1$d appar ersattes. De certifikat de litar på blev kvar.</item>
+    </plurals>
+    <string name="import_settings_offered">Filen innehåller också inställningar för Tern: utseendet, listan, aviseringar och kontroller. De tas inte över om du inte säger till.</string>
+    <string name="import_take_settings">Ta över dessa inställningar</string>
+    <plurals name="import_pick_shown">
+        <item quantity="one">Markera den %1$d visade</item>
+        <item quantity="other">Markera alla %1$d visade</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="one">Avmarkera den %1$d visade</item>
+        <item quantity="other">Avmarkera alla %1$d visade</item>
+    </plurals>
+</resources>

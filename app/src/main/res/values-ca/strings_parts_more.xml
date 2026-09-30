@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parts_obb_name_refused">Aquest arxiu conté un fitxer OBB el nom del qual podria sortir de la carpeta OBB de l\'aplicació, o dos fitxers OBB amb el mateix nom. No s\'ha instal·lat res.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">S\'ha col·locat %1$d fitxer OBB a %2$s.</item>
+        <item quantity="many">S\'han col·locat %1$d fitxers OBB a %2$s.</item>
+        <item quantity="other">S\'han col·locat %1$d fitxers OBB a %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">Els fitxers OBB no s\'han col·locat a %1$s, perquè només els instal·ladors Shizuku i root hi poden escriure. Són a %2$s, el fitxer d\'aquest llançament: %3$s.</string>
+    <string name="parts_obb_failed">Els fitxers OBB no s\'han pogut col·locar a %1$s: %2$s. Són a %3$s, el fitxer d\'aquest llançament: %4$s.</string>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_installer">Cài đặt bằng</string>
+    <string name="installer_system">Trình cài đặt của Android</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">Ứng dụng khác</string>
+    <string name="installer_system_effect">Android hỏi trước lần cài đặt đầu tiên, và trước bản cập nhật khi Android muốn hỏi.</string>
+    <string name="installer_shizuku_effect">Cài đặt và cập nhật không cần hỏi, thông qua Shizuku hoặc Sui. Mọi tệp đều qua các kiểm tra như nhau trước.</string>
+    <string name="installer_root_effect">Cài đặt và cập nhật không cần hỏi, thông qua su. Mọi tệp đều qua các kiểm tra như nhau trước.</string>
+    <string name="installer_other_app_effect">Chuyển từng tệp đã kiểm tra cho ứng dụng trình cài đặt bạn chọn. Ứng dụng đó luôn hỏi, nên không có gì được cài trong nền.</string>
+    <string name="installer_ready">Sẵn sàng</string>
+    <string name="installer_not_ready">Chưa sẵn sàng, tạm thời dùng trình cài đặt của Android</string>
+    <string name="installer_shizuku_not_running">Shizuku chưa chạy. Hãy khởi động trong ứng dụng Shizuku, rồi quay lại.</string>
+    <string name="installer_shizuku_too_old">Phiên bản Shizuku này quá cũ đối với Tern. Hãy cập nhật Shizuku.</string>
+    <string name="installer_shizuku_not_allowed">Tern chưa được phép dùng Shizuku. Nhấn vào đây để yêu cầu.</string>
+    <string name="installer_no_root">Tern không có quyền root. Nhấn vào đây để yêu cầu lại.</string>
+    <string name="installer_no_other_app">Chưa chọn ứng dụng trình cài đặt, hoặc ứng dụng đã chọn không còn nữa.</string>
+    <string name="installer_pick_app">Ứng dụng trình cài đặt</string>
+    <string name="installer_pick_app_none">Chưa chọn</string>
+    <string name="installer_no_apps">Không có ứng dụng trình cài đặt nào khác trên thiết bị này.</string>
+    <string name="installer_play">Báo là Google Play đã cài ứng dụng</string>
+    <string name="installer_play_effect">Một số ứng dụng chỉ hoạt động khi chúng tin rằng Google Play đã cài đặt chúng. Khi đó Tern không còn hiển thị là trình cài đặt của chúng.</string>
+    <string name="install_other_app_signer">Ứng dụng trình cài đặt đã cài một thứ được ký bởi người khác với người ký tệp mà Tern đã kiểm tra, nên lần cài đặt này không được tính.</string>
+</resources>

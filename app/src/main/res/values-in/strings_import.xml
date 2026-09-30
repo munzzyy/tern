@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">Dari daftar alamat</string>
+    <string name="import_addresses_explain">Tempel alamat aplikasi, satu per baris atau di mana saja dalam teks, atau baca dari file seperti daftar OPML. Setiap alamat diperiksa dan ditambahkan seperti satu tautan.</string>
+    <string name="import_addresses_field">Alamat</string>
+    <string name="import_addresses_show">Tampilkan isinya</string>
+    <string name="import_addresses_file">Baca file</string>
+    <string name="import_addresses_none">Tidak ada alamat https di dalamnya.</string>
+    <string name="import_addresses_other">Daftar lain</string>
+    <string name="import_addresses_unreadable">File itu tidak dapat dibaca.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="other">%1$d alamat. Hapus centang yang tidak Anda inginkan, lalu tambahkan.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="other">%1$d aplikasi ada dalam tautan ini. Lihat masing-masing untuk memeriksa setelannya sebelum Anda menambahkannya.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Ekspor untuk Obtainium</string>
+    <string name="settings_export_obtainium_effect">File yang dapat diimpor Obtainium, untuk daftar yang pindah ke sana. Apa yang tidak ada setelannya di Obtainium akan tertinggal.</string>
+    <string name="settings_export_installed_only">Ekspor hanya aplikasi yang terinstal</string>
+    <string name="settings_export_settings">Sertakan setelan dalam ekspor</string>
+    <string name="settings_export_settings_effect">Tampilan, daftar, notifikasi, dan pemeriksaan. Tidak pernah token, proksi, atau penginstal.</string>
+    <string name="settings_kept_export">Selalu perbarui ekspor</string>
+    <string name="settings_kept_export_effect">Sesaat setelah ada perubahan di daftar, Tern menulis ulang ekspor.</string>
+    <string name="settings_kept_export_written">Ditulis pukul %1$s</string>
+    <string name="settings_kept_export_folder">Tempat penyimpanannya</string>
+    <string name="import_settings_taken">Setelan dalam file juga diambil.</string>
+</resources>

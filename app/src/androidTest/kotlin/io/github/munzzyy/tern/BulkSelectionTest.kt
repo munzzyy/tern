@@ -40,10 +40,10 @@ class BulkSelectionTest {
             compose.waitForText("1 selected")
             compose.shownRow("Kestrel Mail").performClick()
             compose.onNodeWithText("2 selected").assertIsDisplayed()
-            bar("Add to category").performClick()
-            compose.onNodeWithText("Add 2 apps to a category").assertIsDisplayed()
+            bar("Change categories").performClick()
+            compose.onNodeWithText("Categories of 2 apps").assertIsDisplayed()
             compose.tagged(BULK_CATEGORY_FIELD_TAG).performTextReplacement("  Reading ")
-            compose.onNode(hasText("Add to category") and !hasAncestorTag(BULK_BAR_TAG) and androidx.compose.ui.test.hasClickAction()).performClick()
+            compose.onNode(hasText("Save") and androidx.compose.ui.test.hasClickAction()).performClick()
             compose.waitUntil(5_000) { app("kestrelmail").config.categories.contains("Reading") }
             assertEquals(listOf("Writing", "Reading"), app("pocketnotes").config.categories)
             assertEquals(listOf("Reading"), app("kestrelmail").config.categories)

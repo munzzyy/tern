@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="appverifier_title">فحص ثانٍ</string>
-    <string name="appverifier_effect">AppVerifier هو تطبيق منفصل. يقارن هذا التطبيق بالشهادة التي يحتفظ بها Tern له، وبقائمته الخاصة للتطبيقات التي يعرفها.</string>
-    <string name="appverifier_action">فحص باستخدام AppVerifier</string>
 </resources>

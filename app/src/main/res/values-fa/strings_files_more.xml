@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_other_title">فایل‌های دیگر این انتشار</string>
+    <string name="files_source_code">کد منبع</string>
+    <string name="files_save_spoken">ذخیره %1$s در پوشه دانلود</string>
+    <string name="files_save_a_file">ذخیره یک فایل</string>
+    <string name="files_pick_title_version">ذخیره یک فایل از نسخه %1$s</string>
+    <string name="files_pick_title_app">ذخیره یک فایل از %1$s</string>
+    <string name="files_skip">رد کردن</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">در حال ذخیره %1$d فایل. وقتی ذخیره تمام شود، یک اعلان به شما اطلاع می‌دهد.</item>
+        <item quantity="other">در حال ذخیره %1$d فایل. وقتی ذخیره هر فایل تمام شود، یک اعلان به شما اطلاع می‌دهد.</item>
+    </plurals>
+    <string name="files_channel_saved">فایل‌های ذخیره‌شده</string>
+    <string name="files_notify_saved">%1$s ذخیره شد</string>
+    <string name="files_notify_saved_plain">یک فایل در پوشه دانلود ذخیره شد</string>
+    <string name="files_notify_not_saved">ذخیره %1$s امکان‌پذیر نشد</string>
+    <string name="files_notify_not_saved_plain">ذخیره یک فایل امکان‌پذیر نشد</string>
+    <string name="files_notify_updated_to">%1$s به %2$s به‌روز شد</string>
+    <string name="files_notify_installed_at">%1$s %2$s نصب شد</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">چه مشکلی پیش آمد</string>
+    <string name="files_problems_none">هیچ‌کدام از این برنامه‌ها اکنون مشکلی ندارند.</string>
+    <string name="files_setting_verifier">نمایش برنامه‌های جدید ابتدا در Verified Apps</string>
+    <string name="files_setting_verifier_effect">پیش از نصب اول یک برنامه، فایل بررسی‌شده آن برای یک بررسی دوم به Verified Apps یا AppVerifier فرستاده می‌شود، در صورتی که یکی از آن‌ها نصب باشد. نصب پس از بازگشت شما به Tern ادامه می‌یابد.</string>
+    <string name="files_verifier_about">درباره Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s یک برنامه جداگانه است. این برنامه را با گواهی‌ای که Tern برای آن دارد و با فهرست خودش از برنامه‌های شناخته‌شده مقایسه می‌کند.</string>
+    <string name="files_verifier_card_action">بررسی با %1$s</string>
+</resources>

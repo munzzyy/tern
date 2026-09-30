@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_package_effect">すべてのファイルがこのパッケージのものである必要があります。このパッケージ名でインストールされているアプリが、Ternの確認対象になります。空欄の場合、Ternはアプリのファイルから読み取ります。</string>
+</resources>

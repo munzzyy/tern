@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">목록 정리</string>
+    <string name="list_options_title">목록 정리</string>
+    <string name="list_reverse">순서 뒤집기</string>
+    <string name="list_updates_first">업데이트를 맨 위에</string>
+    <string name="list_bury_not_installed">설치되지 않은 앱을 맨 아래에</string>
+    <string name="sort_author">개발자순</string>
+    <string name="sort_added">추가한 날짜순</string>
+    <string name="sort_released">릴리스 날짜순</string>
+    <string name="group_title">그룹 기준</string>
+    <string name="group_none">없음</string>
+    <string name="group_category">카테고리</string>
+    <string name="group_source">소스</string>
+    <string name="group_category_effect">여러 카테고리에 속한 앱은 각 카테고리에 모두 표시됩니다.</string>
+    <string name="group_other">나머지 항목</string>
+    <string name="group_folded">접힘</string>
+    <string name="group_open">펼쳐짐</string>
+    <string name="filter_favorites">즐겨찾기</string>
+    <string name="filter_track_only">추적 전용</string>
+    <string name="filter_problems">문제</string>
+    <string name="action_done">완료</string>
+    <string name="settings_swipe">행을 스와이프하여 실행</string>
+    <string name="settings_swipe_effect">앱을 끝 쪽으로 스와이프하면 업데이트하고, 시작 쪽으로 스와이프하면 제거합니다.</string>
+    <string name="action_favorite">즐겨찾기에 추가</string>
+    <string name="action_unfavorite">즐겨찾기에서 삭제</string>
+    <string name="action_set_mode">업데이트가 발견될 때</string>
+    <string name="action_share_addresses">주소 공유</string>
+    <string name="action_share_export">파일로 공유</string>
+    <string name="action_uninstall">설치 삭제</string>
+    <string name="export_format_tern">Tern 파일</string>
+    <string name="export_format_obtainium">Obtainium용 파일</string>
+    <string name="bulk_uninstall_text">Android가 각 앱에 대해 차례로 묻습니다. 여기서 제거할 때까지 Tern은 계속 추적합니다.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="other">앱 %1$d개를 즐겨찾기에 추가함</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="other">앱 %1$d개를 즐겨찾기에서 삭제함</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="other">앱 %1$d개의 업데이트가 발견될 때</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="other">앱 %1$d개를 설치 삭제하시겠습니까?</item>
+    </plurals>
+</resources>

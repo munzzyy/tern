@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Каждую %d минуту</item>
+        <item quantity="few">Каждые %d минуты</item>
+        <item quantity="many">Каждые %d минут</item>
+        <item quantity="other">Каждые %d минуты</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Каждый %d день</item>
+        <item quantity="few">Каждые %d дня</item>
+        <item quantity="many">Каждые %d дней</item>
+        <item quantity="other">Каждые %d дня</item>
+    </plurals>
+    <string name="settings_check_now">Запустить фоновую проверку сейчас</string>
+    <string name="settings_check_now_effect">Проверяет все приложения и устанавливает то, что настроено обновляться самостоятельно, как это делает фоновая проверка.</string>
+    <string name="settings_check_now_running">Проверка…</string>
+    <string name="settings_check_on_start">Проверять при открытии Tern</string>
+    <string name="settings_check_on_open">Проверять приложение при открытии его страницы</string>
+    <string name="settings_check_on_open_effect">Не повторно в течение пяти минут после последней проверки.</string>
+    <string name="settings_only_installed">Проверять только установленные приложения</string>
+    <string name="settings_only_installed_effect">Приложения, которые только отслеживаются, тоже проверяются. Открытое вами приложение проверяется всегда.</string>
+    <string name="settings_remove_uninstalled">Убирать приложения, удаленные в другом месте</string>
+    <string name="settings_remove_uninstalled_effect">Приложение, которое вы удалили не через Tern, тоже исчезает из списка.</string>
+    <string name="settings_file_filter">Фильтр файлов</string>
+    <string name="settings_file_filter_effect">Шаблон, по которому выбирают файл все приложения без собственного фильтра.</string>
+    <string name="settings_file_filter_none">Нет</string>
+    <string name="settings_file_filter_invalid">Этот шаблон невозможно прочитать.</string>
+    <string name="settings_allow_downgrades">Разрешить старые версии</string>
+    <string name="settings_allow_downgrades_effect">Установлен Let Me Downgrade, поэтому Android может установить старую версию поверх более новой.</string>
+    <string name="settings_collapse_groups">Изначально сворачивать группы</string>
+    <string name="settings_haptics">Тактильный отклик</string>
+    <string name="settings_haptics_effect">Легкая вибрация, когда свайп или долгое нажатие что-то делает.</string>
+    <string name="settings_phone_layout">Всегда использовать макет для телефона</string>
+    <string name="settings_phone_layout_effect">Одна панель и полоса навигации внизу, при любой ширине экрана.</string>
+    <string name="density_minimal">Минимальная</string>
+    <string name="search_in">Где искать</string>
+    <string name="activity_share">Поделиться активностью</string>
+    <string name="sources_title">Что может читать Tern</string>
+    <string name="sources_effect">Хостинги кода, репозитории, магазины и веб-страницы, и в каких из них можно искать.</string>
+    <string name="sources_forges">Хостинги кода</string>
+    <string name="sources_repositories">Репозитории</string>
+    <string name="sources_stores">Магазины</string>
+    <string name="sources_mirrors">Магазины, повторно публикующие приложения</string>
+    <string name="sources_modified">Сайты с измененными приложениями</string>
+    <string name="sources_other">Другие места</string>
+    <string name="sources_web_page">Веб-страница со ссылками на файлы</string>
+    <string name="sources_direct">Прямая ссылка на файл</string>
+    <string name="sources_searchable">есть поиск</string>
+    <string name="sources_track_only">только отслеживание</string>
+    <string name="sources_self_hosted">GitLab, Forgejo, Gitea и Jenkins на собственном сервере распознаются по адресу.</string>
+    <string name="shared_configs_title">Конфигурации от пользователей Obtainium</string>
+    <string name="shared_configs_effect">Сайт с готовыми настройками для приложений. Его ссылки открываются в Tern, если в Настройках включено «Открывать ссылки Obtainium».</string>
+    <string name="engine_inner_filter_nothing">Фильтр файлов внутри архивов не совпадает ни с одним APK в этом архиве.</string>
+    <string name="preview_republished">%1$s повторно публикует то, что разработчики выпускают в других местах. Его файлы сверяются с сертификатом разработчика, как только Tern его узнает, поэтому по возможности закрепите сертификат или сначала установите приложение от разработчика.</string>
+    <string name="preview_modified">%1$s предлагает приложения, измененные не их разработчиком. Они подписаны тем, кто их изменил, и Tern не может определить, что именно изменено.</string>
+    <string name="about_track_tern">Обновлять сам Tern</string>
+    <string name="about_track_tern_effect">Добавляет в список релизы самого Tern: они проверяются и сверяются, как у любого приложения.</string>
+    <string name="engine_channel_tracked">Новые релизы отслеживаемых приложений</string>
+    <string name="engine_channel_checking">Проверка</string>
+    <string name="engine_notify_tracked_one">Новый релиз %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">У %1$d отслеживаемого приложения новый релиз</item>
+        <item quantity="few">У %1$d отслеживаемых приложений новые релизы</item>
+        <item quantity="many">У %1$d отслеживаемых приложений новые релизы</item>
+        <item quantity="other">У %1$d отслеживаемого приложения новые релизы</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">Проверка %1$d приложения</item>
+        <item quantity="few">Проверка %1$d приложений</item>
+        <item quantity="many">Проверка %1$d приложений</item>
+        <item quantity="other">Проверка %1$d приложения</item>
+    </plurals>
+    <string name="settings_notify_tracked">Когда у отслеживаемого приложения новый релиз</string>
+    <string name="settings_notify_checking">Во время фоновой проверки</string>
+    <string name="settings_notify_checking_effect">Тихое уведомление, которое исчезает, когда проверка завершена.</string>
+    <string name="engine_event_removed_uninstalled">Убрано из списка, так как было удалено не через Tern</string>
+</resources>

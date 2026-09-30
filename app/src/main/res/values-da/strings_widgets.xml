@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">Tjek</string>
+    <string name="shortcut_check_long">Tjek for opdateringer</string>
+    <string name="shortcut_update_all_long">Opdater alle apps</string>
+    <string name="shortcut_add_short">Tilføj</string>
+    <string name="shortcut_add_long">Tilføj en app</string>
+    <string name="tile_check">Tjek for opdateringer</string>
+    <string name="tile_checking">Tjekker…</string>
+    <string name="tile_up_to_date">Opdateret</string>
+    <string name="widget_label">Opdateringer</string>
+    <string name="widget_description">Hvor mange apps der har en opdatering, med en knap til at tjekke og en til at opdatere dem alle.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d opdatering</item>
+        <item quantity="other">%d opdateringer</item>
+    </plurals>
+    <string name="widget_up_to_date">Alt er opdateret</string>
+    <string name="widget_checked">Tjekket kl. %1$s</string>
+    <string name="widget_never_checked">Ikke tjekket endnu</string>
+    <string name="widget_check">Tjek</string>
+</resources>

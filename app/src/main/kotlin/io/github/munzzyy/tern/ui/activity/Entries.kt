@@ -2,12 +2,16 @@ package io.github.munzzyy.tern.ui.activity
 
 import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.engine.EventKind
+import io.github.munzzyy.tern.engine.isOwn
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 
-/** What an entry says first. [PLAIN] says what the engine wrote, for the kinds that have no words of their own. */
-enum class Headline { INSTALLED, UPDATED, UPDATE_WAITS, INSTALL_WAITS, NOT_INSTALLED, CANCELLED, BLOCKED, ADDED, REMOVED, CHECK_FAILED, PLAIN }
+/**
+ * What an entry says first. [PLAIN] says what the engine wrote, for the kinds that have no words
+ * of their own. [OWN] is one of Tern's own messages, which says what it wrote as well.
+ */
+enum class Headline { INSTALLED, UPDATED, UPDATE_WAITS, INSTALL_WAITS, NOT_INSTALLED, CANCELLED, BLOCKED, ADDED, REMOVED, CHECK_FAILED, PLAIN, OWN }
 
 /** One thing that happened: a single event, or the events of one operation on one app. */
 data class Entry(
@@ -102,13 +106,15 @@ private fun headlineOf(outcome: EventKind, update: Boolean): Headline = when (ou
     EventKind.REMOVED -> Headline.REMOVED
     EventKind.CHECK_FAILED -> Headline.CHECK_FAILED
     EventKind.IMPORTED, EventKind.MOVED -> Headline.PLAIN
+    EventKind.OWN_NOTE, EventKind.OWN_WARNING, EventKind.OWN_ERROR -> Headline.OWN
 }
 
-/** Entries under the day of their outcome, newest first inside each day and across days. */
-fun entriesByDay(events: List<Event>, zone: ZoneId, problemsOnly: Boolean): List<EntryDay> {
+/** Entries under the day of their outcome, newest first inside each day and across days. [own] shows Tern's own messages among them. */
+fun entriesByDay(events: List<Event>, zone: ZoneId, problemsOnly: Boolean, own: Boolean = true): List<EntryDay> {
     val days = LinkedHashMap<LocalDate, MutableList<Entry>>()
     for (entry in entriesOf(events)) {
         if (problemsOnly && !entry.isProblem) continue
+        if (!own && entry.outcome.kind.isOwn) continue
         val day = Instant.ofEpochMilli(entry.atMs).atZone(zone).toLocalDate()
         days.getOrPut(day) { mutableListOf() }.add(entry)
     }

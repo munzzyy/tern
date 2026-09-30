@@ -1,0 +1,35 @@
+{
+  "info": {"status": "OK"},
+  "datalist": {
+    "total": 3,
+    "count": 3,
+    "offset": 0,
+    "limit": 20,
+    "list": [
+      {
+        "id": 12345678,
+        "name": "Example App",
+        "package": "org.example.app",
+        "uname": "example-app",
+        "developer": {"name": "Example Labs"},
+        "store": {"name": "apps"},
+        "file": {"vername": "2.1.0", "vercode": 210}
+      },
+      {
+        "id": 23456789,
+        "name": "Broken Entry",
+        "package": "org.example.broken",
+        "uname": "not a name/../x",
+        "developer": {"name": "Example Labs"}
+      },
+      {
+        "id": 34567890,
+        "name": "Example Tools",
+        "package": "org.example.tools",
+        "uname": "example-tools",
+        "developer": null,
+        "store": {"name": "example-store"}
+      }
+    ]
+  }
+}

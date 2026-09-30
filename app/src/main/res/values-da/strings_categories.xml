@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">Kategorier</string>
+    <string name="settings_categories_effect">Navngiv dem, giv hver en farve, og omdøb eller slet dem for alle apps på én gang.</string>
+    <plurals name="settings_categories_count">
+        <item quantity="one">%d kategori</item>
+        <item quantity="other">%d kategorier</item>
+    </plurals>
+    <string name="categories_none">Ingen endnu. Opret en her, eller læg apps under en fra listen.</string>
+    <string name="categories_new">Ny kategori</string>
+    <string name="category_edit">Rediger kategori</string>
+    <string name="category_name">Navn</string>
+    <string name="category_color">Farve</string>
+    <string name="category_color_spoken">Farve %1$d af %2$d</string>
+    <string name="category_exists">Der findes allerede en kategori med dette navn.</string>
+    <string name="category_delete">Slet</string>
+    <string name="category_delete_effect">Appene i den bliver på listen; de ligger bare ikke længere under den.</string>
+    <plurals name="category_apps">
+        <item quantity="one">%d app</item>
+        <item quantity="other">%d apps</item>
+    </plurals>
+    <string name="action_close">Luk</string>
+    <string name="categories_new_short">Ny…</string>
+    <string name="app_notes_title">Noter</string>
+    <string name="app_notes_help">Markdown virker: **fed**, *kursiv*, lister og links.</string>
+    <string name="app_notes_add">Tilføj en note</string>
+    <string name="app_notes_add_effect">Alt, der er værd at huske om denne app. Den følger med i eksporter.</string>
+    <string name="app_notes_edit">Rediger noten</string>
+</resources>

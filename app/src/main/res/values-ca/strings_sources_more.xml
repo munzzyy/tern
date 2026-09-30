@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">Les aplicacions de %1$s només es poden seguir, perquè no ofereix cap fitxer per instal·lar.</string>
+    <string name="min_age_global">Tal com s\'ha configurat per a totes les aplicacions: %1$s</string>
+    <string name="setting_min_age_global_effect">Les aplicacions sense una espera pròpia esperen aquest temps abans que s\'ofereixi un llançament nou, perquè se\'n pugui retirar primer un de dolent.</string>
+    <string name="option_link_text">Filtra els enllaços pel seu text</string>
+    <string name="option_link_text_effect">El filtre s\'aplica al text d\'un enllaç i no a la seva adreça.</string>
+    <string name="option_take_first">Agafa el primer enllaç</string>
+    <string name="option_take_first_effect">Si no, s\'agafa l\'últim enllaç de l\'ordre.</string>
+    <string name="option_natural_order_effect">Si no, els enllaços s\'ordenen segons l\'ordre natural de la seva adreça, llegint els números com a números.</string>
+    <string name="option_by_last_segment">Guia\'t pel final de l\'adreça</string>
+    <string name="option_by_last_segment_effect">Els enllaços s\'ordenen, i les versions es llegeixen, per la part que hi ha després de l\'última barra.</string>
+    <string name="option_steps_title">Pàgines per recórrer primer</string>
+    <string name="option_steps_order_help">A cada pàgina, els enllaços que coincideixen s\'ordenen i se segueix l\'últim.</string>
+    <string name="step_title">Pàgina %1$d</string>
+    <string name="step_filter">Enllaç a seguir</string>
+    <string name="step_text">Coincideix amb el text de l\'enllaç</string>
+    <string name="step_arch">Prefereix el processador d\'aquest dispositiu</string>
+    <string name="step_add">Afegeix una pàgina</string>
+    <string name="step_remove">Suprimeix aquesta pàgina</string>
+    <string name="option_file_version">Usa el nom del fitxer com a versió</string>
+    <string name="option_file_version_effect">Aleshores cada fitxer compta com un llançament propi.</string>
+    <string name="github_proxy_title">GitHub a través d\'un hubproxy</string>
+    <string name="github_proxy_effect">Cada petició a GitHub va a aquest amfitrió, que les veu totes. No s\'hi envia cap token, així que els projectes privats i GitHub Actions no es poden seguir d\'aquesta manera.</string>
+    <string name="github_proxy_host">Amfitrió del hubproxy</string>
+    <string name="github_proxy_help">Només un nom d\'amfitrió, com ara gh-proxy.com. Tern s\'hi connecta per HTTPS.</string>
+    <string name="github_proxy_invalid">Aquest no és un nom d\'amfitrió que Tern pugui usar</string>
+    <string name="github_proxy_in_use">Les peticions a GitHub passen per %1$s</string>
+    <string name="github_proxy_remove">Deixa d\'usar el hubproxy</string>
+</resources>

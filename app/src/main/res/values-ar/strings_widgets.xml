@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">فحص</string>
+    <string name="shortcut_check_long">فحص التحديثات</string>
+    <string name="shortcut_update_all_long">تحديث كل التطبيقات</string>
+    <string name="shortcut_add_short">إضافة</string>
+    <string name="shortcut_add_long">إضافة تطبيق</string>
+    <string name="tile_check">فحص التحديثات</string>
+    <string name="tile_checking">جارٍ الفحص…</string>
+    <string name="tile_up_to_date">محدث</string>
+    <string name="widget_label">التحديثات</string>
+    <string name="widget_description">عدد التطبيقات التي لها تحديث، مع زر للفحص وآخر لتحديثها كلها.</string>
+    <plurals name="widget_updates">
+        <item quantity="zero">%d تحديث</item>
+        <item quantity="one">تحديث واحد (%d)</item>
+        <item quantity="two">تحديثان (%d)</item>
+        <item quantity="few">%d تحديثات</item>
+        <item quantity="many">%d تحديثًا</item>
+        <item quantity="other">%d تحديث</item>
+    </plurals>
+    <string name="widget_up_to_date">كل شيء محدث</string>
+    <string name="widget_checked">تم الفحص في %1$s</string>
+    <string name="widget_never_checked">لم يُفحص بعد</string>
+    <string name="widget_check">فحص</string>
+</resources>

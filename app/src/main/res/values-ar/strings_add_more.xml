@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="add_link_unknown">لا يعرف Tern هذا النوع من الروابط.</string>
+    <string name="add_not_readable_as">لا يمكن قراءة هذا العنوان على أنه %1$s.</string>
+    <string name="add_event_replaced">استُبدلت إعداداته بالإعدادات التي كان يحملها له ملف أو رابط.</string>
+    <string name="search_miss_unreachable">تعذر البحث في %1$s: لم يستجب المصدر.</string>
+    <string name="search_miss_wait">تعذر البحث في %1$s: يطلب المصدر من Tern الانتظار قليلًا.</string>
+    <string name="search_miss_wait_until">تعذر البحث في %1$s: يطلب المصدر من Tern الانتظار حتى %2$s.</string>
+    <string name="search_miss_refused">تعذر البحث في %1$s: رفض المصدر الطلب.</string>
+    <string name="search_miss_status">تعذر البحث في %1$s: ردّ المصدر بـ %2$d.</string>
+    <string name="search_miss_unreadable">تعذر البحث في %1$s: تعذرت قراءة رد المصدر.</string>
+    <string name="add_options_title">قبل الإضافة</string>
+    <string name="add_options_auto">يتعرف Tern بنفسه على نوع العنوان.</string>
+    <string name="add_options_forced">يُقرأ على أنه %1$s</string>
+    <string name="add_read_as">قراءة العنوان على أنه</string>
+    <string name="add_read_as_auto">تلقائي</string>
+    <string name="add_read_as_forgejo">Forgejo أو Gitea</string>
+    <string name="add_read_as_help">لمصدر لا يتعرف عليه Tern بنفسه، مثل مصدر على خادم خاص به.</string>
+    <string name="add_package_label">اسم الحزمة</string>
+    <string name="add_package_help">يجب أن يكون كل ملف من هذه الحزمة. إذا تُرك الحقل فارغًا، يقرأ Tern الاسم من ملف التطبيق.</string>
+    <string name="add_package_invalid">هذا ليس اسم حزمة. يبدو اسم الحزمة هكذا: org.example.app.</string>
+    <string name="add_set_options">ضبط خياراته</string>
+    <string name="add_failed_options">قد تدل خياراته Tern على مكان البحث. اضبطها أعلاه، ثم يفحص Tern مرة أخرى.</string>
+    <string name="add_replace">استبدال إعداداته</string>
+    <string name="add_replace_explain">يحمل الرابط إعدادات خاصة به لهذا التطبيق. يُبقي الاستبدال على الشهادات التي يثق بها واسم حزمته، ولا يجعله يثبّت التحديثات تلقائيًا.</string>
+    <string name="results_filter">فلتر</string>
+    <string name="results_filter_help">كلمات أو نمط</string>
+    <string name="results_filter_none">لا شيء في القائمة يطابق «%1$s».</string>
+    <string name="repo_search_all">البحث في المستودع كله عن «%1$s»</string>
+    <string name="repo_show_all">إظهار كل تطبيقات المستودع</string>
+    <string name="repo_heading_within">التطبيقات في %1$s المطابقة لـ «%2$s»</string>
+    <string name="search_more">عُثر على أكثر مما هو معروض. يضيّق الفلتر النتائج.</string>
+    <string name="search_forgejo_label">Forgejo أو Gitea للبحث فيه</string>
+    <string name="search_forgejo_help">عنوانه، مثل codeberg.org. يُرسَل معه الرمز المخزَّن له.</string>
+    <string name="search_forgejo_invalid">هذا ليس عنوانًا يمكن لـ Tern البحث فيه.</string>
+    <string name="search_min_stars_label">أقل عدد من النجوم</string>
+    <string name="search_min_stars_help">تُستبعد المشاريع على GitHub وعلى Forgejo المحدد التي لها نجوم أقل.</string>
+    <plurals name="import_replaceable">
+        <item quantity="zero">يحتوي الملف أيضًا على إعدادات أخرى لـ %1$d تطبيق موجود بالفعل في قائمتك. تبقى كما هي ما لم تستبدلها.</item>
+        <item quantity="one">يحتوي الملف أيضًا على إعدادات أخرى لتطبيق واحد (%1$d) موجود بالفعل في قائمتك. تبقى كما هي ما لم تستبدلها.</item>
+        <item quantity="two">يحتوي الملف أيضًا على إعدادات أخرى لتطبيقين (%1$d) موجودين بالفعل في قائمتك. تبقى كما هي ما لم تستبدلها.</item>
+        <item quantity="few">يحتوي الملف أيضًا على إعدادات أخرى لـ %1$d تطبيقات موجودة بالفعل في قائمتك. تبقى كما هي ما لم تستبدلها.</item>
+        <item quantity="many">يحتوي الملف أيضًا على إعدادات أخرى لـ %1$d تطبيقًا موجودة بالفعل في قائمتك. تبقى كما هي ما لم تستبدلها.</item>
+        <item quantity="other">يحتوي الملف أيضًا على إعدادات أخرى لـ %1$d تطبيق موجودة بالفعل في قائمتك. تبقى كما هي ما لم تستبدلها.</item>
+    </plurals>
+    <plurals name="import_replace">
+        <item quantity="zero">استبدال إعدادات %1$d تطبيق</item>
+        <item quantity="one">استبدال إعدادات تطبيق واحد (%1$d)</item>
+        <item quantity="two">استبدال إعدادات تطبيقين (%1$d)</item>
+        <item quantity="few">استبدال إعدادات %1$d تطبيقات</item>
+        <item quantity="many">استبدال إعدادات %1$d تطبيقًا</item>
+        <item quantity="other">استبدال إعدادات %1$d تطبيق</item>
+    </plurals>
+    <plurals name="import_replaced">
+        <item quantity="zero">استُبدلت إعدادات %1$d تطبيق. بقيت الشهادات التي تثق بها.</item>
+        <item quantity="one">استُبدلت إعدادات تطبيق واحد (%1$d). بقيت الشهادات التي يثق بها.</item>
+        <item quantity="two">استُبدلت إعدادات تطبيقين (%1$d). بقيت الشهادات التي يثقان بها.</item>
+        <item quantity="few">استُبدلت إعدادات %1$d تطبيقات. بقيت الشهادات التي تثق بها.</item>
+        <item quantity="many">استُبدلت إعدادات %1$d تطبيقًا. بقيت الشهادات التي تثق بها.</item>
+        <item quantity="other">استُبدلت إعدادات %1$d تطبيق. بقيت الشهادات التي تثق بها.</item>
+    </plurals>
+    <string name="import_settings_offered">يحمل الملف أيضًا إعدادات لـ Tern نفسه: المظهر، والقائمة، والإشعارات، والفحوصات. لا تُؤخذ ما لم تطلب ذلك.</string>
+    <string name="import_take_settings">أخذ هذه الإعدادات</string>
+    <plurals name="import_pick_shown">
+        <item quantity="zero">وضع علامة على كل %1$d عنصر معروض</item>
+        <item quantity="one">وضع علامة على العنصر المعروض (%1$d)</item>
+        <item quantity="two">وضع علامة على العنصرين المعروضين (%1$d)</item>
+        <item quantity="few">وضع علامة على كل %1$d عناصر معروضة</item>
+        <item quantity="many">وضع علامة على كل %1$d عنصرًا معروضًا</item>
+        <item quantity="other">وضع علامة على كل %1$d عنصر معروض</item>
+    </plurals>
+    <plurals name="import_unpick_shown">
+        <item quantity="zero">إزالة العلامة عن كل %1$d عنصر معروض</item>
+        <item quantity="one">إزالة العلامة عن العنصر المعروض (%1$d)</item>
+        <item quantity="two">إزالة العلامة عن العنصرين المعروضين (%1$d)</item>
+        <item quantity="few">إزالة العلامة عن كل %1$d عناصر معروضة</item>
+        <item quantity="many">إزالة العلامة عن كل %1$d عنصرًا معروضًا</item>
+        <item quantity="other">إزالة العلامة عن كل %1$d عنصر معروض</item>
+    </plurals>
+</resources>

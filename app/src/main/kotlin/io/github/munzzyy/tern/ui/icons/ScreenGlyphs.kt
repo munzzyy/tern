@@ -95,6 +95,15 @@ private val bell: ImageVector by lazy {
     }
 }
 
+private val minus: ImageVector by lazy {
+    glyph("Minus") {
+        line {
+            moveTo(5f, 12f)
+            horizontalLineTo(19f)
+        }
+    }
+}
+
 private val plus: ImageVector by lazy {
     glyph("Plus") {
         line {
@@ -115,3 +124,4 @@ val Glyphs.Expand: ImageVector get() = expand
 val Glyphs.Collapse: ImageVector get() = collapse
 val Glyphs.Bell: ImageVector get() = bell
 val Glyphs.Plus: ImageVector get() = plus
+val Glyphs.Minus: ImageVector get() = minus

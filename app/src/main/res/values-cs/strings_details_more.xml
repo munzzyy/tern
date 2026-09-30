@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_package_effect">Každý soubor musí patřit k tomuto balíčku a Tern se dívá na aplikaci nainstalovanou pod tímto názvem. Když pole zůstane prázdné, Tern název přečte ze souboru aplikace.</string>
+</resources>

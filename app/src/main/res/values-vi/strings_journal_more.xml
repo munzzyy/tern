@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Nhật ký hoạt động</string>
+    <string name="journal_keep_own">Giữ thông điệp của chính Tern trong nhật ký</string>
+    <string name="journal_keep_own_effect">Cảnh báo và lỗi của Tern, cùng thời điểm mỗi lần kiểm tra bắt đầu và kết thúc. Mọi thứ có thể là mật khẩu hoặc mã thông báo đều không được ghi lại, và nhật ký chỉ nằm trên thiết bị này trừ khi bạn chia sẻ.</string>
+    <string name="journal_filter_own">Thông điệp của Tern</string>
+    <string name="journal_mark_note">Lưu ý từ Tern</string>
+    <string name="journal_mark_warning">Cảnh báo từ Tern</string>
+    <string name="journal_mark_error">Lỗi từ Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="other">Đã bắt đầu kiểm tra %1$d ứng dụng.</item>
+    </plurals>
+    <string name="journal_check_started_one">Đã bắt đầu kiểm tra %1$s.</string>
+    <string name="journal_cause_asked">Việc kiểm tra được yêu cầu trong Tern.</string>
+    <string name="journal_cause_opening">Tern đã được mở.</string>
+    <string name="journal_cause_page">Trang của ứng dụng đã được mở.</string>
+    <string name="journal_cause_link">Một liên kết đã yêu cầu kiểm tra.</string>
+    <string name="journal_cause_shortcut">Một lối tắt đã yêu cầu kiểm tra.</string>
+    <string name="journal_cause_widget">Tiện ích đã yêu cầu kiểm tra.</string>
+    <string name="journal_cause_tile">Ô Cài đặt nhanh đã yêu cầu kiểm tra.</string>
+    <string name="journal_cause_schedule">Việc kiểm tra bắt đầu theo lịch.</string>
+    <string name="journal_cause_retry">Việc kiểm tra thử lại những gì đã thất bại ở lần trước.</string>
+    <string name="journal_cause_added">Ứng dụng này vừa được thêm.</string>
+    <string name="journal_cause_imported">Các ứng dụng này vừa được nhập.</string>
+    <string name="journal_cause_changed">Cài đặt của ứng dụng đã thay đổi.</string>
+    <string name="journal_cause_install">Ứng dụng sắp được cài đặt và sẽ được kiểm tra trước.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="other">Việc kiểm tra %1$d ứng dụng đã kết thúc sau %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Việc kiểm tra %1$s đã kết thúc sau %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="other">Tìm thấy %1$d bản cập nhật.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="other">Không thể kiểm tra %1$d ứng dụng.</item>
+    </plurals>
+    <string name="journal_check_stopped">Việc kiểm tra dừng lại sau %1$s, trước khi hoàn tất.</string>
+</resources>

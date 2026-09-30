@@ -104,25 +104,6 @@
         <item quantity="other">%d محدد</item>
     </plurals>
     <string name="apps_select_hint">اختر تطبيقات من القائمة.</string>
-    <string name="action_add_to_category">إضافة إلى فئة</string>
-    <plurals name="bulk_category_title">
-        <item quantity="zero">إضافة %d تطبيق إلى فئة</item>
-        <item quantity="one">إضافة %d تطبيق إلى فئة</item>
-        <item quantity="two">إضافة %d تطبيق إلى فئة</item>
-        <item quantity="few">إضافة %d تطبيقات إلى فئة</item>
-        <item quantity="many">إضافة %d تطبيقًا إلى فئة</item>
-        <item quantity="other">إضافة %d تطبيق إلى فئة</item>
-    </plurals>
-    <string name="bulk_category_field">الفئة</string>
-    <plurals name="bulk_category_done">
-        <item quantity="zero">تم تصنيف %1$d تطبيق ضمن %2$s.</item>
-        <item quantity="one">تم تصنيف %1$d تطبيق ضمن %2$s.</item>
-        <item quantity="two">تم تصنيف %1$d تطبيق ضمن %2$s.</item>
-        <item quantity="few">تم تصنيف %1$d تطبيقات ضمن %2$s.</item>
-        <item quantity="many">تم تصنيف %1$d تطبيقًا ضمن %2$s.</item>
-        <item quantity="other">تم تصنيف %1$d تطبيق ضمن %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">أو اختر فئة تستخدمها بالفعل:</string>
     <plurals name="bulk_check_title">
         <item quantity="zero">فحص %d تطبيق الآن؟</item>
         <item quantity="one">فحص %d تطبيق الآن؟</item>
@@ -402,10 +383,6 @@
         <item quantity="many">كل %d ساعة</item>
         <item quantity="other">كل %d ساعة</item>
     </plurals>
-    <string name="settings_unmetered">الشبكات غير المحدودة فقط</string>
-    <string name="settings_unmetered_effect">تخطي الفحوصات على بيانات الجوال وشبكات Wi-Fi المحدودة.</string>
-    <string name="settings_charging">أثناء الشحن فقط</string>
-    <string name="settings_charging_effect">تخطي الفحوصات أثناء الاعتماد على البطارية.</string>
     <string name="settings_defaults">الافتراضيات للتطبيقات الجديدة</string>
     <string name="settings_notifications">الإشعارات</string>
     <string name="settings_notify_updates">عند العثور على تحديثات</string>
@@ -441,7 +418,6 @@
     <string name="proxy_port_invalid">رقم من 1 إلى 65535</string>
     <string name="settings_appearance">المظهر</string>
     <string name="settings_language">اللغة</string>
-    <string name="settings_language_effect">محددة في إعدادات Android لهذا التطبيق.</string>
     <string name="settings_theme">السمة</string>
     <string name="theme_system">اتباع النظام</string>
     <string name="theme_light">فاتح</string>

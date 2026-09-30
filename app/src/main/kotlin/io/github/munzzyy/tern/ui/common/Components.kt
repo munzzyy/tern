@@ -27,6 +27,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -723,7 +724,7 @@ fun ScreenTop(
 
 /** One choice among a few, or a filter that is on or off. It leaves [LocalLook]'s focus room to whoever places it. */
 @Composable
-fun ChoiceChip(text: String, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier, role: Role = Role.RadioButton) {
+fun ChoiceChip(text: String, selected: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier, role: Role = Role.RadioButton, dot: Color? = null) {
     val look = LocalLook.current
     val scheme = MaterialTheme.colorScheme
     val shape = LocalOutlines.current.button
@@ -745,8 +746,21 @@ fun ChoiceChip(text: String, selected: Boolean, onClick: () -> Unit, modifier: M
     ) {
         val ink = if (selected) scheme.onSecondaryContainer else scheme.onSurfaceVariant
         if (selected) Icon(Glyphs.Check, contentDescription = null, tint = ink, modifier = Modifier.size(look.glyphSmall))
+        if (dot != null && !selected) ColorDot(dot)
         Text(text, style = MaterialTheme.typography.labelLarge, color = ink)
     }
+}
+
+/** A small round swatch, such as the colour of a category next to its name. */
+@Composable
+fun ColorDot(color: Color, modifier: Modifier = Modifier) {
+    val look = LocalLook.current
+    Box(
+        modifier
+            .size(look.glyphSmall * 2 / 3)
+            .clip(CircleShape)
+            .background(color),
+    )
 }
 
 /**

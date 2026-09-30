@@ -95,19 +95,6 @@
         <item quantity="other">%d odabranih</item>
     </plurals>
     <string name="apps_select_hint">Odaberite aplikacije sa spiska.</string>
-    <string name="action_add_to_category">Dodaj u kategoriju</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Dodaj %d aplikaciju u kategoriju</item>
-        <item quantity="few">Dodaj %d aplikacije u kategoriju</item>
-        <item quantity="other">Dodaj %d aplikacija u kategoriju</item>
-    </plurals>
-    <string name="bulk_category_field">Kategorija</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">Stavljena %1$d aplikacija pod %2$s.</item>
-        <item quantity="few">Stavljene %1$d aplikacije pod %2$s.</item>
-        <item quantity="other">Stavljeno %1$d aplikacija pod %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Ili odaberite onu koju već koristite:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Provjeriti %d aplikaciju sada?</item>
         <item quantity="few">Provjeriti %d aplikacije sada?</item>
@@ -351,10 +338,6 @@
         <item quantity="few">Svaka %d sata</item>
         <item quantity="other">Svakih %d sati</item>
     </plurals>
-    <string name="settings_unmetered">Samo na neograničenim mrežama</string>
-    <string name="settings_unmetered_effect">Preskoči provjere na mobilnim podacima i ograničenom Wi-Fi-ju.</string>
-    <string name="settings_charging">Samo dok se puni</string>
-    <string name="settings_charging_effect">Preskoči provjere dok je na bateriji.</string>
     <string name="settings_defaults">Zadano za nove aplikacije</string>
     <string name="settings_notifications">Obavijesti</string>
     <string name="settings_notify_updates">Kada se nađu ažuriranja</string>
@@ -390,7 +373,6 @@
     <string name="proxy_port_invalid">Broj od 1 do 65535</string>
     <string name="settings_appearance">Izgled</string>
     <string name="settings_language">Jezik</string>
-    <string name="settings_language_effect">Odabrano u Androidovim postavkama za ovu aplikaciju.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Prati sistem</string>
     <string name="theme_light">Svijetla</string>

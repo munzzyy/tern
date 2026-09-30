@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Journal d\'activité</string>
+    <string name="journal_keep_own">Conserver les propres messages de Tern dans le journal</string>
+    <string name="journal_keep_own_effect">Ses avertissements et erreurs, ainsi que le début et la fin de chaque vérification. Tout ce qui pourrait être un mot de passe ou un jeton est exclu, et le journal reste sur cet appareil, sauf si vous le partagez.</string>
+    <string name="journal_filter_own">Messages de Tern</string>
+    <string name="journal_mark_note">Note de Tern</string>
+    <string name="journal_mark_warning">Avertissement de Tern</string>
+    <string name="journal_mark_error">Erreur de Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Une vérification de %1$d appli a démarré.</item>
+        <item quantity="many">Une vérification de %1$d applis a démarré.</item>
+        <item quantity="other">Une vérification de %1$d applis a démarré.</item>
+    </plurals>
+    <string name="journal_check_started_one">Une vérification de l\'appli %1$s a démarré.</string>
+    <string name="journal_cause_asked">Elle a été demandée dans Tern.</string>
+    <string name="journal_cause_opening">Tern a été ouvert.</string>
+    <string name="journal_cause_page">Sa page a été ouverte.</string>
+    <string name="journal_cause_link">Un lien l\'a demandée.</string>
+    <string name="journal_cause_shortcut">Un raccourci l\'a demandée.</string>
+    <string name="journal_cause_widget">Le widget l\'a demandée.</string>
+    <string name="journal_cause_tile">Le bloc des Réglages rapides l\'a demandée.</string>
+    <string name="journal_cause_schedule">La planification l\'a lancée.</string>
+    <string name="journal_cause_retry">Elle réessaie là où la dernière vérification a échoué.</string>
+    <string name="journal_cause_added">Elle vient d\'être ajoutée.</string>
+    <string name="journal_cause_imported">Elles viennent d\'être importées.</string>
+    <string name="journal_cause_changed">Ses paramètres ont changé.</string>
+    <string name="journal_cause_install">Elle est sur le point d\'être installée, et elle est d\'abord vérifiée.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">La vérification de %1$d appli s\'est terminée au bout de %2$s.</item>
+        <item quantity="many">La vérification de %1$d applis s\'est terminée au bout de %2$s.</item>
+        <item quantity="other">La vérification de %1$d applis s\'est terminée au bout de %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">La vérification de l\'appli %1$s s\'est terminée au bout de %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Elle a trouvé %1$d mise à jour.</item>
+        <item quantity="many">Elle a trouvé %1$d mises à jour.</item>
+        <item quantity="other">Elle a trouvé %1$d mises à jour.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d appli n\'a pas pu être vérifiée.</item>
+        <item quantity="many">%1$d applis n\'ont pas pu être vérifiées.</item>
+        <item quantity="other">%1$d applis n\'ont pas pu être vérifiées.</item>
+    </plurals>
+    <string name="journal_check_stopped">La vérification s\'est arrêtée au bout de %1$s, avant d\'être terminée.</string>
+</resources>

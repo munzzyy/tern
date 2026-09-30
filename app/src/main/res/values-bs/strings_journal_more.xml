@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Dnevnik aktivnosti</string>
+    <string name="journal_keep_own">Zadrži Ternove vlastite poruke u dnevniku</string>
+    <string name="journal_keep_own_effect">Upozorenja i greške Terna te početak i kraj svake provjere. Sve što bi moglo biti lozinka ili token izostavlja se, a dnevnik ostaje na ovom uređaju osim ako ga ne podijelite.</string>
+    <string name="journal_filter_own">Ternove poruke</string>
+    <string name="journal_mark_note">Bilješka od Terna</string>
+    <string name="journal_mark_warning">Upozorenje od Terna</string>
+    <string name="journal_mark_error">Greška od Terna</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Počela je provjera %1$d aplikacije.</item>
+        <item quantity="few">Počela je provjera %1$d aplikacije.</item>
+        <item quantity="other">Počela je provjera %1$d aplikacija.</item>
+    </plurals>
+    <string name="journal_check_started_one">Počela je provjera %1$s.</string>
+    <string name="journal_cause_asked">Provjera je zatražena u Ternu.</string>
+    <string name="journal_cause_opening">Tern je otvoren.</string>
+    <string name="journal_cause_page">Otvorena je stranica aplikacije.</string>
+    <string name="journal_cause_link">Link je zatražio provjeru.</string>
+    <string name="journal_cause_shortcut">Prečica je zatražila provjeru.</string>
+    <string name="journal_cause_widget">Vidžet je zatražio provjeru.</string>
+    <string name="journal_cause_tile">Pločica brzih postavki je zatražila provjeru.</string>
+    <string name="journal_cause_schedule">Raspored je pokrenuo provjeru.</string>
+    <string name="journal_cause_retry">Ponovo pokušava tamo gdje prethodna provjera nije uspjela.</string>
+    <string name="journal_cause_added">Aplikacija je upravo dodana.</string>
+    <string name="journal_cause_imported">Aplikacije su upravo uvezene.</string>
+    <string name="journal_cause_changed">Promijenile su se postavke aplikacije.</string>
+    <string name="journal_cause_install">Aplikacija će se uskoro instalirati i prvo se provjerava.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">Provjera %1$d aplikacije završena je nakon %2$s.</item>
+        <item quantity="few">Provjera %1$d aplikacije završena je nakon %2$s.</item>
+        <item quantity="other">Provjera %1$d aplikacija završena je nakon %2$s.</item>
+    </plurals>
+    <string name="journal_check_ended_one">Provjera %1$s završena je nakon %2$s.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Pronađeno je %1$d ažuriranje.</item>
+        <item quantity="few">Pronađena su %1$d ažuriranja.</item>
+        <item quantity="other">Pronađeno je %1$d ažuriranja.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d aplikacija se nije mogla provjeriti.</item>
+        <item quantity="few">%1$d aplikacije se nisu mogle provjeriti.</item>
+        <item quantity="other">%1$d aplikacija se nije moglo provjeriti.</item>
+    </plurals>
+    <string name="journal_check_stopped">Provjera se zaustavila nakon %1$s, prije nego što je završena.</string>
+</resources>

@@ -2,14 +2,20 @@ package io.github.munzzyy.tern.ui.apps
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,11 +27,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
@@ -33,22 +44,37 @@ import androidx.compose.ui.semantics.focused
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.Phase
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.LocalOnline
+import io.github.munzzyy.tern.ui.common.LocalNoTouch
 import io.github.munzzyy.tern.ui.common.StatusLine
 import io.github.munzzyy.tern.ui.common.TonalButton
 import io.github.munzzyy.tern.ui.common.confirmInstall
 import io.github.munzzyy.tern.ui.common.focusLook
+import io.github.munzzyy.tern.ui.common.rememberHaptics
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.icons.AppIcon
+import io.github.munzzyy.tern.ui.icons.Glyphs
+import io.github.munzzyy.tern.ui.icons.Info
+import io.github.munzzyy.tern.ui.icons.StarFilled
+import io.github.munzzyy.tern.ui.theme.categoryColor
+import io.github.munzzyy.tern.ui.theme.status
 import io.github.munzzyy.tern.ui.text.RowAction
 import io.github.munzzyy.tern.ui.text.canSkip
+import io.github.munzzyy.tern.ui.text.formatDate
 import io.github.munzzyy.tern.ui.text.inlineAction
 import io.github.munzzyy.tern.ui.text.isWaitingForUser
+import io.github.munzzyy.tern.ui.text.isolate
+import io.github.munzzyy.tern.ui.text.ltr
+import io.github.munzzyy.tern.ui.text.shortUrl
 import io.github.munzzyy.tern.ui.text.statusLabel
 import io.github.munzzyy.tern.ui.text.versionChange
 import io.github.munzzyy.tern.ui.theme.LocalLook
@@ -85,9 +111,12 @@ fun AppRowItem(
         when (a) {
             RowAction.UPDATE, RowAction.INSTALL -> engine.install(row.id)
             RowAction.CONFIRM -> confirmInstall(engine, row.id, actions)
+            RowAction.MARK_SEEN -> actions.run { engine.dismissRelease(row.id) }
+            RowAction.CANCEL -> engine.cancel(row.id)
             else -> Unit
         }
     }
+    var showingChanges by remember { mutableStateOf(false) }
     val openApp: () -> Unit = {
         if (!engine.open(row.id)) actions.say(noLauncher)
     }
@@ -103,6 +132,7 @@ fun AppRowItem(
     val labelSelect = stringResource(R.string.action_select)
     val labelToggle = stringResource(if (checked) R.string.action_deselect else R.string.action_select)
     val pickedState = stringResource(if (checked) R.string.state_selected else R.string.state_not_selected)
+    val labelChanges = stringResource(R.string.action_show_changes)
     val labelAction = action?.let { stringResource(it.text) }
     val description = rowDescription(row)
 
@@ -126,7 +156,8 @@ fun AppRowItem(
                 if (row.installed != null) add(CustomAccessibilityAction(labelOpen) { openApp(); true })
                 add(CustomAccessibilityAction(labelDetails) { onOpen(); true })
                 add(CustomAccessibilityAction(labelCheck) { checkNow(); true })
-                if (canSkip(row)) add(CustomAccessibilityAction(labelSkip) { skip(); true })
+                if (canSkip(row) && !row.config.trackOnly) add(CustomAccessibilityAction(labelSkip) { skip(); true })
+                if (hasChanges(row.latest)) add(CustomAccessibilityAction(labelChanges) { showingChanges = true; true })
                 add(CustomAccessibilityAction(labelSelect) { onSelect(); true })
                 add(CustomAccessibilityAction(labelRemove) { onRemove(); true })
             }
@@ -143,11 +174,15 @@ fun AppRowItem(
     val shape = MaterialTheme.shapes.large
     val inside = look.rowPaddingHorizontal - look.focusRoom
 
+    val haptics = rememberHaptics()
+    val categoryColors = LocalEngine.current.settings.collectAsStateWithLifecycle().value.categoryColors
+    val stripe = remember(row.config.categories, categoryColors) { row.config.categories.map { categoryColor(it, categoryColors) } }
     Column(
         modifier
             .fillMaxWidth()
             .padding(horizontal = look.focusRoom, vertical = look.focusRoom / 2)
             .background(if (highlighted) scheme.secondaryContainer else Color.Transparent, shape)
+            .categoryStripe(stripe)
             .onFocusChanged { hasFocus = it.hasFocus }
             .then(rowSemantics),
     ) {
@@ -161,15 +196,26 @@ fun AppRowItem(
                     .clip(shape)
                     .combinedClickable(
                         onClick = if (selecting) onSelect else onOpen,
-                        onLongClick = onSelect,
+                        onLongClick = {
+                            haptics.longPress()
+                            onSelect()
+                        },
                         onLongClickLabel = labelToggle,
                     )
                     .heightIn(min = look.rowHeight - look.focusRoom)
                     .padding(horizontal = inside, vertical = look.rowPaddingVertical),
             ) {
                 if (selecting) Checkbox(checked = checked, onCheckedChange = null)
-                AppIcon(row)
-                RowText(row, highlighted, LocalDensity.current.fontScale >= LARGE_FONT_SCALE, Modifier.weight(1f))
+                if (!look.minimal) {
+                    // A double tap on the icon of an installed app opens it, as in Obtainium; one tap still opens the page.
+                    val opensApp = row.installed != null && !selecting && !LocalNoTouch.current
+                    Box(if (opensApp) Modifier.combinedClickable(onClick = onOpen, onDoubleClick = openApp, onLongClick = onSelect) else Modifier) {
+                        AppIcon(row, dimmed = row.installed == null)
+                    }
+                }
+                // Without touch the page beside the list shows the notes; a second stop in every row would double the presses.
+                val onChanges = if (hasChanges(row.latest) && !selecting && !LocalNoTouch.current) ({ showingChanges = true }) else null
+                RowText(row, highlighted, LocalDensity.current.fontScale >= LARGE_FONT_SCALE, onChanges, Modifier.weight(1f))
             }
             if (!selecting && actionPlace == ActionPlace.BESIDE) button(Modifier.padding(start = look.focusRoom * 2, end = inside))
         }
@@ -177,25 +223,40 @@ fun AppRowItem(
             button(Modifier.padding(start = inside + look.iconList + look.gap, bottom = look.gapSmall))
         }
     }
+    val release = row.latest
+    if (showingChanges && release != null) ChangesDialog(release, onDismiss = { showingChanges = false })
 }
 
 @Composable
-private fun RowText(row: AppRow, highlighted: Boolean, large: Boolean, modifier: Modifier) {
+private fun RowText(row: AppRow, highlighted: Boolean, large: Boolean, onChanges: (() -> Unit)?, modifier: Modifier) {
     val look = LocalLook.current
     val scheme = MaterialTheme.colorScheme
     Column(verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2), modifier = modifier) {
-        Text(
-            row.config.name,
-            style = MaterialTheme.typography.titleMedium.heavier(),
-            color = if (highlighted) scheme.onSecondaryContainer else scheme.onSurface,
-            maxLines = if (large) 3 else 2,
-            overflow = TextOverflow.Ellipsis,
-        )
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
+            Text(
+                row.config.shownName,
+                style = MaterialTheme.typography.titleMedium.heavier(),
+                color = if (highlighted) scheme.onSecondaryContainer else scheme.onSurface,
+                maxLines = if (large) 3 else 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f, fill = false),
+            )
+            if (row.config.favorite) {
+                Icon(Glyphs.StarFilled, contentDescription = null, tint = MaterialTheme.status.caution.color, modifier = Modifier.size(look.glyphSmall))
+            }
+        }
         StatusLine(
             statusLabel(row, LocalOnline.current),
             detail = row.progress?.let { progressText(it) } ?: versionText(versionChange(row)),
             ink = if (highlighted) scheme.onSecondaryContainer else Color.Unspecified,
         )
+        val quiet = if (highlighted) scheme.onSecondaryContainer else scheme.onSurfaceVariant
+        val moved = row.movedTo
+        when {
+            row.progress != null -> Unit
+            moved != null -> MovedLine(moved, quiet)
+            else -> ReleaseLine(row, quiet, onChanges)
+        }
         row.progress?.let { p ->
             val fraction = p.fraction
             val bar = Modifier.fillMaxWidth().padding(top = look.gapSmall / 4)
@@ -205,5 +266,67 @@ private fun RowText(row: AppRow, highlighted: Boolean, large: Boolean, modifier:
                 LinearProgressIndicator(modifier = bar)
             }
         }
+    }
+}
+
+/** Where the project says it lives now, as its page says it. */
+@Composable
+private fun MovedLine(movedTo: String, ink: Color) {
+    val look = LocalLook.current
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(look.gapSmall / 2)) {
+        Icon(Glyphs.Info, contentDescription = null, tint = MaterialTheme.colorScheme.tertiary, modifier = Modifier.size(look.glyphSmall))
+        Text(
+            stringResource(R.string.row_moved, ltr(shortUrl(movedTo))),
+            style = MaterialTheme.typography.bodySmall,
+            color = ink,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
+/** When the offered release came out, and a press that shows its changes where it has any. */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ReleaseLine(row: AppRow, ink: Color, onChanges: (() -> Unit)?) {
+    val look = LocalLook.current
+    val released = row.latest?.publishedAtMs
+    if (released == null && onChanges == null) return
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(look.gapSmall), itemVerticalAlignment = Alignment.CenterVertically) {
+        if (released != null) {
+            Text(stringResource(R.string.row_released, isolate(formatDate(released))), style = MaterialTheme.typography.bodySmall, color = ink)
+        }
+        if (onChanges != null) {
+            val shape = MaterialTheme.shapes.small
+            Text(
+                stringResource(R.string.row_changes),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier
+                    .focusLook(shape)
+                    .clip(shape)
+                    .clickable(role = Role.Button, onClick = onChanges)
+                    .padding(horizontal = look.gapSmall / 2, vertical = look.gapSmall / 4),
+            )
+        }
+    }
+}
+
+/** Thin bands at the start of a row, one in the colour of each of the app's categories, top to bottom. */
+private fun Modifier.categoryStripe(colors: List<Color>): Modifier = if (colors.isEmpty()) this else drawBehind {
+    val width = 4.dp.toPx()
+    val inset = 12.dp.toPx()
+    val height = size.height - inset * 2
+    if (height <= 0f) return@drawBehind
+    val band = height / colors.size
+    val x = if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
+    colors.forEachIndexed { i, color ->
+        drawRoundRect(
+            color = color,
+            topLeft = Offset(x, inset + band * i),
+            size = Size(width, band),
+            cornerRadius = CornerRadius(width / 2, width / 2),
+        )
     }
 }

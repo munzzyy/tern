@@ -34,6 +34,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.security.CodeSigner
 import java.security.MessageDigest
+import java.util.Locale
 import java.util.jar.JarFile
 import java.util.zip.ZipException
 
@@ -52,15 +53,43 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         val path = uri.path?.trimEnd('/') ?: return null
         if (path.isEmpty()) return null
         if (!path.endsWith("/repo") && !path.contains("/fdroid/repo")) return null
-        val base = "https://${uri.authority}$path"
-        val fingerprint = Urls.queryParam(uri.toString(), "fingerprint")?.let(Fingerprints::normalize)
-        val pkg = Urls.queryParam(uri.toString(), "package")
+        val options = optionsOf(uri.toString()) ?: return null
+        return SourceSpec(type, "https://${uri.authority}$path", options)
+    }
+
+    /**
+     * A repository the person names by any address, such as that of the site it is served from.
+     * As Obtainium does, the address itself, then /repo and then /fdroid/repo after it are asked
+     * for an index, and the first that has one is the repository. An address that names one app
+     * of a repository is taken as it is.
+     */
+    override fun matchForced(url: String, context: CheckContext): SourceSpec? {
+        match(url)?.let { return it }
+        val uri = Urls.parseHttps(SCHEME.replace(url) { "https://" }) ?: return null
+        val base = "https://${uri.authority}${uri.path.orEmpty().trimEnd('/')}"
+        val options = optionsOf(uri.toString()) ?: return null
+        if (SourceOptions.PACKAGE in options) return SourceSpec(type, base, options)
+        val found = listOf(base, "$base/repo", "$base/fdroid/repo").firstOrNull { servesIndex(it, context) } ?: base
+        return SourceSpec(type, found, options)
+    }
+
+    /** The fingerprint and the package an address names, or null when the package is not a package name. */
+    private fun optionsOf(url: String): Map<String, String>? {
+        val fingerprint = Urls.queryParam(url, "fingerprint")?.let(Fingerprints::normalize)
+        val pkg = Urls.queryParam(url, "package")
         if (pkg != null && !BinaryManifest.isValidName(pkg)) return null
-        val options = buildMap {
+        return buildMap {
             if (fingerprint != null) put(SourceOptions.FINGERPRINT, fingerprint)
             if (pkg != null) put(SourceOptions.PACKAGE, pkg)
         }
-        return SourceSpec(type, base, options)
+    }
+
+    /** Whether [repositoryUrl] has an index of either kind. Only the headers of the older, larger one are asked for. */
+    private fun servesIndex(repositoryUrl: String, context: CheckContext): Boolean = try {
+        context.http.execute(HttpRequest("$repositoryUrl/entry.jar", method = "HEAD")).use { it.isSuccess } ||
+            context.http.execute(HttpRequest("$repositoryUrl/index-v1.jar", method = "HEAD")).use { it.isSuccess }
+    } catch (_: IOException) {
+        false
     }
 
     /** One app found while listing everything a repository without a chosen package offers. Its texts are fit to be shown. */
@@ -73,11 +102,13 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
      * The apps a repository address without a `package` option carries, read through the same
      * verified path [check] uses. At most [MAX_LIST_APPS], ordered by name without regard to case
      * and by package where names are equal, with [RepoListing.more] set when the repository holds
-     * more than that. An entry whose package is not a package name is left out.
+     * more than that. An entry whose package is not a package name is left out. With [words],
+     * only the apps that have each of them in their package, name or summary are listed, so that
+     * a repository larger than the list can be searched.
      */
-    fun listApps(spec: SourceSpec, context: CheckContext): RepoListing = guarded(context) { listOnce(spec, it) }
+    fun listApps(spec: SourceSpec, context: CheckContext, words: String? = null): RepoListing = guarded(context) { listOnce(spec, it, RepoWords(words)) }
 
-    private fun listOnce(spec: SourceSpec, context: CheckContext): RepoListing {
+    private fun listOnce(spec: SourceSpec, context: CheckContext, words: RepoWords): RepoListing {
         val pinned = spec.option(SourceOptions.FINGERPRINT)
         val entryUrl = "${spec.url}/entry.jar"
         val entryResponse = context.http.execute(HttpRequest(entryUrl))
@@ -102,7 +133,7 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
                 throw SourceException(SourceErrorKind.PARSE, "entry.json is not valid JSON", cause = e)
             }
             val index = signedFile(entry.obj("index"), "index")
-            return streamV2AppList(spec.url, index, context, verification.fingerprint)
+            return streamV2AppList(spec.url, index, context, verification.fingerprint, words)
         }
 
         val v1Url = "${spec.url}/index-v1.jar"
@@ -123,14 +154,15 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
         val first = FirstByName(MAX_LIST_APPS)
         for (a in root.array("apps")?.objects().orEmpty()) {
             val pkg = a.string("packageName")?.takeIf { BinaryManifest.isValidName(it) } ?: continue
-            first.offer(RepoApp(pkg, Shown.lineOrNull(a.string("name"), MAX_APP_STRING) ?: pkg, Shown.lineOrNull(a.string("summary"), MAX_APP_STRING)))
+            val app = RepoApp(pkg, Shown.lineOrNull(a.string("name"), MAX_APP_STRING) ?: pkg, Shown.lineOrNull(a.string("summary"), MAX_APP_STRING))
+            if (words.match(app)) first.offer(app)
         }
         val repoName = Shown.lineOrNull(root.obj("repo")?.string("name"), MAX_APP_STRING)
         return RepoListing(first.apps(), first.more, repoName, verification.fingerprint)
     }
 
     /** Streams "packages" instead of parsing the whole index into memory, as [download] does for a single app. */
-    private fun streamV2AppList(repositoryUrl: String, file: SignedFile, context: CheckContext, fingerprint: String): RepoListing {
+    private fun streamV2AppList(repositoryUrl: String, file: SignedFile, context: CheckContext, fingerprint: String, words: RepoWords): RepoListing {
         val url = repositoryUrl + file.name
         return context.http.execute(HttpRequest(url)).use { response ->
             if (!response.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${response.status} for $url")
@@ -159,7 +191,8 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
                                 val metadata = value?.obj("metadata")
                                 val name = Shown.lineOrNull(localized(metadata?.obj("name")), MAX_APP_STRING) ?: pkg
                                 val summary = Shown.lineOrNull(localized(metadata?.obj("summary")), MAX_APP_STRING)
-                                first.offer(RepoApp(pkg, name, summary))
+                                val app = RepoApp(pkg, name, summary)
+                                if (words.match(app)) first.offer(app)
                             }
                             reader.endObject()
                         }
@@ -464,6 +497,8 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
 
     private fun buildV1Releases(root: JsonObject, pkg: String, repoBase: String, context: CheckContext): List<Release> {
         val device = context.device
+        // What the repository suggests; a version newer than that counts as a pre-release, as on F-Droid itself.
+        val suggested = root.array("apps")?.objects()?.firstOrNull { it.string("packageName") == pkg }?.long("suggestedVersionCode") ?: Long.MAX_VALUE
         // In this format "packages" maps each package to the list of its versions.
         val entries = root.obj("packages")?.array(pkg)?.objects().orEmpty()
         val releases = entries.filter { it.string("packageName") == pkg }.mapNotNull { entry ->
@@ -483,7 +518,14 @@ class FDroidRepoSource(private val tracked: (repositoryUrl: String) -> Set<Strin
                 sha256 = entry.string("hash")?.takeIf { entry.string("hashType").equals("sha256", ignoreCase = true) }?.let(Fingerprints::normalize),
                 signers = listOfNotNull(entry.string("signer")?.let(Fingerprints::normalize)),
             )
-            Release(id = versionCode.toString(), version = versionName, versionCode = versionCode, publishedAtMs = entry.long("added"), assets = listOf(asset))
+            Release(
+                id = versionCode.toString(),
+                version = versionName,
+                versionCode = versionCode,
+                publishedAtMs = entry.long("added"),
+                prerelease = versionCode > suggested,
+                assets = listOf(asset),
+            )
         }
         return releases.sortedByDescending { it.versionCode }.take(MAX_RELEASES)
     }
@@ -559,6 +601,25 @@ internal class FirstByName(private val limit: Int) {
     companion object {
         val ORDER: Comparator<FDroidRepoSource.RepoApp> =
             compareBy<FDroidRepoSource.RepoApp, String>(String.CASE_INSENSITIVE_ORDER) { it.name }.thenBy { it.packageName }
+    }
+}
+
+/**
+ * What a person looks for among the apps of a repository: every word has to be in the package,
+ * the name or the summary, whatever the case. No words match every app.
+ */
+internal class RepoWords(text: String?) {
+    private val words = text.orEmpty().lowercase(Locale.ROOT).split(WHITESPACE).filter { it.isNotEmpty() }.take(MAX_WORDS)
+
+    fun match(app: FDroidRepoSource.RepoApp): Boolean {
+        if (words.isEmpty()) return true
+        val fields = listOfNotNull(app.packageName, app.name, app.summary).map { it.lowercase(Locale.ROOT) }
+        return words.all { word -> fields.any { it.contains(word) } }
+    }
+
+    private companion object {
+        const val MAX_WORDS = 8
+        val WHITESPACE = Regex("\\s+")
     }
 }
 

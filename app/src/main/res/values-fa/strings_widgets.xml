@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">بررسی</string>
+    <string name="shortcut_check_long">بررسی به‌روزرسانی‌ها</string>
+    <string name="shortcut_update_all_long">به‌روزرسانی همه برنامه‌ها</string>
+    <string name="shortcut_add_short">افزودن</string>
+    <string name="shortcut_add_long">افزودن برنامه</string>
+    <string name="tile_check">بررسی به‌روزرسانی‌ها</string>
+    <string name="tile_checking">در حال بررسی…</string>
+    <string name="tile_up_to_date">به‌روز</string>
+    <string name="widget_label">به‌روزرسانی‌ها</string>
+    <string name="widget_description">چند برنامه به‌روزرسانی دارند، با یک دکمه برای بررسی و یکی برای به‌روزرسانی همه.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d به‌روزرسانی</item>
+        <item quantity="other">%d به‌روزرسانی</item>
+    </plurals>
+    <string name="widget_up_to_date">همه‌چیز به‌روز است</string>
+    <string name="widget_checked">بررسی‌شده در %1$s</string>
+    <string name="widget_never_checked">هنوز بررسی نشده</string>
+    <string name="widget_check">بررسی</string>
+</resources>

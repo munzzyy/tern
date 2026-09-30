@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parts_obb_name_refused">Este archivo comprimido contiene un archivo OBB cuyo nombre podría salirse de la carpeta OBB de la aplicación, o dos archivos OBB con el mismo nombre. No se instaló nada.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">Colocado %1$d archivo OBB en %2$s.</item>
+        <item quantity="many">Colocados %1$d archivos OBB en %2$s.</item>
+        <item quantity="other">Colocados %1$d archivos OBB en %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">Los archivos OBB no se colocaron en %1$s, porque solo los instaladores Shizuku y root pueden escribir allí. Están en %2$s, el archivo de este lanzamiento: %3$s.</string>
+    <string name="parts_obb_failed">Los archivos OBB no se pudieron colocar en %1$s: %2$s. Están en %3$s, el archivo de este lanzamiento: %4$s.</string>
+</resources>

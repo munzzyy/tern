@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="filter_open">목록 필터링</string>
+    <string name="filter_state_on">필터 켜짐</string>
+    <string name="filter_name">이름</string>
+    <string name="filter_author">개발자</string>
+    <string name="filter_package">패키지 이름</string>
+    <string name="filter_show_up_to_date">최신 상태인 앱</string>
+    <string name="filter_show_not_installed">설치되지 않은 앱</string>
+    <string name="filter_show_tracked">추적만 하는 앱</string>
+    <string name="filter_categories">다음 카테고리 중 하나에 속함</string>
+    <string name="filter_sources">다음 소스 중 하나에서 제공</string>
+    <string name="filter_clear">필터 지우기</string>
+    <plurals name="filter_shown">
+        <item quantity="other">앱 %2$d개 중 %1$d개 표시</item>
+    </plurals>
+    <string name="checking_count">%2$d개 중 %1$d개 확인 중</string>
+    <string name="row_moved">%1$s(으)로 이동됨</string>
+    <string name="row_released">%1$s에 릴리스됨</string>
+    <string name="row_changes">변경 사항</string>
+    <string name="action_show_changes">변경 사항 보기</string>
+    <string name="action_install_all">모두 설치</string>
+    <string name="action_install_update_all">모두 설치 및 업데이트</string>
+    <plurals name="apps_section_installs">
+        <item quantity="other">앱 %d개가 아직 설치되지 않음</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="other">앱 %d개를 설치하고 업데이트하시겠습니까?</item>
+    </plurals>
+    <string name="settings_update_all">모두 업데이트 버튼</string>
+    <string name="update_all_updates">업데이트만</string>
+    <string name="update_all_all">업데이트와 아직 설치되지 않은 앱</string>
+    <string name="update_all_none">표시 안 함</string>
+    <string name="settings_confirm_update_all">모두 업데이트 전에 확인</string>
+    <string name="settings_confirm_update_all_effect">설치하거나 업데이트할 앱의 개수를 알려 주고 승인을 기다립니다.</string>
+    <plurals name="bulk_install_title">
+        <item quantity="other">앱 %d개를 설치하시겠습니까?</item>
+    </plurals>
+    <string name="bulk_install_text">각 파일을 다운로드하고 확인한 후 Android에 설치를 요청합니다. Tern은 새 앱이 서명된 인증서를 보관하고, 이후의 모든 업데이트가 그 인증서와 일치하도록 요구합니다.</string>
+    <plurals name="bulk_install_left">
+        <item quantity="other">선택한 앱 중 %d개는 지금 설치할 항목이 없어 그대로 유지됩니다.</item>
+    </plurals>
+    <string name="action_change_categories">카테고리 변경</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="other">앱 %d개의 카테고리</item>
+    </plurals>
+    <string name="bulk_categories_help">체크하면 선택한 모든 앱이 해당 카테고리로 분류되고, 빈 상자는 모든 앱을 그 카테고리에서 뺍니다. 가로 줄 표시는 각 앱을 그대로 둡니다.</string>
+    <string name="categories_filed_all">선택한 모든 앱</string>
+    <string name="categories_filed_some">선택한 앱 중 일부</string>
+    <string name="categories_filed_none">선택한 앱 없음</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="other">앱 %d개의 카테고리를 변경했습니다.</item>
+    </plurals>
+    <string name="action_share_config_link">설정이 담긴 링크 공유</string>
+    <string name="action_share_config_links">각각의 설정이 담긴 링크 공유</string>
+    <string name="share_link_none">링크에 이 앱의 설정을 담을 수 없습니다. 대신 파일로 공유하세요.</string>
+    <plurals name="share_links_left">
+        <item quantity="other">앱 %d개는 링크에 설정을 담을 수 없어 제외되었습니다.</item>
+    </plurals>
+</resources>

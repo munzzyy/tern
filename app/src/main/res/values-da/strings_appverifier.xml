@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="appverifier_title">Et andet tjek</string>
-    <string name="appverifier_effect">AppVerifier er en separat app. Den sammenligner denne app med det certifikat, Tern holder den op imod, og med sin egen liste over apps, den kender.</string>
-    <string name="appverifier_action">Tjek med AppVerifier</string>
 </resources>

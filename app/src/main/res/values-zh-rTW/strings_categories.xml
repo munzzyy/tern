@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">分類</string>
+    <string name="settings_categories_effect">為分類命名並設定顏色；重新命名或刪除會一次套用到所有應用程式。</string>
+    <plurals name="settings_categories_count">
+        <item quantity="other">%d 個分類</item>
+    </plurals>
+    <string name="categories_none">目前沒有。在這裡建立一個，或從清單中將應用程式歸入分類。</string>
+    <string name="categories_new">新增分類</string>
+    <string name="category_edit">編輯分類</string>
+    <string name="category_name">名稱</string>
+    <string name="category_color">顏色</string>
+    <string name="category_color_spoken">第 %1$d 種顏色，共 %2$d 種</string>
+    <string name="category_exists">已有同名的分類。</string>
+    <string name="category_delete">刪除</string>
+    <string name="category_delete_effect">其中的應用程式會留在清單中，只是不再歸入此分類。</string>
+    <plurals name="category_apps">
+        <item quantity="other">%d 個應用程式</item>
+    </plurals>
+    <string name="action_close">關閉</string>
+    <string name="categories_new_short">新增…</string>
+    <string name="app_notes_title">備註</string>
+    <string name="app_notes_help">支援 Markdown：**粗體**、*斜體*、清單和連結。</string>
+    <string name="app_notes_add">新增備註</string>
+    <string name="app_notes_add_effect">任何值得記住的應用程式相關事項。匯出時會一併帶上。</string>
+    <string name="app_notes_edit">編輯備註</string>
+</resources>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Example App</title>
+</head>
+<body>
+<section class="app-card">
+  <div class="app-name">Example App</div>
+</section>
+<div class="android-downloaded-tip hidden" id="android-downloaded-tip"></div>
+  <script>
+    window.systemData={"head":{"guid":"1000","clientIp":"192.0.2.10","browserName":"","manufacturerName":"","ext":{"ua":"test"}},"appDetail":{"appId":"424242","packageName":"org.example.app","appName":"Example App","author":"Example Labs","developer":"Example Labs","downCount":{"bytes":"1000","desc":"1000"},"rating":{"averageRating":4.5,"ratingCount":"12"},"iconUrl":"http://pp.myapp.com/ma_icon/0/icon_424242_1789722197/96","versionName":"5.2.0","apkUrl":"http://imtt.dd.qq.com/sjy.00022/sjy.00004/16891/apk/0123456789ABCDEF0123456789ABCDEF.apk?fsname=org.example.app_5.2.0.apk","fileSize":{"bytes":"4096000","desc":"3.9 MB"},"apkMd5":"0123456789ABCDEF0123456789ABCDEF","flag":{"value":"1"},"permissions":"android.permission.INTERNET","channel":"","signatureMd5":"FEDCBA9876543210FEDCBA9876543210","versionCode":"520","apkId":"0","editorIntro":"An app for trying things out","snapshots":[],"parentCategoryId":-1,"apkUrl64":"http://imtt.dd.qq.com/sjy.00022/sjy.00004/16891/apk/00112233445566778899AABBCCDDEEFF.apk?fsname=org.example.app_5.2.0_64.apk"},"appExt":{"channel":1},"yybPkg":{"channel":1,"url":"https://microdown.myapp.com/ug/example.apk","version":"9.0.0"},"pageParams":{"useV2":false}}
+
+    const ua = navigator.userAgent;
+    const isPC = !/android/i.test(ua);
+  </script>
+</body>
+</html>

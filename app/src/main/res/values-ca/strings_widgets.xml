@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">Comprova</string>
+    <string name="shortcut_check_long">Comprova les actualitzacions</string>
+    <string name="shortcut_update_all_long">Actualitza totes les aplicacions</string>
+    <string name="shortcut_add_short">Afegeix</string>
+    <string name="shortcut_add_long">Afegeix una aplicació</string>
+    <string name="tile_check">Comprova les actualitzacions</string>
+    <string name="tile_checking">Comprovant…</string>
+    <string name="tile_up_to_date">Actualitzat</string>
+    <string name="widget_label">Actualitzacions</string>
+    <string name="widget_description">Quantes aplicacions tenen una actualització, amb un botó per comprovar-ho i un altre per actualitzar-les totes.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d actualització</item>
+        <item quantity="many">%d actualitzacions</item>
+        <item quantity="other">%d actualitzacions</item>
+    </plurals>
+    <string name="widget_up_to_date">Tot està actualitzat</string>
+    <string name="widget_checked">Comprovat a les %1$s</string>
+    <string name="widget_never_checked">Encara no s\'ha comprovat</string>
+    <string name="widget_check">Comprova</string>
+</resources>

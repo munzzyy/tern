@@ -92,17 +92,6 @@
         <item quantity="other">%d kiválasztva</item>
     </plurals>
     <string name="apps_select_hint">Válasszon alkalmazásokat a listából.</string>
-    <string name="action_add_to_category">Hozzáadás kategóriához</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">%d app hozzáadása kategóriához</item>
-        <item quantity="other">%d app hozzáadása kategóriához</item>
-    </plurals>
-    <string name="bulk_category_field">Kategória</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">%1$d app besorolva ide: %2$s.</item>
-        <item quantity="other">%1$d app besorolva ide: %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Vagy válasszon egy meglévőt:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">%d app ellenőrzése most?</item>
         <item quantity="other">%d app ellenőrzése most?</item>
@@ -334,10 +323,6 @@
         <item quantity="one">Minden %d órában</item>
         <item quantity="other">Minden %d órában</item>
     </plurals>
-    <string name="settings_unmetered">Csak korlátlan hálózatokon</string>
-    <string name="settings_unmetered_effect">Ellenőrzések kihagyása mobiladaton és forgalomdíjas Wi-Fi-n.</string>
-    <string name="settings_charging">Csak töltés közben</string>
-    <string name="settings_charging_effect">Ellenőrzések kihagyása akkumulátoros működés közben.</string>
     <string name="settings_defaults">Alapértelmezések új appokhoz</string>
     <string name="settings_notifications">Értesítések</string>
     <string name="settings_notify_updates">Ha frissítés található</string>
@@ -373,7 +358,6 @@
     <string name="proxy_port_invalid">Egy szám 1 és 65535 között</string>
     <string name="settings_appearance">Megjelenés</string>
     <string name="settings_language">Nyelv</string>
-    <string name="settings_language_effect">Kiválasztva az Android beállításaiban ehhez az alkalmazáshoz.</string>
     <string name="settings_theme">Téma</string>
     <string name="theme_system">A rendszer követése</string>
     <string name="theme_light">Világos</string>

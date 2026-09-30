@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_share">പങ്കിടുക</string>
+    <string name="action_release_page">റിലീസ് പേജ് തുറക്കുക</string>
+    <string name="action_share_address">വിലാസം പങ്കിടുക</string>
+    <string name="action_share_link">Tern-ൽ തുറക്കുന്ന ഒരു ലിങ്ക് പങ്കിടുക</string>
+    <string name="action_app_info">Android-ലെ ആപ്പ് വിവരം</string>
+    <string name="detail_last_checked">%1$s പരിശോധിച്ചു</string>
+    <string name="state_favorite">പ്രിയപ്പെട്ടത്</string>
+    <string name="action_save_file">ഡൗൺലോഡുകളിലേക്ക് സേവ് ചെയ്യുക</string>
+    <string name="file_saved">ഡൗൺലോഡ് ചെയ്തതുപോലെ തന്നെ %2$s-ൽ %1$s ആയി സേവ് ചെയ്തു. ഒരു ഫയൽ ഇൻസ്റ്റാൾ ചെയ്യുമ്പോഴാണ് Tern അത് പരിശോധിക്കുന്നത്.</string>
+    <string name="action_save_files">ഫയലുകൾ ഡൗൺലോഡുകളിലേക്ക് സേവ് ചെയ്യുക</string>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d റിലീസ് കണ്ടതായി അടയാളപ്പെടുത്തി</item>
+        <item quantity="other">%d റിലീസുകൾ കണ്ടതായി അടയാളപ്പെടുത്തി</item>
+    </plurals>
+    <string name="project_page">പ്രോജക്റ്റ് പേജ്</string>
+    <string name="project_page_read">പ്രോജക്റ്റിൻ്റെ പേജ് വായിക്കുക</string>
+    <string name="project_page_effect">അതിൻ്റെ README, ടെക്സ്റ്റായി കാണിക്കുന്നു. നിങ്ങൾ തുറക്കുന്നത് വരെ കോഡ് ഹോസ്റ്റിംഗ് സൈറ്റിനോട് ഒന്നും ചോദിക്കില്ല.</string>
+    <string name="project_page_loading">വായിക്കുന്നു…</string>
+    <string name="project_page_none">Tern-ന് വായിക്കാനാകുന്ന ഒരു പേജും ഈ പ്രോജക്റ്റിനില്ല.</string>
+    <string name="project_page_failed">പേജ് വായിക്കാനായില്ല. വീണ്ടും ശ്രമിക്കാൻ ടാപ്പ് ചെയ്യുക.</string>
+</resources>

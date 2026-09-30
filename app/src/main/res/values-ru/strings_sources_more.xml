@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">Приложения из %1$s можно только отслеживать, так как этот источник не предлагает файлов для установки.</string>
+    <string name="min_age_global">Как задано для всех приложений: %1$s</string>
+    <string name="setting_min_age_global_effect">Для приложений без собственного срока ожидания новый релиз предлагается не раньше, чем пройдет это время, чтобы неудачный релиз успели отозвать.</string>
+    <string name="option_link_text">Фильтровать ссылки по их тексту</string>
+    <string name="option_link_text_effect">Фильтр сравнивается с текстом ссылки, а не с ее адресом.</string>
+    <string name="option_take_first">Брать первую ссылку</string>
+    <string name="option_take_first_effect">Иначе берется последняя ссылка по порядку.</string>
+    <string name="option_natural_order_effect">Иначе ссылки упорядочиваются по их адресу в естественном порядке, где числа читаются как числа.</string>
+    <string name="option_by_last_segment">Ориентироваться на конец адреса</string>
+    <string name="option_by_last_segment_effect">Ссылки упорядочиваются, а версии считываются по части после последней косой черты.</string>
+    <string name="option_steps_title">Страницы, которые нужно пройти сначала</string>
+    <string name="option_steps_order_help">На каждой странице подходящие ссылки упорядочиваются, и открывается последняя из них.</string>
+    <string name="step_title">Страница %1$d</string>
+    <string name="step_filter">Ссылка для перехода</string>
+    <string name="step_text">Сопоставлять с текстом ссылки</string>
+    <string name="step_arch">Предпочитать процессор этого устройства</string>
+    <string name="step_add">Добавить страницу</string>
+    <string name="step_remove">Удалить эту страницу</string>
+    <string name="option_file_version">Использовать имя файла как версию</string>
+    <string name="option_file_version_effect">Тогда каждый файл считается отдельным релизом.</string>
+    <string name="github_proxy_title">GitHub через hubproxy</string>
+    <string name="github_proxy_effect">Каждый запрос к GitHub идет на этот хост, который видит все запросы. Токен через него не передается, поэтому приватные проекты и GitHub Actions так отслеживать нельзя.</string>
+    <string name="github_proxy_host">Хост hubproxy</string>
+    <string name="github_proxy_help">Только имя хоста, например gh-proxy.com. Tern обращается к нему по HTTPS.</string>
+    <string name="github_proxy_invalid">Это не имя хоста, которое может использовать Tern</string>
+    <string name="github_proxy_in_use">Запросы к GitHub идут через %1$s</string>
+    <string name="github_proxy_remove">Больше не использовать hubproxy</string>
+</resources>

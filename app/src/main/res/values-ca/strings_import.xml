@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">D\'una llista d\'adreces</string>
+    <string name="import_addresses_explain">Enganxa adreces d\'aplicacions, una per línia o en qualsevol lloc del text, o llegeix-les d\'un fitxer com ara una llista OPML. Cadascuna s\'examina i s\'afegeix com un enllaç sol.</string>
+    <string name="import_addresses_field">Adreces</string>
+    <string name="import_addresses_show">Mostra què conté</string>
+    <string name="import_addresses_file">Llegeix un fitxer</string>
+    <string name="import_addresses_none">No hi ha cap adreça https.</string>
+    <string name="import_addresses_other">Una altra llista</string>
+    <string name="import_addresses_unreadable">No s\'ha pogut llegir aquest fitxer.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d adreça. Desmarca el que no vulguis i després afegeix.</item>
+        <item quantity="many">%1$d adreces. Desmarca el que no vulguis i després afegeix.</item>
+        <item quantity="other">%1$d adreces. Desmarca el que no vulguis i després afegeix.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">Aquest enllaç porta %1$d aplicació. Mira-la per veure\'n la configuració abans d\'afegir-la.</item>
+        <item quantity="many">Aquest enllaç porta %1$d aplicacions. Mira cadascuna per veure\'n la configuració abans d\'afegir-la.</item>
+        <item quantity="other">Aquest enllaç porta %1$d aplicacions. Mira cadascuna per veure\'n la configuració abans d\'afegir-la.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Exporta per a Obtainium</string>
+    <string name="settings_export_obtainium_effect">Un fitxer que Obtainium importa, per a una llista que s\'hi trasllada. Les opcions que Obtainium no té es queden enrere.</string>
+    <string name="settings_export_installed_only">Exporta només les aplicacions instal·lades</string>
+    <string name="settings_export_settings">Inclou la configuració a les exportacions</string>
+    <string name="settings_export_settings_effect">L\'aspecte, la llista, les notificacions i les comprovacions. Mai un token, el proxy ni l\'instal·lador.</string>
+    <string name="settings_kept_export">Mantén una exportació actualitzada</string>
+    <string name="settings_kept_export_effect">Poc després que canviï qualsevol cosa de la llista, Tern torna a escriure l\'exportació.</string>
+    <string name="settings_kept_export_written">Escrita a les %1$s</string>
+    <string name="settings_kept_export_folder">On es desa</string>
+    <string name="import_settings_taken">També s\'ha aplicat la configuració del fitxer.</string>
+</resources>

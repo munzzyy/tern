@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">Cài đặt và cập nhật không cần hỏi, thông qua Dhizuku với tư cách là chủ sở hữu thiết bị. Mọi tệp đều qua các kiểm tra như nhau trước. Sau đó Android ghi nhận Dhizuku là trình cài đặt.</string>
+    <string name="installer_dhizuku_not_ready">Chưa sẵn sàng, không có gì được cài đặt cho đến khi sẵn sàng</string>
+    <string name="installer_dhizuku_unsupported">Tern không thể cài đặt qua Dhizuku trên phiên bản Android này.</string>
+    <string name="installer_dhizuku_not_installed">Dhizuku chưa được cài đặt. Hãy cài đặt và đặt nó làm chủ sở hữu thiết bị, rồi quay lại.</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku không phải là chủ sở hữu thiết bị. Hãy đặt nó làm chủ sở hữu thiết bị trong ứng dụng Dhizuku, rồi quay lại.</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku không phản hồi. Hãy mở ứng dụng Dhizuku, rồi quay lại.</string>
+    <string name="installer_dhizuku_not_allowed">Tern chưa được phép dùng Dhizuku. Nhấn vào đây để yêu cầu.</string>
+    <string name="dhizuku_failed_not_installed">Dhizuku chưa được cài đặt.</string>
+    <string name="dhizuku_failed_not_owner">Dhizuku không phải là chủ sở hữu thiết bị.</string>
+    <string name="dhizuku_failed_not_answering">Dhizuku không phản hồi.</string>
+    <string name="dhizuku_failed_not_allowed">Dhizuku không cho phép Tern dùng nó.</string>
+    <string name="install_signer_changed">Ứng dụng đã cài hiện tại được ký bởi người khác với người ký tệp mà Tern đã kiểm tra, nên lần cài đặt này không được tính.</string>
+</resources>

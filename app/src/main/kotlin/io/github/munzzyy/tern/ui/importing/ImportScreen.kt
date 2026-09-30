@@ -87,6 +87,8 @@ fun ImportScreen(onBack: () -> Unit, onOpenApp: (String) -> Unit = {}, onHandoff
     val engine = LocalEngine.current
     val vm = viewModel(key = "import") { ImportViewModel(engine) }
     val stars = viewModel(key = "import-stars") { StarsViewModel(engine) }
+    val addresses = viewModel(key = "import-addresses") { StarsViewModel(engine) }
+    val addressesState by addresses.state.collectAsStateWithLifecycle()
     val state by vm.state.collectAsStateWithLifecycle()
     val files by vm.files.collectAsStateWithLifecycle()
     val starsState by stars.state.collectAsStateWithLifecycle()
@@ -98,7 +100,10 @@ fun ImportScreen(onBack: () -> Unit, onOpenApp: (String) -> Unit = {}, onHandoff
 
     Scaffold(
         topBar = { ScreenTop(stringResource(R.string.import_title), onBack = onBack) },
-        bottomBar = { (starsState as? StarsState.Listed)?.let { AddPickedBar(it, stars::addPicked) } },
+        bottomBar = {
+            (starsState as? StarsState.Listed)?.let { AddPickedBar(it, stars::addPicked) }
+                ?: (addressesState as? StarsState.Listed)?.let { AddPickedBar(it, addresses::addPicked) }
+        },
         snackbarHost = { SnackbarHost(LocalSnackbar.current) },
     ) { padding ->
         LazyColumn(
@@ -129,6 +134,7 @@ fun ImportScreen(onBack: () -> Unit, onOpenApp: (String) -> Unit = {}, onHandoff
                 }
             }
             starsSection(starsState, stars)
+            addressesSection(addressesState, addresses)
         }
     }
 }

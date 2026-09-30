@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_check_short">Provjeri</string>
+    <string name="shortcut_check_long">Provjeri ažuriranja</string>
+    <string name="shortcut_update_all_long">Ažuriraj sve aplikacije</string>
+    <string name="shortcut_add_short">Dodaj</string>
+    <string name="shortcut_add_long">Dodaj aplikaciju</string>
+    <string name="tile_check">Provjeri ažuriranja</string>
+    <string name="tile_checking">Provjerava se…</string>
+    <string name="tile_up_to_date">Ažurno</string>
+    <string name="widget_label">Ažuriranja</string>
+    <string name="widget_description">Koliko aplikacija ima ažuriranje, s dugmetom za provjeru i jednim za ažuriranje svih.</string>
+    <plurals name="widget_updates">
+        <item quantity="one">%d ažuriranje</item>
+        <item quantity="few">%d ažuriranja</item>
+        <item quantity="other">%d ažuriranja</item>
+    </plurals>
+    <string name="widget_up_to_date">Sve je ažurno</string>
+    <string name="widget_checked">Provjereno u %1$s</string>
+    <string name="widget_never_checked">Još nije provjereno</string>
+    <string name="widget_check">Provjeri</string>
+</resources>

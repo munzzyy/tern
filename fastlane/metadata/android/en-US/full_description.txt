@@ -10,7 +10,7 @@ The file has to be the app you asked for, and not an older version of it.
 
 Tern reads the version and the signer out of a file while it is still on the server, a few kilobytes of it, so an update is only offered when there really is one.
 
-On Android 12 and newer, updates go in without asking once Tern has installed the app. If Android does want a confirmation, you get a notification. Background checks use Android's own scheduler, and you choose whether they run on mobile data or only while charging.
+On Android 12 and newer, updates go in without asking once Tern has installed the app. With Shizuku or root they go in without asking on any version, first installs too. If Android does want a confirmation, you get a notification you can update from. Background checks use Android's own scheduler, as often as every 15 minutes, and you choose whether they run on mobile data or only while charging.
 
 No account. Nothing is reported to anyone. HTTPS only.
 
@@ -22,6 +22,8 @@ For well-known apps Tern already carries the developer's certificate, so even th
 
 English and 28 other languages; the translations are machine-made and corrections are welcome.
 
-Obtainium user? Import your export file and your apps come along.
+Obtainium user? Import your export file and your apps come along, with every option they had. Tern writes Obtainium's format too.
 
-Reads: GitHub releases and Actions builds, GitLab, Forgejo, Gitea, Codeberg, F-Droid, IzzyOnDroid, any F-Droid format repository (signature checked), web pages, direct links, Jenkins, SourceHut, SourceForge.
+Sort, group and filter your list, give categories colours, and see what is waiting on a home-screen widget or a Quick Settings tile.
+
+Reads: GitHub releases and Actions builds, GitLab, Forgejo, Gitea, Codeberg, F-Droid, IzzyOnDroid, any F-Droid format repository (signature checked), web pages, direct links, Jenkins, SourceHut, SourceForge, APKPure, Aptoide, Uptodown, APKCombo, APKMirror (tracking only), Farsroid, Huawei AppGallery, Samsung Galaxy Store, vivo, Tencent, CoolApk, RuStore, itch.io, Telegram, NeutronCode, LiteAPKs, Apk4Free and RockMods (tracking only).

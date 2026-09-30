@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_categories">カテゴリ</string>
+    <string name="settings_categories_effect">名前と色を付けます。名前の変更や削除は、すべてのアプリに一度に反映されます。</string>
+    <plurals name="settings_categories_count">
+        <item quantity="other">%d 個のカテゴリ</item>
+    </plurals>
+    <string name="categories_none">まだありません。ここで作成するか、リストからアプリをカテゴリに追加してください。</string>
+    <string name="categories_new">新しいカテゴリ</string>
+    <string name="category_edit">カテゴリを編集</string>
+    <string name="category_name">名前</string>
+    <string name="category_color">色</string>
+    <string name="category_color_spoken">%2$d 色中 %1$d 番目の色</string>
+    <string name="category_exists">この名前のカテゴリはすでにあります。</string>
+    <string name="category_delete">削除</string>
+    <string name="category_delete_effect">カテゴリ内のアプリはリストに残ります。このカテゴリに分類されなくなるだけです。</string>
+    <plurals name="category_apps">
+        <item quantity="other">%d 個のアプリ</item>
+    </plurals>
+    <string name="action_close">閉じる</string>
+    <string name="categories_new_short">新規…</string>
+    <string name="app_notes_title">メモ</string>
+    <string name="app_notes_help">Markdown が使えます: **太字**、*斜体*、リスト、リンク。</string>
+    <string name="app_notes_add">メモを追加</string>
+    <string name="app_notes_add_effect">このアプリについて覚えておきたいこと。エクスポートにも含まれます。</string>
+    <string name="app_notes_edit">メモを編集</string>
+</resources>

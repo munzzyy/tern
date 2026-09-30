@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_package_effect">每個檔案都必須屬於此套件，而以此套件名稱安裝的應用程式就是 Tern 要查看的應用程式。留空時，Tern 會從應用程式的檔案中讀取。</string>
+</resources>

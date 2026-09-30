@@ -6,6 +6,8 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -62,12 +64,14 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -159,6 +163,9 @@ private fun Shell(stack: BackStack) {
     val engine = LocalEngine.current
     val rows by engine.apps.collectAsStateWithLifecycle()
     val online by engine.online.collectAsStateWithLifecycle()
+    val settings by engine.settings.collectAsStateWithLifecycle()
+    // A television keeps its rail: a bar at the bottom is far from where the remote starts.
+    val phoneLayout = settings.phoneLayout && !LocalNoTouch.current
     val updates = remember(rows) { rows.count(::isUpdate) }
     val holder = rememberSaveableStateHolder()
     val reducedMotion = LocalReducedMotion.current
@@ -195,8 +202,8 @@ private fun Shell(stack: BackStack) {
 
     CompositionLocalProvider(LocalOnline provides online) {
         BoxWithConstraints(Modifier.fillMaxSize()) {
-            val wide = maxWidth >= RAIL_WIDTH
-            val twoPane = maxWidth >= TWO_PANE_WIDTH
+            val wide = !phoneLayout && maxWidth >= RAIL_WIDTH
+            val twoPane = !phoneLayout && maxWidth >= TWO_PANE_WIDTH
             val current = stack.top
             val select: (Tab) -> Unit = { tab ->
                 stack.routes.forEach { if (it != Route.Apps) holder.removeState(encodeRoute(it)) }
@@ -302,23 +309,42 @@ private fun Screens(
     reopened: Int = 0,
 ) {
     val reducedMotion = LocalReducedMotion.current
+    val rightToLeft = LocalLayoutDirection.current == LayoutDirection.Rtl
     AnimatedContent(
-        targetState = current,
+        targetState = Shown(current, stack.routes.size),
         transitionSpec = {
-            if (reducedMotion) {
-                fadeIn(tween(0)) togetherWith fadeOut(tween(0))
-            } else {
-                fadeIn(tween(150)) togetherWith fadeOut(tween(90))
+            val deeper = targetState.depth > initialState.depth
+            val back = targetState.depth < initialState.depth
+            val moving = !targetState.route.isTabRoot || !initialState.route.isTabRoot
+            when {
+                reducedMotion -> fadeIn(tween(0)) togetherWith fadeOut(tween(0))
+                // Deeper comes in from the side a line of text runs to, and back returns the way it came.
+                moving && (deeper || back) -> {
+                    val toward = (if (deeper) 1 else -1) * (if (rightToLeft) -1 else 1)
+                    (slideInHorizontally(tween(SLIDE_MS)) { toward * it / SLIDE_PART } + fadeIn(tween(150, delayMillis = 40))) togetherWith
+                        (slideOutHorizontally(tween(SLIDE_MS)) { -toward * it / SLIDE_PART } + fadeOut(tween(90)))
+                }
+                else -> fadeIn(tween(150)) togetherWith fadeOut(tween(90))
             }
         },
-        contentKey = { encodeRoute(it) },
+        contentKey = { encodeRoute(it.route) },
         label = "screen",
-    ) { route ->
-        holder.SaveableStateProvider(encodeRoute(route)) {
-            Screen(stack, route, listState, twoPane, reopened)
+    ) { shown ->
+        holder.SaveableStateProvider(encodeRoute(shown.route)) {
+            Screen(stack, shown.route, listState, twoPane, reopened)
         }
     }
 }
+
+/** A screen and how deep in the stack it sits, which says whether a change goes in or comes back. */
+private data class Shown(val route: Route, val depth: Int)
+
+/** The screens the tabs lead to; moving between them is a change of place, not a step in or out. */
+private val Route.isTabRoot: Boolean
+    get() = this is Route.Apps || this is Route.Add || this is Route.Activity || this is Route.Settings
+
+private const val SLIDE_MS = 220
+private const val SLIDE_PART = 8
 
 @Composable
 private fun Screen(stack: BackStack, route: Route, listState: LazyListState, twoPane: Boolean, reopened: Int) {

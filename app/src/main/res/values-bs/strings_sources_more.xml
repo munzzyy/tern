@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_track_only_forced">Aplikacije iz %1$s mogu se samo pratiti jer ovaj izvor ne nudi datoteku za instalaciju.</string>
+    <string name="min_age_global">Kao što je postavljeno za sve aplikacije: %1$s</string>
+    <string name="setting_min_age_global_effect">Aplikacije bez vlastitog čekanja čekaju ovoliko prije nego što im se ponudi novo izdanje, tako da se loše može prvo povući.</string>
+    <string name="option_link_text">Filtriraj linkove po njihovom tekstu</string>
+    <string name="option_link_text_effect">Filter se uspoređuje s tekstom linka, a ne s njegovom adresom.</string>
+    <string name="option_take_first">Uzmi prvi link</string>
+    <string name="option_take_first_effect">U suprotnom se uzima posljednji link po redoslijedu.</string>
+    <string name="option_natural_order_effect">U suprotnom se linkovi slažu prirodnim redoslijedom njihovih adresa, pri čemu se brojevi čitaju kao brojevi.</string>
+    <string name="option_by_last_segment">Vodi se krajem adrese</string>
+    <string name="option_by_last_segment_effect">Linkovi se slažu po redoslijedu, a verzije čitaju, prema dijelu iza posljednje kose crte.</string>
+    <string name="option_steps_title">Stranice koje treba prvo proći</string>
+    <string name="option_steps_order_help">Na svakoj stranici linkovi koji se podudaraju slažu se po redoslijedu i otvara se posljednji od njih.</string>
+    <string name="step_title">Stranica %1$d</string>
+    <string name="step_filter">Link koji treba otvoriti</string>
+    <string name="step_text">Podudaraj s tekstom linka</string>
+    <string name="step_arch">Daj prednost procesoru ovog uređaja</string>
+    <string name="step_add">Dodaj stranicu</string>
+    <string name="step_remove">Ukloni ovu stranicu</string>
+    <string name="option_file_version">Koristi naziv datoteke kao verziju</string>
+    <string name="option_file_version_effect">Svaka datoteka se tada računa kao zasebno izdanje.</string>
+    <string name="github_proxy_title">GitHub preko hubproxy</string>
+    <string name="github_proxy_effect">Svaki zahtjev prema GitHubu ide ovom domaćinu, koji vidi svaki od njih. Preko njega se ne šalje token, pa se privatni projekti i GitHub Actions na ovaj način ne mogu pratiti.</string>
+    <string name="github_proxy_host">Hubproxy domaćin</string>
+    <string name="github_proxy_help">Samo naziv domaćina, na primjer gh-proxy.com. Tern mu pristupa preko HTTPS-a.</string>
+    <string name="github_proxy_invalid">To nije naziv domaćina koji Tern može koristiti</string>
+    <string name="github_proxy_in_use">Zahtjevi prema GitHubu idu preko %1$s</string>
+    <string name="github_proxy_remove">Prestani koristiti hubproxy</string>
+</resources>

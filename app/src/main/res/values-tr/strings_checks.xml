@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">Her %d dakikada bir</item>
+        <item quantity="other">Her %d dakikada bir</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">Her %d günde bir</item>
+        <item quantity="other">Her %d günde bir</item>
+    </plurals>
+    <string name="settings_check_now">Arka plan denetimini şimdi çalıştır</string>
+    <string name="settings_check_now_effect">Arka plan denetiminin yaptığı gibi her uygulamayı denetler ve kendiliğinden güncellenecek şekilde ayarlananları yükler.</string>
+    <string name="settings_check_now_running">Denetleniyor…</string>
+    <string name="settings_check_on_start">Tern açıldığında denetle</string>
+    <string name="settings_check_on_open">Bir uygulamayı sayfası açıldığında denetle</string>
+    <string name="settings_check_on_open_effect">Son denetimden sonraki beş dakika içinde tekrar denetlenmez.</string>
+    <string name="settings_only_installed">Yalnızca yüklü uygulamaları denetle</string>
+    <string name="settings_only_installed_effect">Yalnızca izlenen uygulamalar da denetlenir. Açtığınız bir uygulama her zaman denetlenir.</string>
+    <string name="settings_remove_uninstalled">Başka yerden kaldırılan uygulamaları listeden çıkar</string>
+    <string name="settings_remove_uninstalled_effect">Tern dışında kaldırdığınız bir uygulama listeden de çıkar.</string>
+    <string name="settings_file_filter">Dosya filtresi</string>
+    <string name="settings_file_filter_effect">Kendi filtresi olmayan her uygulamanın dosyasını seçerken kullandığı bir kalıp.</string>
+    <string name="settings_file_filter_none">Yok</string>
+    <string name="settings_file_filter_invalid">Bu kalıp okunamıyor.</string>
+    <string name="settings_allow_downgrades">Eski sürümlere izin ver</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade yüklü, bu yüzden Android daha yeni bir sürümün üzerine daha eski bir sürüm yükleyebilir.</string>
+    <string name="settings_collapse_groups">Gruplar daraltılmış olarak başla</string>
+    <string name="settings_haptics">Dokunsal geri bildirim</string>
+    <string name="settings_haptics_effect">Bir kaydırma veya uzun basma bir şey yaptığında hafif bir titreşim.</string>
+    <string name="settings_phone_layout">Her zaman telefon düzenini kullan</string>
+    <string name="settings_phone_layout_effect">Ekran ne kadar geniş olursa olsun tek bölme ve altta bir çubuk.</string>
+    <string name="density_minimal">Minimal</string>
+    <string name="search_in">Şurada ara</string>
+    <string name="activity_share">Etkinliği paylaş</string>
+    <string name="sources_title">Tern\'in okuyabildiği kaynaklar</string>
+    <string name="sources_effect">Kod platformları, depolar, mağazalar ve web sayfaları ve bunlardan hangilerinde arama yapılabildiği.</string>
+    <string name="sources_forges">Kod platformları</string>
+    <string name="sources_repositories">Depolar</string>
+    <string name="sources_stores">Mağazalar</string>
+    <string name="sources_mirrors">Uygulamaları yeniden yayınlayan mağazalar</string>
+    <string name="sources_modified">Değiştirilmiş uygulamalar sunan siteler</string>
+    <string name="sources_other">Diğer yerler</string>
+    <string name="sources_web_page">Dosya bağlantıları içeren bir web sayfası</string>
+    <string name="sources_direct">Bir dosyaya doğrudan bağlantı</string>
+    <string name="sources_searchable">aranabilir</string>
+    <string name="sources_track_only">yalnızca izleme</string>
+    <string name="sources_self_hosted">Kendi sunucularında çalışan GitLab, Forgejo, Gitea ve Jenkins adreslerinden tanınır.</string>
+    <string name="shared_configs_title">Obtainium kullanıcılarının paylaştığı yapılandırmalar</string>
+    <string name="shared_configs_effect">Uygulamalar için hazır ayarlar içeren bir site. Ayarlar\'da Obtainium bağlantılarını aç seçeneği açıkken bağlantıları Tern\'de açılır.</string>
+    <string name="engine_inner_filter_nothing">Arşivlerin içindeki dosyalar için filtre, bu arşivdeki APK\'lerin hiçbiriyle eşleşmiyor.</string>
+    <string name="preview_republished">%1$s, geliştiricilerin başka yerde yayınladıklarını yeniden sunar. Tern geliştiricinin sertifikasını öğrendiğinde bu dosyaları o sertifikaya tabi tutar, bu yüzden mümkünse bir sertifika sabitleyin veya önce geliştiriciden yükleyin.</string>
+    <string name="preview_modified">%1$s, geliştiricilerinden başka biri tarafından değiştirilmiş uygulamalar sunar. Bunlar, onları değiştiren kişi tarafından imzalanır ve Tern neyin değiştirildiğini anlayamaz.</string>
+    <string name="about_track_tern">Tern\'in kendisini güncel tut</string>
+    <string name="about_track_tern_effect">Tern\'in kendi sürümlerini listeye ekler, herhangi bir uygulama gibi denetlenir ve doğrulanır.</string>
+    <string name="engine_channel_tracked">İzlenen uygulamaların yeni sürümleri</string>
+    <string name="engine_channel_checking">Denetleniyor</string>
+    <string name="engine_notify_tracked_one">%1$s için yeni sürüm</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d izlenen uygulamanın yeni sürümü var</item>
+        <item quantity="other">%1$d izlenen uygulamanın yeni sürümü var</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">%1$d uygulama denetleniyor</item>
+        <item quantity="other">%1$d uygulama denetleniyor</item>
+    </plurals>
+    <string name="settings_notify_tracked">İzlenen bir uygulamanın yeni sürümü olduğunda</string>
+    <string name="settings_notify_checking">Arka planda denetlerken</string>
+    <string name="settings_notify_checking_effect">Denetim bittiğinde kaybolan sessiz bir bildirim.</string>
+    <string name="engine_event_removed_uninstalled">Tern dışında kaldırıldığı için listeden çıkarıldı</string>
+</resources>

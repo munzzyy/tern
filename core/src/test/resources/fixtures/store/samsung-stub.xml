@@ -1,0 +1,15 @@
+<result>
+<appId>org.example.app</appId>
+<resultCode>1</resultCode>
+<resultMsg>Download URI Available</resultMsg>
+<downloadURI><![CDATA[https://cflare-dn.gw.samsungapps.com/astore_bin/atom/2026/0702/prePost_20260702073935007.apk?ctnt_id=000001234567&bsize=12345678&cpi=1234567890&ch=V&verify=1790729981-c2lnbmF0dXJl%3D]]></downloadURI>
+<contentSize>12345678</contentSize>
+<versionCode>241</versionCode>
+<versionName>2.4.1</versionName>
+<productId>000001234567</productId>
+<productName><![CDATA[Example App]]></productName>
+<signature>12-34-56</signature>
+<timeInfo>260702073935.260702073940</timeInfo>
+<cacheInfo></cacheInfo>
+<serverType>PRD</serverType>
+</result>

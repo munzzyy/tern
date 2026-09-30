@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">デバイスの所有者であるDhizuku経由で、確認なしでインストール・更新します。すべてのファイルは事前に同じ確認を通ります。その後、Androidはインストール元をDhizukuと表示します。</string>
+    <string name="installer_dhizuku_not_ready">準備ができていないため、準備が整うまで何もインストールされません</string>
+    <string name="installer_dhizuku_unsupported">このバージョンのAndroidでは、TernはDhizuku経由でインストールできません。</string>
+    <string name="installer_dhizuku_not_installed">Dhizukuがインストールされていません。インストールし、デバイスの所有者に設定してから、戻ってきてください。</string>
+    <string name="installer_dhizuku_not_owner">Dhizukuはデバイスの所有者ではありません。Dhizukuアプリでデバイスの所有者に設定してから、戻ってきてください。</string>
+    <string name="installer_dhizuku_not_answering">Dhizukuが応答しませんでした。Dhizukuアプリを開いてから、戻ってきてください。</string>
+    <string name="installer_dhizuku_not_allowed">TernはまだDhizukuの使用を許可されていません。ここを押して許可を求めてください。</string>
+    <string name="dhizuku_failed_not_installed">Dhizukuがインストールされていません。</string>
+    <string name="dhizuku_failed_not_owner">Dhizukuはデバイスの所有者ではありません。</string>
+    <string name="dhizuku_failed_not_answering">Dhizukuが応答しませんでした。</string>
+    <string name="dhizuku_failed_not_allowed">DhizukuはTernによる使用を許可していません。</string>
+    <string name="install_signer_changed">現在インストールされているアプリは、Ternが確認したファイルの署名者とは別の人が署名したものであるため、このインストールは無効です。</string>
+</resources>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="journal_section">Activiteitenlogboek</string>
+    <string name="journal_keep_own">Eigen berichten van Tern in het logboek bewaren</string>
+    <string name="journal_keep_own_effect">Waarschuwingen en fouten van Tern, en wanneer elke controle begint en eindigt. Alles wat een wachtwoord of een token zou kunnen zijn, wordt weggelaten, en het logboek blijft op dit apparaat tenzij je het deelt.</string>
+    <string name="journal_filter_own">Berichten van Tern</string>
+    <string name="journal_mark_note">Opmerking van Tern</string>
+    <string name="journal_mark_warning">Waarschuwing van Tern</string>
+    <string name="journal_mark_error">Fout van Tern</string>
+    <plurals name="journal_check_started">
+        <item quantity="one">Een controle van %1$d app is begonnen.</item>
+        <item quantity="other">Een controle van %1$d apps is begonnen.</item>
+    </plurals>
+    <string name="journal_check_started_one">Een controle van %1$s is begonnen.</string>
+    <string name="journal_cause_asked">Er is in Tern om gevraagd.</string>
+    <string name="journal_cause_opening">Tern is geopend.</string>
+    <string name="journal_cause_page">De pagina van de app is geopend.</string>
+    <string name="journal_cause_link">Een link heeft erom gevraagd.</string>
+    <string name="journal_cause_shortcut">Een snelkoppeling heeft erom gevraagd.</string>
+    <string name="journal_cause_widget">De widget heeft erom gevraagd.</string>
+    <string name="journal_cause_tile">De tegel in Snelle instellingen heeft erom gevraagd.</string>
+    <string name="journal_cause_schedule">Het schema heeft de controle gestart.</string>
+    <string name="journal_cause_retry">Er wordt opnieuw geprobeerd waar de laatste controle is mislukt.</string>
+    <string name="journal_cause_added">De app is zojuist toegevoegd.</string>
+    <string name="journal_cause_imported">De apps zijn zojuist geïmporteerd.</string>
+    <string name="journal_cause_changed">De instellingen van de app zijn gewijzigd.</string>
+    <string name="journal_cause_install">De app staat op het punt te worden geïnstalleerd en wordt eerst gecontroleerd.</string>
+    <plurals name="journal_check_ended">
+        <item quantity="one">De controle van %1$d app is na %2$s afgelopen.</item>
+        <item quantity="other">De controle van %1$d apps is na %2$s afgelopen.</item>
+    </plurals>
+    <string name="journal_check_ended_one">De controle van %1$s is na %2$s afgelopen.</string>
+    <plurals name="journal_check_updates">
+        <item quantity="one">Er is %1$d update gevonden.</item>
+        <item quantity="other">Er zijn %1$d updates gevonden.</item>
+    </plurals>
+    <plurals name="journal_check_failures">
+        <item quantity="one">%1$d app kon niet worden gecontroleerd.</item>
+        <item quantity="other">%1$d apps konden niet worden gecontroleerd.</item>
+    </plurals>
+    <string name="journal_check_stopped">De controle stopte na %1$s, voordat ze klaar was.</string>
+</resources>

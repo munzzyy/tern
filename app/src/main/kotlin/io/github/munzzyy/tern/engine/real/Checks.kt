@@ -1,10 +1,11 @@
 package io.github.munzzyy.tern.engine.real
 
 import io.github.munzzyy.tern.core.apk.BinaryManifest
+import io.github.munzzyy.tern.core.engine.ReleaseSelector
 import io.github.munzzyy.tern.core.icon.IconAddresses
+import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.net.Urls
-import io.github.munzzyy.tern.core.source.CheckContext
 import io.github.munzzyy.tern.core.source.CheckResult
 import io.github.munzzyy.tern.core.source.SourceErrorKind
 import io.github.munzzyy.tern.core.source.SourceException
@@ -13,10 +14,12 @@ import io.github.munzzyy.tern.core.text.Shown
 import io.github.munzzyy.tern.data.FileFacts
 import io.github.munzzyy.tern.data.StateJson
 import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.net.isProxySilent
 import io.github.munzzyy.tern.engine.ProblemKind
+import io.github.munzzyy.tern.log.TernLog
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -35,8 +38,38 @@ internal class Checks(private val e: RealEngine) {
     private val all = Semaphore(MAX_PARALLEL)
     private val perHost = ConcurrentHashMap<String, Semaphore>()
 
-    suspend fun checkMany(ids: List<String>): List<CheckOutcome> = coroutineScope {
-        ids.map { id -> async { checkOne(id) } }.awaitAll().filterNotNull()
+    /**
+     * Checks [ids] as [checkMany] does, and says so in Tern's own messages: what started the
+     * check and how many apps it takes, then how long it took, how many of them have an update
+     * after it and how many could not be checked. The log keeps these while its setting is on.
+     */
+    suspend fun run(ids: List<String>, cause: CheckCause, onEach: () -> Unit = {}): List<CheckOutcome> {
+        val one = ids.singleOrNull()?.let { e.stored[it]?.config?.shownName }
+        TernLog.note(TAG, e.texts.checkStarted(ids.size, one, cause))
+        val started = e.nowMs()
+        var outcomes: List<CheckOutcome>? = null
+        try {
+            return checkMany(ids, onEach).also { outcomes = it }
+        } finally {
+            val took = e.nowMs() - started
+            val done = outcomes
+            TernLog.note(TAG, if (done == null) e.texts.checkStopped(took) else e.texts.checkEnded(ids.size, one, took, done.count { hasUpdate(it.id) }, done.count { it.failed }))
+        }
+    }
+
+    private fun hasUpdate(id: String): Boolean = e.evaluations[id]?.status.let { it == AppStatus.UPDATE_AVAILABLE || it == AppStatus.NEW_RELEASE }
+
+    /** [onEach] is called as each check ends, however it ends. */
+    suspend fun checkMany(ids: List<String>, onEach: () -> Unit = {}): List<CheckOutcome> = coroutineScope {
+        ids.map { id ->
+            async {
+                try {
+                    checkOne(id)
+                } finally {
+                    onEach()
+                }
+            }
+        }.awaitAll().filterNotNull()
     }
 
     suspend fun checkOne(id: String): CheckOutcome? {
@@ -46,7 +79,7 @@ internal class Checks(private val e: RealEngine) {
         try {
             return withContext(Dispatchers.IO) {
                 val retryAt = stored.state.checkProblem?.takeIf { it.kind == ProblemKind.RATE_LIMITED }?.retryAtMs
-                val failed = if (retryAt != null && retryAt > e.nowMs()) true else fetch(id, stored.config.source)
+                val failed = if (retryAt != null && retryAt > e.nowMs()) true else fetch(id, stored.config)
                 reevaluate(id, network = true)
                 CheckOutcome(id, announce(id), failed)
             }
@@ -57,13 +90,14 @@ internal class Checks(private val e: RealEngine) {
     }
 
     /** Returns true when the check failed. */
-    private suspend fun fetch(id: String, spec: io.github.munzzyy.tern.core.model.SourceSpec): Boolean {
+    private suspend fun fetch(id: String, config: AppConfig): Boolean {
+        val spec = config.source
         val hostPermits = perHost.getOrPut(Urls.host(spec.url)) { Semaphore(PER_HOST) }
         val outcome: Any = all.withPermit {
             hostPermits.withPermit {
                 runInterruptible(Dispatchers.IO) {
                     try {
-                        e.registry.check(spec, CheckContext(e.http, e.store, e.tokens, e.nowMs, e.device.profile))
+                        e.registry.check(spec, e.checkContext(config, e.store))
                     } catch (ex: SourceException) {
                         ex
                     }
@@ -92,7 +126,9 @@ internal class Checks(private val e: RealEngine) {
             }
             val listed = listing.packageName
             if (config.packageName == null && listed != null && BinaryManifest.isValidName(listed)) config = config.copy(packageName = listed)
-            val releases = listing.releases.take(StateJson.MAX_RELEASES).map { it.copy(notes = it.notes?.take(StateJson.MAX_NOTES)) }
+            // While every release listed now is too young, the last ones that were old enough stay on offer.
+            val kept = ReleaseSelector.keptUntilOldEnough(listing.releases, s.state.releases, e.evaluator.minAgeDays(config), now)
+            val releases = kept.take(StateJson.MAX_RELEASES).map { it.copy(notes = it.notes?.take(StateJson.MAX_NOTES)) }
             val icons = IconAddresses.afterCheck(config.source.url, listing.iconUrls, s.state.iconUrls)
             s.copy(
                 config = config,
@@ -126,7 +162,7 @@ internal class Checks(private val e: RealEngine) {
 
     private fun readFilesFor(id: String) {
         val stored = e.stored[id] ?: return
-        val eval = e.evaluator.evaluate(stored.config, stored.state, e.readInstalled(stored.config.packageName), e.inspector::inspect)
+        val eval = e.evaluator.evaluate(stored.config, stored.state, e.readInstalled(stored.config.packageName), e.inspectorFor(stored.config.source))
         // Remembered at once, so the evaluation that follows does not run a runaway pattern a second time.
         if (eval.patternProblem != stored.state.patternProblem) e.saveState(id) { it.copy(patternProblem = eval.patternProblem) }
     }
@@ -144,6 +180,7 @@ internal class Checks(private val e: RealEngine) {
             eval = e.evaluator.evaluate(config, stored.state, installed, inspect)
         }
         if (eval.patternProblem != stored.state.patternProblem) e.saveState(id) { it.copy(patternProblem = eval.patternProblem) }
+        if (installed != null && !stored.state.seenInstalled) e.saveState(id) { it.copy(seenInstalled = true) }
         e.evaluations[id] = eval
     }
 
@@ -186,5 +223,6 @@ internal class Checks(private val e: RealEngine) {
         const val MAX_ADDRESS = 2048
         const val MAX_DETAIL = 200
         const val MAX_VERSION = 100
+        const val TAG = "TernChecks"
     }
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="interval_minutes">
+        <item quantity="one">هر %d دقیقه</item>
+        <item quantity="other">هر %d دقیقه</item>
+    </plurals>
+    <plurals name="interval_days">
+        <item quantity="one">هر %d روز</item>
+        <item quantity="other">هر %d روز</item>
+    </plurals>
+    <string name="settings_check_now">اجرای بررسی پس‌زمینه همین حالا</string>
+    <string name="settings_check_now_effect">همه برنامه‌ها را بررسی می‌کند و آنچه را برای به‌روزرسانی خودکار تنظیم شده نصب می‌کند، همان‌طور که بررسی پس‌زمینه انجام می‌دهد.</string>
+    <string name="settings_check_now_running">در حال بررسی…</string>
+    <string name="settings_check_on_start">بررسی هنگام باز شدن Tern</string>
+    <string name="settings_check_on_open">بررسی برنامه هنگام باز شدن صفحه‌اش</string>
+    <string name="settings_check_on_open_effect">تا پنج دقیقه پس از آخرین بررسی، دوباره بررسی نمی‌شود.</string>
+    <string name="settings_only_installed">فقط برنامه‌های نصب‌شده بررسی شوند</string>
+    <string name="settings_only_installed_effect">برنامه‌هایی که فقط دنبال می‌شوند هم بررسی می‌شوند. برنامه‌ای که باز می‌کنید همیشه بررسی می‌شود.</string>
+    <string name="settings_remove_uninstalled">حذف برنامه‌هایی که جای دیگری حذف نصب شده‌اند</string>
+    <string name="settings_remove_uninstalled_effect">برنامه‌ای که بیرون از Tern حذف نصب کنید، از لیست هم خارج می‌شود.</string>
+    <string name="settings_file_filter">فیلتر فایل‌ها</string>
+    <string name="settings_file_filter_effect">الگویی که هر برنامه بدون فیلتر اختصاصی، فایلش را با آن انتخاب می‌کند.</string>
+    <string name="settings_file_filter_none">هیچ</string>
+    <string name="settings_file_filter_invalid">این الگو قابل خواندن نیست.</string>
+    <string name="settings_allow_downgrades">اجازه نسخه‌های قدیمی‌تر</string>
+    <string name="settings_allow_downgrades_effect">Let Me Downgrade نصب است، بنابراین Android می‌تواند نسخه قدیمی‌تر را روی نسخه جدیدتر نصب کند.</string>
+    <string name="settings_collapse_groups">شروع با گروه‌های جمع‌شده</string>
+    <string name="settings_haptics">بازخورد لمسی</string>
+    <string name="settings_haptics_effect">لرزشی سبک وقتی کشیدن انگشت یا فشار طولانی کاری انجام می‌دهد.</string>
+    <string name="settings_phone_layout">همیشه از چیدمان تلفن استفاده شود</string>
+    <string name="settings_phone_layout_effect">یک صفحه و یک نوار در پایین، هر قدر هم صفحه‌نمایش عریض باشد.</string>
+    <string name="density_minimal">حداقلی</string>
+    <string name="search_in">جستجو در</string>
+    <string name="activity_share">اشتراک‌گذاری فعالیت</string>
+    <string name="sources_title">آنچه Tern می‌تواند بخواند</string>
+    <string name="sources_effect">میزبان‌های کد، مخزن‌ها، فروشگاه‌ها و صفحه‌های وب، و اینکه در کدام‌یک می‌توان جستجو کرد.</string>
+    <string name="sources_forges">میزبان‌های کد</string>
+    <string name="sources_repositories">مخزن‌ها</string>
+    <string name="sources_stores">فروشگاه‌ها</string>
+    <string name="sources_mirrors">فروشگاه‌هایی که برنامه‌ها را بازنشر می‌کنند</string>
+    <string name="sources_modified">سایت‌های برنامه‌های تغییریافته</string>
+    <string name="sources_other">جاهای دیگر</string>
+    <string name="sources_web_page">یک صفحه وب با پیوند به فایل‌ها</string>
+    <string name="sources_direct">یک پیوند مستقیم به فایل</string>
+    <string name="sources_searchable">قابل جستجو</string>
+    <string name="sources_track_only">فقط دنبال کردن</string>
+    <string name="sources_self_hosted">GitLab، Forgejo، Gitea و Jenkins روی سرور شخصی، از روی آدرسشان شناخته می‌شوند.</string>
+    <string name="shared_configs_title">پیکربندی‌های به‌اشتراک‌گذاشته کاربران Obtainium</string>
+    <string name="shared_configs_effect">سایتی از تنظیمات آماده برای برنامه‌ها. وقتی «باز کردن پیوندهای Obtainium» در تنظیمات روشن باشد، پیوندهای آن در Tern باز می‌شوند.</string>
+    <string name="engine_inner_filter_nothing">فیلتر فایل‌های درون آرشیوها با هیچ‌کدام از APKهای این آرشیو مطابقت ندارد.</string>
+    <string name="preview_republished">%1$s آنچه را توسعه‌دهندگان در جای دیگری منتشر می‌کنند دوباره ارائه می‌دهد. فایل‌های آن به‌محض اینکه Tern گواهی توسعه‌دهنده را بشناسد، ملزم به همان گواهی می‌شوند، پس هر وقت توانستید یک گواهی پین کنید یا ابتدا از خود توسعه‌دهنده نصب کنید.</string>
+    <string name="preview_modified">%1$s برنامه‌هایی را ارائه می‌دهد که شخصی غیر از توسعه‌دهنده‌شان تغییر داده است. این برنامه‌ها توسط کسی که آن‌ها را تغییر داده امضا شده‌اند، و Tern نمی‌تواند بگوید چه چیزی تغییر کرده است.</string>
+    <string name="about_track_tern">به‌روز نگه داشتن خود Tern</string>
+    <string name="about_track_tern_effect">انتشارهای خود Tern را به لیست اضافه می‌کند، که مانند هر برنامه‌ای بررسی و تأیید می‌شوند.</string>
+    <string name="engine_channel_tracked">انتشارهای جدید برنامه‌های دنبال‌شده</string>
+    <string name="engine_channel_checking">بررسی</string>
+    <string name="engine_notify_tracked_one">انتشار جدید %1$s</string>
+    <plurals name="engine_notify_tracked_count">
+        <item quantity="one">%1$d برنامه دنبال‌شده انتشار جدیدی دارد</item>
+        <item quantity="other">%1$d برنامه دنبال‌شده انتشار جدید دارند</item>
+    </plurals>
+    <plurals name="engine_notify_checking">
+        <item quantity="one">در حال بررسی %1$d برنامه</item>
+        <item quantity="other">در حال بررسی %1$d برنامه</item>
+    </plurals>
+    <string name="settings_notify_tracked">وقتی برنامه دنبال‌شده‌ای انتشار جدیدی دارد</string>
+    <string name="settings_notify_checking">هنگام بررسی در پس‌زمینه</string>
+    <string name="settings_notify_checking_effect">اعلانی بی‌صدا که پس از پایان بررسی ناپدید می‌شود.</string>
+    <string name="engine_event_removed_uninstalled">از لیست حذف شد، چون بیرون از Tern حذف نصب شده بود</string>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_other_title">Ostatní soubory tohoto vydání</string>
+    <string name="files_source_code">Zdrojový kód</string>
+    <string name="files_save_spoken">Uložit %1$s do složky Download</string>
+    <string name="files_save_a_file">Uložit soubor</string>
+    <string name="files_pick_title_version">Uložit soubor verze %1$s</string>
+    <string name="files_pick_title_app">Uložit soubor aplikace %1$s</string>
+    <string name="files_skip">Přeskočit</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">Ukládá se %1$d soubor. Oznámení vás upozorní, až bude hotový.</item>
+        <item quantity="few">Ukládají se %1$d soubory. Oznámení vás upozorní, až bude hotový každý z nich.</item>
+        <item quantity="many">Ukládá se %1$d souborů. Oznámení vás upozorní, až bude hotový každý z nich.</item>
+        <item quantity="other">Ukládá se %1$d souborů. Oznámení vás upozorní, až bude hotový každý z nich.</item>
+    </plurals>
+    <string name="files_channel_saved">Uložené soubory</string>
+    <string name="files_notify_saved">Uloženo %1$s</string>
+    <string name="files_notify_saved_plain">Soubor byl uložen do složky Download</string>
+    <string name="files_notify_not_saved">Nebylo možné uložit %1$s</string>
+    <string name="files_notify_not_saved_plain">Soubor nebylo možné uložit</string>
+    <string name="files_notify_updated_to">Aplikace %1$s byla aktualizována na %2$s</string>
+    <string name="files_notify_installed_at">Aplikace %1$s %2$s byla nainstalována</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Co se pokazilo</string>
+    <string name="files_problems_none">Žádná z těchto aplikací nyní nemá problém.</string>
+    <string name="files_setting_verifier">Nové aplikace nejdřív ukázat ve Verified Apps</string>
+    <string name="files_setting_verifier_effect">Před první instalací aplikace se její zkontrolovaný soubor pošle k druhé kontrole do Verified Apps nebo AppVerifier, pokud je některá z nich nainstalovaná. Instalace pokračuje, jakmile se vrátíte do Tern.</string>
+    <string name="files_verifier_about">O Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s je samostatná aplikace. Porovnává tuto aplikaci s certifikátem, který pro ni Tern drží, a s vlastním seznamem aplikací, které zná.</string>
+    <string name="files_verifier_card_action">Zkontrolovat pomocí %1$s</string>
+</resources>

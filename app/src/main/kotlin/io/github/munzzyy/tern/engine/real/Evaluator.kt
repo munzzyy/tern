@@ -12,7 +12,9 @@ import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.select.AssetPicker
 import io.github.munzzyy.tern.core.select.AssetPolicyException
+import io.github.munzzyy.tern.core.select.FileOrigin
 import io.github.munzzyy.tern.core.select.Pick
+import io.github.munzzyy.tern.core.select.PreferredFile
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.text.PatternException
 import io.github.munzzyy.tern.core.verify.Checksums
@@ -41,11 +43,39 @@ data class Evaluation(
     val patternProblem: PatternProblem? = null,
 )
 
-class Evaluator(private val texts: Texts, private val device: DeviceProfile, private val builtIn: BuiltInPins, private val nowMs: () -> Long) {
+class Evaluator(
+    private val texts: Texts,
+    private val device: DeviceProfile,
+    private val builtIn: BuiltInPins,
+    private val nowMs: () -> Long,
+    /** The file filter of the settings, for apps that have none of their own. */
+    private val globalFilter: () -> String? = { null },
+    /** The wait of the settings, for apps that have none of their own. */
+    private val globalMinAgeDays: () -> Int = { 0 },
+) {
     constructor(texts: Texts, device: DeviceProfile, nowMs: () -> Long) : this(texts, device, BuiltInPins(), nowMs)
 
+    /**
+     * [given] with the file filter and the wait of the settings where it has none of its own. A
+     * source that reads versions with the app's pattern itself has done so, so the pattern is not
+     * run over them a second time.
+     */
+    fun effective(given: AppConfig): AppConfig {
+        var releases = given.releases
+        if (releases.minAgeDays == null) releases = releases.copy(minAgeDays = globalMinAgeDays())
+        if (given.source.type in SourceTypes.READS_OWN_VERSIONS) releases = releases.copy(versionExtract = null, matchGroup = null)
+        val assets = given.assets
+        val global = globalFilter()
+        val files = if (assets.include != null || assets.exclude != null || global == null) assets else assets.copy(include = global)
+        return if (releases == given.releases && files == assets) given else given.copy(releases = releases, assets = files)
+    }
+
+    /** How many days [config] waits, its own or the setting's. */
+    fun minAgeDays(config: AppConfig): Int = config.releases.minAgeDays ?: globalMinAgeDays()
+
     /** [inspect] returns what a file says, or null when that cannot be known now. */
-    fun evaluate(config: AppConfig, state: AppState, installed: DeviceApp?, inspect: (Asset, String) -> FileFacts?): Evaluation {
+    fun evaluate(given: AppConfig, state: AppState, installed: DeviceApp?, inspect: (Asset, String) -> FileFacts?): Evaluation {
+        val config = effective(given)
         val filters = filtersKey(config)
         state.patternProblem?.takeIf { it.filters == filters }?.let {
             return Evaluation(AppStatus.ERROR, problem = Problem(ProblemKind.PARSE, texts.patternProblem(it.message)), patternProblem = it)
@@ -73,7 +103,9 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
         }
 
         val ranked = rank(config, candidate)
-        val (chosen, facts) = chooseFile(config, installed, candidate, ranked, device, inspect)
+        val preferred = preferred(config, ranked)
+        val order = if (preferred == null) ranked else listOf(preferred) + ranked.filter { it !== preferred }
+        val (chosen, facts) = chooseFile(config, installed, candidate, order, device, inspect)
         val abiMismatch = facts?.nativeAbis?.takeIf { it.isNotEmpty() && it.none { abi -> abi in device.abis } }
         val app = installed?.app
         var decision = UpdateDecision.decide(
@@ -114,15 +146,32 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
             status = status,
             certain = certain,
             latest = latest,
-            file = FileChoice(chosen.asset, chosen.reasons.map(texts::pickReason)),
-            otherFiles = ranked.filter { it !== chosen }.map { FileChoice(it.asset, it.reasons.map(texts::pickReason)) },
+            file = choice(config, chosen, picked = chosen === preferred),
+            otherFiles = ranked.filter { it !== chosen }.map { choice(config, it, picked = false) },
             verification = verification(config, state, candidate, chosen.asset, facts, installed),
             problem = problem,
             facts = facts,
         )
     }
 
-    fun rank(config: AppConfig, release: Release): List<Pick> = AssetPicker.rank(release.assets, device, config.assets)
+    fun rank(config: AppConfig, release: Release): List<Pick> = AssetPicker.rank(release.assets, device, effective(config).assets)
+
+    /** The file of [release] to install when nothing else names one: the kind the person picked, else the best ranked. */
+    fun bestFile(config: AppConfig, release: Release): Asset? {
+        val ranked = rank(config, release)
+        return (preferred(config, ranked) ?: ranked.firstOrNull())?.asset
+    }
+
+    /** Of [ranked], the file of the kind the person picked for the app, if one is there. */
+    private fun preferred(config: AppConfig, ranked: List<Pick>): Pick? =
+        config.preferredFile?.let { name -> PreferredFile.find(name, ranked) { it.asset.name } }
+
+    private fun choice(config: AppConfig, pick: Pick, picked: Boolean) = FileChoice(
+        asset = pick.asset,
+        reasons = pick.reasons.map(texts::pickReason),
+        foreignHost = FileOrigin.foreignHost(config.source.type, config.source.url, pick.asset),
+        picked = picked,
+    )
 
     fun verification(config: AppConfig, state: AppState, release: Release, asset: Asset, facts: FileFacts?, installed: DeviceApp?): Verification {
         val signerState = when {
@@ -178,6 +227,8 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
     private fun noCandidate(reasons: List<Rejection>, state: AppState): Problem = when {
         reasons.isNotEmpty() && reasons.all { it == Rejection.PRERELEASE } -> Problem(ProblemKind.NO_RELEASES, texts.onlyPrereleases())
         reasons.isNotEmpty() && reasons.all { it == Rejection.WRONG_PACKAGE } -> Problem(ProblemKind.PACKAGE_MISMATCH, texts.onlyOtherPackage())
+        reasons.isNotEmpty() && reasons.all { it == Rejection.VERSION_FILTER } -> Problem(ProblemKind.NO_RELEASES, texts.onlyFilteredVersions())
+        reasons.isNotEmpty() && reasons.all { it == Rejection.STAY_BEHIND || it == Rejection.VERSION_FILTER } -> Problem(ProblemKind.NO_RELEASES, texts.stayingBehind())
         Rejection.NO_USABLE_FILE in reasons -> Problem(ProblemKind.NO_FILE_FOR_DEVICE, texts.noFileForDevice(null))
         state.checkProblem != null -> state.checkProblem
         else -> Problem(ProblemKind.NO_RELEASES, texts.noReleasePasses())
@@ -202,6 +253,7 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
         fun filtersKey(config: AppConfig): String = listOf(
             config.releases.tagFilter, config.releases.titleFilter, config.releases.notesFilter,
             config.releases.versionExtract, config.assets.include, config.assets.exclude,
+            config.releases.versionFilter, config.releases.matchGroup, config.assets.innerFilter,
         ).joinToString("\u0000") { it.orEmpty() }
 
         /**

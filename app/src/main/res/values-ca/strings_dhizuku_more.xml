@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">Instal·la i actualitza sense preguntar, a través de Dhizuku com a propietari del dispositiu. Cada fitxer passa abans les mateixes comprovacions. Aleshores Android indica que l\'instal·lador és Dhizuku.</string>
+    <string name="installer_dhizuku_not_ready">No està a punt, no s\'instal·la res fins que ho estigui</string>
+    <string name="installer_dhizuku_unsupported">Tern no pot instal·lar a través de Dhizuku en aquesta versió d\'Android.</string>
+    <string name="installer_dhizuku_not_installed">Dhizuku no està instal·lat. Instal·la\'l, fes-lo propietari del dispositiu i torna.</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku no és el propietari del dispositiu. Fes-lo propietari del dispositiu a l\'aplicació Dhizuku i torna.</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku no ha respost. Obre l\'aplicació Dhizuku i torna.</string>
+    <string name="installer_dhizuku_not_allowed">Tern encara no té permís per usar Dhizuku. Prem aquí per demanar-lo.</string>
+    <string name="dhizuku_failed_not_installed">Dhizuku no està instal·lat.</string>
+    <string name="dhizuku_failed_not_owner">Dhizuku no és el propietari del dispositiu.</string>
+    <string name="dhizuku_failed_not_answering">Dhizuku no ha respost.</string>
+    <string name="dhizuku_failed_not_allowed">Dhizuku no permet que Tern l\'usi.</string>
+    <string name="install_signer_changed">L\'aplicació que ara hi ha instal·lada està signada per algú que no és el signant del fitxer que ha comprovat Tern, així que la instal·lació no compta.</string>
+</resources>

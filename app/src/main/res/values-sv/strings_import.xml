@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_addresses_heading">Från en lista med adresser</string>
+    <string name="import_addresses_explain">Klistra in adresser till appar, en per rad eller var som helst i texten, eller läs dem från en fil som en OPML-lista. Var och en letas upp och läggs till på samma sätt som en enskild länk.</string>
+    <string name="import_addresses_field">Adresser</string>
+    <string name="import_addresses_show">Visa vad den innehåller</string>
+    <string name="import_addresses_file">Läs en fil</string>
+    <string name="import_addresses_none">Den innehåller ingen https-adress.</string>
+    <string name="import_addresses_other">En annan lista</string>
+    <string name="import_addresses_unreadable">Den filen kunde inte läsas.</string>
+    <plurals name="import_addresses_count">
+        <item quantity="one">%1$d adress. Avmarkera det du inte vill ha och lägg sedan till.</item>
+        <item quantity="other">%1$d adresser. Avmarkera det du inte vill ha och lägg sedan till.</item>
+    </plurals>
+    <plurals name="link_apps_heading">
+        <item quantity="one">%1$d app kom med denna länk. Granska den för att se dess inställningar innan du lägger till den.</item>
+        <item quantity="other">%1$d appar kom med denna länk. Granska var och en för att se dess inställningar innan du lägger till den.</item>
+    </plurals>
+    <string name="settings_export_obtainium">Exportera för Obtainium</string>
+    <string name="settings_export_obtainium_effect">En fil som Obtainium importerar, för en lista som flyttar dit. Det som Obtainium saknar inställning för blir kvar.</string>
+    <string name="settings_export_installed_only">Exportera endast installerade appar</string>
+    <string name="settings_export_settings">Ta med inställningarna i exporter</string>
+    <string name="settings_export_settings_effect">Utseendet, listan, aviseringar och kontroller. Aldrig en token, proxyn eller installationsprogrammet.</string>
+    <string name="settings_kept_export">Håll en export uppdaterad</string>
+    <string name="settings_kept_export_effect">En stund efter att något i listan ändras skriver Tern exporten igen.</string>
+    <string name="settings_kept_export_written">Skrevs klockan %1$s</string>
+    <string name="settings_kept_export_folder">Var den sparas</string>
+    <string name="import_settings_taken">Inställningarna i filen togs också över.</string>
+</resources>

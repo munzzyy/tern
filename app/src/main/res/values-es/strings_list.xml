@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="list_arrange">Organizar la lista</string>
+    <string name="list_options_title">Organizar la lista</string>
+    <string name="list_reverse">Invertir el orden</string>
+    <string name="list_updates_first">Actualizaciones arriba</string>
+    <string name="list_bury_not_installed">Aplicaciones no instaladas abajo</string>
+    <string name="sort_author">Por desarrollador</string>
+    <string name="sort_added">Por fecha de adición</string>
+    <string name="sort_released">Por fecha de lanzamiento</string>
+    <string name="group_title">Agrupar por</string>
+    <string name="group_none">Nada</string>
+    <string name="group_category">Categoría</string>
+    <string name="group_source">Origen</string>
+    <string name="group_category_effect">Una aplicación en varias categorías aparece en cada una de ellas.</string>
+    <string name="group_other">Todo lo demás</string>
+    <string name="group_folded">Plegado</string>
+    <string name="group_open">Desplegado</string>
+    <string name="filter_favorites">Favoritas</string>
+    <string name="filter_track_only">Solo seguimiento</string>
+    <string name="filter_problems">Problemas</string>
+    <string name="action_done">Hecho</string>
+    <string name="settings_swipe">Deslizar filas para actuar</string>
+    <string name="settings_swipe_effect">Desliza una aplicación hacia el final para actualizarla, hacia el principio para eliminarla.</string>
+    <string name="action_favorite">Añadir a favoritos</string>
+    <string name="action_unfavorite">Quitar de favoritos</string>
+    <string name="action_set_mode">Al encontrar actualizaciones</string>
+    <string name="action_share_addresses">Compartir direcciones</string>
+    <string name="action_share_export">Compartir como archivo</string>
+    <string name="action_uninstall">Desinstalar</string>
+    <string name="export_format_tern">Un archivo de Tern</string>
+    <string name="export_format_obtainium">Un archivo para Obtainium</string>
+    <string name="bulk_uninstall_text">Android pregunta por cada aplicación, una tras otra. Tern continúa siguiéndolas hasta que las elimines aquí.</string>
+    <plurals name="bulk_favorite_done">
+        <item quantity="one">%1$d aplicación es ahora favorita</item>
+        <item quantity="many">%1$d aplicaciones son ahora favoritas</item>
+        <item quantity="other">%1$d aplicaciones son ahora favoritas</item>
+    </plurals>
+    <plurals name="bulk_unfavorite_done">
+        <item quantity="one">%1$d aplicación ya no es favorita</item>
+        <item quantity="many">%1$d aplicaciones ya no son favoritas</item>
+        <item quantity="other">%1$d aplicaciones ya no son favoritas</item>
+    </plurals>
+    <plurals name="bulk_mode_title">
+        <item quantity="one">Al encontrar una actualización de %1$d aplicación</item>
+        <item quantity="many">Al encontrar actualizaciones de %1$d aplicaciones</item>
+        <item quantity="other">Al encontrar actualizaciones de %1$d aplicaciones</item>
+    </plurals>
+    <plurals name="bulk_uninstall_title">
+        <item quantity="one">¿Desinstalar %1$d aplicación?</item>
+        <item quantity="many">¿Desinstalar %1$d aplicaciones?</item>
+        <item quantity="other">¿Desinstalar %1$d aplicaciones?</item>
+    </plurals>
+</resources>

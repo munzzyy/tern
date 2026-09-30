@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="install_archive_zstd_unsupported">Dit archief is gecomprimeerd met zstd, wat Tern niet kan openen. Kies een .zip- of .tar-bestand van deze release, of een bestand dat is gecomprimeerd met gzip, bzip2 of xz.</string>
+    <string name="install_notify_bytes">%1$s</string>
+    <string name="install_notify_bytes_of">%1$s van %2$s</string>
+    <string name="install_setting_one_download">Eén download tegelijk</string>
+    <string name="install_setting_one_download_effect">Downloads wachten op elkaar in plaats van tegelijk te lopen.</string>
+    <string name="install_file_foreign_host">Dit bestand komt van %1$s, dat niet de site van de bron van deze app is. Het wordt net als elk ander bestand gecontroleerd.</string>
+    <string name="install_file_picked">Jouw keuze</string>
+    <string name="install_file_automatic">Tern het bestand opnieuw laten kiezen</string>
+    <string name="install_file_picked_kept">Updates blijven bij het bestand dat je koos: %1$s.</string>
+    <string name="install_file_picked_missing">Deze release heeft geen bestand zoals het bestand dat je koos (%1$s), dus Tern koos er een.</string>
+</resources>

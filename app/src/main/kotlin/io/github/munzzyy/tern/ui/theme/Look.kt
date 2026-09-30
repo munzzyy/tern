@@ -15,8 +15,10 @@ import io.github.munzzyy.tern.engine.Density as Roominess
 data class Look(
     /** True on a television, where everything is a step larger and the shell keeps the overscan margin clear. */
     val television: Boolean,
-    /** True when the Density setting is Compact. */
+    /** True when the Density setting is Compact or Minimal. */
     val compact: Boolean,
+    /** True when the Density setting is Minimal: rows in lists leave out the app's icon. */
+    val minimal: Boolean = false,
     /** Kept clear by the shell at the left and right of the whole window: the overscan margin, 0 on anything but a television. */
     val edgeHorizontal: Dp,
     /** Kept clear by the shell at the top and bottom of the whole window: the overscan margin, 0 on anything but a television. */
@@ -66,12 +68,13 @@ data class Look(
 )
 
 fun lookFor(density: Roominess, television: Boolean): Look {
-    val compact = density == Roominess.COMPACT
+    val compact = density != Roominess.COMFORTABLE
     val step = if (television) 1 else 0
     fun size(comfortable: Int, tight: Int, larger: Int): Dp = ((if (compact) tight else comfortable) + step * larger).dp
     return Look(
         television = television,
         compact = compact,
+        minimal = density == Roominess.MINIMAL,
         edgeHorizontal = if (television) 48.dp else 0.dp,
         edgeVertical = if (television) 27.dp else 0.dp,
         screenPadding = size(16, 12, 0),

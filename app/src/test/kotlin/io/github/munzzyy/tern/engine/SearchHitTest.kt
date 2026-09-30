@@ -4,9 +4,13 @@ import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.net.HttpClient
 import io.github.munzzyy.tern.core.net.HttpRequest
 import io.github.munzzyy.tern.core.net.HttpResponse
+import io.github.munzzyy.tern.core.source.CheckContext
+import io.github.munzzyy.tern.core.source.Hit
+import io.github.munzzyy.tern.core.source.Searchable
 import io.github.munzzyy.tern.core.source.TokenProvider
 import io.github.munzzyy.tern.engine.real.Search
 import java.io.IOException
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -32,6 +36,40 @@ class SearchHitTest {
         assertEquals("https://github.com/example/app", hit.url)
         assertEquals("GitHub", hit.origin)
         assertEquals(12, hit.stars)
+    }
+
+    @Test
+    fun aStoresHitIsCleanedAsAForgesIs() {
+        val hit = search.hit(Hit("Sig${hidden}nal", "Signal$turn", "Private\nmessages", "https://m.apkpure.com/signal/org.thoughtcrime.securesms", -3), "APKPure")!!
+        assertEquals("Signal", hit.name)
+        assertEquals("Private messages", hit.description)
+        assertEquals("APKPure", hit.origin)
+        assertEquals(0, hit.stars)
+        assertNull(search.hit(Hit("Plain", null, null, "http://example.com/app", null), "APKPure"))
+    }
+
+    @Test
+    fun onlyThePlacesPickedAreAsked() = runBlocking {
+        val asked = ArrayList<String>()
+        val store = object : Searchable {
+            override val origin = "Aptoide"
+            override fun search(query: String, context: CheckContext): List<Hit> {
+                asked += query
+                return listOf(Hit("Found", null, null, "https://found.en.aptoide.com/app", null))
+            }
+        }
+        val both = Search(
+            object : HttpClient {
+                override fun execute(request: HttpRequest): HttpResponse = throw IOException("no network in this test")
+            },
+            TokenProvider.NONE,
+            listOf(store),
+        )
+        assertEquals(listOf("GitHub", "Codeberg", "GitLab", "Aptoide"), both.origins)
+        assertEquals(emptyList<SearchHit>(), both.search("maps", setOf("Somewhere else")).hits)
+        assertEquals(emptyList<String>(), asked)
+        assertEquals(listOf("Found"), both.search("maps", setOf("Aptoide")).hits.map { it.name })
+        assertEquals(listOf("maps"), asked)
     }
 
     @Test

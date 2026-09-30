@@ -38,6 +38,24 @@ class SourceRegistryTest {
     }
 
     @Test
+    fun theSourcesThatRepublishAreTheOnesTheListNames() {
+        val registry = SourceRegistry.standard()
+        assertEquals(SourceTypes.REPUBLISHING, registry.sources.filter { it.republishes }.map { it.type }.toSet())
+        assertTrue(SourceTypes.REPUBLISHING.containsAll(SourceTypes.MODIFIED))
+        assertEquals(SourceTypes.TRACK_ONLY, registry.sources.filter { it.trackOnly }.map { it.type }.toSet())
+    }
+
+    @Test
+    fun aStorePageRoutedAfterAHashIsReadAsTyped() {
+        val registry = SourceRegistry.standard()
+        assertEquals(SourceTypes.HUAWEI, registry.match("appgallery.huawei.com/#/app/C100000000")?.type)
+        assertEquals("https://appgallery.huawei.com/app/C100000000", registry.match("https://appgallery.huawei.com/#/app/C100000000")?.url)
+        assertEquals(SourceTypes.VIVO, registry.match("https://h5.appstore.vivo.com.cn/#/details?appId=123")?.type)
+        // Anywhere else the part after '#' means nothing, and the address is matched without it.
+        assertEquals(SourceTypes.GITHUB, registry.match("https://github.com/owner/repo/#/readme")?.type)
+    }
+
+    @Test
     fun matchReturnsNullForUnrecognisedUrl() {
         assertNull(registry.match("not a url"))
         assertNull(registry.match("https://example.com/nothing"))

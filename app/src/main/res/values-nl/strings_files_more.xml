@@ -1,2 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="files_other_title">Andere bestanden van deze release</string>
+    <string name="files_source_code">Broncode</string>
+    <string name="files_save_spoken">%1$s opslaan in de map Download</string>
+    <string name="files_save_a_file">Een bestand opslaan</string>
+    <string name="files_pick_title_version">Een bestand van versie %1$s opslaan</string>
+    <string name="files_pick_title_app">Een bestand van %1$s opslaan</string>
+    <string name="files_skip">Overslaan</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">%1$d bestand wordt opgeslagen. Een melding zegt wanneer het klaar is.</item>
+        <item quantity="other">%1$d bestanden worden opgeslagen. Een melding zegt wanneer elk bestand klaar is.</item>
+    </plurals>
+    <string name="files_channel_saved">Opgeslagen bestanden</string>
+    <string name="files_notify_saved">%1$s opgeslagen</string>
+    <string name="files_notify_saved_plain">Een bestand is opgeslagen in de map Download</string>
+    <string name="files_notify_not_saved">%1$s kon niet worden opgeslagen</string>
+    <string name="files_notify_not_saved_plain">Een bestand kon niet worden opgeslagen</string>
+    <string name="files_notify_updated_to">%1$s is geüpdatet naar %2$s</string>
+    <string name="files_notify_installed_at">%1$s %2$s is geïnstalleerd</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Wat er is misgegaan</string>
+    <string name="files_problems_none">Geen van deze apps heeft nu een probleem.</string>
+    <string name="files_setting_verifier">Nieuwe apps eerst aan Verified Apps tonen</string>
+    <string name="files_setting_verifier_effect">Voordat een app voor het eerst wordt geïnstalleerd, gaat het gecontroleerde bestand voor een tweede blik naar Verified Apps of AppVerifier, als een van beide is geïnstalleerd. De installatie gaat verder zodra je terug bent in Tern.</string>
+    <string name="files_verifier_about">Over Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s is een aparte app. Hij vergelijkt deze app met het certificaat waaraan Tern hem houdt, en met zijn eigen lijst van apps die hij kent.</string>
+    <string name="files_verifier_card_action">Controleren met %1$s</string>
+</resources>

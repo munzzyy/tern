@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">Dit archief bevat een OBB-bestand waarvan de naam de OBB-map van de app zou kunnen verlaten, of twee OBB-bestanden met dezelfde naam. Er is niets geïnstalleerd.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">%1$d OBB-bestand in %2$s geplaatst.</item>
+        <item quantity="other">%1$d OBB-bestanden in %2$s geplaatst.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">De OBB-bestanden zijn niet in %1$s geplaatst, omdat alleen de installatieprogramma\'s Shizuku en root daar kunnen schrijven. Ze staan in %2$s, het bestand van deze release: %3$s.</string>
+    <string name="parts_obb_failed">De OBB-bestanden konden niet in %1$s worden geplaatst: %2$s. Ze staan in %3$s, het bestand van deze release: %4$s.</string>
+</resources>

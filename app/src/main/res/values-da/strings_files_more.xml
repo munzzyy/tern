@@ -1,2 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="files_other_title">Andre filer i denne udgivelse</string>
+    <string name="files_source_code">Kildekode</string>
+    <string name="files_save_spoken">Gem %1$s i mappen Download</string>
+    <string name="files_save_a_file">Gem en fil</string>
+    <string name="files_pick_title_version">Gem en fil fra version %1$s</string>
+    <string name="files_pick_title_app">Gem en fil fra %1$s</string>
+    <string name="files_skip">Spring over</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">Gemmer %1$d fil. En notifikation fortæller, hvornår den er færdig.</item>
+        <item quantity="other">Gemmer %1$d filer. En notifikation fortæller, hvornår hver enkelt er færdig.</item>
+    </plurals>
+    <string name="files_channel_saved">Gemte filer</string>
+    <string name="files_notify_saved">Gemte %1$s</string>
+    <string name="files_notify_saved_plain">En fil blev gemt i mappen Download</string>
+    <string name="files_notify_not_saved">Kunne ikke gemme %1$s</string>
+    <string name="files_notify_not_saved_plain">En fil kunne ikke gemmes</string>
+    <string name="files_notify_updated_to">%1$s blev opdateret til %2$s</string>
+    <string name="files_notify_installed_at">%1$s %2$s blev installeret</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Hvad der gik galt</string>
+    <string name="files_problems_none">Ingen af disse apps har et problem nu.</string>
+    <string name="files_setting_verifier">Vis nye apps for Verified Apps først</string>
+    <string name="files_setting_verifier_effect">Før en app installeres første gang, sendes dens tjekkede fil til Verified Apps eller AppVerifier, hvis en af dem er installeret, til endnu et kig. Installationen fortsætter, når du er tilbage i Tern.</string>
+    <string name="files_verifier_about">Om Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s er en separat app. Den sammenligner denne app med det certifikat, Tern holder den op imod, og med sin egen liste over apps, den kender.</string>
+    <string name="files_verifier_card_action">Tjek med %1$s</string>
+</resources>

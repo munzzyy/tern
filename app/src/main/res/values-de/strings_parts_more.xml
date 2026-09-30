@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">Dieses Archiv enthält eine OBB-Datei, deren Name aus dem OBB-Ordner der App hinausführen könnte, oder zwei OBB-Dateien mit demselben Namen. Es wurde nichts installiert.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">%1$d OBB-Datei in %2$s abgelegt.</item>
+        <item quantity="other">%1$d OBB-Dateien in %2$s abgelegt.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">Die OBB-Dateien wurden nicht in %1$s abgelegt, da nur die Installer Shizuku und Root dorthin schreiben können. Sie liegen in %2$s, der Datei dieses Releases: %3$s.</string>
+    <string name="parts_obb_failed">Die OBB-Dateien konnten nicht in %1$s abgelegt werden: %2$s. Sie liegen in %3$s, der Datei dieses Releases: %4$s.</string>
+</resources>

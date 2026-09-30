@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_package_effect">Jede Datei muss zu diesem Paket gehören, und die darunter installierte App ist die, die Tern betrachtet. Bleibt das Feld leer, liest Tern den Namen aus der Datei der App.</string>
+</resources>

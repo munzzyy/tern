@@ -1,2 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="files_other_title">Andra filer i denna utgåva</string>
+    <string name="files_source_code">Källkod</string>
+    <string name="files_save_spoken">Spara %1$s i mappen Nedladdningar</string>
+    <string name="files_save_a_file">Spara en fil</string>
+    <string name="files_pick_title_version">Spara en fil från version %1$s</string>
+    <string name="files_pick_title_app">Spara en fil från %1$s</string>
+    <string name="files_skip">Hoppa över</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">Sparar %1$d fil. En avisering berättar när den är klar.</item>
+        <item quantity="other">Sparar %1$d filer. En avisering berättar när var och en är klar.</item>
+    </plurals>
+    <string name="files_channel_saved">Sparade filer</string>
+    <string name="files_notify_saved">Sparade %1$s</string>
+    <string name="files_notify_saved_plain">En fil sparades i mappen Nedladdningar</string>
+    <string name="files_notify_not_saved">Kunde inte spara %1$s</string>
+    <string name="files_notify_not_saved_plain">En fil kunde inte sparas</string>
+    <string name="files_notify_updated_to">%1$s uppdaterades till %2$s</string>
+    <string name="files_notify_installed_at">%1$s %2$s installerades</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Vad som gick fel</string>
+    <string name="files_problems_none">Ingen av dessa appar har något problem nu.</string>
+    <string name="files_setting_verifier">Visa nya appar för Verified Apps först</string>
+    <string name="files_setting_verifier_effect">Innan en app installeras för första gången skickas dess kontrollerade fil till Verified Apps eller AppVerifier, om någon av dem är installerad, för en andra titt. Installationen fortsätter när du är tillbaka i Tern.</string>
+    <string name="files_verifier_about">Om Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s är en separat app. Den jämför denna app med det certifikat som Tern kräver av den, och med sin egen lista över appar den känner till.</string>
+    <string name="files_verifier_card_action">Kontrollera med %1$s</string>
+</resources>

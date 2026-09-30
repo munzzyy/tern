@@ -7,4 +7,15 @@
     <string name="action_app_info">App info in Android</string>
     <string name="detail_last_checked">Checked %1$s</string>
     <string name="state_favorite">Favourite</string>
+    <string name="action_save_file">Save to Downloads</string>
+    <string name="file_saved">Saved as %1$s in %2$s, as it was downloaded. Tern checks a file when it installs it.</string>
+    <string name="action_save_files">Save files to Downloads</string>
+    <plurals name="bulk_saved_files">
+        <item quantity="one">%d file saved in Download/Tern</item>
+        <item quantity="other">%d files saved in Download/Tern</item>
+    </plurals>
+    <plurals name="bulk_marked_seen">
+        <item quantity="one">%d release marked as seen</item>
+        <item quantity="other">%d releases marked as seen</item>
+    </plurals>
 </resources>

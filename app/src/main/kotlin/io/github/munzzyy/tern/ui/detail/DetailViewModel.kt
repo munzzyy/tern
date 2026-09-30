@@ -11,6 +11,8 @@ import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.NoteBlock
 import io.github.munzzyy.tern.engine.Problem
+import io.github.munzzyy.tern.engine.ProblemException
+import io.github.munzzyy.tern.engine.SavedFile
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -135,6 +137,22 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
         if (d.invalid.isNotEmpty()) return
         draft = PatternDraft.of(d.applyTo(config))
         save({ d.applyTo(it) }, onFailed)
+    }
+
+    /** Hands back the copy that was saved, or else why not. */
+    fun saveFile(releaseId: String, assetUrl: String, onDone: (SavedFile?, String?) -> Unit) {
+        viewModelScope.launch {
+            val (file, problem) = try {
+                engine.saveFile(appId, releaseId, assetUrl) to null
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: ProblemException) {
+                null to e.problem.message
+            } catch (e: Exception) {
+                null to (e.message ?: "")
+            }
+            onDone(file, problem)
+        }
     }
 
     /** Saves at once; the list flow brings the change back to the screen. */

@@ -159,6 +159,15 @@ class AppListTest {
     }
 
     @Test
+    fun bulkActionsTouchOnlyTheAppsTheyCanChange() {
+        val tracked = testRow(id = "t", status = AppStatus.NEW_RELEASE, trackOnly = true)
+        val installed = testRow(id = "i", status = AppStatus.UP_TO_DATE)
+        val noFile = testRow(id = "n", withFile = false)
+        assertEquals(listOf("t"), touched(BulkAction.MARK_SEEN, listOf(tracked, installed)).map { it.id })
+        assertEquals(listOf("t", "i"), touched(BulkAction.SAVE_FILES, listOf(tracked, installed, noFile)).map { it.id })
+    }
+
+    @Test
     fun updateAllCountsOnlyWhatCanStartNow() {
         assertEquals(1, updatableCount(rows))
     }

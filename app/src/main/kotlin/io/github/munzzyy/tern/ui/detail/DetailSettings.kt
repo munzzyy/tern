@@ -29,6 +29,7 @@ import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.ui.LocalEngine
+import io.github.munzzyy.tern.ui.LocalOnline
 import io.github.munzzyy.tern.ui.apps.rememberRemove
 import io.github.munzzyy.tern.ui.common.ActionRow
 import io.github.munzzyy.tern.ui.common.ChoiceRow
@@ -152,8 +153,11 @@ private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
                         color = MaterialTheme.colorScheme.primary,
                     )
                     FileChoiceView(choice)
-                    if (index > 0 && canPickInstall(row)) {
-                        TonalButton(stringResource(R.string.action_install_file), onClick = { engine.install(row.id, assetUrl = choice.asset.url) })
+                    Row(horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2)) {
+                        if (index > 0 && canPickInstall(row)) {
+                            TonalButton(stringResource(R.string.action_install_file), onClick = { engine.install(row.id, assetUrl = choice.asset.url) })
+                        }
+                        row.latest?.let { release -> SaveFileButton(vm, release.id, choice.asset.url) }
                     }
                 }
             }
@@ -321,4 +325,17 @@ private fun RemoveGroup(row: AppRow, onRemoved: () -> Unit) {
             },
         )
     }
+}
+
+/** Puts a copy of the file in Download/Tern, as it came; only an install checks a file. */
+@Composable
+private fun SaveFileButton(vm: DetailViewModel, releaseId: String, assetUrl: String) {
+    val actions = rememberActions()
+    val online = LocalOnline.current
+    val saved = stringResource(R.string.file_saved)
+    QuietButton(
+        stringResource(R.string.action_save_file),
+        onClick = { vm.saveFile(releaseId, assetUrl) { file, problem -> actions.say(if (file != null) saved.format(file.name, file.place) else problem.orEmpty()) } },
+        enabled = online,
+    )
 }

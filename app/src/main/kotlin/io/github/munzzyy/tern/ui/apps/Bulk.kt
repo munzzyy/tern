@@ -2,9 +2,10 @@ package io.github.munzzyy.tern.ui.apps
 
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.engine.AppRow
+import io.github.munzzyy.tern.engine.AppStatus
 import io.github.munzzyy.tern.ui.text.canUpdateNow
 
-enum class BulkAction { CATEGORY, CHECK, UPDATE, REMOVE, FAVORITE, MODE, SHARE_ADDRESSES, SHARE_EXPORT, UNINSTALL }
+enum class BulkAction { CATEGORY, CHECK, UPDATE, REMOVE, FAVORITE, MODE, SHARE_ADDRESSES, SHARE_EXPORT, UNINSTALL, MARK_SEEN, SAVE_FILES }
 
 const val MAX_CATEGORY = 40
 
@@ -12,6 +13,8 @@ const val MAX_CATEGORY = 40
 fun touched(action: BulkAction, rows: List<AppRow>): List<AppRow> = when (action) {
     BulkAction.UPDATE -> rows.filter(::canUpdateNow)
     BulkAction.UNINSTALL -> rows.filter { it.installed != null }
+    BulkAction.MARK_SEEN -> rows.filter { it.config.trackOnly && it.status == AppStatus.NEW_RELEASE }
+    BulkAction.SAVE_FILES -> rows.filter { it.file != null && it.latest != null }
     else -> rows
 }
 

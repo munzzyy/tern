@@ -101,6 +101,35 @@ internal class Files(context: Context, private val texts: Texts, private val now
     }
 
     /**
+     * Copies [source] into Download/Tern as [name], for the person to keep or pass on. MediaStore
+     * picks another name when one of that name is there already.
+     */
+    fun saveCopy(source: File, name: String, mime: String): SavedFile {
+        val values = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, mime)
+            put(MediaStore.MediaColumns.RELATIVE_PATH, PLACE)
+            put(MediaStore.MediaColumns.IS_PENDING, 1)
+        }
+        val uri = asked { resolver.insert(downloads, values) } ?: throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportNoPlace()))
+        try {
+            val out = resolver.openOutputStream(uri, "w") ?: throw IOException("MediaStore opened no file")
+            out.use { target -> source.inputStream().use { it.copyTo(target) } }
+            resolver.update(uri, ContentValues().apply { put(MediaStore.MediaColumns.IS_PENDING, 0) }, null, null)
+        } catch (ex: IOException) {
+            asked { resolver.delete(uri, null, null) }
+            throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportFailed(ex.message)))
+        } catch (ex: RuntimeException) {
+            asked { resolver.delete(uri, null, null) }
+            throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportFailed(ex.message)))
+        }
+        val written = asked {
+            resolver.query(uri, arrayOf(MediaStore.MediaColumns.DISPLAY_NAME), null, null, null)?.use { if (it.moveToFirst()) it.getString(0) else null }
+        } ?: name
+        return SavedFile(written, PLACE, File(shared, "$PLACE/$written").path, nowMs(), source.length())
+    }
+
+    /**
      * Writes [text] as [name] in Download/Tern, over the file of that name this app made before,
      * so a kept export stays one file instead of one a day.
      */

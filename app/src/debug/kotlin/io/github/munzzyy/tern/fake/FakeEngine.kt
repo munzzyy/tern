@@ -591,6 +591,9 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override suspend fun runBackgroundCheck() = check(null)
 
+    override suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile =
+        SavedFile(assetUrl.substringAfterLast('/'), "Download/Tern", "/storage/emulated/0/Download/Tern/" + assetUrl.substringAfterLast('/'), System.currentTimeMillis(), 0)
+
     override val searchOrigins: List<String> = listOf("GitHub", "Codeberg", "GitLab", "F-Droid", "Aptoide", "Uptodown")
 
     override fun renderNotes(text: String): List<NoteBlock> = io.github.munzzyy.tern.engine.real.NotesMapper.markdown(text)

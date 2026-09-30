@@ -100,6 +100,8 @@ private fun BulkMenu(picked: List<AppRow>, onAction: (BulkAction) -> Unit) {
                 BulkAction.MODE to R.string.action_set_mode,
                 BulkAction.SHARE_ADDRESSES to R.string.action_share_addresses,
                 BulkAction.SHARE_EXPORT to R.string.action_share_export,
+                BulkAction.MARK_SEEN to R.string.action_mark_seen,
+                BulkAction.SAVE_FILES to R.string.action_save_files,
                 BulkAction.UNINSTALL to R.string.action_uninstall,
                 BulkAction.REMOVE to R.string.action_remove,
             )) {
@@ -119,7 +121,8 @@ private fun BulkMenu(picked: List<AppRow>, onAction: (BulkAction) -> Unit) {
 fun available(action: BulkAction, picked: List<AppRow>, online: Boolean): Boolean = when (action) {
     BulkAction.CHECK -> online && picked.isNotEmpty()
     BulkAction.UPDATE -> online && touched(action, picked).isNotEmpty()
-    BulkAction.UNINSTALL -> touched(action, picked).isNotEmpty()
+    BulkAction.UNINSTALL, BulkAction.MARK_SEEN -> touched(action, picked).isNotEmpty()
+    BulkAction.SAVE_FILES -> online && touched(action, picked).isNotEmpty()
     else -> picked.isNotEmpty()
 }
 
@@ -249,6 +252,30 @@ fun BulkDialog(action: BulkAction, picked: List<AppRow>, categories: List<String
                 actions.run {
                     val uri = engine.shareableExport(touched.map { it.id }, format)
                     shareFile(context, title, uri)
+                }
+                onDismiss()
+                onDone()
+            }
+        }
+        BulkAction.MARK_SEEN -> {
+            val words = pluralStringResource(R.plurals.bulk_marked_seen, touched.size, touched.size)
+            LaunchedEffect(Unit) {
+                actions.run { for (row in touched) engine.dismissRelease(row.id) }
+                actions.say(words)
+                onDismiss()
+                onDone()
+            }
+        }
+        BulkAction.SAVE_FILES -> {
+            val done = pluralStringResource(R.plurals.bulk_saved_files, touched.size, touched.size)
+            LaunchedEffect(Unit) {
+                actions.run {
+                    for (row in touched) {
+                        val release = row.latest ?: continue
+                        val file = row.file ?: continue
+                        engine.saveFile(row.id, release.id, file.asset.url)
+                    }
+                    actions.say(done)
                 }
                 onDismiss()
                 onDone()

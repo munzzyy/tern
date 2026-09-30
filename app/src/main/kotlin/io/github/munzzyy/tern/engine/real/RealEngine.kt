@@ -630,6 +630,11 @@ class RealEngine(
 
     override suspend fun runBackgroundCheck() = runScheduledCheck()
 
+    override suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile {
+        ready()
+        return interop.saveFile(appId, releaseId, assetUrl)
+    }
+
     override val searchOrigins: List<String> get() = detector.searchOrigins
 
     override fun renderNotes(text: String): List<NoteBlock> = NotesMapper.markdown(text)

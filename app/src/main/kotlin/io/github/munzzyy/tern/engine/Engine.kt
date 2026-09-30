@@ -209,6 +209,12 @@ interface Engine {
     /** Writes the kept export now. */
     suspend fun writeKeptExport()
 
+    /**
+     * Downloads [assetUrl] of the release [releaseId] of the app and puts a copy in Download/Tern,
+     * as it came. Nothing is checked or installed. Throws [ProblemException] when it cannot.
+     */
+    suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile
+
     /** Runs the background check now, installs of apps set to update by themselves included. */
     suspend fun runBackgroundCheck()
 

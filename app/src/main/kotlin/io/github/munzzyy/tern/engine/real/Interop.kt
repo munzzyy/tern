@@ -14,6 +14,7 @@ import io.github.munzzyy.tern.core.json.JsonObject
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.UpdateMode
 import io.github.munzzyy.tern.core.net.Urls
+import io.github.munzzyy.tern.core.source.SourceException
 import io.github.munzzyy.tern.data.AppState
 import io.github.munzzyy.tern.data.SettingsJson
 import io.github.munzzyy.tern.data.StoredApp
@@ -24,7 +25,9 @@ import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemException
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.SavedFile
+import io.github.munzzyy.tern.install.Downloader
 import io.github.munzzyy.tern.install.OtherAppInstaller
+import io.github.munzzyy.tern.install.StepFailure
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -140,6 +143,34 @@ internal class Interop(private val e: RealEngine) {
 
     suspend fun importableFiles(): List<SavedFile> = runInterruptible(Dispatchers.IO) { files.list() }
 
+    /**
+     * Downloads one file of one release and puts a copy in Download/Tern, as it came. Nothing is
+     * checked or installed: the file is for the person to keep or pass on.
+     */
+    suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile {
+        val t = e.texts
+        val stored = e.stored[appId] ?: throw ProblemException(Problem(ProblemKind.NOT_FOUND, t.noRelease()))
+        val release = stored.state.releases.firstOrNull { it.id == releaseId } ?: throw ProblemException(Problem(ProblemKind.NOT_FOUND, t.noRelease()))
+        val asset = release.assets.firstOrNull { it.url == assetUrl } ?: throw ProblemException(Problem(ProblemKind.NOT_FOUND, t.noFileForDevice(null)))
+        val key = Downloader.key(release.id, asset.url)
+        var fresh = false
+        try {
+            val from = runInterruptible(Dispatchers.IO) { e.registry.resolve(stored.config.source, asset, e.sourceContext()) }
+            val sameHost = Urls.host(from.url) == Urls.host(asset.url)
+            val authorization = if (asset.needsAuth && sameHost) e.tokens.tokenFor(Urls.host(asset.url))?.let { "Bearer $it" } else null
+            val download = e.downloader.fetch(appId, key, from.url, authorization, from.headers) { _, _ -> }
+            fresh = !download.reused
+            return runInterruptible(Dispatchers.IO) { files.saveCopy(download.file, savedName(asset.name), mimeOf(asset.name)) }
+        } catch (ex: SourceException) {
+            throw ProblemException(e.checks.problemOf(ex))
+        } catch (ex: StepFailure) {
+            throw ProblemException(ex.problem)
+        } finally {
+            // A file kept for an install that is to be tried again stays; one fetched only to be saved goes.
+            if (fresh && !e.settings.value.keepInstallers) e.downloader.discard(appId, key)
+        }
+    }
+
     private suspend fun bring(door: () -> Decoded): ImportSummary {
         val decoded = runInterruptible(Dispatchers.IO) { door() }
         return oneAtATime.withLock { withContext(Dispatchers.IO) { store(decoded) } }
@@ -238,5 +269,23 @@ internal class Interop(private val e: RealEngine) {
         const val MAX_BYTES = 8 * 1024 * 1024
         const val MAX_APPS = 2000
         const val SHARE_FOLDER = "share"
+    }
+}
+
+/** A file name MediaStore takes: no folders, nothing unseen, not too long. */
+internal fun savedName(name: String): String {
+    val plain = name.map { if (it == '/' || it == '\\' || it.isISOControl()) '_' else it }.joinToString("").trim().trimStart('.')
+    return plain.take(120).ifEmpty { "download.bin" }
+}
+
+/** What kind of file [name] is, as Android's Downloads lists it. */
+internal fun mimeOf(name: String): String {
+    val lower = name.lowercase()
+    return when {
+        lower.endsWith(".apk") -> "application/vnd.android.package-archive"
+        lower.endsWith(".apks") || lower.endsWith(".xapk") || lower.endsWith(".apkm") || lower.endsWith(".zip") -> "application/zip"
+        lower.endsWith(".tar.gz") || lower.endsWith(".tgz") -> "application/gzip"
+        lower.endsWith(".tar") -> "application/x-tar"
+        else -> "application/octet-stream"
     }
 }

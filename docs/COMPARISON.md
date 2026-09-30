@@ -102,9 +102,83 @@ Not yet observed: behaviour in Doze over many hours, and after a reboot.
 | Work out the source from the link | 1108 | Yes |
 | XAPK and split APKs | 682, 1056 | Yes, installed as one session |
 | Keep the file when an install fails | 1978 | Yes |
-| Older versions | 2934 | The version history installs any listed release; going back needs the app removed first, which Android requires |
+| Older versions | 2934 | The version history installs any listed release. Going back needs the app removed first, which Android requires, unless the Let Me Downgrade module is installed; then a setting lets an older version go in over a newer one, as in Obtainium |
 | Update ownership | 2078 | A setting, off by default. Not yet tested |
 | VirusTotal | 462 | A link to the file's page there, by its SHA-256. Nothing is uploaded |
+
+## Feature by feature
+
+Every row of Obtainium's feature list, read from its sources at the commit named
+above, and where Tern stands on it. The tests of each source are in
+`core/src/test/kotlin/io/github/munzzyy/tern/core/source/`, one file per source,
+run against answers recorded from the real services.
+
+### Sources
+
+| Obtainium | Tern |
+|---|---|
+| GitHub, GitLab, Codeberg and Forgejo, F-Droid, IzzyOnDroid, third-party F-Droid repositories, SourceHut, SourceForge, Jenkins, a direct link, any web page | All of them, and GitHub Actions artifacts |
+| APKPure, Aptoide, Uptodown, APKCombo, APKMirror (tracking only), Farsroid | All of them. The Add screen says the store offers again what developers publish elsewhere, and every file is still held to the developer's certificate once Tern knows it |
+| Huawei AppGallery, Samsung Galaxy Store (device model and CSC), vivo, Tencent, RuStore, CoolApk, itch.io | All of them |
+| Telegram, NeutronCode | Both |
+| LiteAPKs, Apk4Free, RockMods (tracking only) | All three, with a warning on the Add screen that they offer apps changed by someone else |
+| Search in GitHub, GitLab, Codeberg, F-Droid, a third-party F-Droid repository, Uptodown, AppGallery, vivo and RuStore, with a picker of where to look | GitHub, GitLab, Codeberg, F-Droid, Uptodown, AppGallery, vivo, RuStore and Aptoide, with the picker kept between searches |
+| Override source, for self-hosted instances | Self-hosted GitLab, Forgejo and Gitea are recognised by asking them; a hash route such as `appgallery.huawei.com/#/app/…` is read as typed |
+
+### Per-app options
+
+| Obtainium | Tern |
+|---|---|
+| Pre-releases, fallback to older releases, minimum age, title and notes filters, version extraction with a match group, version from the release date | All of them, with the version also read from the title, and a filter on the extracted version |
+| APK filter, inverted filter, filter by architecture | Include and exclude filters, and the device's own processors |
+| Sort releases by date or by name, verify the latest tag, use the asset's date | Order by version, date, the source's own order or name; the release the forge marks as latest comes first |
+| Zip and tar archives, a filter inside them | Both |
+| Track only, exempt from background updates, pinned certificate hashes | All three; the pin is set by itself at first install |
+| Custom name and author, notes, categories, pinned to top | All of them |
+| Google Play as the installer (Shizuku or root) | For one app or for all |
+| Skip update notifications | Muted apps |
+| Refresh before download | Yes |
+| Headers, steps through intermediate pages and other options of the HTML source | All of them, set on the app's page; a header that carries credentials is refused |
+
+### Settings
+
+| Obtainium | Tern |
+|---|---|
+| Background checks from 15 minutes to 30 days, Wi-Fi and charging only | Yes, through Android's job scheduler rather than a task that decides by itself whether it is due |
+| Check on start, check on opening an app, only installed and tracked apps, remove apps uninstalled elsewhere, a global APK filter | All of them |
+| Installers: system, Shizuku, root, another app | All four; the other app is held to the same checks, and the signer of what it installed is compared afterwards |
+| Downgrades with Let Me Downgrade | Yes |
+| Theme, pure black, colours, Material You, language | All of them, with palettes, contrast levels, corner and icon shapes. The language is Android's own choice for the app, from Android 13 on |
+| Sort, order, pin updates, bury apps that are not installed, group by category or source, collapse groups at start, swipe actions, haptics, phone layout, list density | All of them |
+| Category colours | Yes, sixteen, and every category takes one of them by itself until one is picked |
+| Automatic export to a folder, installed apps only, settings in the export | All three; tokens never go into a file |
+| Import Obtainium exports, lists of addresses, GitHub stars | All three, with the settings in an Obtainium export read under Tern's names |
+| Export in Obtainium's format | Yes |
+
+### Everything else
+
+| Obtainium | Tern |
+|---|---|
+| `obtainium://add`, `app`, `apps`, `refresh` links | All four, and `tern://` links of the same kinds |
+| Notifications for updates, errors, track-only releases | Yes, with Update and Update all buttons, and a quiet one while checking if wanted |
+| Logs page with sharing | The activity log, shared as text |
+| Save a release's files | Any file a release offers, saved to Downloads |
+| Keeps itself up to date | Offered in Settings |
+
+### What Tern has that Obtainium has not
+
+- A home-screen widget with the number of updates, a Check button and an Update
+  all button.
+- A Quick Settings tile that checks and says how many updates there are.
+- Launcher shortcuts: check, update all, add an app.
+- Every file checked before the installer sees it: checksum, two signature
+  verifiers, the pinned certificate, the package name, the version code.
+- The project's README on an app's page, read from the forge's API, with no
+  script and no web page.
+- The top of an app's page in the colour of its icon, and each app's categories
+  as a coloured stripe in the list.
+- Android TV by remote, with a phone able to send links to it.
+- Tor through Orbot with nothing going round it.
 
 ## Tern and the other installers
 

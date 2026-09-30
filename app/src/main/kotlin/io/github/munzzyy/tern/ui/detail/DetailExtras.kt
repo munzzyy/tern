@@ -13,6 +13,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -188,7 +189,7 @@ fun ProjectPageCard(row: AppRow) {
     val online = io.github.munzzyy.tern.ui.LocalOnline.current
     var state by remember(row.id) { mutableStateOf<PageState>(PageState.Closed) }
     var asked by remember(row.id) { mutableStateOf(0) }
-    androidx.compose.runtime.LaunchedEffect(row.id, asked) {
+    LaunchedEffect(row.id, asked) {
         if (asked == 0) return@LaunchedEffect
         state = PageState.Loading
         state = try {

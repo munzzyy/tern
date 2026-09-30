@@ -1,5 +1,55 @@
 # Changelog
 
+## Unreleased
+
+Everything Obtainium does, and more.
+
+- Reads the stores and sites Obtainium reads: APKPure, Aptoide, Uptodown,
+  APKCombo, APKMirror (tracking only), Farsroid, Huawei AppGallery, Samsung
+  Galaxy Store, vivo, Tencent, CoolApk, RuStore, itch.io, Telegram,
+  NeutronCode, LiteAPKs, Apk4Free and RockMods (tracking only). The Add screen
+  says when a store offers again what developers publish elsewhere, and when a
+  site offers apps changed by someone else. Every file is still held to the
+  certificate of the first install.
+- Fetches each file from where its source says it is at the moment of the
+  download, for stores whose addresses expire.
+- Searches F-Droid, Aptoide, Uptodown, AppGallery, the vivo store and RuStore
+  as well as GitHub, Codeberg and GitLab, in the places ticked under "Search in".
+- Installs through Shizuku, root or another installer app. Google Play can be
+  named as the installer, for every app or for one, and with Let Me Downgrade
+  installed an older version can go in over a newer one.
+- Every per-app option Obtainium has: pre-releases, falling back to older
+  releases, a minimum age, filters on titles, notes and versions, the version
+  read from the tag, the title or the date with a match group, the order of
+  releases, staying some releases behind the newest, zip and tar archives with a filter
+  inside them, a name and author of your own, muted notifications, refreshing
+  before a download, and the options of each source, from the steps through a
+  web page to the device model the Galaxy Store is asked as. Both import and
+  export carry all of them.
+- Checks as often as every 15 minutes or as seldom as every 30 days, on start
+  and on opening an app if wanted, only installed apps if wanted, with a filter
+  for every app's files, and forgets apps removed from the phone if wanted.
+- The list can be sorted, grouped by category or source with groups that fold,
+  filtered, and swiped. Favourites stay on top, each app's categories show as
+  a coloured stripe, and a double tap on an icon opens the app. A minimal
+  density, haptics and an always-phone layout are settings.
+- Categories have colours, and can be renamed or deleted for every app at once.
+- Notifications carry Update and Update all buttons. Releases of tracked apps
+  have their own channel, and a quiet notification can show a check running.
+- Imports a list of addresses from any text, and `obtainium://apps` links of
+  several apps. `tern://refresh` and `obtainium://refresh` check from a link.
+- Keeps an export up to date in a folder you pick, can carry settings in it,
+  and writes a file Obtainium can import.
+- A home-screen widget with the number of updates and Check and Update all
+  buttons, a Quick Settings tile, and launcher shortcuts.
+- Saves any file a release offers to Downloads. Many tracked releases can be
+  marked as seen at once.
+- Notes of your own and category chips on an app's page, and the project's
+  README, read from the forge when you ask for it.
+- The activity log can be shared as text, and Tern offers to keep itself up to
+  date.
+- The top of an app's page takes the colour of its icon.
+
 ## 0.1.0, 2026-09-29
 
 The first version.

@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">يثبّت ويحدّث دون مطالبة، عبر Dhizuku بصفته مالك الجهاز. يجتاز كل ملف الفحوصات نفسها أولًا. ثم يذكر Android أن Dhizuku هو أداة التثبيت.</string>
+    <string name="installer_dhizuku_not_ready">غير جاهز، لا يُثبَّت شيء حتى يصبح جاهزًا</string>
+    <string name="installer_dhizuku_unsupported">لا يستطيع Tern التثبيت عبر Dhizuku في هذا الإصدار من Android.</string>
+    <string name="installer_dhizuku_not_installed">Dhizuku غير مثبت. ثبّته واجعله مالك الجهاز، ثم عُد.</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku ليس مالك الجهاز. اجعله مالك الجهاز من تطبيق Dhizuku، ثم عُد.</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku لم يُجب. افتح تطبيق Dhizuku، ثم عُد.</string>
+    <string name="installer_dhizuku_not_allowed">لا يُسمح لـ Tern باستخدام Dhizuku بعد. اضغط هنا لطلب الإذن.</string>
+    <string name="dhizuku_failed_not_installed">Dhizuku غير مثبت.</string>
+    <string name="dhizuku_failed_not_owner">Dhizuku ليس مالك الجهاز.</string>
+    <string name="dhizuku_failed_not_answering">Dhizuku لم يُجب.</string>
+    <string name="dhizuku_failed_not_allowed">لا يسمح Dhizuku لـ Tern باستخدامه.</string>
+    <string name="install_signer_changed">التطبيق المثبّت الآن موقّع من شخص غير الذي وقّع الملف الذي فحصه Tern، لذا لا يُحتسب التثبيت.</string>
+</resources>

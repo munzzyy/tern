@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="installer_dhizuku">Dhizuku</string>
+    <string name="installer_dhizuku_effect">Instaluje i aktualizuje bez pytania, przez Dhizuku jako właściciela urządzenia. Każdy plik najpierw przechodzi te same sprawdzenia. Potem Android wskazuje Dhizuku jako instalator.</string>
+    <string name="installer_dhizuku_not_ready">Niegotowe, nic się nie instaluje, dopóki nie będzie gotowe</string>
+    <string name="installer_dhizuku_unsupported">Tern nie może instalować przez Dhizuku w tej wersji Androida.</string>
+    <string name="installer_dhizuku_not_installed">Dhizuku nie jest zainstalowane. Zainstaluj je i ustaw jako właściciela urządzenia, a potem wróć.</string>
+    <string name="installer_dhizuku_not_owner">Dhizuku nie jest właścicielem urządzenia. Ustaw je jako właściciela urządzenia w aplikacji Dhizuku, a potem wróć.</string>
+    <string name="installer_dhizuku_not_answering">Dhizuku nie odpowiedziało. Otwórz aplikację Dhizuku, a potem wróć.</string>
+    <string name="installer_dhizuku_not_allowed">Tern nie może jeszcze używać Dhizuku. Naciśnij tutaj, aby poprosić o zgodę.</string>
+    <string name="dhizuku_failed_not_installed">Dhizuku nie jest zainstalowane.</string>
+    <string name="dhizuku_failed_not_owner">Dhizuku nie jest właścicielem urządzenia.</string>
+    <string name="dhizuku_failed_not_answering">Dhizuku nie odpowiedziało.</string>
+    <string name="dhizuku_failed_not_allowed">Dhizuku nie zezwala, aby Tern z niego korzystał.</string>
+    <string name="install_signer_changed">Zainstalowana teraz aplikacja jest podpisana przez kogoś innego niż ten, kto podpisał plik sprawdzony przez Tern, więc instalacja się nie liczy.</string>
+</resources>

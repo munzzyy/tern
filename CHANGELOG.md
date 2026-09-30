@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0, 2026-09-30
 
 Nearly everything Obtainium does, done in a way Tern can stand behind, and
 more.
@@ -89,6 +89,9 @@ The list and the screens
   shortcuts can start Update all, Add or a check. A `tern://refresh` or
   `obtainium://refresh` link from a web page or another app asks first, at
   most once a minute, and never installs.
+- The well known apps say when one is already in your list or on the phone,
+  and when the copy on the phone is signed by someone else, so this address
+  could not update it.
 - Notifications carry Update and Update all buttons, name the version an app
   was updated to, and name each app with a problem and its reason.
 - Notes of your own and category chips on an app's page, and the project's

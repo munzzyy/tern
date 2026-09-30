@@ -654,14 +654,23 @@ import it.
   is the one to compare.
 - Tern's verifier has been tested on a computer, against files signed by
   apksigner and against files changed after signing. On a device it uses the
-  cryptography and the JAR reader of that device. The tests for that have not
-  been run yet.
+  cryptography and the JAR reader of that device. The tests for that have run
+  on Android 10 and 16 phone emulators and an Android TV 14 emulator.
 - It has been tested on emulators. Vendor builds of Android can behave
   differently.
 - Installing through Dhizuku has been checked against Android's sources for
-  versions 10 to 16 and tested on a computer, not yet on a device with Dhizuku
-  as its owner.
+  versions 10 to 16 and tested on a computer. On an Android 13 emulator with
+  Dhizuku 2.12 as its device owner, a first install and an update went in
+  without a prompt, with Dhizuku named as the installer. No other version has
+  been tried with it.
+- Keeping an app that Android 15 archived has not been tried on a device. No
+  installer on Android's emulator images can archive an app.
+- Installing through Shizuku has been tried on an Android 13 emulator only.
+  Installing as root has not been tried on a device: the su of Android's
+  emulator images answers only adb.
 - The handoff has been tested with real connections on a computer, and its
-  page in Chromium on a computer. No phone has loaded the page yet. How the
-  handoff finds the device's address and how it closes when Tern leaves the
-  screen has tests for a device that have not been run yet.
+  page in Chromium on a computer. No phone has loaded the page yet. Its tests
+  for a device, where it listens and how it closes when Tern leaves the
+  screen, have run on Android 10, 14 and 16 emulators. A link and an export
+  file sent from a computer to an Android TV 14 emulator arrived sealed and
+  were shown, and what was changed on the way was refused.

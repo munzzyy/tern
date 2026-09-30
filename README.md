@@ -127,9 +127,12 @@ surprise. Android refuses a second silent update of the same app within 30
 seconds of the last one, and that is one of the cases where you are asked.
 
 With Shizuku, Dhizuku or root chosen under Settings, Installing, first installs
-and updates install without a prompt on any Android from 10 on. Android then
-names Dhizuku as the installer, and may show its own notice that an admin
-installed the app. You can also hand
+and updates install without a prompt. Shizuku 13.6 and Dhizuku 2.12 did that on
+an Android 13 emulator, for a first install and for an update. Root has not
+been tried yet: the su of Android's emulator images answers only adb, so Tern
+could not be given root there. With Dhizuku, Android names Dhizuku as the
+installer, and may show its own notice that an admin installed the app. You can
+also hand
 every checked file to another installer app; Tern then compares the signer of
 what it installed with the file it checked.
 
@@ -232,11 +235,11 @@ Obtainium does that Tern does not.
 - The translations are machine-made. Details of an error that come from a
   server or a parser stay in English, and an entry in the activity log stays in
   the language it was written in.
-- It has run on emulators: Android 10, 13 and 16 phones and Android TV 11 and
-  14. It has not yet run on a shelf of real devices. Vendor installers, Doze over
-  many hours and a reboot are untested. On the television image Play Protect
-  stopped the first install of an app it had not seen and offered "Install
-  anyway"; that answer is yours to give.
+- This version has run on emulators: phones with Android 10, 13 and 16, and a
+  television with Android TV 14. It has not yet run on a shelf of real devices.
+  Vendor installers, Doze over many hours and a reboot are untested. On the
+  television image Play Protect stopped the first install of an app it had not
+  seen and offered "Install anyway"; that answer is yours to give.
 - F-Droid and IzzyOnDroid are read through their per-app listings, which are
   protected by TLS and not by the index signature. Add either as a repository by
   its address if you want the signature checked; the first contact then downloads

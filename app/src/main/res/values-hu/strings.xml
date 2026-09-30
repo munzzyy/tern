@@ -334,10 +334,6 @@
         <item quantity="one">Minden %d órában</item>
         <item quantity="other">Minden %d órában</item>
     </plurals>
-    <string name="settings_unmetered">Csak korlátlan hálózatokon</string>
-    <string name="settings_unmetered_effect">Ellenőrzések kihagyása mobiladaton és forgalomdíjas Wi-Fi-n.</string>
-    <string name="settings_charging">Csak töltés közben</string>
-    <string name="settings_charging_effect">Ellenőrzések kihagyása akkumulátoros működés közben.</string>
     <string name="settings_defaults">Alapértelmezések új appokhoz</string>
     <string name="settings_notifications">Értesítések</string>
     <string name="settings_notify_updates">Ha frissítés található</string>
@@ -373,7 +369,6 @@
     <string name="proxy_port_invalid">Egy szám 1 és 65535 között</string>
     <string name="settings_appearance">Megjelenés</string>
     <string name="settings_language">Nyelv</string>
-    <string name="settings_language_effect">Kiválasztva az Android beállításaiban ehhez az alkalmazáshoz.</string>
     <string name="settings_theme">Téma</string>
     <string name="theme_system">A rendszer követése</string>
     <string name="theme_light">Világos</string>

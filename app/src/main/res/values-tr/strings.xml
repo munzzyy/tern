@@ -330,10 +330,6 @@
         <item quantity="one">Her %d saatte bir</item>
         <item quantity="other">Her %d saatte bir</item>
     </plurals>
-    <string name="settings_unmetered">Yalnızca kotasız ağlarda</string>
-    <string name="settings_unmetered_effect">Mobil veri ve kotalı Wi-Fi\'da denetimleri atla.</string>
-    <string name="settings_charging">Yalnızca şarj olurken</string>
-    <string name="settings_charging_effect">Pil kullanılırken denetimleri atla.</string>
     <string name="settings_defaults">Yeni uygulamalar için varsayılanlar</string>
     <string name="settings_notifications">Bildirimler</string>
     <string name="settings_notify_updates">Güncellemeler bulunduğunda</string>
@@ -369,7 +365,6 @@
     <string name="proxy_port_invalid">1 ile 65535 arası bir sayı</string>
     <string name="settings_appearance">Görünüm</string>
     <string name="settings_language">Dil</string>
-    <string name="settings_language_effect">Bu uygulama için Android ayarlarında seçilir.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Sisteme uy</string>
     <string name="theme_light">Açık</string>

@@ -334,10 +334,6 @@
         <item quantity="one">Hver %d time</item>
         <item quantity="other">Hver %d. time</item>
     </plurals>
-    <string name="settings_unmetered">Kun på ubegrænsede netværk</string>
-    <string name="settings_unmetered_effect">Spring tjek over på mobildata og Wi-Fi med forbrugsafregning.</string>
-    <string name="settings_charging">Kun under opladning</string>
-    <string name="settings_charging_effect">Spring tjek over på batteri.</string>
     <string name="settings_defaults">Standarder for nye apps</string>
     <string name="settings_notifications">Notifikationer</string>
     <string name="settings_notify_updates">Når opdateringer findes</string>
@@ -373,7 +369,6 @@
     <string name="proxy_port_invalid">Et tal fra 1 til 65535</string>
     <string name="settings_appearance">Udseende</string>
     <string name="settings_language">Sprog</string>
-    <string name="settings_language_effect">Valgt i Androids indstillinger for denne app.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Følg systemet</string>
     <string name="theme_light">Lyst</string>

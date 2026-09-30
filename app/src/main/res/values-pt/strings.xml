@@ -351,10 +351,6 @@
         <item quantity="many">A cada %d horas</item>
         <item quantity="other">A cada %d horas</item>
     </plurals>
-    <string name="settings_unmetered">Apenas em redes não taxadas</string>
-    <string name="settings_unmetered_effect">Ignorar verificações nos dados móveis e Wi-Fi taxado.</string>
-    <string name="settings_charging">Apenas a carregar</string>
-    <string name="settings_charging_effect">Ignorar verificações quando estiver na bateria.</string>
     <string name="settings_defaults">Predefinições para novas aplicações</string>
     <string name="settings_notifications">Notificações</string>
     <string name="settings_notify_updates">Quando atualizações são encontradas</string>
@@ -390,7 +386,6 @@
     <string name="proxy_port_invalid">Um número de 1 a 65535</string>
     <string name="settings_appearance">Aspeto</string>
     <string name="settings_language">Idioma</string>
-    <string name="settings_language_effect">Escolhido nas definições do Android para esta aplicação.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Seguir o sistema</string>
     <string name="theme_light">Claro</string>

@@ -334,10 +334,6 @@
         <item quantity="one">Elk %d uur</item>
         <item quantity="other">Elke %d uur</item>
     </plurals>
-    <string name="settings_unmetered">Alleen op onbeperkte netwerken</string>
-    <string name="settings_unmetered_effect">Sla controles over op mobiele data en beperkte wifi.</string>
-    <string name="settings_charging">Alleen tijdens het opladen</string>
-    <string name="settings_charging_effect">Sla controles over op de batterij.</string>
     <string name="settings_defaults">Standaarden voor nieuwe apps</string>
     <string name="settings_notifications">Meldingen</string>
     <string name="settings_notify_updates">Als updates worden gevonden</string>
@@ -373,7 +369,6 @@
     <string name="proxy_port_invalid">Een getal van 1 tot 65535</string>
     <string name="settings_appearance">Uiterlijk</string>
     <string name="settings_language">Taal</string>
-    <string name="settings_language_effect">Gekozen in de instellingen van Android voor deze app.</string>
     <string name="settings_theme">Thema</string>
     <string name="theme_system">Systeem volgen</string>
     <string name="theme_light">Licht</string>

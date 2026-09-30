@@ -368,10 +368,6 @@
         <item quantity="many">Každých %d hodin</item>
         <item quantity="other">Každých %d hodin</item>
     </plurals>
-    <string name="settings_unmetered">Jen na neomezených sítích</string>
-    <string name="settings_unmetered_effect">Přeskočí kontroly na mobilních datech a účtovaných Wi-Fi.</string>
-    <string name="settings_charging">Jen při nabíjení</string>
-    <string name="settings_charging_effect">Přeskočí kontroly při běhu na baterii.</string>
     <string name="settings_defaults">Výchozí hodnoty pro nové aplikace</string>
     <string name="settings_notifications">Oznámení</string>
     <string name="settings_notify_updates">Když se najdou aktualizace</string>
@@ -407,7 +403,6 @@
     <string name="proxy_port_invalid">Číslo od 1 do 65535</string>
     <string name="settings_appearance">Vzhled</string>
     <string name="settings_language">Jazyk</string>
-    <string name="settings_language_effect">Zvoleno v nastavení Androidu pro tuto aplikaci.</string>
     <string name="settings_theme">Motiv</string>
     <string name="theme_system">Podle systému</string>
     <string name="theme_light">Světlý</string>

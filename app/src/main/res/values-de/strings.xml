@@ -334,10 +334,6 @@
         <item quantity="one">Alle %d Stunde</item>
         <item quantity="other">Alle %d Stunden</item>
     </plurals>
-    <string name="settings_unmetered">Nur in ungetakteten Netzwerken</string>
-    <string name="settings_unmetered_effect">Prüfungen bei mobilen Daten und getaktetem WLAN überspringen.</string>
-    <string name="settings_charging">Nur beim Laden</string>
-    <string name="settings_charging_effect">Prüfungen im Akkubetrieb überspringen.</string>
     <string name="settings_defaults">Standards für neue Apps</string>
     <string name="settings_notifications">Benachrichtigungen</string>
     <string name="settings_notify_updates">Wenn Updates gefunden werden</string>
@@ -373,7 +369,6 @@
     <string name="proxy_port_invalid">Eine Zahl von 1 bis 65535</string>
     <string name="settings_appearance">Erscheinungsbild</string>
     <string name="settings_language">Sprache</string>
-    <string name="settings_language_effect">In den Android-Einstellungen für diese App ausgewählt.</string>
     <string name="settings_theme">Design</string>
     <string name="theme_system">Systemstandard</string>
     <string name="theme_light">Hell</string>

@@ -368,10 +368,6 @@
         <item quantity="many">Кожні %d годин</item>
         <item quantity="other">Кожні %d години</item>
     </plurals>
-    <string name="settings_unmetered">Лише в мережах без тарифікації</string>
-    <string name="settings_unmetered_effect">Пропускати перевірки через мобільні дані та Wi-Fi з тарифікацією.</string>
-    <string name="settings_charging">Лише під час заряджання</string>
-    <string name="settings_charging_effect">Пропускати перевірки під час роботи від батареї.</string>
     <string name="settings_defaults">Типові для нових програм</string>
     <string name="settings_notifications">Сповіщення</string>
     <string name="settings_notify_updates">Коли знайдено оновлення</string>
@@ -407,7 +403,6 @@
     <string name="proxy_port_invalid">Число від 1 до 65535</string>
     <string name="settings_appearance">Вигляд</string>
     <string name="settings_language">Мова</string>
-    <string name="settings_language_effect">Вибрано в налаштуваннях Android для цієї програми.</string>
     <string name="settings_theme">Тема</string>
     <string name="theme_system">Як у системі</string>
     <string name="theme_light">Світла</string>

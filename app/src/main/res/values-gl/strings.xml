@@ -334,10 +334,6 @@
         <item quantity="one">Cada %d hora</item>
         <item quantity="other">Cada %d horas</item>
     </plurals>
-    <string name="settings_unmetered">Só en redes sen límite</string>
-    <string name="settings_unmetered_effect">Omitir comprobacións en datos móbiles e Wi-Fi con límite.</string>
-    <string name="settings_charging">Só ao cargar</string>
-    <string name="settings_charging_effect">Omitir comprobacións ao usar a batería.</string>
     <string name="settings_defaults">Predefinidos para novas aplicacións</string>
     <string name="settings_notifications">Notificacións</string>
     <string name="settings_notify_updates">Cando se atopan actualizacións</string>
@@ -373,7 +369,6 @@
     <string name="proxy_port_invalid">Un número do 1 ao 65535</string>
     <string name="settings_appearance">Aparencia</string>
     <string name="settings_language">Idioma</string>
-    <string name="settings_language_effect">Escollido nos axustes de Android para esta aplicación.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Seguir o sistema</string>
     <string name="theme_light">Claro</string>

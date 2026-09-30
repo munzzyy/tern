@@ -402,10 +402,6 @@
         <item quantity="many">كل %d ساعة</item>
         <item quantity="other">كل %d ساعة</item>
     </plurals>
-    <string name="settings_unmetered">الشبكات غير المحدودة فقط</string>
-    <string name="settings_unmetered_effect">تخطي الفحوصات على بيانات الجوال وشبكات Wi-Fi المحدودة.</string>
-    <string name="settings_charging">أثناء الشحن فقط</string>
-    <string name="settings_charging_effect">تخطي الفحوصات أثناء الاعتماد على البطارية.</string>
     <string name="settings_defaults">الافتراضيات للتطبيقات الجديدة</string>
     <string name="settings_notifications">الإشعارات</string>
     <string name="settings_notify_updates">عند العثور على تحديثات</string>
@@ -441,7 +437,6 @@
     <string name="proxy_port_invalid">رقم من 1 إلى 65535</string>
     <string name="settings_appearance">المظهر</string>
     <string name="settings_language">اللغة</string>
-    <string name="settings_language_effect">محددة في إعدادات Android لهذا التطبيق.</string>
     <string name="settings_theme">السمة</string>
     <string name="theme_system">اتباع النظام</string>
     <string name="theme_light">فاتح</string>

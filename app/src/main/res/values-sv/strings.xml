@@ -334,10 +334,6 @@
         <item quantity="one">Var %d timme</item>
         <item quantity="other">Var %d:e timme</item>
     </plurals>
-    <string name="settings_unmetered">Endast på obegränsade nätverk</string>
-    <string name="settings_unmetered_effect">Hoppa över kontroller på mobildata och begränsat Wi-Fi.</string>
-    <string name="settings_charging">Endast vid laddning</string>
-    <string name="settings_charging_effect">Hoppa över kontroller på batteridrift.</string>
     <string name="settings_defaults">Standardval för nya appar</string>
     <string name="settings_notifications">Aviseringar</string>
     <string name="settings_notify_updates">När uppdateringar hittas</string>
@@ -373,7 +369,6 @@
     <string name="proxy_port_invalid">Ett nummer från 1 till 65535</string>
     <string name="settings_appearance">Utseende</string>
     <string name="settings_language">Språk</string>
-    <string name="settings_language_effect">Väljs i Androids inställningar för denna app.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Följ systemet</string>
     <string name="theme_light">Ljust</string>

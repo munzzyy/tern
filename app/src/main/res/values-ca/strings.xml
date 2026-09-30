@@ -351,10 +351,6 @@
         <item quantity="many">Cada %d hores</item>
         <item quantity="other">Cada %d hores</item>
     </plurals>
-    <string name="settings_unmetered">Només en xarxes no mesurades</string>
-    <string name="settings_unmetered_effect">Omet les comprovacions amb dades mòbils i Wi-Fi mesurada.</string>
-    <string name="settings_charging">Només mentre es carrega</string>
-    <string name="settings_charging_effect">Omet les comprovacions mentre s\'usa la bateria.</string>
     <string name="settings_defaults">Valors per defecte per a noves aplicacions</string>
     <string name="settings_notifications">Notificacions</string>
     <string name="settings_notify_updates">Quan es troben actualitzacions</string>
@@ -390,7 +386,6 @@
     <string name="proxy_port_invalid">Un número de l\'1 al 65535</string>
     <string name="settings_appearance">Aparença</string>
     <string name="settings_language">Idioma</string>
-    <string name="settings_language_effect">Triat a la configuració d\'Android per a aquesta aplicació.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Segueix el sistema</string>
     <string name="theme_light">Clar</string>

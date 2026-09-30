@@ -317,10 +317,6 @@
     <plurals name="interval_hours">
         <item quantity="other">Setiap %d jam</item>
     </plurals>
-    <string name="settings_unmetered">Hanya di jaringan tanpa kuota</string>
-    <string name="settings_unmetered_effect">Lewati pemeriksaan pada data seluler dan Wi-Fi berkuota.</string>
-    <string name="settings_charging">Hanya saat mengisi daya</string>
-    <string name="settings_charging_effect">Lewati pemeriksaan saat menggunakan baterai.</string>
     <string name="settings_defaults">Default aplikasi baru</string>
     <string name="settings_notifications">Notifikasi</string>
     <string name="settings_notify_updates">Bila ada pembaruan</string>
@@ -356,7 +352,6 @@
     <string name="proxy_port_invalid">Angka dari 1 hingga 65535</string>
     <string name="settings_appearance">Tampilan</string>
     <string name="settings_language">Bahasa</string>
-    <string name="settings_language_effect">Dipilih di setelan Android untuk aplikasi ini.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Ikuti sistem</string>
     <string name="theme_light">Terang</string>

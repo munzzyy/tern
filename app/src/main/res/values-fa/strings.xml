@@ -334,10 +334,6 @@
         <item quantity="one">هر %d ساعت</item>
         <item quantity="other">هر %d ساعت</item>
     </plurals>
-    <string name="settings_unmetered">فقط در شبکه‌های نامحدود</string>
-    <string name="settings_unmetered_effect">بررسی‌ها در داده تلفن همراه و Wi-Fi محدودشده انجام نمی‌شود.</string>
-    <string name="settings_charging">فقط در حال شارژ</string>
-    <string name="settings_charging_effect">در زمان استفاده از باتری بررسی انجام نمی‌شود.</string>
     <string name="settings_defaults">پیش‌فرض‌های برنامه‌های جدید</string>
     <string name="settings_notifications">اعلان‌ها</string>
     <string name="settings_notify_updates">وقتی به‌روزرسانی یافت شد</string>
@@ -373,7 +369,6 @@
     <string name="proxy_port_invalid">عددی از ۱ تا ۶۵۵۳۵</string>
     <string name="settings_appearance">ظاهر</string>
     <string name="settings_language">زبان</string>
-    <string name="settings_language_effect">در تنظیمات Android برای این برنامه انتخاب شده است.</string>
     <string name="settings_theme">طرح زمینه</string>
     <string name="theme_system">مطابق با سیستم</string>
     <string name="theme_light">روشن</string>

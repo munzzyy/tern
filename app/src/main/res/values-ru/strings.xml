@@ -368,10 +368,6 @@
         <item quantity="many">Каждые %d часов</item>
         <item quantity="other">Каждые %d часа</item>
     </plurals>
-    <string name="settings_unmetered">Только в безлимитных сетях</string>
-    <string name="settings_unmetered_effect">Пропускать проверки через мобильный интернет и лимитный Wi-Fi.</string>
-    <string name="settings_charging">Только при зарядке</string>
-    <string name="settings_charging_effect">Пропускать проверки при работе от батареи.</string>
     <string name="settings_defaults">По умолчанию для новых</string>
     <string name="settings_notifications">Уведомления</string>
     <string name="settings_notify_updates">Когда найдены обновления</string>
@@ -407,7 +403,6 @@
     <string name="proxy_port_invalid">Число от 1 до 65535</string>
     <string name="settings_appearance">Внешний вид</string>
     <string name="settings_language">Язык</string>
-    <string name="settings_language_effect">Выбирается в настройках Android для этого приложения.</string>
     <string name="settings_theme">Тема</string>
     <string name="theme_system">Как в системе</string>
     <string name="theme_light">Светлая</string>

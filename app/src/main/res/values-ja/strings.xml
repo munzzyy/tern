@@ -317,10 +317,6 @@
     <plurals name="interval_hours">
         <item quantity="other">%d時間ごと</item>
     </plurals>
-    <string name="settings_unmetered">定額制ネットワークのみ</string>
-    <string name="settings_unmetered_effect">モバイルデータや従量制のWi-Fiでは確認をスキップします。</string>
-    <string name="settings_charging">充電中のみ</string>
-    <string name="settings_charging_effect">バッテリー駆動時は確認をスキップします。</string>
     <string name="settings_defaults">新しいアプリのデフォルト</string>
     <string name="settings_notifications">通知</string>
     <string name="settings_notify_updates">更新が見つかったとき</string>
@@ -356,7 +352,6 @@
     <string name="proxy_port_invalid">1〜65535の数値</string>
     <string name="settings_appearance">外観</string>
     <string name="settings_language">言語</string>
-    <string name="settings_language_effect">Androidのこのアプリの設定で選択されます。</string>
     <string name="settings_theme">テーマ</string>
     <string name="theme_system">システムに従う</string>
     <string name="theme_light">ライト</string>

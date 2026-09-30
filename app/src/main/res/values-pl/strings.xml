@@ -368,10 +368,6 @@
         <item quantity="many">Co %d godzin</item>
         <item quantity="other">Co %d godzin</item>
     </plurals>
-    <string name="settings_unmetered">Tylko w nielimitowanych sieciach</string>
-    <string name="settings_unmetered_effect">Pomiń sprawdzanie w przypadku danych komórkowych i limitowanego Wi-Fi.</string>
-    <string name="settings_charging">Tylko podczas ładowania</string>
-    <string name="settings_charging_effect">Pomiń sprawdzanie podczas zasilania z baterii.</string>
     <string name="settings_defaults">Domyślne dla nowych aplikacji</string>
     <string name="settings_notifications">Powiadomienia</string>
     <string name="settings_notify_updates">Gdy znaleziono aktualizacje</string>
@@ -407,7 +403,6 @@
     <string name="proxy_port_invalid">Liczba od 1 do 65535</string>
     <string name="settings_appearance">Wygląd</string>
     <string name="settings_language">Język</string>
-    <string name="settings_language_effect">Wybierany w ustawieniach Androida dla tej aplikacji.</string>
     <string name="settings_theme">Motyw</string>
     <string name="theme_system">Zgodnie z systemem</string>
     <string name="theme_light">Jasny</string>

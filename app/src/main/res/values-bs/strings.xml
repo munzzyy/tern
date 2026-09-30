@@ -351,10 +351,6 @@
         <item quantity="few">Svaka %d sata</item>
         <item quantity="other">Svakih %d sati</item>
     </plurals>
-    <string name="settings_unmetered">Samo na neograničenim mrežama</string>
-    <string name="settings_unmetered_effect">Preskoči provjere na mobilnim podacima i ograničenom Wi-Fi-ju.</string>
-    <string name="settings_charging">Samo dok se puni</string>
-    <string name="settings_charging_effect">Preskoči provjere dok je na bateriji.</string>
     <string name="settings_defaults">Zadano za nove aplikacije</string>
     <string name="settings_notifications">Obavijesti</string>
     <string name="settings_notify_updates">Kada se nađu ažuriranja</string>
@@ -390,7 +386,6 @@
     <string name="proxy_port_invalid">Broj od 1 do 65535</string>
     <string name="settings_appearance">Izgled</string>
     <string name="settings_language">Jezik</string>
-    <string name="settings_language_effect">Odabrano u Androidovim postavkama za ovu aplikaciju.</string>
     <string name="settings_theme">Tema</string>
     <string name="theme_system">Prati sistem</string>
     <string name="theme_light">Svijetla</string>

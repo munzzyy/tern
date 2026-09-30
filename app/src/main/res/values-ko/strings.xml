@@ -317,10 +317,6 @@
     <plurals name="interval_hours">
         <item quantity="other">%d시간마다</item>
     </plurals>
-    <string name="settings_unmetered">무제한 네트워크에서만</string>
-    <string name="settings_unmetered_effect">모바일 데이터 및 종량제 Wi-Fi에서는 확인을 건너뜁니다.</string>
-    <string name="settings_charging">충전 중일 때만</string>
-    <string name="settings_charging_effect">배터리 사용 중에는 확인을 건너뜁니다.</string>
     <string name="settings_defaults">새 앱의 기본 설정</string>
     <string name="settings_notifications">알림</string>
     <string name="settings_notify_updates">업데이트가 발견될 때</string>
@@ -356,7 +352,6 @@
     <string name="proxy_port_invalid">1에서 65535 사이의 숫자</string>
     <string name="settings_appearance">모양</string>
     <string name="settings_language">언어</string>
-    <string name="settings_language_effect">이 앱의 Android 설정에서 선택되었습니다.</string>
     <string name="settings_theme">테마</string>
     <string name="theme_system">시스템 설정 따르기</string>
     <string name="theme_light">라이트</string>

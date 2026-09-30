@@ -6,6 +6,6 @@
         <item quantity="few">Smještene su %1$d OBB datoteke u %2$s.</item>
         <item quantity="other">Smješteno je %1$d OBB datoteka u %2$s.</item>
     </plurals>
-    <string name="parts_obb_not_placed">OBB datoteke nisu smještene u %1$s, jer tamo mogu pisati samo instalateri Shizuku i root. Nalaze se u %2$s, datoteci ovog izdanja: %3$s.</string>
+    <string name="parts_obb_not_placed">OBB datoteke nisu smještene u %1$s, jer tamo mogu pisati samo instalatori Shizuku i root. Nalaze se u %2$s, datoteci ovog izdanja: %3$s.</string>
     <string name="parts_obb_failed">OBB datoteke se nisu mogle smjestiti u %1$s: %2$s. Nalaze se u %3$s, datoteci ovog izdanja: %4$s.</string>
 </resources>

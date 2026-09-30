@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_installer">Install with</string>
+    <string name="installer_system">Android\'s installer</string>
+    <string name="installer_shizuku">Shizuku</string>
+    <string name="installer_root">Root</string>
+    <string name="installer_other_app">Another app</string>
+    <string name="installer_system_effect">Android asks before a first install, and before an update where it wants to.</string>
+    <string name="installer_shizuku_effect">Installs and updates without a prompt, through Shizuku or Sui. Every file passes the same checks first.</string>
+    <string name="installer_root_effect">Installs and updates without a prompt, through su. Every file passes the same checks first.</string>
+    <string name="installer_other_app_effect">Hands each checked file to the installer app you pick. That app always asks, so nothing installs in the background.</string>
+    <string name="installer_ready">Ready</string>
+    <string name="installer_not_ready">Not ready, Android\'s installer is used meanwhile</string>
+    <string name="installer_shizuku_not_running">Shizuku is not running. Start it in the Shizuku app, then come back.</string>
+    <string name="installer_shizuku_too_old">This version of Shizuku is too old for Tern. Update Shizuku.</string>
+    <string name="installer_shizuku_not_allowed">Tern may not use Shizuku yet. Press here to ask.</string>
+    <string name="installer_no_root">Tern has no root access. Press here to ask for it again.</string>
+    <string name="installer_no_other_app">No installer app is chosen, or the chosen one is gone.</string>
+    <string name="installer_pick_app">Installer app</string>
+    <string name="installer_pick_app_none">None chosen</string>
+    <string name="installer_no_apps">There is no other installer app on this device.</string>
+    <string name="installer_play">Say Google Play installed apps</string>
+    <string name="installer_play_effect">Some apps only work when they believe Google Play installed them. Tern then no longer shows as their installer.</string>
+    <string name="install_other_app_signer">The installer app installed something signed by someone other than the file Tern checked, so the install does not count.</string>
+</resources>

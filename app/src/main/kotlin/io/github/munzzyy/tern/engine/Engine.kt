@@ -57,6 +57,18 @@ interface Engine {
      */
     fun mayInstall(): Boolean
 
+    /** Whether the installer chosen in settings can be used now. Until it can, Android's own installer is used. */
+    val installerReadiness: StateFlow<InstallerReadiness>
+
+    /** Asks the chosen installer again. For root this runs su, which may show the root manager's own question. */
+    fun recheckInstaller()
+
+    /** Asks Shizuku to let Tern use it; the answer arrives through [installerReadiness]. False when Shizuku cannot be asked. */
+    fun askShizuku(): Boolean
+
+    /** Apps on this device that take an APK to install, for [InstallerMode.OTHER_APP]. */
+    fun installerChoices(): List<InstallerChoice>
+
     fun installAllUpdates()
 
     fun cancel(appId: String)

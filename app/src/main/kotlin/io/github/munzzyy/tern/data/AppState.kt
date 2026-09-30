@@ -4,7 +4,7 @@ import io.github.munzzyy.tern.core.engine.InstallRecord
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.Problem
 
-/** An install handed to the system installer whose answer has not arrived yet. */
+/** An install handed to an installer whose answer has not arrived yet. */
 data class PendingInstall(
     val sessionId: Int,
     val packageName: String,
@@ -16,6 +16,11 @@ data class PendingInstall(
     val assetUrl: String,
     val startedAtMs: Long,
     val waitingForUser: Boolean = false,
+    /**
+     * SHA-256 of the certificates the gate verified in the file handed over. An installer that is
+     * not Android's own must end with an app signed by exactly these, or the install does not count.
+     */
+    val signers: List<String> = emptyList(),
 )
 
 /** A refusal tied to one file of one release, so a new release clears it by itself. */

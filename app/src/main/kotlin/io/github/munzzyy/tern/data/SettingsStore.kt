@@ -36,6 +36,9 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             proxy = enumOr(prefs.getString("proxy", null), d.proxy),
             proxyHost = prefs.getString("proxyHost", null) ?: d.proxyHost,
             proxyPort = prefs.getInt("proxyPort", d.proxyPort),
+            installer = enumOr(prefs.getString("installer", null), d.installer),
+            otherInstaller = prefs.getString("otherInstaller", null)?.takeIf { PACKAGE.matches(it) },
+            playInstaller = prefs.getBoolean("playInstaller", d.playInstaller),
         )
     }
 
@@ -67,6 +70,9 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putString("proxy", s.proxy.name)
             .putString("proxyHost", s.proxyHost)
             .putInt("proxyPort", s.proxyPort)
+            .putString("installer", s.installer.name)
+            .putString("otherInstaller", s.otherInstaller?.takeIf { PACKAGE.matches(it) })
+            .putBoolean("playInstaller", s.playInstaller)
             .commit()
     }
 
@@ -76,5 +82,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
     companion object {
         const val DEFAULT_NAME = "settings"
         const val MAX_HOURS = 24 * 7
+
+        /** A package name, so what goes into an Intent as one can be nothing else. */
+        private val PACKAGE = Regex("^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)+$")
     }
 }

@@ -182,6 +182,36 @@ sealed interface Detection {
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
 
+/** What hands a checked file to Android. Whichever it is, the file passed the same checks first. */
+enum class InstallerMode {
+    /** Android's own installer: asks before a first install, and before an update where Android wants it. */
+    SYSTEM,
+
+    /** pm, run through Shizuku or Sui: installs and updates without a prompt. */
+    SHIZUKU,
+
+    /** pm, run through su: installs and updates without a prompt. */
+    ROOT,
+
+    /** Another installer app the person chose. It always asks, so it never runs in the background. */
+    OTHER_APP,
+}
+
+/** Whether the chosen installer can be used now, and if not, what stands in the way. */
+enum class InstallerReadiness {
+    READY,
+    SHIZUKU_NOT_RUNNING,
+    SHIZUKU_TOO_OLD,
+    SHIZUKU_NOT_ALLOWED,
+    NO_ROOT,
+
+    /** "Another app" is chosen and no app is picked, or the one picked is gone. */
+    NO_OTHER_APP,
+}
+
+/** An app on this device that takes an APK to install. */
+data class InstallerChoice(val packageName: String, val label: String)
+
 enum class ProxyMode { NONE, ORBOT, CUSTOM }
 
 data class Settings(
@@ -216,6 +246,11 @@ data class Settings(
     val proxy: ProxyMode = ProxyMode.NONE,
     val proxyHost: String = "127.0.0.1",
     val proxyPort: Int = 9050,
+    val installer: InstallerMode = InstallerMode.SYSTEM,
+    /** The package of the installer app used with [InstallerMode.OTHER_APP]. */
+    val otherInstaller: String? = null,
+    /** With Shizuku or root, record Google Play as the installer of every app, as if an app had asked for it. */
+    val playInstaller: Boolean = false,
 )
 
 data class ImportSummary(

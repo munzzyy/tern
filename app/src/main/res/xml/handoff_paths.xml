@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Only the copies made for another installer app are ever handed out, read-only. -->
+<paths>
+    <cache-path name="handoff" path="handoff/" />
+</paths>

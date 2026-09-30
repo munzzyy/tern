@@ -55,6 +55,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.tern.BuildConfig
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.model.UpdateMode
+import io.github.munzzyy.tern.engine.InstallerChoice
+import io.github.munzzyy.tern.engine.InstallerMode
+import io.github.munzzyy.tern.engine.InstallerReadiness
 import io.github.munzzyy.tern.engine.OrbotState
 import io.github.munzzyy.tern.engine.ProxyMode
 import io.github.munzzyy.tern.engine.Settings
@@ -91,6 +94,7 @@ const val SOURCE_URL = "https://github.com/munzzyy/tern"
 const val ORBOT_URL = "https://github.com/guardianproject/orbot-android"
 const val ORBOT_TAG = "settings_orbot"
 const val PERMIT_ROW_TAG = "settings_install_permission"
+const val INSTALLER_STATUS_TAG = "settings_installer_status"
 const val EXPORT_ROW_TAG = "settings_export"
 
 private val MIN_AGE_CHOICES = listOf(0, 1, 3, 7, 14, 30)
@@ -229,7 +233,8 @@ private fun NotificationsSection(s: Settings, update: Update) {
 @Composable
 private fun InstallingSection(s: Settings, update: Update) {
     SectionCard(title = stringResource(R.string.settings_installing)) {
-        InstallPermissionRow()
+        InstallerRows(s, update)
+        if (s.installer != InstallerMode.OTHER_APP) InstallPermissionRow()
         SwitchRow(
             title = stringResource(R.string.settings_keep_installers),
             summary = stringResource(R.string.settings_keep_installers_effect),
@@ -245,6 +250,104 @@ private fun InstallingSection(s: Settings, update: Update) {
             )
         }
     }
+}
+
+@Composable
+fun installerLabel(mode: InstallerMode): String = stringResource(
+    when (mode) {
+        InstallerMode.SYSTEM -> R.string.installer_system
+        InstallerMode.SHIZUKU -> R.string.installer_shizuku
+        InstallerMode.ROOT -> R.string.installer_root
+        InstallerMode.OTHER_APP -> R.string.installer_other_app
+    },
+)
+
+@Composable
+private fun installerEffect(mode: InstallerMode): String = stringResource(
+    when (mode) {
+        InstallerMode.SYSTEM -> R.string.installer_system_effect
+        InstallerMode.SHIZUKU -> R.string.installer_shizuku_effect
+        InstallerMode.ROOT -> R.string.installer_root_effect
+        InstallerMode.OTHER_APP -> R.string.installer_other_app_effect
+    },
+)
+
+/** What stands in the way of the chosen installer, and so why Android's own is used meanwhile. Null when nothing does. */
+fun readinessWords(readiness: InstallerReadiness): Int? = when (readiness) {
+    InstallerReadiness.READY -> null
+    InstallerReadiness.SHIZUKU_NOT_RUNNING -> R.string.installer_shizuku_not_running
+    InstallerReadiness.SHIZUKU_TOO_OLD -> R.string.installer_shizuku_too_old
+    InstallerReadiness.SHIZUKU_NOT_ALLOWED -> R.string.installer_shizuku_not_allowed
+    InstallerReadiness.NO_ROOT -> R.string.installer_no_root
+    InstallerReadiness.NO_OTHER_APP -> R.string.installer_no_other_app
+}
+
+/**
+ * The installer, how it stands, and what it takes to use it. Shizuku and root install without a
+ * prompt; another app always asks. Whichever it is, the file passed the same checks before.
+ */
+@Composable
+private fun InstallerRows(s: Settings, update: Update) {
+    val engine = LocalEngine.current
+    val readiness by engine.installerReadiness.collectAsStateWithLifecycle()
+    val status = MaterialTheme.status
+    ChoiceRow(
+        title = stringResource(R.string.settings_installer),
+        options = InstallerMode.entries,
+        selected = s.installer,
+        label = { installerLabel(it) },
+        summary = installerEffect(s.installer),
+        onSelect = { mode -> update { it.copy(installer = mode) } },
+    )
+    LifecycleResumeEffect(engine, s.installer) {
+        if (s.installer != InstallerMode.SYSTEM) engine.recheckInstaller()
+        onPauseOrDispose { }
+    }
+    if (s.installer == InstallerMode.SYSTEM) return
+    val problem = readinessWords(readiness)
+    ActionRow(
+        title = stringResource(if (problem == null) R.string.installer_ready else R.string.installer_not_ready),
+        summary = problem?.let { stringResource(it) },
+        trailing = if (problem == null) Glyphs.Check else Glyphs.Caution,
+        iconTint = if (problem == null) status.verified.color else status.caution.color,
+        onClick = {
+            when (readiness) {
+                InstallerReadiness.SHIZUKU_NOT_ALLOWED -> if (!engine.askShizuku()) engine.recheckInstaller()
+                else -> engine.recheckInstaller()
+            }
+        },
+        modifier = Modifier.testTag(INSTALLER_STATUS_TAG),
+    )
+    when (s.installer) {
+        InstallerMode.OTHER_APP -> OtherInstallerRow(s, update)
+        InstallerMode.SHIZUKU, InstallerMode.ROOT -> SwitchRow(
+            title = stringResource(R.string.installer_play),
+            summary = stringResource(R.string.installer_play_effect),
+            checked = s.playInstaller,
+            onChange = { v -> update { it.copy(playInstaller = v) } },
+        )
+        InstallerMode.SYSTEM -> Unit
+    }
+}
+
+@Composable
+private fun OtherInstallerRow(s: Settings, update: Update) {
+    val engine = LocalEngine.current
+    val choices = remember(engine) { engine.installerChoices() }
+    if (choices.isEmpty()) {
+        InfoRow(stringResource(R.string.installer_pick_app), stringResource(R.string.installer_no_apps))
+        return
+    }
+    val none = InstallerChoice("", "")
+    val picked = choices.firstOrNull { it.packageName == s.otherInstaller } ?: none
+    val noneLabel = stringResource(R.string.installer_pick_app_none)
+    ChoiceRow(
+        title = stringResource(R.string.installer_pick_app),
+        options = choices,
+        selected = picked,
+        label = { if (it === none) noneLabel else it.label },
+        onSelect = { choice -> update { it.copy(otherInstaller = choice.packageName) } },
+    )
 }
 
 /** Says whether Android lets Tern install apps, and leads to the switch: the settings page where it can be opened, the way to it in words where not. */

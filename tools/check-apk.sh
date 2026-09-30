@@ -19,6 +19,7 @@ android.permission.RECEIVE_BOOT_COMPLETED
 android.permission.REQUEST_DELETE_PACKAGES
 android.permission.REQUEST_INSTALL_PACKAGES
 android.permission.UPDATE_PACKAGES_WITHOUT_USER_ACTION
+moe.shizuku.manager.permission.API_V23
 LIST
 )
 actual=$("$AAPT" dump permissions "$APK" | sed -n "s/^uses-permission: name='\([^']*\)'.*/\1/p" | grep -v 'DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION$' | sort -u)

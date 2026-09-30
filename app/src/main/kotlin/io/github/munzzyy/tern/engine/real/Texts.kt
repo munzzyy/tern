@@ -50,6 +50,7 @@ class Texts(context: Context) : ImportTexts {
     fun warnBuiltInPin() = s(R.string.engine_warn_built_in_pin)
     fun splitSignerMismatch() = s(R.string.engine_split_signer_mismatch)
     fun partNotSigned() = s(R.string.engine4_part_not_signed)
+    fun otherAppSigner() = s(R.string.install_other_app_signer)
     fun downgrade(installed: String?, offered: String?) = s(R.string.engine_downgrade, installed ?: "?", offered ?: "?")
     fun testOnly() = s(R.string.engine_test_only)
     fun needsNewerAndroid(minSdk: Int) = s(R.string.engine_needs_newer_android, minSdk)

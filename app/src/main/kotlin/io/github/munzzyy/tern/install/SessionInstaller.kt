@@ -24,6 +24,12 @@ interface Installer {
 
     /** Abandons sessions of ours created more than [maxAgeMs] ago. Returns how many. */
     fun abandonOlderThan(maxAgeMs: Long, nowMs: Long): Int
+
+    /**
+     * The way back to where the person confirms [sessionId], for an installer that knows it
+     * without being told again. Android's own installer hands it over once, with its answer.
+     */
+    fun confirmation(sessionId: Int): Intent? = null
 }
 
 /** Hands files to Android's PackageInstaller as one session and tells it where to send the answer. */

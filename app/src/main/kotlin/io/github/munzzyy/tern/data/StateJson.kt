@@ -169,7 +169,7 @@ object StateJson {
     private fun pending(p: PendingInstall): JsonObject = Json.obj(
         "sessionId" to p.sessionId, "packageName" to p.packageName, "releaseId" to p.releaseId, "version" to p.version, "versionCode" to p.versionCode,
         "fileSha256" to p.fileSha256, "fileSize" to p.fileSize, "assetUrl" to p.assetUrl,
-        "startedAtMs" to p.startedAtMs, "waitingForUser" to p.waitingForUser,
+        "startedAtMs" to p.startedAtMs, "waitingForUser" to p.waitingForUser, "signers" to p.signers,
     )
 
     private fun pending(obj: JsonObject): PendingInstall? = PendingInstall(
@@ -183,6 +183,7 @@ object StateJson {
         assetUrl = obj.string("assetUrl") ?: "",
         startedAtMs = obj.long("startedAtMs") ?: 0L,
         waitingForUser = obj.bool("waitingForUser") ?: false,
+        signers = obj.array("signers")?.strings().orEmpty().mapNotNull(Fingerprints::normalize).take(8),
     )
 
     private inline fun <reified E : Enum<E>> enumOr(name: String?, fallback: E): E =

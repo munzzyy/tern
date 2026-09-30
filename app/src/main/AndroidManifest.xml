@@ -78,6 +78,26 @@
             android:name=".install.InstallReceiver"
             android:exported="false" />
 
+        <!-- Hands a checked file, read-only, to the installer app the person chose. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.handoff"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/handoff_paths" />
+        </provider>
+
+        <!-- Where Shizuku and Sui hand over their binder. Only the system and they may call it. -->
+        <provider
+            android:name="rikka.shizuku.ShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="false"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
         <receiver
             android:name=".work.RescheduleReceiver"
             android:exported="false">

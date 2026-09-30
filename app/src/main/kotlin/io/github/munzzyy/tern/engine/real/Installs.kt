@@ -23,6 +23,7 @@ import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.Progress
 import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.install.GateRequest
+import io.github.munzzyy.tern.install.OtherAppInstaller
 import io.github.munzzyy.tern.install.StepFailure
 import io.github.munzzyy.tern.work.TransferService
 import java.io.File
@@ -84,7 +85,7 @@ internal class Installs(private val e: RealEngine) {
     /** Reopens the system's confirmation for a live session; otherwise settles the phase and returns false. */
     fun resume(appId: String): Boolean {
         val pending = e.stored[appId]?.state?.pending
-        val confirm = confirmations[appId]
+        val confirm = confirmations[appId] ?: pending?.let { e.installer.confirmation(it.sessionId) }
         val live = e.installer.liveSessionIds()
         if (pending != null && pending.sessionId in live && confirm != null) {
             try {
@@ -190,6 +191,7 @@ internal class Installs(private val e: RealEngine) {
                 fileSize = download.size,
                 assetUrl = chosenAsset.url,
                 startedAtMs = e.nowMs(),
+                signers = facts.signers,
             )
             commit(appId, pending)
             sessionId
@@ -278,7 +280,7 @@ internal class Installs(private val e: RealEngine) {
             PackageInstaller.STATUS_PENDING_USER_ACTION -> {
                 e.saveState(appId) { it.copy(pending = pending.copy(waitingForUser = true)) }
                 e.setProgress(appId, Progress(Phase.WAITING_FOR_USER))
-                val shown = confirm?.takeIf { it.action == CONFIRM_INSTALL }
+                val shown = confirm?.takeIf { it.action == CONFIRM_INSTALL || OtherAppInstaller.isHandoff(e.context, it) }
                 if (shown != null) {
                     confirmations[appId] = shown
                     askUser(appId, stored.config.name, shown)
@@ -304,6 +306,14 @@ internal class Installs(private val e: RealEngine) {
             failed(appId, Problem(ProblemKind.INSTALL_FAILED, e.texts.installVersionMismatch(pending.versionCode, now?.app?.versionCode ?: 0)))
             return
         }
+        if (byOtherApp(pending)) {
+            e.installer.abandon(pending.sessionId)
+            // Another app installed something; it counts only if it is what the gate passed.
+            if (pending.signers.isNotEmpty() && now.app.signers.toSet() != pending.signers.toSet()) {
+                failed(appId, Problem(ProblemKind.SIGNER_MISMATCH, e.texts.otherAppSigner()))
+                return
+            }
+        }
         val record = InstallRecord(pending.releaseId, pending.version, now.app.versionCode, pending.fileSha256, pending.fileSize)
         e.saveApp(appId) { s ->
             val pins = s.config.pinnedSigners.ifEmpty { now.app.signers }
@@ -328,8 +338,25 @@ internal class Installs(private val e: RealEngine) {
     }
 
     private fun failed(appId: String, problem: Problem) {
+        e.stored[appId]?.state?.pending?.takeIf(::byOtherApp)?.let { e.installer.abandon(it.sessionId) }
         e.saveState(appId) { it.copy(pending = null, installProblem = problem) }
         e.event(appId, EventKind.FAILED, problem.message)
+    }
+
+    /** Sessions of another installer app are Tern's own numbers, below zero. */
+    private fun byOtherApp(pending: PendingInstall): Boolean = pending.sessionId < 0
+
+    /**
+     * Another installer app says nothing to Tern when it is done. A package that changed is the
+     * sign: when it now has the version handed over, that install happened.
+     */
+    suspend fun onPackageChanged(packageName: String) {
+        for (stored in e.stored.values) {
+            val pending = stored.state.pending ?: continue
+            if (!byOtherApp(pending) || pending.packageName != packageName) continue
+            val now = e.readInstalled(packageName) ?: continue
+            if (now.app.versionCode == pending.versionCode) onResult(stored.config.id, PackageInstaller.STATUS_SUCCESS, pending.sessionId, null, null)
+        }
     }
 
     private fun problemFor(status: Int, message: String?): Problem {
@@ -396,7 +423,7 @@ internal class Installs(private val e: RealEngine) {
         val installed = ArrayList<String>()
         val failed = ArrayList<String>()
         // Without the permission Android would ask from a notification and then call the install cancelled.
-        val allowed = e.device.mayInstall()
+        val allowed = e.mayInstallUnattended()
         for (id in targets) {
             val config = e.stored[id]?.config ?: continue
             if (!installsByItself(config, allowed, e.evaluations[id], busy = e.progress.containsKey(id))) continue

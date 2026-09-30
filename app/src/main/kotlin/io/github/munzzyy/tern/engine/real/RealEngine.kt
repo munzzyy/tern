@@ -48,6 +48,8 @@ import io.github.munzzyy.tern.engine.Handoff
 import io.github.munzzyy.tern.engine.HandoffEnd
 import io.github.munzzyy.tern.engine.OrbotState
 import io.github.munzzyy.tern.engine.ImportSummary
+import io.github.munzzyy.tern.engine.InstallerChoice
+import io.github.munzzyy.tern.engine.InstallerReadiness
 import io.github.munzzyy.tern.engine.NoteBlock
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemException
@@ -65,7 +67,6 @@ import io.github.munzzyy.tern.install.Gate
 import io.github.munzzyy.tern.install.InstallGate
 import io.github.munzzyy.tern.install.Installer
 import io.github.munzzyy.tern.install.PackageManagerArchiveReader
-import io.github.munzzyy.tern.install.SessionInstaller
 import io.github.munzzyy.tern.net.Orbot
 import io.github.munzzyy.tern.net.ProxyChoice
 import io.github.munzzyy.tern.net.ProxyDoor
@@ -121,7 +122,8 @@ class RealEngine(
     internal val evaluator = Evaluator(texts, device.profile, builtIn, nowMs)
     internal val downloader = Downloader(http, downloadsDir ?: File(this.context.filesDir, "downloads"), texts)
     internal val gate: Gate = gate ?: InstallGate(archiveReader ?: PackageManagerArchiveReader(this.context.packageManager), texts)
-    internal val installer: Installer = installer ?: SessionInstaller(this.context)
+    private val installers = Installers(this)
+    internal val installer: Installer = installer ?: installers.routing
     internal val notifier = Notifier(this.context, texts) { _settings.value.notifyNames }
     internal val staging = File(this.context.cacheDir, "staging")
 
@@ -184,12 +186,16 @@ class RealEngine(
         override fun onReceive(context: Context, intent: Intent) {
             val pkg = intent.data?.schemeSpecificPart ?: return
             orbotLink.packageChanged(pkg)
-            scope.launch(Dispatchers.IO) { checks.onPackageChanged(pkg) }
+            scope.launch(Dispatchers.IO) {
+                checks.onPackageChanged(pkg)
+                installs.onPackageChanged(pkg)
+            }
         }
     }
 
     private val startup = scope.launch(Dispatchers.IO) {
         notifier.ensureChannels()
+        installers.start()
         Scheduler.apply(this@RealEngine.context, _settings.value)
         setObtainiumLinks(_settings.value.openObtainiumLinks)
         if (_settings.value.proxy == ProxyMode.ORBOT) orbotLink.ask()
@@ -273,7 +279,7 @@ class RealEngine(
             progress = progress[id],
             problem = eval.problem,
             lastCheckedMs = entry.state.lastCheckedMs,
-            silentUpdate = if (installed == null) null else device.silentUpdateLikely(installed, eval.facts?.targetSdk),
+            silentUpdate = if (installed == null) null else installers.silent() ?: device.silentUpdateLikely(installed, eval.facts?.targetSdk),
             checking = id in checking,
             movedTo = Moves.suggestion(entry.state),
         )
@@ -420,7 +426,18 @@ class RealEngine(
         return true
     }
 
-    override fun mayInstall(): Boolean = device.mayInstall()
+    override fun mayInstall(): Boolean = installers.mayInstall()
+
+    /** Whether an install may start with nobody there to answer: never through another installer app. */
+    internal fun mayInstallUnattended(): Boolean = installers.mayInstallUnattended()
+
+    override val installerReadiness: StateFlow<InstallerReadiness> get() = installers.readiness
+
+    override fun recheckInstaller() = installers.recheck()
+
+    override fun askShizuku(): Boolean = installers.askShizuku()
+
+    override fun installerChoices(): List<InstallerChoice> = installers.choices()
 
     override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
         ready()
@@ -474,6 +491,7 @@ class RealEngine(
             Scheduler.apply(context, loaded)
             setObtainiumLinks(loaded.openObtainiumLinks)
             if (loaded.proxy == ProxyMode.ORBOT && before.proxy != ProxyMode.ORBOT) orbotLink.ask()
+            if (loaded.installer != before.installer || loaded.otherInstaller != before.otherInstaller) installers.recheck()
         }
     }
 
@@ -647,6 +665,7 @@ class RealEngine(
         scope.cancel()
         handoffs.shutDown()
         orbotLink.close()
+        installers.stop()
         try {
             connectivity.unregisterNetworkCallback(networkCallback)
         } catch (e: IllegalArgumentException) {

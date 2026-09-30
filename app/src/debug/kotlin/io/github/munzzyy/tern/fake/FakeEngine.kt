@@ -19,6 +19,9 @@ import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.Event
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.ImportSummary
+import io.github.munzzyy.tern.engine.InstallerChoice
+import io.github.munzzyy.tern.engine.InstallerMode
+import io.github.munzzyy.tern.engine.InstallerReadiness
 import io.github.munzzyy.tern.engine.Suggestion
 import io.github.munzzyy.tern.engine.SavedFile
 import io.github.munzzyy.tern.engine.Received
@@ -344,6 +347,31 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     @Volatile var installsAllowed = true
 
     override fun mayInstall(): Boolean = installsAllowed
+
+    private val _installerReadiness = MutableStateFlow(InstallerReadiness.READY)
+    override val installerReadiness: StateFlow<InstallerReadiness> = _installerReadiness.asStateFlow()
+
+    /** The stand-in has Shizuku running and waiting for a yes, root refused, and one installer app. */
+    override fun recheckInstaller() {
+        _installerReadiness.value = when (_settings.value.installer) {
+            InstallerMode.SYSTEM -> InstallerReadiness.READY
+            InstallerMode.SHIZUKU -> if (shizukuAllowed) InstallerReadiness.READY else InstallerReadiness.SHIZUKU_NOT_ALLOWED
+            InstallerMode.ROOT -> InstallerReadiness.NO_ROOT
+            InstallerMode.OTHER_APP ->
+                if (_settings.value.otherInstaller == null) InstallerReadiness.NO_OTHER_APP else InstallerReadiness.READY
+        }
+    }
+
+    @Volatile private var shizukuAllowed = false
+
+    override fun askShizuku(): Boolean {
+        shizukuAllowed = true
+        recheckInstaller()
+        return true
+    }
+
+    override fun installerChoices(): List<InstallerChoice> =
+        listOf(InstallerChoice("org.example.installer", "Example Installer"))
 
     override suspend fun configure(appId: String, change: (AppConfig) -> AppConfig) {
         edit(appId) { it.copy(config = change(it.config).copy(id = appId)) }

@@ -4,6 +4,7 @@ import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonException
 import io.github.munzzyy.tern.core.json.JsonObject
 import io.github.munzzyy.tern.core.model.Asset
+import io.github.munzzyy.tern.core.model.AssetKind
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.net.HttpRequest
@@ -18,7 +19,6 @@ import io.github.munzzyy.tern.core.source.SourceListing
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.guarded
 import io.github.munzzyy.tern.core.source.web.LinkScanner
-import io.github.munzzyy.tern.core.source.web.ServedFile
 import io.github.munzzyy.tern.core.xml.XmlScanner
 import java.time.Instant
 import java.time.LocalDateTime
@@ -33,9 +33,10 @@ import java.util.Locale
  * uploads with the platforms each is for; only the uploads marked for Android are listed. When the
  * page asks for a price first, the free download page itch.io hands out in its place is read. The
  * version is the highest "v1.2.3" or "Version 1.2.3" in the page's main part, else the day of the
- * newest date on the page. itch.io hands out a file at an address that lasts a minute, so a file is
- * listed by the page and its upload id, and [resolve] asks for a fresh address just before the
- * download. None of this needs a cookie: the token in the page is enough.
+ * newest date on the page. A check reads only the page: each file is listed by the page and its
+ * upload id, under the name the page gives it, and [resolve] asks itch.io for the file, at an
+ * address that lasts a minute, just before the download. None of this needs a cookie: the token in
+ * the page is enough.
  */
 class ItchIoSource : Source {
     override val type: String = SourceTypes.ITCHIO
@@ -68,8 +69,9 @@ class ItchIoSource : Source {
         }
         val android = uploads.filter { it.android }.take(MAX_UPLOADS)
         if (android.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "$base offers no file for Android")
-        val assets = android.mapNotNull { asset(base, it, csrf, context) }
-        if (assets.isEmpty()) throw SourceException(SourceErrorKind.NO_RELEASES, "$base keeps its files for Android outside itch.io")
+        // Asking for a file is what itch.io's download button does, so a check only reads the page.
+        // An upload marked for Android is an APK; the page may call it anything, and the file is read before it is installed.
+        val assets = android.map { Asset(name = it.name, url = "$base/download/${it.id}", kind = Asset.kindOf(it.name).takeIf { kind -> kind != AssetKind.OTHER } ?: AssetKind.APK) }
         val shown = version ?: updated?.let(::dayOf) ?: "latest"
         val release = Release(id = shown, version = shown, publishedAtMs = updated, pageUrl = base, assets = assets)
         val listing = SourceListing(
@@ -100,8 +102,6 @@ class ItchIoSource : Source {
 
     private class Answer(val status: Int, val json: JsonObject?)
 
-    private class Served(val name: String?, val size: Long?)
-
     private fun page(url: String, context: CheckContext): String = context.http.execute(HttpRequest(url)).use {
         if (it.status == 404) throw SourceException(SourceErrorKind.NOT_FOUND, "There is nothing at $url")
         if (!it.isSuccess) throw SourceException(SourceErrorKind.NETWORK, "Unexpected status ${it.status} for $url")
@@ -115,29 +115,12 @@ class ItchIoSource : Source {
         return context.http.execute(HttpRequest(address)).use { if (it.isSuccess) it.text(PAGE_CAP) else null }
     }
 
-    /** The upload as a file: its name and size as the file store gives them, else its name on the page. Null when itch.io keeps it elsewhere. */
-    private fun asset(base: String, upload: Upload, csrf: String?, context: CheckContext): Asset? {
-        val named = csrf?.let { post(fileEndpoint(base, upload.id), it, referer(base, upload.id), context).json?.string("url") }
-        val served = if (named == null) null else served(fileAddress(base, named) ?: return null, context)
-        return Asset(name = served?.name ?: upload.name, url = "$base/download/${upload.id}", size = served?.size)
-    }
-
     /** A POST of the page's token, as the page's own script sends it. */
     private fun post(url: String, csrf: String, headers: Map<String, String>, context: CheckContext): Answer {
         val body = Json.write(Json.obj("csrf_token" to csrf))
         val request = HttpRequest.post(url, body, "application/json", headers + ("X-Requested-With" to "XMLHttpRequest"))
         return context.http.execute(request).use {
             Answer(it.status, if (it.isSuccess) objectOrNull(it.text(JSON_CAP)) else null)
-        }
-    }
-
-    /** The name and size of the file at [address], read from the answer for its first byte. */
-    private fun served(address: String, context: CheckContext): Served? {
-        context.http.execute(HttpRequest(address, headers = mapOf("Range" to "bytes=0-0", "Accept-Encoding" to "identity"))).use {
-            if (!it.isSuccess) return null
-            val whole = it.headers["Content-Range"]?.substringAfterLast('/')?.toLongOrNull()
-                ?: if (it.status == 200) it.headers["Content-Length"]?.toLongOrNull() else null
-            return Served(ServedFile.dispositionName(it.headers["Content-Disposition"]), whole?.takeIf { size -> size > 0 })
         }
     }
 

@@ -4,6 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,7 +24,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -36,11 +41,15 @@ import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.Phase
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.LocalOnline
+import io.github.munzzyy.tern.ui.common.LocalNoTouch
 import io.github.munzzyy.tern.ui.common.StatusLine
 import io.github.munzzyy.tern.ui.common.TonalButton
 import io.github.munzzyy.tern.ui.common.confirmInstall
@@ -50,6 +59,7 @@ import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.icons.AppIcon
 import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.icons.StarFilled
+import io.github.munzzyy.tern.ui.theme.categoryColor
 import io.github.munzzyy.tern.ui.theme.status
 import io.github.munzzyy.tern.ui.text.RowAction
 import io.github.munzzyy.tern.ui.text.canSkip
@@ -150,11 +160,14 @@ fun AppRowItem(
     val inside = look.rowPaddingHorizontal - look.focusRoom
 
     val haptics = rememberHaptics()
+    val categoryColors = LocalEngine.current.settings.collectAsStateWithLifecycle().value.categoryColors
+    val stripe = remember(row.config.categories, categoryColors) { row.config.categories.map { categoryColor(it, categoryColors) } }
     Column(
         modifier
             .fillMaxWidth()
             .padding(horizontal = look.focusRoom, vertical = look.focusRoom / 2)
             .background(if (highlighted) scheme.secondaryContainer else Color.Transparent, shape)
+            .categoryStripe(stripe)
             .onFocusChanged { hasFocus = it.hasFocus }
             .then(rowSemantics),
     ) {
@@ -178,7 +191,13 @@ fun AppRowItem(
                     .padding(horizontal = inside, vertical = look.rowPaddingVertical),
             ) {
                 if (selecting) Checkbox(checked = checked, onCheckedChange = null)
-                if (!look.minimal) AppIcon(row)
+                if (!look.minimal) {
+                    // A double tap on the icon of an installed app opens it, as in Obtainium; one tap still opens the page.
+                    val opensApp = row.installed != null && !selecting && !LocalNoTouch.current
+                    Box(if (opensApp) Modifier.combinedClickable(onClick = onOpen, onDoubleClick = openApp, onLongClick = onSelect) else Modifier) {
+                        AppIcon(row)
+                    }
+                }
                 RowText(row, highlighted, LocalDensity.current.fontScale >= LARGE_FONT_SCALE, Modifier.weight(1f))
             }
             if (!selecting && actionPlace == ActionPlace.BESIDE) button(Modifier.padding(start = look.focusRoom * 2, end = inside))
@@ -221,5 +240,23 @@ private fun RowText(row: AppRow, highlighted: Boolean, large: Boolean, modifier:
                 LinearProgressIndicator(modifier = bar)
             }
         }
+    }
+}
+
+/** Thin bands at the start of a row, one in the colour of each of the app's categories, top to bottom. */
+private fun Modifier.categoryStripe(colors: List<Color>): Modifier = if (colors.isEmpty()) this else drawBehind {
+    val width = 4.dp.toPx()
+    val inset = 12.dp.toPx()
+    val height = size.height - inset * 2
+    if (height <= 0f) return@drawBehind
+    val band = height / colors.size
+    val x = if (layoutDirection == LayoutDirection.Rtl) size.width - width else 0f
+    colors.forEachIndexed { i, color ->
+        drawRoundRect(
+            color = color,
+            topLeft = Offset(x, inset + band * i),
+            size = Size(width, band),
+            cornerRadius = CornerRadius(width / 2, width / 2),
+        )
     }
 }

@@ -110,9 +110,20 @@ class FormatTest {
 
     @Test
     fun intervalChoicesKeepTheCurrentValue() {
-        assertEquals(listOf(0, 1, 3, 6, 12, 24), intervalChoices(6))
-        assertEquals(listOf(0, 1, 3, 6, 12, 24, 48), intervalChoices(48))
-        assertEquals(listOf(0, 1, 3, 6, 12, 24), intervalChoices(-4))
+        val offered = listOf(0, 15, 30, 60, 180, 360, 720, 1440, 2880, 4320, 10080, 20160, 43200)
+        assertEquals(offered, intervalChoices(360))
+        assertEquals((offered + 45).sorted(), intervalChoices(45))
+        assertEquals(offered, intervalChoices(-4))
+    }
+
+    @Test
+    fun anIntervalIsNamedInTheLargestUnitThatDividesIt() {
+        assertEquals(IntervalUnit.OFF to 0, intervalUnit(0))
+        assertEquals(IntervalUnit.MINUTES to 15, intervalUnit(15))
+        assertEquals(IntervalUnit.MINUTES to 90, intervalUnit(90))
+        assertEquals(IntervalUnit.HOURS to 6, intervalUnit(360))
+        assertEquals(IntervalUnit.DAYS to 1, intervalUnit(1440))
+        assertEquals(IntervalUnit.DAYS to 30, intervalUnit(43200))
     }
 
     @Test

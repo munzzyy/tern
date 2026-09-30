@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.core.interop
 
 import io.github.munzzyy.tern.core.json.Json
+import io.github.munzzyy.tern.core.json.JsonObject
 import io.github.munzzyy.tern.core.json.JsonValue
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.UpdateMode
@@ -23,7 +24,8 @@ data class ObtainiumExportResult(val text: String, val written: Int, val left: L
  * blocks on. Sources Obtainium does not read, such as GitHub Actions, are left out and named.
  */
 object ObtainiumExport {
-    fun write(apps: List<AppConfig>, exportedAtMs: Long, appVersion: String): ObtainiumExportResult {
+    /** [settings] are Tern's portable settings, which go in under Obtainium's names when given. */
+    fun write(apps: List<AppConfig>, exportedAtMs: Long, appVersion: String, settings: JsonObject? = null): ObtainiumExportResult {
         val written = ArrayList<JsonValue>()
         val left = ArrayList<String>()
         for (app in apps) {
@@ -35,7 +37,7 @@ object ObtainiumExport {
             "exportedAt" to iso(exportedAtMs),
             "appVersion" to "tern-$appVersion",
             "apps" to written,
-            "settings" to null,
+            "settings" to settings?.let(ObtainiumSettings::toObtainium),
         )
         return ObtainiumExportResult(Json.write(root, indent = true), written.size, left)
     }

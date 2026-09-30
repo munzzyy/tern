@@ -126,7 +126,7 @@ class InstalledTruthTest {
         try {
             val id = "fixture"
             engine().use { first ->
-                first.saveSettings(first.settings.value.copy(checkEveryHours = 0))
+                first.saveSettings(first.settings.value.copy(checkEveryMinutes = 0))
                 val config = AppConfig(id = id, source = SourceSpec(SourceTypes.FORGEJO, FakeForge.PROJECT), name = "Fixture", packageName = PKG)
                 first.store.putApp(config, AppState())
                 first.stored[id] = StoredApp(config, AppState())

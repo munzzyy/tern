@@ -31,7 +31,8 @@ class ObtainiumImportException(message: String) : Exception(message)
 
 data class Skipped(val name: String, val url: String, val reason: String)
 
-data class ImportResult(val apps: List<AppConfig>, val skipped: List<Skipped>)
+/** [settings] are those of the file Tern has a setting for, under Tern's names; null when it carries none. */
+data class ImportResult(val apps: List<AppConfig>, val skipped: List<Skipped>, val settings: JsonObject? = null)
 
 object ObtainiumImport {
     fun read(text: String): ImportResult {
@@ -106,7 +107,8 @@ object ObtainiumImport {
                 ),
             )
         }
-        return ImportResult(apps.map(::shown), skipped)
+        val settings = (root as? JsonObject)?.obj("settings")?.let(ObtainiumSettings::toTern)?.takeIf { it.fields.isNotEmpty() }
+        return ImportResult(apps.map(::shown), skipped, settings)
     }
 
     private fun mapSource(url: String, overrideSource: String?, settings: JsonObject): SourceSpec? {

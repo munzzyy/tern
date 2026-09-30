@@ -45,6 +45,7 @@ import io.github.munzzyy.tern.ui.common.StatusLine
 import io.github.munzzyy.tern.ui.common.TonalButton
 import io.github.munzzyy.tern.ui.common.confirmInstall
 import io.github.munzzyy.tern.ui.common.focusLook
+import io.github.munzzyy.tern.ui.common.rememberHaptics
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.icons.AppIcon
 import io.github.munzzyy.tern.ui.icons.Glyphs
@@ -148,6 +149,7 @@ fun AppRowItem(
     val shape = MaterialTheme.shapes.large
     val inside = look.rowPaddingHorizontal - look.focusRoom
 
+    val haptics = rememberHaptics()
     Column(
         modifier
             .fillMaxWidth()
@@ -166,14 +168,17 @@ fun AppRowItem(
                     .clip(shape)
                     .combinedClickable(
                         onClick = if (selecting) onSelect else onOpen,
-                        onLongClick = onSelect,
+                        onLongClick = {
+                            haptics.longPress()
+                            onSelect()
+                        },
                         onLongClickLabel = labelToggle,
                     )
                     .heightIn(min = look.rowHeight - look.focusRoom)
                     .padding(horizontal = inside, vertical = look.rowPaddingVertical),
             ) {
                 if (selecting) Checkbox(checked = checked, onCheckedChange = null)
-                AppIcon(row)
+                if (!look.minimal) AppIcon(row)
                 RowText(row, highlighted, LocalDensity.current.fontScale >= LARGE_FONT_SCALE, Modifier.weight(1f))
             }
             if (!selecting && actionPlace == ActionPlace.BESIDE) button(Modifier.padding(start = look.focusRoom * 2, end = inside))

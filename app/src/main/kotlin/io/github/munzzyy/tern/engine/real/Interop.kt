@@ -106,7 +106,7 @@ internal object ImportDecoder {
             if (saysItIsTerns(text)) throw ProblemException(Problem(ProblemKind.PARSE, texts.importUnreadableExport(tern.message)))
             try {
                 val result = ObtainiumImport.read(text)
-                Decoded(result.apps, result.skipped.map { it.name to it.reason })
+                Decoded(result.apps, result.skipped.map { it.name to it.reason }, result.settings)
             } catch (_: ObtainiumImportException) {
                 throw ProblemException(Problem(ProblemKind.PARSE, notAnExport))
             }
@@ -208,7 +208,7 @@ internal class Interop(private val e: RealEngine) {
 
     /**
      * The apps in [appIds], or all of them, and how many were written. The settings say whether
-     * apps that are not installed stay out, and whether a Tern export carries the settings too.
+     * apps that are not installed stay out, and whether the export carries the settings too.
      */
     private fun export(appIds: Collection<String>?, format: ExportFormat): Pair<String, Int> {
         val s = e.settings.value
@@ -218,7 +218,8 @@ internal class Interop(private val e: RealEngine) {
             .sortedBy { it.name.lowercase() }
         return when (format) {
             ExportFormat.TERN -> TernExport.write(configs, e.nowMs(), BuildConfig.VERSION_NAME, SettingsJson.encode(s).takeIf { s.exportSettings }) to configs.size
-            ExportFormat.OBTAINIUM -> ObtainiumExport.write(configs, e.nowMs(), BuildConfig.VERSION_NAME).let { it.text to it.written }
+            ExportFormat.OBTAINIUM -> ObtainiumExport.write(configs, e.nowMs(), BuildConfig.VERSION_NAME, SettingsJson.encode(s).takeIf { s.exportSettings })
+                .let { it.text to it.written }
         }
     }
 

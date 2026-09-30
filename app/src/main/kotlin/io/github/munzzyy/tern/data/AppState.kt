@@ -49,4 +49,6 @@ data class AppState(
     val iconUrls: List<String> = emptyList(),
     /** When the app was added. Older apps have none. */
     val addedAtMs: Long? = null,
+    /** The app was seen installed on this device while in the list; only such an app can be taken as uninstalled. */
+    val seenInstalled: Boolean = false,
 )

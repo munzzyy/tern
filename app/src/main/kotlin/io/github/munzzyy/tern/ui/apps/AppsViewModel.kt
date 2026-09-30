@@ -49,6 +49,10 @@ fun listState(rows: List<AppRow>, query: ListQuery, gone: Set<String>): AppsStat
     )
 }
 
+/** The groups folded now: those the person folded, or, when all start folded, those not opened since. */
+fun foldedGroups(groups: List<RowGroup>, toggled: Set<String>, foldedAtStart: Boolean): Set<String> =
+    if (!foldedAtStart) toggled else groups.mapTo(LinkedHashSet()) { it.key }.filterTo(LinkedHashSet()) { it !in toggled }
+
 class AppsViewModel(private val engine: Engine, hidden: StateFlow<Set<String>> = MutableStateFlow(emptySet())) : ViewModel() {
     /** What was typed and the filter; the order and grouping come from the settings, so they last. */
     private val _query = MutableStateFlow(ListQuery())
@@ -60,13 +64,16 @@ class AppsViewModel(private val engine: Engine, hidden: StateFlow<Set<String>> =
     val state: StateFlow<AppsState> = combine(engine.apps, query, hidden, ::listState)
         .flowOn(Dispatchers.Default).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), AppsState())
 
-    private val _collapsed = MutableStateFlow<Set<String>>(emptySet())
+    /** Read once: the setting says how groups start, not what happens to those already opened. */
+    private val foldedAtStart = engine.settings.value.collapseGroups
+    private val _toggled = MutableStateFlow<Set<String>>(emptySet())
 
-    /** Keys of the groups folded away. Not kept: a group opens again when Tern starts. */
-    val collapsed: StateFlow<Set<String>> = _collapsed.asStateFlow()
+    /** Keys of the groups folded away. Not kept: groups start open again when Tern starts, or folded when the setting asks. */
+    val collapsed: StateFlow<Set<String>> = combine(state, _toggled) { s, toggled -> foldedGroups(s.sections.groups, toggled, foldedAtStart) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
 
     fun toggleGroup(key: String) {
-        _collapsed.update { if (key in it) it - key else it + key }
+        _toggled.update { if (key in it) it - key else it + key }
     }
 
     fun setText(text: String) {

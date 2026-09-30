@@ -122,6 +122,7 @@ class Texts(context: Context) : ImportTexts {
 
     fun eventAdded(from: String) = s(R.string.engine_event_added, ltr(from))
     fun eventRemoved() = s(R.string.engine_event_removed)
+    fun eventRemovedUninstalled() = s(R.string.engine_event_removed_uninstalled)
     fun eventImported() = s(R.string.engine_event_imported)
     fun eventUpdateFound(version: String) = s(R.string.engine_event_update_found, version)
     fun eventDownloaded(size: Long) = s(R.string.engine_event_downloaded, bytes(size))

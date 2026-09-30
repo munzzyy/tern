@@ -59,6 +59,24 @@ class SettingsViewModel(private val engine: Engine) : ViewModel() {
 
     val exportStatus: StateFlow<ExportStatus?> = engine.exportStatus
 
+    private val _runningCheck = MutableStateFlow(false)
+    val runningCheck: StateFlow<Boolean> = _runningCheck.asStateFlow()
+
+    /** Whether Let Me Downgrade is installed; read once, as the screen opens. */
+    val canDowngrade: Boolean = engine.canDowngrade()
+
+    fun runBackgroundCheck() {
+        if (_runningCheck.value) return
+        _runningCheck.value = true
+        viewModelScope.launch {
+            try {
+                attempt { engine.runBackgroundCheck() }
+            } finally {
+                _runningCheck.value = false
+            }
+        }
+    }
+
     /** Keeps the export up to date in [folder] from now on; Android's grant of it is taken first. */
     fun keepIn(folder: Uri, onFailed: () -> Unit) {
         viewModelScope.launch {

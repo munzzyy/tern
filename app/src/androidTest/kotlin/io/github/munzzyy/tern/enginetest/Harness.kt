@@ -190,7 +190,7 @@ class Harness(
     )
 
     init {
-        runBlocking { engine.saveSettings(engine.settings.value.copy(checkEveryHours = 0)) }
+        runBlocking { engine.saveSettings(engine.settings.value.copy(checkEveryMinutes = 0)) }
     }
 
     fun addFixture(mode: UpdateMode = UpdateMode.NOTIFY, packageName: String? = PKG, id: String = "fixture"): String {

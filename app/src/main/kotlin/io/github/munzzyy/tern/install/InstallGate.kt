@@ -50,6 +50,8 @@ data class GateRequest(
     val staging: File,
     /** True when [pinnedSigners] are certificates Tern itself carries for this app, which changes what a refusal says. */
     val builtInPin: Boolean = false,
+    /** An older version may replace a newer one: the person allowed it, and something lets Android do it. */
+    val allowDowngrade: Boolean = false,
 )
 
 fun interface Gate {
@@ -217,7 +219,7 @@ class InstallGate(
                 Block.PIN_MISMATCH -> StepFailure(ProblemKind.PIN_MISMATCH, if (request.builtInPin) texts.builtInPinMismatch() else texts.pinMismatch())
             }
         }
-        if (installed != null && android.versionCode < installed.versionCode) {
+        if (installed != null && android.versionCode < installed.versionCode && !request.allowDowngrade) {
             throw StepFailure(ProblemKind.DOWNGRADE, texts.downgrade(installed.versionName, android.versionName))
         }
         if (android.testOnly || ours.manifest.testOnly) throw StepFailure(ProblemKind.UNSUPPORTED, texts.testOnly())

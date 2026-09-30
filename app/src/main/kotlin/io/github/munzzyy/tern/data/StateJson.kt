@@ -35,6 +35,7 @@ object StateJson {
             "announcedReleaseId" to state.announcedReleaseId,
             "iconUrls" to state.iconUrls.take(IconAddresses.MAX_ADDRESSES),
             "addedAtMs" to state.addedAtMs,
+            "seenInstalled" to state.seenInstalled,
         ),
     )
 
@@ -64,6 +65,7 @@ object StateJson {
             announcedReleaseId = obj.string("announcedReleaseId"),
             iconUrls = obj.array("iconUrls")?.strings().orEmpty().filter(Urls::isHttps).take(IconAddresses.MAX_ADDRESSES),
             addedAtMs = obj.long("addedAtMs")?.takeIf { it > 0 },
+            seenInstalled = obj.bool("seenInstalled") ?: false,
         )
     }
 

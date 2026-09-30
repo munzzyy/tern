@@ -185,7 +185,7 @@ private fun Choices(settings: Settings, onChange: ((Settings) -> Settings) -> Un
         SectionCard(title = stringResource(R.string.look_shape_and_size)) {
             ChoiceChips(
                 title = stringResource(R.string.look_density),
-                options = listOf(stringResource(R.string.density_comfortable), stringResource(R.string.density_compact)),
+                options = listOf(stringResource(R.string.density_comfortable), stringResource(R.string.density_compact), stringResource(R.string.density_minimal)),
                 selected = Density.entries.indexOf(settings.density),
                 onSelect = { picked -> onChange { it.copy(density = Density.entries[picked]) } },
                 summary = stringResource(R.string.look_density_effect),

@@ -203,6 +203,12 @@ interface Engine {
     /** Writes the kept export now. */
     suspend fun writeKeptExport()
 
+    /** Runs the background check now, installs of apps set to update by themselves included. */
+    suspend fun runBackgroundCheck()
+
+    /** True when Let Me Downgrade is installed, without which Android refuses an older version over a newer one. */
+    fun canDowngrade(): Boolean
+
     suspend fun clearEvents()
 
     /**

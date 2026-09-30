@@ -50,6 +50,16 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
         viewModelScope.launch {
             row.map { it?.lastCheckedMs to it?.latest?.id }.distinctUntilChanged().collect { loadReleases() }
         }
+        if (checksOnOpen(engine.settings.value.checkOnOpen, row.value, System.currentTimeMillis())) {
+            viewModelScope.launch {
+                try {
+                    engine.check(appId)
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (_: Exception) {
+                }
+            }
+        }
     }
 
     private suspend fun loadReleases() {
@@ -141,4 +151,14 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
             }
         }
     }
+}
+
+/** How long after a check opening the page does not check again, so going back and forth costs nothing. */
+const val OPEN_CHECK_QUIET_MS = 5 * 60 * 1000L
+
+/** Whether opening the page of [row] checks it now, as the setting asks, unless it is being checked or was a moment ago. */
+fun checksOnOpen(setting: Boolean, row: AppRow?, nowMs: Long): Boolean {
+    if (!setting || row == null || row.checking) return false
+    val last = row.lastCheckedMs ?: return true
+    return nowMs - last >= OPEN_CHECK_QUIET_MS
 }

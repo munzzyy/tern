@@ -125,7 +125,7 @@ class RealEngine(
     internal val registry = SourceRegistry.standard(::trackedInRepository)
     internal val inspector = FileInspector(http, store, tokens, device.sdk)
     internal val builtIn = BuiltInPins(catalog)
-    internal val evaluator = Evaluator(texts, device.profile, builtIn, nowMs)
+    internal val evaluator = Evaluator(texts, device.profile, builtIn, nowMs) { _settings.value.globalFileFilter }
     internal val downloader = Downloader(http, downloadsDir ?: File(this.context.filesDir, "downloads"), texts)
     internal val gate: Gate = gate ?: InstallGate(archiveReader ?: PackageManagerArchiveReader(this.context.packageManager), texts)
     private val installers = Installers(this)
@@ -191,10 +191,12 @@ class RealEngine(
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val pkg = intent.data?.schemeSpecificPart ?: return
+            val gone = intent.action == Intent.ACTION_PACKAGE_REMOVED && !intent.getBooleanExtra(Intent.EXTRA_REPLACING, false)
             orbotLink.packageChanged(pkg)
             scope.launch(Dispatchers.IO) {
                 checks.onPackageChanged(pkg)
                 installs.onPackageChanged(pkg)
+                if (gone) dropUninstalled(pkg)
             }
         }
     }
@@ -211,6 +213,7 @@ class RealEngine(
         installs.reconcile()
         for (id in stored.keys) checks.reevaluate(id, network = false)
         publish()
+        dropUninstalled()
     }
 
     init {
@@ -397,11 +400,15 @@ class RealEngine(
         }
         _checkingAll.value = true
         try {
-            checks.checkMany(stored.keys.toList())
+            checks.checkMany(stored.values.filter { inWholeListCheck(it.config) }.map { it.config.id })
         } finally {
             _checkingAll.value = false
         }
     }
+
+    /** Whether a check of the whole list looks at [config]; one asked for by itself always does. */
+    internal fun inWholeListCheck(config: AppConfig): Boolean =
+        !_settings.value.onlyCheckInstalled || config.trackOnly || readInstalled(packageOf(config)) != null
 
     override fun install(appId: String, releaseId: String?, assetUrl: String?) {
         installs.start(appId, releaseId, assetUrl, userStarted = true)
@@ -417,10 +424,28 @@ class RealEngine(
 
     override suspend fun remove(appId: String) {
         ready()
+        drop(appId, texts.eventRemoved())
+    }
+
+    /**
+     * With the setting on, takes out of the list the apps that were seen installed and are not any
+     * more, or only those of [packageName]. Nothing is taken while an install of it is under way.
+     */
+    internal suspend fun dropUninstalled(packageName: String? = null) {
+        if (!_settings.value.removeUninstalled) return
+        for (app in stored.values.toList()) {
+            val pkg = packageOf(app.config) ?: continue
+            if (packageName != null && pkg != packageName) continue
+            if (!app.state.seenInstalled || app.state.pending != null || progress.containsKey(app.config.id)) continue
+            if (readInstalled(pkg) == null) drop(app.config.id, texts.eventRemovedUninstalled())
+        }
+    }
+
+    private suspend fun drop(appId: String, why: String) {
         withContext(Dispatchers.IO) {
             val app = stored[appId] ?: return@withContext
             installs.cancel(appId)
-            event(appId, EventKind.REMOVED, texts.eventRemoved())
+            event(appId, EventKind.REMOVED, why)
             store.deleteApp(appId)
             store.removeValidators("${app.config.source.type}|${app.config.source.url}|")
             downloader.discardAll(appId)
@@ -510,6 +535,11 @@ class RealEngine(
             setObtainiumLinks(loaded.openObtainiumLinks)
             if (loaded.proxy == ProxyMode.ORBOT && before.proxy != ProxyMode.ORBOT) orbotLink.ask()
             if (loaded.installer != before.installer || loaded.otherInstaller != before.otherInstaller) installers.recheck()
+            if (loaded.globalFileFilter != before.globalFileFilter) {
+                for (id in stored.keys) checks.reevaluate(id, network = false)
+                publish()
+            }
+            if (loaded.removeUninstalled && !before.removeUninstalled) scope.launch { dropUninstalled() }
             val keeping = loaded.autoExport && (!before.autoExport || loaded.exportFolder != before.exportFolder ||
                 loaded.exportInstalledOnly != before.exportInstalledOnly || loaded.exportSettings != before.exportSettings)
             if (keeping) scope.launch { interop.kept.write() }
@@ -597,6 +627,10 @@ class RealEngine(
     override val exportStatus: StateFlow<ExportStatus?> get() = interop.kept.status
 
     override suspend fun takeExportFolder(folder: Uri) = interop.kept.choose(folder)
+
+    override suspend fun runBackgroundCheck() = runScheduledCheck()
+
+    override fun canDowngrade(): Boolean = device.read(LET_ME_DOWNGRADE) != null
 
     override suspend fun writeKeptExport() {
         ready()
@@ -722,6 +756,9 @@ class RealEngine(
     companion object {
         private const val TAG = "TernEngine"
         private const val OBTAINIUM_ALIAS = "io.github.munzzyy.tern.ObtainiumLinks"
+
+        /** The module that lets Android put an older version of an app over a newer one. */
+        internal const val LET_ME_DOWNGRADE = "com.berdik.letmedowngrade"
 
         @Volatile
         internal var current: RealEngine? = null

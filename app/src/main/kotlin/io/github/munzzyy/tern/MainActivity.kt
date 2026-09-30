@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.Settings.Global
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -27,10 +28,12 @@ import io.github.munzzyy.tern.ui.incomingAddInput
 import io.github.munzzyy.tern.ui.refreshLink
 import io.github.munzzyy.tern.ui.theme.TernTheme
 import io.github.munzzyy.tern.ui.theme.isDark
+import kotlin.coroutines.cancellation.CancellationException
 import kotlinx.coroutines.launch
 
 private const val PREFS = "ui"
 private const val KEY_FIRST_RUN_DONE = "first_run_done"
+private const val TAG = "TernMain"
 
 private data class Incoming(val text: String, val nonce: Long)
 
@@ -44,6 +47,7 @@ class MainActivity : ComponentActivity() {
         firstRunDone = prefs().getBoolean(KEY_FIRST_RUN_DONE, false)
         applyScenario(intent)
         if (savedInstanceState == null) receive(intent)
+        if (savedInstanceState == null && firstRunDone && engine.settings.value.checkOnStart) checkOnStart()
 
         setContent {
             val settings by engine.settings.collectAsStateWithLifecycle()
@@ -78,6 +82,19 @@ class MainActivity : ComponentActivity() {
         setIntent(intent)
         applyScenario(intent)
         receive(intent)
+    }
+
+    /** The setting asks for a check of the list each time Tern is opened; turning the screen is not opening it. */
+    private fun checkOnStart() {
+        lifecycleScope.launch {
+            try {
+                engine.check(null)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Log.w(TAG, "The check on opening could not run: ${e.javaClass.simpleName}")
+            }
+        }
     }
 
     private fun receive(intent: Intent) {

@@ -1,9 +1,11 @@
 package io.github.munzzyy.tern.data
 
+import io.github.munzzyy.tern.core.interop.ObtainiumSettings
 import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.json.JsonObject
 import io.github.munzzyy.tern.engine.AppGrouping
 import io.github.munzzyy.tern.engine.AppSort
+import io.github.munzzyy.tern.engine.Density
 import io.github.munzzyy.tern.engine.InstallerMode
 import io.github.munzzyy.tern.engine.ProxyMode
 import io.github.munzzyy.tern.engine.Settings
@@ -11,13 +13,14 @@ import io.github.munzzyy.tern.ui.settings.folderName
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SettingsJsonTest {
     @Test
     fun portableSettingsComeBackAsTheyWent() {
         val chosen = Settings().copy(
-            checkEveryHours = 12,
+            checkEveryMinutes = 720,
             pureBlack = true,
             listSort = AppSort.ADDED,
             listDescending = true,
@@ -52,9 +55,30 @@ class SettingsJsonTest {
 
     @Test
     fun badValuesLeaveTheSettingAsItWas() {
-        val file = Json.parseObject("""{"checkEveryHours":-4,"listSort":"SIDEWAYS","pureBlack":"yes","customHue":900}""")
+        val file = Json.parseObject("""{"checkEveryMinutes":-4,"listSort":"SIDEWAYS","pureBlack":"yes","customHue":900}""")
         assertEquals(Settings(), SettingsJson.apply(file, Settings()))
         assertEquals(Settings(), SettingsJson.apply(JsonObject(emptyMap()), Settings()))
+    }
+
+    @Test
+    fun everySettingObtainiumSharesIsOneTernKeeps() {
+        val all = Json.parseObject(
+            """{"updateInterval":30,"bgUpdatesOnWiFiOnly":true,"bgUpdatesWhileChargingOnly":true,"checkOnStart":true,
+               "checkUpdateOnDetailPage":true,"onlyCheckInstalledOrTrackOnlyApps":true,"removeOnExternalUninstall":true,
+               "includePrereleasesByDefault":true,"minimumUpdateAgeDays":3,"theme":1,"useBlackTheme":true,"sortColumn":3,
+               "sortOrder":1,"pinUpdates":false,"buryNonInstalled":true,"groupBy":"source","disableSwipeActions":true,
+               "alwaysUsePhoneLayout":true,"tactileFeedbackEnabled":false,"collapseGroupsOnStartup":true,"appListDensity":"compact"}""",
+        )
+        val tern = ObtainiumSettings.toTern(all)
+        assertEquals(21, tern.fields.size)
+        for (key in tern.fields.keys) assertTrue("$key is not a setting Tern keeps", key in SettingsJson.KEYS)
+        val taken = SettingsJson.apply(tern, Settings())
+        assertEquals(30, taken.checkEveryMinutes)
+        assertEquals(AppSort.RELEASED, taken.listSort)
+        assertEquals(AppGrouping.SOURCE, taken.listGrouping)
+        assertEquals(Density.COMPACT, taken.density)
+        assertFalse(taken.haptics)
+        assertFalse(taken.updatesFirst)
     }
 
     @Test

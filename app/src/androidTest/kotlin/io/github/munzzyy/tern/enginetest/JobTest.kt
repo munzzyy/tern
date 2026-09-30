@@ -32,7 +32,7 @@ class JobTest {
             val id = h.addFixture()
             assertNull(scheduler.getPendingJob(Scheduler.JOB_ID))
 
-            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryHours = 6, onlyOnUnmetered = true))
+            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 360, onlyOnUnmetered = true))
             val job = checkNotNull(scheduler.getPendingJob(Scheduler.JOB_ID)) { "apply() scheduled nothing" }
             assertTrue(job.isPeriodic)
             assertEquals(6 * 60 * 60 * 1000L, job.intervalMillis)
@@ -49,7 +49,7 @@ class JobTest {
             assertTrue(h.forge.requests.count { it.url.contains("/releases") } > listingsBefore)
             assertNotNull("the periodic job is gone after a forced run", scheduler.getPendingJob(Scheduler.JOB_ID))
 
-            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryHours = 0))
+            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 0))
             assertNull(scheduler.getPendingJob(Scheduler.JOB_ID))
         }
     }

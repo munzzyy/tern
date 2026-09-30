@@ -159,6 +159,9 @@ private fun Shell(stack: BackStack) {
     val engine = LocalEngine.current
     val rows by engine.apps.collectAsStateWithLifecycle()
     val online by engine.online.collectAsStateWithLifecycle()
+    val settings by engine.settings.collectAsStateWithLifecycle()
+    // A television keeps its rail: a bar at the bottom is far from where the remote starts.
+    val phoneLayout = settings.phoneLayout && !LocalNoTouch.current
     val updates = remember(rows) { rows.count(::isUpdate) }
     val holder = rememberSaveableStateHolder()
     val reducedMotion = LocalReducedMotion.current
@@ -195,8 +198,8 @@ private fun Shell(stack: BackStack) {
 
     CompositionLocalProvider(LocalOnline provides online) {
         BoxWithConstraints(Modifier.fillMaxSize()) {
-            val wide = maxWidth >= RAIL_WIDTH
-            val twoPane = maxWidth >= TWO_PANE_WIDTH
+            val wide = !phoneLayout && maxWidth >= RAIL_WIDTH
+            val twoPane = !phoneLayout && maxWidth >= TWO_PANE_WIDTH
             val current = stack.top
             val select: (Tab) -> Unit = { tab ->
                 stack.routes.forEach { if (it != Route.Apps) holder.removeState(encodeRoute(it)) }

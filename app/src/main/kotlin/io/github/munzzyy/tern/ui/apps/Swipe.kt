@@ -24,6 +24,7 @@ import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.common.confirmInstall
 import io.github.munzzyy.tern.ui.common.rememberActions
+import io.github.munzzyy.tern.ui.common.rememberHaptics
 import io.github.munzzyy.tern.ui.icons.Bin
 import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.text.RowAction
@@ -41,6 +42,7 @@ fun SwipeRow(row: AppRow, onRemove: () -> Unit, content: @Composable () -> Unit)
     val engine = LocalEngine.current
     val actions = rememberActions()
     val scope = rememberCoroutineScope()
+    val haptics = rememberHaptics()
     val action = inlineAction(row)
     val state = rememberSwipeToDismissBoxState()
     SwipeToDismissBox(
@@ -48,6 +50,7 @@ fun SwipeRow(row: AppRow, onRemove: () -> Unit, content: @Composable () -> Unit)
         enableDismissFromStartToEnd = action != null,
         enableDismissFromEndToStart = true,
         onDismiss = { value ->
+            if (value != SwipeToDismissBoxValue.Settled) haptics.threshold()
             when (value) {
                 SwipeToDismissBoxValue.StartToEnd -> when (action) {
                     RowAction.UPDATE, RowAction.INSTALL -> engine.install(row.id)

@@ -154,8 +154,19 @@ fun minutesUntil(atMs: Long, nowMs: Long): Long {
     return (diff + 59_999) / 60_000
 }
 
+/** Minutes between background checks to offer, from a quarter of an hour to a month, and the one chosen now. */
 fun intervalChoices(current: Int): List<Int> =
-    (listOf(0, 1, 3, 6, 12, 24) + current).filter { it >= 0 }.distinct().sorted()
+    (listOf(0, 15, 30, 60, 180, 360, 720, 1440, 2880, 4320, 10080, 20160, 43200) + current).filter { it >= 0 }.distinct().sorted()
+
+/** How an interval of [minutes] is named: in days, hours or minutes, whichever divides it evenly. */
+enum class IntervalUnit { OFF, MINUTES, HOURS, DAYS }
+
+fun intervalUnit(minutes: Int): Pair<IntervalUnit, Int> = when {
+    minutes <= 0 -> IntervalUnit.OFF to 0
+    minutes % (24 * 60) == 0 -> IntervalUnit.DAYS to minutes / (24 * 60)
+    minutes % 60 == 0 -> IntervalUnit.HOURS to minutes / 60
+    else -> IntervalUnit.MINUTES to minutes
+}
 
 fun formatDate(ms: Long, zone: ZoneId = ZoneId.systemDefault(), locale: Locale = Locale.getDefault()): String =
     DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale).format(Instant.ofEpochMilli(ms).atZone(zone))

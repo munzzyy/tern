@@ -149,6 +149,16 @@ class AppListTest {
     }
 
     @Test
+    fun groupsStartFoldedOnlyWhenTheSettingAsks() {
+        val groups = arrange(rows, ListQuery(grouping = AppGrouping.SOURCE, updatesFirst = false), Locale.US).groups
+        assertEquals(setOf("s:x"), foldedGroups(groups, setOf("s:x"), foldedAtStart = false))
+        val keys = groups.map { it.key }
+        assertEquals(keys.toSet(), foldedGroups(groups, emptySet(), foldedAtStart = true))
+        // A group opened since stays open, and the others stay folded.
+        assertEquals(keys.drop(1).toSet(), foldedGroups(groups, setOf(keys.first()), foldedAtStart = true))
+    }
+
+    @Test
     fun updateAllCountsOnlyWhatCanStartNow() {
         assertEquals(1, updatableCount(rows))
     }

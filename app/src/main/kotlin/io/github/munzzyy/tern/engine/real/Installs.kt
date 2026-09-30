@@ -174,6 +174,7 @@ internal class Installs(private val e: RealEngine) {
                 device = e.device.profile,
                 staging = staging,
                 builtInPin = e.builtIn.hold(config),
+                allowDowngrade = e.settings.value.allowDowngrades && e.canDowngrade(),
             )
             val pass = runInterruptible { e.gate.check(request) }
             val facts = pass.facts.copy(checksumMatchedFrom = expected?.second, fileSha256 = download.sha256)
@@ -435,7 +436,7 @@ internal class Installs(private val e: RealEngine) {
     }
 
     suspend fun runScheduled(settings: Settings) {
-        val targets = e.stored.values.filter { checkedInTheBackground(it.config) }.map { it.config.id }
+        val targets = e.stored.values.filter { checkedInTheBackground(it.config) && e.inWholeListCheck(it.config) }.map { it.config.id }
         val checked = e.checks.checkMany(targets)
         val installed = ArrayList<String>()
         val failed = ArrayList<String>()

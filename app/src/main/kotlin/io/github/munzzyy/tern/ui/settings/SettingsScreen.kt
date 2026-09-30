@@ -88,7 +88,9 @@ import io.github.munzzyy.tern.ui.detail.updateModeEffect
 import io.github.munzzyy.tern.ui.detail.updateModeLabel
 import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.text.formatTime
+import io.github.munzzyy.tern.ui.text.IntervalUnit
 import io.github.munzzyy.tern.ui.text.intervalChoices
+import io.github.munzzyy.tern.ui.text.intervalUnit
 import io.github.munzzyy.tern.ui.text.ltr
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.status
@@ -134,10 +136,10 @@ fun SettingsScreen(onImport: () -> Unit, onLook: () -> Unit, onAdd: (String) -> 
                     .widthIn(max = look.contentMaxWidth)
                     .firstFocus(screen),
             ) {
-                BackgroundSection(s, update)
+                BackgroundSection(s, vm, update)
                 DefaultsSection(s, update)
                 if (showsNotifications(look.television)) NotificationsSection(s, update)
-                InstallingSection(s, update)
+                InstallingSection(s, vm, update)
                 TokensSection(vm)
                 NetworkSection(s, update, onGetOrbot = { onAdd(ORBOT_URL) }, orbotFocus = Modifier.returnFocus(screen, "orbot"))
                 AppearanceSection(s, update, onLook, Modifier.returnFocus(screen, "look"))
@@ -157,16 +159,17 @@ fun ownershipSupported(sdk: Int = Build.VERSION.SDK_INT): Boolean = sdk >= Build
 private typealias Update = ((Settings) -> Settings) -> Unit
 
 @Composable
-private fun BackgroundSection(s: Settings, update: Update) {
+private fun BackgroundSection(s: Settings, vm: SettingsViewModel, update: Update) {
+    val running by vm.runningCheck.collectAsStateWithLifecycle()
     SectionCard(title = stringResource(R.string.settings_background)) {
         ChoiceRow(
             title = stringResource(R.string.settings_interval),
-            options = intervalChoices(s.checkEveryHours),
-            selected = s.checkEveryHours,
-            label = { if (it == 0) stringResource(R.string.interval_off) else pluralStringResource(R.plurals.interval_hours, it, it) },
-            onSelect = { h -> update { it.copy(checkEveryHours = h) } },
+            options = intervalChoices(s.checkEveryMinutes),
+            selected = s.checkEveryMinutes,
+            label = { intervalLabel(it) },
+            onSelect = { m -> update { it.copy(checkEveryMinutes = m) } },
         )
-        val on = s.checkEveryHours > 0
+        val on = s.checkEveryMinutes > 0
         SwitchRow(
             title = stringResource(R.string.settings_unmetered),
             summary = stringResource(R.string.settings_unmetered_effect),
@@ -181,6 +184,46 @@ private fun BackgroundSection(s: Settings, update: Update) {
             enabled = on,
             onChange = { v -> update { it.copy(onlyWhileCharging = v) } },
         )
+        ActionRow(
+            title = stringResource(if (running) R.string.settings_check_now_running else R.string.settings_check_now),
+            summary = stringResource(R.string.settings_check_now_effect),
+            onClick = { vm.runBackgroundCheck() },
+            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+        )
+        SwitchRow(
+            title = stringResource(R.string.settings_check_on_start),
+            checked = s.checkOnStart,
+            onChange = { v -> update { it.copy(checkOnStart = v) } },
+        )
+        SwitchRow(
+            title = stringResource(R.string.settings_check_on_open),
+            summary = stringResource(R.string.settings_check_on_open_effect),
+            checked = s.checkOnOpen,
+            onChange = { v -> update { it.copy(checkOnOpen = v) } },
+        )
+        SwitchRow(
+            title = stringResource(R.string.settings_only_installed),
+            summary = stringResource(R.string.settings_only_installed_effect),
+            checked = s.onlyCheckInstalled,
+            onChange = { v -> update { it.copy(onlyCheckInstalled = v) } },
+        )
+        SwitchRow(
+            title = stringResource(R.string.settings_remove_uninstalled),
+            summary = stringResource(R.string.settings_remove_uninstalled_effect),
+            checked = s.removeUninstalled,
+            onChange = { v -> update { it.copy(removeUninstalled = v) } },
+        )
+    }
+}
+
+@Composable
+fun intervalLabel(minutes: Int): String {
+    val (unit, count) = intervalUnit(minutes)
+    return when (unit) {
+        IntervalUnit.OFF -> stringResource(R.string.interval_off)
+        IntervalUnit.MINUTES -> pluralStringResource(R.plurals.interval_minutes, count, count)
+        IntervalUnit.HOURS -> pluralStringResource(R.plurals.interval_hours, count, count)
+        IntervalUnit.DAYS -> pluralStringResource(R.plurals.interval_days, count, count)
     }
 }
 
@@ -209,6 +252,7 @@ private fun DefaultsSection(s: Settings, update: Update) {
             summary = stringResource(R.string.setting_min_age_effect),
             onSelect = { d -> update { it.copy(minAgeDaysByDefault = d) } },
         )
+        FileFilterRow(s, update)
     }
 }
 
@@ -235,10 +279,18 @@ private fun NotificationsSection(s: Settings, update: Update) {
 }
 
 @Composable
-private fun InstallingSection(s: Settings, update: Update) {
+private fun InstallingSection(s: Settings, vm: SettingsViewModel, update: Update) {
     SectionCard(title = stringResource(R.string.settings_installing)) {
         InstallerRows(s, update)
         if (s.installer != InstallerMode.OTHER_APP) InstallPermissionRow()
+        if (vm.canDowngrade || s.allowDowngrades) {
+            SwitchRow(
+                title = stringResource(R.string.settings_allow_downgrades),
+                summary = stringResource(R.string.settings_allow_downgrades_effect),
+                checked = s.allowDowngrades,
+                onChange = { v -> update { it.copy(allowDowngrades = v) } },
+            )
+        }
         SwitchRow(
             title = stringResource(R.string.settings_keep_installers),
             summary = stringResource(R.string.settings_keep_installers_effect),
@@ -643,7 +695,24 @@ private fun AppearanceSection(s: Settings, update: Update, onLook: () -> Unit, l
                 checked = s.swipeActions,
                 onChange = { v -> update { it.copy(swipeActions = v) } },
             )
+            SwitchRow(
+                title = stringResource(R.string.settings_haptics),
+                summary = stringResource(R.string.settings_haptics_effect),
+                checked = s.haptics,
+                onChange = { v -> update { it.copy(haptics = v) } },
+            )
         }
+        SwitchRow(
+            title = stringResource(R.string.settings_collapse_groups),
+            checked = s.collapseGroups,
+            onChange = { v -> update { it.copy(collapseGroups = v) } },
+        )
+        SwitchRow(
+            title = stringResource(R.string.settings_phone_layout),
+            summary = stringResource(R.string.settings_phone_layout_effect),
+            checked = s.phoneLayout,
+            onChange = { v -> update { it.copy(phoneLayout = v) } },
+        )
     }
 }
 

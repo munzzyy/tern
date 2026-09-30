@@ -236,8 +236,8 @@ data class InstallerChoice(val packageName: String, val label: String)
 enum class ProxyMode { NONE, ORBOT, CUSTOM }
 
 data class Settings(
-    /** 0 turns background checks off. */
-    val checkEveryHours: Int = 6,
+    /** Minutes between background checks; 0 turns them off. Android runs them 15 minutes apart at the least. */
+    val checkEveryMinutes: Int = 360,
     val onlyOnUnmetered: Boolean = false,
     val onlyWhileCharging: Boolean = false,
     val defaultUpdateMode: UpdateMode = UpdateMode.NOTIFY,
@@ -289,6 +289,24 @@ data class Settings(
     val otherInstaller: String? = null,
     /** With Shizuku or root, record Google Play as the installer of every app, as if an app had asked for it. */
     val playInstaller: Boolean = false,
+    /** Check every app each time Tern is opened. */
+    val checkOnStart: Boolean = false,
+    /** Check an app when its page is opened, unless it was checked a moment ago. */
+    val checkOnOpen: Boolean = false,
+    /** Checks of the whole list leave out apps that are neither installed nor only tracked. */
+    val onlyCheckInstalled: Boolean = false,
+    /** The file filter of every app that has none of its own; null leaves the choice to each app. */
+    val globalFileFilter: String? = null,
+    /** An app uninstalled outside Tern leaves the list as well. */
+    val removeUninstalled: Boolean = false,
+    /** Groups of the list start folded each time Tern is opened. */
+    val collapseGroups: Boolean = false,
+    /** A light tap under the finger when something is done by a swipe or a long press. */
+    val haptics: Boolean = true,
+    /** One pane and a bar at the bottom, however wide the screen. */
+    val phoneLayout: Boolean = false,
+    /** Lets an older version replace a newer one. Android refuses unless Let Me Downgrade is installed. */
+    val allowDowngrades: Boolean = false,
 )
 
 data class ImportSummary(
@@ -317,7 +335,8 @@ enum class Palette { INK, SLATE, TIDE, MOSS, AMBER, CLAY, ROSE, PLUM }
 
 enum class Contrast { STANDARD, MEDIUM, HIGH }
 
-enum class Density { COMFORTABLE, COMPACT }
+/** How much room the list takes. Minimal leaves out the icon and the author. */
+enum class Density { COMFORTABLE, COMPACT, MINIMAL }
 
 enum class Corners { ROUND, SOFT, SHARP }
 

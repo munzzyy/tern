@@ -52,7 +52,7 @@ class FolderExportTest {
         val engine = RealEngine(targetContext, FakeForge(), storeName = store, prefsPrefix = prefs, nowMs = { nowMs }, downloadsDir = downloads)
 
         init {
-            runBlocking { engine.saveSettings(engine.settings.value.copy(checkEveryHours = 0)) }
+            runBlocking { engine.saveSettings(engine.settings.value.copy(checkEveryMinutes = 0)) }
         }
 
         fun add(name: String) {

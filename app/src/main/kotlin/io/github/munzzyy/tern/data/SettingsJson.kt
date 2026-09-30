@@ -11,12 +11,16 @@ import io.github.munzzyy.tern.engine.Settings
  * The settings that may travel in an export and come back from one: the look, the list,
  * notifications, background checks and the defaults for new apps. What reaches past this device
  * or decides how it is protected stays out, both ways: no token, no proxy, no installer, no
- * link handling, no export folder. A file that names more is read for what it may set, and the
- * rest is ignored.
+ * link handling, no export folder, no file filter and no downgrades. A file that names more is
+ * read for what it may set, and the rest is ignored.
  */
 object SettingsJson {
     private val PORTABLE: List<Field<*>> = listOf(
-        Field.number("checkEveryHours", { it.checkEveryHours }, 0..SettingsStore.MAX_HOURS) { s, v -> s.copy(checkEveryHours = v) },
+        Field.number("checkEveryMinutes", { it.checkEveryMinutes }, 0..SettingsStore.MAX_MINUTES) { s, v -> s.copy(checkEveryMinutes = SettingsStore.cleanMinutes(v)) },
+        Field.flag("checkOnStart", { it.checkOnStart }) { s, v -> s.copy(checkOnStart = v) },
+        Field.flag("checkOnOpen", { it.checkOnOpen }) { s, v -> s.copy(checkOnOpen = v) },
+        Field.flag("onlyCheckInstalled", { it.onlyCheckInstalled }) { s, v -> s.copy(onlyCheckInstalled = v) },
+        Field.flag("removeUninstalled", { it.removeUninstalled }) { s, v -> s.copy(removeUninstalled = v) },
         Field.flag("onlyOnUnmetered", { it.onlyOnUnmetered }) { s, v -> s.copy(onlyOnUnmetered = v) },
         Field.flag("onlyWhileCharging", { it.onlyWhileCharging }) { s, v -> s.copy(onlyWhileCharging = v) },
         Field.choice("defaultUpdateMode", { it.defaultUpdateMode }) { s, v -> s.copy(defaultUpdateMode = v) },
@@ -43,6 +47,9 @@ object SettingsJson {
         Field.flag("updatesFirst", { it.updatesFirst }) { s, v -> s.copy(updatesFirst = v) },
         Field.flag("buryNotInstalled", { it.buryNotInstalled }) { s, v -> s.copy(buryNotInstalled = v) },
         Field.flag("swipeActions", { it.swipeActions }) { s, v -> s.copy(swipeActions = v) },
+        Field.flag("collapseGroups", { it.collapseGroups }) { s, v -> s.copy(collapseGroups = v) },
+        Field.flag("haptics", { it.haptics }) { s, v -> s.copy(haptics = v) },
+        Field.flag("phoneLayout", { it.phoneLayout }) { s, v -> s.copy(phoneLayout = v) },
     )
 
     /** The keys a file may carry. */

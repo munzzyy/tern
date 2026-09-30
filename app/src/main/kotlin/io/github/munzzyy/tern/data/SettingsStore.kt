@@ -10,7 +10,7 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
     fun load(): Settings {
         val d = Settings()
         return Settings(
-            checkEveryHours = prefs.getInt("checkEveryHours", d.checkEveryHours).coerceIn(0, MAX_HOURS),
+            checkEveryMinutes = storedMinutes(d.checkEveryMinutes),
             onlyOnUnmetered = prefs.getBoolean("onlyOnUnmetered", d.onlyOnUnmetered),
             onlyWhileCharging = prefs.getBoolean("onlyWhileCharging", d.onlyWhileCharging),
             defaultUpdateMode = enumOr(prefs.getString("defaultUpdateMode", null), d.defaultUpdateMode),
@@ -49,12 +49,29 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             installer = enumOr(prefs.getString("installer", null), d.installer),
             otherInstaller = prefs.getString("otherInstaller", null)?.takeIf { PACKAGE.matches(it) },
             playInstaller = prefs.getBoolean("playInstaller", d.playInstaller),
+            checkOnStart = prefs.getBoolean("checkOnStart", d.checkOnStart),
+            checkOnOpen = prefs.getBoolean("checkOnOpen", d.checkOnOpen),
+            onlyCheckInstalled = prefs.getBoolean("onlyCheckInstalled", d.onlyCheckInstalled),
+            globalFileFilter = cleanFilter(prefs.getString("globalFileFilter", null)),
+            removeUninstalled = prefs.getBoolean("removeUninstalled", d.removeUninstalled),
+            collapseGroups = prefs.getBoolean("collapseGroups", d.collapseGroups),
+            haptics = prefs.getBoolean("haptics", d.haptics),
+            phoneLayout = prefs.getBoolean("phoneLayout", d.phoneLayout),
+            allowDowngrades = prefs.getBoolean("allowDowngrades", d.allowDowngrades),
         )
+    }
+
+    /** Tern kept hours before it kept minutes; a value stored as hours is read as that many minutes. */
+    private fun storedMinutes(fallback: Int): Int = when {
+        prefs.contains("checkEveryMinutes") -> cleanMinutes(prefs.getInt("checkEveryMinutes", fallback))
+        prefs.contains("checkEveryHours") -> cleanMinutes(prefs.getInt("checkEveryHours", 0) * 60)
+        else -> fallback
     }
 
     fun save(s: Settings) {
         prefs.edit()
-            .putInt("checkEveryHours", s.checkEveryHours.coerceIn(0, MAX_HOURS))
+            .putInt("checkEveryMinutes", cleanMinutes(s.checkEveryMinutes))
+            .remove("checkEveryHours")
             .putBoolean("onlyOnUnmetered", s.onlyOnUnmetered)
             .putBoolean("onlyWhileCharging", s.onlyWhileCharging)
             .putString("defaultUpdateMode", s.defaultUpdateMode.name)
@@ -93,6 +110,15 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putString("installer", s.installer.name)
             .putString("otherInstaller", s.otherInstaller?.takeIf { PACKAGE.matches(it) })
             .putBoolean("playInstaller", s.playInstaller)
+            .putBoolean("checkOnStart", s.checkOnStart)
+            .putBoolean("checkOnOpen", s.checkOnOpen)
+            .putBoolean("onlyCheckInstalled", s.onlyCheckInstalled)
+            .putString("globalFileFilter", cleanFilter(s.globalFileFilter))
+            .putBoolean("removeUninstalled", s.removeUninstalled)
+            .putBoolean("collapseGroups", s.collapseGroups)
+            .putBoolean("haptics", s.haptics)
+            .putBoolean("phoneLayout", s.phoneLayout)
+            .putBoolean("allowDowngrades", s.allowDowngrades)
             .commit()
     }
 
@@ -101,7 +127,22 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
 
     companion object {
         const val DEFAULT_NAME = "settings"
-        const val MAX_HOURS = 24 * 7
+
+        /** Thirty days, the longest Obtainium offers too. */
+        const val MAX_MINUTES = 30 * 24 * 60
+
+        /** The shortest period Android runs a job at. */
+        const val MIN_MINUTES = 15
+        const val MAX_FILTER = 500
+
+        /** 0 stays off; anything else is taken to the range Android keeps to. */
+        fun cleanMinutes(minutes: Int): Int = if (minutes <= 0) 0 else minutes.coerceIn(MIN_MINUTES, MAX_MINUTES)
+
+        /** A filter as it may be stored: trimmed, not too long, and one that compiles; anything else is none. */
+        fun cleanFilter(pattern: String?): String? {
+            val trimmed = pattern?.trim()?.takeIf { it.isNotEmpty() && it.length <= MAX_FILTER } ?: return null
+            return trimmed.takeIf { runCatching { Regex(it) }.isSuccess }
+        }
 
         /** A package name, so what goes into an Intent as one can be nothing else. */
         private val PACKAGE = Regex("^[A-Za-z][A-Za-z0-9_]*(\\.[A-Za-z][A-Za-z0-9_]*)+$")

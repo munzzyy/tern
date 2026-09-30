@@ -41,11 +41,27 @@ data class Evaluation(
     val patternProblem: PatternProblem? = null,
 )
 
-class Evaluator(private val texts: Texts, private val device: DeviceProfile, private val builtIn: BuiltInPins, private val nowMs: () -> Long) {
+class Evaluator(
+    private val texts: Texts,
+    private val device: DeviceProfile,
+    private val builtIn: BuiltInPins,
+    private val nowMs: () -> Long,
+    /** The file filter of the settings, for apps that have none of their own. */
+    private val globalFilter: () -> String? = { null },
+) {
     constructor(texts: Texts, device: DeviceProfile, nowMs: () -> Long) : this(texts, device, BuiltInPins(), nowMs)
 
+    /** [given] with the file filter of the settings when it has no filter for files of its own. */
+    fun effective(given: AppConfig): AppConfig {
+        val assets = given.assets
+        if (assets.include != null || assets.exclude != null) return given
+        val global = globalFilter() ?: return given
+        return given.copy(assets = assets.copy(include = global))
+    }
+
     /** [inspect] returns what a file says, or null when that cannot be known now. */
-    fun evaluate(config: AppConfig, state: AppState, installed: DeviceApp?, inspect: (Asset, String) -> FileFacts?): Evaluation {
+    fun evaluate(given: AppConfig, state: AppState, installed: DeviceApp?, inspect: (Asset, String) -> FileFacts?): Evaluation {
+        val config = effective(given)
         val filters = filtersKey(config)
         state.patternProblem?.takeIf { it.filters == filters }?.let {
             return Evaluation(AppStatus.ERROR, problem = Problem(ProblemKind.PARSE, texts.patternProblem(it.message)), patternProblem = it)
@@ -122,7 +138,7 @@ class Evaluator(private val texts: Texts, private val device: DeviceProfile, pri
         )
     }
 
-    fun rank(config: AppConfig, release: Release): List<Pick> = AssetPicker.rank(release.assets, device, config.assets)
+    fun rank(config: AppConfig, release: Release): List<Pick> = AssetPicker.rank(release.assets, device, effective(config).assets)
 
     fun verification(config: AppConfig, state: AppState, release: Release, asset: Asset, facts: FileFacts?, installed: DeviceApp?): Verification {
         val signerState = when {

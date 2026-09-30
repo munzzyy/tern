@@ -10,17 +10,17 @@ import io.github.munzzyy.tern.engine.Settings
 /** One persisted periodic job. Re-applying unchanged settings leaves the job alone so its clock keeps running. */
 object Scheduler {
     const val JOB_ID = 1
-    private const val HOUR_MS = 60L * 60 * 1000
+    private const val MINUTE_MS = 60L * 1000
     private const val TAG = "TernScheduler"
 
     fun apply(context: Context, settings: Settings): Boolean {
         val scheduler = context.getSystemService(JobScheduler::class.java)
-        if (settings.checkEveryHours <= 0) {
+        if (settings.checkEveryMinutes <= 0) {
             scheduler.cancel(JOB_ID)
             return false
         }
         val wanted = JobInfo.Builder(JOB_ID, ComponentName(context, CheckJobService::class.java))
-            .setPeriodic(settings.checkEveryHours * HOUR_MS)
+            .setPeriodic(settings.checkEveryMinutes * MINUTE_MS)
             .setPersisted(true)
             .setRequiredNetworkType(if (settings.onlyOnUnmetered) JobInfo.NETWORK_TYPE_UNMETERED else JobInfo.NETWORK_TYPE_ANY)
             .setRequiresCharging(settings.onlyWhileCharging)

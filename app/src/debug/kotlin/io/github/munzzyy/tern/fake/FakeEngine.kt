@@ -589,6 +589,10 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
 
     override suspend fun takeExportFolder(folder: Uri) = Unit
 
+    override suspend fun runBackgroundCheck() = check(null)
+
+    override fun canDowngrade(): Boolean = false
+
     override suspend fun writeKeptExport() {
         _exportStatus.value = ExportStatus(System.currentTimeMillis(), null)
     }

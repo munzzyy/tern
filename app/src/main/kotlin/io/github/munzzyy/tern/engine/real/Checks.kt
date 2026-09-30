@@ -144,6 +144,7 @@ internal class Checks(private val e: RealEngine) {
             eval = e.evaluator.evaluate(config, stored.state, installed, inspect)
         }
         if (eval.patternProblem != stored.state.patternProblem) e.saveState(id) { it.copy(patternProblem = eval.patternProblem) }
+        if (installed != null && !stored.state.seenInstalled) e.saveState(id) { it.copy(seenInstalled = true) }
         e.evaluations[id] = eval
     }
 

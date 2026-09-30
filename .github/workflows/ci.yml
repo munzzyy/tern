@@ -24,6 +24,8 @@ jobs:
         run: python3 tools/strings.py check app/src/main/res
       - name: the network has one door, and it goes through the proxy
         run: bash tools/check-network-doors.sh
+      - name: every other way to the network fails that check
+        run: bash tools/tests/network-doors/run.sh
       - name: core tests
         run: ./gradlew --no-daemon :core:test
       - name: the page of the handoff seals what the device opens

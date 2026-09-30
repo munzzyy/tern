@@ -272,7 +272,9 @@ real Chromium to a live handoff and checks that the page broke no rule of its
 Content-Security-Policy.
 
 `bash tools/check-network-doors.sh` fails if any code other than the one HTTP
-client opens a connection or resolves a name on the device.
+client opens a connection or resolves a name on the device, or uses anything
+else that fetches by itself. `bash tools/tests/network-doors/run.sh` proves it
+catches each of those ways.
 
 `bash tools/check-reproducible.sh <folder>` builds the release twice from two
 clones in different places and compares the files byte for byte.

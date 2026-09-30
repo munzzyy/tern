@@ -284,7 +284,12 @@ also when the proxy does not answer and when the setting names no proxy at
 all. One file opens connections, `net/UrlConnectionHttp.kt`, and
 `tools/check-network-doors.sh` fails in CI when a second one appears, when
 anything outside the handoff makes a socket, or when a name is resolved on the
-device. Device tests send a check, a download and an icon through a proxy that
+device. It also fails on everything else that can fetch by itself:
+`java.net.URL` or a URLConnection outside that file, Android's DownloadManager,
+HttpEngine or Cronet, a web view, DnsResolver, and HTTP libraries such as OkHttp
+or Ktor. `tools/tests/network-doors` keeps a small file for each of these ways,
+and CI proves that each one makes the check fail and that the tree passes.
+Device tests send a check, a download and an icon through a proxy that
 is not there and count the requests that arrive: none. When a request through a
 proxy on the device fails, Tern asks the proxy whether it is there at all. If
 not, the failure says "The proxy did not answer, so nothing was sent" instead of

@@ -383,6 +383,14 @@ same install as the buttons in Tern, through every check above. So do the
 widget's Update all button and the launcher shortcut of that name. The tile and
 the widget's Check button only check.
 
+Only Tern can start these. The widget's buttons go to a receiver that is not
+exported. The launcher shortcuts go to an activity alias that is not exported
+either. Tern's window has to be exported for the launcher, but an intent that
+reaches it any other way cannot run Update all, Add or a check. A
+`tern://refresh` or `obtainium://refresh` link from a web page or another app
+asks the person before it checks anything. One such link a minute at most gets
+that far, and it never installs.
+
 A notification about problems gives each app's reason only in the version that
 names apps. A tap on it carries the ids of the apps and nothing else, and the
 screen it opens shows what Tern holds now, so another app cannot make Tern show

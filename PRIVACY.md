@@ -116,6 +116,17 @@ the folder you picked whenever the list changes.
 The widget and the Quick Settings tile show how many updates there are, and
 the widget names none of the apps.
 
+With "Keep Tern's own messages in the log" on, which it is not at first, the
+activity log also keeps Tern's own warnings and errors, an error with its kind,
+its message and at most five lines of Tern's code, and the start and end of
+each check: what started it, how many apps, how many updates, how long. Before
+anything is kept, addresses lose their query, their fragment and any name and
+password, and tokens, passwords, keys, email addresses and the device's own
+network address become "…". Such an entry can name apps, packages and the
+addresses of sources, as the rest of the log does. At most 500 are kept, and
+Clear removes them. Nothing of it leaves the device unless you share or copy
+the log.
+
 If Tern stops unexpectedly, it writes what it was doing, a technical report
 with the version of Tern and of Android, into a file of its own. The next
 start shows it once, to read, copy or share; closing it deletes the file.

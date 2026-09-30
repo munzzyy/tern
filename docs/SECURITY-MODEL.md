@@ -233,7 +233,10 @@ are followed by hand, and each hop must be HTTPS.
 A token is stored for one exact host, encrypted under a key in the Android
 Keystore that cannot be exported. It is sent to that host only. When a redirect
 changes the host, the token is dropped for the rest of the chain. Tokens are not
-part of exports and are never written to the log.
+part of exports and are never written to the log. When the log keeps Tern's
+own messages, each passes a filter first that takes the query, fragment and any
+name and password off every address, and turns what looks like a token, a key,
+a password or an email address into an ellipsis (`app/.../log/Scrub.kt`).
 
 With a GitHub token, a release's files are fetched through GitHub's API, which
 serves them for a private project too; the token goes to `api.github.com` and
@@ -338,8 +341,8 @@ file can come from anyone. That is for the user of the device to switch on,
 app by app.
 
 An export may carry settings, and an import may set them, from a list kept in
-one place: the look of the list, notifications, when to check, and the defaults
-for new apps. What reaches past the device or decides how it is protected is not
+one place: the look of the list, notifications, when to check, whether the log
+keeps Tern's own messages, and the defaults for new apps. What reaches past the device or decides how it is protected is not
 on that list, either way: tokens, the proxy, the hubproxy, the installer, the
 folder of the kept export, the file filter for every app, and older versions
 over newer ones. Obtainium's settings are read through the same list, under

@@ -178,7 +178,7 @@ run against answers recorded from the real services.
 | Install, categorize and share many apps at once, a determinate check | All of them; categories can be set, cleared or left for each |
 | Cancel a download from its tile or notification | Both, with how much has come |
 | Notifications for updates, errors, track-only releases, the version an app was updated to, each app's problem with its reason | Yes, with Update and Update all buttons, and a quiet one while checking if wanted. A tap on problems opens what went wrong |
-| Logs page with a filter of the last days, sharing, and copying on a TV; a screen for an unexpected error | The activity log, cut to its last one to seven days, shared as text or copied where nothing takes a share. After an unexpected stop, the next start shows what Tern was doing |
+| Logs page with the app's own messages by level, a filter of the last days, sharing, and copying on a TV; a screen for an unexpected error | The activity log, cut to its last one to seven days, shared as text or copied where nothing takes a share, and when switched on, Tern's own warnings, errors and checks, marked and coloured by level, with a filter of their own and nothing secret in them. After an unexpected stop, the next start shows what Tern was doing |
 | Save a release's files and its source code, from an app, one of its versions or many apps at once, with a notification when each is saved, and sizes asked of the server | All of it. Saving goes on after the page is left, and a tap on the notification opens Downloads rather than a file the checks have not seen |
 | Keeps itself up to date | Offered in Settings |
 
@@ -232,5 +232,5 @@ such a review has something to disagree with.
   app, installing over a different signing certificate, and "Hide downgrades"
   turned off. With downgrades allowed, Tern's version history installs any
   older release instead.
-- A log of the app's own debug messages. Tern's activity log records what
-  happened to each app, in words; its own messages stay in Android's log.
+- Buttons that jump to the top and the bottom of the log. Tern's log opens at
+  its newest entry and is kept short by its filters.

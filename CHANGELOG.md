@@ -51,6 +51,11 @@ Everything Obtainium does, and more.
   names each app with its reason, a tap away from what went wrong.
 - New apps can be shown to Verified Apps first, as in Obtainium. The installer
   app is picked from a list with icons, with the way in it takes.
+- The activity log can keep Tern's own messages: warnings, errors, and each
+  check's start and end, with what started it, how many apps, what it found and
+  how long it took. Off at first. They are marked and coloured by level, have a
+  filter of their own, and lose addresses' queries, tokens, passwords and email
+  addresses before they are kept.
 - Notes of your own and category chips on an app's page, and the project's
   README, read from the forge when you ask for it.
 - The activity log can be shared as text, and Tern offers to keep itself up to

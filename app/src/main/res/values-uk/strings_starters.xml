@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">У вашому списку</string>
+    <string name="starter_on_phone">На цьому телефоні</string>
+    <string name="starter_on_phone_other">На цьому телефоні від іншого підписувача</string>
+    <string name="starter_on_phone_other_explain">Вашу копію підписано іншим ключем, тому Tern не може оновити її з цієї адреси.</string>
+</resources>

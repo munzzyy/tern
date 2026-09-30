@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">목록에 있음</string>
+    <string name="starter_on_phone">이 휴대전화에 있음</string>
+    <string name="starter_on_phone_other">다른 서명자의 앱이 이 휴대전화에 있음</string>
+    <string name="starter_on_phone_other_explain">설치된 앱은 다른 키로 서명되어 있어 Tern이 이 주소에서 업데이트할 수 없습니다.</string>
+</resources>

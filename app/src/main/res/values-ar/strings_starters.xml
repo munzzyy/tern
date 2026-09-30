@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">في قائمتك</string>
+    <string name="starter_on_phone">على هذا الهاتف</string>
+    <string name="starter_on_phone_other">على هذا الهاتف من موقّع آخر</string>
+    <string name="starter_on_phone_other_explain">النسخة التي لديك موقعة بمفتاح مختلف، لذلك لا يمكن لـ Tern تحديثها من هذا العنوان.</string>
+</resources>

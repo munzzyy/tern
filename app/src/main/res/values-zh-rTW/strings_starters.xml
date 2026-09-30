@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">在您的清單中</string>
+    <string name="starter_on_phone">在此手機上</string>
+    <string name="starter_on_phone_other">在此手機上，但來自另一個簽署者</string>
+    <string name="starter_on_phone_other_explain">您擁有的副本是使用不同的金鑰簽署，因此 Tern 無法從這個網址更新它。</string>
+</resources>

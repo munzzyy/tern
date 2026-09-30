@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">在您的列表中</string>
+    <string name="starter_on_phone">在此手机上</string>
+    <string name="starter_on_phone_other">在此手机上，来自其他签名者</string>
+    <string name="starter_on_phone_other_explain">您拥有的副本使用了不同的密钥签名，因此 Tern 无法从此地址更新它。</string>
+</resources>

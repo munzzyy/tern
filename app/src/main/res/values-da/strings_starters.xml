@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">På din liste</string>
+    <string name="starter_on_phone">På denne telefon</string>
+    <string name="starter_on_phone_other">På denne telefon signeret af en anden</string>
+    <string name="starter_on_phone_other_explain">Den kopi, du har, er signeret med en anden nøgle, så Tern kan ikke opdatere den fra denne adresse.</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">നിങ്ങളുടെ ലിസ്റ്റിൽ</string>
+    <string name="starter_on_phone">ഈ ഫോണിൽ</string>
+    <string name="starter_on_phone_other">മറ്റൊരാൾ ഒപ്പിട്ടത് ഈ ഫോണിൽ</string>
+    <string name="starter_on_phone_other_explain">നിങ്ങളുടെ പക്കലുള്ള കോപ്പി മറ്റൊരു കീ ഉപയോഗിച്ചാണ് ഒപ്പിട്ടിരിക്കുന്നത്, അതിനാൽ Tern-ന് ഈ വിലാസത്തിൽ നിന്ന് ഇത് അപ്ഡേറ്റ് ചെയ്യാൻ കഴിയില്ല.</string>
+</resources>

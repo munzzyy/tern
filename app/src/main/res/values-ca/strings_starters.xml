@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">A la teva llista</string>
+    <string name="starter_on_phone">En aquest telèfon</string>
+    <string name="starter_on_phone_other">En aquest telèfon d\'un altre signant</string>
+    <string name="starter_on_phone_other_explain">La còpia que tens està signada amb una clau diferent, així que Tern no pot actualitzar-la des d\'aquesta adreça.</string>
+</resources>

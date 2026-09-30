@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">Di daftar Anda</string>
+    <string name="starter_on_phone">Di ponsel ini</string>
+    <string name="starter_on_phone_other">Di ponsel ini dari penandatangan lain</string>
+    <string name="starter_on_phone_other_explain">Salinan yang Anda miliki ditandatangani dengan kunci yang berbeda, jadi Tern tidak dapat memperbaruinya dari alamat ini.</string>
+</resources>

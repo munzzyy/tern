@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_in_list">リストにあります</string>
+    <string name="starter_on_phone">この端末にあります</string>
+    <string name="starter_on_phone_other">別の署名者のものがこの端末にあります</string>
+    <string name="starter_on_phone_other_explain">お持ちのアプリは別の鍵で署名されているため、Ternはこのアドレスから更新できません。</string>
+</resources>

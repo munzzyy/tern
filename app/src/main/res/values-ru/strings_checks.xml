@@ -27,7 +27,6 @@
     <string name="settings_file_filter_none">Нет</string>
     <string name="settings_file_filter_invalid">Этот шаблон невозможно прочитать.</string>
     <string name="settings_allow_downgrades">Разрешить старые версии</string>
-    <string name="settings_allow_downgrades_effect">Установлен Let Me Downgrade, поэтому Android может установить старую версию поверх более новой.</string>
     <string name="settings_collapse_groups">Изначально сворачивать группы</string>
     <string name="settings_haptics">Тактильный отклик</string>
     <string name="settings_haptics_effect">Легкая вибрация, когда свайп или долгое нажатие что-то делает.</string>

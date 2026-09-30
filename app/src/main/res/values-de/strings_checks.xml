@@ -23,7 +23,6 @@
     <string name="settings_file_filter_none">Keiner</string>
     <string name="settings_file_filter_invalid">Dieses Muster kann nicht gelesen werden.</string>
     <string name="settings_allow_downgrades">Ältere Versionen erlauben</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade ist installiert, daher darf Android eine ältere Version über eine neuere installieren.</string>
     <string name="settings_collapse_groups">Mit eingeklappten Gruppen beginnen</string>
     <string name="settings_haptics">Haptisches Feedback</string>
     <string name="settings_haptics_effect">Eine leichte Vibration, wenn Wischen oder langes Drücken etwas auslöst.</string>

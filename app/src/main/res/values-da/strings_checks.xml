@@ -23,7 +23,6 @@
     <string name="settings_file_filter_none">Intet</string>
     <string name="settings_file_filter_invalid">Dette mønster kan ikke læses.</string>
     <string name="settings_allow_downgrades">Tillad ældre versioner</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade er installeret, så Android må installere en ældre version oven på en nyere.</string>
     <string name="settings_collapse_groups">Start med grupper foldet sammen</string>
     <string name="settings_haptics">Haptisk feedback</string>
     <string name="settings_haptics_effect">En let vibration, når et stryg eller et langt tryk gør noget.</string>

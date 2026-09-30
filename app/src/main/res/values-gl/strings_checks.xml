@@ -23,7 +23,6 @@
     <string name="settings_file_filter_none">Ningún</string>
     <string name="settings_file_filter_invalid">Este patrón non se pode ler.</string>
     <string name="settings_allow_downgrades">Permitir versións máis antigas</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade está instalado, polo que Android pode poñer unha versión máis antiga sobre unha máis nova.</string>
     <string name="settings_collapse_groups">Comezar cos grupos pregados</string>
     <string name="settings_haptics">Resposta háptica</string>
     <string name="settings_haptics_effect">Unha vibración lixeira cando un deslizamento ou unha pulsación longa fai algo.</string>

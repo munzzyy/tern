@@ -9,4 +9,6 @@
     <string name="settings_charging_checks_effect">Background checks wait until the device is charging.</string>
     <string name="settings_unmetered_installs_wait">An update that would install by itself waits for Wi-Fi or a cable, as in Obtainium.</string>
     <string name="settings_charging_installs_wait">An update that would install by itself waits until the device is charging.</string>
+    <string name="engine_downgrade_not_as_named">The source named version code %2$d, but this file is %1$d, older than the one installed. It is not put over the newer one.</string>
+    <string name="settings_allow_downgrades_picked">Let Me Downgrade is installed, so Android may put an older version over a newer one. Tern does it only for a release you pick from an app\'s history, never in the background or with Update all.</string>
 </resources>

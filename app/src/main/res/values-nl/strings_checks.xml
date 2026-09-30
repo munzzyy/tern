@@ -23,7 +23,6 @@
     <string name="settings_file_filter_none">Geen</string>
     <string name="settings_file_filter_invalid">Dit patroon kan niet worden gelezen.</string>
     <string name="settings_allow_downgrades">Oudere versies toestaan</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade is geïnstalleerd, dus Android mag een oudere versie over een nieuwere installeren.</string>
     <string name="settings_collapse_groups">Beginnen met ingeklapte groepen</string>
     <string name="settings_haptics">Haptische feedback</string>
     <string name="settings_haptics_effect">Een lichte trilling wanneer vegen of lang indrukken iets doet.</string>

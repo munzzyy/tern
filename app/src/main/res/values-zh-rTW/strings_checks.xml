@@ -21,7 +21,6 @@
     <string name="settings_file_filter_none">無</string>
     <string name="settings_file_filter_invalid">無法讀取這個模式。</string>
     <string name="settings_allow_downgrades">允許較舊的版本</string>
-    <string name="settings_allow_downgrades_effect">已安裝 Let Me Downgrade，因此 Android 可以用較舊的版本覆蓋較新的版本。</string>
     <string name="settings_collapse_groups">群組預設為摺疊</string>
     <string name="settings_haptics">觸覺回饋</string>
     <string name="settings_haptics_effect">滑動或長按觸發動作時輕微震動。</string>

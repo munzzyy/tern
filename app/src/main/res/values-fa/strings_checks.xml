@@ -23,7 +23,6 @@
     <string name="settings_file_filter_none">هیچ</string>
     <string name="settings_file_filter_invalid">این الگو قابل خواندن نیست.</string>
     <string name="settings_allow_downgrades">اجازه نسخه‌های قدیمی‌تر</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade نصب است، بنابراین Android می‌تواند نسخه قدیمی‌تر را روی نسخه جدیدتر نصب کند.</string>
     <string name="settings_collapse_groups">شروع با گروه‌های جمع‌شده</string>
     <string name="settings_haptics">بازخورد لمسی</string>
     <string name="settings_haptics_effect">لرزشی سبک وقتی کشیدن انگشت یا فشار طولانی کاری انجام می‌دهد.</string>

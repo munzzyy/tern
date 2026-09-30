@@ -23,7 +23,6 @@
     <string name="settings_file_filter_none">Inget</string>
     <string name="settings_file_filter_invalid">Detta mönster kan inte läsas.</string>
     <string name="settings_allow_downgrades">Tillåt äldre versioner</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade är installerad, så Android får installera en äldre version över en nyare.</string>
     <string name="settings_collapse_groups">Börja med grupperna hopfällda</string>
     <string name="settings_haptics">Haptisk återkoppling</string>
     <string name="settings_haptics_effect">En lätt vibration när en svepning eller ett långt tryck gör något.</string>

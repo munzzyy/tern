@@ -23,7 +23,6 @@
     <string name="settings_file_filter_none">None</string>
     <string name="settings_file_filter_invalid">This pattern cannot be read.</string>
     <string name="settings_allow_downgrades">Allow older versions</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade is installed, so Android may put an older version over a newer one.</string>
     <string name="settings_collapse_groups">Start with groups folded</string>
     <string name="settings_haptics">Haptic feedback</string>
     <string name="settings_haptics_effect">A light tap when a swipe or a long press does something.</string>

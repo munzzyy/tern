@@ -21,7 +21,6 @@
     <string name="settings_file_filter_none">Tidak ada</string>
     <string name="settings_file_filter_invalid">Pola ini tidak dapat dibaca.</string>
     <string name="settings_allow_downgrades">Izinkan versi lama</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade terinstal, jadi Android dapat memasang versi lama menimpa versi yang lebih baru.</string>
     <string name="settings_collapse_groups">Mulai dengan grup terlipat</string>
     <string name="settings_haptics">Umpan balik haptik</string>
     <string name="settings_haptics_effect">Getaran ringan saat geser atau tekan lama melakukan sesuatu.</string>

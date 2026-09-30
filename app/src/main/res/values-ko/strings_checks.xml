@@ -21,7 +21,6 @@
     <string name="settings_file_filter_none">없음</string>
     <string name="settings_file_filter_invalid">이 패턴을 읽을 수 없습니다.</string>
     <string name="settings_allow_downgrades">이전 버전 허용</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade가 설치되어 있으므로 Android가 최신 버전 위에 이전 버전을 설치할 수 있습니다.</string>
     <string name="settings_collapse_groups">그룹을 접은 상태로 시작</string>
     <string name="settings_haptics">햅틱 피드백</string>
     <string name="settings_haptics_effect">스와이프나 길게 누르기로 동작이 실행될 때 가볍게 진동합니다.</string>

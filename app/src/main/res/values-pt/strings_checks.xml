@@ -25,7 +25,6 @@
     <string name="settings_file_filter_none">Nenhum</string>
     <string name="settings_file_filter_invalid">Este padrão não pode ser lido.</string>
     <string name="settings_allow_downgrades">Permitir versões mais antigas</string>
-    <string name="settings_allow_downgrades_effect">O Let Me Downgrade está instalado, por isso o Android pode instalar uma versão mais antiga sobre uma mais recente.</string>
     <string name="settings_collapse_groups">Começar com os grupos fechados</string>
     <string name="settings_haptics">Resposta tátil</string>
     <string name="settings_haptics_effect">Uma vibração leve quando um deslize ou um toque longo faz algo.</string>

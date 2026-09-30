@@ -25,7 +25,6 @@
     <string name="settings_file_filter_none">Nijedan</string>
     <string name="settings_file_filter_invalid">Ovaj obrazac se ne može pročitati.</string>
     <string name="settings_allow_downgrades">Dozvoli starije verzije</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade je instaliran, pa Android može staviti stariju verziju preko novije.</string>
     <string name="settings_collapse_groups">Počni sa sklopljenim grupama</string>
     <string name="settings_haptics">Haptički odziv</string>
     <string name="settings_haptics_effect">Lagana vibracija kada prevlačenje ili dugi pritisak nešto uradi.</string>

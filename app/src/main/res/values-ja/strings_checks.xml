@@ -21,7 +21,6 @@
     <string name="settings_file_filter_none">なし</string>
     <string name="settings_file_filter_invalid">このパターンは読み取れません。</string>
     <string name="settings_allow_downgrades">古いバージョンを許可</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgradeがインストールされているため、Androidは新しいバージョンの上に古いバージョンをインストールできます。</string>
     <string name="settings_collapse_groups">グループを折りたたんだ状態で開始</string>
     <string name="settings_haptics">触覚フィードバック</string>
     <string name="settings_haptics_effect">スワイプや長押しで操作が実行されたときに軽く振動します。</string>

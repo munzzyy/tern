@@ -60,6 +60,7 @@ class Texts(context: Context) : ImportTexts {
     fun partNotSigned() = s(R.string.engine4_part_not_signed)
     fun otherAppSigner() = s(R.string.install_other_app_signer)
     fun downgrade(installed: String?, offered: String?) = s(R.string.engine_downgrade, installed ?: "?", offered ?: "?")
+    fun downgradeNotAsNamed(file: Long, named: Long) = s(R.string.engine_downgrade_not_as_named, file, named)
     fun testOnly() = s(R.string.engine_test_only)
     fun needsNewerAndroid(minSdk: Int) = s(R.string.engine_needs_newer_android, minSdk)
 

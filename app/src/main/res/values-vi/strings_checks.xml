@@ -21,7 +21,6 @@
     <string name="settings_file_filter_none">Không có</string>
     <string name="settings_file_filter_invalid">Không thể đọc mẫu này.</string>
     <string name="settings_allow_downgrades">Cho phép phiên bản cũ hơn</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade đã được cài đặt, nên Android có thể cài phiên bản cũ đè lên phiên bản mới hơn.</string>
     <string name="settings_collapse_groups">Bắt đầu với các nhóm được thu gọn</string>
     <string name="settings_haptics">Phản hồi xúc giác</string>
     <string name="settings_haptics_effect">Rung nhẹ khi thao tác vuốt hoặc nhấn giữ thực hiện một việc gì đó.</string>

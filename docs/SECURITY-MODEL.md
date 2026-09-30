@@ -111,6 +111,14 @@ has been verified by Android or by Tern.
 A file for another package is refused. So is an older version code, a test-only
 build, and a build for a newer Android than the device runs.
 
+With Let Me Downgrade installed and "Allow older versions" on, an older version
+code can go in, but only for a release the person picked from an app's history.
+A background install, Update all and a plain install of the latest release
+never go back. Even a picked release is refused when the file's version code is
+lower than the one its source named, since then the source said it was newer.
+A store that lies about version codes cannot roll an app back to a version with
+known holes that way.
+
 ### Android
 
 The system installer runs its own checks after all of that. Tern treats an

@@ -27,7 +27,6 @@
     <string name="settings_file_filter_none">Brak</string>
     <string name="settings_file_filter_invalid">Nie można odczytać tego wzorca.</string>
     <string name="settings_allow_downgrades">Zezwalaj na starsze wersje</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade jest zainstalowany, więc Android może zainstalować starszą wersję na nowszą.</string>
     <string name="settings_collapse_groups">Zaczynaj ze zwiniętymi grupami</string>
     <string name="settings_haptics">Reakcja haptyczna</string>
     <string name="settings_haptics_effect">Lekka wibracja, gdy przesunięcie lub długie naciśnięcie coś wykonuje.</string>

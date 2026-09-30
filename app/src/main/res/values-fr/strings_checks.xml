@@ -25,7 +25,6 @@
     <string name="settings_file_filter_none">Aucun</string>
     <string name="settings_file_filter_invalid">Ce modèle ne peut pas être lu.</string>
     <string name="settings_allow_downgrades">Autoriser les versions plus anciennes</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade est installé, Android peut donc installer une version plus ancienne par-dessus une plus récente.</string>
     <string name="settings_collapse_groups">Commencer avec les groupes repliés</string>
     <string name="settings_haptics">Retour haptique</string>
     <string name="settings_haptics_effect">Une légère vibration quand un balayage ou un appui long déclenche une action.</string>

@@ -321,7 +321,7 @@ private fun InstallingSection(s: Settings, vm: SettingsViewModel, update: Update
         if (vm.canDowngrade || s.allowDowngrades) {
             SwitchRow(
                 title = stringResource(R.string.settings_allow_downgrades),
-                summary = stringResource(R.string.settings_allow_downgrades_effect),
+                summary = stringResource(R.string.settings_allow_downgrades_picked),
                 checked = s.allowDowngrades,
                 onChange = { v -> update { it.copy(allowDowngrades = v) } },
             )

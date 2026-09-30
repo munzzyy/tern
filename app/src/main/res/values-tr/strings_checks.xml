@@ -23,7 +23,6 @@
     <string name="settings_file_filter_none">Yok</string>
     <string name="settings_file_filter_invalid">Bu kalıp okunamıyor.</string>
     <string name="settings_allow_downgrades">Eski sürümlere izin ver</string>
-    <string name="settings_allow_downgrades_effect">Let Me Downgrade yüklü, bu yüzden Android daha yeni bir sürümün üzerine daha eski bir sürüm yükleyebilir.</string>
     <string name="settings_collapse_groups">Gruplar daraltılmış olarak başla</string>
     <string name="settings_haptics">Dokunsal geri bildirim</string>
     <string name="settings_haptics_effect">Bir kaydırma veya uzun basma bir şey yaptığında hafif bir titreşim.</string>

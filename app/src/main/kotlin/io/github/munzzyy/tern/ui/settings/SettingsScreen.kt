@@ -63,6 +63,7 @@ import io.github.munzzyy.tern.engine.InstallerReadiness
 import io.github.munzzyy.tern.engine.OrbotState
 import io.github.munzzyy.tern.engine.ProxyMode
 import io.github.munzzyy.tern.engine.Settings
+import io.github.munzzyy.tern.engine.UpdateAllMode
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.LocalSnackbar
 import io.github.munzzyy.tern.ui.common.ActionRow
@@ -320,7 +321,26 @@ private fun InstallingSection(s: Settings, vm: SettingsViewModel, update: Update
                 onChange = { v -> update { it.copy(claimUpdateOwnership = v) } },
             )
         }
+        ChoiceRow(
+            title = stringResource(R.string.settings_update_all),
+            options = UpdateAllMode.entries,
+            selected = s.updateAllMode,
+            label = { stringResource(updateAllModeLabel(it)) },
+            onSelect = { v -> update { it.copy(updateAllMode = v) } },
+        )
+        SwitchRow(
+            title = stringResource(R.string.settings_confirm_update_all),
+            summary = stringResource(R.string.settings_confirm_update_all_effect),
+            checked = s.confirmUpdateAll,
+            onChange = { v -> update { it.copy(confirmUpdateAll = v) } },
+        )
     }
+}
+
+private fun updateAllModeLabel(mode: UpdateAllMode): Int = when (mode) {
+    UpdateAllMode.UPDATES -> R.string.update_all_updates
+    UpdateAllMode.ALL -> R.string.update_all_all
+    UpdateAllMode.NONE -> R.string.update_all_none
 }
 
 @Composable

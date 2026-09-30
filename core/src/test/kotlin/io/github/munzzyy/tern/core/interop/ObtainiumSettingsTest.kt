@@ -80,4 +80,16 @@ class ObtainiumSettingsTest {
         assertEquals(JsonBool(false), settings["updatesFirst"])
         assertNull(ObtainiumImport.read("""{"apps":[]}""").settings)
     }
+
+    @Test
+    fun theBannerButtonIsTernsUpdateAllAndSkippingTheQuestionIsNotAskingIt() {
+        val tern = ObtainiumSettings.toTern(Json.parseObject("""{"actionBannerMode":"all","skipBulkUpdateConfirmation":false}"""))
+        assertEquals(JsonString("ALL"), tern["updateAllMode"])
+        assertEquals(JsonBool(true), tern["confirmUpdateAll"])
+        assertEquals(JsonString("NONE"), ObtainiumSettings.toTern(Json.parseObject("""{"actionBannerMode":"none"}"""))["updateAllMode"])
+        assertNull(ObtainiumSettings.toTern(Json.parseObject("""{"actionBannerMode":"sometimes"}"""))["updateAllMode"])
+        val back = ObtainiumSettings.toObtainium(Json.parseObject("""{"updateAllMode":"UPDATES","confirmUpdateAll":false}"""))
+        assertEquals(JsonString("updatesOnly"), back["actionBannerMode"])
+        assertEquals(JsonBool(true), back["skipBulkUpdateConfirmation"])
+    }
 }

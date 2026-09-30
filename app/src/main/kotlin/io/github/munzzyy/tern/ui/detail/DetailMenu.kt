@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import io.github.munzzyy.tern.R
+import io.github.munzzyy.tern.core.interop.ConfigLink
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.ui.LocalEngine
@@ -69,6 +70,8 @@ fun DetailMenu(row: AppRow) {
     val shareTitle = stringResource(R.string.action_share)
     val noScreen = stringResource(R.string.action_failed)
     val page = row.latest?.pageUrl
+    val settingsLink = remember(row.config) { ConfigLink.web(row.config) }
+    val noLink = stringResource(R.string.share_link_none)
     Box {
         GlyphButton(Glyphs.More, stringResource(R.string.action_more), onClick = { open = true }, modifier = Modifier.testTag(DETAIL_MENU_TAG))
         DropdownMenu(expanded = open, onDismissRequest = { open = false }, modifier = Modifier.focusHighlight()) {
@@ -80,6 +83,7 @@ fun DetailMenu(row: AppRow) {
             HorizontalDivider()
             item(R.string.action_share_address, true) { shareText(context, shareTitle, row.config.source.url) }
             item(R.string.action_share_link, true) { shareText(context, shareTitle, ternLink(row.config.source.url)) }
+            item(R.string.action_share_config_link, true) { settingsLink?.let { shareText(context, shareTitle, it) } ?: actions.say(noLink) }
             item(R.string.action_share_export, true) { exporting = true }
             if (row.installed != null) {
                 HorizontalDivider()

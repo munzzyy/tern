@@ -1,2 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="language_system">与系统相同</string>
+    <string name="interval_more_often">提高检查频率</string>
+    <string name="interval_less_often">降低检查频率</string>
+    <string name="about_help">Tern 的工作原理</string>
+    <string name="about_help_effect">在项目页面上查看 Tern 会检查什么，以及如何添加、更新和迁移应用。</string>
+    <string name="about_security">Tern 如何保障您的安全</string>
+    <string name="about_privacy">隐私</string>
+    <string name="verification_title">Android 开发者验证</string>
+    <string name="verification_text">Google 已宣布，已获认证的 Android 设备将只安装已在 Google 注册的开发者所提供的应用。该措施将从 2026 年 9 月起先在少数国家实行，之后会扩大到更多国家。\n\n在适用该措施的地区，无论 Tern 自身的检查结果如何，Android 都可能拒绝未注册开发者的应用，或在安装前要求您进行更多操作。Tern 无法改变这一点，并会在 Android 拒绝时告知您。\n\n未获得 Google 认证的设备不受影响。</string>
+    <string name="verification_more">Google 的相关页面</string>
+    <string name="kept_export_format">格式</string>
+    <string name="kept_export_format_tern">Tern 格式，包含所有内容</string>
+    <string name="kept_export_format_obtainium">Obtainium 格式，Obtainium 也能读取</string>
+    <string name="kept_export_name">文件名</string>
+    <string name="kept_export_name_usual">留空则使用 %1$s。</string>
+    <string name="look_style">样式</string>
+    <string name="style_standard">标准</string>
+    <string name="style_vibrant">鲜艳</string>
+    <string name="style_expressive">富有表现力</string>
+    <string name="look_style_effect">“鲜艳”会让整体色彩更丰富。“富有表现力”会让第二种和第三种颜色的色相进一步偏离第一种颜色。</string>
+    <string name="look_color_code">颜色代码</string>
+    <string name="look_color_code_effect">Tern 会取此颜色的色相和饱和度，并从中挑选出依然易于阅读的深浅色调。</string>
+    <string name="look_color_code_invalid">六位十六进制数字，例如 #3D5A80。</string>
+    <string name="crash_title">Tern 意外停止运行</string>
+    <string name="crash_text">这是它停止运行时正在执行的操作。内容会保留在此设备上；如果希望开发者查看，请将其分享给开发者。</string>
+    <string name="crash_share">分享</string>
+    <string name="crash_copied">已复制</string>
+    <string name="activity_range">显示</string>
+    <string name="activity_range_all">全部日期</string>
+    <plurals name="activity_range_days">
+        <item quantity="other">最近 %d 天</item>
+    </plurals>
+    <string name="activity_copied">已复制日志</string>
+    <string name="settings_auto_installs">自动安装更新</string>
+    <string name="settings_auto_installs_effect">设为自动更新的应用会在后台检查后自行更新。关闭后，它们只会提示有可用更新，各应用会保留各自的选择供日后使用。</string>
+    <string name="settings_unmetered_installs">仅在 Wi-Fi 下安装</string>
+    <string name="settings_unmetered_installs_effect">检查在任何网络下都会运行。原本会自动安装的更新将等待 Wi-Fi 或有线网络，与 Obtainium 相同。</string>
+    <string name="settings_charging_installs">仅在充电时安装</string>
+    <string name="settings_charging_installs_effect">使用电池时也会运行检查。原本会自动安装的更新将等到设备正在充电时再安装。</string>
+    <string name="engine_unreadable_app">无法读取已保存的应用 %1$s，因此已将其排除在列表之外。未删除任何内容：较新版本的 Tern 可能可以读取它。</string>
+    <string name="settings_pin_certificates">固定代码托管平台的证书</string>
+    <string name="settings_pin_certificates_effect">与 Obtainium 相同，GitHub、GitLab 和 Codeberg 必须出示其已知所用证书颁发机构签发的证书。另一家证书颁发机构被迫签发的证书会被拒绝。如果某个代码托管平台更换了证书颁发机构，在关闭此选项之前，对它的检查都会失败。</string>
+</resources>

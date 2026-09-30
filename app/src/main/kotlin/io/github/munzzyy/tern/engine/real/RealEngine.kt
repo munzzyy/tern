@@ -44,6 +44,7 @@ import io.github.munzzyy.tern.data.StoredApp
 import io.github.munzzyy.tern.data.TokenVault
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.CheckCount
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.Event
@@ -95,6 +96,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withContext
@@ -150,12 +152,14 @@ class RealEngine(
     private val _events = MutableStateFlow<List<Event>>(emptyList())
     private val _settings = MutableStateFlow(settingsStore.load())
     private val _checkingAll = MutableStateFlow(false)
+    private val _checkCount = MutableStateFlow<CheckCount?>(null)
     private val _transfers = MutableStateFlow<Map<String, Progress>>(emptyMap())
 
     override val apps get() = _apps.asStateFlow()
     override val events: StateFlow<List<Event>> get() = _events.asStateFlow()
     override val settings: StateFlow<Settings> get() = _settings.asStateFlow()
     override val checkingAll: StateFlow<Boolean> get() = _checkingAll.asStateFlow()
+    override val checkCount: StateFlow<CheckCount?> get() = _checkCount.asStateFlow()
 
     /** Downloads the user started, which keep the transfer service in the foreground. */
     val transfers: StateFlow<Map<String, Progress>> get() = _transfers.asStateFlow()
@@ -410,11 +414,14 @@ class RealEngine(
             checks.checkOne(appId)
             return
         }
+        val ids = stored.values.filter { inWholeListCheck(it.config) }.map { it.config.id }
+        _checkCount.value = CheckCount(0, ids.size)
         _checkingAll.value = true
         try {
-            checks.checkMany(stored.values.filter { inWholeListCheck(it.config) }.map { it.config.id })
+            checks.checkMany(ids) { _checkCount.update { it?.copy(done = it.done + 1) } }
         } finally {
             _checkingAll.value = false
+            _checkCount.value = null
         }
     }
 

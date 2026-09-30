@@ -35,8 +35,17 @@ internal class Checks(private val e: RealEngine) {
     private val all = Semaphore(MAX_PARALLEL)
     private val perHost = ConcurrentHashMap<String, Semaphore>()
 
-    suspend fun checkMany(ids: List<String>): List<CheckOutcome> = coroutineScope {
-        ids.map { id -> async { checkOne(id) } }.awaitAll().filterNotNull()
+    /** [onEach] is called as each check ends, however it ends. */
+    suspend fun checkMany(ids: List<String>, onEach: () -> Unit = {}): List<CheckOutcome> = coroutineScope {
+        ids.map { id ->
+            async {
+                try {
+                    checkOne(id)
+                } finally {
+                    onEach()
+                }
+            }
+        }.awaitAll().filterNotNull()
     }
 
     suspend fun checkOne(id: String): CheckOutcome? {

@@ -71,6 +71,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             colorStyle = enumOr(prefs.getString("colorStyle", null), d.colorStyle),
             pinCertificates = prefs.getBoolean("pinCertificates", d.pinCertificates),
             autoInstalls = prefs.getBoolean("autoInstalls", d.autoInstalls),
+            updateAllMode = enumOr(prefs.getString("updateAllMode", null), d.updateAllMode),
+            confirmUpdateAll = prefs.getBoolean("confirmUpdateAll", d.confirmUpdateAll),
         )
     }
 
@@ -143,6 +145,8 @@ class SettingsStore(context: Context, name: String = DEFAULT_NAME) {
             .putString("colorStyle", s.colorStyle.name)
             .putBoolean("pinCertificates", s.pinCertificates)
             .putBoolean("autoInstalls", s.autoInstalls)
+            .putString("updateAllMode", s.updateAllMode.name)
+            .putBoolean("confirmUpdateAll", s.confirmUpdateAll)
             .commit()
     }
 

@@ -89,15 +89,6 @@
         <item quantity="other">%d 件選択</item>
     </plurals>
     <string name="apps_select_hint">リストからアプリを選択してください。</string>
-    <string name="action_add_to_category">カテゴリに追加</string>
-    <plurals name="bulk_category_title">
-        <item quantity="other">%d 個のアプリをカテゴリに追加</item>
-    </plurals>
-    <string name="bulk_category_field">カテゴリ</string>
-    <plurals name="bulk_category_done">
-        <item quantity="other">%1$d 個のアプリを %2$s に追加しました。</item>
-    </plurals>
-    <string name="bulk_category_existing">または既存のものから選択:</string>
     <plurals name="bulk_check_title">
         <item quantity="other">今すぐ %d 個のアプリを確認しますか？</item>
     </plurals>

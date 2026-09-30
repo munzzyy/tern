@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +30,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -55,6 +58,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
@@ -64,16 +68,19 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.AppRow
+import io.github.munzzyy.tern.engine.CheckCount
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.LocalOnline
 import io.github.munzzyy.tern.ui.common.BannerRow
 import io.github.munzzyy.tern.ui.common.ChoiceChip
 import io.github.munzzyy.tern.ui.common.ColorDot
+import io.github.munzzyy.tern.ui.common.ConfirmDialog
 import io.github.munzzyy.tern.ui.common.EmptyState
 import io.github.munzzyy.tern.ui.common.GlyphButton
 import io.github.munzzyy.tern.ui.common.LocalNoTouch
 import io.github.munzzyy.tern.ui.common.OfflineBanner
 import io.github.munzzyy.tern.ui.common.PrimaryButton
+import io.github.munzzyy.tern.ui.common.QuietButton
 import io.github.munzzyy.tern.ui.common.RevealWithRoom
 import io.github.munzzyy.tern.ui.common.ScreenFocus
 import io.github.munzzyy.tern.ui.common.ScreenTop
@@ -96,11 +103,15 @@ import io.github.munzzyy.tern.ui.icons.Search
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.LocalOutlines
 import io.github.munzzyy.tern.ui.theme.categoryColor
+import io.github.munzzyy.tern.ui.theme.figures
 
 const val APP_LIST_TAG = "app_list"
 const val APP_SEARCH_TAG = "app_search"
 const val APP_SEARCH_OPEN_TAG = "app_search_open"
 const val APP_FILTERS_TAG = "app_filters"
+const val APP_FILTER_OPEN_TAG = "app_filter_open"
+const val FILTER_NOTE_TAG = "filter_note"
+const val CHECKING_BAR_TAG = "checking_bar"
 const val WAITING_BANNER_TAG = "waiting_banner"
 
 private const val STACK_FONT_SCALE = 1.5f
@@ -121,6 +132,7 @@ fun AppsScreen(
     val state = vm.state.collectAsStateWithLifecycle().value
     val query = vm.query.collectAsStateWithLifecycle().value
     val checking = engine.checkingAll.collectAsStateWithLifecycle().value
+    val checkCount = engine.checkCount.collectAsStateWithLifecycle().value
     val online = LocalOnline.current
     val offlineReason = stringResource(R.string.offline_reason)
     val actions = rememberActions()
@@ -142,7 +154,21 @@ fun AppsScreen(
     var pending by rememberSaveable { mutableStateOf<BulkAction?>(null) }
     var arranging by rememberSaveable { mutableStateOf(false) }
     val collapsed = vm.collapsed.collectAsStateWithLifecycle().value
-    val swipe = engine.settings.collectAsStateWithLifecycle().value.swipeActions && !LocalNoTouch.current
+    val settings = engine.settings.collectAsStateWithLifecycle().value
+    val swipe = settings.swipeActions && !LocalNoTouch.current
+    var filtering by rememberSaveable { mutableStateOf(false) }
+    val clearFilters = {
+        typed = ""
+        vm.clearFilters()
+    }
+    val plan = if (selection == null) updateAllPlan(settings.updateAllMode, state.updatable, state.firstInstalls.size) else null
+    var confirmingAll by rememberSaveable { mutableStateOf(false) }
+    // First installs go first, so an update of Tern itself stays where Update all puts it.
+    val startAll = {
+        if (plan != null && plan.installs > 0) state.firstInstalls.forEach { engine.install(it) }
+        engine.installAllUpdates()
+    }
+    val onUpdateAll = { if (settings.confirmUpdateAll) confirmingAll = true else startAll() }
     BackHandler(enabled = selection == null && folded && fieldShown, onBack = closeSearch)
     BackHandler(enabled = selection != null) { vm.stopSelecting() }
     val screen = rememberScreenFocus(active = selectedId == null)
@@ -166,6 +192,7 @@ fun AppsScreen(
                 if (state.total > 0 && !fieldShown) {
                     GlyphButton(Glyphs.Search, stringResource(R.string.apps_search_hint), onClick = { searching = true }, modifier = Modifier.testTag(APP_SEARCH_OPEN_TAG))
                 }
+                if (state.total > 0) FilterButton(on = state.filter.isOn, onClick = { filtering = true })
                 GlyphButton(
                     Glyphs.Busy,
                     stringResource(R.string.action_check_all),
@@ -187,6 +214,7 @@ fun AppsScreen(
         ) {
             OfflineBanner(online)
             if (selection == null) WaitingBanner(state.waiting, onGone = { landAgain++ }) { confirmInstall(engine, it.id, actions) }
+            if (checking) CheckingBar(checkCount)
             RevealWithRoom {
             val pull = rememberPullToRefreshState()
             val noTouch = LocalNoTouch.current
@@ -205,16 +233,17 @@ fun AppsScreen(
                     state.total == 0 -> EmptyApps(onAdd, onHandoff, Modifier.firstFocus(screen))
                     else -> AppList(
                         state = state,
-                        query = query,
                         search = if (fieldShown) {
                             Search(text, grab = grab, onText = { typed = it.take(200) }, onClose = if (folded) closeSearch else null)
                         } else {
                             null
                         },
-                        onFilter = vm::setFilter,
+                        onFilter = vm::toggleFilter,
+                        onClearFilters = clearFilters,
                         selectedId = selectedId,
                         onOpen = onOpen,
-                        onUpdateAll = { engine.installAllUpdates() },
+                        plan = plan,
+                        onUpdateAll = onUpdateAll,
                         onRemove = remove,
                         listState = listState,
                         selection = selection,
@@ -225,15 +254,53 @@ fun AppsScreen(
                         swipe = swipe,
                     )
                 }
-                if (checking) LinearProgressIndicator(Modifier.fillMaxWidth().align(Alignment.TopCenter))
             }
             }
         }
     }
     pending?.let { action ->
-        BulkDialog(action, picked, state.categories, engine, actions, onDismiss = { pending = null }, onDone = vm::stopSelecting)
+        BulkDialog(action, picked, engine, actions, onDismiss = { pending = null }, onDone = vm::stopSelecting)
     }
     if (arranging) ListOptionsDialog(query, vm, onDismiss = { arranging = false })
+    if (filtering) FilterDialog(state, onChange = vm::setFilter, onClear = clearFilters, onDismiss = { filtering = false })
+    if (confirmingAll && plan != null) UpdateAllDialog(plan, onConfirm = startAll, onDismiss = { confirmingAll = false })
+}
+
+/** Opens the filters. While one is on, the glyph takes the accent colour and says so. */
+@Composable
+private fun FilterButton(on: Boolean, onClick: () -> Unit) {
+    val onWords = stringResource(R.string.filter_state_on)
+    GlyphButton(
+        Glyphs.Filter,
+        stringResource(R.string.filter_open),
+        onClick = onClick,
+        tint = if (on) MaterialTheme.colorScheme.primary else LocalContentColor.current,
+        modifier = Modifier
+            .testTag(APP_FILTER_OPEN_TAG)
+            .then(if (on) Modifier.semantics { stateDescription = onWords } else Modifier),
+    )
+}
+
+/** How far a check of the whole list has got, in words and as a bar that fills. Until the engine has counted, the bar only moves. */
+@Composable
+private fun CheckingBar(count: CheckCount?) {
+    val look = LocalLook.current
+    val words = if (count != null && count.total > 0) stringResource(R.string.checking_count, count.done, count.total) else stringResource(R.string.status_checking)
+    Column(
+        verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = look.screenPadding, vertical = look.gapSmall / 2)
+            .testTag(CHECKING_BAR_TAG)
+            .semantics(mergeDescendants = true) {},
+    ) {
+        Text(words, style = MaterialTheme.typography.labelLarge.figures(), color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (count != null && count.total > 0) {
+            LinearProgressIndicator(progress = { count.fraction }, modifier = Modifier.fillMaxWidth())
+        } else {
+            LinearProgressIndicator(Modifier.fillMaxWidth())
+        }
+    }
 }
 
 /** What the search field holds and does. [grab] is true when the user has just opened it, so it takes focus. */
@@ -274,11 +341,12 @@ private fun ScreenMenu(onArrange: () -> Unit, onSelect: () -> Unit) {
 @Composable
 private fun AppList(
     state: AppsState,
-    query: ListQuery,
     search: Search?,
     onFilter: (AppFilter) -> Unit,
+    onClearFilters: () -> Unit,
     selectedId: String?,
     onOpen: (String) -> Unit,
+    plan: UpdateAllPlan?,
     onUpdateAll: () -> Unit,
     onRemove: (AppRow) -> Unit,
     listState: LazyListState,
@@ -303,7 +371,10 @@ private fun AppList(
             item(key = "search", contentType = "search") { SearchField(search, Modifier.backupFocus(screen)) }
         }
         if (state.filters.isNotEmpty()) {
-            item(key = "filters", contentType = "filters") { FilterChips(state.filters, query.filter, onFilter) }
+            item(key = "filters", contentType = "filters") { FilterChips(state.filters, state.filter, onFilter) }
+        }
+        if (state.filter.isOn) {
+            item(key = "filtered", contentType = "filtered") { FilterNote(state.shown, state.total, onClearFilters) }
         }
         if (sections.isEmpty) {
             item(key = "nomatch", contentType = "message") {
@@ -317,9 +388,13 @@ private fun AppList(
         }
         if (sections.updates.isNotEmpty()) {
             item(key = "h-updates", contentType = "header") {
-                UpdatesHeader(sections.updates.size, if (selection == null) state.updatable else 0, onUpdateAll)
+                ActionHeader(pluralStringResource(R.plurals.apps_section_updates, sections.updates.size, sections.updates.size), plan, onUpdateAll)
             }
             rows(sections.updates, selectedId, onOpen, onRemove, selection, onSelect, rowFocus, place, swipe)
+        } else if (plan != null && plan.installs > 0) {
+            item(key = "h-installs", contentType = "header") {
+                ActionHeader(pluralStringResource(R.plurals.apps_section_installs, plan.installs, plan.installs), plan, onUpdateAll)
+            }
         }
         if (sections.groups.isNotEmpty()) {
             for (group in sections.groups) {
@@ -433,11 +508,11 @@ private fun ListHeader(text: String) {
     )
 }
 
+/** A header with the Update all button of [plan] beside it, or alone where there is no such button. */
 @Composable
-private fun UpdatesHeader(count: Int, updatable: Int, onUpdateAll: () -> Unit) {
+private fun ActionHeader(words: String, plan: UpdateAllPlan?, onUpdateAll: () -> Unit) {
     val look = LocalLook.current
-    val words = pluralStringResource(R.plurals.apps_section_updates, count, count)
-    if (updatable < 2) {
+    if (plan == null) {
         ListHeader(words)
         return
     }
@@ -445,7 +520,7 @@ private fun UpdatesHeader(count: Int, updatable: Int, onUpdateAll: () -> Unit) {
     val offlineReason = stringResource(R.string.offline_reason)
     val button: @Composable () -> Unit = {
         PrimaryButton(
-            stringResource(R.string.action_update_all),
+            stringResource(updateAllLabel(plan)),
             onClick = onUpdateAll,
             enabled = online,
             modifier = if (online) Modifier else Modifier.semantics { stateDescription = offlineReason },
@@ -464,6 +539,46 @@ private fun UpdatesHeader(count: Int, updatable: Int, onUpdateAll: () -> Unit) {
             HeaderWords(words, Modifier.weight(1f))
             button()
         }
+    }
+}
+
+/** Asks before Update all starts, naming how many apps it installs or updates. */
+@Composable
+private fun UpdateAllDialog(plan: UpdateAllPlan, onConfirm: () -> Unit, onDismiss: () -> Unit) {
+    val title = when {
+        plan.installs == 0 -> pluralStringResource(R.plurals.bulk_update_title, plan.updates, plan.updates)
+        plan.updates == 0 -> pluralStringResource(R.plurals.bulk_install_title, plan.installs, plan.installs)
+        else -> pluralStringResource(R.plurals.update_all_title, plan.total, plan.total)
+    }
+    ConfirmDialog(
+        title = title,
+        text = stringResource(if (plan.installs == 0) R.string.bulk_update_text else R.string.bulk_install_text),
+        confirm = stringResource(updateAllLabel(plan)),
+        onConfirm = onConfirm,
+        onDismiss = onDismiss,
+    )
+}
+
+/** Says that a filter is on and how much of the list it leaves, with one press that clears it and the search. */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun FilterNote(shown: Int, total: Int, onClear: () -> Unit) {
+    val look = LocalLook.current
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(look.gapSmall),
+        itemVerticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = look.screenPadding, vertical = look.focusRoom / 2)
+            .testTag(FILTER_NOTE_TAG),
+    ) {
+        Text(
+            pluralStringResource(R.plurals.filter_shown, total, shown, total),
+            style = MaterialTheme.typography.bodyMedium.figures(),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite },
+        )
+        QuietButton(stringResource(R.string.filter_clear), onClick = onClear)
     }
 }
 
@@ -519,8 +634,9 @@ private fun filterLabel(filter: AppFilter): String = when (filter) {
     is AppFilter.Source -> sourceLabel(filter.type)
 }
 
+/** The quick filters. Any number can be on at once; All is on while none is, and clears them all. */
 @Composable
-private fun FilterChips(filters: List<AppFilter>, current: AppFilter, onFilter: (AppFilter) -> Unit) {
+private fun FilterChips(filters: List<AppFilter>, current: ListFilter, onFilter: (AppFilter) -> Unit) {
     val colors = LocalEngine.current.settings.collectAsStateWithLifecycle().value.categoryColors
     val look = LocalLook.current
     LazyRow(
@@ -534,8 +650,9 @@ private fun FilterChips(filters: List<AppFilter>, current: AppFilter, onFilter: 
         items(filters, key = { it.toString() }) { filter ->
             ChoiceChip(
                 filterLabel(filter),
-                selected = filter == current,
+                selected = current.has(filter),
                 onClick = { onFilter(filter) },
+                role = Role.Checkbox,
                 dot = (filter as? AppFilter.Category)?.let { categoryColor(it.name, colors) },
             )
         }

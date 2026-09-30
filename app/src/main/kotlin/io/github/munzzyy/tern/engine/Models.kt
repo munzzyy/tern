@@ -329,6 +329,10 @@ data class Settings(
     val pinCertificates: Boolean = false,
     /** Apps set to update by themselves do; off, they only say so, and each keeps its own choice. */
     val autoInstalls: Boolean = true,
+    /** What the Update all button above the list takes in, or that there is no such button. */
+    val updateAllMode: UpdateAllMode = UpdateAllMode.UPDATES,
+    /** Update all says first how many apps it installs or updates, and waits for a yes. */
+    val confirmUpdateAll: Boolean = false,
 ) {
     companion object {
         /** The forges and F-Droid; the stores are there to be picked. */
@@ -462,4 +466,21 @@ sealed interface Received {
     data class Link(val text: String) : Received
 
     class ExportFile(val name: String, val bytes: ByteArray) : Received
+}
+
+/** What the Update all button above the list takes in. A first install still passes every check, and Android asks as usual. */
+enum class UpdateAllMode {
+    /** The updates of installed apps. */
+    UPDATES,
+
+    /** Those, and the apps that are not installed yet. */
+    ALL,
+
+    /** No button. */
+    NONE,
+}
+
+/** How far a check of the whole list has got: [done] of [total] apps. */
+data class CheckCount(val done: Int, val total: Int) {
+    val fraction: Float get() = if (total <= 0) 0f else (done.toFloat() / total).coerceIn(0f, 1f)
 }

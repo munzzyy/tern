@@ -38,6 +38,24 @@ class ObtainiumLinkTest {
     }
 
     @Test
+    fun readsTheLinkBehindObtainiumsWebPage() {
+        val json = """{"id":"x","url":"https://example.com/a b"}"""
+        val encoded = java.net.URLEncoder.encode(json, "UTF-8").replace("+", "%20")
+        val shared = ObtainiumLink.parse("https://apps.obtainium.imranr.dev/redirect?r=obtainium://app/$encoded")
+        assertEquals(json, (shared as ObtainiumLink.App).json)
+        // Some pages encode the carried link as a whole.
+        val whole = java.net.URLEncoder.encode("obtainium://app/$encoded", "UTF-8")
+        assertEquals(json, (ObtainiumLink.parse("HTTPS://apps.obtainium.imranr.dev/redirect/?r=$whole") as ObtainiumLink.App).json)
+    }
+
+    @Test
+    fun obtainiumsWebPageWithoutALinkIsNoLink() {
+        assertNull(ObtainiumLink.parse("https://apps.obtainium.imranr.dev/redirect?r=https://example.com/app"))
+        assertNull(ObtainiumLink.parse("https://apps.obtainium.imranr.dev/redirect?url=obtainium://add/x"))
+        assertNull(ObtainiumLink.parse("https://apps.obtainium.imranr.dev/redirected?r=obtainium://add/x"))
+    }
+
+    @Test
     fun returnsNullForWrongScheme() {
         assertNull(ObtainiumLink.parse("https://example.com/add/x"))
     }

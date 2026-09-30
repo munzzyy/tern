@@ -95,19 +95,6 @@
         <item quantity="other">%d odabranih</item>
     </plurals>
     <string name="apps_select_hint">Odaberite aplikacije sa spiska.</string>
-    <string name="action_add_to_category">Dodaj u kategoriju</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Dodaj %d aplikaciju u kategoriju</item>
-        <item quantity="few">Dodaj %d aplikacije u kategoriju</item>
-        <item quantity="other">Dodaj %d aplikacija u kategoriju</item>
-    </plurals>
-    <string name="bulk_category_field">Kategorija</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">Stavljena %1$d aplikacija pod %2$s.</item>
-        <item quantity="few">Stavljene %1$d aplikacije pod %2$s.</item>
-        <item quantity="other">Stavljeno %1$d aplikacija pod %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Ili odaberite onu koju već koristite:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Provjeriti %d aplikaciju sada?</item>
         <item quantity="few">Provjeriti %d aplikacije sada?</item>

@@ -81,11 +81,15 @@ class StatusTest {
     }
 
     @Test
-    fun trackOnlyNeverInstalls() {
+    fun trackOnlyNeverInstallsAndIsMarkedAsSeenFromItsRow() {
         val row = testRow(status = AppStatus.NEW_RELEASE, trackOnly = true)
         assertEquals(RowAction.MARK_SEEN, primaryAction(row))
-        assertNull(inlineAction(row))
+        assertEquals(RowAction.MARK_SEEN, inlineAction(row))
         assertTrue(isUpdate(row))
+        assertFalse(canUpdateNow(row))
+        assertFalse(canInstallNow(row.copy(status = AppStatus.NOT_INSTALLED, installed = null)))
+        assertNull(inlineAction(row.copy(status = AppStatus.UP_TO_DATE)))
+        assertNull(inlineAction(row.copy(status = AppStatus.NOT_INSTALLED, installed = null)))
     }
 
     @Test

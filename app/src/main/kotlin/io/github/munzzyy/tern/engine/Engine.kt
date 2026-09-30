@@ -22,6 +22,9 @@ interface Engine {
     /** True while a check of the whole list is running. */
     val checkingAll: StateFlow<Boolean>
 
+    /** How far the running check of the whole list has got; null while none runs. */
+    val checkCount: StateFlow<CheckCount?>
+
     /** False while the device has no working internet connection. */
     val online: StateFlow<Boolean>
 

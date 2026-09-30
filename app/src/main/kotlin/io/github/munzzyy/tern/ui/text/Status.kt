@@ -94,10 +94,11 @@ fun promptLine(row: AppRow, sdk: Int): PromptLine? {
     }
 }
 
-/** The one button that fits inline in a list row, if any. */
+/** The one button that fits inline in a list row, if any. An app that is only tracked is never installed from there, only marked as seen. */
 fun inlineAction(row: AppRow): RowAction? = when {
     isWaitingForUser(row) -> RowAction.CONFIRM
-    isBusy(row) || row.checking || row.config.trackOnly -> null
+    isBusy(row) || row.checking -> null
+    row.config.trackOnly -> RowAction.MARK_SEEN.takeIf { row.status == AppStatus.NEW_RELEASE && row.latest != null }
     row.status == AppStatus.UPDATE_AVAILABLE -> RowAction.UPDATE
     row.status == AppStatus.NOT_INSTALLED && row.file != null -> RowAction.INSTALL
     else -> null
@@ -128,6 +129,10 @@ fun isUpdate(row: AppRow): Boolean = row.status == AppStatus.UPDATE_AVAILABLE ||
 
 fun canUpdateNow(row: AppRow): Boolean =
     row.status == AppStatus.UPDATE_AVAILABLE && !row.config.trackOnly && !isBusy(row)
+
+/** A first install that can start now: a file for this device is known and nothing stops it. It is checked like any other. */
+fun canInstallNow(row: AppRow): Boolean =
+    row.status == AppStatus.NOT_INSTALLED && row.file != null && !row.config.trackOnly && !isBusy(row)
 
 @StringRes
 /** [installed] matters for a signer mismatch: a pin can be changed, what Android refuses cannot. */

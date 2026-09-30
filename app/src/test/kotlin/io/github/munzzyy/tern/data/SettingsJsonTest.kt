@@ -9,6 +9,7 @@ import io.github.munzzyy.tern.engine.Density
 import io.github.munzzyy.tern.engine.InstallerMode
 import io.github.munzzyy.tern.engine.ProxyMode
 import io.github.munzzyy.tern.engine.Settings
+import io.github.munzzyy.tern.engine.UpdateAllMode
 import io.github.munzzyy.tern.ui.settings.folderName
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -27,6 +28,8 @@ class SettingsJsonTest {
             listGrouping = AppGrouping.SOURCE,
             buryNotInstalled = true,
             swipeActions = false,
+            updateAllMode = UpdateAllMode.ALL,
+            confirmUpdateAll = true,
         )
         val text = Json.write(SettingsJson.encode(chosen))
         val back = SettingsJson.apply(Json.parseObject(text), Settings())
@@ -67,10 +70,11 @@ class SettingsJsonTest {
                "checkUpdateOnDetailPage":true,"onlyCheckInstalledOrTrackOnlyApps":true,"removeOnExternalUninstall":true,
                "includePrereleasesByDefault":true,"minimumUpdateAgeDays":3,"theme":1,"useBlackTheme":true,"sortColumn":3,
                "sortOrder":1,"pinUpdates":false,"buryNonInstalled":true,"groupBy":"source","disableSwipeActions":true,
-               "alwaysUsePhoneLayout":true,"tactileFeedbackEnabled":false,"collapseGroupsOnStartup":true,"appListDensity":"compact"}""",
+               "alwaysUsePhoneLayout":true,"tactileFeedbackEnabled":false,"collapseGroupsOnStartup":true,"appListDensity":"compact",
+               "actionBannerMode":"none","skipBulkUpdateConfirmation":false}""",
         )
         val tern = ObtainiumSettings.toTern(all)
-        assertEquals(21, tern.fields.size)
+        assertEquals(23, tern.fields.size)
         for (key in tern.fields.keys) assertTrue("$key is not a setting Tern keeps", key in SettingsJson.KEYS)
         val taken = SettingsJson.apply(tern, Settings())
         assertEquals(30, taken.checkEveryMinutes)
@@ -79,6 +83,8 @@ class SettingsJsonTest {
         assertEquals(Density.COMPACT, taken.density)
         assertFalse(taken.haptics)
         assertFalse(taken.updatesFirst)
+        assertEquals(UpdateAllMode.NONE, taken.updateAllMode)
+        assertTrue(taken.confirmUpdateAll)
     }
 
     @Test

@@ -55,6 +55,7 @@ fun SwipeRow(row: AppRow, onRemove: () -> Unit, content: @Composable () -> Unit)
                 SwipeToDismissBoxValue.StartToEnd -> when (action) {
                     RowAction.UPDATE, RowAction.INSTALL -> engine.install(row.id)
                     RowAction.CONFIRM -> confirmInstall(engine, row.id, actions)
+                    RowAction.MARK_SEEN -> actions.run { engine.dismissRelease(row.id) }
                     else -> Unit
                 }
                 SwipeToDismissBoxValue.EndToStart -> onRemove()
@@ -88,7 +89,12 @@ private fun SwipeBackground(direction: SwipeToDismissBoxValue, action: RowAction
     ) {
         if (direction == SwipeToDismissBoxValue.Settled) return@Row
         val words = if (start) action?.let { stringResource(it.text) } else stringResource(R.string.action_remove)
-        Icon(if (start) Glyphs.Update else Glyphs.Bin, contentDescription = null, tint = ink, modifier = Modifier.size(look.glyph))
+        val glyph = when {
+            !start -> Glyphs.Bin
+            action == RowAction.MARK_SEEN -> Glyphs.Check
+            else -> Glyphs.Update
+        }
+        Icon(glyph, contentDescription = null, tint = ink, modifier = Modifier.size(look.glyph))
         if (words != null) Text(words, style = MaterialTheme.typography.labelLarge, color = ink)
     }
 }

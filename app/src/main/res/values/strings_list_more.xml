@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The filters of the list. -->
+    <string name="filter_open">Filter the list</string>
+    <string name="filter_state_on">Filters are on</string>
+    <string name="filter_name">Name</string>
+    <string name="filter_author">Developer</string>
+    <string name="filter_package">Package name</string>
+    <string name="filter_show_up_to_date">Apps that are up to date</string>
+    <string name="filter_show_not_installed">Apps that are not installed</string>
+    <string name="filter_show_tracked">Apps that are only tracked</string>
+    <string name="filter_categories">In any of these categories</string>
+    <string name="filter_sources">From any of these sources</string>
+    <string name="filter_clear">Clear filters</string>
+    <!-- %1$d is how many apps the filters leave, %2$d how many there are. -->
+    <plurals name="filter_shown">
+        <item quantity="one">%1$d of %2$d app shown</item>
+        <item quantity="other">%1$d of %2$d apps shown</item>
+    </plurals>
+
+    <!-- A check of the whole list; %1$d apps are done, of %2$d. -->
+    <string name="checking_count">Checking %1$d of %2$d</string>
+
+    <!-- A row of the list. %1$s is the new address, such as github.com/owner/app. -->
+    <string name="row_moved">Moved to %1$s</string>
+    <!-- %1$s is a date. -->
+    <string name="row_released">Released %1$s</string>
+    <string name="row_changes">Changes</string>
+    <string name="action_show_changes">Show the changes</string>
+
+    <!-- The Update all button, and what it takes in. -->
+    <string name="action_install_all">Install all</string>
+    <string name="action_install_update_all">Install and update all</string>
+    <plurals name="apps_section_installs">
+        <item quantity="one">%d app is not installed yet</item>
+        <item quantity="other">%d apps are not installed yet</item>
+    </plurals>
+    <plurals name="update_all_title">
+        <item quantity="one">Install and update %d app?</item>
+        <item quantity="other">Install and update %d apps?</item>
+    </plurals>
+    <string name="settings_update_all">The Update all button</string>
+    <string name="update_all_updates">Updates only</string>
+    <string name="update_all_all">Updates and apps not installed yet</string>
+    <string name="update_all_none">Not shown</string>
+    <string name="settings_confirm_update_all">Ask before Update all</string>
+    <string name="settings_confirm_update_all_effect">Says how many apps it installs or updates, and waits for a yes.</string>
+
+    <!-- Installing the apps picked in the list. -->
+    <plurals name="bulk_install_title">
+        <item quantity="one">Install %d app?</item>
+        <item quantity="other">Install %d apps?</item>
+    </plurals>
+    <string name="bulk_install_text">Each file is downloaded and checked before Android is asked to install it. Tern keeps the certificate each new app is signed with, and holds every later update to it.</string>
+    <!-- %d is how many of the picked apps have nothing to install and are left as they are. -->
+    <plurals name="bulk_install_left">
+        <item quantity="one">%d of the picked apps has nothing to install now and is left as it is.</item>
+        <item quantity="other">%d of the picked apps have nothing to install now and are left as they are.</item>
+    </plurals>
+
+    <!-- The categories of the apps picked in the list. -->
+    <string name="action_change_categories">Change categories</string>
+    <plurals name="bulk_categories_title">
+        <item quantity="one">Categories of %d app</item>
+        <item quantity="other">Categories of %d apps</item>
+    </plurals>
+    <string name="bulk_categories_help">A tick files every picked app under a category, and an empty box takes them all out of it. A dash leaves each app as it is.</string>
+    <string name="categories_filed_all">Every picked app</string>
+    <string name="categories_filed_some">Some of the picked apps</string>
+    <string name="categories_filed_none">None of the picked apps</string>
+    <plurals name="bulk_categories_done">
+        <item quantity="one">Changed the categories of %d app.</item>
+        <item quantity="other">Changed the categories of %d apps.</item>
+    </plurals>
+
+    <!-- Links that carry an app's settings, which Tern and Obtainium both open. -->
+    <string name="action_share_config_link">Share a link with its settings</string>
+    <string name="action_share_config_links">Share links with their settings</string>
+    <string name="share_link_none">No link can carry this app\'s settings. Share it as a file instead.</string>
+    <plurals name="share_links_left">
+        <item quantity="one">%d app is left out, as no link can carry its settings.</item>
+        <item quantity="other">%d apps are left out, as no link can carry their settings.</item>
+    </plurals>
+</resources>

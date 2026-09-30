@@ -1,11 +1,13 @@
 package io.github.munzzyy.tern.ui.apps
 
+import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.AppGrouping
 import io.github.munzzyy.tern.engine.AppSort
 import io.github.munzzyy.tern.engine.AppStatus
 import io.github.munzzyy.tern.engine.Phase
 import io.github.munzzyy.tern.engine.Progress
+import io.github.munzzyy.tern.engine.UpdateAllMode
 import io.github.munzzyy.tern.ui.testRow
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -38,12 +40,12 @@ class AppListTest {
 
     @Test
     fun filtersNarrowTheList() {
-        val notInstalled = arrange(rows, ListQuery(filter = AppFilter.NotInstalled), Locale.US)
+        val notInstalled = arrange(rows, ListQuery(filter = ListFilter(installed = false)), Locale.US)
         assertEquals(listOf("Cedar"), notInstalled.others.map { it.config.name })
         assertTrue(notInstalled.updates.isEmpty())
-        assertEquals(listOf("Cedar"), arrange(rows, ListQuery(filter = AppFilter.Category("Maps")), Locale.US).others.map { it.config.name })
-        assertEquals(2, arrange(rows, ListQuery(filter = AppFilter.Category("Tools")), Locale.US).others.size)
-        assertTrue(arrange(rows, ListQuery(filter = AppFilter.Updates), Locale.US).others.isEmpty())
+        assertEquals(listOf("Cedar"), arrange(rows, ListQuery(filter = ListFilter(categories = setOf("Maps"))), Locale.US).others.map { it.config.name })
+        assertEquals(2, arrange(rows, ListQuery(filter = ListFilter(categories = setOf("Tools"))), Locale.US).others.size)
+        assertTrue(arrange(rows, ListQuery(filter = ListFilter(updates = true)), Locale.US).others.isEmpty())
     }
 
     @Test
@@ -143,9 +145,9 @@ class AppListTest {
 
     @Test
     fun theNewFiltersNarrowAsTheySay() {
-        assertEquals(listOf("Dune"), names(arrange(rows, ListQuery(filter = AppFilter.TrackOnly), Locale.US)))
-        assertEquals(listOf("Cedar"), names(arrange(rows, ListQuery(filter = AppFilter.Source("gitlab")), Locale.US)))
-        assertTrue(arrange(rows, ListQuery(filter = AppFilter.Favorites), Locale.US).isEmpty)
+        assertEquals(listOf("Dune"), names(arrange(rows, ListQuery(filter = ListFilter(tracked = true)), Locale.US)))
+        assertEquals(listOf("Cedar"), names(arrange(rows, ListQuery(filter = ListFilter(sources = setOf("gitlab"))), Locale.US)))
+        assertTrue(arrange(rows, ListQuery(filter = ListFilter(favorites = true)), Locale.US).isEmpty)
     }
 
     @Test
@@ -170,5 +172,65 @@ class AppListTest {
     @Test
     fun updateAllCountsOnlyWhatCanStartNow() {
         assertEquals(1, updatableCount(rows))
+    }
+
+    @Test
+    fun filtersOfOneKindWidenAndOfDifferentKindsNarrow() {
+        val both = ListFilter(categories = setOf("Maps", "Tools"))
+        assertEquals(listOf("Birch", "Cedar"), names(arrange(rows, ListQuery(filter = both, updatesFirst = false), Locale.US)))
+        val installedTools = ListFilter(categories = setOf("Tools"), installed = true)
+        assertEquals(listOf("Birch"), names(arrange(rows, ListQuery(filter = installedTools), Locale.US)))
+        assertEquals(listOf("alder", "Dune", "Ember"), names(arrange(rows, ListQuery(filter = ListFilter(updates = true, problems = true)), Locale.US)))
+        assertEquals(listOf("Cedar"), names(arrange(rows, ListQuery(filter = ListFilter(sources = setOf("gitlab"), categories = setOf("Tools"))), Locale.US)))
+        assertTrue(arrange(rows, ListQuery(filter = ListFilter(sources = setOf("gitlab"), updates = true)), Locale.US).isEmpty)
+    }
+
+    @Test
+    fun obtainiumsWordsAndHidesNarrowTheListToo() {
+        assertEquals(listOf("Cedar"), names(arrange(rows, ListQuery(filter = ListFilter(name = "ced")), Locale.US)))
+        assertEquals(5, arrange(rows, ListQuery(filter = ListFilter(author = "exam")), Locale.US).let { it.updates.size + it.others.size })
+        assertTrue(arrange(rows, ListQuery(filter = ListFilter(author = "nobody")), Locale.US).isEmpty)
+        assertEquals(listOf("Dune"), names(arrange(rows, ListQuery(filter = ListFilter(packageName = "example.d")), Locale.US)))
+        assertEquals(listOf("alder", "Dune", "Ember", "Cedar"), names(arrange(rows, ListQuery(filter = ListFilter(hideUpToDate = true)), Locale.US)))
+        assertEquals(listOf("alder", "Ember", "Birch", "Cedar"), names(arrange(rows, ListQuery(filter = ListFilter(tracked = false)), Locale.US)))
+    }
+
+    @Test
+    fun chipsTurnPartsOfTheFilterOnAndOffAndAllClearsEverything() {
+        val tools = ListFilter().toggled(AppFilter.Category("Tools")).toggled(AppFilter.Category("Maps")).toggled(AppFilter.Installed)
+        assertTrue(tools.has(AppFilter.Category("Tools")) && tools.has(AppFilter.Category("Maps")) && tools.has(AppFilter.Installed))
+        assertTrue(!tools.has(AppFilter.All) && tools.isOn)
+        val swapped = tools.toggled(AppFilter.NotInstalled)
+        assertTrue(swapped.has(AppFilter.NotInstalled) && !swapped.has(AppFilter.Installed))
+        assertEquals(setOf("Maps"), tools.toggled(AppFilter.Category("Tools")).categories)
+        assertEquals(ListFilter(), tools.copy(name = "x").toggled(AppFilter.All))
+        assertTrue(ListFilter().has(AppFilter.All))
+        assertTrue(!ListFilter(name = "  ").isOn)
+    }
+
+    @Test
+    fun aCategoryOrASourceThatIsGoneLeavesTheFilter() {
+        val filter = ListFilter(categories = setOf("Tools", "Gone"), sources = setOf("gitlab", "codeberg"))
+        assertEquals(ListFilter(categories = setOf("Tools"), sources = setOf("gitlab")), filter.within(listOf("Tools"), listOf("gitlab", "github")))
+    }
+
+    @Test
+    fun aProjectThatMovedComesFirst() {
+        val moved = testRow("m", "Zinc").copy(movedTo = "https://example.org/new/zinc")
+        val favourite = testRow("f", "Fern").let { it.copy(config = it.config.copy(favorite = true)) }
+        val s = arrange(listOf(testRow("a", "Aster"), favourite, moved), ListQuery(), Locale.US)
+        assertEquals(listOf("Zinc", "Fern", "Aster"), s.others.map { it.config.name })
+    }
+
+    @Test
+    fun updateAllTakesInWhatTheSettingSaysAndOnlyForTwoOrMore() {
+        assertEquals(UpdateAllPlan(3, 0), updateAllPlan(UpdateAllMode.UPDATES, updatable = 3, installable = 4))
+        assertEquals(UpdateAllPlan(3, 4), updateAllPlan(UpdateAllMode.ALL, updatable = 3, installable = 4))
+        assertEquals(null, updateAllPlan(UpdateAllMode.NONE, updatable = 3, installable = 4))
+        assertEquals(null, updateAllPlan(UpdateAllMode.UPDATES, updatable = 1, installable = 4))
+        assertEquals(UpdateAllPlan(1, 1), updateAllPlan(UpdateAllMode.ALL, updatable = 1, installable = 1))
+        assertEquals(R.string.action_update_all, updateAllLabel(UpdateAllPlan(2, 0)))
+        assertEquals(R.string.action_install_all, updateAllLabel(UpdateAllPlan(0, 2)))
+        assertEquals(R.string.action_install_update_all, updateAllLabel(UpdateAllPlan(1, 1)))
     }
 }

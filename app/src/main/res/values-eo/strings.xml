@@ -92,17 +92,6 @@
         <item quantity="other">%d elektitaj</item>
     </plurals>
     <string name="apps_select_hint">Elektu aplikaĵojn el la listo.</string>
-    <string name="action_add_to_category">Aldoni al kategorio</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Aldoni %d aplikaĵon al kategorio</item>
-        <item quantity="other">Aldoni %d aplikaĵojn al kategorio</item>
-    </plurals>
-    <string name="bulk_category_field">Kategorio</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">Metis %1$d aplikaĵon sub %2$s.</item>
-        <item quantity="other">Metis %1$d aplikaĵojn sub %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Aŭ elektu unu kiun vi jam uzas:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Kontroli %d aplikaĵon nun?</item>
         <item quantity="other">Kontroli %d aplikaĵojn nun?</item>

@@ -1,2 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="language_system">Sistemle aynı</string>
+    <string name="interval_more_often">Daha sık denetle</string>
+    <string name="interval_less_often">Daha seyrek denetle</string>
+    <string name="about_help">Tern nasıl çalışır</string>
+    <string name="about_help_effect">Tern\'ın neyi denetlediği ve uygulamaların nasıl ekleneceği, güncelleneceği ve taşınacağı, projenin sayfasında.</string>
+    <string name="about_security">Tern sizi nasıl korur</string>
+    <string name="about_privacy">Gizlilik</string>
+    <string name="verification_title">Android\'in geliştirici doğrulaması</string>
+    <string name="verification_text">Google, sertifikalı Android cihazların yalnızca Google\'a kayıt olmuş geliştiricilerin uygulamalarını yükleyeceğini duyurdu. Bu, Eylül 2026\'dan itibaren birkaç ülkede, sonrasında ise daha fazla ülkede başlayacak.\n\nBunun geçerli olduğu yerlerde Android, kayıt olmamış bir geliştiricinin uygulamasını reddedebilir veya yüklemeden önce sizden daha fazlasını isteyebilir; Tern\'ın kendi denetimlerinin sonucu ne olursa olsun. Tern bunu değiştiremez ve Android reddettiğinde size söyler.\n\nGoogle sertifikası olmayan cihazlar etkilenmez.</string>
+    <string name="verification_more">Google\'ın bu konudaki sayfası</string>
+    <string name="kept_export_format">Biçim</string>
+    <string name="kept_export_format_tern">Tern\'ın biçimi, her şeyi içerir</string>
+    <string name="kept_export_format_obtainium">Obtainium\'un biçimi, Obtainium da okuyabilir</string>
+    <string name="kept_export_name">Dosya adı</string>
+    <string name="kept_export_name_usual">%1$s için boş bırakın.</string>
+    <string name="look_style">Stil</string>
+    <string name="style_standard">Standart</string>
+    <string name="style_vibrant">Canlı</string>
+    <string name="style_expressive">İfade edici</string>
+    <string name="look_style_effect">Canlı, genel olarak daha renklidir. İfade edici, ikinci ve üçüncü rengi birinci renkten daha uzağa çevirir.</string>
+    <string name="look_color_code">Renk kodu</string>
+    <string name="look_color_code_effect">Tern, bu rengin tonunu ve yoğunluğunu alır ve ondan kolay okunur kalan tonları seçer.</string>
+    <string name="look_color_code_invalid">Altı onaltılık basamak, örneğin #3D5A80.</string>
+    <string name="crash_title">Tern beklenmedik şekilde durdu</string>
+    <string name="crash_text">Bu, Tern durduğunda yapmakta olduğu şeydir. Rapor bu cihazda kalır; bakılmasını isterseniz geliştiriciyle paylaşın.</string>
+    <string name="crash_share">Paylaş</string>
+    <string name="crash_copied">Kopyalandı</string>
+    <string name="activity_range">Göster</string>
+    <string name="activity_range_all">Tüm günler</string>
+    <plurals name="activity_range_days">
+        <item quantity="one">Son %d gün</item>
+        <item quantity="other">Son %d gün</item>
+    </plurals>
+    <string name="activity_copied">Günlük kopyalandı</string>
+    <string name="settings_auto_installs">Güncellemeler kendiliğinden yüklenir</string>
+    <string name="settings_auto_installs_effect">Kendiliğinden güncellenecek şekilde ayarlanan uygulamalar bunu bir arka plan denetiminden sonra yapar. Kapalıyken yalnızca bir güncelleme olduğunu bildirirler ve her biri kendi seçimini sonrası için korur.</string>
+    <string name="settings_unmetered_installs">Yalnızca Wi-Fi bağlantısında yükle</string>
+    <string name="settings_unmetered_installs_effect">Denetimler her ağda çalışır. Kendiliğinden yüklenecek bir güncelleme, Obtainium\'daki gibi Wi-Fi bağlantısını veya bir ağ kablosunu bekler.</string>
+    <string name="settings_charging_installs">Yalnızca şarj olurken yükle</string>
+    <string name="settings_charging_installs_effect">Denetimler pilde de çalışır. Kendiliğinden yüklenecek bir güncelleme, cihaz şarj olana kadar bekler.</string>
+    <string name="engine_unreadable_app">Kaydedilen %1$s uygulaması okunamadı, bu yüzden listenin dışında bırakıldı. Hiçbir şey silinmedi: Tern\'ın daha yeni bir sürümü onu okuyabilir.</string>
+    <string name="settings_pin_certificates">Kod platformlarının sertifikalarını sabitle</string>
+    <string name="settings_pin_certificates_effect">GitHub, GitLab ve Codeberg, her birinin kullandığı bilinen sertifika yetkilisinden bir sertifika göstermelidir; Obtainium\'da olduğu gibi. Başka bir sertifika yetkilisinin vermeye zorlandığı bir sertifika ise reddedilir. Bir kod platformu sertifika yetkilisini değiştirirse, bu ayar kapatılana kadar oradaki denetimler başarısız olur.</string>
+</resources>

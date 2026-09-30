@@ -98,21 +98,6 @@
         <item quantity="other">%d вибрано</item>
     </plurals>
     <string name="apps_select_hint">Виберіть програми зі списку.</string>
-    <string name="action_add_to_category">Додати до категорії</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">Додати %d програму до категорії</item>
-        <item quantity="few">Додати %d програми до категорії</item>
-        <item quantity="many">Додати %d програм до категорії</item>
-        <item quantity="other">Додати %d програм до категорії</item>
-    </plurals>
-    <string name="bulk_category_field">Категорія</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">Додано %1$d програму до %2$s.</item>
-        <item quantity="few">Додано %1$d програми до %2$s.</item>
-        <item quantity="many">Додано %1$d програм до %2$s.</item>
-        <item quantity="other">Додано %1$d програм до %2$s.</item>
-    </plurals>
-    <string name="bulk_category_existing">Або виберіть ту, яку вже використовуєте:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">Перевірити %d програму зараз?</item>
         <item quantity="few">Перевірити %d програми зараз?</item>

@@ -1,17 +1,21 @@
 package io.github.munzzyy.tern.ui.apps
 
+import androidx.annotation.StringRes
 import androidx.compose.ui.unit.Dp
+import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.engine.AppGrouping
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.AppSort
 import io.github.munzzyy.tern.engine.AppStatus
 import io.github.munzzyy.tern.engine.Settings
+import io.github.munzzyy.tern.engine.UpdateAllMode
 import io.github.munzzyy.tern.ui.text.canUpdateNow
 import io.github.munzzyy.tern.ui.text.isUpdate
 import java.text.Collator
 import java.util.Locale
 
+/** A chip above the list. Each one turns a part of [ListFilter] on or off; All clears it. */
 sealed interface AppFilter {
     data object All : AppFilter
     data object Updates : AppFilter
@@ -28,9 +32,39 @@ sealed interface AppFilter {
     data class Source(val type: String) : AppFilter
 }
 
+/**
+ * What the list is narrowed to. Filters of one kind widen each other: two categories show the
+ * apps in either, and Updates with Problems shows both. Filters of different kinds all have to
+ * hold: a category with Installed shows the installed apps in it. Every word of [name], [author]
+ * and [packageName] has to be found in that field.
+ */
+data class ListFilter(
+    /** Apps with an update or a new release. */
+    val updates: Boolean = false,
+    /** Apps whose check failed or whose offered file Tern refused. */
+    val problems: Boolean = false,
+    /** True keeps installed apps only, false apps that are not installed only, null both. */
+    val installed: Boolean? = null,
+    /** True keeps apps that are only tracked only, false leaves them out, null keeps both. */
+    val tracked: Boolean? = null,
+    val favorites: Boolean = false,
+    val hideUpToDate: Boolean = false,
+    val categories: Set<String> = emptySet(),
+    /** Source types, such as github. */
+    val sources: Set<String> = emptySet(),
+    val name: String = "",
+    val author: String = "",
+    val packageName: String = "",
+) {
+    /** True when anything narrows the list. */
+    val isOn: Boolean
+        get() = updates || problems || installed != null || tracked != null || favorites || hideUpToDate ||
+            categories.isNotEmpty() || sources.isNotEmpty() || name.isNotBlank() || author.isNotBlank() || packageName.isNotBlank()
+}
+
 data class ListQuery(
     val text: String = "",
-    val filter: AppFilter = AppFilter.All,
+    val filter: ListFilter = ListFilter(),
     val sort: AppSort = AppSort.NAME,
     val descending: Boolean = false,
     val grouping: AppGrouping = AppGrouping.NONE,
@@ -80,23 +114,66 @@ fun sourceLabel(type: String): String = SourceTypes.displayName(type) ?: type
 
 /** Every word typed has to be found, in the name, the author, the package or the address. */
 fun matches(row: AppRow, text: String): Boolean {
-    val words = text.trim().split(WHITESPACE).filter { it.isNotEmpty() }
-    if (words.isEmpty()) return true
     val c = row.config
-    val fields = listOfNotNull(c.shownName, c.name, c.shownAuthor, c.author, c.packageName, row.installed?.packageName, c.source.url, sourceLabel(c.source.type))
+    return allFound(text, listOfNotNull(c.shownName, c.name, c.shownAuthor, c.author, c.packageName, row.installed?.packageName, c.source.url, sourceLabel(c.source.type)))
+}
+
+/** True when every word of [text] is in one of [fields], and when [text] has no words. */
+private fun allFound(text: String, fields: List<String>): Boolean {
+    val words = text.trim().split(WHITESPACE).filter { it.isNotEmpty() }
     return words.all { word -> fields.any { it.contains(word, ignoreCase = true) } }
 }
 
-fun passes(row: AppRow, filter: AppFilter): Boolean = when (filter) {
-    AppFilter.All -> true
-    AppFilter.Updates -> isUpdate(row)
-    AppFilter.Installed -> row.installed != null
-    AppFilter.NotInstalled -> row.installed == null
-    AppFilter.Favorites -> row.config.favorite
-    AppFilter.TrackOnly -> row.config.trackOnly
-    AppFilter.Problems -> row.status == AppStatus.ERROR || row.status == AppStatus.BLOCKED
-    is AppFilter.Category -> filter.name in row.config.categories.map { it.trim() }
-    is AppFilter.Source -> row.config.source.type == filter.type
+fun passes(row: AppRow, filter: ListFilter): Boolean {
+    val c = row.config
+    val wanted = (filter.updates && isUpdate(row)) || (filter.problems && hasProblem(row))
+    return when {
+        (filter.updates || filter.problems) && !wanted -> false
+        filter.installed != null && (row.installed != null) != filter.installed -> false
+        filter.tracked != null && c.trackOnly != filter.tracked -> false
+        filter.favorites && !c.favorite -> false
+        filter.hideUpToDate && row.status == AppStatus.UP_TO_DATE -> false
+        filter.categories.isNotEmpty() && c.categories.none { it.trim() in filter.categories } -> false
+        filter.sources.isNotEmpty() && c.source.type !in filter.sources -> false
+        else -> allFound(filter.name, listOfNotNull(c.shownName, c.name)) &&
+            allFound(filter.author, listOfNotNull(c.shownAuthor, c.author)) &&
+            allFound(filter.packageName, listOfNotNull(c.packageName, row.installed?.packageName))
+    }
+}
+
+private fun hasProblem(row: AppRow): Boolean = row.status == AppStatus.ERROR || row.status == AppStatus.BLOCKED
+
+/** Whether [chip] is on in this filter. All is on while nothing else is. */
+fun ListFilter.has(chip: AppFilter): Boolean = when (chip) {
+    AppFilter.All -> !isOn
+    AppFilter.Updates -> updates
+    AppFilter.Installed -> installed == true
+    AppFilter.NotInstalled -> installed == false
+    AppFilter.Favorites -> favorites
+    AppFilter.TrackOnly -> tracked == true
+    AppFilter.Problems -> problems
+    is AppFilter.Category -> chip.name in categories
+    is AppFilter.Source -> chip.type in sources
+}
+
+/** This filter with [chip] turned on, or off where it was on. All clears everything; Installed and Not installed turn each other off. */
+fun ListFilter.toggled(chip: AppFilter): ListFilter = when (chip) {
+    AppFilter.All -> ListFilter()
+    AppFilter.Updates -> copy(updates = !updates)
+    AppFilter.Installed -> copy(installed = if (installed == true) null else true)
+    AppFilter.NotInstalled -> copy(installed = if (installed == false) null else false)
+    AppFilter.Favorites -> copy(favorites = !favorites)
+    AppFilter.TrackOnly -> copy(tracked = if (tracked == true) null else true)
+    AppFilter.Problems -> copy(problems = !problems)
+    is AppFilter.Category -> copy(categories = if (chip.name in categories) categories - chip.name else categories + chip.name)
+    is AppFilter.Source -> copy(sources = if (chip.type in sources) sources - chip.type else sources + chip.type)
+}
+
+/** This filter without the categories and sources that are gone from the list, which would otherwise hide every app for a reason nobody can see. */
+fun ListFilter.within(categories: Collection<String>, sources: Collection<String>): ListFilter {
+    val keptCategories = this.categories.filterTo(LinkedHashSet()) { it in categories }
+    val keptSources = this.sources.filterTo(LinkedHashSet()) { it in sources }
+    return if (keptCategories == this.categories && keptSources == this.sources) this else copy(categories = keptCategories, sources = keptSources)
 }
 
 /** The order of [query.sort], with ties broken by name, and each direction a true reversal of the other. */
@@ -118,10 +195,12 @@ fun order(query: ListQuery, locale: Locale = Locale.getDefault()): Comparator<Ap
 
 fun arrange(rows: List<AppRow>, query: ListQuery, locale: Locale = Locale.getDefault()): AppSections {
     val kept = rows.filter { passes(it, query.filter) && matches(it, query.text) }.sortedWith(order(query, locale))
-    // Stable sorts: each placement keeps the chosen order within what it moves.
+    // Stable sorts: each placement keeps the chosen order within what it moves. A project that
+    // moved comes first of all, as the person has to say whether to follow it.
     val placed = kept
         .sortedBy { if (query.buryNotInstalled && it.installed == null && !it.config.trackOnly) 1 else 0 }
         .sortedBy { if (it.config.favorite) 0 else 1 }
+        .sortedBy { if (it.movedTo != null) 0 else 1 }
     val (updates, others) = if (query.updatesFirst) placed.partition(::isUpdate) else emptyList<AppRow>() to placed
     return AppSections(updates, others, group(others, query.grouping, locale))
 }
@@ -142,6 +221,30 @@ fun group(rows: List<AppRow>, grouping: AppGrouping, locale: Locale = Locale.get
 }
 
 fun updatableCount(rows: List<AppRow>): Int = rows.count(::canUpdateNow)
+
+/** What the Update all button would start: [updates] of installed apps, and [installs] of apps not installed yet. */
+data class UpdateAllPlan(val updates: Int, val installs: Int) {
+    val total: Int get() = updates + installs
+}
+
+/**
+ * The Update all button as the setting has it, with [updatable] updates and [installable] first
+ * installs to start; null when there is no button. One app has its own button in its row, so
+ * the button stands only for two or more.
+ */
+fun updateAllPlan(mode: UpdateAllMode, updatable: Int, installable: Int): UpdateAllPlan? = when (mode) {
+    UpdateAllMode.NONE -> null
+    UpdateAllMode.UPDATES -> UpdateAllPlan(updatable, 0)
+    UpdateAllMode.ALL -> UpdateAllPlan(updatable, installable)
+}?.takeIf { it.total >= 2 }
+
+/** What the button that starts [plan] says. */
+@StringRes
+fun updateAllLabel(plan: UpdateAllPlan): Int = when {
+    plan.installs == 0 -> R.string.action_update_all
+    plan.updates == 0 -> R.string.action_install_all
+    else -> R.string.action_install_update_all
+}
 
 private val WHITESPACE = Regex("\\s+")
 private const val SEARCH_SHOWN_FROM = 8
@@ -171,14 +274,16 @@ fun actionPlace(width: Dp, icon: Dp, fontScale: Float, noTouch: Boolean): Action
 fun foldsSearch(total: Int, television: Boolean = false): Boolean = television || total < SEARCH_SHOWN_FROM
 
 /**
- * The filters worth showing: All, and each one that keeps some rows and drops others. Empty
- * when the rows are all of one kind, so there is nothing to filter. [current] is always among
- * them, so a filter that was taken can be left again.
+ * The chips worth showing: All, and each one that keeps some rows and drops others. Empty when
+ * the rows are all of one kind, so there is nothing to filter. A chip that is on in [current] is
+ * always among them, so it can be turned off again.
  */
-fun offeredFilters(rows: List<AppRow>, categories: List<String>, current: AppFilter): List<AppFilter> {
+fun offeredFilters(rows: List<AppRow>, categories: List<String>, current: ListFilter): List<AppFilter> {
     val narrowing = listOf(
         AppFilter.Updates, AppFilter.Installed, AppFilter.NotInstalled, AppFilter.Favorites, AppFilter.TrackOnly, AppFilter.Problems,
     ) + categories.map { AppFilter.Category(it) } + sourcesOf(rows).map { AppFilter.Source(it) }
-    val useful = narrowing.filter { filter -> filter == current || rows.count { passes(it, filter) } in 1 until rows.size }
+    val useful = narrowing.filter { chip ->
+        current.has(chip) || rows.count { passes(it, ListFilter().toggled(chip)) } in 1 until rows.size
+    }
     return if (useful.isEmpty()) emptyList() else listOf(AppFilter.All) + useful
 }

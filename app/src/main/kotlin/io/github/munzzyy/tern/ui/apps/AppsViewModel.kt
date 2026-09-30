@@ -7,6 +7,7 @@ import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.AppSort
 import io.github.munzzyy.tern.engine.Engine
 import io.github.munzzyy.tern.engine.Settings
+import io.github.munzzyy.tern.ui.text.canInstallNow
 import io.github.munzzyy.tern.ui.text.isWaitingForUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,23 +30,36 @@ data class AppsState(
     val filters: List<AppFilter> = emptyList(),
     /** Apps whose install waits for the user, whatever the search and the filter hide. */
     val waiting: List<AppRow> = emptyList(),
+    /** The filter as it applies: without the categories and sources that are gone from the list. */
+    val filter: ListFilter = ListFilter(),
+    /** How many apps the search and the filter leave. */
+    val shown: Int = 0,
+    /** Source types in the list, for the filter. */
+    val sources: List<String> = emptyList(),
+    /** Apps whose first install can start now, whatever the search and the filter hide, in the order of the list. */
+    val firstInstalls: List<String> = emptyList(),
 )
 
 /** What the list shows of [rows]: the apps in [gone] were removed and can still be taken back, so they are left out. */
 fun listState(rows: List<AppRow>, query: ListQuery, gone: Set<String>): AppsState {
     val shown = if (gone.isEmpty()) rows else rows.filterNot { it.id in gone }
     val categories = categoriesOf(shown)
-    val filter = query.filter
-    val effective = if (filter is AppFilter.Category && filter.name !in categories) query.copy(filter = AppFilter.All) else query
-    val everything = arrange(shown, ListQuery(sort = query.sort))
+    val sources = sourcesOf(shown)
+    val filter = query.filter.within(categories, sources)
+    val sections = arrange(shown, query.copy(filter = filter))
+    val everything = arrange(shown, ListQuery(sort = query.sort)).let { it.updates + it.others }
     return AppsState(
         loaded = true,
         total = shown.size,
-        sections = arrange(shown, effective),
+        sections = sections,
         categories = categories,
         updatable = updatableCount(shown),
-        filters = offeredFilters(shown, categories, effective.filter),
-        waiting = (everything.updates + everything.others).filter(::isWaitingForUser),
+        filters = offeredFilters(shown, categories, filter),
+        waiting = everything.filter(::isWaitingForUser),
+        filter = filter,
+        shown = sections.updates.size + sections.others.size,
+        sources = sources,
+        firstInstalls = everything.filter(::canInstallNow).map { it.id },
     )
 }
 
@@ -80,8 +94,18 @@ class AppsViewModel(private val engine: Engine, hidden: StateFlow<Set<String>> =
         _query.value = _query.value.copy(text = text.take(200))
     }
 
-    fun setFilter(filter: AppFilter) {
-        _query.value = _query.value.copy(filter = filter)
+    fun setFilter(filter: ListFilter) {
+        _query.update { it.copy(filter = filter) }
+    }
+
+    /** Turns [chip] on, or off where it was on; All clears every filter and the search. */
+    fun toggleFilter(chip: AppFilter) {
+        if (chip == AppFilter.All) clearFilters() else _query.update { it.copy(filter = it.filter.toggled(chip)) }
+    }
+
+    /** Clears the search and every filter at once. */
+    fun clearFilters() {
+        _query.update { it.copy(text = "", filter = ListFilter()) }
     }
 
     fun setSort(sort: AppSort) = saveList { it.copy(listSort = sort) }

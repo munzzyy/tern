@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
@@ -68,9 +69,12 @@ private val AVATAR_COLORS = listOf(
     Color(0xFF285C86), Color(0xFF52632A), Color(0xFF743A74), Color(0xFF2F6666), Color(0xFF86352A),
 )
 
-/** Cut to the Icon shape setting. */
+/** How much of an icon shows through when its app is not installed, as in Obtainium. */
+private const val DIMMED = 0.6f
+
+/** Cut to the Icon shape setting. [dimmed] shows it faded, for an app that is not installed. */
 @Composable
-fun AppIcon(row: AppRow, size: Dp = LocalLook.current.iconList, modifier: Modifier = Modifier) {
+fun AppIcon(row: AppRow, size: Dp = LocalLook.current.iconList, modifier: Modifier = Modifier, dimmed: Boolean = false) {
     val engine = LocalEngine.current
     val px = with(LocalDensity.current) { size.roundToPx() }
     val settings by engine.settings.collectAsStateWithLifecycle()
@@ -90,7 +94,7 @@ fun AppIcon(row: AppRow, size: Dp = LocalLook.current.iconList, modifier: Modifi
         }
     }
     val image = bitmap
-    val shaped = modifier.size(size).clip(LocalOutlines.current.icon).clearAndSetSemantics { }
+    val shaped = modifier.size(size).clip(LocalOutlines.current.icon).alpha(if (dimmed) DIMMED else 1f).clearAndSetSemantics { }
     if (image != null) {
         Image(image.asImageBitmap(), contentDescription = null, modifier = shaped)
     } else {

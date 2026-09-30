@@ -13,6 +13,7 @@ import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.CheckCount
 import io.github.munzzyy.tern.engine.ChecksumState
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.Engine
@@ -92,6 +93,9 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     private val _checkingAll = MutableStateFlow(false)
     override val checkingAll: StateFlow<Boolean> = _checkingAll.asStateFlow()
 
+    private val _checkCount = MutableStateFlow<CheckCount?>(null)
+    override val checkCount: StateFlow<CheckCount?> = _checkCount.asStateFlow()
+
     private val _online = MutableStateFlow(true)
     private val _handoff = MutableStateFlow<Handoff?>(null)
     override val handoff: StateFlow<Handoff?> = _handoff.asStateFlow()
@@ -141,6 +145,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         _apps.value = ordered(rows)
         _events.value = events
         _checkingAll.value = false
+        _checkCount.value = null
         _settings.value = Settings()
         _online.value = name != "offline"
         nothingWaits = false
@@ -252,11 +257,16 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     override suspend fun check(appId: String?) {
         if (!_online.value) return
         val ids = appId?.let { listOf(it) } ?: _apps.value.map { it.id }
-        if (appId == null) _checkingAll.value = true
+        if (appId == null) {
+            _checkCount.value = CheckCount(0, ids.size)
+            _checkingAll.value = true
+        }
         ids.forEach { id -> edit(id) { it.copy(checking = true) } }
-        delay(stepMs * 8)
-        val now = System.currentTimeMillis()
+        // The apps are done one after another, in the time one check took before.
+        val each = stepMs * 8 / ids.size.coerceAtLeast(1)
         ids.forEach { id ->
+            delay(each)
+            val now = System.currentTimeMillis()
             edit(id) { r ->
                 val known = if (r.status == AppStatus.UNKNOWN) {
                     val release = Invent(now).release(r.id, "1.0.0", 1)
@@ -268,8 +278,12 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
                 val stale = nothingWaits && known.progress?.phase == Phase.WAITING_FOR_USER
                 known.copy(checking = false, lastCheckedMs = now, progress = if (stale) null else known.progress)
             }
+            if (appId == null) _checkCount.update { it?.copy(done = it.done + 1) }
         }
-        if (appId == null) _checkingAll.value = false
+        if (appId == null) {
+            _checkingAll.value = false
+            _checkCount.value = null
+        }
     }
 
     override fun install(appId: String, releaseId: String?, assetUrl: String?) {

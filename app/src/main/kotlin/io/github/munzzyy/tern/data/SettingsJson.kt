@@ -58,6 +58,8 @@ object SettingsJson {
         Field.number("customStrength", { it.customStrength }, 0..100) { s, v -> s.copy(customStrength = v) },
         Field.choice("colorStyle", { it.colorStyle }) { s, v -> s.copy(colorStyle = v) },
         Field.flag("autoInstalls", { it.autoInstalls }) { s, v -> s.copy(autoInstalls = v) },
+        Field.choice("updateAllMode", { it.updateAllMode }) { s, v -> s.copy(updateAllMode = v) },
+        Field.flag("confirmUpdateAll", { it.confirmUpdateAll }) { s, v -> s.copy(confirmUpdateAll = v) },
     )
 
     /** The keys a file may carry. */

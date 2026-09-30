@@ -1,2 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="language_system">Sama seperti sistem</string>
+    <string name="interval_more_often">Periksa lebih sering</string>
+    <string name="interval_less_often">Periksa lebih jarang</string>
+    <string name="about_help">Cara kerja Tern</string>
+    <string name="about_help_effect">Apa yang diperiksa Tern serta cara menambah, memperbarui, dan memindahkan aplikasi, di halaman proyek.</string>
+    <string name="about_security">Cara Tern menjaga keamanan Anda</string>
+    <string name="about_privacy">Privasi</string>
+    <string name="verification_title">Verifikasi pengembang Android</string>
+    <string name="verification_text">Google telah mengumumkan bahwa perangkat Android bersertifikasi hanya akan menginstal aplikasi dari pengembang yang telah mendaftar ke Google, mulai September 2026 di beberapa negara dan di lebih banyak negara setelahnya.\n\nDi tempat aturan ini berlaku, Android dapat menolak aplikasi dari pengembang yang belum mendaftar, atau meminta lebih banyak dari Anda sebelum menginstalnya, apa pun hasil pemeriksaan Tern sendiri. Tern tidak dapat mengubah hal itu, dan akan memberi tahu Anda saat Android menolak.\n\nPerangkat tanpa sertifikasi Google tidak terpengaruh.</string>
+    <string name="verification_more">Halaman Google tentang hal ini</string>
+    <string name="kept_export_format">Format</string>
+    <string name="kept_export_format_tern">Format Tern, yang memuat semuanya</string>
+    <string name="kept_export_format_obtainium">Format Obtainium, yang juga dapat dibaca Obtainium</string>
+    <string name="kept_export_name">Nama file</string>
+    <string name="kept_export_name_usual">Kosongkan untuk memakai %1$s.</string>
+    <string name="look_style">Gaya</string>
+    <string name="style_standard">Standar</string>
+    <string name="style_vibrant">Cerah</string>
+    <string name="style_expressive">Ekspresif</string>
+    <string name="look_style_effect">Cerah lebih berwarna secara keseluruhan. Ekspresif memutar rona warna kedua dan ketiga lebih jauh dari warna pertama.</string>
+    <string name="look_color_code">Kode warna</string>
+    <string name="look_color_code_effect">Tern mengambil rona dan intensitas warna ini, lalu memilih gradasinya yang tetap mudah dibaca.</string>
+    <string name="look_color_code_invalid">Enam digit heksadesimal, misalnya #3D5A80.</string>
+    <string name="crash_title">Tern berhenti secara tak terduga</string>
+    <string name="crash_text">Ini yang sedang dilakukannya saat berhenti. Data ini tetap berada di perangkat ini; bagikan kepada pengembang jika Anda ingin agar ditinjau.</string>
+    <string name="crash_share">Bagikan</string>
+    <string name="crash_copied">Disalin</string>
+    <string name="activity_range">Tampilkan</string>
+    <string name="activity_range_all">Semua hari</string>
+    <plurals name="activity_range_days">
+        <item quantity="other">%d hari terakhir</item>
+    </plurals>
+    <string name="activity_copied">Log disalin</string>
+    <string name="settings_auto_installs">Pembaruan diinstal dengan sendirinya</string>
+    <string name="settings_auto_installs_effect">Aplikasi yang diatur untuk diperbarui dengan sendirinya melakukannya setelah pemeriksaan di latar belakang. Jika dimatikan, aplikasi hanya memberi tahu bahwa ada pembaruan, dan masing-masing tetap menyimpan pilihannya untuk nanti.</string>
+    <string name="settings_unmetered_installs">Instal hanya di Wi-Fi</string>
+    <string name="settings_unmetered_installs_effect">Pemeriksaan berjalan di jaringan apa pun. Pembaruan yang akan diinstal dengan sendirinya menunggu Wi-Fi atau kabel, seperti di Obtainium.</string>
+    <string name="settings_charging_installs">Instal hanya saat mengisi daya</string>
+    <string name="settings_charging_installs_effect">Pemeriksaan juga berjalan saat memakai baterai. Pembaruan yang akan diinstal dengan sendirinya menunggu hingga perangkat sedang mengisi daya.</string>
+    <string name="engine_unreadable_app">Aplikasi tersimpan %1$s tidak dapat dibaca, jadi tidak dimasukkan ke daftar. Tidak ada yang dihapus: Tern versi yang lebih baru mungkin dapat membacanya.</string>
+    <string name="settings_pin_certificates">Sematkan sertifikat platform kode</string>
+    <string name="settings_pin_certificates_effect">GitHub, GitLab, dan Codeberg harus menunjukkan sertifikat dari otoritas sertifikat yang diketahui digunakan masing-masing, seperti di Obtainium. Sertifikat yang diterbitkan otoritas sertifikat lain karena dipaksa akan ditolak. Jika sebuah platform kode mengganti otoritas sertifikatnya, pemeriksaan di sana gagal hingga ini dimatikan.</string>
+</resources>

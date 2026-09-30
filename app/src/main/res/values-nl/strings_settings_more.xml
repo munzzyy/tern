@@ -1,2 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="language_system">Hetzelfde als het systeem</string>
+    <string name="interval_more_often">Vaker controleren</string>
+    <string name="interval_less_often">Minder vaak controleren</string>
+    <string name="about_help">Hoe Tern werkt</string>
+    <string name="about_help_effect">Wat Tern controleert en hoe je apps toevoegt, updatet en verhuist, op de pagina van het project.</string>
+    <string name="about_security">Hoe Tern je beschermt</string>
+    <string name="about_privacy">Privacy</string>
+    <string name="verification_title">Ontwikkelaarsverificatie van Android</string>
+    <string name="verification_text">Google heeft aangekondigd dat gecertificeerde Android-apparaten alleen apps zullen installeren van ontwikkelaars die zich bij Google hebben geregistreerd, te beginnen in enkele landen vanaf september 2026 en daarna in meer landen.\n\nWaar dit geldt, kan Android een app van een niet-geregistreerde ontwikkelaar weigeren, of meer van je vragen voordat het er een installeert, hoe de eigen controles van Tern ook uitpakken. Tern kan dat niet veranderen en meldt je wanneer Android weigert.\n\nApparaten zonder de certificering van Google worden niet getroffen.</string>
+    <string name="verification_more">De pagina van Google hierover</string>
+    <string name="kept_export_format">Formaat</string>
+    <string name="kept_export_format_tern">Het formaat van Tern, dat alles bevat</string>
+    <string name="kept_export_format_obtainium">Het formaat van Obtainium, dat Obtainium ook kan lezen</string>
+    <string name="kept_export_name">Bestandsnaam</string>
+    <string name="kept_export_name_usual">Laat leeg voor %1$s.</string>
+    <string name="look_style">Stijl</string>
+    <string name="style_standard">Standaard</string>
+    <string name="style_vibrant">Levendig</string>
+    <string name="style_expressive">Expressief</string>
+    <string name="look_style_effect">Levendig is overal kleurrijker. Expressief draait de tweede en derde kleur verder van de eerste af.</string>
+    <string name="look_color_code">Kleurcode</string>
+    <string name="look_color_code_effect">Tern neemt de tint en intensiteit van deze kleur over en kiest daaruit de schakeringen die goed leesbaar blijven.</string>
+    <string name="look_color_code_invalid">Zes hexadecimale cijfers, zoals #3D5A80.</string>
+    <string name="crash_title">Tern is onverwacht gestopt</string>
+    <string name="crash_text">Dit deed Tern toen het stopte. Het rapport blijft op dit apparaat; deel het met de ontwikkelaar als je wilt dat er naar wordt gekeken.</string>
+    <string name="crash_share">Delen</string>
+    <string name="crash_copied">Gekopieerd</string>
+    <string name="activity_range">Tonen</string>
+    <string name="activity_range_all">Alle dagen</string>
+    <plurals name="activity_range_days">
+        <item quantity="one">De laatste %d dag</item>
+        <item quantity="other">De laatste %d dagen</item>
+    </plurals>
+    <string name="activity_copied">Het logboek is gekopieerd</string>
+    <string name="settings_auto_installs">Updates worden vanzelf geïnstalleerd</string>
+    <string name="settings_auto_installs_effect">Apps die zijn ingesteld om zichzelf te updaten, doen dat na een controle op de achtergrond. Staat dit uit, dan melden ze alleen dat er een update is, en elke app houdt zijn eigen keuze voor later.</string>
+    <string name="settings_unmetered_installs">Alleen installeren via wifi</string>
+    <string name="settings_unmetered_installs_effect">Controles draaien op elk netwerk. Een update die zichzelf zou installeren, wacht op wifi of een netwerkkabel, zoals in Obtainium.</string>
+    <string name="settings_charging_installs">Alleen installeren tijdens het opladen</string>
+    <string name="settings_charging_installs_effect">Controles draaien ook op de batterij. Een update die zichzelf zou installeren, wacht tot het apparaat oplaadt.</string>
+    <string name="engine_unreadable_app">De opgeslagen app %1$s kon niet worden gelezen, dus hij is weggelaten uit de lijst. Er is niets verwijderd: een nieuwere versie van Tern kan hem misschien lezen.</string>
+    <string name="settings_pin_certificates">De certificaten van de codeplatforms vastzetten</string>
+    <string name="settings_pin_certificates_effect">GitHub, GitLab en Codeberg moeten een certificaat tonen van de certificeringsinstantie waarvan bekend is dat elk van hen die gebruikt, zoals in Obtainium. Een certificaat dat een andere instantie ertoe is gebracht uit te geven, wordt dan geweigerd. Als een codeplatform van instantie verandert, mislukken controles daar totdat dit is uitgezet.</string>
+</resources>

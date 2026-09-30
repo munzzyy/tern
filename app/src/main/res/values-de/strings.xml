@@ -92,17 +92,6 @@
         <item quantity="other">%d ausgewählt</item>
     </plurals>
     <string name="apps_select_hint">Wähle Apps aus der Liste.</string>
-    <string name="action_add_to_category">Zu Kategorie hinzufügen</string>
-    <plurals name="bulk_category_title">
-        <item quantity="one">%d App zu Kategorie hinzufügen</item>
-        <item quantity="other">%d Apps zu Kategorie hinzufügen</item>
-    </plurals>
-    <string name="bulk_category_field">Kategorie</string>
-    <plurals name="bulk_category_done">
-        <item quantity="one">%1$d App unter %2$s abgelegt.</item>
-        <item quantity="other">%1$d Apps unter %2$s abgelegt.</item>
-    </plurals>
-    <string name="bulk_category_existing">Oder wähle eine bereits genutzte:</string>
     <plurals name="bulk_check_title">
         <item quantity="one">%d App jetzt prüfen?</item>
         <item quantity="other">%d Apps jetzt prüfen?</item>

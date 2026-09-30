@@ -88,6 +88,9 @@ object ObtainiumSettings {
                 }
             },
         ),
+        // Obtainium's banner button, which Tern keeps as what its Update all button takes in.
+        choice("actionBannerMode", "updateAllMode", byIndex = false, listOf("updatesOnly" to "UPDATES", "all" to "ALL", "none" to "NONE")),
+        flag("skipBulkUpdateConfirmation", "confirmUpdateAll", inverted = true),
     )
 
     /** What [obtainium] sets that Tern has a setting for, under Tern's names. */

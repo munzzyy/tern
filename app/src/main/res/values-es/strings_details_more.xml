@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_package_effect">Todos los archivos tienen que ser de este paquete, y la aplicación instalada con ese nombre es la que Tern examina. Si se deja vacío, Tern lo lee del archivo de la aplicación.</string>
+</resources>

@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="parts_obb_name_refused">Questo archivio contiene un file OBB il cui nome potrebbe uscire dalla cartella OBB dell\'app, oppure due file OBB con lo stesso nome. Non è stato installato nulla.</string>
+    <plurals name="parts_obb_placed">
+        <item quantity="one">Inserito %1$d file OBB in %2$s.</item>
+        <item quantity="many">Inseriti %1$d file OBB in %2$s.</item>
+        <item quantity="other">Inseriti %1$d file OBB in %2$s.</item>
+    </plurals>
+    <string name="parts_obb_not_placed">I file OBB non sono stati inseriti in %1$s, perché solo gli installer Shizuku e root possono scrivere lì. Si trovano in %2$s, il file di questa release: %3$s.</string>
+    <string name="parts_obb_failed">Impossibile inserire i file OBB in %1$s: %2$s. Si trovano in %3$s, il file di questa release: %4$s.</string>
+</resources>

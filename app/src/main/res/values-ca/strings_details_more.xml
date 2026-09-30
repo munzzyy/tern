@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="setting_package_effect">Tots els fitxers han de ser d\'aquest paquet, i l\'aplicació instal·lada amb aquest nom és la que Tern examina. Si es deixa buit, Tern el llegeix del fitxer de l\'aplicació.</string>
+</resources>

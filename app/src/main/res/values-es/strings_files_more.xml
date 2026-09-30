@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources />
+<resources>
+    <string name="files_other_title">Otros archivos de este lanzamiento</string>
+    <string name="files_source_code">Código fuente</string>
+    <string name="files_save_spoken">Guardar %1$s en Descargas</string>
+    <string name="files_save_a_file">Guardar un archivo</string>
+    <string name="files_pick_title_version">Guardar un archivo de la versión %1$s</string>
+    <string name="files_pick_title_app">Guardar un archivo de %1$s</string>
+    <string name="files_skip">Omitir</string>
+    <plurals name="files_bulk_saving">
+        <item quantity="one">Guardando %1$d archivo. Una notificación avisa cuando termine.</item>
+        <item quantity="many">Guardando %1$d archivos. Una notificación avisa cuando termine cada uno.</item>
+        <item quantity="other">Guardando %1$d archivos. Una notificación avisa cuando termine cada uno.</item>
+    </plurals>
+    <string name="files_channel_saved">Archivos guardados</string>
+    <string name="files_notify_saved">%1$s guardado</string>
+    <string name="files_notify_saved_plain">Se guardó un archivo en Descargas</string>
+    <string name="files_notify_not_saved">No se pudo guardar %1$s</string>
+    <string name="files_notify_not_saved_plain">No se pudo guardar un archivo</string>
+    <string name="files_notify_updated_to">%1$s se actualizó a %2$s</string>
+    <string name="files_notify_installed_at">%1$s %2$s se instaló</string>
+    <string name="files_notify_problem_line">%1$s: %2$s</string>
+    <string name="files_problems_title">Qué salió mal</string>
+    <string name="files_problems_none">Ninguna de estas aplicaciones tiene un problema ahora.</string>
+    <string name="files_setting_verifier">Mostrar primero las aplicaciones nuevas a Verified Apps</string>
+    <string name="files_setting_verifier_effect">Antes de instalar una aplicación por primera vez, su archivo comprobado se envía a Verified Apps o a AppVerifier, si alguna de las dos está instalada, para un segundo vistazo. La instalación continúa cuando vuelves a Tern.</string>
+    <string name="files_verifier_about">Acerca de Verified Apps</string>
+    <string name="files_verifier_card_effect">%1$s es una aplicación aparte. Compara esta aplicación con el certificado que Tern le exige y con su propia lista de aplicaciones conocidas.</string>
+    <string name="files_verifier_card_action">Comprobar con %1$s</string>
+</resources>

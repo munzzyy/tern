@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.ui.detail
 
 import android.os.Build
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -28,6 +29,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
@@ -36,6 +39,7 @@ import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.tern.R
@@ -73,6 +77,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.text.style.TextOverflow
 import io.github.munzzyy.tern.ui.icons.AppIcon
 import io.github.munzzyy.tern.ui.icons.Seal
+import io.github.munzzyy.tern.ui.icons.rememberIconTint
 import io.github.munzzyy.tern.ui.text.PromptLine
 import io.github.munzzyy.tern.ui.text.RowAction
 import io.github.munzzyy.tern.ui.text.canSkip
@@ -130,13 +135,13 @@ fun DetailScreen(appId: String, onBack: (() -> Unit)?, onRemoved: () -> Unit, fo
         LazyColumn(
             state = listState,
             verticalArrangement = Arrangement.spacedBy(look.gap),
-            contentPadding = PaddingValues(top = if (onBack == null) look.gap else look.gapSmall / 2, bottom = look.gapSection),
+            contentPadding = PaddingValues(bottom = look.gapSection),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
                 .testTag(DETAIL_LIST_TAG),
         ) {
-            item(key = "header") { Header(current, Modifier.backupFocus(screen)) }
+            item(key = "header") { Header(current, Modifier.backupFocus(screen), top = if (onBack == null) look.gap else look.gapSmall / 2) }
             item(key = "action") { ActionArea(current, Modifier.firstFocus(screen)) }
             val moveState = move
             if (current.movedTo != null || moveState is MoveState.Refused || moveState == MoveState.Followed) {
@@ -201,7 +206,7 @@ private fun Passed(row: AppRow) {
 }
 
 @Composable
-private fun Header(row: AppRow, focus: Modifier) {
+private fun Header(row: AppRow, focus: Modifier, top: Dp) {
     val look = LocalLook.current
     var link by rememberSaveable { mutableStateOf<String?>(null) }
     val words: @Composable (Modifier) -> Unit = { place ->
@@ -230,22 +235,29 @@ private fun Header(row: AppRow, focus: Modifier) {
         .padding(horizontal = look.screenPadding + look.focusRoom)
         .widthIn(max = look.contentMaxWidth)
         .fillMaxWidth()
-    Column(frame, verticalArrangement = Arrangement.spacedBy(look.gapSmall)) {
-        if (LocalDensity.current.fontScale >= STACK_FONT_SCALE) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                AppIcon(row, size = look.iconHeader)
-                Box(Modifier.weight(1f))
-                tools()
+    // The top of the page takes the colour of the app's own icon, fading into the page. It starts
+    // right under the bar, so the room above the header is part of the wash.
+    val tint = rememberIconTint(row, look.iconHeader)
+    val wash = if (MaterialTheme.colorScheme.surface.luminance() < 0.5f) 0.30f else 0.20f
+    val backdrop = Brush.verticalGradient(listOf(tint.copy(alpha = wash), tint.copy(alpha = 0f)))
+    Box(Modifier.fillMaxWidth().background(backdrop).padding(top = top + look.gapSmall, bottom = look.gapSmall)) {
+        Column(frame, verticalArrangement = Arrangement.spacedBy(look.gapSmall)) {
+            if (LocalDensity.current.fontScale >= STACK_FONT_SCALE) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    AppIcon(row, size = look.iconHeader)
+                    Box(Modifier.weight(1f))
+                    tools()
+                }
+                words(Modifier.fillMaxWidth())
+            } else {
+                Row(horizontalArrangement = Arrangement.spacedBy(look.gap), verticalAlignment = Alignment.CenterVertically) {
+                    AppIcon(row, size = look.iconHeader)
+                    words(Modifier.weight(1f))
+                    tools()
+                }
             }
-            words(Modifier.fillMaxWidth())
-        } else {
-            Row(horizontalArrangement = Arrangement.spacedBy(look.gap), verticalAlignment = Alignment.CenterVertically) {
-                AppIcon(row, size = look.iconHeader)
-                words(Modifier.weight(1f))
-                tools()
-            }
+            row.description?.takeIf { it.isNotBlank() }?.let { Description(it) }
         }
-        row.description?.takeIf { it.isNotBlank() }?.let { Description(it) }
     }
     link?.let { LinkDialog(it, onDismiss = { link = null }) }
 }

@@ -28,6 +28,8 @@ import io.github.munzzyy.tern.ui.text.avatarLetter
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.LocalOutlines
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /** [key] names the picture. [round] changes with every check of the app, and a new round asks again for a picture that was missing. */
 internal data class IconAsk(val key: String, val round: String)
@@ -109,3 +111,65 @@ fun LetterAvatar(id: String, name: String, size: Dp, modifier: Modifier = Modifi
         )
     }
 }
+
+/**
+ * The colour an app's icon mostly is, for tinting what stands around it, or the colour of its
+ * letter when it has no icon. Grey and near-white pixels count for little, so a white icon on a
+ * coloured shape gives the shape's colour.
+ */
+@Composable
+fun rememberIconTint(row: AppRow, size: Dp): Color {
+    val engine = LocalEngine.current
+    val px = with(LocalDensity.current) { size.roundToPx() }
+    val settings by engine.settings.collectAsStateWithLifecycle()
+    val ask = iconAsk(row, px, settings.sourceIcons)
+    val letter = AVATAR_COLORS[avatarColorIndex(row.id, AVATAR_COLORS.size)]
+    val tint by produceState(letter, ask) {
+        val bitmap = IconCache.bitmaps.get(ask.key) ?: if (IconCache.misses.known(ask)) null else try {
+            engine.icon(row, px)?.also { IconCache.bitmaps.put(ask.key, it) }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (_: Exception) {
+            null
+        }
+        value = bitmap?.let { withContext(Dispatchers.Default) { dominantColor(it) } } ?: letter
+    }
+    return tint
+}
+
+/** The mean of the icon's coloured pixels, each weighed by how coloured it is; null for an icon of greys. */
+internal fun dominantColor(bitmap: Bitmap): Color? {
+    val small = Bitmap.createScaledBitmap(bitmap, TINT_SAMPLE, TINT_SAMPLE, true)
+    val pixels = IntArray(TINT_SAMPLE * TINT_SAMPLE)
+    small.getPixels(pixels, 0, TINT_SAMPLE, 0, 0, TINT_SAMPLE, TINT_SAMPLE)
+    if (small !== bitmap) small.recycle()
+    return weighedColor(pixels)
+}
+
+/** [argb] pixels averaged by how coloured and how opaque each is; null when none has colour enough. */
+internal fun weighedColor(argb: IntArray): Color? {
+    var r = 0.0
+    var g = 0.0
+    var b = 0.0
+    var total = 0.0
+    for (p in argb) {
+        val alpha = (p ushr 24 and 0xff) / 255.0
+        if (alpha < 0.5) continue
+        val red = p shr 16 and 0xff
+        val green = p shr 8 and 0xff
+        val blue = p and 0xff
+        val max = maxOf(red, green, blue)
+        val min = minOf(red, green, blue)
+        val chroma = (max - min) / 255.0
+        if (chroma < 0.12) continue
+        val weight = alpha * chroma * chroma
+        r += red * weight
+        g += green * weight
+        b += blue * weight
+        total += weight
+    }
+    if (total <= 0.0) return null
+    return Color((r / total).toInt(), (g / total).toInt(), (b / total).toInt())
+}
+
+private const val TINT_SAMPLE = 24

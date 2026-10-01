@@ -249,7 +249,13 @@ class InstallGate(
                 parts += Part(android, ours, own)
                 continue
             }
-            if (android == null) throw StepFailure(ProblemKind.PARSE, texts.androidRefusedFile())
+            if (android == null) {
+                // Android itself refuses to even parse an archive whose own manifest asks for a
+                // newer platform than this device has, so the file's own minSdk is read instead.
+                val minSdk = ours.manifest.minSdk
+                if (minSdk != null && minSdk > request.device.sdk) throw StepFailure(ProblemKind.UNSUPPORTED, texts.needsNewerAndroid(minSdk))
+                throw StepFailure(ProblemKind.PARSE, texts.androidRefusedFile())
+            }
             if (base != null) throw StepFailure(ProblemKind.PARSE, texts.archiveHasNoBase())
             base = android to ours
         }

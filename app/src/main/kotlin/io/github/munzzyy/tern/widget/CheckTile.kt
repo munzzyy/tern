@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.widget
 
+import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import io.github.munzzyy.tern.R
@@ -54,11 +55,17 @@ class CheckTile : TileService() {
 
     private fun draw(state: WidgetState) {
         val tile = qsTile ?: return
-        tile.label = getString(R.string.tile_check)
-        tile.subtitle = when {
+        val label = when {
             state.checking -> getString(R.string.tile_checking)
             state.updates == 0 -> getString(R.string.tile_up_to_date)
             else -> resources.getQuantityString(R.plurals.widget_updates, state.updates, state.updates)
+        }
+        // Tile.setSubtitle needs Android 10; below that the label itself carries the same words.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            tile.label = getString(R.string.tile_check)
+            tile.subtitle = label
+        } else {
+            tile.label = label
         }
         tile.state = if (state.checking || state.updates > 0) Tile.STATE_ACTIVE else Tile.STATE_INACTIVE
         tile.updateTile()

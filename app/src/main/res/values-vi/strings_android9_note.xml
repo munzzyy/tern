@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">Điện thoại này chạy Android 9</string>
+    <string name="android9_body">Các bản vá bảo mật cuối cùng của Google cho Android 9 đã ra mắt vào tháng 1 năm 2022, nên các lỗ hổng trong Android được phát hiện từ đó đến nay vẫn tồn tại trên điện thoại này. Tern kiểm tra mọi tệp trước khi Android cài đặt, nhưng nó không thể vá các lỗ hổng trong chính Android.</string>
+</resources>

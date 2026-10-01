@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">此手机运行 Android 9</string>
+    <string name="android9_body">Google 最后一次针对 Android 9 的安全修复发布于 2022 年 1 月，因此自那时起发现的 Android 漏洞在此手机上依然存在。Tern 会在 Android 安装每个文件前对其进行检查，但它无法修补 Android 本身的漏洞。</string>
+</resources>

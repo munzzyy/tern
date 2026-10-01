@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">Этот телефон работает на Android 9</string>
+    <string name="android9_body">Последние исправления безопасности от Google для Android 9 вышли в январе 2022 года, поэтому уязвимости в Android, найденные с тех пор, остаются открытыми на этом телефоне. Tern проверяет каждый файл до того, как Android его установит, но он не может закрыть уязвимости в самом Android.</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">Auf diesem Telefon läuft Android 9</string>
+    <string name="android9_body">Googles letzte Sicherheitsupdates für Android 9 erschienen im Januar 2022, daher bleiben seitdem gefundene Lücken in Android auf diesem Telefon offen. Tern prüft jede Datei, bevor Android sie installiert, aber es kann Lücken in Android selbst nicht schließen.</string>
+</resources>

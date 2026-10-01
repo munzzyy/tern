@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">Denne telefon kører Android 9</string>
+    <string name="android9_body">Googles sidste sikkerhedsrettelser til Android 9 udkom i januar 2022, så huller i Android, der er fundet siden da, forbliver åbne på denne telefon. Tern tjekker hver fil, før Android installerer den, men den kan ikke lukke huller i selve Android.</string>
+</resources>

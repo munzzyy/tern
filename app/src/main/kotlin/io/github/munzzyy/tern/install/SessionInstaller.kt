@@ -71,14 +71,24 @@ class SessionInstaller(private val context: Context) : Installer {
     override fun abandonOlderThan(maxAgeMs: Long, nowMs: Long): Int {
         var count = 0
         for (session in installer.mySessions) {
-            // Android 10 does not say when a session was made, only when it was last written to.
-            val since = if (Build.VERSION.SDK_INT >= 30) session.createdMillis else session.updatedMillis
+            val since = sinceMillis(session) ?: continue
             if (nowMs - since > maxAgeMs) {
                 abandon(session.sessionId)
                 count++
             }
         }
         return count
+    }
+
+    /**
+     * When the session was made, as far as this Android says: exactly from 11 on, and no later
+     * than it was last written to on 10. Android 9 says neither, so a session there is never
+     * abandoned by age.
+     */
+    private fun sinceMillis(session: PackageInstaller.SessionInfo): Long? = when {
+        Build.VERSION.SDK_INT >= 30 -> session.createdMillis
+        Build.VERSION.SDK_INT >= 29 -> session.updatedMillis
+        else -> null
     }
 
     private inline fun guarded(sessionId: Int, block: () -> Unit) {

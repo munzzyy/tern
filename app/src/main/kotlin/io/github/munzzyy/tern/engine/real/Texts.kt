@@ -107,6 +107,7 @@ class Texts(context: Context) : ImportTexts {
     override fun linkNotAnExport() = s(R.string.engine_link_not_an_export)
     fun exportNoPlace() = s(R.string.engine_export_no_place)
     fun exportFailed(detail: String?) = if (detail.isNullOrBlank()) s(R.string.engine_export_failed_plain) else s(R.string.engine_export_failed, detail.take(200))
+    fun pickedPlace() = s(R.string.engine_picked_place)
 
     fun trackOnly() = s(R.string.engine_track_only)
     fun noRelease() = s(R.string.engine_no_release)

@@ -645,6 +645,9 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     override suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile =
         SavedFile(assetUrl.substringAfterLast('/'), "Download/Tern", "/storage/emulated/0/Download/Tern/" + assetUrl.substringAfterLast('/'), System.currentTimeMillis(), 0)
 
+    override suspend fun saveFileTo(appId: String, releaseId: String, assetUrl: String, destination: Uri): SavedFile =
+        SavedFile(assetUrl.substringAfterLast('/'), "the place you picked", destination.toString(), System.currentTimeMillis(), 0)
+
     override suspend fun fileSize(appId: String, releaseId: String, assetUrl: String): Long? = null
 
     override val searchOrigins: List<String> = listOf("GitHub", "Codeberg", "GitLab", "F-Droid", "Aptoide", "vivo App Store")

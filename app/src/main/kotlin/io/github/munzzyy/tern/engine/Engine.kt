@@ -261,6 +261,13 @@ interface Engine {
     suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile
 
     /**
+     * The same download as [saveFile], written to [destination] instead of Download/Tern. For
+     * Android versions that have no Download/Tern of their own, where a person picks the place
+     * themselves through a file picker.
+     */
+    suspend fun saveFileTo(appId: String, releaseId: String, assetUrl: String, destination: Uri): SavedFile
+
+    /**
      * The size of a file of the app whose source names none, asked of the server once, or null
      * when the server does not say. The token goes only where it would go for the download.
      */

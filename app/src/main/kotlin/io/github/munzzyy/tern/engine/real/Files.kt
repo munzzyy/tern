@@ -4,8 +4,10 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import androidx.annotation.RequiresApi
 import io.github.munzzyy.tern.engine.ExportFormat
 import io.github.munzzyy.tern.engine.Problem
 import io.github.munzzyy.tern.engine.ProblemException
@@ -73,6 +75,7 @@ internal object Importable {
 internal class Files(context: Context, private val texts: Texts, private val nowMs: () -> Long) {
     private val c = context.applicationContext
     private val resolver = c.contentResolver
+    @get:RequiresApi(Build.VERSION_CODES.Q)
     private val downloads: Uri get() = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
 
     // Deprecated as a way to open files; here it only names the shared folder in a path a person reads.
@@ -82,6 +85,7 @@ internal class Files(context: Context, private val texts: Texts, private val now
     private class Entry(val file: SavedFile, val uri: Uri?)
 
     fun save(text: String, fixedName: String? = null, prefix: String = ExportNames.PREFIX): SavedFile {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) throw needsQ()
         val bytes = text.toByteArray(Charsets.UTF_8)
         val name = fixedName ?: ExportNames.forDay(nowMs(), ZoneId.systemDefault(), asked { exports() }.orEmpty().map { it.file.name }, prefix)
         val values = ContentValues().apply {
@@ -112,6 +116,7 @@ internal class Files(context: Context, private val texts: Texts, private val now
      * picks another name when one of that name is there already.
      */
     fun saveCopy(source: File, name: String, mime: String): SavedFile {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) throw needsQ()
         val values = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, mime)
@@ -141,6 +146,7 @@ internal class Files(context: Context, private val texts: Texts, private val now
      * so a kept export stays one file instead of one a day.
      */
     fun keep(name: String, text: String): SavedFile {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) throw needsQ()
         val existing = asked { exports() }.orEmpty().firstOrNull { it.file.name == name && it.uri != null }
         val uri = existing?.uri ?: return save(text, name)
         try {
@@ -153,6 +159,27 @@ internal class Files(context: Context, private val texts: Texts, private val now
         }
         return existing.file
     }
+
+    /** Copies [source] to [destination], a place the person picked themselves through a file picker. */
+    fun saveTo(source: File, destination: Uri): SavedFile {
+        val name = asked { displayNameOf(destination) } ?: source.name
+        try {
+            val out = resolver.openOutputStream(destination) ?: throw IOException("The picker opened no file")
+            out.use { target -> source.inputStream().use { it.copyTo(target) } }
+        } catch (ex: IOException) {
+            throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportFailed(ex.message)))
+        } catch (ex: RuntimeException) {
+            throw ProblemException(Problem(ProblemKind.STORAGE, texts.exportFailed(ex.message)))
+        }
+        return SavedFile(name, texts.pickedPlace(), destination.toString(), nowMs(), source.length())
+    }
+
+    private fun displayNameOf(uri: Uri): String? =
+        resolver.query(uri, arrayOf(MediaStore.MediaColumns.DISPLAY_NAME), null, null, null)?.use {
+            if (it.moveToFirst()) it.getString(0) else null
+        }
+
+    private fun needsQ() = ProblemException(Problem(ProblemKind.UNSUPPORTED, texts.needsNewerAndroid(Build.VERSION_CODES.Q)))
 
     fun list(): List<SavedFile> = entries().map { it.file }
 
@@ -175,7 +202,11 @@ internal class Files(context: Context, private val texts: Texts, private val now
     private fun open(entry: Entry): InputStream =
         if (entry.uri == null) Importable.openDropped(File(entry.file.path)) else resolver.openInputStream(entry.uri) ?: throw IOException("MediaStore opened no file")
 
-    private fun entries(): List<Entry> = Importable.newestFirst(asked { exports() }.orEmpty() + dropped()) { it.file }
+    private fun entries(): List<Entry> = Importable.newestFirst(mediaStoreExports() + dropped()) { it.file }
+
+    /** MediaStore's downloads collection exists only from Android 10 on; below that there is nothing to list here. */
+    private fun mediaStoreExports(): List<Entry> =
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) emptyList() else asked { exports() }.orEmpty()
 
     /** MediaStore runs in another process and answers a failure with whichever RuntimeException it likes. */
     private fun <T> asked(call: () -> T): T? = try {
@@ -185,6 +216,7 @@ internal class Files(context: Context, private val texts: Texts, private val now
     }
 
     /** Rows of the download collection that this app made; Android shows an app without permissions no others. */
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun exports(only: Uri? = null): List<Entry> {
         val columns = arrayOf(
             MediaStore.MediaColumns._ID, MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.RELATIVE_PATH,

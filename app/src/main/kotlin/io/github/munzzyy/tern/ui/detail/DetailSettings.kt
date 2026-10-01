@@ -1,5 +1,8 @@
 package io.github.munzzyy.tern.ui.detail
 
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -499,14 +502,29 @@ private fun RemoveGroup(row: AppRow, onRemoved: () -> Unit) {
     }
 }
 
-/** Puts a copy of the file in Download/Tern, as it came; only an install checks a file. */
+/**
+ * Puts a copy of the file in Download/Tern, as it came; only an install checks a file. Below
+ * Android 10, which has no Download/Tern of its own, a person is asked where to put it instead.
+ */
 @Composable
 private fun SaveFileButton(vm: DetailViewModel, releaseId: String, file: Asset, modifier: Modifier = Modifier) {
+    val actions = rememberActions()
+    val saved = stringResource(R.string.file_saved)
+    val failed = stringResource(R.string.save_failed)
     val saveFile = rememberFileSaver(vm)
+    val picker = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/octet-stream")) { uri ->
+        if (uri != null) {
+            vm.saveFileTo(releaseId, file.url, uri) { saved2, problem ->
+                actions.say(if (saved2 != null) saved.format(saved2.name, saved2.place) else problem ?: failed)
+            }
+        }
+    }
     val spoken = stringResource(R.string.files_save_spoken, file.name)
     QuietButton(
         stringResource(R.string.action_save_file),
-        onClick = { saveFile(releaseId, file.url) },
+        onClick = {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) saveFile(releaseId, file.url) else picker.launch(file.name)
+        },
         enabled = LocalOnline.current,
         modifier = modifier.semantics { contentDescription = spoken },
     )

@@ -1,20 +1,14 @@
 # Changelog
 
-## Unreleased
+## 0.2.1, 2026-09-30
 
-- Android 9 is now the minimum, down from 10. Saving to Download/Tern on its
-  own needs Android 10, which only Android has; on 9 the kept export and a
-  file saved from an app's page go through a file picker instead, and the
-  settings say so when a picker is not available either. Three API-level
-  bugs are fixed along the way: Dhizuku's own binder named itself in a way
-  only Android 10 and later accept, the transfer notification used a
-  foreground-service type Android 9 does not know, and the quick settings
-  tile tried to set a subtitle Android 9 has no field for. Two real bugs in
-  the install flow, found only once Android 9 ran it for the first time:
-  the system's install confirmation carries a different action on 9
-  (CONFIRM_PERMISSIONS, not CONFIRM_INSTALL) and was silently never shown;
-  and a file whose own manifest asks for a newer Android than this device
-  has was blamed as unreadable instead of named for what it needed.
+- Runs on Android 9. Saving into Download/Tern without asking needs Android
+  10, so on 9 the kept export and a file saved from an app's page go through
+  the system's file picker, and the settings say where a picker is needed.
+- On Android 9 the system's install confirmation now shows. It arrived in a
+  form Tern did not expect and was never put on screen.
+- A file that needs a newer Android than the phone has is named for that,
+  instead of being called unreadable.
 
 ## 0.2.0, 2026-09-30
 

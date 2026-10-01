@@ -1,0 +1,1 @@
+Runs on Android 9. There, saving without asking goes through the system's file picker, and the system's install confirmation now shows. A file that needs a newer Android than the phone has is named for that instead of being called unreadable.

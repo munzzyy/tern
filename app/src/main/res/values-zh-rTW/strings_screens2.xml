@@ -4,7 +4,6 @@
     <string name="action_import">匯入</string>
     <string name="add_clear">清除欄位</string>
     <string name="starter_title">知名應用程式</string>
-    <string name="starter_explain">每一個都來自其開發者自己的網址。在您同意之前，不會新增任何東西。</string>
     <string name="starter_for_television">適用於此電視</string>
     <string name="starter_for_any_device">適用於任何裝置</string>
     <string name="starter_pinned">憑證已知</string>

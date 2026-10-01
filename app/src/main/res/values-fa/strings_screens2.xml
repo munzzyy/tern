@@ -4,7 +4,6 @@
     <string name="action_import">وارد کردن</string>
     <string name="add_clear">پاک کردن کادر</string>
     <string name="starter_title">برنامه‌های شناخته‌شده</string>
-    <string name="starter_explain">هر کدام از آدرس خود توسعه‌دهنده می‌آیند. هیچ‌چیزی تا زمانی که شما نگویید اضافه نمی‌شود.</string>
     <string name="starter_for_television">برای این تلویزیون</string>
     <string name="starter_for_any_device">برای هر دستگاهی</string>
     <string name="starter_pinned">گواهی شناخته‌شده</string>

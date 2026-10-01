@@ -21,6 +21,8 @@ import io.github.munzzyy.tern.ui.common.SectionCard
 import io.github.munzzyy.tern.ui.common.StatusChip
 import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.icons.LetterAvatar
+import io.github.munzzyy.tern.ui.text.ltr
+import io.github.munzzyy.tern.ui.text.shortUrl
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.heavier
 
@@ -60,7 +62,7 @@ fun Starters(
     Column(modifier.testTag(STARTERS_TAG), verticalArrangement = Arrangement.spacedBy(look.gap)) {
         Column(verticalArrangement = Arrangement.spacedBy(look.gapSmall / 2), modifier = Modifier.padding(horizontal = look.cardPadding)) {
             Text(stringResource(R.string.starter_title), style = MaterialTheme.typography.titleLarge, modifier = Modifier.semantics { heading() })
-            Text(stringResource(R.string.starter_explain), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(R.string.starter_explain_sources), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         for (group in groups) {
             val title = when (group.heading) {
@@ -86,6 +88,7 @@ private fun StarterRow(app: Suggestion, onLook: () -> Unit, modifier: Modifier) 
     ) {
         Text(app.name, style = MaterialTheme.typography.titleMedium.heavier())
         Text(app.summary, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(ltr(shortUrl(app.url)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         if (app.pinned) StatusChip(Glyphs.Seal, stringResource(R.string.starter_pinned), tone = ChipTone.VERIFIED)
         when (app.here) {
             StarterHere.NONE -> Unit

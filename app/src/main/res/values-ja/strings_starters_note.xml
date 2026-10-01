@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_explain_sources">それぞれ、名前の下にあるアドレスから提供されます。開くと、そのアドレスにアプリの最新リリースを問い合わせます。指示するまで、何も追加されません。</string>
+</resources>

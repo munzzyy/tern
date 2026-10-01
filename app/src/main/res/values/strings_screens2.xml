@@ -7,7 +7,6 @@
     <!-- Add screen -->
     <string name="add_clear">Clear the field</string>
     <string name="starter_title">Well known apps</string>
-    <string name="starter_explain">Each one comes from its developer\'s own address. Nothing is added until you say so.</string>
     <string name="starter_for_television">For this television</string>
     <string name="starter_for_any_device">For any device</string>
     <!-- A short label on an app whose signing certificate is built into Tern. -->

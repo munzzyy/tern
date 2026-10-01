@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_explain_sources">Cada una viene de la dirección bajo su nombre. Al abrir una se pide a esa dirección el lanzamiento más nuevo de la aplicación. No se añade nada hasta que tú lo indiques.</string>
+</resources>

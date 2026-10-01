@@ -4,7 +4,6 @@
     <string name="action_import">导入</string>
     <string name="add_clear">清空字段</string>
     <string name="starter_title">知名应用</string>
-    <string name="starter_explain">每一个都来自其开发者自己的地址。只有在您确认后才会添加内容。</string>
     <string name="starter_for_television">适用于此电视</string>
     <string name="starter_for_any_device">适用于任何设备</string>
     <string name="starter_pinned">证书已知</string>

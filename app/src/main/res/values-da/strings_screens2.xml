@@ -4,7 +4,6 @@
     <string name="action_import">Importer</string>
     <string name="add_clear">Ryd feltet</string>
     <string name="starter_title">Velkendte apps</string>
-    <string name="starter_explain">Hver af dem kommer fra sin udviklers egen adresse. Intet tilføjes, før du siger til.</string>
     <string name="starter_for_television">Til dette tv</string>
     <string name="starter_for_any_device">Til enhver enhed</string>
     <string name="starter_pinned">Certifikat kendt</string>

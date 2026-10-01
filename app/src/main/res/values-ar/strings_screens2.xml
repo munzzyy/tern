@@ -4,7 +4,6 @@
     <string name="action_import">استيراد</string>
     <string name="add_clear">مسح الحقل</string>
     <string name="starter_title">تطبيقات معروفة</string>
-    <string name="starter_explain">كل واحد يأتي من العنوان الخاص بمطوره. لن يتم إضافة أي شيء حتى توافق.</string>
     <string name="starter_for_television">لهذا التلفاز</string>
     <string name="starter_for_any_device">لأي جهاز</string>
     <string name="starter_pinned">الشهادة معروفة</string>

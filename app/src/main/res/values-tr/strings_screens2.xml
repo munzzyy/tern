@@ -4,7 +4,6 @@
     <string name="action_import">İçe aktar</string>
     <string name="add_clear">Alanı temizle</string>
     <string name="starter_title">Bilinen uygulamalar</string>
-    <string name="starter_explain">Her biri kendi geliştiricisinin kendi adresinden gelir. Siz söyleyene kadar hiçbir şey eklenmez.</string>
     <string name="starter_for_television">Bu televizyon için</string>
     <string name="starter_for_any_device">Herhangi bir cihaz için</string>
     <string name="starter_pinned">Sertifika biliniyor</string>

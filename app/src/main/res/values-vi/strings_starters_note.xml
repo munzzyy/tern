@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_explain_sources">Mỗi ứng dụng đến từ địa chỉ dưới tên của nó. Mở một ứng dụng sẽ yêu cầu địa chỉ đó cung cấp bản phát hành mới nhất của ứng dụng. Không có gì được thêm cho đến khi bạn đồng ý.</string>
+</resources>

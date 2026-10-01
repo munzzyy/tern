@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2, 2026-10-01
+
+- The well known apps show the address each one comes from under its name,
+  and the list says that opening one asks that address for its newest
+  release. Nothing is asked before you open one.
+
 ## 0.2.1, 2026-09-30
 
 - Runs on Android 9. Saving into Download/Tern without asking needs Android

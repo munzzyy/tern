@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_explain_sources">每一个都来自其名称下方的地址。打开其中一个会向该地址请求应用的最新发布。在您确认之前，不会添加任何内容。</string>
+</resources>

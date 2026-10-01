@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_explain_sources">每個都來自其名稱下方的網址。開啟其中一個會向該網址要求應用程式的最新發行版本。除非您要求，否則不會新增任何內容。</string>
+</resources>

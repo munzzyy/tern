@@ -4,7 +4,6 @@
     <string name="action_import">Importa</string>
     <string name="add_clear">Svuota il campo</string>
     <string name="starter_title">App conosciute</string>
-    <string name="starter_explain">Ognuna proviene dall\'indirizzo del suo sviluppatore. Non viene aggiunto nulla finché non lo dici tu.</string>
     <string name="starter_for_television">Per questo televisore</string>
     <string name="starter_for_any_device">Per qualsiasi dispositivo</string>
     <string name="starter_pinned">Certificato noto</string>

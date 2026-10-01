@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_explain_sources">Var och en kommer från adressen under sitt namn. När du öppnar en frågas den adressen efter appens nyaste utgåva. Inget läggs till förrän du säger till.</string>
+</resources>

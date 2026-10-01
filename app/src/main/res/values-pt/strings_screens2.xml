@@ -4,7 +4,6 @@
     <string name="action_import">Importar</string>
     <string name="add_clear">Limpar o campo</string>
     <string name="starter_title">Aplicações conhecidas</string>
-    <string name="starter_explain">Cada uma vem do próprio endereço do seu programador. Nada é adicionado até que o diga.</string>
     <string name="starter_for_television">Para esta televisão</string>
     <string name="starter_for_any_device">Para qualquer dispositivo</string>
     <string name="starter_pinned">Certificado conhecido</string>

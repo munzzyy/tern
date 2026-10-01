@@ -4,7 +4,6 @@
     <string name="action_import">Importuj</string>
     <string name="add_clear">Wyczyść pole</string>
     <string name="starter_title">Dobrze znane aplikacje</string>
-    <string name="starter_explain">Każda z nich pochodzi z własnego adresu twórcy. Nic nie jest dodawane bez Twojej zgody.</string>
     <string name="starter_for_television">Dla tego telewizora</string>
     <string name="starter_for_any_device">Dla dowolnego urządzenia</string>
     <string name="starter_pinned">Znany certyfikat</string>

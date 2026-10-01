@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_explain_sources">Hver enkelt kommer fra adressen under sit navn. Når du åbner en, spørger den adressen om appens nyeste udgivelse. Intet tilføjes, før du siger til.</string>
+</resources>

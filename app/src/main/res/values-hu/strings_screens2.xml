@@ -4,7 +4,6 @@
     <string name="action_import">Importálás</string>
     <string name="add_clear">Mező törlése</string>
     <string name="starter_title">Jól ismert alkalmazások</string>
-    <string name="starter_explain">Mindegyik a fejlesztő saját címéről származik. Semmi sem adódik hozzá, amíg Ön nem hagyja jóvá.</string>
     <string name="starter_for_television">Ehhez a televízióhoz</string>
     <string name="starter_for_any_device">Bármilyen eszközhöz</string>
     <string name="starter_pinned">Tanúsítvány ismert</string>

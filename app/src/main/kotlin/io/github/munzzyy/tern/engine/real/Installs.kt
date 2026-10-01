@@ -428,7 +428,7 @@ internal class Installs(private val e: RealEngine) {
             PackageInstaller.STATUS_PENDING_USER_ACTION -> {
                 e.saveState(appId) { it.copy(pending = pending.copy(waitingForUser = true)) }
                 e.setProgress(appId, Progress(Phase.WAITING_FOR_USER))
-                val shown = confirm?.takeIf { it.action == CONFIRM_INSTALL || OtherAppInstaller.isHandoff(e.context, it) }
+                val shown = confirm?.takeIf { it.action in CONFIRM_ACTIONS || OtherAppInstaller.isHandoff(e.context, it) }
                 if (shown != null) {
                     confirmations[appId] = shown
                     askUser(appId, stored.config.shownName, shown)
@@ -674,7 +674,11 @@ internal class Installs(private val e: RealEngine) {
         private const val APK_MIME = "application/vnd.android.package-archive"
 
         private const val TAG = "TernInstalls"
-        private const val CONFIRM_INSTALL = "android.content.pm.action.CONFIRM_INSTALL"
+
+        // Android 10 and later hand back a confirm intent for CONFIRM_INSTALL; on Android 9 the
+        // same pending-user-action status carries CONFIRM_PERMISSIONS instead. Both are the
+        // system's own install confirmation, so both are shown the same way.
+        private val CONFIRM_ACTIONS = setOf("android.content.pm.action.CONFIRM_INSTALL", "android.content.pm.action.CONFIRM_PERMISSIONS")
         private const val DAY_MS = 24L * 60 * 60 * 1000
         private const val SUMS_LIMIT = 1024 * 1024
         private const val INSTALL_WAIT_MS = 3 * 60 * 1000L

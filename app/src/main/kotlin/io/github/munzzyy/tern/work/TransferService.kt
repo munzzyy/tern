@@ -25,7 +25,12 @@ class TransferService : Service() {
         val engine = RealEngine.obtain(applicationContext)
         val notifier = engine.notifier
         notifier.ensureChannels()
-        startForeground(Notifier.ID_TRANSFER, notifier.transfer(emptyList(), 0, null), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        val notification = notifier.transfer(emptyList(), 0, null)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(Notifier.ID_TRANSFER, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+        } else {
+            startForeground(Notifier.ID_TRANSFER, notification)
+        }
         if (watcher?.isActive == true) return START_NOT_STICKY
         watcher = engine.scope.launch {
             engine.transfers.takeWhile { it.isNotEmpty() }.collect { transfers ->

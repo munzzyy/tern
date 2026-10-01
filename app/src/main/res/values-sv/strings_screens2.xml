@@ -4,7 +4,6 @@
     <string name="action_import">Importera</string>
     <string name="add_clear">Rensa fältet</string>
     <string name="starter_title">Välkända appar</string>
-    <string name="starter_explain">Varje app kommer från dess utvecklares egen adress. Inget läggs till förrän du säger till.</string>
     <string name="starter_for_television">För denna tv</string>
     <string name="starter_for_any_device">För valfri enhet</string>
     <string name="starter_pinned">Certifikat känt</string>

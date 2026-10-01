@@ -4,7 +4,6 @@
     <string name="action_import">インポート</string>
     <string name="add_clear">入力欄をクリア</string>
     <string name="starter_title">よく知られたアプリ</string>
-    <string name="starter_explain">それぞれ開発者自身のアドレスから提供されます。承認するまで何も追加されません。</string>
     <string name="starter_for_television">このテレビ用</string>
     <string name="starter_for_any_device">すべての端末用</string>
     <string name="starter_pinned">証明書が既知</string>

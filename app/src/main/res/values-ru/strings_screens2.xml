@@ -4,7 +4,6 @@
     <string name="action_import">Импорт</string>
     <string name="add_clear">Очистить поле</string>
     <string name="starter_title">Известные приложения</string>
-    <string name="starter_explain">Каждое загружается с адреса своего разработчика. Ничего не добавляется без вашего согласия.</string>
     <string name="starter_for_television">Для этого телевизора</string>
     <string name="starter_for_any_device">Для любого устройства</string>
     <string name="starter_pinned">Известный сертификат</string>

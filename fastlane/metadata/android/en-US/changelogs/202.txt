@@ -1,0 +1,1 @@
+The well known apps show the address each one comes from, and the list says that opening one asks that address for its newest release.

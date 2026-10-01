@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_explain_sources">Jeder Eintrag kommt von der Adresse unter seinem Namen. Beim Öffnen wird diese Adresse nach dem neuesten Release der App gefragt. Es wird nichts hinzugefügt, bis du zustimmst.</string>
+</resources>

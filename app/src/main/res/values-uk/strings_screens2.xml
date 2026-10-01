@@ -4,7 +4,6 @@
     <string name="action_import">Імпортувати</string>
     <string name="add_clear">Очистити поле</string>
     <string name="starter_title">Відомі програми</string>
-    <string name="starter_explain">Кожна з них надходить із власної адреси розробника. Нічого не додається, поки ви цього не скажете.</string>
     <string name="starter_for_television">Для цього телевізора</string>
     <string name="starter_for_any_device">Для будь-якого пристрою</string>
     <string name="starter_pinned">Сертифікат відомий</string>

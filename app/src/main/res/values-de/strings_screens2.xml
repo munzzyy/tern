@@ -4,7 +4,6 @@
     <string name="action_import">Importieren</string>
     <string name="add_clear">Feld leeren</string>
     <string name="starter_title">Bekannte Apps</string>
-    <string name="starter_explain">Jede kommt von der eigenen Adresse ihres Entwicklers. Nichts wird hinzugefügt, bis du es sagst.</string>
     <string name="starter_for_television">Für diesen Fernseher</string>
     <string name="starter_for_any_device">Für jedes Gerät</string>
     <string name="starter_pinned">Zertifikat bekannt</string>

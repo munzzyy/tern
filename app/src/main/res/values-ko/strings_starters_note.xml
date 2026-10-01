@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="starter_explain_sources">각 항목은 이름 아래의 주소에서 제공됩니다. 항목을 열면 해당 주소에 앱의 최신 릴리스를 요청합니다. 사용자가 승인하기 전까지는 아무것도 추가되지 않습니다.</string>
+</resources>

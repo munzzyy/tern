@@ -4,7 +4,6 @@
     <string name="action_import">Importa</string>
     <string name="add_clear">Buida el camp</string>
     <string name="starter_title">Aplicacions conegudes</string>
-    <string name="starter_explain">Cadascuna prové de l\'adreça del seu desenvolupador. No s\'afegeix res fins que tu ho diguis.</string>
     <string name="starter_for_television">Per a aquest televisor</string>
     <string name="starter_for_any_device">Per a qualsevol dispositiu</string>
     <string name="starter_pinned">Certificat conegut</string>

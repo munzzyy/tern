@@ -4,7 +4,6 @@
     <string name="action_import">가져오기</string>
     <string name="add_clear">입력란 지우기</string>
     <string name="starter_title">잘 알려진 앱</string>
-    <string name="starter_explain">각 앱은 개발자의 자체 주소에서 가져옵니다. 사용자가 승인하기 전까지는 아무것도 추가되지 않습니다.</string>
     <string name="starter_for_television">이 TV용</string>
     <string name="starter_for_any_device">모든 기기용</string>
     <string name="starter_pinned">알려진 인증서</string>

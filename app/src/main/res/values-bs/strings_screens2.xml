@@ -4,7 +4,6 @@
     <string name="action_import">Uvezi</string>
     <string name="add_clear">Očisti polje</string>
     <string name="starter_title">Poznate aplikacije</string>
-    <string name="starter_explain">Svaka dolazi s vlastite adrese programera. Ništa se ne dodaje dok vi to ne odobrite.</string>
     <string name="starter_for_television">Za ovaj televizor</string>
     <string name="starter_for_any_device">Za bilo koji uređaj</string>
     <string name="starter_pinned">Certifikat je poznat</string>

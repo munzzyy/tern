@@ -4,7 +4,6 @@
     <string name="action_import">Importovat</string>
     <string name="add_clear">Vymazat pole</string>
     <string name="starter_title">Známé aplikace</string>
-    <string name="starter_explain">Každá pochází z vlastní adresy svého vývojáře. Nic se nepřidá, dokud to neschválíte.</string>
     <string name="starter_for_television">Pro tuto televizi</string>
     <string name="starter_for_any_device">Pro jakékoli zařízení</string>
     <string name="starter_pinned">Certifikát je znám</string>

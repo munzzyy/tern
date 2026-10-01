@@ -32,7 +32,10 @@ class Dhizuku(private val context: Context, private val changed: () -> Unit = {}
     @Volatile private var server: Server? = null
 
     /** What Dhizuku is given with a request for its binder. It tells the version of the protocol and nothing else. */
-    private val client = object : Binder(DhizukuProtocol.CLIENT) {
+    // Binder(String) needs Android 10; naming the interface this way instead works on every version this app runs on.
+    private val client = object : Binder() {
+        override fun getInterfaceDescriptor(): String = DhizukuProtocol.CLIENT
+
         override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean {
             if (code != DhizukuProtocol.CLIENT_GET_VERSION) return super.onTransact(code, data, reply, flags)
             data.enforceInterface(DhizukuProtocol.CLIENT)
@@ -66,7 +69,9 @@ class Dhizuku(private val context: Context, private val changed: () -> Unit = {}
      */
     fun ask(answered: () -> Unit): Boolean {
         val owner = owner() ?: return false
-        val listener = object : Binder(DhizukuProtocol.LISTENER) {
+        val listener = object : Binder() {
+            override fun getInterfaceDescriptor(): String = DhizukuProtocol.LISTENER
+
             override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean {
                 if (code != DhizukuProtocol.LISTENER_ON_RESULT) return super.onTransact(code, data, reply, flags)
                 data.enforceInterface(DhizukuProtocol.LISTENER)

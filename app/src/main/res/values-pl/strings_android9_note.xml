@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">Ten telefon działa na Androidzie 9</string>
+    <string name="android9_body">Ostatnie poprawki zabezpieczeń Google dla Androida 9 ukazały się w styczniu 2022 roku, więc luki w Androidzie znalezione od tego czasu pozostają otwarte na tym telefonie. Tern sprawdza każdy plik, zanim Android go zainstaluje, ale nie może załatać luk w samym Androidzie.</string>
+</resources>

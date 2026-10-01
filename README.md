@@ -36,7 +36,7 @@ behalf. Every request says it comes from Tern.
 [<img src="site/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/#url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Ftern)
 
 Or download `tern.apk` from the [latest release](https://github.com/munzzyy/tern/releases/latest).
-It runs on Android 10 and later, on phones, tablets and TVs. Once it is
+It runs on Android 9 and later, on phones, tablets and TVs. Once it is
 installed, the badge above adds Tern to itself, so it keeps itself up to date.
 
 <p align="center">
@@ -236,8 +236,13 @@ Obtainium does that Tern does not.
 - The translations are machine-made. Details of an error that come from a
   server or a parser stay in English, and an entry in the activity log stays in
   the language it was written in.
-- This version has run on emulators: phones with Android 10, 13 and 16, and a
-  television with Android TV 14. It has not yet run on a shelf of real devices.
+- This version has run on emulators: phones with Android 9, 10, 13 and 16, and
+  a television with Android TV 14. It has not yet run on a shelf of real devices.
+  On Android 9, a kept export or a file saved from an app's page goes through
+  a file picker instead of straight to Download/Tern, since Android only
+  added that folder in 10; Android itself offers no certificate transparency
+  check there either. Everything else, install and update included, works
+  the same.
   Vendor installers, Doze over many hours and a reboot are untested. On the
   television image Play Protect stopped the first install of an app it had not
   seen and offered "Install anyway"; that answer is yours to give.

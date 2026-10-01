@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">この電話はAndroid 9で動作しています</string>
+    <string name="android9_body">Android 9に対するGoogleの最後のセキュリティ修正は2022年1月に公開されたため、それ以降に見つかったAndroidのセキュリティホールは、この電話では塞がれないままです。TernはAndroidがインストールする前にすべてのファイルを確認しますが、Android自体のセキュリティホールを塞ぐことはできません。</string>
+</resources>

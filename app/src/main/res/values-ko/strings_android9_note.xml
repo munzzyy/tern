@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">이 휴대전화는 Android 9을 실행합니다</string>
+    <string name="android9_body">Google의 Android 9용 마지막 보안 수정은 2022년 1월에 나왔으므로, 그 이후에 발견된 Android의 취약점은 이 휴대전화에 그대로 남아 있습니다. Tern은 Android가 설치하기 전에 모든 파일을 확인하지만, Android 자체의 취약점을 막을 수는 없습니다.</string>
+</resources>

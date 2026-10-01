@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">يعمل هذا الهاتف بنظام Android 9</string>
+    <string name="android9_body">صدرت آخر إصلاحات الأمان من Google لنظام Android 9 في يناير 2022، لذا تظل الثغرات المكتشفة في Android منذ ذلك الحين مفتوحة على هذا الهاتف. يفحص Tern كل ملف قبل أن يثبته Android، لكنه لا يستطيع إغلاق الثغرات في Android نفسه.</string>
+</resources>

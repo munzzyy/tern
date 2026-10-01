@@ -763,6 +763,13 @@ class RealEngine(
         return saving.await()
     }
 
+    override suspend fun saveFileTo(appId: String, releaseId: String, assetUrl: String, destination: Uri): SavedFile {
+        ready()
+        val saving = scope.async { interop.saveFileTo(appId, releaseId, assetUrl, destination) }
+        saves.track(saving)
+        return saving.await()
+    }
+
     override suspend fun fileSize(appId: String, releaseId: String, assetUrl: String): Long? {
         ready()
         return interop.fileSize(appId, releaseId, assetUrl)

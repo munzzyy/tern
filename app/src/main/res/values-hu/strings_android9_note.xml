@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">Ezen a telefonon Android 9 fut</string>
+    <string name="android9_body">A Google utolsó biztonsági javításai az Android 9-hez 2022 januárjában jelentek meg, így az azóta az Androidban talált rések ezen a telefonon nyitva maradnak. A Tern minden fájlt ellenőriz, mielőtt az Android telepíti, de magában az Androidban lévő réseket nem tudja bezárni.</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">Ponsel ini menjalankan Android 9</string>
+    <string name="android9_body">Perbaikan keamanan terakhir Google untuk Android 9 dirilis pada Januari 2022, sehingga celah pada Android yang ditemukan sejak saat itu tetap terbuka di ponsel ini. Tern memeriksa setiap file sebelum Android menginstalnya, tetapi tidak dapat menutup celah pada Android itu sendiri.</string>
+</resources>

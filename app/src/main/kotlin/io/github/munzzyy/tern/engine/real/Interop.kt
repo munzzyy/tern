@@ -161,7 +161,17 @@ internal class Interop(private val e: RealEngine) {
      * Download/Tern, as it came. Nothing is checked or installed: the file is for the person to keep
      * or pass on. The notification of downloads counts it, and one of its own says when it is saved.
      */
-    suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile {
+    suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile =
+        saveFile(appId, releaseId, assetUrl, destination = null)
+
+    /**
+     * The same download, written to [destination] when a person picked one through a file picker,
+     * for an Android that has no Download/Tern of its own to fall back to.
+     */
+    suspend fun saveFileTo(appId: String, releaseId: String, assetUrl: String, destination: Uri): SavedFile =
+        saveFile(appId, releaseId, assetUrl, destination)
+
+    private suspend fun saveFile(appId: String, releaseId: String, assetUrl: String, destination: Uri?): SavedFile {
         val (stored, release, asset) = fileOf(appId, releaseId, assetUrl)
         val name = savedName(asset.name)
         val key = Downloader.key(release.id, asset.url)
@@ -178,7 +188,9 @@ internal class Interop(private val e: RealEngine) {
                 }
             }
             fresh = !download.reused
-            val saved = runInterruptible(Dispatchers.IO) { files.saveCopy(download.file, name, mimeOf(asset.name)) }
+            val saved = runInterruptible(Dispatchers.IO) {
+                if (destination != null) files.saveTo(download.file, destination) else files.saveCopy(download.file, name, mimeOf(asset.name))
+            }
             e.notifier.saved(saved)
             return saved
         } catch (ex: SourceException) {

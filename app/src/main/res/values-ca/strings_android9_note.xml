@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">Aquest telèfon funciona amb Android 9</string>
+    <string name="android9_body">Les últimes correccions de seguretat de Google per a Android 9 van sortir el gener de 2022, així que els forats a Android trobats des de llavors continuen oberts en aquest telèfon. Tern comprova cada fitxer abans que Android l\'instal·li, però no pot tancar els forats del mateix Android.</string>
+</resources>

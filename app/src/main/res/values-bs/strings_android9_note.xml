@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">Ovaj telefon koristi Android 9</string>
+    <string name="android9_body">Googleove posljednje sigurnosne popravke za Android 9 izašle su u januaru 2022., tako da propusti u Androidu pronađeni od tada ostaju otvoreni na ovom telefonu. Tern provjerava svaku datoteku prije nego što je Android instalira, ali ne može zatvoriti propuste u samom Androidu.</string>
+</resources>

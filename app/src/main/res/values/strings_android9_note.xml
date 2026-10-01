@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">This phone runs Android 9</string>
+    <string name="android9_body">Google\'s last security fixes for Android 9 came out in January 2022, so holes in Android found since then stay open on this phone. Tern checks every file before Android installs it, but it cannot close holes in Android itself.</string>
+</resources>

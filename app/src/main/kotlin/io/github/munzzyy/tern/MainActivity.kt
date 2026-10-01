@@ -3,6 +3,7 @@ package io.github.munzzyy.tern
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings.Global
 import androidx.activity.ComponentActivity
@@ -38,7 +39,9 @@ import io.github.munzzyy.tern.ui.TernApp
 import io.github.munzzyy.tern.ui.common.CrashDialog
 import io.github.munzzyy.tern.ui.common.ProblemsDialog
 import io.github.munzzyy.tern.ui.incomingAddInput
+import io.github.munzzyy.tern.ui.settings.Android9Note
 import io.github.munzzyy.tern.ui.settings.VerificationNote
+import io.github.munzzyy.tern.ui.settings.showsAndroid9Note
 import io.github.munzzyy.tern.ui.theme.TernTheme
 import io.github.munzzyy.tern.ui.theme.isDark
 import io.github.munzzyy.tern.widget.Surfaces
@@ -49,6 +52,7 @@ import kotlinx.coroutines.launch
 private const val PREFS = "ui"
 private const val KEY_FIRST_RUN_DONE = "first_run_done"
 private const val KEY_VERIFICATION_NOTE_SHOWN = "verification_note_shown"
+private const val KEY_ANDROID9_NOTE_SHOWN = "android9_note_shown"
 private const val TAG = "TernMain"
 private const val MAX_APP_ID = 64
 private const val MAX_PROBLEMS = 50
@@ -69,6 +73,7 @@ class MainActivity : ComponentActivity() {
 
     /** Shown once, on the first start after the first run, so it never stands in the way of that run. */
     private var verificationNote by mutableStateOf(false)
+    private var android9Note by mutableStateOf(false)
 
     /** A check a link from outside asked for, until the person says yes or no. */
     private var confirmCheck by mutableStateOf<RefreshLink?>(null)
@@ -88,6 +93,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         firstRunDone = prefs().getBoolean(KEY_FIRST_RUN_DONE, false)
         verificationNote = firstRunDone && !prefs().getBoolean(KEY_VERIFICATION_NOTE_SHOWN, false)
+        android9Note = showsAndroid9Note(Build.VERSION.SDK_INT, firstRunDone, prefs().getBoolean(KEY_ANDROID9_NOTE_SHOWN, false))
         if (savedInstanceState == null) crash = CrashReport.pending(this)
         applyScenario(intent)
         if (savedInstanceState == null) receive(intent)
@@ -142,6 +148,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     if (crash == null && verificationNote) VerificationNote(onDismiss = ::sawVerificationNote)
+                    if (crash == null && !verificationNote && android9Note) Android9Note(onDismiss = ::sawAndroid9Note)
                 }
             }
         }
@@ -238,6 +245,11 @@ class MainActivity : ComponentActivity() {
     private fun sawCrash() {
         crash = null
         CrashReport.dismiss(this)
+    }
+
+    private fun sawAndroid9Note() {
+        android9Note = false
+        prefs().edit().putBoolean(KEY_ANDROID9_NOTE_SHOWN, true).apply()
     }
 
     private fun sawVerificationNote() {

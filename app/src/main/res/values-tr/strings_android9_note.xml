@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">Bu telefonda Android 9 çalışıyor</string>
+    <string name="android9_body">Google\'ın Android 9 için son güvenlik düzeltmeleri Ocak 2022\'de çıktı, bu yüzden o zamandan beri Android\'de bulunan açıklar bu telefonda açık kalıyor. Tern, Android yüklemeden önce her dosyayı denetler, ancak Android\'in kendisindeki açıkları kapatamaz.</string>
+</resources>

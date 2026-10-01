@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="android9_title">Questo telefono usa Android 9</string>
+    <string name="android9_body">Le ultime correzioni di sicurezza di Google per Android 9 sono uscite a gennaio 2022, quindi le falle di Android trovate da allora rimangono aperte su questo telefono. Tern controlla ogni file prima che Android lo installi, ma non può chiudere le falle di Android stesso.</string>
+</resources>

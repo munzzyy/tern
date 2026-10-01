@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.ui.detail
 
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -157,6 +158,22 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
         viewModelScope.launch {
             val (file, problem) = try {
                 engine.saveFile(appId, releaseId, assetUrl) to null
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: ProblemException) {
+                null to e.problem.message
+            } catch (e: Exception) {
+                null to (e.message ?: "")
+            }
+            onDone(file, problem)
+        }
+    }
+
+    /** As [saveFile], but to [destination], for an Android with no Download/Tern of its own. */
+    fun saveFileTo(releaseId: String, assetUrl: String, destination: Uri, onDone: (SavedFile?, String?) -> Unit) {
+        viewModelScope.launch {
+            val (file, problem) = try {
+                engine.saveFileTo(appId, releaseId, assetUrl, destination) to null
             } catch (e: CancellationException) {
                 throw e
             } catch (e: ProblemException) {

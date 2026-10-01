@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.enginetest
 
 import android.content.ContentUris
+import android.os.Build
 import android.provider.MediaStore
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.tern.core.interop.TernExport
@@ -21,6 +22,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -32,7 +34,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class FolderExportTest {
     private val resolver = targetContext.contentResolver
-    private val downloads = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+
+    // MediaStore.Downloads exists only from Android 10 on; nothing here touches it before a test needs it.
+    private val downloads by lazy { MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY) }
     private val dropFolder = File(targetContext.getExternalFilesDir(null), "import")
 
     // A day of its own for each run, years back, so that no file a person or an earlier run left has this run's names.
@@ -118,13 +122,17 @@ class FolderExportTest {
     @Before
     @After
     fun sweep() {
-        for ((id, _) in exportsOfTheDay()) resolver.delete(ContentUris.withAppendedId(downloads, id), null, null)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            for ((id, _) in exportsOfTheDay()) resolver.delete(ContentUris.withAppendedId(downloads, id), null, null)
+        }
         dropFolder.listFiles().orEmpty().filter { it.name.startsWith("enginetest-") }.forEach { it.delete() }
         targetContext.cacheDir.listFiles().orEmpty().filter { it.name.startsWith("enginetest-") }.forEach { it.delete() }
     }
 
     @Test
     fun anExportLandsInTheDownloadFolderAndASecondOfThatDayGetsANumber() = runBlocking {
+        // Writing to Download/Tern without a picker goes through MediaStore.Downloads, which needs Android 10.
+        assumeTrue(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
         Dated("folder-export", noon).use { h ->
             h.add("Wren")
             h.add("Dunnock")
@@ -151,6 +159,7 @@ class FolderExportTest {
 
     @Test
     fun anExportComesBackThroughTheListOfFiles() = runBlocking {
+        assumeTrue(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
         val saved = Dated("folder-out", noon).use { h ->
             h.add("Wren")
             h.add("Dunnock")

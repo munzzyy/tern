@@ -9,6 +9,9 @@
   form Tern did not expect and was never put on screen.
 - A file that needs a newer Android than the phone has is named for that,
   instead of being called unreadable.
+- On Android 9, Tern says once that Google's last security fixes for it came
+  out in January 2022, and that checking files cannot close holes in Android.
+- Persian text added in 0.2.0 has its zero-width non-joiners back.
 
 ## 0.2.0, 2026-09-30
 

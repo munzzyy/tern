@@ -33,17 +33,18 @@ secret-tool store --label "Tern upload keystore" service tern-keystore key uploa
 5. Install `dist/tern-<version>.apk` on an emulator over the previous
    release and walk through adding, installing and updating an app.
 6. Tag, push, and create the release with both APK files and both checksum files.
-7. Until fdroiddata merge request
-   [!50599](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/50599) is
-   merged, bring it up to the release. In `metadata/io.github.munzzyy.tern.yml`
-   on its branch, add a build for the new `versionName` and `versionCode`
-   whose `commit:` is the full 40-character hash of the tagged commit
-   (`git rev-parse <tag>^{commit}`), not the tag and not a short hash. Set
-   `CurrentVersion` and `CurrentVersionCode` to the same two values. Run
-   `fdroid rewritemeta io.github.munzzyy.tern` and `fdroid lint
-   io.github.munzzyy.tern`, push the branch, and wait for the pipeline of the
-   merge request to pass. F-Droid's build has to reproduce the APK signed in
-   step 4, so this commit and that file must match.
+7. F-Droid takes the release from the tag. Its recipe,
+   `metadata/io.github.munzzyy.tern.yml` in fdroiddata, looks at the tags
+   (`UpdateCheckMode: Tags`), reads `versionName` and `versionCode` from
+   `app/build.gradle.kts` at the new one and adds the build itself
+   (`AutoUpdateMode: Version`), so there is no merge request to bump. Its
+   build has to reproduce the APK signed in step 4: it fetches
+   `releases/download/v%v/tern-%v.apk` (`Binaries`) and takes the signature
+   from it only when the two match. So the tag is `v<versionName>` on the
+   released commit, the file is uploaded as exactly `tern-<versionName>.apk`,
+   and both version values stay plain literals in `app/build.gradle.kts`.
+   Never push a tag that is not a release, since F-Droid reads every tag on
+   GitHub as one.
 
 apksigner comes from build-tools 34.0.0 on purpose. F-Droid copies the
 developer's signature onto its own reproducible build, and its tool rejects

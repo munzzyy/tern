@@ -170,7 +170,7 @@ with the version of Tern and of Android, into a file of its own. The next
 start shows it once, to read, copy or share; closing it deletes the file.
 Nothing is sent unless you share it.
 
-On Android 10 to 12, the language chosen in Tern's settings is kept by Tern.
+On Android 9 to 12, the language chosen in Tern's settings is kept by Tern.
 From Android 13 on, Android keeps it.
 
 ## Permissions

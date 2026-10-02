@@ -13,7 +13,7 @@ Android 16 emulator on 2026-09-29.
 
 | | Obtainium | Tern |
 |---|---|---|
-| Release APK, arm64 | 26,088,490 bytes (v1.6.17, `app-arm64-v8a-fdroid-release.apk`) | 6,937,650 bytes, all architectures, 29 languages |
+| Release APK, arm64 | 26,088,490 bytes (v1.6.17, `app-arm64-v8a-fdroid-release.apk`) | 7,194,245 bytes (0.2.2, `tern-0.2.2.apk`), all architectures, 29 languages |
 | Toolkit | Flutter | Kotlin and Jetpack Compose |
 | Cold start to first frame | not measured | 913 ms for 0.1.0, the middle of five cold starts (`am start -W`, release build, on a host that was busy with other emulators); not measured again since |
 
@@ -216,7 +216,7 @@ does not. Sources are their own pages, read on 2026-09-29.
 | F-Droid client | The client for F-Droid's own repository and for any other in its format | Apps built from source by F-Droid. Two independent security audits, the second of which found nothing in its nearby swap (f-droid.org/en/2022/12/22/third-audit-results.html) | Tern takes the file the developer published and holds it to the developer's certificate. It reads repositories in F-Droid's format with the same checks: signed index, pinned signer, no replay |
 | Droid-ify, Neo Store | Other clients for repositories in F-Droid's format | Installs without a prompt through Shizuku | The same repository checks, and sources outside repositories |
 | Accrescent | A store with its own signed repository | The signing key of every app is pinned before the first install, by the store's signed metadata (accrescent.app/faq) | Tern pins before the first install for repositories with a signed index, for a pin carried by a link, and for the well-known apps whose certificate it carries. For an address typed by hand the first install is trust on first use, as in Obtainium |
-| GrapheneOS App Store | The store of one operating system | Verification tied to the system's verified boot | Runs on any Android from 10 on |
+| GrapheneOS App Store | The store of one operating system | Verification tied to the system's verified boot | Runs on any Android from 9 on |
 | AppVerifier | Compares an installed app's certificate with a list kept by people | That list | Tern shows the certificate before an install and hands package and certificate to AppVerifier in its own format, for a second opinion from a tool that shares no code with Tern |
 | Aurora Store | A client for Google Play without an account | Google Play's catalogue | Tern checks who signed a file. Aurora Store's own forum says it does not (forum.f-droid.org/t/is-aurora-store-safe-for-banking-apps/6900) |
 | Zapstore | Releases signed by the developer's Nostr key | A trust anchor that needs no forge and no repository | Tern's anchor is the Android signing certificate, which every app already has |

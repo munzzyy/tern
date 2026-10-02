@@ -22,7 +22,7 @@ bash tools/device-suite.sh <serial>   # needs an emulator or a phone
 ```
 
 Run the device tests with `tools/device-suite.sh` and not with Gradle's connected
-task. The connected task drops a permission that Android 10 and 11 only take from
+task. The connected task drops a permission that Android 9 to 11 only take from
 the host, and the tests that install something then step aside without a word.
 The script names every test that was skipped and why.
 

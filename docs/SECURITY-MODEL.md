@@ -668,7 +668,8 @@ import it.
 - It has been tested on emulators. Vendor builds of Android can behave
   differently.
 - Installing through Dhizuku has been checked against Android's sources for
-  versions 10 to 16 and tested on a computer. On an Android 13 emulator with
+  versions 10 to 16 and tested on a computer. On Android 9 it has not been
+  checked against the sources or tried. On an Android 13 emulator with
   Dhizuku 2.12 as its device owner, a first install and an update went in
   without a prompt, with Dhizuku named as the installer. No other version has
   been tried with it.

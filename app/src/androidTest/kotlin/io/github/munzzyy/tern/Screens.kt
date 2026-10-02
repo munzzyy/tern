@@ -76,7 +76,10 @@ fun ComposeTestRule.assertShown(text: String) {
 }
 
 
-/** Whether the note about Android's developer verification counts as read; a launch without a scenario shows it otherwise. */
+/** Whether the notes shown once, on developer verification and on Android 9's end of fixes, count as read; a launch without a scenario shows them otherwise. */
 fun noteSeen(seen: Boolean) {
-    appContext.getSharedPreferences("ui", Context.MODE_PRIVATE).edit().putBoolean("verification_note_shown", seen).commit()
+    appContext.getSharedPreferences("ui", Context.MODE_PRIVATE).edit()
+        .putBoolean("verification_note_shown", seen)
+        .putBoolean("android9_note_shown", seen)
+        .commit()
 }

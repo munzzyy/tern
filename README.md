@@ -257,7 +257,7 @@ Obtainium does that Tern does not.
 - A filter pattern that takes too long to match is stopped after half a second
   and reported, but the thread it ran on keeps spinning until Android ends the
   app's process.
-- It is not in any store yet.
+- It is not in any store yet; see the roadmap below.
 
 ## Build it
 
@@ -326,6 +326,28 @@ debuggable, if it is over 7 MiB, or if test code reached it.
 `python3 tools/strings.py check app/src/main/res` compares every translation
 with the English: the same placeholders, the plural forms the language needs,
 nothing that exists in one and not the other.
+
+## Roadmap
+
+What is left needs people, devices or decisions from outside this repository.
+
+- A release with what is listed under Unreleased in
+  [CHANGELOG.md](CHANGELOG.md), the stricter check of files signed by more
+  than one key first among it. It is not cut yet.
+- F-Droid. The recipe was merged on 2026-10-01, and F-Droid's build server
+  has not published it yet. Its build has to reproduce the APK here to carry
+  the same signature, and then the two can replace each other without a
+  reinstall. The README and the site will link the listing once it is up.
+- Real devices. Every test so far ran on emulators, as
+  [What it does not do](#what-it-does-not-do) says. A phone with its maker's
+  own Android, a television box, root through Magisk or KernelSU, Doze through
+  a whole night, and sending to a television from a real phone's browser over
+  Wi-Fi are still to be tried.
+- Native speakers for the 28 translations, which
+  [Languages and screens](#languages-and-screens) says machines made.
+- An independent security review of the verifier, the install gate and the
+  handoff. Tern has had none, and [docs/SECURITY-MODEL.md](docs/SECURITY-MODEL.md)
+  writes down what such a review would hold it to.
 
 ## Taking part
 

@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+- A file signed with more than one key passes only when every one of those
+  keys is pinned, and an update only when the installed app has exactly the
+  same keys. One matching key used to be enough, so a key added to a download
+  could tie a first install to it, and no later update from the developer
+  would then go in until the app was uninstalled.
+- The question that asks to allow installs no longer says, on Android 12 and
+  12L, that Android will close Tern when the switch is turned on. Android 11
+  does that and is still told so; on Android 12 Tern stays open.
+
 ## 0.2.2, 2026-10-01
 
 - The well known apps show the address each one comes from under its name,

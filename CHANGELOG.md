@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.0, 2026-10-02
 
 - A file signed with more than one key passes only when every one of those
   keys is pinned, and an update only when the installed app has exactly the

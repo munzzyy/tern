@@ -1,0 +1,3 @@
+A file signed with more than one key passes only when every one of its keys is pinned, and an update only when the installed app has exactly the same keys. One matching key used to be enough.
+
+On Android 12 and 12L the question that asks to allow installs no longer says Android will close Tern.

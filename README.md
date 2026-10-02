@@ -331,9 +331,6 @@ nothing that exists in one and not the other.
 
 What is left needs people, devices or decisions from outside this repository.
 
-- A release with what is listed under Unreleased in
-  [CHANGELOG.md](CHANGELOG.md), the stricter check of files signed by more
-  than one key first among it. It is not cut yet.
 - F-Droid. The recipe was merged on 2026-10-01, and F-Droid's build server
   has not published it yet. Its build has to reproduce the APK here to carry
   the same signature, and then the two can replace each other without a

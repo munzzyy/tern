@@ -41,8 +41,11 @@ class SuggestionsLiveTest {
     private val registry = SourceRegistry.standard()
     private val phone = DeviceProfile(listOf("arm64-v8a"), sdk = 36, densityDpi = 420)
 
+    /** A phone on the oldest Android that Tern itself runs on. */
+    private val oldPhone = DeviceProfile(listOf("arm64-v8a"), sdk = 28, densityDpi = 420)
+
     /** The oldest Android that Tern itself runs on, with a 32-bit processor as most television boxes have. */
-    private val television = DeviceProfile(listOf("armeabi-v7a", "armeabi"), sdk = 29, densityDpi = 320, television = true)
+    private val television = DeviceProfile(listOf("armeabi-v7a", "armeabi"), sdk = 28, densityDpi = 320, television = true)
     private val inspected = HashMap<String, ApkInfo>()
 
     @Before
@@ -114,11 +117,13 @@ class SuggestionsLiveTest {
         listing.movedTo?.let { problems += "moved to $it" }
 
         val onPhone = fit(listing, phone)
+        val onOldPhone = fit(listing, oldPhone)
         val onTelevision = fit(listing, television)
         if (!onPhone.installs) problems += "nothing for a 64-bit phone"
+        if (!onOldPhone.installs) problems += "nothing for a phone on Android 9"
         if (app.television && !onTelevision.installs) problems += "nothing for a 32-bit television"
         val signedBy = LinkedHashSet<String>()
-        for ((info, device) in listOf(onPhone.info to phone, onTelevision.info to television)) {
+        for ((info, device) in listOf(onPhone.info to phone, onOldPhone.info to oldPhone, onTelevision.info to television)) {
             if (info == null) continue
             if (info.manifest.packageName != app.packageName) problems += "serves ${info.manifest.packageName}, not ${app.packageName}"
             if (info.manifest.debuggable) problems += "offers a debug build"
@@ -126,14 +131,14 @@ class SuggestionsLiveTest {
             signedBy += signers
             if (app.signers.isNotEmpty() && signers.none { it in app.signers }) problems += "is signed by ${signers.joinToString()}, which the list does not carry"
         }
-        if (onPhone.early || onTelevision.early) problems += "offers a pre-release as the newest release"
+        if (onPhone.early || onOldPhone.early || onTelevision.early) problems += "offers a pre-release as the newest release"
         if (app.television && onTelevision.info?.manifest?.features?.contains(LEANBACK) != true) problems += "does not declare $LEANBACK"
 
         val carried = app.fdroidId?.let { if (carries(it)) "F-Droid carries $it" else "F-Droid does not carry $it".also(problems::add) }
         val ground = carried ?: app.publisher?.let { "published by $it" } ?: if (app.own) "the author's own" else "no ground".also(problems::add)
         val pins = if (app.signers.isEmpty()) "the list carries no certificate" else "the list carries it"
         val signed = "the file names as its signer ${signedBy.joinToString().ifEmpty { "nobody" }}, $pins"
-        return problems.distinct() to "${spec.type} ${spec.url} | phone: ${onPhone.text} | television: ${onTelevision.text} | $ground | $signed"
+        return problems.distinct() to "${spec.type} ${spec.url} | phone: ${onPhone.text} | Android 9 phone: ${onOldPhone.text} | television: ${onTelevision.text} | $ground | $signed"
     }
 
     /** What Tern would offer [device] with the settings a new app starts with, and whether that file can be installed there. */

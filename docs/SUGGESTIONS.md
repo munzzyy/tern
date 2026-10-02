@@ -52,9 +52,11 @@ downloading the file. The entry is proven when all of this holds:
 - The file installs on a phone that runs 64-bit code only (arm64-v8a, Android
   16). Current phones are like that, and a file built for 32-bit only fails on
   them after the download.
+- The file Tern would offer a phone on Android 9, the oldest Android that Tern
+  runs on, installs there too. A file that needs a newer Android would
+  otherwise fail only after the download.
 - A television entry also installs on a 32-bit television (armeabi-v7a) with
-  Android 10, the oldest Android that Tern runs on, and its manifest declares
-  `android.software.leanback`.
+  Android 9, and its manifest declares `android.software.leanback`.
 - The file's application id is the one the entry names.
 - The file is not a debug build, and neither its name nor its version reads as
   a pre-release.

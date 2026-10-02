@@ -24,7 +24,8 @@ secret-tool store --label "Tern upload keystore" service tern-keystore key uploa
    then `bash tools/device-suite.sh <serial>` for each. Gradle's own connected task is not used,
    because it drops the install permission that old Android only takes from the host, and the
    tests that install something then step aside without a word. The script names every test
-   that was skipped.
+   that was skipped. CI runs only the engine's tests, and only on Android 16
+   (`tools/ci-emulator.sh`), so the screen tests and the other images are run here by hand.
 3. `bash tools/check-reproducible.sh ~/.cache/tern-reproducible` on the commit to release.
 4. `bash tools/release.sh`. It runs the JVM tests, builds the release, runs
    `tools/check-apk.sh` on it, signs it with apksigner 34.0.0, and writes

@@ -26,6 +26,10 @@ task. The connected task drops a permission that Android 10 and 11 only take fro
 the host, and the tests that install something then step aside without a word.
 The script names every test that was skipped and why.
 
+CI runs the engine's device tests on an Android 16 emulator with
+`bash tools/ci-emulator.sh`, which boots a throwaway emulator and works the same
+on your machine. The screen tests and the other Android images stay manual.
+
 A change to a parser or a check comes with a test that fails without it. Break
 your fix on purpose once and watch the test fail; a test that cannot fail is
 worse than none.

@@ -266,6 +266,7 @@ class MainActivity : ComponentActivity() {
         } ?: return
         (engine as? Scenarios)?.loadScenario(name)
         verificationNote = false
+        android9Note = false
         crash = null
         firstRunDone = name != SCENARIO_FIRST_RUN
         prefs().edit().putBoolean(KEY_FIRST_RUN_DONE, firstRunDone).apply()

@@ -13,7 +13,9 @@ found.
 The handoff listens on the device's own address on its network and not on its loopback address,
 so `adb forward`, which ends at the loopback address, does not reach it. An emulator is reached
 through a redirection of its own network (`adb emu redir`), which ends at the address the handoff
-listens on. Any other device is reached at the address it shows, from the same network.
+listens on. Where the Wi-Fi of the image sits in a network the redirection does not reach, as on
+the Android TV 9 image, a netcat on the device passes the connections on instead. Any other device
+is reached at the address it shows, from the same network.
 
 Needs adb, zbarimg, and a device that is on a network, which an emulator is.
 """
@@ -157,7 +159,41 @@ def way_to(serial, address):
     answer = adb(serial, "emu", "redir", "add", f"tcp:{here}:{port}")
     if "OK" not in answer:
         raise SystemExit("the emulator did not redirect the port: " + answer.strip())
-    return ("127.0.0.1", here), lambda: adb(serial, "emu", "redir", "del", f"tcp:{here}")
+    if answers(("127.0.0.1", here)):
+        return ("127.0.0.1", here), lambda: adb(serial, "emu", "redir", "del", f"tcp:{here}")
+    adb(serial, "emu", "redir", "del", f"tcp:{here}")
+    return relay(serial, host, port)
+
+
+def answers(reach):
+    """Whether anything answers there; a redirection that cannot reach the address still takes the connection, then resets it."""
+    try:
+        with socket.create_connection(reach, timeout=5) as probe:
+            probe.sendall(b"GET / HTTP/1.0\r\nHost: probe\r\n\r\n")
+            return probe.recv(1) != b""
+    except OSError:
+        return False
+
+
+def relay(serial, host, port):
+    """A netcat on the device's loopback address that passes each connection on, with a port of this machine forwarded to it."""
+    inside = 20000 + int.from_bytes(os.urandom(2)) % 40000
+    listening = f"nc -s 127.0.0.1 -p {inside} -L"
+    shell = subprocess.Popen([ADB, "-s", serial, "shell", f"toybox {listening} sh -c 'toybox nc {host} {port} 2>/dev/null'"],
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    time.sleep(1)
+    here = free_port()
+    adb(serial, "forward", f"tcp:{here}", f"tcp:{inside}", check=True)
+
+    def close():
+        adb(serial, "forward", "--remove", f"tcp:{here}")
+        adb(serial, "shell", f"pkill -f '[t]oybox {listening}'")
+        shell.terminate()
+
+    if not answers(("127.0.0.1", here)):
+        close()
+        raise SystemExit(f"neither the redirection nor a relay on the device reaches {host}:{port}")
+    return ("127.0.0.1", here), close
 
 
 def adb(serial, *args, text=True, check=False, stdin=None):

@@ -237,7 +237,8 @@ Obtainium does that Tern does not.
   server or a parser stay in English, and an entry in the activity log stays in
   the language it was written in.
 - This version has run on emulators: phones with Android 9, 10, 13 and 16, and
-  a television with Android TV 14. It has not yet run on a shelf of real devices.
+  televisions with Android TV 9, 12 and 14. It has not yet run on a shelf of
+  real devices.
   On Android 9, a kept export or a file saved from an app's page goes through
   a file picker instead of straight to Download/Tern, since Android only
   added that folder in 10; Android itself offers no certificate transparency

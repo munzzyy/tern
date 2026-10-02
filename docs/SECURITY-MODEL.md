@@ -664,7 +664,8 @@ import it.
 - Tern's verifier has been tested on a computer, against files signed by
   apksigner and against files changed after signing. On a device it uses the
   cryptography and the JAR reader of that device. The tests for that have run
-  on Android 10 and 16 phone emulators and an Android TV 14 emulator.
+  on Android 10 and 16 phone emulators and on Android TV 9, 12 and 14
+  emulators.
 - It has been tested on emulators. Vendor builds of Android can behave
   differently.
 - Installing through Dhizuku has been checked against Android's sources for
@@ -681,6 +682,7 @@ import it.
 - The handoff has been tested with real connections on a computer, and its
   page in Chromium on a computer. No phone has loaded the page yet. Its tests
   for a device, where it listens and how it closes when Tern leaves the
-  screen, have run on Android 10, 14 and 16 emulators. A link and an export
-  file sent from a computer to an Android TV 14 emulator arrived sealed and
-  were shown, and what was changed on the way was refused.
+  screen, have run on Android 9, 10, 12, 14 and 16 emulators, on 9 without the
+  two that open the screen. A link and an export file sent from a computer to
+  Android TV 9, 12 and 14 emulators arrived sealed and were shown, and what
+  was changed on the way was refused.

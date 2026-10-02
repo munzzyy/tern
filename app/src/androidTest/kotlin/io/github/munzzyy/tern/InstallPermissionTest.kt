@@ -133,7 +133,7 @@ class InstallPermissionTest {
             compose.waitForText("Allow Tern to install apps")
 
             val said = compose.textCount("closes Tern when you turn the switch on", substring = true)
-            assertEquals(if (Build.VERSION.SDK_INT in 30..32) 1 else 0, said)
+            assertEquals(if (Build.VERSION.SDK_INT == 30) 1 else 0, said)
             compose.onNodeWithText("Not now").performClick()
         }
     }

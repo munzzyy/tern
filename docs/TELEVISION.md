@@ -80,6 +80,7 @@ to look: on Android TV and Google TV under Settings, Apps, Security and restrict
 sources, and on Fire TV under Settings, My Fire TV, Developer options, Install unknown apps. Choose
 "I have done it" when you have, and what you asked for carries on.
 
-Android 11 closes Tern the moment you turn the switch on. Android 12 was not measured, and Tern
-expects the same of it. Either way Tern keeps what you wanted for 15 minutes, so open it again and
-the install carries on by itself.
+Android 11 closes Tern the moment you turn the switch on. Android 12 does not: on its Android TV
+emulator Tern stayed open and in front when the permission was given, and only taking it away
+again closed Tern. Where Android does close it, Tern keeps what you wanted for 15 minutes, so open
+it again and the install carries on by itself.

@@ -26,6 +26,14 @@ class InstallGuardTest {
     private fun afterARestart() = InstallGuard({ allowed }, store, { now })
 
     @Test
+    fun onlyAndroid11IsSaidToCloseTernWhenItMayInstall() {
+        assertFalse(closesOnAllow(29))
+        assertTrue(closesOnAllow(30))
+        assertFalse(closesOnAllow(31))
+        assertFalse(closesOnAllow(33))
+    }
+
+    @Test
     fun anInstallStartsAtOnceWhenAndroidAlreadyAllowsIt() {
         allowed = true
         assertTrue(guard.admit(Wanted.One("a")))

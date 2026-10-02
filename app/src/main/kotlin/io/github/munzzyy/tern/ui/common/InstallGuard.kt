@@ -214,8 +214,8 @@ class GuardedEngine(private val real: Engine, val guard: InstallGuard) : Engine 
     }
 }
 
-/** Android 11 closes an app when it is allowed to install others. Android 10 and 13 were measured and do not; 12 was not measured. */
-fun closesOnAllow(sdk: Int = Build.VERSION.SDK_INT): Boolean = sdk in Build.VERSION_CODES.R..Build.VERSION_CODES.S_V2
+/** Android 11 closes an app when it is allowed to install others. Android 10, 12 and 13 were measured and do not. */
+fun closesOnAllow(sdk: Int = Build.VERSION.SDK_INT): Boolean = sdk == Build.VERSION_CODES.R
 
 /** Kept with the screens' own view models, which hold the guarded engine across a rotation. */
 class GuardHolder(engine: Engine, store: WishStore = WishStore.None) : ViewModel() {

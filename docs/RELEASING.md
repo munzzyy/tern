@@ -27,9 +27,15 @@ secret-tool store --label "Tern upload keystore" service tern-keystore key uploa
    that was skipped. CI runs only the engine's tests, and only on Android 16
    (`tools/ci-emulator.sh`), so the screen tests and the other images are run here by hand.
 3. `bash tools/check-reproducible.sh ~/.cache/tern-reproducible` on the commit to release.
-4. `bash tools/release.sh`. It runs the JVM tests, builds the release, runs
-   `tools/check-apk.sh` on it, signs it with apksigner 34.0.0, and writes
+4. `bash tools/release.sh`. It runs what the build job of CI runs, in the
+   same order: the wrapper, translation and network checks, the JVM tests of
+   `core`, the handoff page and site checks, the JVM tests of `app`, the
+   release build, lint, `tools/check-java-api.sh` and `tools/check-apk.sh`.
+   Then `tools/check-release-notes.sh` wants a `CHANGELOG.md` heading for the
+   version and its fastlane changelog of at most 500 characters. Only then
+   does it sign the APK with apksigner 34.0.0 and write
    `dist/tern-<version>.apk`, `dist/tern.apk` and their `.sha256` files.
+   `bash tools/release.sh --gates-only` runs the same gates without the key.
 5. Install `dist/tern-<version>.apk` on an emulator over the previous
    release and walk through adding, installing and updating an app.
 6. Tag, push, and create the release with both APK files and both checksum files.

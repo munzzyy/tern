@@ -32,7 +32,7 @@ import org.junit.Test
 
 /**
  * Proves the starter list against the real services, one line for each entry. Off unless asked for:
- * ./gradlew :core:cleanTest :core:test --tests '*SuggestionsLiveTest' -Dtern.live=true
+ * ./gradlew :core:test --tests '*SuggestionsLiveTest' -Dtern.live=true
  * TERN_SUGGEST="Kodi,VLC" in the environment limits the run to the entries named.
  * It reads public data only and sends no credentials. GitHub answers 60 such requests an hour.
  */

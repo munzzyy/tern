@@ -28,7 +28,13 @@ tasks.test {
         .withPropertyName("catalogFiles").withPathSensitivity(PathSensitivity.RELATIVE)
     // PrivacyHostsTest reads PRIVACY.md.
     inputs.files("../PRIVACY.md").withPropertyName("privacyPolicy").withPathSensitivity(PathSensitivity.RELATIVE)
+    val live = System.getProperty("tern.live") == "true" || System.getProperty("tern.index") != null
     systemProperty("tern.live", System.getProperty("tern.live") ?: "false")
     systemProperty("tern.index", System.getProperty("tern.index") ?: "")
-    testLogging.showStandardStreams = System.getProperty("tern.live") == "true" || System.getProperty("tern.index") != null
+    testLogging.showStandardStreams = live
+    if (live) {
+        // A live run asks the servers of today, so an earlier pass, kept or cached, says nothing.
+        outputs.upToDateWhen { false }
+        outputs.cacheIf { false }
+    }
 }

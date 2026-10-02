@@ -155,7 +155,7 @@ read. A project may name its certificate somewhere else.
 3. Run the unit tests. They say what was forgotten:
    `./gradlew :core:test --tests '*CatalogTest' :app:testDebugUnitTest --tests '*SuggestionsTest'`
 4. Run the live test for the new entry alone:
-   `TERN_SUGGEST="Name of the app" ./gradlew :core:cleanTest :core:test --tests '*SuggestionsLiveTest' -Dtern.live=true`
+   `TERN_SUGGEST="Name of the app" ./gradlew :core:test --tests '*SuggestionsLiveTest' -Dtern.live=true`
 5. Put the line it prints into the commit message.
 6. The line ends with the certificate the file names. Look for a second place
    that names the same one, as the section on certificates says. With one,

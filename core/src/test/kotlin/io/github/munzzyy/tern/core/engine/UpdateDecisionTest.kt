@@ -1,5 +1,8 @@
 package io.github.munzzyy.tern.core.engine
 
+import io.github.munzzyy.tern.core.apk.ApkInspector
+import io.github.munzzyy.tern.core.apk.BytesSource
+import io.github.munzzyy.tern.core.apk.SigningFixtures
 import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.Release
 import org.junit.Assert.assertEquals
@@ -11,6 +14,7 @@ class UpdateDecisionTest {
     private val keyA = "a".repeat(64)
     private val keyB = "b".repeat(64)
     private val keyOld = "c".repeat(64)
+    private val keyExtra = "e".repeat(64)
     private val pkg = "org.example.app"
 
     private fun release(tag: String, code: Long? = null) = Release(id = tag, version = tag, versionCode = code)
@@ -183,6 +187,47 @@ class UpdateDecisionTest {
         assertEquals(Block.SIGNER_MISMATCH, (decide(r, installed("1", 10), indexSigners = listOf(keyB)) as Decision.Blocked).block)
         assertEquals(Block.PIN_MISMATCH, (decide(r, null, pinned = listOf(keyA), indexSigners = listOf(keyB)) as Decision.Blocked).block)
         assertEquals(Decision.UpdateAvailable(r, certain = true), decide(r, installed("1", 10), indexSigners = listOf(keyA)))
+    }
+
+    private fun signerBlockFor(file: List<String>, onPhone: List<String>?, pinned: List<String> = emptyList(), lineage: List<String> = emptyList()) =
+        UpdateDecision.blockFor(Inspection(pkg, 2, "2", file, lineage), onPhone?.let { installed("1", 1, signers = it) }, pkg, pinned)?.first
+
+    @Test
+    fun anAddedSignerIsNotExcusedByThePin() {
+        assertEquals(Block.PIN_MISMATCH, signerBlockFor(listOf(keyA, keyExtra), onPhone = null, pinned = listOf(keyA)))
+    }
+
+    @Test
+    fun anAddedSignerDoesNotMatchTheInstalledApp() {
+        assertEquals(Block.SIGNER_MISMATCH, signerBlockFor(listOf(keyA, keyExtra), onPhone = listOf(keyA)))
+    }
+
+    @Test
+    fun anAppWithSeveralSignersTakesOnlyThatSameSet() {
+        assertEquals(Block.SIGNER_MISMATCH, signerBlockFor(listOf(keyA), onPhone = listOf(keyA, keyExtra)))
+        assertNull(signerBlockFor(listOf(keyA, keyExtra), onPhone = listOf(keyExtra, keyA), pinned = listOf(keyA, keyExtra)))
+    }
+
+    @Test
+    fun aPinWithAlternativesStillTakesOneSigner() {
+        assertNull(signerBlockFor(listOf(keyA), onPhone = null, pinned = listOf(keyA, keyB)))
+        assertNull(signerBlockFor(listOf(keyB), onPhone = listOf(keyA), pinned = listOf(keyA), lineage = listOf(keyA, keyB)))
+    }
+
+    @Test
+    fun aRealTwoSignerFileNeedsBothCertificatesPinned() {
+        val name = "v2-two-signers.apk"
+        val file = Inspection.of(ApkInspector.inspect(BytesSource(SigningFixtures.bytes(name))), 36)
+        val both = SigningFixtures.certificatesAt(name, 29)!!.toList()
+        assertEquals(2, file.signers.size)
+        assertEquals(Block.PIN_MISMATCH, UpdateDecision.blockFor(file, null, file.packageName, listOf(both.first()))?.first)
+        assertNull(UpdateDecision.blockFor(file, null, file.packageName, both))
+    }
+
+    @Test
+    fun aSignedIndexNamingAnAddedSignerIsBlocked() {
+        val r = release("12", 12)
+        assertEquals(Block.PIN_MISMATCH, (decide(r, null, pinned = listOf(keyA), indexSigners = listOf(keyA, keyExtra)) as Decision.Blocked).block)
     }
 
     @Test

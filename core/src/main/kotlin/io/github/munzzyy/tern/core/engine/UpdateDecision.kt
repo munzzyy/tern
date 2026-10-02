@@ -155,18 +155,23 @@ object UpdateDecision {
     /**
      * The installed app and the pin must both agree. A pin can arrive with an import, so it may
      * add a condition but never lift the one Android enforces: the signer of what is installed.
-     * A rotated key counts where it proves descent from the known one.
+     * A rotated key counts where it proves descent from the known one. With several signers on
+     * either side, Android wants the very same set, and every one of them has to be pinned.
      */
     private fun signerBlock(signers: List<String>, lineage: List<String>, installed: InstalledApp?, pinned: List<String>): Pair<Block, String>? {
-        val onPhone = installed?.signers.orEmpty()
-        if (onPhone.isEmpty() && pinned.isEmpty()) return null
+        val onPhone = installed?.signers.orEmpty().mapTo(HashSet()) { it.lowercase() }
+        val pins = pinned.mapTo(HashSet()) { it.lowercase() }
+        if (onPhone.isEmpty() && pins.isEmpty()) return null
         if (signers.isEmpty()) return Block.SIGNER_MISMATCH to "The file carries no signing certificate"
-        val presented = (signers + lineage).mapTo(HashSet()) { it.lowercase() }
-        if (onPhone.isNotEmpty() && onPhone.none { it.lowercase() in presented }) {
-            return Block.SIGNER_MISMATCH to "The file is signed with a different certificate than the installed app"
+        val own = signers.mapTo(HashSet()) { it.lowercase() }
+        val presented = own + lineage.map { it.lowercase() }
+        if (onPhone.isNotEmpty()) {
+            val agrees = if (own.size > 1 || onPhone.size > 1) own == onPhone else onPhone.any { it in presented }
+            if (!agrees) return Block.SIGNER_MISMATCH to "The file is signed with a different certificate than the installed app"
         }
-        if (pinned.isNotEmpty() && pinned.none { it.lowercase() in presented }) {
-            return Block.PIN_MISMATCH to "The file is signed with a different certificate than the one pinned for this app"
+        if (pins.isNotEmpty()) {
+            val agrees = if (own.size > 1) pins.containsAll(own) else pins.any { it in presented }
+            if (!agrees) return Block.PIN_MISMATCH to "The file is signed with a different certificate than the one pinned for this app"
         }
         return null
     }

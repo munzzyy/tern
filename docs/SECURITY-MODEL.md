@@ -107,6 +107,14 @@ certificate if there is one. The certificates compared are the ones Android
 reported after verifying the file. A rotated key is accepted where the file
 proves descent from the known one.
 
+A file signed by v1 or v2 alone can carry several signers, and anyone who can
+change the download can add one without the developer's key. So a file with
+several signers passes only when the installed app has exactly those signers
+and every one of them is pinned. Where nothing is installed yet, the pin alone
+decides, and a pin naming only one of them stops the file. An installed app
+with several signers takes only a file with that same set, which is what
+Android does too.
+
 In a bundle, every part must be signed by the signers of the base. A part
 Android read is held to what Android reported for it. A part Android did not
 read is held to what Tern's own verifier found, as described above. No part

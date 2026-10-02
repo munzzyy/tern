@@ -243,7 +243,10 @@ Obtainium does that Tern does not.
   added that folder in 10; Android itself offers no certificate transparency
   check there either. Everything else, install and update included, works
   the same.
-  Vendor installers, Doze over many hours and a reboot are untested. On the
+  On Android 9 and 16 emulators the background check was still scheduled
+  after a reboot and after Tern updated itself, and it ran in a Doze
+  maintenance window. Doze was only forced and stepped through there, not
+  left to run for hours, and vendor installers are untested. On the
   television image Play Protect stopped the first install of an app it had not
   seen and offered "Install anyway"; that answer is yours to give.
 - F-Droid and IzzyOnDroid are read through their per-app listings, which are
@@ -296,6 +299,11 @@ downloads mid-way, redirect a request with a token to another host, hand the
 gate bundles that were altered after signing, and send checks through a proxy
 that is not there. Gradle's own connected task is not used, because it drops a
 permission that old Android versions only take from the host.
+
+`bash tools/check-schedule.sh <serial>` sets the debug build to check every 15
+minutes and makes sure the job is still there after a reboot and after Tern
+replaces itself. Then it forces Doze and steps through its maintenance windows
+until the check runs in one, without ever starting the job by hand.
 
 `bash tools/check-handoff-page.sh` runs the handoff page's own ChaCha20, SHA-256
 and HMAC against the RFC test vectors in node, then sends links and files from a

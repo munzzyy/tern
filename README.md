@@ -4,6 +4,8 @@
 [![ci](https://github.com/munzzyy/tern/actions/workflows/ci.yml/badge.svg)](https://github.com/munzzyy/tern/actions/workflows/ci.yml)
 [![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue.svg)](LICENSE)
 
+[<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/io.github.munzzyy.tern/)
+
 Android apps from where their developers publish them, checked before they install.
 
 Most open source Android apps put their releases on GitHub, GitLab, Codeberg or a
@@ -35,9 +37,10 @@ behalf. Every request says it comes from Tern.
 
 [<img src="site/badge.png" alt="Get it with Tern" height="80">](https://tern.munzzyy.dev/add/#url=https%3A%2F%2Fgithub.com%2Fmunzzyy%2Ftern)
 
-Or download `tern.apk` from the [latest release](https://github.com/munzzyy/tern/releases/latest).
-It runs on Android 9 and later, on phones, tablets and TVs. Once it is
-installed, the badge above adds Tern to itself, so it keeps itself up to date.
+Get it from F-Droid, or download `tern.apk` from the
+[latest release](https://github.com/munzzyy/tern/releases/latest). It runs on Android 9 and
+later, on phones, tablets and TVs. Once it is installed, the Tern badge above adds Tern to
+itself, so it keeps itself up to date.
 
 <p align="center">
   <img src="docs/shots/detail.png" width="30%" alt="The page of an app with an update waiting, 29.0.0 to 30.0.0: it can install without a prompt, the project moved and Tern asks before following it, and the checks start with the package name and the certificate the file claims">
@@ -331,10 +334,6 @@ nothing that exists in one and not the other.
 
 What is left needs people, devices or decisions from outside this repository.
 
-- F-Droid. The recipe was merged on 2026-10-01, and F-Droid's build server
-  has not published it yet. Its build has to reproduce the APK here to carry
-  the same signature, and then the two can replace each other without a
-  reinstall. The README and the site will link the listing once it is up.
 - Real devices. Every test so far ran on emulators, as
   [What it does not do](#what-it-does-not-do) says. A phone with its maker's
   own Android, a television box, root through Magisk or KernelSU, Doze through

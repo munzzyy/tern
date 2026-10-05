@@ -1,5 +1,7 @@
 package io.github.munzzyy.tern.engine.real
 
+import android.app.ActivityManager
+import android.app.NotificationManager
 import android.content.ActivityNotFoundException
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -44,12 +46,14 @@ import io.github.munzzyy.tern.core.suggest.SuggestedApp
 import io.github.munzzyy.tern.core.text.PatternException
 import io.github.munzzyy.tern.core.verify.Fingerprints
 import io.github.munzzyy.tern.data.AppState
+import io.github.munzzyy.tern.data.BackgroundRuns
 import io.github.munzzyy.tern.data.SettingsStore
 import io.github.munzzyy.tern.data.Store
 import io.github.munzzyy.tern.data.StoredApp
 import io.github.munzzyy.tern.data.TokenVault
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.BackgroundFacts
 import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.CheckCount
 import io.github.munzzyy.tern.engine.Detection
@@ -136,6 +140,7 @@ class RealEngine(
     internal val store = Store(this.context, storeName)
     private val settingsStore = SettingsStore(this.context, prefsPrefix + SettingsStore.DEFAULT_NAME)
     internal val keptPins = KeptPins(this.context, prefsPrefix + KeptPins.DEFAULT_NAME, nowMs)
+    private val runs = BackgroundRuns(this.context, prefsPrefix + BackgroundRuns.DEFAULT_NAME)
     private val vault = TokenVault(this.context, prefsPrefix + TokenVault.DEFAULT_NAME)
     internal val texts = Texts(this.context)
     internal val device = Device(this.context)
@@ -259,7 +264,7 @@ class RealEngine(
         notifier.ensureChannels()
         installers.start()
         interop.kept.start()
-        Scheduler.apply(this@RealEngine.context, _settings.value)
+        schedule(null, _settings.value)
         setObtainiumLinks(_settings.value.openObtainiumLinks)
         if (_settings.value.proxy == ProxyMode.ORBOT) orbotLink.ask()
         store.apps().forEach { stored[it.config.id] = it }
@@ -690,8 +695,8 @@ class RealEngine(
             settingsStore.save(settings)
             val loaded = settingsStore.load()
             val wasPaused = stored.values.filter { registry.paused(it.config.source) }.map { it.config.id }
+            schedule(before, loaded)
             _settings.value = loaded
-            Scheduler.apply(context, loaded)
             setObtainiumLinks(loaded.openObtainiumLinks)
             if (loaded.proxy == ProxyMode.ORBOT && before.proxy != ProxyMode.ORBOT) orbotLink.ask()
             if (loaded.installer != before.installer || loaded.otherInstaller != before.otherInstaller) installers.recheck()
@@ -806,6 +811,29 @@ class RealEngine(
     override suspend fun takeExportFolder(folder: Uri) = interop.kept.choose(folder)
 
     override suspend fun runBackgroundCheck() = runScheduledCheck(cause = CheckCause.ASKED)
+
+    override fun background(): BackgroundFacts {
+        val notifications = context.getSystemService(NotificationManager::class.java)
+        return BackgroundFacts(
+            lastRunMs = runs.lastRunMs(),
+            sinceMs = runs.sinceMs(),
+            scheduled = Scheduler.isScheduled(context),
+            restricted = context.getSystemService(ActivityManager::class.java)?.isBackgroundRestricted == true,
+            notificationsOn = notifications?.areNotificationsEnabled() != false,
+            updatesChannelOn = notifications?.getNotificationChannel(Notifier.UPDATES)?.importance != NotificationManager.IMPORTANCE_NONE,
+            canOpenAppInfo = device.canOpenAppInfo(),
+        )
+    }
+
+    /** The periodic job ran to its end, failed or not. A run Android stopped halfway does not count. */
+    internal fun ranInBackground() = runs.ran(nowMs())
+
+    /** Sets the periodic job, and notes when it was set anew: a new job starts its clock again. */
+    private fun schedule(before: Settings?, settings: Settings) {
+        val had = Scheduler.isScheduled(context)
+        if (!Scheduler.apply(context, settings)) return
+        if (BackgroundRuns.setsAnew(had, before, settings, runs.sinceMs() != null)) runs.setAnew(nowMs())
+    }
 
     override suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile {
         ready()

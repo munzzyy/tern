@@ -181,6 +181,7 @@ class Harness(
         if (freshPrefs) {
             targetContext.deleteSharedPreferences("${prefs}settings")
             targetContext.deleteSharedPreferences("${prefs}tokens")
+            targetContext.deleteSharedPreferences("${prefs}background")
         }
     }
 
@@ -246,6 +247,7 @@ class Harness(
         if (!keepPrefs) {
             targetContext.deleteSharedPreferences("${prefs}settings")
             targetContext.deleteSharedPreferences("${prefs}tokens")
+            targetContext.deleteSharedPreferences("${prefs}background")
         }
         downloads.deleteRecursively()
     }

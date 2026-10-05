@@ -62,4 +62,10 @@
     <string name="settings_notify_checking">While checking in the background</string>
     <string name="settings_notify_checking_effect">A quiet notification that goes away when the check is done.</string>
     <string name="engine_event_removed_uninstalled">Removed from the list, as it was uninstalled outside Tern</string>
+    <string name="background_last_run">Last background check: %1$s</string>
+    <string name="background_not_run_yet">The background check has not run yet.</string>
+    <string name="background_restricted">Android restricts Tern in the background, so the check may not run. The battery setting in App info can lift that.</string>
+    <string name="background_quiet">Android shows no notifications from Tern about updates, so what the background check finds goes unsaid.</string>
+    <string name="background_not_set">Android holds no background check for Tern right now. Tern asks for it again each time it starts.</string>
+    <string name="background_stale">The background check has not run for a while. Android may be holding it back to save battery.</string>
 </resources>

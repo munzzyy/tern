@@ -208,6 +208,7 @@ private fun BackgroundSection(s: Settings, vm: SettingsViewModel, update: Update
     val running by vm.runningCheck.collectAsStateWithLifecycle()
     SectionCard(title = stringResource(R.string.settings_background)) {
         IntervalRow(s.checkEveryMinutes) { m -> update { it.copy(checkEveryMinutes = m) } }
+        BackgroundHealthRows(s)
         val on = s.checkEveryMinutes > 0
         SwitchRow(
             title = stringResource(R.string.settings_auto_installs),

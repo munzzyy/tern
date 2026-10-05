@@ -5,6 +5,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.provider.Settings
 
 fun openNotificationSettings(context: Context): Boolean {
@@ -15,6 +16,14 @@ fun openNotificationSettings(context: Context): Boolean {
     } catch (_: ActivityNotFoundException) {
         false
     }
+}
+
+/** Android's page about [packageName], where its battery use and its notifications are set. */
+fun openAppInfo(context: Context, packageName: String = context.packageName): Boolean = try {
+    context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+    true
+} catch (_: ActivityNotFoundException) {
+    false
 }
 
 /** Puts [text] on the clipboard, for a device where no app takes a share, as most TVs are. */

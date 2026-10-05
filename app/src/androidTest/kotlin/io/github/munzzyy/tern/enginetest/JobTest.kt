@@ -43,6 +43,10 @@ class JobTest {
             @Suppress("DEPRECATION")
             assertEquals(JobInfo.NETWORK_TYPE_ANY, job.networkType)
             assertFalse(job.isRequireCharging)
+            val set = h.engine.background()
+            assertTrue(set.scheduled)
+            assertNotNull("a job set anew notes when", set.sinceMs)
+            assertNull("no run is noted before one ran", set.lastRunMs)
 
             val listingsBefore = h.forge.requests.count { it.url.contains("/releases") }
             val out = shell("cmd jobscheduler run -f -u 0 ${targetContext.packageName} ${Scheduler.JOB_ID}")
@@ -51,9 +55,12 @@ class JobTest {
             waitUntil(10_000, "the row to show the result") { h.row(id).status == AppStatus.NOT_INSTALLED }
             assertTrue(h.forge.requests.count { it.url.contains("/releases") } > listingsBefore)
             assertNotNull("the periodic job is gone after a forced run", scheduler.getPendingJob(Scheduler.JOB_ID))
+            waitUntil(10_000, "the run to be noted for settings") { h.engine.background().lastRunMs != null }
+            assertEquals("a run leaves the time the job was set alone", set.sinceMs, h.engine.background().sinceMs)
 
             h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 0))
             assertNull(scheduler.getPendingJob(Scheduler.JOB_ID))
+            assertFalse(h.engine.background().scheduled)
         }
     }
 }

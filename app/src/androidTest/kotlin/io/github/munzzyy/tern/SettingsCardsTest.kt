@@ -14,12 +14,14 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import io.github.munzzyy.tern.engine.BackgroundFacts
 import io.github.munzzyy.tern.engine.OrbotState
 import io.github.munzzyy.tern.engine.ProxyMode
 import io.github.munzzyy.tern.ui.add.ADD_FIELD_TAG
 import io.github.munzzyy.tern.ui.settings.ORBOT_TAG
 import io.github.munzzyy.tern.ui.settings.ORBOT_URL
 import io.github.munzzyy.tern.ui.settings.SettingsScreen
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -176,5 +178,84 @@ class SettingsRowsScreenTest {
         assertEquals(if (Build.VERSION.SDK_INT >= 34) 1 else 0, shown)
         assertEquals(0, compose.textCount("Needs Android 14 or later."))
         assertEquals("Tern offers its own language setting on every version", 1, compose.textCount("Language"))
+    }
+}
+
+/** The note under how often, as the stand-in engine reports what Android does with the background check. */
+@RunWith(AndroidJUnit4::class)
+class BackgroundNotesTest {
+    @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
+
+    private val quiet = "Android shows no notifications from Tern about updates"
+    private val restricted = "Android restricts Tern in the background"
+    private val stale = "The background check has not run for a while"
+    private val notSet = "Android holds no background check for Tern right now"
+
+    private fun show(facts: BackgroundFacts, television: Boolean = false, minutes: Int = 360) {
+        fake.loadScenario("default")
+        runBlocking { fake.saveSettings(fake.settings.value.copy(checkEveryMinutes = minutes)) }
+        fake.backgroundFacts = facts
+        compose.host(television = television) { SettingsScreen(onImport = {}, onLook = {}) }
+        compose.waitForText("How often")
+    }
+
+    private fun healthy(): BackgroundFacts {
+        val now = System.currentTimeMillis()
+        return BackgroundFacts(lastRunMs = now - 2 * 3_600_000L, sinceMs = now - 3 * 86_400_000L)
+    }
+
+    @Test
+    fun allWellShowsWhenTheCheckLastRanAndNoNote() {
+        show(healthy())
+        compose.onNodeWithText("Last background check: 2 hours ago").assertIsDisplayed()
+        for (note in listOf(quiet, restricted, stale, notSet)) assertEquals(note, 0, compose.textCount(note, substring = true))
+    }
+
+    @Test
+    fun notificationsThatAreOffAreSaidAndLeadToTheirSettings() {
+        show(healthy().copy(notificationsOn = false))
+        compose.onNodeWithText(quiet, substring = true).performScrollTo().assertIsDisplayed()
+        assertEquals("the note has its button, and the Notifications card keeps its own", 2, compose.textCount("Android notification settings"))
+    }
+
+    @Test
+    fun aTelevisionIsToldNothingAboutNotifications() {
+        show(healthy().copy(notificationsOn = false, updatesChannelOn = false), television = true)
+        assertEquals(0, compose.textCount(quiet, substring = true))
+    }
+
+    @Test
+    fun aRestrictedAppIsToldWhereToLiftItWhereThatPageOpens() {
+        show(healthy().copy(restricted = true))
+        compose.onNodeWithText(restricted, substring = true).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("App info in Android").performScrollTo().assertIsDisplayed()
+    }
+
+    @Test
+    fun noButtonIsOfferedForAPageThatWouldOpenNothing() {
+        show(healthy().copy(restricted = true, canOpenAppInfo = false), television = true)
+        compose.onNodeWithText(restricted, substring = true).performScrollTo().assertIsDisplayed()
+        assertEquals(0, compose.textCount("App info in Android"))
+    }
+
+    @Test
+    fun aCheckThatHasNotRunForThreeIntervalsIsSaidToBeHeldBack() {
+        val now = System.currentTimeMillis()
+        show(BackgroundFacts(lastRunMs = now - 19 * 3_600_000L, sinceMs = now - 30 * 3_600_000L))
+        compose.onNodeWithText(stale, substring = true).performScrollTo().assertIsDisplayed()
+    }
+
+    @Test
+    fun aJobAndroidDoesNotHoldIsSaid() {
+        show(healthy().copy(scheduled = false))
+        compose.onNodeWithText(notSet, substring = true).performScrollTo().assertIsDisplayed()
+    }
+
+    @Test
+    fun aCheckThatIsOffSaysNothing() {
+        show(BackgroundFacts(restricted = true, notificationsOn = false, scheduled = false), minutes = 0)
+        assertEquals(0, compose.textCount("Last background check", substring = true))
+        assertEquals(0, compose.textCount("has not run yet", substring = true))
+        for (note in listOf(quiet, restricted, stale, notSet)) assertEquals(note, 0, compose.textCount(note, substring = true))
     }
 }

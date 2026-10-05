@@ -13,6 +13,7 @@ import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.AppStatus
+import io.github.munzzyy.tern.engine.BackgroundFacts
 import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.CheckCount
 import io.github.munzzyy.tern.engine.ChecksumState
@@ -153,6 +154,7 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         _online.value = name != "offline"
         nothingWaits = false
         installsAllowed = name != BARE
+        backgroundFacts = healthyBackground()
         filePicker = name != BARE
         installSettings = name != BARE
         localNetwork = true
@@ -647,6 +649,16 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
     override suspend fun takeExportFolder(folder: Uri) = Unit
 
     override suspend fun runBackgroundCheck() = check(null)
+
+    /** What Android does with the background check; a test sets the trouble it wants shown. */
+    @Volatile var backgroundFacts = healthyBackground()
+
+    private fun healthyBackground(): BackgroundFacts {
+        val now = System.currentTimeMillis()
+        return BackgroundFacts(lastRunMs = now - 2 * 3_600_000L, sinceMs = now - 3 * 86_400_000L)
+    }
+
+    override fun background(): BackgroundFacts = backgroundFacts
 
     override suspend fun saveFile(appId: String, releaseId: String, assetUrl: String): SavedFile =
         SavedFile(assetUrl.substringAfterLast('/'), "Download/Tern", "/storage/emulated/0/Download/Tern/" + assetUrl.substringAfterLast('/'), System.currentTimeMillis(), 0)

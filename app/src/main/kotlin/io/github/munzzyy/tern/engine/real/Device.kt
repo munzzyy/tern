@@ -111,6 +111,9 @@ class Device(context: Context) {
     fun canOpenInstallSettings(): Boolean =
         opens(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.fromParts("package", ownPackage, null)))
 
+    fun canOpenAppInfo(): Boolean =
+        opens(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", ownPackage, null)))
+
     private fun opens(intent: Intent): Boolean {
         val activity = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)?.activityInfo ?: return false
         return !isStub(activity.packageName, activity.name)

@@ -279,6 +279,9 @@ interface Engine {
     /** Runs the background check now, installs of apps set to update by themselves included. */
     suspend fun runBackgroundCheck()
 
+    /** When the background check last ran, and what Android does now that may keep it from running or from being heard. */
+    fun background(): BackgroundFacts
+
     /** True when Let Me Downgrade is installed, without which Android refuses an older version over a newer one. */
     fun canDowngrade(): Boolean
 

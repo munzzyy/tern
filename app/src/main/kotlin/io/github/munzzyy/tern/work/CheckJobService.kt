@@ -32,6 +32,7 @@ class CheckJobService : JobService() {
             } finally {
                 if (self != null) running.remove(params.jobId, self)
             }
+            if (params.jobId == Scheduler.JOB_ID) engine.ranInBackground()
             jobFinished(params, failed)
         }
         running[params.jobId] = job

@@ -1,9 +1,5 @@
 package io.github.munzzyy.tern.ui.detail
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -29,6 +25,7 @@ import io.github.munzzyy.tern.ui.common.ChoiceDialog
 import io.github.munzzyy.tern.ui.common.GlyphButton
 import io.github.munzzyy.tern.ui.common.LinkDialog
 import io.github.munzzyy.tern.ui.common.focusHighlight
+import io.github.munzzyy.tern.ui.common.openAppInfo
 import io.github.munzzyy.tern.ui.common.rememberActions
 import io.github.munzzyy.tern.ui.common.shareFile
 import io.github.munzzyy.tern.ui.common.shareText
@@ -107,11 +104,4 @@ fun DetailMenu(row: AppRow) {
             actions.run { shareFile(context, shareTitle, engine.shareableExport(listOf(row.id), format)) }
         }
     }
-}
-
-private fun openAppInfo(context: android.content.Context, packageName: String): Boolean = try {
-    context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-    true
-} catch (_: ActivityNotFoundException) {
-    false
 }

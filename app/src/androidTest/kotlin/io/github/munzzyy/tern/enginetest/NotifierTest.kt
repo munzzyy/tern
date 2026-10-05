@@ -3,12 +3,14 @@ package io.github.munzzyy.tern.enginetest
 import android.app.Notification
 import android.app.NotificationManager
 import android.content.Intent
+import android.os.Build
 import android.provider.Settings
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.tern.engine.SavedFile
 import io.github.munzzyy.tern.engine.real.Texts
 import io.github.munzzyy.tern.work.Installed
 import io.github.munzzyy.tern.work.Notifier
+import io.github.munzzyy.tern.work.Offered
 import io.github.munzzyy.tern.work.Trouble
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -94,6 +96,47 @@ class NotifierTest {
             waitUntil(10_000, "the summary to count two") { summary()?.extras?.getCharSequence(Notification.EXTRA_TITLE)?.toString() == texts.notifyConfirms(2) }
             apps.drop(1).forEach(notifier::cancelConfirm)
             waitUntil(10_000, "the summary to go with the last confirmation") { grouped().isEmpty() }
+        } finally {
+            manager.cancelAll()
+        }
+    }
+
+    @Test
+    fun aNotificationAboutOneAppOffersToSkipItsReleaseOrToOpenIt() {
+        prepareDevice()
+        val manager = targetContext.getSystemService(NotificationManager::class.java)
+        val texts = Texts(targetContext)
+        val notifier = Notifier(targetContext, texts) { true }
+        val shown = { id: Int -> manager.activeNotifications.firstOrNull { it.id == id }?.notification }
+        val labels = { id: Int -> shown(id)?.actions.orEmpty().map { it.title.toString() } }
+        val own = targetContext.packageName
+        try {
+            notifier.updates(listOf(Offered("a", APP, "v2.0")))
+            waitUntil(10_000, "the notification about one update") { labels(Notifier.ID_UPDATES).isNotEmpty() }
+            if (Build.VERSION.SDK_INT >= 31) {
+                assertEquals(listOf(texts.actionUpdate(), texts.actionSkipVersion()), labels(Notifier.ID_UPDATES))
+                assertTrue("a skip from a locked phone", shown(Notifier.ID_UPDATES)!!.actions[1].isAuthenticationRequired)
+            } else {
+                assertEquals("Android ${Build.VERSION.RELEASE} cannot hold a skip until the phone is unlocked", listOf(texts.actionUpdate()), labels(Notifier.ID_UPDATES))
+            }
+            assertFalse("the lock screen names the app", APP in words(shown(Notifier.ID_UPDATES)!!.publicVersion!!))
+            // Android drops updates of one notification that come faster than a few a second.
+            Thread.sleep(1_000)
+            notifier.updates(listOf(Offered("a", APP, "v2.0"), Offered("b", "Other", "v5")))
+            waitUntil(10_000, "the notification about two updates") { labels(Notifier.ID_UPDATES) == listOf(texts.actionUpdateAll()) }
+
+            notifier.installed(listOf(Installed("t", APP, "2.0", packageName = own)))
+            waitUntil(10_000, "the notification about one install") { labels(Notifier.ID_INSTALLED).isNotEmpty() }
+            assertEquals(listOf(texts.actionOpen()), labels(Notifier.ID_INSTALLED))
+            assertFalse("the lock screen names the app", APP in words(shown(Notifier.ID_INSTALLED)!!.publicVersion!!))
+            Thread.sleep(1_000)
+            notifier.installed(listOf(Installed("t", APP, "2.0", packageName = "com.example.nothing.to.open")))
+            waitUntil(10_000, "the notification about an app with nothing to open") { shown(Notifier.ID_INSTALLED)?.actions == null }
+            Thread.sleep(1_000)
+            notifier.installed(listOf(Installed("t", APP, "2.0", packageName = own), Installed("u", "Other", "1.0", packageName = own)))
+            waitUntil(10_000, "the notification about two installs") {
+                shown(Notifier.ID_INSTALLED)?.let { it.actions == null && texts.notifyInstalled(2, null) in words(it) } == true
+            }
         } finally {
             manager.cancelAll()
         }

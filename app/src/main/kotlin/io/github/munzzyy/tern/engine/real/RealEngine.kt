@@ -100,6 +100,7 @@ import io.github.munzzyy.tern.net.ProxyProbe
 import io.github.munzzyy.tern.net.ProxySettingsException
 import io.github.munzzyy.tern.net.UrlConnectionHttp
 import io.github.munzzyy.tern.work.Notifier
+import io.github.munzzyy.tern.work.Offered
 import io.github.munzzyy.tern.work.Pace
 import io.github.munzzyy.tern.work.Scheduler
 import java.io.Closeable
@@ -655,16 +656,31 @@ class RealEngine(
         ready()
         withContext(Dispatchers.IO) {
             val offered = evaluations[appId]?.latest?.id ?: return@withContext
-            saveApp(appId) { stored ->
-                if (stored.config.trackOnly) {
-                    stored.copy(state = stored.state.copy(seenReleaseId = offered))
-                } else {
-                    stored.copy(config = stored.config.copy(releases = stored.config.releases.copy(skippedReleaseId = offered)))
-                }
-            }
-            checks.reevaluate(appId, network = false)
-            publish()
+            dismiss(appId, offered)
         }
+    }
+
+    /** As [dismissRelease], from a notification about [releaseId]: once another release is on offer, nothing happens. */
+    internal suspend fun skipRelease(appId: String, releaseId: String) {
+        ready()
+        withContext(Dispatchers.IO) {
+            if (!skips(evaluations[appId]?.latest?.id, releaseId)) return@withContext
+            dismiss(appId, releaseId)
+            notifier.installedUpdate(appId, ::offered)
+        }
+    }
+
+    private fun dismiss(appId: String, releaseId: String) {
+        saveApp(appId) { setAside(it, releaseId) }
+        checks.reevaluate(appId, network = false)
+        publish()
+    }
+
+    /** [appId] with its name and the release it is offered, while it has an update waiting. */
+    internal fun offered(appId: String): Offered? {
+        val name = stored[appId]?.config?.shownName ?: return null
+        val eval = evaluations[appId]?.takeIf { it.status == AppStatus.UPDATE_AVAILABLE } ?: return null
+        return Offered(appId, name, eval.latest?.id ?: return null)
     }
 
     override suspend fun releases(appId: String): List<Release> = ranked(appId, passingOnly = false)
@@ -1113,6 +1129,17 @@ class RealEngine(
          */
         internal fun removedForGood(action: String?, replacing: Boolean, archival: Boolean): Boolean =
             action == Intent.ACTION_PACKAGE_REMOVED && !replacing && !archival
+
+        /** Whether a Skip about [asked] skips it, with [offered] the release on offer now. A newer one is never skipped unseen. */
+        internal fun skips(offered: String?, asked: String): Boolean = offered != null && offered == asked
+
+        /** [app] with [releaseId] set aside: seen for an app that is only tracked, skipped for one Tern installs. */
+        internal fun setAside(app: StoredApp, releaseId: String): StoredApp =
+            if (app.config.trackOnly) {
+                app.copy(state = app.state.copy(seenReleaseId = releaseId))
+            } else {
+                app.copy(config = app.config.copy(releases = app.config.releases.copy(skippedReleaseId = releaseId)))
+            }
 
         /** Whether [a] and [b] are one app's source: one kind at one address, and in a repository of many apps, one package. */
         internal fun sameSource(a: SourceSpec, b: SourceSpec): Boolean =

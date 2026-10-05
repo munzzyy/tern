@@ -475,13 +475,13 @@ internal class Installs(private val e: RealEngine) {
             )
         }
         e.event(appId, EventKind.INSTALLED, e.texts.eventInstalled(pending.version, now.app.versionCode))
-        e.notifier.installedUpdate(appId) { id -> e.stored[id]?.config?.shownName?.takeIf { e.evaluations[id]?.status == AppStatus.UPDATE_AVAILABLE } }
+        e.notifier.installedUpdate(appId, e::offered)
         if (!e.settings.value.keepInstallers) {
             for (url in listOf(pending.assetUrl) + pending.partUrls) e.downloader.discard(appId, Downloader.key(pending.releaseId, url))
         }
         val update = updating.remove(appId) ?: true
         if (notify && e.settings.value.notifyInstalled) {
-            e.stored[appId]?.config?.shownName?.let { e.notifier.installed(listOf(Installed(appId, it, pending.version, update))) }
+            e.stored[appId]?.config?.shownName?.let { e.notifier.installed(listOf(Installed(appId, it, pending.version, update, pending.packageName))) }
         }
     }
 
@@ -644,7 +644,7 @@ internal class Installs(private val e: RealEngine) {
                 val session = run(id, null, null)
                 val status = if (session != null) awaitOutcome(id, INSTALL_WAIT_MS) else null
                 when (status) {
-                    PackageInstaller.STATUS_SUCCESS -> installed += Installed(id, config.shownName, e.stored[id]?.state?.record?.version)
+                    PackageInstaller.STATUS_SUCCESS -> installed += e.stored[id].let { Installed(id, config.shownName, it?.state?.record?.version, packageName = it?.config?.let(e::packageOf)) }
                     PackageInstaller.STATUS_PENDING_USER_ACTION -> Unit
                     else -> failed += id
                 }
@@ -657,7 +657,7 @@ internal class Installs(private val e: RealEngine) {
         val heard = checked.filter { it.newRelease && e.stored[it.id]?.config?.muted != true }
         val fresh = heard.filter { e.evaluations[it.id]?.status == AppStatus.UPDATE_AVAILABLE }.map { it.id }
         val tracked = heard.filter { e.evaluations[it.id]?.status == AppStatus.NEW_RELEASE }.map { it.id }
-        if (settings.notifyUpdates) e.notifier.updates(named(fresh))
+        if (settings.notifyUpdates) e.notifier.updates(fresh.mapNotNull(e::offered))
         if (settings.notifyTracked) e.notifier.tracked(named(tracked))
         if (settings.notifyInstalled) e.notifier.installed(installed)
         if (settings.notifyFailures) sayFailures(troubles(checked.filter { it.failed }.map { it.id } + failed)) else e.saidFailures.set(emptySet())

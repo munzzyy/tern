@@ -174,6 +174,8 @@ class Texts(context: Context) : ImportTexts {
     fun notifyChecking(count: Int) = q(R.plurals.engine_notify_checking, count)
     fun actionUpdate() = s(R.string.action_update)
     fun actionUpdateAll() = s(R.string.action_update_all)
+    fun actionSkipVersion() = s(R.string.action_skip_version)
+    fun actionOpen() = s(R.string.action_open)
     fun notifyUpdates(count: Int, onlyName: String?) = if (count == 1 && onlyName != null) s(R.string.engine_notify_update_one, onlyName) else q(R.plurals.engine_notify_updates_count, count)
     fun notifyInstalled(count: Int, onlyName: String?) = if (count == 1 && onlyName != null) s(R.string.engine_notify_installed_one, onlyName) else q(R.plurals.engine_notify_installed_count, count)
     fun notifyConfirm(name: String) = s(R.string.engine_notify_confirm, name)

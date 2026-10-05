@@ -8,6 +8,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Icon
+import android.os.Build
 import android.os.Bundle
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.verify.Fingerprints
@@ -15,8 +16,14 @@ import io.github.munzzyy.tern.engine.SavedFile
 import io.github.munzzyy.tern.engine.real.Texts
 import io.github.munzzyy.tern.log.TernLog
 
-/** An app that was installed: [version] as it was installed, and [update] when it was on the device before. */
-data class Installed(val id: String, val name: String, val version: String?, val update: Boolean = true)
+/**
+ * An app that was installed: [version] as it was installed, and [update] when it was on the device
+ * before. [packageName] is what a notification about it alone opens, when the app has a screen.
+ */
+data class Installed(val id: String, val name: String, val version: String?, val update: Boolean = true, val packageName: String? = null)
+
+/** An app whose update is on offer, and the release that is, so that a Skip from a notification skips that release alone. */
+data class Offered(val id: String, val name: String, val releaseId: String)
 
 /** An app that could not be checked or updated, and why, in the words shown for it. */
 data class Trouble(val id: String, val name: String, val reason: String)
@@ -45,32 +52,38 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
     }
 
     /**
-     * [apps] are ids and names. A notification about one app opens its page and offers to update
-     * it; one about several offers to update them all. Either way nothing starts until it is tapped.
+     * A notification about one app opens its page and offers to update it, and from Android 12 on
+     * to skip the release on offer once the phone is unlocked; one about several offers to update
+     * them all. Either way nothing starts until it is tapped.
      */
-    fun updates(apps: List<Pair<String, String>>, quiet: Boolean = false) {
+    fun updates(apps: List<Offered>, quiet: Boolean = false) {
         if (apps.isEmpty()) return
         val single = apps.singleOrNull()
         show(
             ID_UPDATES,
-            updatesAbout(apps.map { it.second }) { b ->
+            updatesAbout(apps.map { it.name }) { b ->
                 // Which apps it names, so that an install can take its app out of it later.
-                b.addExtras(Bundle().apply { putStringArray(EXTRA_APPS, apps.map { it.first }.toTypedArray()) })
+                b.addExtras(Bundle().apply { putStringArray(EXTRA_APPS, apps.map { it.id }.toTypedArray()) })
                 if (quiet) b.setOnlyAlertOnce(true)
-                if (single != null) b.setContentIntent(openApp(single.first))
+                if (single != null) b.setContentIntent(openApp(single.id))
                 val label = if (single != null) texts.actionUpdate() else texts.actionUpdateAll()
-                b.addAction(Notification.Action.Builder(Icon.createWithResource(c, R.drawable.ic_stat_update), label, NotificationActions.update(c, single?.first)).build())
+                b.addAction(Notification.Action.Builder(Icon.createWithResource(c, R.drawable.ic_stat_update), label, NotificationActions.update(c, single?.id)).build())
+                // A button can wait for an unlock only from Android 12; without that, anyone holding the locked phone could skip an update.
+                if (single != null && Build.VERSION.SDK_INT >= 31) {
+                    val skip = NotificationActions.skip(c, single.id, single.releaseId)
+                    b.addAction(Notification.Action.Builder(Icon.createWithResource(c, R.drawable.ic_stat_update), texts.actionSkipVersion(), skip).setAuthenticationRequired(true).build())
+                }
             },
         )
     }
 
     /**
-     * Takes [appId], now installed, out of the notification of updates, if one shows: it then names
-     * the apps that still wait, or goes when none does. [waiting] gives the name of an app whose
+     * Takes [appId], now installed or skipped, out of the notification of updates, if one shows: it
+     * then names the apps that still wait, or goes when none does. [waiting] gives an app whose
      * update still waits, and null for one whose does not. A notification that was swiped away
      * stays away.
      */
-    fun installedUpdate(appId: String, waiting: (String) -> String?) {
+    fun installedUpdate(appId: String, waiting: (String) -> Offered?) {
         val shown = try {
             manager.activeNotifications.firstOrNull { it.id == ID_UPDATES }?.notification
         } catch (e: RuntimeException) {
@@ -113,10 +126,30 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
         return PendingIntent.getActivity(c, appId.hashCode(), open, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
-    /** Apps that were installed or updated. A notification about one says its version and opens its page. */
+    /**
+     * Apps that were installed or updated. A notification about one says its version, opens its
+     * page, and offers to open the app itself where it has a screen to open.
+     */
     fun installed(apps: List<Installed>) {
         if (apps.isEmpty()) return
-        show(ID_INSTALLED, installedAbout(apps) { b -> apps.singleOrNull()?.let { b.setContentIntent(openApp(it.id)) } })
+        val single = apps.singleOrNull()
+        show(
+            ID_INSTALLED,
+            installedAbout(apps) { b ->
+                if (single != null) {
+                    b.setContentIntent(openApp(single.id))
+                    launch(single.packageName)?.let { b.addAction(Notification.Action.Builder(Icon.createWithResource(c, R.drawable.ic_stat_done), texts.actionOpen(), it).build()) }
+                }
+            },
+        )
+    }
+
+    /** Opens the app [packageName] itself, as its launcher icon does, or null when it has nothing to open. */
+    private fun launch(packageName: String?): PendingIntent? {
+        if (packageName == null) return null
+        val pm = c.packageManager
+        val open = pm.getLaunchIntentForPackage(packageName) ?: pm.getLeanbackLaunchIntentForPackage(packageName) ?: return null
+        return PendingIntent.getActivity(c, packageName.hashCode(), open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     /**
@@ -316,12 +349,12 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
         fun stillSaid(said: Set<String>, current: List<Trouble>): Set<String> = said intersect current.mapTo(HashSet(), ::fingerprint)
 
         /**
-         * The apps of a notification that named [named] which still wait for their update, by id
-         * and name, once [installed] is in. An app named there only by an older Tern is not known
-         * and so not named again.
+         * The apps of a notification that named [named] which still wait for their update, once
+         * [installed] is in. An app named there only by an older Tern is not known and so not
+         * named again.
          */
-        fun stillWaiting(named: List<String>, installed: String, waiting: (String) -> String?): List<Pair<String, String>> =
-            named.filter { it != installed }.mapNotNull { id -> waiting(id)?.let { id to it } }
+        fun stillWaiting(named: List<String>, installed: String, waiting: (String) -> Offered?): List<Offered> =
+            named.filter { it != installed }.mapNotNull(waiting)
 
         /**
          * How many confirmations the summary counts once [posted] shows and [gone] does not, of

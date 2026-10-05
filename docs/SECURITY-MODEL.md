@@ -415,7 +415,11 @@ that is not set that way, and that is how phones come, so Settings has a switch,
 never which.
 
 The Update and Update all buttons on a notification about updates start the
-same install as the buttons in Tern, through every check above. So do the
+same install as the buttons in Tern, through every check above. Skip this
+version, on a notification about one app, skips only the release that
+notification named, never one that came after it, and Android sends it only
+once the phone is unlocked. Android can ask for that from version 12 on, so
+older versions get no Skip button. So do the
 widget's Update all button and the launcher shortcut of that name. The tile and
 the widget's Check button only check.
 

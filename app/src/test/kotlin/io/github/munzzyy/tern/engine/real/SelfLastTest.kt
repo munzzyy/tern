@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.engine.real
 
 import io.github.munzzyy.tern.work.Notifier
+import io.github.munzzyy.tern.work.Offered
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -13,10 +14,12 @@ class SelfLastTest {
 
     @Test
     fun anInstalledAppLeavesTheUpdatesNotificationAndTheRestStay() {
-        val waiting = mapOf("a" to "Alpha", "c" to "Gamma")
-        assertEquals(listOf("a" to "Alpha", "c" to "Gamma"), Notifier.stillWaiting(listOf("a", "b", "c"), "b") { waiting[it] })
+        val alpha = Offered("a", "Alpha", "v2")
+        val gamma = Offered("c", "Gamma", "v7")
+        val waiting = listOf(alpha, gamma).associateBy { it.id }
+        assertEquals(listOf(alpha, gamma), Notifier.stillWaiting(listOf("a", "b", "c"), "b") { waiting[it] })
         // An app updated some other way in the meantime is not named again.
-        assertEquals(listOf("c" to "Gamma"), Notifier.stillWaiting(listOf("b", "c", "x"), "b") { waiting[it] })
-        assertEquals(emptyList<Pair<String, String>>(), Notifier.stillWaiting(listOf("b"), "b") { waiting[it] })
+        assertEquals(listOf(gamma), Notifier.stillWaiting(listOf("b", "c", "x"), "b") { waiting[it] })
+        assertEquals(emptyList<Offered>(), Notifier.stillWaiting(listOf("b"), "b") { waiting[it] })
     }
 }

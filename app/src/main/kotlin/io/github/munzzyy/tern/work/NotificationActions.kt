@@ -10,9 +10,9 @@ import io.github.munzzyy.tern.log.TernLog
 import kotlinx.coroutines.launch
 
 /**
- * What the buttons of a notification do: update one app, or every app with an update, or stop the
- * downloads under way. The same checks run as when the buttons in Tern are pressed; nothing is
- * installed that would not be there.
+ * What the buttons of a notification do: update one app, or every app with an update, skip the
+ * release of one app, or stop the downloads under way. The same checks run as when the buttons in
+ * Tern are pressed; nothing is installed that would not be there.
  */
 class NotificationActions : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -24,6 +24,22 @@ class NotificationActions : BroadcastReceiver() {
                 try {
                     engine.ready()
                     engine.cancelDownloads()
+                } finally {
+                    done.finish()
+                }
+            }
+            return
+        }
+        if (action == ACTION_SKIP) {
+            val appId = intent.getStringExtra(EXTRA_APP)?.take(MAX_ID) ?: return
+            val releaseId = intent.getStringExtra(EXTRA_RELEASE)?.take(MAX_RELEASE) ?: return
+            val engine = RealEngine.obtain(context)
+            val done = goAsync()
+            engine.scope.launch {
+                try {
+                    engine.skipRelease(appId, releaseId)
+                } catch (e: RuntimeException) {
+                    TernLog.w(TAG, "The release asked to be skipped from a notification was not: ${e.javaClass.simpleName}")
                 } finally {
                     done.finish()
                 }
@@ -51,8 +67,11 @@ class NotificationActions : BroadcastReceiver() {
         private const val ACTION_UPDATE = "io.github.munzzyy.tern.action.UPDATE"
         private const val ACTION_UPDATE_ALL = "io.github.munzzyy.tern.action.UPDATE_ALL"
         private const val ACTION_CANCEL_DOWNLOADS = "io.github.munzzyy.tern.action.CANCEL_DOWNLOADS"
+        private const val ACTION_SKIP = "io.github.munzzyy.tern.action.SKIP"
         private const val EXTRA_APP = "app"
+        private const val EXTRA_RELEASE = "release"
         private const val MAX_ID = 64
+        private const val MAX_RELEASE = 1024
         private const val TAG = "TernNotifyAction"
 
         /** Updates [appId], or every app with an update when it is null. */
@@ -61,6 +80,12 @@ class NotificationActions : BroadcastReceiver() {
                 .setAction(if (appId == null) ACTION_UPDATE_ALL else ACTION_UPDATE)
                 .apply { if (appId != null) putExtra(EXTRA_APP, appId) }
             return PendingIntent.getBroadcast(context, appId?.hashCode() ?: 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        /** Skips [releaseId] of [appId], and nothing if a newer release is on offer by the time it is tapped. */
+        fun skip(context: Context, appId: String, releaseId: String): PendingIntent {
+            val intent = Intent(context, NotificationActions::class.java).setAction(ACTION_SKIP).putExtra(EXTRA_APP, appId).putExtra(EXTRA_RELEASE, releaseId)
+            return PendingIntent.getBroadcast(context, appId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
         /** Stops every download the person started that has not reached the installer yet. */

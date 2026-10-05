@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.enginetest
 
+import android.app.job.JobScheduler
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.tern.core.net.Headers
 import io.github.munzzyy.tern.core.net.HttpClient
@@ -16,6 +17,7 @@ import io.github.munzzyy.tern.engine.real.Texts
 import io.github.munzzyy.tern.net.ProxyDoor
 import io.github.munzzyy.tern.net.ProxyProbe
 import io.github.munzzyy.tern.net.UrlConnectionHttp
+import io.github.munzzyy.tern.work.Scheduler
 import java.io.Closeable
 import java.io.DataInputStream
 import java.io.File
@@ -294,6 +296,39 @@ class ProxyTest {
                     assertEquals(443, one.port)
                 }
             }
+        }
+    }
+
+    @Test
+    fun aBackgroundRunThroughASilentProxyStopsOnceAndMarksNoApp() = runBlocking {
+        val scheduler = targetContext.getSystemService(JobScheduler::class.java)
+        try {
+            Harness("proxy-gate").use { h ->
+                h.assumeOnline()
+                h.forge.releases = listOf(v1())
+                val id = h.addFixture()
+                h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 360))
+                scheduler.cancel(Scheduler.RETRY_JOB_ID)
+
+                h.throughProxyAt(nobodyListens())
+                val failedBefore = h.engine.events.value.count { it.kind == EventKind.CHECK_FAILED }
+                h.engine.runScheduledCheck()
+                assertEquals(Texts(targetContext).proxySilent(), h.engine.lastRunProblem.value?.message)
+                assertNull(h.describe(id), h.state(id).checkProblem)
+                assertEquals("requests reached the forge although the proxy did not answer", 0, h.forge.requests.size)
+                assertEquals("the run says so once", failedBefore + 1, h.engine.events.value.count { it.kind == EventKind.CHECK_FAILED })
+                assertNotNull("the run is tried again later", scheduler.getPendingJob(Scheduler.RETRY_JOB_ID))
+
+                SocksWitness().use { witness ->
+                    h.throughProxyAt(witness.port)
+                    h.engine.runScheduledCheck()
+                    assertNull(h.engine.lastRunProblem.value)
+                    assertTrue("a proxy that answers lets the same run through", h.forge.requests.isNotEmpty())
+                }
+            }
+        } finally {
+            scheduler.cancel(Scheduler.RETRY_JOB_ID)
+            scheduler.cancel(Scheduler.JOB_ID)
         }
     }
 }

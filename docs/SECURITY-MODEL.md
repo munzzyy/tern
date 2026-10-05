@@ -361,7 +361,11 @@ Device tests send a check, a download and an icon through a proxy that
 is not there and count the requests that arrive: none. When a request through a
 proxy on the device fails, Tern asks the proxy whether it is there at all. If
 not, the failure says "The proxy did not answer, so nothing was sent" instead of
-what the socket said.
+what the socket said. A background run asks a proxy on the device first, the
+same way, before it checks anything. Orbot that is silent is asked to start and
+given 20 seconds. When the proxy still does not answer, the run stops, says so
+once in the log and tries again later, and no app is marked as failed. A proxy
+on another host is not asked.
 
 With the setting on Orbot, Tern finds out whether Orbot is connected by saying
 hello to a SOCKS proxy on `127.0.0.1` at Orbot's port, the way SOCKS 5 begins,

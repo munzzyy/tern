@@ -95,6 +95,7 @@ import io.github.munzzyy.tern.net.ProxyChoice
 import io.github.munzzyy.tern.net.PinChoice
 import io.github.munzzyy.tern.net.ProxyDoor
 import io.github.munzzyy.tern.net.ProxyProbe
+import io.github.munzzyy.tern.net.ProxySettingsException
 import io.github.munzzyy.tern.net.UrlConnectionHttp
 import io.github.munzzyy.tern.work.Notifier
 import io.github.munzzyy.tern.work.Pace
@@ -111,6 +112,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -118,6 +120,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 
 /**
  * The engine behind the screens. Installed versions are always read from PackageManager and never
@@ -927,22 +930,62 @@ class RealEngine(
      * The background check: of [only] or of every app it looks at. Updates that install by
      * themselves wait while the settings hold them back, and a job installs them once the network
      * and the charger allow it. Apps that could not be checked for a passing reason are checked
-     * again a few times, each time later, and a rate limit is waited out, as in Obtainium.
+     * again a few times, each time later, and a rate limit is waited out, as in Obtainium. A run
+     * the job starts first asks a proxy on this device whether it answers, and when it does not,
+     * says so once and tries again later instead of failing every app.
      * [cause] is what Tern's own messages in the log say started it.
      */
     suspend fun runScheduledCheck(attempt: Int = 0, only: Set<String>? = null, cause: CheckCause = if (only == null) CheckCause.SCHEDULE else CheckCause.RETRY) {
         ready()
-        if (!_online.value) {
-            offline(null)
-            return
+        val settings = _settings.value
+        val asksProxy = RunGate.asksProxyFirst(cause) && RunGate.onDevice(settings)
+        when (RunGate.blocked(_online.value, asksProxy) { proxyAnswers(settings) }) {
+            RunGate.Block.OFFLINE -> {
+                offline(null)
+                return
+            }
+            RunGate.Block.PROXY_SILENT -> {
+                stopForSilentProxy(settings, attempt, only)
+                return
+            }
+            null -> Unit
         }
         _lastRunProblem.value = null
-        val settings = _settings.value
         val installsNow = Scheduler.installsNow(settings, waitingJob = false, device::onUnmeteredNetwork, device::isCharging)
         val run = installs.runScheduled(settings, installsNow, only, cause)
         if (only == null) scope.launch(Dispatchers.IO) { sweepDownloads() }
         if (Scheduler.armsWaiting(settings, waitingJob = false, waited = run.waited)) Scheduler.waitForInstalls(context, settings)
         retryDelay(run.failed, attempt, nowMs())?.let { (again, delay) -> Scheduler.retry(context, settings, again, attempt + 1, delay) }
+    }
+
+    /**
+     * Whether the proxy on this device answers, asked over 127.0.0.1 alone. A silent Orbot is asked
+     * to start, as it is when Tern starts, and given a short while to come up.
+     */
+    private suspend fun proxyAnswers(settings: Settings): Boolean = withContext(Dispatchers.IO) {
+        if (proxyAnswersNow()) return@withContext true
+        if (settings.proxy != ProxyMode.ORBOT) return@withContext false
+        orbotLink.ask()
+        withTimeoutOrNull(ORBOT_WAIT_MS) {
+            while (!proxyAnswersNow()) delay(ORBOT_POLL_MS)
+            true
+        } ?: false
+    }
+
+    /** A proxy whose setting cannot be built is left to the checks, which say what is wrong with it. */
+    private fun proxyAnswersNow(): Boolean = try {
+        ProxyProbe.answers(proxy())
+    } catch (_: ProxySettingsException) {
+        true
+    }
+
+    /** The proxy on this device did not answer: the run says so once and tries again later, and no app is marked. */
+    private suspend fun stopForSilentProxy(settings: Settings, attempt: Int, only: Set<String>?) {
+        val problem = Problem(ProblemKind.NETWORK, texts.proxySilent())
+        _lastRunProblem.value = problem
+        withContext(Dispatchers.IO) { event(null, EventKind.CHECK_FAILED, problem.message) }
+        val again = Retries.plan(installs.backgroundTargets(only).map { it to problem }, attempt, nowMs()) ?: return
+        Scheduler.retry(context, settings, again.first, attempt + 1, again.second)
     }
 
     /** The waiting job: installs what the last check held back, without checking the list again or setting itself anew. */
@@ -1042,6 +1085,10 @@ class RealEngine(
         private const val TAG = "TernEngine"
         private const val ROW_INTERVAL_MS = 250L
         private const val OBTAINIUM_ALIAS = "io.github.munzzyy.tern.ObtainiumLinks"
+
+        /** How long a background run waits for a silent Orbot to come up, out of the ten minutes a job has. */
+        private const val ORBOT_WAIT_MS = 20_000L
+        private const val ORBOT_POLL_MS = 2_000L
 
         /** The module that lets Android put an older version of an app over a newer one. */
         internal const val LET_ME_DOWNGRADE = "com.berdik.letmedowngrade"

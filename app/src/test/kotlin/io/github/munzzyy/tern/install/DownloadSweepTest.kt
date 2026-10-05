@@ -7,6 +7,7 @@ import io.github.munzzyy.tern.data.PendingInstall
 import java.io.File
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -103,6 +104,82 @@ class DownloadSweepTest {
         val all = files(root, "app", listed, finished = true) + files(root, "app", gone, finished = false) + files(root, "other", listed, finished = true)
         Downloader.sweep(root, mapOf("app" to setOf(listed, gone), "other" to setOf(listed)), now)
         assertTrue(all.all { it.isFile })
+    }
+
+    private val older = Downloader.key("v0", "https://example.org/app-v0.apk")
+    private val release = Release("v2", "2.0", assets = listOf(Asset("app-v2.apk", "https://example.org/app-v2.apk")))
+    private val waiting = PendingInstall(
+        sessionId = 7, packageName = "com.example.app", releaseId = "v1", version = "1.0", versionCode = 1,
+        fileSha256 = null, fileSize = null, assetUrl = "https://example.org/app-v1.apk", startedAtMs = now,
+    )
+
+    /**
+     * What the engine keeps of the stored apps [ids] when every one lists [release] and nothing else
+     * says otherwise: [held] have a fetch under way, [busy] are being installed, [pending] wait on an
+     * install and [unreadable] cannot be read.
+     */
+    private fun keepMap(
+        ids: Set<String>,
+        held: Set<String> = emptySet(),
+        busy: Set<String> = emptySet(),
+        pending: Set<String> = emptySet(),
+        unreadable: Set<String> = emptySet(),
+    ) = Downloader.keepMap(ids, held, { id ->
+        if (id in unreadable) null else AppState(releases = listOf(release), pending = waiting.takeIf { id in pending })
+    }) { it in busy }
+
+    /** Sweeps with [keep] a folder for "app" holding a finished file of [listed] and one of [older], which no release names. */
+    private fun sweepApp(keep: Map<String, Set<String>?>): Pair<List<File>, List<File>> {
+        val root = root()
+        val listedFiles = files(root, "app", listed, finished = true)
+        val olderFiles = files(root, "app", older, finished = true)
+        Downloader.sweep(root, keep, now)
+        return listedFiles to olderFiles
+    }
+
+    @Test
+    fun anAppNothingIsDoingWithKeepsOnlyWhatItsReleasesName() {
+        val keep = keepMap(setOf("app"))
+        assertEquals(mapOf("app" to setOf(listed)), keep)
+        val (listedFiles, olderFiles) = sweepApp(keep)
+        assertTrue(listedFiles.all { it.isFile })
+        assertFalse(olderFiles.any { it.exists() })
+    }
+
+    @Test
+    fun anAppBeingInstalledIsLeftAlone() {
+        val keep = keepMap(setOf("app"), busy = setOf("app"))
+        assertNull(keep["app"])
+        assertTrue(sweepApp(keep).second.all { it.isFile })
+    }
+
+    @Test
+    fun anAppWaitingOnAnInstallIsLeftAlone() {
+        val keep = keepMap(setOf("app"), pending = setOf("app"))
+        assertNull(keep["app"])
+        assertTrue(sweepApp(keep).second.all { it.isFile })
+    }
+
+    @Test
+    fun anAppAFetchIsUnderWayForIsLeftAlone() {
+        val keep = keepMap(setOf("app"), held = setOf("app"))
+        assertNull(keep["app"])
+        assertTrue(sweepApp(keep).second.all { it.isFile })
+    }
+
+    @Test
+    fun anAppTheStoreCannotReadIsLeftAlone() {
+        val keep = keepMap(setOf("app"), unreadable = setOf("app"))
+        assertNull(keep["app"])
+        assertTrue(sweepApp(keep).second.all { it.isFile })
+    }
+
+    @Test
+    fun aFetchForAnAppNotStoredKeepsItsFolder() {
+        val keep = keepMap(emptySet(), held = setOf("app"))
+        assertEquals(mapOf("app" to null), keep)
+        val (listedFiles, olderFiles) = sweepApp(keep)
+        assertTrue((listedFiles + olderFiles).all { it.isFile })
     }
 
     @Test

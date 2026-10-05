@@ -126,11 +126,11 @@ class Downloader(
     }
 
     /**
-     * Sweeps this downloader's folder with what [keep] gives, asked once no fetch can start. An app
-     * a fetch is under way for is left alone, whatever [keep] says of it.
+     * Sweeps this downloader's folder, keeping what [keepMap] says of the stored apps [ids] gives.
+     * Everything is asked once no fetch can start, and none starts until the sweep is done.
      */
-    fun sweep(nowMs: Long, keep: () -> Map<String, Set<String>?>) = synchronized(holds) {
-        sweep(root, keep() + holds.keys.associateWith<String, Set<String>?> { null }, nowMs)
+    fun sweep(nowMs: Long, ids: () -> Set<String>, stateOf: (String) -> AppState?, busy: (String) -> Boolean) = synchronized(holds) {
+        sweep(root, keepMap(ids(), holds.keys, stateOf, busy), nowMs)
     }
 
     private class RestartFromZero : Exception()
@@ -350,6 +350,17 @@ class Downloader(
             }
             state.pending?.let { pending -> for (url in listOf(pending.assetUrl) + pending.partUrls) add(key(pending.releaseId, url)) }
         }
+
+        /**
+         * What [sweep] may keep of each app in [ids] or [held]: null, so nothing is touched, for one
+         * [stateOf] cannot read, one a fetch is held for, one waiting on an install or one [busy]
+         * says is being installed; for any other, the keys its state can still ask for.
+         */
+        fun keepMap(ids: Set<String>, held: Set<String>, stateOf: (String) -> AppState?, busy: (String) -> Boolean): Map<String, Set<String>?> =
+            (ids + held).associateWith { id ->
+                val state = stateOf(id)
+                if (state == null || id in held || state.pending != null || busy(id)) null else keysOf(state)
+            }
 
         /**
          * Deletes from [root] what nothing will ask for again: the folder of an app [keep] does not

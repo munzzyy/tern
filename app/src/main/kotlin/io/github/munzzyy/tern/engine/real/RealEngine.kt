@@ -506,16 +506,12 @@ class RealEngine(
 
     /**
      * Deletes the downloads nothing will ask for again, as [Downloader.sweep] says. An app being
-     * installed or waiting on an install is left as it is, and so is one the store cannot read.
+     * installed, shown in progress or waiting on an install is left as it is, and so is one the
+     * store cannot read.
      */
     private fun sweepDownloads() {
         if (!ownsDownloads) return
-        downloader.sweep(System.currentTimeMillis()) {
-            store.ids().associateWith { id ->
-                val app = stored[id]
-                if (app == null || installs.underWay(id) || app.state.pending != null || progress.containsKey(id)) null else Downloader.keysOf(app.state)
-            }
-        }
+        downloader.sweep(System.currentTimeMillis(), store::ids, { stored[it]?.state }) { installs.underWay(it) || progress.containsKey(it) }
     }
 
     /** Whether a check of the whole list looks at [config]; one asked for by itself always does. */

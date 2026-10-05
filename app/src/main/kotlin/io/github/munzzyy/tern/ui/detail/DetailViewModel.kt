@@ -140,17 +140,18 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
 
     fun draftFor(config: AppConfig): PatternDraft = draft ?: PatternDraft.of(config)
 
-    fun isDirty(config: AppConfig): Boolean = draft.let { it != null && it != PatternDraft.of(config) }
+    fun changedIn(part: DraftPart, config: AppConfig): Boolean = draft?.changedIn(part, config) == true
 
     fun editDraft(config: AppConfig, change: (PatternDraft) -> PatternDraft) {
         draft = change(draftFor(config))
     }
 
-    fun saveDraft(config: AppConfig, onFailed: () -> Unit) {
+    /** Saves what the card for [part] holds; the other cards keep what is typed in them. */
+    fun saveDraft(config: AppConfig, part: DraftPart, onFailed: () -> Unit) {
         val d = draft ?: return
-        if (d.invalid.isNotEmpty()) return
-        draft = PatternDraft.of(d.applyTo(config))
-        save({ d.applyTo(it) }, onFailed)
+        if (d.invalidIn(part).isNotEmpty()) return
+        draft = d.withPart(part, PatternDraft.of(d.applyPart(part, config)))
+        save({ d.applyPart(part, it) }, onFailed)
     }
 
     /** The size of a file whose source names none, as its server says; null when it does not say or cannot be asked. */

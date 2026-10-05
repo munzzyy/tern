@@ -122,7 +122,7 @@ private fun NameGroup(vm: DetailViewModel, config: AppConfig) {
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth().textFieldKeys(),
             )
-            SaveDraft(vm, config)
+            SaveDraft(vm, config, DraftPart.NAME)
         }
     }
 }
@@ -311,21 +311,27 @@ private fun FilesGroup(vm: DetailViewModel, row: AppRow) {
                     vm.editDraft(config) { it.copy(innerFilter = v) }
                 }
             }
-            SaveDraft(vm, config)
+            SaveDraft(vm, config, DraftPart.FILES)
         }
     }
 }
 
+/** The test tag of the Save and Discard row of the card for [part]. */
+fun draftSaveTag(part: DraftPart): String = "draft_save_" + part.name.lowercase()
+
 @Composable
-private fun SaveDraft(vm: DetailViewModel, config: AppConfig) {
-    if (!vm.isDirty(config)) return
+private fun SaveDraft(vm: DetailViewModel, config: AppConfig, part: DraftPart) {
+    if (!vm.changedIn(part, config)) return
     val look = LocalLook.current
     val actions = rememberActions()
     val failed = stringResource(R.string.save_failed)
-    val invalid = vm.draftFor(config).invalid.isNotEmpty()
-    Row(horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2, Alignment.End), modifier = Modifier.fillMaxWidth()) {
-        QuietButton(stringResource(R.string.action_discard), onClick = { vm.editDraft(config) { PatternDraft.of(config) } })
-        TonalButton(stringResource(R.string.action_save), onClick = { vm.saveDraft(config) { actions.say(failed) } }, enabled = !invalid)
+    val invalid = vm.draftFor(config).invalidIn(part).isNotEmpty()
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(look.focusRoom * 2, Alignment.End),
+        modifier = Modifier.fillMaxWidth().testTag(draftSaveTag(part)),
+    ) {
+        QuietButton(stringResource(R.string.action_discard), onClick = { vm.editDraft(config) { it.resetPart(part, config) } })
+        TonalButton(stringResource(R.string.action_save), onClick = { vm.saveDraft(config, part) { actions.say(failed) } }, enabled = !invalid)
     }
 }
 
@@ -386,7 +392,7 @@ private fun AdvancedGroup(vm: DetailViewModel, config: AppConfig) {
             PatternField(R.string.setting_version_filter, R.string.setting_version_filter_help, draft.versionFilter, "versionFilter" in invalid) { v ->
                 vm.editDraft(config) { it.copy(versionFilter = v) }
             }
-            SaveDraft(vm, config)
+            SaveDraft(vm, config, DraftPart.ADVANCED)
         }
         ChoiceRow(
             title = stringResource(R.string.setting_version_from),

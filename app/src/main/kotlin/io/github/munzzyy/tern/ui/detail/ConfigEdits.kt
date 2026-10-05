@@ -28,7 +28,10 @@ fun isValidPattern(text: String): Boolean {
     }
 }
 
-/** The free-text fields of an app's settings, edited together and saved with one button. */
+/** The cards that edit the draft; each saves and discards its own fields only. */
+enum class DraftPart { NAME, FILES, ADVANCED }
+
+/** The free-text fields of an app's settings, edited in three cards. */
 data class PatternDraft(
     val include: String = "",
     val exclude: String = "",
@@ -68,6 +71,29 @@ data class PatternDraft(
         customName = customName.blankToNull()?.take(MAX_SHOWN_NAME),
         customAuthor = customAuthor.blankToNull()?.take(MAX_SHOWN_NAME),
     )
+
+    /** This draft with the fields of [part] taken from [from]. */
+    fun withPart(part: DraftPart, from: PatternDraft): PatternDraft = when (part) {
+        DraftPart.NAME -> copy(customName = from.customName, customAuthor = from.customAuthor)
+        DraftPart.FILES -> copy(include = from.include, exclude = from.exclude, innerFilter = from.innerFilter)
+        DraftPart.ADVANCED -> copy(
+            tag = from.tag,
+            title = from.title,
+            notes = from.notes,
+            version = from.version,
+            versionFilter = from.versionFilter,
+            matchGroup = from.matchGroup,
+        )
+    }
+
+    fun changedIn(part: DraftPart, config: AppConfig): Boolean = resetPart(part, config) != this
+
+    fun resetPart(part: DraftPart, config: AppConfig): PatternDraft = withPart(part, of(config))
+
+    fun invalidIn(part: DraftPart): Set<String> = PatternDraft().withPart(part, this).invalid
+
+    /** [config] with the fields of [part] from this draft and every other field as it was. */
+    fun applyPart(part: DraftPart, config: AppConfig): AppConfig = of(config).withPart(part, this).applyTo(config)
 
     companion object {
         fun of(config: AppConfig) = PatternDraft(

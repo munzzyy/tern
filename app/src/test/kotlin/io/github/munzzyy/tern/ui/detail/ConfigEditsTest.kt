@@ -91,4 +91,48 @@ class ConfigEditsTest {
         assertEquals(PatternDraft.of(saved), PatternDraft.of(saved.copy()))
         assertEquals(config, PatternDraft.of(config).applyTo(config))
     }
+
+    @Test
+    fun eachCardSeesOnlyItsOwnChanges() {
+        val config = AppConfig("id", SourceSpec("github", "https://github.com/example/app"), "App")
+        val named = PatternDraft.of(config).copy(customName = "Mine")
+        assertTrue(named.changedIn(DraftPart.NAME, config))
+        assertFalse(named.changedIn(DraftPart.FILES, config))
+        assertFalse(named.changedIn(DraftPart.ADVANCED, config))
+
+        val filtered = PatternDraft.of(config).copy(include = "arm64")
+        assertTrue(filtered.changedIn(DraftPart.FILES, config))
+        assertFalse(filtered.changedIn(DraftPart.NAME, config))
+        assertFalse(filtered.changedIn(DraftPart.ADVANCED, config))
+
+        val versioned = PatternDraft.of(config).copy(matchGroup = "2")
+        assertEquals(listOf(DraftPart.ADVANCED), DraftPart.entries.filter { versioned.changedIn(it, config) })
+    }
+
+    @Test
+    fun discardingOneCardKeepsWhatIsTypedInTheOthers() {
+        val config = AppConfig("id", SourceSpec("github", "https://github.com/example/app"), "App")
+        val both = PatternDraft.of(config).copy(customName = "Mine", include = "arm64", tag = "^v")
+        val kept = both.resetPart(DraftPart.FILES, config)
+        assertEquals("Mine", kept.customName)
+        assertEquals("", kept.include)
+        assertEquals("^v", kept.tag)
+        assertFalse(kept.changedIn(DraftPart.FILES, config))
+        assertTrue(kept.changedIn(DraftPart.NAME, config))
+    }
+
+    @Test
+    fun aCardSavesItsOwnFieldsAndABadPatternElsewhereDoesNotStopIt() {
+        val config = AppConfig("id", SourceSpec("github", "https://github.com/example/app"), "App")
+        val both = PatternDraft.of(config).copy(customName = " Mine ", include = "(unclosed", versionFilter = "^2")
+        assertEquals(emptySet<String>(), both.invalidIn(DraftPart.NAME))
+        assertEquals(setOf("include"), both.invalidIn(DraftPart.FILES))
+        assertEquals(emptySet<String>(), both.invalidIn(DraftPart.ADVANCED))
+
+        val saved = both.applyPart(DraftPart.NAME, config)
+        assertEquals("Mine", saved.customName)
+        assertNull(saved.assets.include)
+        assertNull(saved.releases.versionFilter)
+        assertEquals(config.copy(customName = "Mine"), saved)
+    }
 }

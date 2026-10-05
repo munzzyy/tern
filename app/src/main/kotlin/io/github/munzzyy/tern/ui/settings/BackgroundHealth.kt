@@ -58,7 +58,7 @@ object BackgroundHealth {
                 null -> Unit
             }
             if (facts.restricted) add(BackgroundNote.RESTRICTED)
-            if (!television && s.notifyUpdates && (!facts.notificationsOn || !facts.updatesChannelOn)) add(BackgroundNote.QUIET)
+            if (showsNotifications(television) && s.notifyUpdates && (!facts.notificationsOn || !facts.updatesChannelOn)) add(BackgroundNote.QUIET)
             if (!facts.scheduled) {
                 add(BackgroundNote.NOT_SET)
             } else if (!facts.restricted && !waits && stale(s.checkEveryMinutes, facts, nowMs)) {

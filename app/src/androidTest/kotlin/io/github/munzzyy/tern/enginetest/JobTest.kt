@@ -97,6 +97,21 @@ class JobTest {
     }
 
     @Test
+    fun aBackgroundRestrictionIsReadFromAndroid() {
+        val own = targetContext.packageName
+        Harness("job-restricted").use { h ->
+            assertFalse("Tern starts unrestricted here", h.engine.background().restricted)
+            try {
+                shell("appops set $own RUN_ANY_IN_BACKGROUND ignore")
+                waitUntil(5_000, "Android to report the restriction") { h.engine.background().restricted }
+            } finally {
+                shell("appops set $own RUN_ANY_IN_BACKGROUND allow")
+            }
+            waitUntil(5_000, "the restriction to be lifted") { !h.engine.background().restricted }
+        }
+    }
+
+    @Test
     fun checksTurnedOffWhileARunIsUnderwayLeaveNoRetry() = runBlocking {
         val hold = AtomicBoolean(false)
         val asked = CountDownLatch(1)

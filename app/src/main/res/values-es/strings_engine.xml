@@ -113,4 +113,5 @@
     <string name="engine_pick_debug">Parece una compilación de depuración</string>
     <string name="engine_pick_test">Parece una compilación de prueba</string>
     <string name="engine_pick_unsigned">Su nombre dice que no está firmado</string>
+    <string name="engine_patterns_busy">Los filtros que tardaron demasiado en coincidir siguen ejecutándose, así que los filtros de esta aplicación no se aplican hasta que se detengan o Tern se reinicie.</string>
 </resources>

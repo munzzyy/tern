@@ -428,4 +428,5 @@
     <string name="install_permission_body">Android 會在一個應用程式安裝另一個應用程式前詢問一次。在下一個畫面中，開啟 Tern 的開關，然後返回。安裝將會自行繼續。</string>
     <string name="install_permission_open">開啟設定</string>
     <string name="install_permission_closes">當您開啟開關時，此 Android 版本會關閉 Tern。之後再次開啟 Tern，安裝即會繼續。</string>
+    <string name="notes_title_since">自 %1$s 以來的新內容</string>
 </resources>

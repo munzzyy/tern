@@ -4,4 +4,10 @@
     <string name="notify_downloading_plain">Stahování</string>
     <string name="settings_notify_names">Pojmenovat aplikace v oznámeních</string>
     <string name="settings_notify_names_help">Oznámení lze číst na zamykací obrazovce. Pokud je vypnuto, Tern říká, kolik aplikací, ale nikdy které.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d instalace k dokončení</item>
+        <item quantity="few">%1$d instalace k dokončení</item>
+        <item quantity="many">%1$d instalací k dokončení</item>
+        <item quantity="other">%1$d instalací k dokončení</item>
+    </plurals>
 </resources>

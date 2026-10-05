@@ -428,4 +428,5 @@
     <string name="install_permission_body">Android sẽ hỏi một lần trước khi một ứng dụng có thể cài đặt ứng dụng khác. Trên màn hình tiếp theo, hãy bật công tắc cho Tern, rồi quay lại. Quá trình cài đặt sẽ tự động tiếp tục.</string>
     <string name="install_permission_open">Mở cài đặt</string>
     <string name="install_permission_closes">Phiên bản Android này sẽ đóng Tern khi bạn bật tùy chọn. Mở lại Tern sau đó và quá trình cài đặt sẽ tiếp tục.</string>
+    <string name="notes_title_since">Có gì mới từ %1$s</string>
 </resources>

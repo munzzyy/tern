@@ -4,4 +4,7 @@
     <string name="notify_downloading_plain">下載中</string>
     <string name="settings_notify_names">在通知中顯示應用程式名稱</string>
     <string name="settings_notify_names_help">通知可以在鎖定畫面上讀取。關閉時，Tern 只會說有多少應用程式，而不會說出是哪些。</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="other">還有 %1$d 個安裝待完成</item>
+    </plurals>
 </resources>

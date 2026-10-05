@@ -62,4 +62,11 @@
     <string name="settings_notify_checking">Während der Prüfung im Hintergrund</string>
     <string name="settings_notify_checking_effect">Eine stille Benachrichtigung, die verschwindet, wenn die Prüfung fertig ist.</string>
     <string name="engine_event_removed_uninstalled">Aus der Liste entfernt, da außerhalb von Tern deinstalliert</string>
+    <string name="background_last_run">Android hat die Hintergrundprüfung zuletzt ausgeführt: %1$s</string>
+    <string name="background_not_run_yet">Android hat die Hintergrundprüfung noch nicht ausgeführt.</string>
+    <string name="background_restricted">Android schränkt Tern im Hintergrund ein, daher läuft die Prüfung möglicherweise nicht. Die Akku-Einstellung in der App-Info kann das aufheben.</string>
+    <string name="background_quiet">Android zeigt keine Benachrichtigungen von Tern über Updates, daher bleibt unerwähnt, was die Hintergrundprüfung findet.</string>
+    <string name="background_not_set">Android hat im Moment keine Hintergrundprüfung für Tern geplant. Tern fordert sie bei jedem Start erneut an.</string>
+    <string name="background_stale">Die Hintergrundprüfung lief schon eine Weile nicht mehr. Android hält sie möglicherweise zurück, um Akku zu sparen.</string>
+    <string name="background_stopped_offline">Es bestand keine Internetverbindung, als sie lief, daher wurde nichts geprüft.</string>
 </resources>

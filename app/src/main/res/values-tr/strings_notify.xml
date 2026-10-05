@@ -4,4 +4,8 @@
     <string name="notify_downloading_plain">İndiriliyor</string>
     <string name="settings_notify_names">Bildirimlerde uygulamaları adlandır</string>
     <string name="settings_notify_names_help">Bir bildirim kilit ekranında okunabilir. Kapalı olduğunda Tern, kaç uygulama olduğunu söyler, hangileri olduğunu asla söylemez.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">Tamamlanacak %1$d yükleme</item>
+        <item quantity="other">Tamamlanacak %1$d yükleme</item>
+    </plurals>
 </resources>

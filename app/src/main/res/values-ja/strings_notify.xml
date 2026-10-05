@@ -4,4 +4,7 @@
     <string name="notify_downloading_plain">ダウンロード中</string>
     <string name="settings_notify_names">通知にアプリ名を記載</string>
     <string name="settings_notify_names_help">通知はロック画面でも読まれる可能性があります。オフにすると、Ternはアプリの数だけを伝え、どのアプリかは記載しません。</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="other">完了待ちのインストール %1$d 件</item>
+    </plurals>
 </resources>

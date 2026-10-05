@@ -58,4 +58,11 @@
     <string name="settings_notify_checking">バックグラウンドで確認している間</string>
     <string name="settings_notify_checking_effect">確認が終わると消える控えめな通知です。</string>
     <string name="engine_event_removed_uninstalled">Tern以外でアンインストールされたため、リストから削除しました</string>
+    <string name="background_last_run">Androidが最後にバックグラウンドチェックを実行した日時: %1$s</string>
+    <string name="background_not_run_yet">Androidはまだバックグラウンドチェックを実行していません。</string>
+    <string name="background_restricted">AndroidがバックグラウンドでTernを制限しているため、確認が実行されない場合があります。アプリ情報のバッテリー設定でこれを解除できます。</string>
+    <string name="background_quiet">AndroidはTernからの更新に関する通知を表示しないため、バックグラウンドチェックで見つかったものは通知されません。</string>
+    <string name="background_not_set">現在、AndroidはTernのバックグラウンドチェックを保持していません。Ternは起動するたびに再度要求します。</string>
+    <string name="background_stale">しばらくバックグラウンドチェックが実行されていません。Androidがバッテリーを節約するために保留している可能性があります。</string>
+    <string name="background_stopped_offline">実行時にインターネット接続がなかったため、何も確認されませんでした。</string>
 </resources>

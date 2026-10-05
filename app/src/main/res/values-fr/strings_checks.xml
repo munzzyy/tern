@@ -66,4 +66,11 @@
     <string name="settings_notify_checking">Pendant la vérification en arrière-plan</string>
     <string name="settings_notify_checking_effect">Une notification discrète qui disparaît une fois la vérification terminée.</string>
     <string name="engine_event_removed_uninstalled">Supprimée de la liste, car désinstallée en dehors de Tern</string>
+    <string name="background_last_run">Dernière vérification en arrière-plan par Android : %1$s</string>
+    <string name="background_not_run_yet">Android n\'a pas encore exécuté la vérification en arrière-plan.</string>
+    <string name="background_restricted">Android restreint Tern en arrière-plan, la vérification peut donc ne pas s\'exécuter. Le paramètre de batterie dans les Infos sur l\'appli peut lever cette restriction.</string>
+    <string name="background_quiet">Android n\'affiche aucune notification de Tern concernant les mises à jour, donc ce que la vérification en arrière-plan trouve n\'est pas signalé.</string>
+    <string name="background_not_set">Android ne prévoit aucune vérification en arrière-plan pour Tern en ce moment. Tern la demande à nouveau à chaque démarrage.</string>
+    <string name="background_stale">La vérification en arrière-plan ne s\'est pas exécutée depuis un moment. Android la retarde peut-être pour économiser la batterie.</string>
+    <string name="background_stopped_offline">Il n\'y avait aucune connexion internet lors de son exécution, donc rien n\'a été vérifié.</string>
 </resources>

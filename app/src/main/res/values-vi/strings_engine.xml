@@ -107,4 +107,5 @@
     <string name="engine_pick_debug">Có vẻ là bản gỡ lỗi</string>
     <string name="engine_pick_test">Có vẻ là bản thử nghiệm</string>
     <string name="engine_pick_unsigned">Tên tệp cho thấy chưa được ký</string>
+    <string name="engine_patterns_busy">Các bộ lọc mất quá nhiều thời gian để khớp vẫn đang chạy, nên các bộ lọc của ứng dụng này không được áp dụng cho đến khi chúng dừng hoặc Tern khởi động lại.</string>
 </resources>

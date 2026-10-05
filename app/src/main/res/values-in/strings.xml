@@ -428,4 +428,5 @@
     <string name="install_permission_body">Android bertanya sekali sebelum satu aplikasi dapat menginstal aplikasi lain. Di layar berikutnya, nyalakan sakelar untuk Tern, lalu kembali. Proses instal akan berlanjut dengan sendirinya.</string>
     <string name="install_permission_open">Buka setelan</string>
     <string name="install_permission_closes">Versi Android ini menutup Tern saat Anda menyalakan tombol. Buka Tern lagi setelah itu dan instal akan dilanjutkan.</string>
+    <string name="notes_title_since">Apa yang baru sejak %1$s</string>
 </resources>

@@ -110,4 +110,5 @@
     <string name="engine_pick_debug">ഒരു ഡീബഗ് ബിൽഡ് പോലെ തോന്നുന്നു</string>
     <string name="engine_pick_test">ഒരു ടെസ്റ്റ് ബിൽഡ് പോലെ തോന്നുന്നു</string>
     <string name="engine_pick_unsigned">ഇത് സൈൻ ചെയ്തിട്ടില്ല എന്ന് ഇതിൻ്റെ പേര് പറയുന്നു</string>
+    <string name="engine_patterns_busy">പൊരുത്തപ്പെടാൻ വളരെയധികം സമയമെടുത്ത ഫിൽട്ടറുകൾ ഇപ്പോഴും പ്രവർത്തിക്കുന്നു, അതിനാൽ അവ നിൽക്കുകയോ Tern റീസ്റ്റാർട്ട് ചെയ്യുകയോ ചെയ്യുന്നത് വരെ ഈ ആപ്പിൻ്റെ ഫിൽട്ടറുകൾ പ്രയോഗിക്കില്ല.</string>
 </resources>

@@ -4,4 +4,12 @@
     <string name="notify_downloading_plain">جارٍ التنزيل</string>
     <string name="settings_notify_names">تسمية التطبيقات في الإشعارات</string>
     <string name="settings_notify_names_help">يمكن قراءة الإشعار على شاشة القفل. عند إيقاف التشغيل، يذكر Tern عدد التطبيقات ولا يحدد أيها أبدًا.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="zero">%1$d تثبيت للإنهاء</item>
+        <item quantity="one">%1$d تثبيت للإنهاء</item>
+        <item quantity="two">%1$d تثبيت للإنهاء</item>
+        <item quantity="few">%1$d تثبيتات للإنهاء</item>
+        <item quantity="many">%1$d تثبيتًا للإنهاء</item>
+        <item quantity="other">%1$d تثبيت للإنهاء</item>
+    </plurals>
 </resources>

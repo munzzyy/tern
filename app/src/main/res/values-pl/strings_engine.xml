@@ -116,4 +116,5 @@
     <string name="engine_pick_debug">Wygląda na wersję debugową</string>
     <string name="engine_pick_test">Wygląda na wersję testową</string>
     <string name="engine_pick_unsigned">Nazwa wskazuje, że nie jest podpisany</string>
+    <string name="engine_patterns_busy">Filtry, których dopasowanie trwało zbyt długo, nadal działają, więc filtry tej aplikacji nie zostaną zastosowane, dopóki się nie zatrzymają lub Tern nie zostanie uruchomiony ponownie.</string>
 </resources>

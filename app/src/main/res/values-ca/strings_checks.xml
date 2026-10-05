@@ -66,4 +66,11 @@
     <string name="settings_notify_checking">Mentre es comprova en segon pla</string>
     <string name="settings_notify_checking_effect">Una notificació discreta que desapareix quan acaba la comprovació.</string>
     <string name="engine_event_removed_uninstalled">S\'ha suprimit de la llista, perquè s\'ha desinstal·lat fora de Tern</string>
+    <string name="background_last_run">Android va executar l\'última comprovació en segon pla: %1$s</string>
+    <string name="background_not_run_yet">Android encara no ha executat la comprovació en segon pla.</string>
+    <string name="background_restricted">Android restringeix Tern en segon pla, de manera que pot ser que la comprovació no s\'executi. La configuració de la bateria a la informació de l\'aplicació ho pot canviar.</string>
+    <string name="background_quiet">Android no mostra notificacions de Tern sobre les actualitzacions, de manera que no es comunica el que troba la comprovació en segon pla.</string>
+    <string name="background_not_set">Android no té cap comprovació en segon pla per a Tern ara mateix. Tern la torna a demanar cada vegada que s\'inicia.</string>
+    <string name="background_stale">Fa temps que no s\'executa la comprovació en segon pla. Pot ser que Android l\'estigui retenint per estalviar bateria.</string>
+    <string name="background_stopped_offline">No hi havia connexió a internet quan s\'ha executat, de manera que no s\'ha comprovat res.</string>
 </resources>

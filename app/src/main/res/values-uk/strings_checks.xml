@@ -70,4 +70,11 @@
     <string name="settings_notify_checking">Під час фонової перевірки</string>
     <string name="settings_notify_checking_effect">Тихе сповіщення, яке зникає, коли перевірку завершено.</string>
     <string name="engine_event_removed_uninstalled">Вилучено зі списку, оскільки програму видалено не через Tern</string>
+    <string name="background_last_run">Android востаннє запускав фонову перевірку: %1$s</string>
+    <string name="background_not_run_yet">Android ще не запускав фонову перевірку.</string>
+    <string name="background_restricted">Android обмежує Tern у фоновому режимі, тому перевірка може не запуститися. Налаштування акумулятора в інформації про програму може скасувати це.</string>
+    <string name="background_quiet">Android не показує сповіщень від Tern про оновлення, тому про те, що знаходить фонова перевірка, не повідомляється.</string>
+    <string name="background_not_set">Зараз в Android немає запланованої фонової перевірки для Tern. Tern знову робить запит на неї під час кожного запуску.</string>
+    <string name="background_stale">Фонова перевірка не запускалася вже деякий час. Android може стримувати її, щоб заощадити заряд акумулятора.</string>
+    <string name="background_stopped_offline">Під час її запуску не було підключення до інтернету, тому нічого не було перевірено.</string>
 </resources>

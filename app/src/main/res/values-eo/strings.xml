@@ -451,4 +451,5 @@
     <string name="install_permission_body">Android demandas unufoje antaŭ ol unu aplikaĵo rajtas instali alian. Sur la sekva ekrano, ŝaltu la ŝaltilon por Tern, poste revenu. La instalo daŭros memstare.</string>
     <string name="install_permission_open">Malfermi agordojn</string>
     <string name="install_permission_closes">Ĉi tiu versio de Android fermas Tern kiam vi ŝaltas la ŝaltilon. Malfermu Tern denove poste kaj la instalo daŭros.</string>
+    <string name="notes_title_since">Kio novas ekde %1$s</string>
 </resources>

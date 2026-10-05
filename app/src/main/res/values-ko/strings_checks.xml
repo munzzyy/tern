@@ -58,4 +58,11 @@
     <string name="settings_notify_checking">백그라운드에서 확인하는 동안</string>
     <string name="settings_notify_checking_effect">확인이 끝나면 사라지는 조용한 알림입니다.</string>
     <string name="engine_event_removed_uninstalled">Tern 밖에서 설치 삭제되어 목록에서 제거됨</string>
+    <string name="background_last_run">Android가 마지막으로 백그라운드 확인을 실행한 시간: %1$s</string>
+    <string name="background_not_run_yet">Android가 아직 백그라운드 확인을 실행하지 않았습니다.</string>
+    <string name="background_restricted">Android가 백그라운드에서 Tern을 제한하여 확인이 실행되지 않을 수 있습니다. 앱 정보의 배터리 설정에서 이 제한을 해제할 수 있습니다.</string>
+    <string name="background_quiet">Android에서 Tern의 업데이트 알림을 표시하지 않으므로 백그라운드 확인에서 발견한 내용을 알리지 않습니다.</string>
+    <string name="background_not_set">현재 Android에 Tern의 백그라운드 확인이 설정되어 있지 않습니다. Tern은 시작할 때마다 다시 요청합니다.</string>
+    <string name="background_stale">한동안 백그라운드 확인이 실행되지 않았습니다. Android가 배터리를 절약하기 위해 보류 중일 수 있습니다.</string>
+    <string name="background_stopped_offline">실행 당시 인터넷 연결이 없어 아무것도 확인하지 않았습니다.</string>
 </resources>

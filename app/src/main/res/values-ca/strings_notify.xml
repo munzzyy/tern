@@ -4,4 +4,9 @@
     <string name="notify_downloading_plain">Baixant</string>
     <string name="settings_notify_names">Anomena les aplicacions a les notificacions</string>
     <string name="settings_notify_names_help">Una notificació es pot llegir a la pantalla de bloqueig. Desactivat, Tern diu quantes aplicacions i mai quines.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d instal·lació per acabar</item>
+        <item quantity="many">%1$d instal·lacions per acabar</item>
+        <item quantity="other">%1$d instal·lacions per acabar</item>
+    </plurals>
 </resources>

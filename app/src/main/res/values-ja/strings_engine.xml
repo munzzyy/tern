@@ -107,4 +107,5 @@
     <string name="engine_pick_debug">デバッグビルドのようです</string>
     <string name="engine_pick_test">テストビルドのようです</string>
     <string name="engine_pick_unsigned">名前に未署名とあります</string>
+    <string name="engine_patterns_busy">一致に時間がかかりすぎたフィルターがまだ実行中であるため、それらが停止するかTernが再起動するまで、このアプリのフィルターは適用されません。</string>
 </resources>

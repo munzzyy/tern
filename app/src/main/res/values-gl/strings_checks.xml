@@ -62,4 +62,11 @@
     <string name="settings_notify_checking">Mentres se comproba en segundo plano</string>
     <string name="settings_notify_checking_effect">Unha notificación discreta que desaparece cando remata a comprobación.</string>
     <string name="engine_event_removed_uninstalled">Eliminouse da lista, porque se desinstalou fóra de Tern</string>
+    <string name="background_last_run">Android executou a comprobación en segundo plano por última vez: %1$s</string>
+    <string name="background_not_run_yet">Android aínda non executou a comprobación en segundo plano.</string>
+    <string name="background_restricted">Android restrinxe Tern en segundo plano, así que pode que a comprobación non se execute. O axuste de batería na información da aplicación pode evitalo.</string>
+    <string name="background_quiet">Android non amosa notificacións de Tern sobre actualizacións, polo que o que atopa a comprobación en segundo plano non se notifica.</string>
+    <string name="background_not_set">Android non ten ningunha comprobación en segundo plano para Tern agora mesmo. Tern pídea de novo cada vez que se inicia.</string>
+    <string name="background_stale">A comprobación en segundo plano leva un tempo sen executarse. Pode que Android a estea retendo para aforrar batería.</string>
+    <string name="background_stopped_offline">Non había conexión a internet cando se executou, así que non se comprobou nada.</string>
 </resources>

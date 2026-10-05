@@ -66,4 +66,11 @@
     <string name="settings_notify_checking">Durante a verificação em segundo plano</string>
     <string name="settings_notify_checking_effect">Uma notificação discreta que desaparece quando a verificação termina.</string>
     <string name="engine_event_removed_uninstalled">Removida da lista, porque foi desinstalada fora do Tern</string>
+    <string name="background_last_run">O Android executou a verificação em segundo plano pela última vez: %1$s</string>
+    <string name="background_not_run_yet">O Android ainda não executou a verificação em segundo plano.</string>
+    <string name="background_restricted">O Android restringe o Tern em segundo plano, por isso a verificação pode não ser executada. A definição de bateria nas Informações da aplicação pode remover isso.</string>
+    <string name="background_quiet">O Android não mostra notificações do Tern sobre atualizações, por isso o que a verificação em segundo plano encontra não é comunicado.</string>
+    <string name="background_not_set">O Android não tem nenhuma verificação em segundo plano para o Tern neste momento. O Tern pede-a novamente sempre que inicia.</string>
+    <string name="background_stale">A verificação em segundo plano não é executada há algum tempo. O Android pode estar a retê-la para poupar bateria.</string>
+    <string name="background_stopped_offline">Não havia ligação à Internet quando foi executada, por isso nada foi verificado.</string>
 </resources>

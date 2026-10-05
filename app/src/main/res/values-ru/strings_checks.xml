@@ -70,4 +70,11 @@
     <string name="settings_notify_checking">Во время фоновой проверки</string>
     <string name="settings_notify_checking_effect">Тихое уведомление, которое исчезает, когда проверка завершена.</string>
     <string name="engine_event_removed_uninstalled">Убрано из списка, так как было удалено не через Tern</string>
+    <string name="background_last_run">В последний раз Android запускал фоновую проверку: %1$s</string>
+    <string name="background_not_run_yet">Android еще не запускал фоновую проверку.</string>
+    <string name="background_restricted">Android ограничивает работу Tern в фоне, поэтому проверка может не запускаться. Настройка батареи в информации о приложении может снять это ограничение.</string>
+    <string name="background_quiet">Android не показывает уведомления от Tern об обновлениях, поэтому результаты фоновой проверки остаются неизвестными.</string>
+    <string name="background_not_set">Сейчас в Android не назначена фоновая проверка для Tern. Tern запрашивает ее снова при каждом запуске.</string>
+    <string name="background_stale">Фоновая проверка давно не запускалась. Возможно, Android откладывает ее для экономии заряда батареи.</string>
+    <string name="background_stopped_offline">Во время ее запуска не было подключения к интернету, поэтому ничего не проверялось.</string>
 </resources>

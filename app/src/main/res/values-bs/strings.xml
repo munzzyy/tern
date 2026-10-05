@@ -474,4 +474,5 @@
     <string name="install_permission_body">Android pita jednom prije nego što jedna aplikacija može instalirati drugu. Na sljedećem ekranu, uključite prekidač za Tern, a zatim se vratite. Instalacija se nastavlja sama.</string>
     <string name="install_permission_open">Otvorite postavke</string>
     <string name="install_permission_closes">Ova verzija Androida zatvara Tern kada uključite prekidač. Ponovo otvorite Tern nakon toga i instalacija se nastavlja.</string>
+    <string name="notes_title_since">Šta je novo od %1$s</string>
 </resources>

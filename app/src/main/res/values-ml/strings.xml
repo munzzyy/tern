@@ -451,4 +451,5 @@
     <string name="install_permission_body">ഒരു ആപ്പ് മറ്റൊന്ന് ഇൻസ്റ്റാൾ ചെയ്യുന്നതിന് മുമ്പ് Android ഒരിക്കൽ ചോദിക്കും. അടുത്ത സ്ക്രീനിൽ, Tern-നായുള്ള സ്വിച്ച് ഓൺ ചെയ്യുക, തുടർന്ന് തിരികെ വരിക. ഇൻസ്റ്റാൾ സ്വയം തുടരും.</string>
     <string name="install_permission_open">സെറ്റിംഗ്സ് തുറക്കുക</string>
     <string name="install_permission_closes">നിങ്ങൾ സ്വിച്ച് ഓൺ ചെയ്യുമ്പോൾ Android-ൻ്റെ ഈ പതിപ്പ് Tern-നെ അടയ്ക്കുന്നു. അതിനുശേഷം Tern വീണ്ടും തുറക്കുക, ഇൻസ്റ്റാൾ തുടരുന്നതാണ്.</string>
+    <string name="notes_title_since">%1$s-ന് ശേഷമുള്ള പുതിയ മാറ്റങ്ങൾ</string>
 </resources>

@@ -62,4 +62,11 @@
     <string name="settings_notify_checking">هنگام بررسی در پس‌زمینه</string>
     <string name="settings_notify_checking_effect">اعلانی بی‌صدا که پس از پایان بررسی ناپدید می‌شود.</string>
     <string name="engine_event_removed_uninstalled">از لیست حذف شد، چون بیرون از Tern حذف نصب شده بود</string>
+    <string name="background_last_run">آخرین باری که Android بررسی پس‌زمینه را اجرا کرد: %1$s</string>
+    <string name="background_not_run_yet">Android هنوز بررسی پس‌زمینه را اجرا نکرده است.</string>
+    <string name="background_restricted">Android فعالیت Tern را در پس‌زمینه محدود می‌کند، بنابراین ممکن است بررسی اجرا نشود. تنظیمات باتری در اطلاعات برنامه می‌تواند این محدودیت را بردارد.</string>
+    <string name="background_quiet">Android هیچ اعلانی از Tern درباره به‌روزرسانی‌ها نشان نمی‌دهد، بنابراین آنچه بررسی پس‌زمینه پیدا می‌کند ناگفته می‌ماند.</string>
+    <string name="background_not_set">Android در حال حاضر هیچ بررسی پس‌زمینه‌ای برای Tern ندارد. Tern هر بار که شروع می‌شود دوباره آن را درخواست می‌کند.</string>
+    <string name="background_stale">بررسی پس‌زمینه مدتی است که اجرا نشده است. ممکن است Android برای ذخیره باتری مانع اجرای آن شود.</string>
+    <string name="background_stopped_offline">هنگام اجرای آن اتصال اینترنت برقرار نبود، بنابراین هیچ چیزی بررسی نشد.</string>
 </resources>

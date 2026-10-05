@@ -58,4 +58,11 @@
     <string name="settings_notify_checking">Saat memeriksa di latar belakang</string>
     <string name="settings_notify_checking_effect">Notifikasi senyap yang hilang saat pemeriksaan selesai.</string>
     <string name="engine_event_removed_uninstalled">Dihapus dari daftar karena di-uninstal di luar Tern</string>
+    <string name="background_last_run">Android terakhir kali menjalankan pemeriksaan latar belakang: %1$s</string>
+    <string name="background_not_run_yet">Android belum menjalankan pemeriksaan latar belakang.</string>
+    <string name="background_restricted">Android membatasi Tern di latar belakang, sehingga pemeriksaan mungkin tidak berjalan. Setelan baterai di Info aplikasi dapat mencabut batasan tersebut.</string>
+    <string name="background_quiet">Android tidak menampilkan notifikasi dari Tern tentang pembaruan, jadi apa yang ditemukan oleh pemeriksaan latar belakang tidak disampaikan.</string>
+    <string name="background_not_set">Android tidak menjadwalkan pemeriksaan latar belakang untuk Tern saat ini. Tern memintanya lagi setiap kali dijalankan.</string>
+    <string name="background_stale">Pemeriksaan latar belakang sudah beberapa waktu tidak berjalan. Android mungkin menahannya untuk menghemat baterai.</string>
+    <string name="background_stopped_offline">Tidak ada koneksi internet saat dijalankan, jadi tidak ada yang diperiksa.</string>
 </resources>

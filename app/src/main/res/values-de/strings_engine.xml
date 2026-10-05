@@ -110,4 +110,5 @@
     <string name="engine_pick_debug">Sieht nach einem Debug-Build aus</string>
     <string name="engine_pick_test">Sieht nach einem Test-Build aus</string>
     <string name="engine_pick_unsigned">Laut Name nicht signiert</string>
+    <string name="engine_patterns_busy">Filter, die zu lange zum Abgleichen brauchten, laufen noch, daher werden die Filter dieser App nicht angewendet, bis sie stoppen oder Tern neu startet.</string>
 </resources>

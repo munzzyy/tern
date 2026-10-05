@@ -116,4 +116,5 @@
     <string name="engine_pick_debug">Похоже на отладочную сборку</string>
     <string name="engine_pick_test">Похоже на тестовую сборку</string>
     <string name="engine_pick_unsigned">Судя по имени, он не подписан</string>
+    <string name="engine_patterns_busy">Фильтры, проверка которых заняла слишком много времени, все еще работают, поэтому фильтры этого приложения не применяются до их остановки или перезапуска Tern.</string>
 </resources>

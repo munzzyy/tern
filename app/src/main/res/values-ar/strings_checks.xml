@@ -78,4 +78,11 @@
     <string name="settings_notify_checking">أثناء الفحص في الخلفية</string>
     <string name="settings_notify_checking_effect">إشعار هادئ يختفي عند انتهاء الفحص.</string>
     <string name="engine_event_removed_uninstalled">أُزيل من القائمة، لأنه أُلغي تثبيته خارج Tern</string>
+    <string name="background_last_run">أجرى Android الفحص في الخلفية آخر مرة: %1$s</string>
+    <string name="background_not_run_yet">لم يُجرِ Android الفحص في الخلفية بعد.</string>
+    <string name="background_restricted">يُقيّد Android تطبيق Tern في الخلفية، لذلك قد لا يتم تشغيل الفحص. يمكن لإعداد البطارية في معلومات التطبيق إلغاء هذا التقييد.</string>
+    <string name="background_quiet">لا يعرض Android أي إشعارات من Tern حول التحديثات، لذا لا يُذكر ما يجده الفحص في الخلفية.</string>
+    <string name="background_not_set">ليس لدى Android أي فحص في الخلفية مجدول لتطبيق Tern في الوقت الحالي. يطلب Tern إجراؤه مرة أخرى في كل مرة يتم تشغيله فيها.</string>
+    <string name="background_stale">لم يتم تشغيل الفحص في الخلفية منذ فترة. قد يقوم Android بتأخيره لتوفير البطارية.</string>
+    <string name="background_stopped_offline">لم يكن هناك اتصال بالإنترنت عند تشغيله، لذلك لم يتم فحص أي شيء.</string>
 </resources>

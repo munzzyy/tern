@@ -474,4 +474,5 @@
     <string name="install_permission_body">O Android pergunta uma vez antes de uma aplicação poder instalar outra. No ecrã seguinte, ative o interruptor para o Tern, depois regresse. A instalação continua sozinha.</string>
     <string name="install_permission_open">Abrir definições</string>
     <string name="install_permission_closes">Esta versão do Android fecha o Tern quando liga o interruptor. Abra o Tern novamente a seguir e a instalação continua.</string>
+    <string name="notes_title_since">Novidades desde %1$s</string>
 </resources>

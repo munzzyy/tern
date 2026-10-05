@@ -451,4 +451,5 @@
     <string name="install_permission_body">Android spørger én gang, før en app må installere en anden. På næste skærm skal du slå kontakten til for Tern og derefter vende tilbage. Installationen fortsætter af sig selv.</string>
     <string name="install_permission_open">Åbn indstillinger</string>
     <string name="install_permission_closes">Denne version af Android lukker Tern, når du slår kontakten til. Åbn Tern igen bagefter, og installationen fortsætter.</string>
+    <string name="notes_title_since">Nyt siden %1$s</string>
 </resources>

@@ -107,4 +107,5 @@
     <string name="engine_pick_debug">디버그 빌드로 보임</string>
     <string name="engine_pick_test">테스트 빌드로 보임</string>
     <string name="engine_pick_unsigned">이름에 서명되지 않았다고 명시됨</string>
+    <string name="engine_patterns_busy">일치하는 데 너무 오래 걸린 필터가 아직 실행 중이므로, 해당 필터가 중지되거나 Tern이 다시 시작될 때까지 이 앱의 필터는 적용되지 않습니다.</string>
 </resources>

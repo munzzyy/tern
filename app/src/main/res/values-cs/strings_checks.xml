@@ -70,4 +70,11 @@
     <string name="settings_notify_checking">Během kontroly na pozadí</string>
     <string name="settings_notify_checking_effect">Tiché oznámení, které zmizí, když kontrola skončí.</string>
     <string name="engine_event_removed_uninstalled">Odebráno ze seznamu, protože bylo odinstalováno mimo Tern</string>
+    <string name="background_last_run">Android naposledy spustil kontrolu na pozadí: %1$s</string>
+    <string name="background_not_run_yet">Android zatím nespustil kontrolu na pozadí.</string>
+    <string name="background_restricted">Android omezuje Tern na pozadí, takže kontrola se možná nespustí. Nastavení baterie v Informacích o aplikaci to může zrušit.</string>
+    <string name="background_quiet">Android nezobrazuje žádná oznámení od Tern o aktualizacích, takže to, co kontrola na pozadí najde, se nedozvíte.</string>
+    <string name="background_not_set">Android teď nemá pro Tern naplánovanou žádnou kontrolu na pozadí. Tern o ni znovu požádá při každém spuštění.</string>
+    <string name="background_stale">Kontrola na pozadí už nějakou dobu neproběhla. Android ji možná pozdržuje kvůli úspoře baterie.</string>
+    <string name="background_stopped_offline">Když proběhla, nebylo připojení k internetu, takže se nic nezkontrolovalo.</string>
 </resources>

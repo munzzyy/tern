@@ -66,4 +66,11 @@
     <string name="settings_notify_checking">Durante il controllo in background</string>
     <string name="settings_notify_checking_effect">Una notifica silenziosa che scompare quando il controllo è finito.</string>
     <string name="engine_event_removed_uninstalled">Rimossa dalla lista, perché disinstallata fuori da Tern</string>
+    <string name="background_last_run">Android ha eseguito l\'ultimo controllo in background: %1$s</string>
+    <string name="background_not_run_yet">Android non ha ancora eseguito il controllo in background.</string>
+    <string name="background_restricted">Android limita Tern in background, quindi il controllo potrebbe non essere eseguito. L\'impostazione della batteria in Informazioni app può rimuovere questa restrizione.</string>
+    <string name="background_quiet">Android non mostra notifiche da Tern sugli aggiornamenti, quindi ciò che il controllo in background trova non viene comunicato.</string>
+    <string name="background_not_set">Al momento Android non ha programmato alcun controllo in background per Tern. Tern lo richiede di nuovo a ogni avvio.</string>
+    <string name="background_stale">Il controllo in background non viene eseguito da un po\'. Android potrebbe averlo bloccato per risparmiare batteria.</string>
+    <string name="background_stopped_offline">Non c\'era connessione a internet quando è stato eseguito, quindi non è stato controllato nulla.</string>
 </resources>

@@ -4,4 +4,9 @@
     <string name="notify_downloading_plain">Téléchargement</string>
     <string name="settings_notify_names">Nommer les applis dans les notifications</string>
     <string name="settings_notify_names_help">Une notification peut être lue sur l\'écran de verrouillage. Désactivé, Tern indique combien d\'applis mais jamais lesquelles.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d installation à terminer</item>
+        <item quantity="many">%1$d installations à terminer</item>
+        <item quantity="other">%1$d installations à terminer</item>
+    </plurals>
 </resources>

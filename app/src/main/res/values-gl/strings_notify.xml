@@ -4,4 +4,8 @@
     <string name="notify_downloading_plain">Descargando</string>
     <string name="settings_notify_names">Nomear as aplicacións nas notificacións</string>
     <string name="settings_notify_names_help">Pódese ler unha notificación na pantalla de bloqueo. Se está desactivado, Tern di cantas aplicacións son e nunca cales.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d instalación para rematar</item>
+        <item quantity="other">%1$d instalacións para rematar</item>
+    </plurals>
 </resources>

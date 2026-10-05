@@ -447,4 +447,5 @@
     <string name="install_permission_body">Android, bir uygulamanın başka bir uygulama yüklemesine izin vermeden önce bir kez sorar. Sonraki ekranda Tern için anahtarı açın ve geri dönün. Yükleme kendiliğinden devam eder.</string>
     <string name="install_permission_open">Ayarları aç</string>
     <string name="install_permission_closes">Anahtarı açtığınızda Android\'in bu sürümü Tern\'i kapatır. Ardından Tern\'i tekrar açtığınızda yükleme devam eder.</string>
+    <string name="notes_title_since">%1$s sonrasındaki yenilikler</string>
 </resources>

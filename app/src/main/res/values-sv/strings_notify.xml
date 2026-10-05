@@ -4,4 +4,8 @@
     <string name="notify_downloading_plain">Laddar ned</string>
     <string name="settings_notify_names">Namnge apparna i aviseringar</string>
     <string name="settings_notify_names_help">En avisering kan läsas på låsskärmen. I läget Av säger Tern hur många appar det gäller och aldrig vilka.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d installation att slutföra</item>
+        <item quantity="other">%1$d installationer att slutföra</item>
+    </plurals>
 </resources>

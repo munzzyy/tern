@@ -428,4 +428,5 @@
     <string name="install_permission_body">앱이 다른 앱을 설치하기 전에 Android에서 한 번 묻습니다. 다음 화면에서 Tern 스위치를 켠 다음 돌아오세요. 설치가 자동으로 진행됩니다.</string>
     <string name="install_permission_open">설정 열기</string>
     <string name="install_permission_closes">이 버전의 Android는 스위치를 켜면 Tern을 닫습니다. 나중에 Tern을 다시 열면 설치가 계속됩니다.</string>
+    <string name="notes_title_since">%1$s 이후 새로운 기능</string>
 </resources>

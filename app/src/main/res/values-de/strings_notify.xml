@@ -4,4 +4,8 @@
     <string name="notify_downloading_plain">Wird heruntergeladen</string>
     <string name="settings_notify_names">Apps in Benachrichtigungen benennen</string>
     <string name="settings_notify_names_help">Eine Benachrichtigung kann auf dem Sperrbildschirm gelesen werden. Wenn aus, sagt Tern nur, wie viele Apps und niemals welche.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d Installation abzuschließen</item>
+        <item quantity="other">%1$d Installationen abzuschließen</item>
+    </plurals>
 </resources>

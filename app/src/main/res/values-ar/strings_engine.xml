@@ -122,4 +122,5 @@
     <string name="engine_pick_debug">يبدو كنسخة تصحيح أخطاء</string>
     <string name="engine_pick_test">يبدو كنسخة اختبار</string>
     <string name="engine_pick_unsigned">يشير اسمه إلى أنه غير موقع</string>
+    <string name="engine_patterns_busy">لا تزال الفلاتر التي استغرقت وقتًا طويلاً في المطابقة قيد التشغيل، لذا لا يتم تطبيق فلاتر هذا التطبيق حتى تتوقف أو يُعاد تشغيل Tern.</string>
 </resources>

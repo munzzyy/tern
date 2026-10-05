@@ -58,4 +58,11 @@
     <string name="settings_notify_checking">Trong khi kiểm tra trong nền</string>
     <string name="settings_notify_checking_effect">Một thông báo im lặng, tự biến mất khi kiểm tra xong.</string>
     <string name="engine_event_removed_uninstalled">Đã xóa khỏi danh sách vì ứng dụng đã bị gỡ cài đặt bên ngoài Tern</string>
+    <string name="background_last_run">Android đã chạy kiểm tra trong nền lần cuối: %1$s</string>
+    <string name="background_not_run_yet">Android chưa chạy kiểm tra trong nền.</string>
+    <string name="background_restricted">Android hạn chế Tern trong nền, nên quá trình kiểm tra có thể không chạy. Cài đặt pin trong Thông tin ứng dụng có thể gỡ bỏ hạn chế đó.</string>
+    <string name="background_quiet">Android không hiện thông báo từ Tern về các bản cập nhật, nên những gì kiểm tra trong nền tìm thấy sẽ không được báo.</string>
+    <string name="background_not_set">Android hiện không có lịch kiểm tra trong nền nào cho Tern. Tern yêu cầu lại mỗi khi khởi động.</string>
+    <string name="background_stale">Kiểm tra trong nền đã lâu không chạy. Android có thể đang giữ lại để tiết kiệm pin.</string>
+    <string name="background_stopped_offline">Không có kết nối internet khi chạy, nên không có gì được kiểm tra.</string>
 </resources>

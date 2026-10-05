@@ -110,4 +110,5 @@
     <string name="engine_pick_debug">Parece unha versión de depuración</string>
     <string name="engine_pick_test">Parece unha versión de proba</string>
     <string name="engine_pick_unsigned">O seu nome di que non está asinado</string>
+    <string name="engine_patterns_busy">Os filtros que tardaron demasiado en coincidir aínda se están executando, polo que os filtros desta aplicación non se aplican ata que se deteñan ou Tern se reinicie.</string>
 </resources>

@@ -4,4 +4,10 @@
     <string name="notify_downloading_plain">Скачивание</string>
     <string name="settings_notify_names">Названия приложений в уведомлениях</string>
     <string name="settings_notify_names_help">Уведомления можно прочитать на экране блокировки. Если выключено, Tern сообщает количество приложений, но не их названия.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">Осталось завершить %1$d установку</item>
+        <item quantity="few">Осталось завершить %1$d установки</item>
+        <item quantity="many">Осталось завершить %1$d установок</item>
+        <item quantity="other">Осталось завершить %1$d установок</item>
+    </plurals>
 </resources>

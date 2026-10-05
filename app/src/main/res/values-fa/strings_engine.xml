@@ -110,4 +110,5 @@
     <string name="engine_pick_debug">به نظر میرسد یک نسخه خطایابی است</string>
     <string name="engine_pick_test">به نظر میرسد یک نسخه آزمایشی است</string>
     <string name="engine_pick_unsigned">نام آن میگوید امضا نشده است</string>
+    <string name="engine_patterns_busy">فیلترهایی که تطبیق آن‌ها زمان زیادی برده هنوز در حال اجرا هستند، بنابراین فیلترهای این برنامه تا زمانی که متوقف شوند یا Tern دوباره راه‌اندازی شود اعمال نمی‌شوند.</string>
 </resources>

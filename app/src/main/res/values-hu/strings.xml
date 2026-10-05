@@ -451,4 +451,5 @@
     <string name="install_permission_body">Az Android egyszer rákérdez, mielőtt egy alkalmazás telepíthetne egy másikat. A következő képernyőn kapcsolja be a Tern kapcsolóját, majd térjen vissza. A telepítés magától folytatódik.</string>
     <string name="install_permission_open">Beállítások megnyitása</string>
     <string name="install_permission_closes">Az Android ezen verziója bezárja a Tern-t, amikor bekapcsolja a kapcsolót. Utána nyissa meg újra a Tern-t, és a telepítés folytatódik.</string>
+    <string name="notes_title_since">Újdonságok %1$s óta</string>
 </resources>

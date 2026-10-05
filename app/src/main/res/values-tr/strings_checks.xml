@@ -62,4 +62,11 @@
     <string name="settings_notify_checking">Arka planda denetlerken</string>
     <string name="settings_notify_checking_effect">Denetim bittiğinde kaybolan sessiz bir bildirim.</string>
     <string name="engine_event_removed_uninstalled">Tern dışında kaldırıldığı için listeden çıkarıldı</string>
+    <string name="background_last_run">Android arka plan denetimini en son çalıştırdığı zaman: %1$s</string>
+    <string name="background_not_run_yet">Android arka plan denetimini henüz çalıştırmadı.</string>
+    <string name="background_restricted">Android arka planda Tern\'i kısıtlıyor, bu yüzden denetim çalışmayabilir. Uygulama bilgilerindeki pil ayarı bunu kaldırabilir.</string>
+    <string name="background_quiet">Android, güncellemeler hakkında Tern\'den gelen bildirimleri göstermiyor, bu yüzden arka plan denetiminin buldukları bildirilmiyor.</string>
+    <string name="background_not_set">Android\'in şu anda Tern için planlanmış bir arka plan denetimi yok. Tern her başladığında bunu tekrar ister.</string>
+    <string name="background_stale">Arka plan denetimi bir süredir çalışmadı. Android pil tasarrufu için bunu bekletiyor olabilir.</string>
+    <string name="background_stopped_offline">Çalıştığında internet bağlantısı yoktu, bu yüzden hiçbir şey denetlenmedi.</string>
 </resources>

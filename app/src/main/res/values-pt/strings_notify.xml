@@ -4,4 +4,9 @@
     <string name="notify_downloading_plain">A transferir</string>
     <string name="settings_notify_names">Mostrar o nome das aplicações nas notificações</string>
     <string name="settings_notify_names_help">Uma notificação pode ser lida no ecrã de bloqueio. Desligado, o Tern diz quantas aplicações e nunca quais.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d instalação para terminar</item>
+        <item quantity="many">%1$d instalações para terminar</item>
+        <item quantity="other">%1$d instalações para terminar</item>
+    </plurals>
 </resources>

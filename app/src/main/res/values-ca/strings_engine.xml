@@ -113,4 +113,5 @@
     <string name="engine_pick_debug">Sembla una compilació de depuració</string>
     <string name="engine_pick_test">Sembla una compilació de prova</string>
     <string name="engine_pick_unsigned">El seu nom diu que no està signat</string>
+    <string name="engine_patterns_busy">Els filtres que han trigat massa a trobar coincidències encara s\'estan executant, de manera que els filtres d\'aquesta aplicació no s\'apliquen fins que s\'aturin o Tern es reiniciï.</string>
 </resources>

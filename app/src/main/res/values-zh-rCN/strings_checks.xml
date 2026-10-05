@@ -58,4 +58,11 @@
     <string name="settings_notify_checking">在后台检查期间</string>
     <string name="settings_notify_checking_effect">一条安静的通知，检查完成后消失。</string>
     <string name="engine_event_removed_uninstalled">已从列表中移除，因为它在 Tern 之外被卸载</string>
+    <string name="background_last_run">Android 上次运行后台检查：%1$s</string>
+    <string name="background_not_run_yet">Android 尚未运行后台检查。</string>
+    <string name="background_restricted">Android 在后台限制了 Tern，因此检查可能无法运行。应用信息中的电池设置可以解除此限制。</string>
+    <string name="background_quiet">Android 不显示来自 Tern 的更新通知，因此不会提示后台检查发现的内容。</string>
+    <string name="background_not_set">Android 目前没有为 Tern 安排后台检查。Tern 每次启动时都会再次请求。</string>
+    <string name="background_stale">后台检查已有一段时间未运行。Android 可能为了省电而暂缓了它。</string>
+    <string name="background_stopped_offline">运行时没有网络连接，因此未检查任何内容。</string>
 </resources>

@@ -107,4 +107,5 @@
     <string name="engine_pick_debug">Tampaknya ini adalah versi debug</string>
     <string name="engine_pick_test">Tampaknya ini adalah versi pengujian</string>
     <string name="engine_pick_unsigned">Namanya menyatakan bahwa ini tidak ditandatangani</string>
+    <string name="engine_patterns_busy">Filter yang memakan waktu terlalu lama saat pencocokan masih berjalan, sehingga filter aplikasi ini tidak diterapkan sampai filter tersebut berhenti atau Tern dimulai ulang.</string>
 </resources>

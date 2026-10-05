@@ -474,4 +474,5 @@
     <string name="install_permission_body">Android ne demande l\'autorisation qu\'une seule fois avant qu\'une appli puisse en installer une autre. Sur l\'écran suivant, activez le commutateur pour Tern, puis revenez. L\'installation se poursuit d\'elle-même.</string>
     <string name="install_permission_open">Ouvrir les paramètres</string>
     <string name="install_permission_closes">Cette version d\'Android ferme Tern quand vous activez le commutateur. Rouvrez Tern ensuite et l\'installation continue.</string>
+    <string name="notes_title_since">Nouveautés depuis %1$s</string>
 </resources>

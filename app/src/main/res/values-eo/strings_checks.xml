@@ -62,4 +62,11 @@
     <string name="settings_notify_checking">Dum kontrolado en la fono</string>
     <string name="settings_notify_checking_effect">Kvieta sciigo kiu malaperas kiam la kontrolo finiĝas.</string>
     <string name="engine_event_removed_uninstalled">Forigita el la listo, ĉar ĝi estis malinstalita ekster Tern</string>
+    <string name="background_last_run">Android laste faris la fonan kontrolon: %1$s</string>
+    <string name="background_not_run_yet">Android ankoraŭ ne faris la fonan kontrolon.</string>
+    <string name="background_restricted">Android limigas Tern en la fono, do la kontrolo eble ne okazos. La bateria agordo en Informoj pri aplikaĵo povas forigi tion.</string>
+    <string name="background_quiet">Android montras neniujn sciigojn de Tern pri ĝisdatigoj, do tio, kion la fona kontrolo trovas, restas nedirita.</string>
+    <string name="background_not_set">Android nuntempe havas neniun fonan kontrolon por Tern. Tern petas ĝin denove ĉiufoje kiam ĝi lanĉiĝas.</string>
+    <string name="background_stale">La fona kontrolo ne okazis de iom da tempo. Android eble retenas ĝin por ŝpari baterion.</string>
+    <string name="background_stopped_offline">Estis neniu interreta konekto kiam ĝi okazis, do nenio estis kontrolita.</string>
 </resources>

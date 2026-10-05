@@ -58,4 +58,11 @@
     <string name="settings_notify_checking">在背景檢查期間</string>
     <string name="settings_notify_checking_effect">一則安靜的通知，檢查完成後就會消失。</string>
     <string name="engine_event_removed_uninstalled">已從清單中移除，因為它在 Tern 以外被解除安裝</string>
+    <string name="background_last_run">Android 上次執行背景檢查的時間：%1$s</string>
+    <string name="background_not_run_yet">Android 尚未執行背景檢查。</string>
+    <string name="background_restricted">Android 限制 Tern 在背景執行，因此可能不會執行檢查。應用程式資訊中的電池設定可以解除此限制。</string>
+    <string name="background_quiet">Android 不會顯示來自 Tern 的更新通知，因此不會顯示背景檢查發現的內容。</string>
+    <string name="background_not_set">Android 目前沒有為 Tern 排定背景檢查。Tern 在每次啟動時都會再次要求。</string>
+    <string name="background_stale">背景檢查已經有一段時間未執行。Android 可能為了省電而暫緩了檢查。</string>
+    <string name="background_stopped_offline">執行時沒有網際網路連線，因此沒有檢查任何內容。</string>
 </resources>

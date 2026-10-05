@@ -62,4 +62,11 @@
     <string name="settings_notify_checking">Under tjek i baggrunden</string>
     <string name="settings_notify_checking_effect">En stille notifikation, der forsvinder, når tjekket er færdigt.</string>
     <string name="engine_event_removed_uninstalled">Fjernet fra listen, da den blev afinstalleret uden for Tern</string>
+    <string name="background_last_run">Android kørte sidst baggrundstjekket: %1$s</string>
+    <string name="background_not_run_yet">Android har ikke kørt baggrundstjekket endnu.</string>
+    <string name="background_restricted">Android begrænser Tern i baggrunden, så tjekket kører muligvis ikke. Batteriindstillingen i Appinfo kan ophæve det.</string>
+    <string name="background_quiet">Android viser ingen notifikationer fra Tern om opdateringer, så det, baggrundstjekket finder, bliver ikke nævnt.</string>
+    <string name="background_not_set">Android har intet baggrundstjek for Tern lige nu. Tern beder om det igen, hver gang den starter.</string>
+    <string name="background_stale">Baggrundstjekket har ikke kørt i et stykke tid. Android holder det muligvis tilbage for at spare på batteriet.</string>
+    <string name="background_stopped_offline">Der var ingen internetforbindelse, da det kørte, så intet blev tjekket.</string>
 </resources>

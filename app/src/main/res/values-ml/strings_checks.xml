@@ -62,4 +62,11 @@
     <string name="settings_notify_checking">പശ്ചാത്തലത്തിൽ പരിശോധിക്കുമ്പോൾ</string>
     <string name="settings_notify_checking_effect">പരിശോധന കഴിയുമ്പോൾ മാഞ്ഞുപോകുന്ന ശബ്ദമില്ലാത്ത ഒരു നോട്ടിഫിക്കേഷൻ.</string>
     <string name="engine_event_removed_uninstalled">Tern-ന് പുറത്ത് അൺഇൻസ്റ്റാൾ ചെയ്തതിനാൽ ലിസ്റ്റിൽ നിന്ന് നീക്കംചെയ്തു</string>
+    <string name="background_last_run">Android അവസാനമായി പശ്ചാത്തല പരിശോധന നടത്തിയത്: %1$s</string>
+    <string name="background_not_run_yet">Android ഇതുവരെ പശ്ചാത്തല പരിശോധന നടത്തിയിട്ടില്ല.</string>
+    <string name="background_restricted">പശ്ചാത്തലത്തിൽ Android Tern-നെ നിയന്ത്രിക്കുന്നു, അതിനാൽ പരിശോധന നടന്നേക്കില്ല. ആപ്പ് വിവരങ്ങളിലെ ബാറ്ററി സെറ്റിംഗ്സ് ഉപയോഗിച്ച് അത് മാറ്റാനാകും.</string>
+    <string name="background_quiet">അപ്ഡേറ്റുകളെക്കുറിച്ചുള്ള Tern-ൻ്റെ നോട്ടിഫിക്കേഷനുകളൊന്നും Android കാണിക്കുന്നില്ല, അതിനാൽ പശ്ചാത്തല പരിശോധന കണ്ടെത്തുന്ന കാര്യങ്ങൾ അറിയിക്കപ്പെടുന്നില്ല.</string>
+    <string name="background_not_set">നിലവിൽ Tern-നായി Android പശ്ചാത്തല പരിശോധനകളൊന്നും നിലനിർത്തിയിട്ടില്ല. ഓരോ തവണ ആരംഭിക്കുമ്പോഴും Tern ഇതിനായി വീണ്ടും ആവശ്യപ്പെടുന്നു.</string>
+    <string name="background_stale">കുറച്ച് സമയമായി പശ്ചാത്തല പരിശോധന നടന്നിട്ടില്ല. ബാറ്ററി ലാഭിക്കുന്നതിനായി Android അത് തടഞ്ഞുവെച്ചിരിക്കാം.</string>
+    <string name="background_stopped_offline">ഇത് പ്രവർത്തിച്ചപ്പോൾ ഇൻ്റർനെറ്റ് കണക്ഷൻ ഉണ്ടായിരുന്നില്ല, അതിനാൽ ഒന്നും പരിശോധിച്ചില്ല.</string>
 </resources>

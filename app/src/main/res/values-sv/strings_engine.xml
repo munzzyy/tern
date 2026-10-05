@@ -110,4 +110,5 @@
     <string name="engine_pick_debug">Ser ut som ett debugbygge</string>
     <string name="engine_pick_test">Ser ut som ett testbygge</string>
     <string name="engine_pick_unsigned">Namnet anger att den inte är signerad</string>
+    <string name="engine_patterns_busy">Filter som tog för lång tid att matcha körs fortfarande, så denna apps filter tillämpas inte förrän de avslutas eller Tern startar om.</string>
 </resources>

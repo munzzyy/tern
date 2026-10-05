@@ -107,4 +107,5 @@
     <string name="engine_pick_debug">似乎是偵錯版本</string>
     <string name="engine_pick_test">似乎是測試版本</string>
     <string name="engine_pick_unsigned">其名稱表示尚未簽署</string>
+    <string name="engine_patterns_busy">耗時過久的比對篩選器仍在執行，因此在它們停止或 Tern 重新啟動之前，不會套用此應用程式的篩選器。</string>
 </resources>

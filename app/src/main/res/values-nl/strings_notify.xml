@@ -4,4 +4,8 @@
     <string name="notify_downloading_plain">Downloaden</string>
     <string name="settings_notify_names">Noem de apps in meldingen</string>
     <string name="settings_notify_names_help">Een melding is te lezen op het vergrendelscherm. Uit zegt Tern hoeveel apps en nooit welke.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d installatie te voltooien</item>
+        <item quantity="other">%1$d installaties te voltooien</item>
+    </plurals>
 </resources>

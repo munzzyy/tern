@@ -4,4 +4,7 @@
     <string name="notify_downloading_plain">Mengunduh</string>
     <string name="settings_notify_names">Sebutkan nama aplikasi di notifikasi</string>
     <string name="settings_notify_names_help">Notifikasi dapat dibaca di layar kunci. Jika dimatikan, Tern akan menyebutkan jumlah aplikasi tanpa menyebutkan namanya.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="other">%1$d instalasi untuk diselesaikan</item>
+    </plurals>
 </resources>

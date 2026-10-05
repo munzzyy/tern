@@ -474,4 +474,5 @@
     <string name="install_permission_body">O Android pergunta uma vez antes que um app possa instalar outro. Na próxima tela, ative a chave para o Tern e depois volte. A instalação continua sozinha.</string>
     <string name="install_permission_open">Abrir configurações</string>
     <string name="install_permission_closes">Esta versão do Android fecha o Tern quando você ativa a chave. Abra o Tern novamente depois e a instalação continua.</string>
+    <string name="notes_title_since">O que há de novo desde %1$s</string>
 </resources>

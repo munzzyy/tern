@@ -4,4 +4,10 @@
     <string name="notify_downloading_plain">Завантаження</string>
     <string name="settings_notify_names">Назви програм у сповіщеннях</string>
     <string name="settings_notify_names_help">Сповіщення можна прочитати на екрані блокування. Якщо вимкнено, Tern повідомляє скільки програм, і ніколи які саме.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">Ще %1$d встановлення до завершення</item>
+        <item quantity="few">Ще %1$d встановлення до завершення</item>
+        <item quantity="many">Ще %1$d встановлень до завершення</item>
+        <item quantity="other">Ще %1$d встановлення до завершення</item>
+    </plurals>
 </resources>

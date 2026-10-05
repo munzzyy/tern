@@ -451,4 +451,5 @@
     <string name="install_permission_body">Android fragt einmal, bevor eine App eine andere installieren darf. Schalte auf dem nächsten Bildschirm den Schalter für Tern ein und kehre dann zurück. Die Installation läuft von selbst weiter.</string>
     <string name="install_permission_open">Einstellungen öffnen</string>
     <string name="install_permission_closes">Diese Android-Version schließt Tern, wenn du den Schalter umlegst. Öffne Tern danach wieder und die Installation geht weiter.</string>
+    <string name="notes_title_since">Neues seit %1$s</string>
 </resources>

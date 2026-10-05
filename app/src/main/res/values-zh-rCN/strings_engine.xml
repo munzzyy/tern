@@ -107,4 +107,5 @@
     <string name="engine_pick_debug">似乎是调试版本</string>
     <string name="engine_pick_test">似乎是测试版本</string>
     <string name="engine_pick_unsigned">其名称显示未签名</string>
+    <string name="engine_patterns_busy">匹配耗时过长的过滤器仍在运行，因此在它们停止或 Tern 重启之前，不会应用此应用的过滤器。</string>
 </resources>

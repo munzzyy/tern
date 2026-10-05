@@ -62,4 +62,11 @@
     <string name="settings_notify_checking">Tijdens het controleren op de achtergrond</string>
     <string name="settings_notify_checking_effect">Een stille melding die verdwijnt als de controle klaar is.</string>
     <string name="engine_event_removed_uninstalled">Uit de lijst verwijderd, omdat de app buiten Tern is gede-installeerd</string>
+    <string name="background_last_run">Android heeft de achtergrondcontrole voor het laatst uitgevoerd: %1$s</string>
+    <string name="background_not_run_yet">Android heeft de achtergrondcontrole nog niet uitgevoerd.</string>
+    <string name="background_restricted">Android beperkt Tern op de achtergrond, dus de controle wordt mogelijk niet uitgevoerd. De batterij-instelling in App-info kan dit opheffen.</string>
+    <string name="background_quiet">Android toont geen meldingen van Tern over updates, dus wat de achtergrondcontrole vindt wordt niet gemeld.</string>
+    <string name="background_not_set">Android heeft op dit moment geen achtergrondcontrole voor Tern klaarstaan. Tern vraagt er bij elke start opnieuw om.</string>
+    <string name="background_stale">De achtergrondcontrole is al een tijdje niet uitgevoerd. Android houdt deze mogelijk tegen om de batterij te sparen.</string>
+    <string name="background_stopped_offline">Er was geen internetverbinding toen deze werd uitgevoerd, dus er is niets gecontroleerd.</string>
 </resources>

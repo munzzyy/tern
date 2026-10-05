@@ -451,4 +451,5 @@
     <string name="install_permission_body">Android پیش از اینکه یک برنامه بتواند برنامه دیگری را نصب کند، یک بار سؤال میکند. در صفحه بعد، کلید Tern را روشن کنید و سپس برگردید. نصب بهطور خودکار ادامه مییابد.</string>
     <string name="install_permission_open">باز کردن تنظیمات</string>
     <string name="install_permission_closes">این نسخه از Android وقتی سوئیچ را روشن می‌کنید Tern را می‌بندد. پس از آن دوباره Tern را باز کنید تا نصب ادامه یابد.</string>
+    <string name="notes_title_since">موارد جدید از %1$s</string>
 </resources>

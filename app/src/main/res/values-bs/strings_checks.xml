@@ -66,4 +66,11 @@
     <string name="settings_notify_checking">Tokom provjere u pozadini</string>
     <string name="settings_notify_checking_effect">Tiha obavijest koja nestane kada se provjera završi.</string>
     <string name="engine_event_removed_uninstalled">Uklonjeno sa spiska jer je deinstalirano izvan Terna</string>
+    <string name="background_last_run">Android je posljednji put pokrenuo provjeru u pozadini: %1$s</string>
+    <string name="background_not_run_yet">Android još nije pokrenuo provjeru u pozadini.</string>
+    <string name="background_restricted">Android ograničava Tern u pozadini, pa se provjera možda neće pokrenuti. Postavka baterije u informacijama o aplikaciji to može ukinuti.</string>
+    <string name="background_quiet">Android ne prikazuje Ternove obavijesti o ažuriranjima, pa ono što provjera u pozadini pronađe ostaje neprikazano.</string>
+    <string name="background_not_set">Android trenutno nema zakazanu provjeru u pozadini za Tern. Tern je ponovo traži svaki put kada se pokrene.</string>
+    <string name="background_stale">Provjera u pozadini nije pokrenuta neko vrijeme. Android je možda zadržava kako bi uštedio bateriju.</string>
+    <string name="background_stopped_offline">Nije bilo internetske veze kada se pokrenula, pa ništa nije provjereno.</string>
 </resources>

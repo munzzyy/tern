@@ -451,4 +451,5 @@
     <string name="install_permission_body">Android vraagt eenmalig voordat een app een andere mag installeren. Zet op het volgende scherm de schakelaar voor Tern aan en kom dan terug. De installatie gaat vanzelf verder.</string>
     <string name="install_permission_open">Instellingen openen</string>
     <string name="install_permission_closes">Deze versie van Android sluit Tern wanneer je de schakelaar aanzet. Open Tern daarna opnieuw en de installatie gaat verder.</string>
+    <string name="notes_title_since">Wat er nieuw is sinds %1$s</string>
 </resources>

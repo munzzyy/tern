@@ -497,4 +497,5 @@
     <string name="install_permission_body">Android se ptá jen jednou, než může jedna aplikace instalovat jinou. Na další obrazovce zapněte přepínač pro Tern a pak se vraťte. Instalace pak pokračuje sama.</string>
     <string name="install_permission_open">Otevřít nastavení</string>
     <string name="install_permission_closes">Tato verze Androidu po zapnutí přepínače zavře Tern. Poté Tern znovu otevřete a instalace bude pokračovat.</string>
+    <string name="notes_title_since">Co je nového od %1$s</string>
 </resources>

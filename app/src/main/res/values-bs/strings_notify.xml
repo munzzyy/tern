@@ -4,4 +4,9 @@
     <string name="notify_downloading_plain">Preuzimanje</string>
     <string name="settings_notify_names">Imenuj aplikacije u obavijestima</string>
     <string name="settings_notify_names_help">Obavijest se može pročitati na zaključanom ekranu. Isključeno, Tern kaže koliko aplikacija i nikada koje.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d instalacija čeka završetak</item>
+        <item quantity="few">%1$d instalacije čekaju završetak</item>
+        <item quantity="other">%1$d instalacija čeka završetak</item>
+    </plurals>
 </resources>

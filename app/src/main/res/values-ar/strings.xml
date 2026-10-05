@@ -543,4 +543,5 @@
     <string name="install_permission_body">يسأل Android مرة واحدة قبل أن يتمكن تطبيق من تثبيت تطبيق آخر. في الشاشة التالية، قم بتشغيل المفتاح لـ Tern، ثم عُد. سيستمر التثبيت تلقائيًا.</string>
     <string name="install_permission_open">فتح الإعدادات</string>
     <string name="install_permission_closes">يغلق هذا الإصدار من Android تطبيق Tern عندما تقوم بتشغيل المفتاح. افتح Tern مرة أخرى بعد ذلك وسيستمر التثبيت.</string>
+    <string name="notes_title_since">ما الجديد منذ %1$s</string>
 </resources>

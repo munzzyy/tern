@@ -62,4 +62,11 @@
     <string name="settings_notify_checking">Under kontroll i bakgrunden</string>
     <string name="settings_notify_checking_effect">En tyst avisering som försvinner när kontrollen är klar.</string>
     <string name="engine_event_removed_uninstalled">Togs bort från listan, eftersom den avinstallerades utanför Tern</string>
+    <string name="background_last_run">Android körde senast bakgrundskontrollen: %1$s</string>
+    <string name="background_not_run_yet">Android har inte kört bakgrundskontrollen än.</string>
+    <string name="background_restricted">Android begränsar Tern i bakgrunden, så kontrollen kanske inte körs. Batteriinställningen i Appinfo kan häva det.</string>
+    <string name="background_quiet">Android visar inga aviseringar från Tern om uppdateringar, så det bakgrundskontrollen hittar meddelas inte.</string>
+    <string name="background_not_set">Android har ingen bakgrundskontroll för Tern just nu. Tern ber om den igen varje gång den startar.</string>
+    <string name="background_stale">Bakgrundskontrollen har inte körts på ett tag. Android kan hålla tillbaka den för att spara batteri.</string>
+    <string name="background_stopped_offline">Det fanns ingen internetanslutning när den kördes, så inget kontrollerades.</string>
 </resources>

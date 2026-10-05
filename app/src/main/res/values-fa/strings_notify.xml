@@ -4,4 +4,8 @@
     <string name="notify_downloading_plain">در حال دانلود</string>
     <string name="settings_notify_names">نام بردن برنامه‌ها در اعلان‌ها</string>
     <string name="settings_notify_names_help">اعلان را می‌توان در صفحه قفل خواند. در حالت خاموش، Tern می‌گوید چند برنامه و هرگز نمی‌گوید کدام.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d نصب برای تکمیل</item>
+        <item quantity="other">%1$d نصب برای تکمیل</item>
+    </plurals>
 </resources>

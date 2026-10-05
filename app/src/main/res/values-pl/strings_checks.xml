@@ -70,4 +70,11 @@
     <string name="settings_notify_checking">Podczas sprawdzania w tle</string>
     <string name="settings_notify_checking_effect">Ciche powiadomienie, które znika po zakończeniu sprawdzania.</string>
     <string name="engine_event_removed_uninstalled">Usunięto z listy, ponieważ odinstalowano ją poza Tern</string>
+    <string name="background_last_run">Android ostatnio uruchomił sprawdzanie w tle: %1$s</string>
+    <string name="background_not_run_yet">Android nie uruchomił jeszcze sprawdzania w tle.</string>
+    <string name="background_restricted">Android ogranicza działanie Tern w tle, więc sprawdzanie może się nie uruchomić. Ustawienie baterii w informacjach o aplikacji może cofnąć to ograniczenie.</string>
+    <string name="background_quiet">Android nie pokazuje powiadomień od Tern o aktualizacjach, więc to, co wykryje sprawdzanie w tle, nie jest zgłaszane.</string>
+    <string name="background_not_set">Android nie ma teraz zaplanowanego sprawdzania w tle dla Tern. Tern prosi o nie ponownie przy każdym uruchomieniu.</string>
+    <string name="background_stale">Sprawdzanie w tle nie było uruchamiane od dłuższego czasu. Android może je wstrzymywać, aby oszczędzać baterię.</string>
+    <string name="background_stopped_offline">Podczas działania nie było połączenia z internetem, więc nic nie zostało sprawdzone.</string>
 </resources>

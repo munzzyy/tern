@@ -4,4 +4,8 @@
     <string name="notify_downloading_plain">Elŝutas</string>
     <string name="settings_notify_names">Nomumi la aplikaĵojn en sciigoj</string>
     <string name="settings_notify_names_help">Sciigo povas esti legita sur la ŝlosekrano. Malŝaltita, Tern diras kiom da aplikaĵoj kaj neniam kiujn.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d instalo por fini</item>
+        <item quantity="other">%1$d instaloj por fini</item>
+    </plurals>
 </resources>

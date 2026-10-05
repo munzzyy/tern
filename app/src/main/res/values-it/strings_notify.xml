@@ -4,4 +4,9 @@
     <string name="notify_downloading_plain">Download in corso</string>
     <string name="settings_notify_names">Nomina le app nelle notifiche</string>
     <string name="settings_notify_names_help">Una notifica può essere letta sulla schermata di blocco. Disattivato, Tern dice quante app e mai quali.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d installazione da completare</item>
+        <item quantity="many">%1$d installazioni da completare</item>
+        <item quantity="other">%1$d installazioni da completare</item>
+    </plurals>
 </resources>

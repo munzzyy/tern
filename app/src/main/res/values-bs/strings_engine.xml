@@ -113,4 +113,5 @@
     <string name="engine_pick_debug">Izgleda kao debug verzija</string>
     <string name="engine_pick_test">Izgleda kao testna verzija</string>
     <string name="engine_pick_unsigned">Njen naziv kaže da nije potpisana</string>
+    <string name="engine_patterns_busy">Filteri kojima je trebalo predugo da pronađu podudaranje još uvijek rade, pa se filteri ove aplikacije ne primjenjuju dok se ne zaustave ili se Tern ponovo ne pokrene.</string>
 </resources>

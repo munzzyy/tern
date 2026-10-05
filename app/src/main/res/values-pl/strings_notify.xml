@@ -4,4 +4,10 @@
     <string name="notify_downloading_plain">Pobieranie</string>
     <string name="settings_notify_names">Nazwij aplikacje w powiadomieniach</string>
     <string name="settings_notify_names_help">Powiadomienia można czytać na ekranie blokady. Gdy opcja jest wyłączona, Tern informuje ile aplikacji, ale nigdy które.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d instalacja do dokończenia</item>
+        <item quantity="few">%1$d instalacje do dokończenia</item>
+        <item quantity="many">%1$d instalacji do dokończenia</item>
+        <item quantity="other">%1$d instalacji do dokończenia</item>
+    </plurals>
 </resources>

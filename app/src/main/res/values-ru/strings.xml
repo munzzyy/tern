@@ -497,4 +497,5 @@
     <string name="install_permission_body">Android спрашивает один раз, прежде чем одно приложение сможет установить другое. На следующем экране включите переключатель для Tern, затем вернитесь. Установка продолжится сама.</string>
     <string name="install_permission_open">Открыть настройки</string>
     <string name="install_permission_closes">Эта версия Android закрывает Tern при включении переключателя. Откройте Tern снова после этого, и установка продолжится.</string>
+    <string name="notes_title_since">Что нового начиная с %1$s</string>
 </resources>

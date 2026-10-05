@@ -62,4 +62,11 @@
     <string name="settings_notify_checking">Háttérbeli ellenőrzés közben</string>
     <string name="settings_notify_checking_effect">Csendes értesítés, amely eltűnik, amikor az ellenőrzés befejeződik.</string>
     <string name="engine_event_removed_uninstalled">Lekerült a listáról, mert a Ternen kívül eltávolították</string>
+    <string name="background_last_run">Az Android legutóbb ekkor futtatta a háttérbeli ellenőrzést: %1$s</string>
+    <string name="background_not_run_yet">Az Android még nem futtatta a háttérbeli ellenőrzést.</string>
+    <string name="background_restricted">Az Android korlátozza a Tern működését a háttérben, így az ellenőrzés lehet, hogy nem fut le. Ezt az Alkalmazásinfó akkumulátor beállításainál lehet feloldani.</string>
+    <string name="background_quiet">Az Android nem jeleníti meg a Tern frissítésekről szóló értesítéseit, így nem derül ki, mit talált a háttérbeli ellenőrzés.</string>
+    <string name="background_not_set">Az Android jelenleg nem tart nyilván háttérbeli ellenőrzést a Tern számára. A Tern minden indulásakor újra kéri.</string>
+    <string name="background_stale">A háttérbeli ellenőrzés egy ideje nem futott le. Lehet, hogy az Android visszatartja az akkumulátor kímélése érdekében.</string>
+    <string name="background_stopped_offline">A futásakor nem volt internetkapcsolat, így semmit sem ellenőrzött.</string>
 </resources>

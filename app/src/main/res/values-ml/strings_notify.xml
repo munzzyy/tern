@@ -4,4 +4,8 @@
     <string name="notify_downloading_plain">ഡൗൺലോഡ് ചെയ്യുന്നു</string>
     <string name="settings_notify_names">നോട്ടിഫിക്കേഷനുകളിൽ ആപ്പുകളുടെ പേര് കാണിക്കുക</string>
     <string name="settings_notify_names_help">ഒരു നോട്ടിഫിക്കേഷൻ ലോക്ക് സ്ക്രീനിൽ വായിക്കാനാകും. ഓഫ് ചെയ്യുമ്പോൾ, എത്ര ആപ്പുകളുണ്ടെന്ന് Tern പറയുന്നു, ഏതൊക്കെയെന്ന് ഒരിക്കലും പറയില്ല.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">പൂർത്തിയാക്കാൻ %1$d ഇൻസ്റ്റാൾ</item>
+        <item quantity="other">പൂർത്തിയാക്കാൻ %1$d ഇൻസ്റ്റാളുകൾ</item>
+    </plurals>
 </resources>

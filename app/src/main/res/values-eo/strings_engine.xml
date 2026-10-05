@@ -110,4 +110,5 @@
     <string name="engine_pick_debug">Aspektas kiel sencimiga konstruaĵo</string>
     <string name="engine_pick_test">Aspektas kiel testa konstruaĵo</string>
     <string name="engine_pick_unsigned">Ĝia nomo diras ke ĝi ne estas subskribita</string>
+    <string name="engine_patterns_busy">Filtriloj kiuj postulis tro da tempo por kongrui ankoraŭ ruliĝas, do la filtriloj de ĉi tiu aplikaĵo ne estas aplikataj ĝis ili haltos aŭ Tern relanĉiĝos.</string>
 </resources>

@@ -4,4 +4,8 @@
     <string name="notify_downloading_plain">Letöltés</string>
     <string name="settings_notify_names">Alkalmazások megnevezése az értesítésekben</string>
     <string name="settings_notify_names_help">Egy értesítés elolvasható a lezárási képernyőn. Ha ki van kapcsolva, a Tern csak azt mondja meg, hány alkalmazás, de azt soha, hogy melyik.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="one">%1$d telepítés vár befejezésre</item>
+        <item quantity="other">%1$d telepítés vár befejezésre</item>
+    </plurals>
 </resources>

@@ -4,4 +4,7 @@
     <string name="notify_downloading_plain">Đang tải xuống</string>
     <string name="settings_notify_names">Nêu tên ứng dụng trong thông báo</string>
     <string name="settings_notify_names_help">Có thể đọc thông báo trên màn hình khóa. Nếu tắt, Tern chỉ báo số lượng ứng dụng mà không cho biết là ứng dụng nào.</string>
+    <plurals name="notify_confirm_count">
+        <item quantity="other">%1$d bản cài đặt cần hoàn tất</item>
+    </plurals>
 </resources>

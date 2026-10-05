@@ -110,4 +110,5 @@
     <string name="engine_pick_debug">Hibakeresési változatnak tűnik</string>
     <string name="engine_pick_test">Tesztváltozatnak tűnik</string>
     <string name="engine_pick_unsigned">A neve alapján nincs aláírva</string>
+    <string name="engine_patterns_busy">A túl sokáig tartó szűrők még mindig futnak, így ennek az alkalmazásnak a szűrői nem kerülnek alkalmazásra, amíg le nem állnak, vagy a Tern újra nem indul.</string>
 </resources>

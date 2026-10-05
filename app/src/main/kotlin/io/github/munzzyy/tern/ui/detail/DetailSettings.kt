@@ -361,7 +361,10 @@ private fun AdvancedGroup(vm: DetailViewModel, config: AppConfig) {
             icon = if (open) Glyphs.Collapse else Glyphs.Expand,
             onClick = { open = !open },
         )
-        if (!open) return@DetailCard
+        if (!open) {
+            if (vm.changedIn(DraftPart.ADVANCED, config)) Padded { SaveDraft(vm, config, DraftPart.ADVANCED) }
+            return@DetailCard
+        }
         Padded {
             PatternField(R.string.setting_tag_filter, R.string.setting_tag_filter_help, draft.tag, "tag" in invalid) { v ->
                 vm.editDraft(config) { it.copy(tag = v) }

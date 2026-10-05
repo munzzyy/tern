@@ -27,6 +27,9 @@ class DraftCardsTest {
 
     private val nameField = hasSetTextAction() and hasText("Name")
     private val includeField = hasSetTextAction() and hasText("Only files matching")
+    private val tagField = hasSetTextAction() and hasText("Only tags matching")
+    private val showAdvanced = hasText("Show filters", substring = true)
+    private val hideAdvanced = hasText("Hide advanced settings")
 
     private fun open(name: String) {
         compose.shownRow(name).performClick()
@@ -51,9 +54,9 @@ class DraftCardsTest {
             compose.waitForIdle()
             assertEquals("the files card is unchanged and offers no Save", 0, saveRows(DraftPart.FILES))
 
-            scrollTo(hasText("Show filters", substring = true))
-            compose.onNode(hasText("Show filters", substring = true)).performClick()
-            scrollTo(hasSetTextAction() and hasText("Only tags matching"))
+            scrollTo(showAdvanced)
+            compose.onNode(showAdvanced).performClick()
+            scrollTo(tagField)
             compose.waitForIdle()
             assertEquals("the advanced card is unchanged and offers no Save", 0, saveRows(DraftPart.ADVANCED))
         }
@@ -78,6 +81,26 @@ class DraftCardsTest {
             compose.waitUntil(3_000) { saveRows(DraftPart.FILES) == 0 }
             assertNull(trailMap().assets.include)
             assertEquals("My map", trailMap().customName)
+        }
+    }
+
+    @Test
+    fun aClosedAdvancedCardStillOffersTheSaveForWhatWasTypedInIt() {
+        launch("default").use {
+            open("Trail Map")
+            scrollTo(showAdvanced)
+            compose.onNode(showAdvanced).performClick()
+            scrollTo(tagField)
+            compose.onNode(tagField).performTextReplacement("^v")
+            scrollTo(hideAdvanced)
+            compose.onNode(hideAdvanced).performClick()
+            compose.waitForIdle()
+            assertEquals("the closed card still shows its Save and Discard", 1, saveRows(DraftPart.ADVANCED))
+
+            scrollTo(hasTestTag(draftSaveTag(DraftPart.ADVANCED)))
+            compose.onNode(hasText("Save") and hasAnyAncestor(hasTestTag(draftSaveTag(DraftPart.ADVANCED)))).performClick()
+            compose.waitUntil(3_000) { trailMap().releases.tagFilter == "^v" }
+            compose.waitUntil(3_000) { saveRows(DraftPart.ADVANCED) == 0 }
         }
     }
 }

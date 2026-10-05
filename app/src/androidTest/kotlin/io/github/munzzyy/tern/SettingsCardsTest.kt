@@ -215,7 +215,7 @@ class BackgroundNotesTest {
     @Test
     fun allWellShowsWhenTheCheckLastRanAndNoNote() {
         show(healthy())
-        compose.onNodeWithText("Last background check: 2 hours ago").assertIsDisplayed()
+        compose.onNodeWithText("Android last ran the background check: 2 hours ago").assertIsDisplayed()
         for (note in listOf(quiet, restricted, stale, notSet)) assertEquals(note, 0, compose.textCount(note, substring = true))
     }
 
@@ -260,8 +260,8 @@ class BackgroundNotesTest {
     @Test
     fun aCheckThatIsOffSaysNothing() {
         show(BackgroundFacts(restricted = true, notificationsOn = false, scheduled = false), minutes = 0)
-        assertEquals(0, compose.textCount("Last background check", substring = true))
-        assertEquals(0, compose.textCount("has not run yet", substring = true))
+        assertEquals(0, compose.textCount("last ran the background check", substring = true))
+        assertEquals(0, compose.textCount("has not run the background check yet", substring = true))
         for (note in listOf(quiet, restricted, stale, notSet)) assertEquals(note, 0, compose.textCount(note, substring = true))
     }
 }

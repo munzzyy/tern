@@ -308,17 +308,29 @@ class ProxyTest {
                 h.assumeOnline()
                 h.forge.releases = listOf(v1())
                 val id = h.addFixture()
+                // A periodic job is due as soon as it is set and can start before it is cancelled, so the
+                // proxy is silent first: such a run stops at the gate too, and it ends before anything is counted.
+                h.throughProxyAt(nobodyListens())
                 h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 360))
-                // A periodic job is due as soon as it is set, and a run of its own would add to the counts below.
                 scheduler.cancel(Scheduler.JOB_ID)
+                var seen = -1
+                var quietSince = 0L
+                waitUntil(15_000, "a run the job may have started to end") {
+                    val now = h.engine.events.value.size
+                    if (now != seen) {
+                        seen = now
+                        quietSince = System.currentTimeMillis()
+                    }
+                    System.currentTimeMillis() - quietSince >= 2_000
+                }
                 scheduler.cancel(Scheduler.RETRY_JOB_ID)
 
-                h.throughProxyAt(nobodyListens())
                 val failedBefore = h.engine.events.value.count { it.kind == EventKind.CHECK_FAILED }
+                val requestsBefore = h.forge.requests.size
                 h.engine.runScheduledCheck()
                 assertEquals(Texts(targetContext).proxySilent(), h.engine.lastRunProblem.value?.message)
                 assertNull(h.describe(id), h.state(id).checkProblem)
-                assertEquals("requests reached the forge although the proxy did not answer", 0, h.forge.requests.size)
+                assertEquals("requests reached the forge although the proxy did not answer", requestsBefore, h.forge.requests.size)
                 assertEquals("the run says so once", failedBefore + 1, h.engine.events.value.count { it.kind == EventKind.CHECK_FAILED })
                 assertNotNull("the run is tried again later", scheduler.getPendingJob(Scheduler.RETRY_JOB_ID))
                 assertEquals("settings says why the run reached nothing", RunStop.PROXY_SILENT, h.engine.background().lastRunStopped)
@@ -327,7 +339,7 @@ class ProxyTest {
                     h.throughProxyAt(witness.port)
                     h.engine.runScheduledCheck()
                     assertNull(h.engine.lastRunProblem.value)
-                    assertTrue("a proxy that answers lets the same run through", h.forge.requests.isNotEmpty())
+                    assertTrue("a proxy that answers lets the same run through", h.forge.requests.size > requestsBefore)
                     assertNull("a run that went through takes the reason away", h.engine.background().lastRunStopped)
                 }
             }

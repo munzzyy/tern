@@ -309,6 +309,8 @@ class ProxyTest {
                 h.forge.releases = listOf(v1())
                 val id = h.addFixture()
                 h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 360))
+                // A periodic job is due as soon as it is set, and a run of its own would add to the counts below.
+                scheduler.cancel(Scheduler.JOB_ID)
                 scheduler.cancel(Scheduler.RETRY_JOB_ID)
 
                 h.throughProxyAt(nobodyListens())

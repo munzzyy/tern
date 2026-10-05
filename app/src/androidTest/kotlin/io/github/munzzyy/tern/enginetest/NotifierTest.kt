@@ -69,7 +69,7 @@ class NotifierTest {
         prepareDevice()
         val manager = targetContext.getSystemService(NotificationManager::class.java)
         val texts = Texts(targetContext)
-        val notifier = Notifier(targetContext, texts) { true }
+        val notifier = Notifier(targetContext, texts) { true }.apply { ensureChannels() }
         val grouped = { manager.activeNotifications.filter { it.notification.group == Notifier.GROUP_CONFIRM } }
         val summary = { grouped().singleOrNull { it.id == Notifier.ID_CONFIRMS }?.notification }
         val apps = listOf("kestrel", "moss", "quill")
@@ -82,6 +82,7 @@ class NotifierTest {
             waitUntil(10_000, "three confirmations and their summary") { grouped().size == 4 }
             val shown = summary()!!
             assertTrue((shown.flags and Notification.FLAG_GROUP_SUMMARY) != 0)
+            assertTrue("the summary sounds when it first shows and not as it counts", (shown.flags and Notification.FLAG_ONLY_ALERT_ONCE) != 0)
             assertEquals("a tap on the summary leaves the confirmations", 0, shown.flags and Notification.FLAG_AUTO_CANCEL)
             assertEquals(texts.notifyConfirms(3), shown.extras.getCharSequence(Notification.EXTRA_TITLE).toString())
             assertEquals(Notification.VISIBILITY_PUBLIC, shown.visibility)
@@ -106,7 +107,7 @@ class NotifierTest {
         prepareDevice()
         val manager = targetContext.getSystemService(NotificationManager::class.java)
         val texts = Texts(targetContext)
-        val notifier = Notifier(targetContext, texts) { true }
+        val notifier = Notifier(targetContext, texts) { true }.apply { ensureChannels() }
         val shown = { id: Int -> manager.activeNotifications.firstOrNull { it.id == id }?.notification }
         val labels = { id: Int -> shown(id)?.actions.orEmpty().map { it.title.toString() } }
         val own = targetContext.packageName

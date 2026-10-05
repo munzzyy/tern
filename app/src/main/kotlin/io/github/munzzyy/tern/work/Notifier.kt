@@ -265,9 +265,9 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
         about(ATTENTION, R.drawable.ic_stat_attention, texts.notifyConfirmPlain(), texts.notifyConfirm(app), null, more)
 
     fun confirmsAbout(count: Int): Notification =
-        about(ATTENTION, R.drawable.ic_stat_attention, texts.notifyConfirms(count), null, null) { b ->
+        about(ATTENTION, R.drawable.ic_stat_attention, texts.notifyConfirms(count), null, null, more = { b ->
             b.setGroup(GROUP_CONFIRM).setGroupSummary(true).setGroupAlertBehavior(Notification.GROUP_ALERT_SUMMARY).setOnlyAlertOnce(true).setAutoCancel(false)
-        }
+        })
 
     /** [more] goes into both versions; [namedOnly] only into the one that names apps, which a locked screen may hide. */
     private fun about(

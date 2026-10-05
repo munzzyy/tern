@@ -2,6 +2,9 @@ package io.github.munzzyy.tern
 
 import android.os.Build
 import androidx.activity.ComponentActivity
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.getOrNull
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasAnyAncestor
@@ -190,6 +193,11 @@ class BackgroundNotesTest {
     private val restricted = "Android restricts Tern in the background"
     private val stale = "The background check has not run for a while"
     private val notSet = "Android holds no background check for Tern right now"
+    private val appInfo = "App info in Android"
+    private val notificationSettings = "Android notification settings"
+
+    /** A row's button is drawn with no semantics of its own; what it says is the label of the row's click. */
+    private fun clicksTo(label: String) = SemanticsMatcher("clicks to $label") { it.config.getOrNull(SemanticsActions.OnClick)?.label == label }
 
     private fun show(facts: BackgroundFacts, television: Boolean = false, minutes: Int = 360) {
         fake.loadScenario("default")
@@ -214,8 +222,7 @@ class BackgroundNotesTest {
     @Test
     fun notificationsThatAreOffAreSaidAndLeadToTheirSettings() {
         show(healthy().copy(notificationsOn = false))
-        compose.onNodeWithText(quiet, substring = true).performScrollTo().assertIsDisplayed()
-        assertEquals("the note has its button, and the Notifications card keeps its own", 2, compose.textCount("Android notification settings"))
+        compose.onNode(hasText(quiet, substring = true) and clicksTo(notificationSettings)).performScrollTo().assertIsDisplayed()
     }
 
     @Test
@@ -227,15 +234,14 @@ class BackgroundNotesTest {
     @Test
     fun aRestrictedAppIsToldWhereToLiftItWhereThatPageOpens() {
         show(healthy().copy(restricted = true))
-        compose.onNodeWithText(restricted, substring = true).performScrollTo().assertIsDisplayed()
-        compose.onNodeWithText("App info in Android").performScrollTo().assertIsDisplayed()
+        compose.onNode(hasText(restricted, substring = true) and clicksTo(appInfo)).performScrollTo().assertIsDisplayed()
     }
 
     @Test
     fun noButtonIsOfferedForAPageThatWouldOpenNothing() {
         show(healthy().copy(restricted = true, canOpenAppInfo = false), television = true)
         compose.onNodeWithText(restricted, substring = true).performScrollTo().assertIsDisplayed()
-        assertEquals(0, compose.textCount("App info in Android"))
+        assertEquals(0, compose.onAllNodes(clicksTo(appInfo)).fetchSemanticsNodes().size)
     }
 
     @Test

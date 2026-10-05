@@ -192,7 +192,7 @@ fun Modifier.focusWhenShown(revealTop: Boolean = false): Modifier = composed {
     bringIntoViewRequester(reveal).focusRequester(requester)
 }
 
-private fun FocusRequester.tryFocus(): Boolean = try {
+internal fun FocusRequester.tryFocus(): Boolean = try {
     requestFocus()
 } catch (_: IllegalStateException) {
     false

@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.ui.apps
 
+import android.view.KeyEvent
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.AppGrouping
@@ -10,6 +11,7 @@ import io.github.munzzyy.tern.engine.Progress
 import io.github.munzzyy.tern.engine.UpdateAllMode
 import io.github.munzzyy.tern.ui.testRow
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.util.Locale
@@ -257,5 +259,56 @@ class AppListTest {
         assertEquals(R.string.action_update_all, updateAllLabel(UpdateAllPlan(2, 0)))
         assertEquals(R.string.action_install_all, updateAllLabel(UpdateAllPlan(0, 2)))
         assertEquals(R.string.action_install_update_all, updateAllLabel(UpdateAllPlan(1, 1)))
+    }
+
+    @Test
+    fun theSearchKeysOpenTheSearchAndALetterStartsOne() {
+        assertEquals(ListKey.Search(""), listKey(KeyEvent.KEYCODE_SEARCH, 0, ctrl = false, alt = false, television = true))
+        assertEquals(ListKey.Search(""), listKey(KeyEvent.KEYCODE_F, 'f'.code, ctrl = true, alt = false, television = false))
+        assertEquals(ListKey.Search("s"), listKey(KeyEvent.KEYCODE_S, 's'.code, ctrl = false, alt = false, television = false))
+        assertEquals(ListKey.Search("S"), listKey(KeyEvent.KEYCODE_S, 'S'.code, ctrl = false, alt = false, television = true))
+        assertEquals(ListKey.Search("\u00e9"), listKey(KeyEvent.KEYCODE_E, 0xe9, ctrl = false, alt = false, television = false))
+        assertEquals(ListKey.Search("7"), listKey(KeyEvent.KEYCODE_7, '7'.code, ctrl = false, alt = false, television = false))
+    }
+
+    @Test
+    fun shortcutsSpacesAndATelevisionsNumberKeysStartNoSearch() {
+        assertNull(listKey(KeyEvent.KEYCODE_7, '7'.code, ctrl = false, alt = false, television = true))
+        assertNull(listKey(KeyEvent.KEYCODE_S, 's'.code, ctrl = true, alt = false, television = false))
+        assertNull(listKey(KeyEvent.KEYCODE_S, 's'.code, ctrl = false, alt = true, television = false))
+        assertNull(listKey(KeyEvent.KEYCODE_F, 'f'.code, ctrl = true, alt = true, television = false))
+        assertNull(listKey(KeyEvent.KEYCODE_SPACE, ' '.code, ctrl = false, alt = false, television = false))
+        assertNull(listKey(KeyEvent.KEYCODE_PERIOD, '.'.code, ctrl = false, alt = false, television = false))
+    }
+
+    @Test
+    fun pageChannelHomeAndEndKeysMoveThroughTheList() {
+        assertEquals(ListKey.PageDown, listKey(KeyEvent.KEYCODE_PAGE_DOWN, 0, ctrl = false, alt = false, television = false))
+        assertEquals(ListKey.PageDown, listKey(KeyEvent.KEYCODE_CHANNEL_DOWN, 0, ctrl = false, alt = false, television = true))
+        assertEquals(ListKey.PageUp, listKey(KeyEvent.KEYCODE_PAGE_UP, 0, ctrl = false, alt = false, television = false))
+        assertEquals(ListKey.PageUp, listKey(KeyEvent.KEYCODE_CHANNEL_UP, 0, ctrl = false, alt = false, television = true))
+        assertEquals(ListKey.Top, listKey(KeyEvent.KEYCODE_MOVE_HOME, 0, ctrl = true, alt = false, television = false))
+        assertEquals(ListKey.Bottom, listKey(KeyEvent.KEYCODE_MOVE_END, 0, ctrl = false, alt = false, television = false))
+    }
+
+    @Test
+    fun arrowsEnterTabAndBackAreLeftToFocus() {
+        val left = listOf(
+            KeyEvent.KEYCODE_DPAD_UP to 0, KeyEvent.KEYCODE_DPAD_DOWN to 0, KeyEvent.KEYCODE_DPAD_LEFT to 0, KeyEvent.KEYCODE_DPAD_RIGHT to 0,
+            KeyEvent.KEYCODE_DPAD_CENTER to 0, KeyEvent.KEYCODE_ENTER to '\n'.code, KeyEvent.KEYCODE_TAB to '\t'.code, KeyEvent.KEYCODE_BACK to 0,
+        )
+        for ((code, char) in left) {
+            for (television in listOf(false, true)) assertNull("key code $code", listKey(code, char, ctrl = false, alt = false, television = television))
+        }
+    }
+
+    @Test
+    fun aPageStepsAScreenfulLessOneAndStaysInsideTheList() {
+        assertEquals(9, pageTarget(first = 0, shown = 10, total = 40, down = true))
+        assertEquals(39, pageTarget(first = 35, shown = 10, total = 40, down = true))
+        assertEquals(11, pageTarget(first = 20, shown = 10, total = 40, down = false))
+        assertEquals(0, pageTarget(first = 5, shown = 10, total = 40, down = false))
+        assertEquals(1, pageTarget(first = 0, shown = 1, total = 40, down = true))
+        assertEquals(0, pageTarget(first = 0, shown = 0, total = 0, down = true))
     }
 }

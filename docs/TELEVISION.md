@@ -84,3 +84,11 @@ Android 11 closes Tern the moment you turn the switch on. Android 12 does not: o
 emulator Tern stayed open and in front when the permission was given, and only taking it away
 again closed Tern. Where Android does close it, Tern keeps what you wanted for 15 minutes, so open
 it again and the install carries on by itself.
+
+## Keys on the list
+
+On the list of apps, Channel up and Channel down move a screenful at a time, as Page up and Page
+down do on a keyboard. Focus lands on the first app in view, or on the last once the list is at its
+end. Home and End go to the first and the last app. The Search key or Ctrl+F opens the search, and a letter typed on the list starts a
+search with that letter. A remote's number keys start nothing. Inside the search field every key
+belongs to the field.

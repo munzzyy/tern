@@ -41,6 +41,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -53,6 +54,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
@@ -64,7 +66,9 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import io.github.munzzyy.tern.R
@@ -178,6 +182,14 @@ fun AppsScreen(
     var landAgain by remember { mutableIntStateOf(0) }
     LaunchedEffect(landAgain) { if (landAgain > 0 && keys) screen.land() }
     LaunchedEffect(grab) { if (grab) listState.scrollToItem(0) }
+    var searchAsked by remember { mutableIntStateOf(0) }
+    var searchGiven by remember { mutableIntStateOf(0) }
+    LaunchedEffect(searchAsked) { if (searchAsked > searchGiven) listState.scrollToItem(0) }
+    val searchKey: (String) -> Unit = { typedNow ->
+        typed = (typed + typedNow).take(200)
+        searching = true
+        searchAsked++
+    }
 
     Scaffold(
         topBar = {
@@ -236,7 +248,14 @@ fun AppsScreen(
                     else -> AppList(
                         state = state,
                         search = if (fieldShown) {
-                            Search(text, grab = grab, onText = { typed = it.take(200) }, onClose = if (folded) closeSearch else null)
+                            Search(
+                                text,
+                                grab = grab,
+                                onText = { typed = it.take(200) },
+                                onClose = if (folded) closeSearch else null,
+                                asked = searchAsked.takeIf { it > searchGiven } ?: 0,
+                                onGiven = { searchGiven = searchAsked },
+                            )
                         } else {
                             null
                         },
@@ -254,6 +273,7 @@ fun AppsScreen(
                         collapsed = collapsed,
                         onToggleGroup = vm::toggleGroup,
                         swipe = swipe,
+                        onSearchKey = if (selection == null) searchKey else null,
                     )
                 }
             }
@@ -305,8 +325,18 @@ private fun CheckingBar(count: CheckCount?) {
     }
 }
 
-/** What the search field holds and does. [grab] is true when the user has just opened it, so it takes focus. */
-private class Search(val text: String, val grab: Boolean, val onText: (String) -> Unit, val onClose: (() -> Unit)?)
+/**
+ * What the search field holds and does. [grab] is true when the user has just opened it, so it takes focus.
+ * [asked] is above zero while a key pressed on the list waits for the field to take focus, and [onGiven] says it has.
+ */
+private class Search(
+    val text: String,
+    val grab: Boolean,
+    val onText: (String) -> Unit,
+    val onClose: (() -> Unit)?,
+    val asked: Int,
+    val onGiven: () -> Unit,
+)
 
 /** Says which install waits for the user, or how many do. Its action confirms the first of them. [onGone] is called when it leaves with the focus on it. */
 @Composable
@@ -358,9 +388,11 @@ private fun AppList(
     collapsed: Set<String> = emptySet(),
     onToggleGroup: (String) -> Unit = {},
     swipe: Boolean = false,
+    onSearchKey: ((String) -> Unit)? = null,
 ) {
     val look = LocalLook.current
     val sections = state.sections
+    var inSearch by remember { mutableStateOf(false) }
     val categoryColors = LocalEngine.current.settings.collectAsStateWithLifecycle().value.categoryColors
     val landing = remember(sections, collapsed) { firstPlace(sections, collapsed) }
     val rowFocus: (String) -> Modifier = { key ->
@@ -368,9 +400,16 @@ private fun AppList(
     }
     BoxWithConstraints(Modifier.fillMaxSize()) {
     val place = actionPlace(maxWidth, look.iconList, LocalDensity.current.fontScale, LocalNoTouch.current)
-    LazyColumn(state = listState, contentPadding = PaddingValues(bottom = look.gapSection), modifier = Modifier.fillMaxSize().testTag(APP_LIST_TAG)) {
+    LazyColumn(
+        state = listState,
+        contentPadding = PaddingValues(bottom = look.gapSection),
+        modifier = Modifier
+            .fillMaxSize()
+            .listKeys(listState, screen, inSearch = { inSearch }, onSearch = onSearchKey)
+            .testTag(APP_LIST_TAG),
+    ) {
         if (search != null) {
-            item(key = "search", contentType = "search") { SearchField(search, Modifier.backupFocus(screen)) }
+            item(key = "search", contentType = "search") { SearchField(search, Modifier.backupFocus(screen), onFocus = { inSearch = it }) }
         }
         if (state.filters.isNotEmpty()) {
             item(key = "filters", contentType = "filters") { FilterChips(state.filters, state.filter, onFilter) }
@@ -587,14 +626,27 @@ private fun FilterNote(shown: Int, total: Int, onClear: () -> Unit) {
 }
 
 @Composable
-private fun SearchField(search: Search, focus: Modifier) {
+private fun SearchField(search: Search, focus: Modifier, onFocus: (Boolean) -> Unit) {
     val look = LocalLook.current
     val scheme = MaterialTheme.colorScheme
     val grab = remember { FocusRequester() }
     if (search.grab) LaunchedEffect(Unit) { grab.requestFocus() }
+    if (search.asked > 0) {
+        LaunchedEffect(search.asked) {
+            grab.requestFocus()
+            search.onGiven()
+        }
+    }
+    DisposableEffect(Unit) { onDispose { onFocus(false) } }
+    // Text put in from outside, such as a letter typed on the list, leaves the cursor after it.
+    var edited by remember { mutableStateOf(TextFieldValue(search.text, TextRange(search.text.length))) }
+    val value = if (edited.text == search.text) edited else TextFieldValue(search.text, TextRange(search.text.length))
     TextField(
-        value = search.text,
-        onValueChange = search.onText,
+        value = value,
+        onValueChange = {
+            edited = it
+            search.onText(it.text)
+        },
         singleLine = true,
         placeholder = { Text(stringResource(R.string.apps_search_hint)) },
         leadingIcon = { Icon(Glyphs.Search, contentDescription = null, modifier = Modifier.size(look.glyph)) },
@@ -619,6 +671,7 @@ private fun SearchField(search: Search, focus: Modifier) {
             .fillMaxWidth()
             .padding(horizontal = look.screenPadding, vertical = look.gapSmall / 2)
             .then(focus)
+            .onFocusChanged { onFocus(it.hasFocus) }
             .focusRequester(grab)
             .textFieldKeys()
             .testTag(APP_SEARCH_TAG),

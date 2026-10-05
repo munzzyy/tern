@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.ui.apps
 
+import android.view.KeyEvent
 import androidx.annotation.StringRes
 import androidx.compose.ui.unit.Dp
 import io.github.munzzyy.tern.R
@@ -81,6 +82,43 @@ data class ListQuery(
             buryNotInstalled = settings.buryNotInstalled,
         )
     }
+}
+
+/** What a key pressed on the list does there. */
+sealed interface ListKey {
+    /** Opens the search and adds [typed] to what it holds. */
+    data class Search(val typed: String) : ListKey
+    data object PageUp : ListKey
+    data object PageDown : ListKey
+    data object Top : ListKey
+    data object Bottom : ListKey
+}
+
+/**
+ * The list's own keys: Search or Ctrl+F opens the search and a letter typed starts one; page,
+ * channel, Home and End keys move through the list. [char] is the code point the key types, 0 for
+ * none, and [alt] stands for Alt or Meta held. A television's number keys are for channels and
+ * start no search.
+ */
+fun listKey(keyCode: Int, char: Int, ctrl: Boolean, alt: Boolean, television: Boolean): ListKey? = when (keyCode) {
+    KeyEvent.KEYCODE_SEARCH -> ListKey.Search("")
+    KeyEvent.KEYCODE_PAGE_UP, KeyEvent.KEYCODE_CHANNEL_UP -> ListKey.PageUp
+    KeyEvent.KEYCODE_PAGE_DOWN, KeyEvent.KEYCODE_CHANNEL_DOWN -> ListKey.PageDown
+    KeyEvent.KEYCODE_MOVE_HOME -> ListKey.Top
+    KeyEvent.KEYCODE_MOVE_END -> ListKey.Bottom
+    else -> when {
+        ctrl && !alt && keyCode == KeyEvent.KEYCODE_F -> ListKey.Search("")
+        ctrl || alt || char <= 0 -> null
+        Character.isLetter(char) || (Character.isDigit(char) && !television) -> ListKey.Search(String(Character.toChars(char)))
+        else -> null
+    }
+}
+
+/** The item a page key scrolls to from [first], when [shown] items are on screen of [total]: a screenful on, less the one that stays in sight. */
+fun pageTarget(first: Int, shown: Int, total: Int, down: Boolean): Int {
+    if (total <= 0) return 0
+    val step = (shown - 1).coerceAtLeast(1)
+    return (if (down) first + step else first - step).coerceIn(0, total - 1)
 }
 
 /** A group of the list. [title] is null for the apps that belong to none, such as those without a category. */

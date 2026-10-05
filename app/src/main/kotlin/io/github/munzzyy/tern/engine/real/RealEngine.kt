@@ -274,8 +274,8 @@ class RealEngine(
         connectivity.registerDefaultNetworkCallback(networkCallback)
     }
 
-    private fun usable(capabilities: NetworkCapabilities) =
-        capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+    /** Not VALIDATED: Android's probe to Google never succeeds where Google is blocked, so a working network would read as offline. */
+    private fun usable(capabilities: NetworkCapabilities) = capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
 
     /** A check started offline fails at once: one problem for the run, not a timeout per app. */
     private suspend fun offline(appId: String?) = withContext(Dispatchers.IO) {

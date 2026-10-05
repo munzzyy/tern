@@ -4,6 +4,8 @@ import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.PersistableBundle
 import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.log.TernLog
@@ -35,7 +37,7 @@ object Scheduler {
         val wanted = JobInfo.Builder(JOB_ID, ComponentName(context, CheckJobService::class.java))
             .setPeriodic(settings.checkEveryMinutes * MINUTE_MS)
             .setPersisted(true)
-            .setRequiredNetworkType(checkNetwork(settings))
+            .setRequiredNetwork(networkRequest(settings.checkOnlyOnUnmetered))
             .setRequiresCharging(settings.checkOnlyWhileCharging)
             .setRequiresBatteryNotLow(true)
             .build()
@@ -56,7 +58,7 @@ object Scheduler {
         val job = JobInfo.Builder(WAITING_JOB_ID, ComponentName(context, CheckJobService::class.java))
             .setPersisted(true)
             .setMinimumLatency(WAITING_LATENCY_MS)
-            .setRequiredNetworkType(installNetwork(settings))
+            .setRequiredNetwork(networkRequest(settings.onlyOnUnmetered))
             .setRequiresCharging(settings.onlyWhileCharging)
             .setRequiresBatteryNotLow(true)
             .build()
@@ -71,18 +73,20 @@ object Scheduler {
         }
         val job = JobInfo.Builder(RETRY_JOB_ID, ComponentName(context, CheckJobService::class.java))
             .setPersisted(true)
-            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+            .setRequiredNetwork(networkRequest(unmetered = false))
             .setMinimumLatency(delayMs)
             .setExtras(extras)
             .build()
         if (context.getSystemService(JobScheduler::class.java).schedule(job) != JobScheduler.RESULT_SUCCESS) TernLog.e(TAG, "JobScheduler refused the retry")
     }
 
-    /** The network the periodic check waits for. */
-    fun checkNetwork(settings: Settings): Int = if (settings.checkOnlyOnUnmetered) JobInfo.NETWORK_TYPE_UNMETERED else JobInfo.NETWORK_TYPE_ANY
-
-    /** The network the waiting job waits for. */
-    fun installNetwork(settings: Settings): Int = if (settings.onlyOnUnmetered) JobInfo.NETWORK_TYPE_UNMETERED else JobInfo.NETWORK_TYPE_ANY
+    /** Not VALIDATED, which setRequiredNetworkType adds: Android's probe to Google fails where Google is blocked. */
+    private fun networkRequest(unmetered: Boolean): NetworkRequest =
+        NetworkRequest.Builder()
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)
+            .apply { if (unmetered) addCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED) }
+            .build()
 
     /**
      * Whether a run installs now. The waiting job runs only once JobScheduler found the network

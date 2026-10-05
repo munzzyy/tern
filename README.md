@@ -243,9 +243,9 @@ Obtainium does that Tern does not.
 - The translations are machine-made. Details of an error that come from a
   server or a parser stay in English, and an entry in the activity log stays in
   the language it was written in.
-- This version has run on emulators: phones with Android 9, 10, 13 and 16, and
-  televisions with Android TV 9, 12 and 14. It has not yet run on a shelf of
-  real devices.
+- This version has run on emulators: phones with Android 9, 13 and 16, and a
+  television with Android TV 14. Earlier versions also ran on Android 10 and
+  Android TV 9 and 12. It has not yet run on a shelf of real devices.
   On Android 9, a kept export or a file saved from an app's page goes through
   a file picker instead of straight to Download/Tern, since Android only
   added that folder in 10; Android itself offers no certificate transparency
@@ -266,7 +266,9 @@ Obtainium does that Tern does not.
   app's process. Tern does not run that pattern again while it spins, and while
   four are left spinning it applies no app's filters until they stop or Tern
   restarts. Apps without filters are not affected.
-- It is not in any store yet; see the roadmap below.
+- On Android 9 to 11 the Update button of a notification works from a locked
+  phone, since Android lets a button wait for an unlock only from 12 on. Skip
+  this version is left off there for the same reason.
 
 ## Build it
 

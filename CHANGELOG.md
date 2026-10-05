@@ -1,5 +1,61 @@
 # Changelog
 
+## 0.4.0, 2026-10-05
+
+- F-Droid lists one build of a version for each processor. Tern took the
+  arm64 one, so an armv7 television or an x86 tablet got an error row while
+  its own build was listed right below. The build that fits the device now
+  goes first, and the F-Droid changelog shows on every build of the version.
+- An app a few releases behind shows the notes of every release since the
+  installed one, under "What's new since", newest first, ten at most.
+- A publisher's checksum is found in more of the places publishers put it,
+  such as `app.apk.sha256.txt` or `checksums_sha256.txt`. A bare sum counts
+  only from a file made for that one download, and files of other digests
+  are not read.
+- Release notes keep what the developer wrote: `a < b and c > d` no longer
+  loses its middle, `app_arm64_v8a.apk` keeps every `_` instead of going half
+  italic, a link at the end of a sentence leaves out the full stop, and
+  `~~struck~~` text keeps its marks.
+- A filter pattern that ran past its deadline is not started again while its
+  earlier run still spins. Before, each check started one more thread that
+  kept a core busy until the app was closed.
+- Download progress redraws four times a second and its notification once a
+  second. Every byte count used to rebuild every row and post a
+  notification, past what Android takes, so some were dropped.
+- Downloads that no listed release or waiting install names, the folders of
+  removed apps and parts left for two weeks are deleted at start and after a
+  check of the whole list. An app with an install or download under way is
+  left alone.
+- When a server asks a download to wait, it waits up to a minute and goes on.
+  A longer wait stops the download and says when to try again.
+- Settings says when Android last ran the background check, and what holds
+  it back: Tern restricted in the background, update notifications off, no
+  job held, or no run for three intervals. A check set to wait for Wi-Fi or a
+  charger is not called held back.
+- A retry after a failed background check waits for what the check waits for,
+  and none is set while background checks are off.
+- With Orbot off or a proxy on this device not running, a background run asks
+  the proxy first, gives Orbot 20 seconds to start, and then stops with one
+  log line and one retry instead of failing every app. Nothing goes direct.
+- A failure that repeats is logged and notified once, and again only if it
+  goes away and comes back. What is kept to tell is a fingerprint of the app
+  id and the reason, never a name.
+- Several installs waiting for the system's confirmation sit under one
+  summary that makes one sound, instead of one alert each.
+- A notification about one update has Skip this version on Android 12 and
+  later, and one about an install has Open when the app has a screen.
+- On Android 12 and later the Update and Update all buttons of a notification
+  work only once the phone is unlocked, as Skip does. Before, anyone holding
+  a locked phone could start an install from the lock screen.
+- On an app's page each card has its own Save and Discard, shown only when
+  that card changed and acting on its fields alone.
+- The Well known apps button lands on the apps it names, on a television too.
+- On the app list, Page up and Page down (Channel up and down on a remote),
+  Home and End move through the list, and the Search key, Ctrl+F or a typed
+  letter starts a search.
+- Search and repository results that are already in your list say so. The
+  match is made on the phone from the addresses, with nothing sent.
+
 ## 0.3.1, 2026-10-05
 
 - Where Google is blocked, Tern no longer calls a working connection

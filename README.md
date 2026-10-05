@@ -260,7 +260,8 @@ Obtainium does that Tern does not.
   the whole index, 19 MB for F-Droid, and later changes cost a diff.
 - A filter pattern that takes too long to match is stopped after half a second
   and reported, but the thread it ran on keeps spinning until Android ends the
-  app's process.
+  app's process. Tern does not run that pattern again while it spins, and with
+  four left spinning it matches no pattern at all until it is restarted.
 - It is not in any store yet; see the roadmap below.
 
 ## Build it

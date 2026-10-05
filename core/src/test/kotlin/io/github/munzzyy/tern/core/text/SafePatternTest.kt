@@ -19,7 +19,9 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
+import org.junit.After
 import org.junit.Test
+import java.util.concurrent.atomic.AtomicBoolean
 
 class SafePatternTest {
     @Test
@@ -115,5 +117,81 @@ class SafePatternTest {
             HtmlSource().check(spec, CheckContext(FakeHttp().text(page, "<a href=\"/a.apk\">x</a>"), InMemoryValidatorStore()))
         }
         assertEquals(SourceErrorKind.UNSUPPORTED, stopped.kind)
+    }
+
+    private val released = AtomicBoolean(false)
+
+    @After
+    fun releaseTheSpinners() {
+        released.set(true)
+    }
+
+    private fun spin(): Int {
+        while (!released.get()) Thread.onSpinWait()
+        return 0
+    }
+
+    private fun untilNoMoreThan(count: Int) {
+        val deadline = System.nanoTime() + 5_000_000_000
+        while (SafePattern.stillRunning() > count && System.nanoTime() < deadline) Thread.sleep(10)
+        assertEquals(count, SafePattern.stillRunning())
+    }
+
+    @Test(timeout = 10_000)
+    fun aPatternStillRunningPastItsDeadlineIsNotStartedAgain() {
+        val before = SafePattern.stillRunning()
+        val pattern = "(x+x+)+y-single"
+        assertThrows(PatternException::class.java) { SafePattern.matching(pattern, timeoutMs = 100) { spin() } }
+        assertEquals(before + 1, SafePattern.stillRunning())
+
+        var ran = false
+        val started = System.nanoTime()
+        val refused = assertThrows(PatternException::class.java) { SafePattern.matching(pattern, timeoutMs = 100) { ran = true } }
+        assertTrue((System.nanoTime() - started) / 1_000_000 < 50)
+        assertFalse(ran)
+        assertEquals(pattern, refused.pattern)
+        assertEquals(before + 1, SafePattern.stillRunning())
+        assertEquals(42, SafePattern.matching("another-single", timeoutMs = 100) { 42 })
+
+        released.set(true)
+        untilNoMoreThan(before)
+        assertEquals(7, SafePattern.matching(pattern, timeoutMs = 100) { 7 })
+    }
+
+    @Test(timeout = 10_000)
+    fun aBatchNamesThePatternItWasMatchingWhenTheDeadlinePassed() {
+        val before = SafePattern.stillRunning()
+        val pattern = "(x+x+)+y-batch"
+        assertThrows(PatternException::class.java) {
+            SafePattern.watched("release filters", timeoutMs = 100) { SafePattern.matching(pattern) { spin() } }
+        }
+        var ran = false
+        val started = System.nanoTime()
+        val refused = assertThrows(PatternException::class.java) {
+            SafePattern.watched("release filters", timeoutMs = 100) { SafePattern.matching(pattern) { ran = true } }
+        }
+        assertTrue((System.nanoTime() - started) / 1_000_000 < 50)
+        assertFalse(ran)
+        assertEquals(pattern, refused.pattern)
+        assertEquals(3, SafePattern.watched("release filters", timeoutMs = 100) { SafePattern.matching("fine-batch") { 3 } })
+        released.set(true)
+        untilNoMoreThan(before)
+    }
+
+    @Test(timeout = 10_000)
+    fun onceAFewAreLeftRunningNothingMoreIsMatched() {
+        val before = SafePattern.stillRunning()
+        assertTrue(before < SafePattern.MAX_LEFT_RUNNING)
+        repeat(SafePattern.MAX_LEFT_RUNNING - before) { n ->
+            assertThrows(PatternException::class.java) { SafePattern.watched("stuck $n", timeoutMs = 50) { spin() } }
+        }
+        assertEquals(SafePattern.MAX_LEFT_RUNNING, SafePattern.stillRunning())
+        val refused = assertThrows(PatternException::class.java) { SafePattern.compile("a").matches("a") }
+        assertTrue(refused.message!!, "until Tern restarts" in refused.message!!)
+        assertThrows(PatternException::class.java) { SafePattern.watched<String>("batch") { "never" } }
+
+        released.set(true)
+        untilNoMoreThan(before)
+        assertTrue(SafePattern.compile("a").matches("a"))
     }
 }

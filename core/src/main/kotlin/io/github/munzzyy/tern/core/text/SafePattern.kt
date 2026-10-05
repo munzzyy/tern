@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.core.text
 
 import java.util.concurrent.Callable
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.FutureTask
 import java.util.concurrent.TimeUnit
@@ -14,7 +15,8 @@ class PatternException(val pattern: String, message: String, cause: Throwable? =
  * Two limits apply. Matching is counted in steps where the engine reads the text through us (the
  * JVM does). Where it does not (Android hands the text to native code), a deadline applies instead:
  * the match runs on a thread of its own, and when the deadline passes the caller gets an error and
- * the thread is left behind to finish or die with the process.
+ * the thread is left behind to finish or die with the process. While it is still running, its
+ * pattern is not started again, and once a few are left running nothing more is matched.
  */
 class SafePattern private constructor(
     private val regex: Regex,
@@ -22,15 +24,15 @@ class SafePattern private constructor(
     private val maxSteps: Int,
     private val maxInput: Int,
 ) {
-    fun matches(text: String?): Boolean = watched(pattern) { regex.containsMatchIn(metered(text)) }
+    fun matches(text: String?): Boolean = matching(pattern) { regex.containsMatchIn(metered(text)) }
 
     /**
      * The first capture group of the last match when the pattern has one, else the whole of that
      * match. The last match, because Obtainium takes that one, so a version pattern means the same
      * in both.
      */
-    fun extract(text: String?): String? = watched(pattern) {
-        val match = lastMatch(text) ?: return@watched null
+    fun extract(text: String?): String? = matching(pattern) {
+        val match = lastMatch(text) ?: return@matching null
         val group = if (match.groupValues.size > 1) match.groupValues[1] else match.value
         group.takeIf { it.isNotEmpty() }
     }
@@ -39,8 +41,8 @@ class SafePattern private constructor(
     fun extract(text: String?, template: MatchTemplate): String? = groups(text)?.let(template::fill)
 
     /** The last match: the whole of it, then each group, null for a group that took no part. Null when nothing matches. */
-    fun groups(text: String?): List<String?>? = watched(pattern) {
-        val match = lastMatch(text) ?: return@watched null
+    fun groups(text: String?): List<String?>? = matching(pattern) {
+        val match = lastMatch(text) ?: return@matching null
         List(match.groups.size) { match.groups[it]?.value }
     }
 
@@ -76,8 +78,22 @@ class SafePattern private constructor(
         const val SINGLE_TIMEOUT_MS = 500L
         const val BATCH_TIMEOUT_MS = 2_000L
 
-        private val inside = ThreadLocal<Boolean>()
+        /** How many runs past their deadline may still be going before nothing more is matched. */
+        const val MAX_LEFT_RUNNING = 4
+
+        /** A run on its own thread, and the pattern it is matching right now. */
+        private class Run(@Volatile var pattern: String?)
+
+        private val inside = ThreadLocal<Run>()
         private val started = AtomicInteger()
+        private val runaway = ConcurrentHashMap<String, Thread>()
+        private val leftRunning: MutableSet<Thread> = ConcurrentHashMap.newKeySet()
+
+        /** How many runs that missed their deadline are still going. */
+        internal fun stillRunning(): Int {
+            leftRunning.removeIf { !it.isAlive }
+            return leftRunning.size
+        }
 
         fun compile(pattern: String): SafePattern = compile(pattern, MAX_STEPS)
 
@@ -99,10 +115,35 @@ class SafePattern private constructor(
          * Runs [body], which may match many times, under one deadline. Matches made inside it do
          * not start deadlines of their own. [what] names the work in the error.
          */
-        fun <T> watched(what: String, timeoutMs: Long = BATCH_TIMEOUT_MS, body: () -> T): T {
-            if (inside.get() == true) return translate(what, body)
+        fun <T> watched(what: String, timeoutMs: Long = BATCH_TIMEOUT_MS, body: () -> T): T = run(what, null, timeoutMs, body)
+
+        /**
+         * One match of [pattern]: under its own deadline, or the one of the batch it is part of,
+         * which then names it if the deadline passes. A pattern whose earlier match is still
+         * running past its deadline is refused at once.
+         */
+        internal fun <T> matching(pattern: String, timeoutMs: Long = SINGLE_TIMEOUT_MS, body: () -> T): T {
+            runaway[pattern]?.let { earlier ->
+                if (earlier.isAlive) throw PatternException(pattern, "This pattern is still running from a match that took too long: $pattern")
+                runaway.remove(pattern, earlier)
+            }
+            val current = inside.get() ?: return run(pattern, pattern, timeoutMs, body)
+            current.pattern = pattern
+            try {
+                return translate(pattern, body)
+            } finally {
+                current.pattern = null
+            }
+        }
+
+        private fun <T> run(what: String, pattern: String?, timeoutMs: Long, body: () -> T): T {
+            if (inside.get() != null) return translate(what, body)
+            if (stillRunning() >= MAX_LEFT_RUNNING) {
+                throw PatternException(what, "Patterns that took too long are still running, so nothing more is matched until Tern restarts")
+            }
+            val run = Run(pattern)
             val task = FutureTask(Callable {
-                inside.set(true)
+                inside.set(run)
                 translate(what, body)
             })
             val thread = Thread(task, "pattern-${started.incrementAndGet()}")
@@ -113,6 +154,8 @@ class SafePattern private constructor(
                 return task.get(timeoutMs, TimeUnit.MILLISECONDS)
             } catch (e: TimeoutException) {
                 thread.interrupt()
+                leftRunning += thread
+                run.pattern?.let { runaway[it] = thread }
                 throw PatternException(what, "This pattern takes too long to match: $what", e)
             } catch (e: InterruptedException) {
                 thread.interrupt()
@@ -126,8 +169,6 @@ class SafePattern private constructor(
                 }
             }
         }
-
-        private fun <T> watched(pattern: String, body: () -> T): T = watched(pattern, SINGLE_TIMEOUT_MS, body)
 
         private fun <T> translate(what: String, body: () -> T): T = try {
             body()

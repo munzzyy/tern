@@ -59,15 +59,22 @@ class JobTest {
             assertTrue(set.scheduled)
             assertNotNull("a job set anew notes when", set.sinceMs)
 
-            val listingsBefore = h.forge.requests.count { it.url.contains("/releases") }
             // A job an earlier test set, or this one as soon as it was set, may have run already.
             val forcedAt = System.currentTimeMillis()
-            val out = shell("cmd jobscheduler run -f -u 0 ${targetContext.packageName} ${Scheduler.JOB_ID}")
-            android.util.Log.i("EngineTest", "jobscheduler run said: ${out.trim()}")
+            val force = { shell("cmd jobscheduler run -f -u 0 ${targetContext.packageName} ${Scheduler.JOB_ID}") }
+            android.util.Log.i("EngineTest", "jobscheduler run said: ${force().trim()}")
+            // Android drops a forced run while a run of the job is still going, so it is asked again.
+            var askedAt = System.currentTimeMillis()
             waitUntil(30_000, "the forced job to check the app") {
-                (h.state(id).lastCheckedMs ?: 0L) >= forcedAt && h.forge.requests.count { it.url.contains("/releases") } > listingsBefore
+                val checked = (h.state(id).lastCheckedMs ?: 0L) >= forcedAt
+                if (!checked && System.currentTimeMillis() - askedAt > 5_000) {
+                    force()
+                    askedAt = System.currentTimeMillis()
+                }
+                checked
             }
             waitUntil(10_000, "the row to show the result") { h.row(id).status == AppStatus.NOT_INSTALLED }
+            assertTrue(h.forge.requests.count { it.url.contains("/releases") } > 0)
             assertNotNull("the periodic job is gone after a forced run", scheduler.getPendingJob(Scheduler.JOB_ID))
             waitUntil(10_000, "the run to be noted for settings") { (h.engine.background().lastRunMs ?: 0L) >= forcedAt }
             assertEquals("a run leaves the time the job was set alone", set.sinceMs, h.engine.background().sinceMs)

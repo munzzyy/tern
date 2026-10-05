@@ -2,24 +2,23 @@ package io.github.munzzyy.tern.engine.real
 
 import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.ProxyMode
+import io.github.munzzyy.tern.engine.RunStop
 import io.github.munzzyy.tern.engine.Settings
 
-/** Why a background run can reach nothing at all, which it then says once instead of failing every app. */
+/** Whether a background run can reach anything before it checks a single app. */
 internal object RunGate {
-    enum class Block { OFFLINE, PROXY_SILENT }
-
     /** [answers] is asked only when there is a network and a proxy on this device to ask. */
-    inline fun blocked(online: Boolean, proxyOnDevice: Boolean, answers: () -> Boolean): Block? = when {
-        !online -> Block.OFFLINE
-        proxyOnDevice && !answers() -> Block.PROXY_SILENT
+    inline fun blocked(online: Boolean, proxyOnDevice: Boolean, answers: () -> Boolean): RunStop? = when {
+        !online -> RunStop.OFFLINE
+        proxyOnDevice && !answers() -> RunStop.PROXY_SILENT
         else -> null
     }
 
     /**
-     * Only the runs the job starts ask the proxy first. A person who asked for a check sees every
-     * app say why it could not be checked, and nothing reads a reason for the whole run.
+     * Whether the job started the run. Only those ask the proxy first, and only theirs are noted for
+     * settings. A person who asked for a check sees every app say why it could not be checked.
      */
-    fun asksProxyFirst(cause: CheckCause): Boolean = cause == CheckCause.SCHEDULE || cause == CheckCause.RETRY
+    fun byTheJob(cause: CheckCause): Boolean = cause == CheckCause.SCHEDULE || cause == CheckCause.RETRY
 
     /** A proxy that can be asked over 127.0.0.1, so asking sends nothing off the device: Orbot's, or one set there. */
     fun onDevice(settings: Settings): Boolean = when (settings.proxy) {

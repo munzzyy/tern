@@ -364,8 +364,9 @@ not, the failure says "The proxy did not answer, so nothing was sent" instead of
 what the socket said. A background run asks a proxy on the device first, the
 same way, before it checks anything. Orbot that is silent is asked to start and
 given 20 seconds. When the proxy still does not answer, the run stops, says so
-once in the log and tries again later, and no app is marked as failed. A proxy
-on another host is not asked.
+once in the log and tries again later, and no app is marked as failed.
+Settings says it too, under the time Android last ran the check. A proxy on
+another host is not asked.
 
 With the setting on Orbot, Tern finds out whether Orbot is connected by saying
 hello to a SOCKS proxy on `127.0.0.1` at Orbot's port, the way SOCKS 5 begins,

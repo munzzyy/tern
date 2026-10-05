@@ -61,6 +61,7 @@ class JobTest {
             assertNotNull("the periodic job is gone after a forced run", scheduler.getPendingJob(Scheduler.JOB_ID))
             waitUntil(10_000, "the run to be noted for settings") { h.engine.background().lastRunMs != null }
             assertEquals("a run leaves the time the job was set alone", set.sinceMs, h.engine.background().sinceMs)
+            assertNull("a run that went through has no reason to give", h.engine.background().lastRunStopped)
 
             h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 0))
             assertNull(scheduler.getPendingJob(Scheduler.JOB_ID))

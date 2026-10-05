@@ -2,6 +2,7 @@ package io.github.munzzyy.tern.engine.real
 
 import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.ProxyMode
+import io.github.munzzyy.tern.engine.RunStop
 import io.github.munzzyy.tern.engine.Settings
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -15,13 +16,13 @@ class RunGateTest {
 
     @Test
     fun offlineStopsTheRunWithoutAskingTheProxy() {
-        assertEquals(RunGate.Block.OFFLINE, RunGate.blocked(online = false, proxyOnDevice = true, answers = never))
-        assertEquals(RunGate.Block.OFFLINE, RunGate.blocked(online = false, proxyOnDevice = false, answers = never))
+        assertEquals(RunStop.OFFLINE, RunGate.blocked(online = false, proxyOnDevice = true, answers = never))
+        assertEquals(RunStop.OFFLINE, RunGate.blocked(online = false, proxyOnDevice = false, answers = never))
     }
 
     @Test
     fun aSilentProxyOnThisDeviceStopsTheRun() {
-        assertEquals(RunGate.Block.PROXY_SILENT, RunGate.blocked(online = true, proxyOnDevice = true) { false })
+        assertEquals(RunStop.PROXY_SILENT, RunGate.blocked(online = true, proxyOnDevice = true) { false })
         assertNull(RunGate.blocked(online = true, proxyOnDevice = true) { true })
     }
 
@@ -44,10 +45,10 @@ class RunGateTest {
 
     @Test
     fun onlyTheRunsTheJobStartsAskTheProxyFirst() {
-        assertTrue(RunGate.asksProxyFirst(CheckCause.SCHEDULE))
-        assertTrue(RunGate.asksProxyFirst(CheckCause.RETRY))
+        assertTrue(RunGate.byTheJob(CheckCause.SCHEDULE))
+        assertTrue(RunGate.byTheJob(CheckCause.RETRY))
         for (cause in CheckCause.entries - CheckCause.SCHEDULE - CheckCause.RETRY) {
-            assertFalse("$cause leaves every app to say why", RunGate.asksProxyFirst(cause))
+            assertFalse("$cause leaves every app to say why", RunGate.byTheJob(cause))
         }
     }
 }

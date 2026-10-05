@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.ui.settings
 
 import io.github.munzzyy.tern.engine.BackgroundFacts
+import io.github.munzzyy.tern.engine.RunStop
 import io.github.munzzyy.tern.engine.Settings
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -30,8 +31,28 @@ class BackgroundHealthTest {
     }
 
     @Test
+    fun aRunThatReachedNothingSaysWhyFirst() {
+        assertEquals(listOf(BackgroundNote.PROXY_SILENT), notes(healthy.copy(lastRunStopped = RunStop.PROXY_SILENT)))
+        assertEquals(listOf(BackgroundNote.OFFLINE), notes(healthy.copy(lastRunStopped = RunStop.OFFLINE)))
+        assertEquals(listOf(BackgroundNote.OFFLINE), notes(healthy.copy(lastRunStopped = RunStop.OFFLINE), television = true))
+        assertEquals(
+            listOf(BackgroundNote.PROXY_SILENT, BackgroundNote.RESTRICTED),
+            notes(healthy.copy(lastRunStopped = RunStop.PROXY_SILENT, restricted = true)),
+        )
+    }
+
+    @Test
+    fun aRunThatReachedNothingStillCountsAsARun() {
+        assertEquals(
+            "Android did start the job, so it is held back only when it has not since",
+            listOf(BackgroundNote.PROXY_SILENT, BackgroundNote.STALE),
+            notes(healthy.copy(lastRunStopped = RunStop.PROXY_SILENT, lastRunMs = now - 19 * hour)),
+        )
+    }
+
+    @Test
     fun aCheckThatIsOffHasNoNotes() {
-        val everything = BackgroundFacts(lastRunMs = now - 900 * hour, restricted = true, notificationsOn = false, scheduled = false)
+        val everything = BackgroundFacts(lastRunMs = now - 900 * hour, lastRunStopped = RunStop.PROXY_SILENT, restricted = true, notificationsOn = false, scheduled = false)
         assertEquals(emptyList<BackgroundNote>(), notes(everything, sixHours.copy(checkEveryMinutes = 0)))
     }
 

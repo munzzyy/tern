@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.engine.BackgroundFacts
+import io.github.munzzyy.tern.engine.RunStop
 import io.github.munzzyy.tern.engine.Settings
 import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.common.PressRow
@@ -33,8 +34,8 @@ import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.status
 
-/** What keeps the background check from running, or what it finds from being heard. */
-enum class BackgroundNote { RESTRICTED, QUIET, NOT_SET, STALE }
+/** Why the last background run reached nothing, what keeps the check from running, or what it finds from being heard. */
+enum class BackgroundNote { PROXY_SILENT, OFFLINE, RESTRICTED, QUIET, NOT_SET, STALE }
 
 object BackgroundHealth {
     /** A check that has not run for this many of its intervals is said to be held back. */
@@ -42,7 +43,8 @@ object BackgroundHealth {
     private const val MINUTE_MS = 60_000L
 
     /**
-     * The notes for the check as [s] sets it, none while it is off. A television shows no
+     * The notes for the check as [s] sets it, none while it is off, the reason the last run reached
+     * nothing first. A television shows no
      * notifications, so it is told nothing about them. A check that waits for Wi-Fi or a charger
      * may not have run for long because of that alone, so it is not said to be held back.
      */
@@ -50,6 +52,11 @@ object BackgroundHealth {
         if (s.checkEveryMinutes <= 0) return emptyList()
         val waits = s.checkOnlyOnUnmetered || s.checkOnlyWhileCharging
         return buildList {
+            when (facts.lastRunStopped) {
+                RunStop.PROXY_SILENT -> add(BackgroundNote.PROXY_SILENT)
+                RunStop.OFFLINE -> add(BackgroundNote.OFFLINE)
+                null -> Unit
+            }
             if (facts.restricted) add(BackgroundNote.RESTRICTED)
             if (!television && s.notifyUpdates && (!facts.notificationsOn || !facts.updatesChannelOn)) add(BackgroundNote.QUIET)
             if (!facts.scheduled) {
@@ -100,7 +107,7 @@ private fun NoteRow(note: BackgroundNote, canOpenAppInfo: Boolean) {
         Icon(Glyphs.Caution, contentDescription = null, tint = MaterialTheme.status.caution.color, modifier = Modifier.size(look.glyph))
     }
     val toNotifications = note == BackgroundNote.QUIET
-    val opens = toNotifications || canOpenAppInfo && note != BackgroundNote.NOT_SET
+    val opens = toNotifications || canOpenAppInfo && (note == BackgroundNote.RESTRICTED || note == BackgroundNote.STALE)
     if (!opens) {
         ReadBlock {
             Row(horizontalArrangement = Arrangement.spacedBy(look.gap), verticalAlignment = Alignment.CenterVertically) {
@@ -121,6 +128,8 @@ private fun NoteRow(note: BackgroundNote, canOpenAppInfo: Boolean) {
 
 @StringRes
 private fun noteText(note: BackgroundNote): Int = when (note) {
+    BackgroundNote.PROXY_SILENT -> R.string.engine_proxy_silent
+    BackgroundNote.OFFLINE -> R.string.background_stopped_offline
     BackgroundNote.RESTRICTED -> R.string.background_restricted
     BackgroundNote.QUIET -> R.string.background_quiet
     BackgroundNote.NOT_SET -> R.string.background_not_set

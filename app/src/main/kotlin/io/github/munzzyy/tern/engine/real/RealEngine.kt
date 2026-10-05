@@ -75,6 +75,7 @@ import io.github.munzzyy.tern.engine.ProblemException
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.Progress
 import io.github.munzzyy.tern.engine.ProxyMode
+import io.github.munzzyy.tern.engine.RunStop
 import io.github.munzzyy.tern.engine.Reading
 import io.github.munzzyy.tern.engine.Received
 import io.github.munzzyy.tern.engine.SavedFile
@@ -820,6 +821,7 @@ class RealEngine(
         return BackgroundFacts(
             lastRunMs = runs.lastRunMs(),
             sinceMs = runs.sinceMs(),
+            lastRunStopped = runs.stoppedBy(),
             scheduled = Scheduler.isScheduled(context),
             restricted = context.getSystemService(ActivityManager::class.java)?.isBackgroundRestricted == true,
             notificationsOn = notifications?.areNotificationsEnabled() != false,
@@ -938,13 +940,15 @@ class RealEngine(
     suspend fun runScheduledCheck(attempt: Int = 0, only: Set<String>? = null, cause: CheckCause = if (only == null) CheckCause.SCHEDULE else CheckCause.RETRY) {
         ready()
         val settings = _settings.value
-        val asksProxy = RunGate.asksProxyFirst(cause) && RunGate.onDevice(settings)
-        when (RunGate.blocked(_online.value, asksProxy) { proxyAnswers(settings) }) {
-            RunGate.Block.OFFLINE -> {
+        val byTheJob = RunGate.byTheJob(cause)
+        val stop = RunGate.blocked(_online.value, byTheJob && RunGate.onDevice(settings)) { proxyAnswers(settings) }
+        if (byTheJob) withContext(Dispatchers.IO) { runs.stopped(stop) }
+        when (stop) {
+            RunStop.OFFLINE -> {
                 offline(null)
                 return
             }
-            RunGate.Block.PROXY_SILENT -> {
+            RunStop.PROXY_SILENT -> {
                 stopForSilentProxy(settings, attempt, only)
                 return
             }

@@ -7,6 +7,7 @@ import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
@@ -20,6 +21,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.tern.engine.BackgroundFacts
 import io.github.munzzyy.tern.engine.OrbotState
 import io.github.munzzyy.tern.engine.ProxyMode
+import io.github.munzzyy.tern.engine.RunStop
 import io.github.munzzyy.tern.ui.add.ADD_FIELD_TAG
 import io.github.munzzyy.tern.ui.settings.ORBOT_TAG
 import io.github.munzzyy.tern.ui.settings.ORBOT_URL
@@ -193,6 +195,8 @@ class BackgroundNotesTest {
     private val restricted = "Android restricts Tern in the background"
     private val stale = "The background check has not run for a while"
     private val notSet = "Android holds no background check for Tern right now"
+    private val proxySilent = "The proxy did not answer, so nothing was sent"
+    private val offlineThen = "There was no internet connection when it ran"
     private val appInfo = "App info in Android"
     private val notificationSettings = "Android notification settings"
 
@@ -216,7 +220,7 @@ class BackgroundNotesTest {
     fun allWellShowsWhenTheCheckLastRanAndNoNote() {
         show(healthy())
         compose.onNodeWithText("Android last ran the background check: 2 hours ago").assertIsDisplayed()
-        for (note in listOf(quiet, restricted, stale, notSet)) assertEquals(note, 0, compose.textCount(note, substring = true))
+        for (note in listOf(proxySilent, offlineThen, quiet, restricted, stale, notSet)) assertEquals(note, 0, compose.textCount(note, substring = true))
     }
 
     @Test
@@ -258,10 +262,18 @@ class BackgroundNotesTest {
     }
 
     @Test
+    fun aRunThatReachedNothingSaysWhyUnderWhenItRan() {
+        show(healthy().copy(lastRunStopped = RunStop.PROXY_SILENT))
+        compose.onNodeWithText("Android last ran the background check: 2 hours ago").assertIsDisplayed()
+        compose.onNodeWithText(proxySilent, substring = true).performScrollTo().assertIsDisplayed()
+        assertEquals("there is nothing to press for it", 0, compose.onAllNodes(hasText(proxySilent, substring = true) and hasClickAction()).fetchSemanticsNodes().size)
+    }
+
+    @Test
     fun aCheckThatIsOffSaysNothing() {
-        show(BackgroundFacts(restricted = true, notificationsOn = false, scheduled = false), minutes = 0)
+        show(BackgroundFacts(lastRunStopped = RunStop.OFFLINE, restricted = true, notificationsOn = false, scheduled = false), minutes = 0)
         assertEquals(0, compose.textCount("last ran the background check", substring = true))
         assertEquals(0, compose.textCount("has not run the background check yet", substring = true))
-        for (note in listOf(quiet, restricted, stale, notSet)) assertEquals(note, 0, compose.textCount(note, substring = true))
+        for (note in listOf(proxySilent, offlineThen, quiet, restricted, stale, notSet)) assertEquals(note, 0, compose.textCount(note, substring = true))
     }
 }

@@ -10,6 +10,7 @@ import io.github.munzzyy.tern.engine.AppStatus
 import io.github.munzzyy.tern.engine.EventKind
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.ProxyMode
+import io.github.munzzyy.tern.engine.RunStop
 import io.github.munzzyy.tern.enginetest.LoopbackServer.Companion.head
 import io.github.munzzyy.tern.install.Downloader
 import io.github.munzzyy.tern.install.Installer
@@ -318,12 +319,14 @@ class ProxyTest {
                 assertEquals("requests reached the forge although the proxy did not answer", 0, h.forge.requests.size)
                 assertEquals("the run says so once", failedBefore + 1, h.engine.events.value.count { it.kind == EventKind.CHECK_FAILED })
                 assertNotNull("the run is tried again later", scheduler.getPendingJob(Scheduler.RETRY_JOB_ID))
+                assertEquals("settings says why the run reached nothing", RunStop.PROXY_SILENT, h.engine.background().lastRunStopped)
 
                 SocksWitness().use { witness ->
                     h.throughProxyAt(witness.port)
                     h.engine.runScheduledCheck()
                     assertNull(h.engine.lastRunProblem.value)
                     assertTrue("a proxy that answers lets the same run through", h.forge.requests.isNotEmpty())
+                    assertNull("a run that went through takes the reason away", h.engine.background().lastRunStopped)
                 }
             }
         } finally {

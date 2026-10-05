@@ -275,6 +275,9 @@ class Evaluator(
         /** A checksum of an app of a third-party store is the store's own, which is said as such. */
         fun fromStore(type: String, checksum: ChecksumState): Boolean = checksum != ChecksumState.NOT_PUBLISHED && type in SourceTypes.THIRD_PARTY_STORES
 
+        /** True when [state] remembers that the filters of [config], as [effective] gives it, failed, so they are not run again. */
+        fun filtersFailed(config: AppConfig, state: AppState): Boolean = state.patternProblem?.filters == filtersKey(config)
+
         fun filtersKey(config: AppConfig): String = listOf(
             config.releases.tagFilter, config.releases.titleFilter, config.releases.notesFilter,
             config.releases.versionExtract, config.assets.include, config.assets.exclude,

@@ -7,7 +7,9 @@ import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.select.Pick
+import io.github.munzzyy.tern.data.AppState
 import io.github.munzzyy.tern.data.FileFacts
+import io.github.munzzyy.tern.data.PatternProblem
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -167,6 +169,15 @@ class EvaluatorTest {
         assertEquals(13060101L, picked.candidate!!.versionCode)
         val phone = { release: Release -> Evaluator.fitsDevice(sequenceOf(facts("org.videolan.vlc", listOf(abis.getValue(release.id)))), arm64Phone) }
         assertEquals(13060104L, ReleaseSelector.select(builds, ReleasePolicy(), 0, fitsDevice = phone) { it.installable.isNotEmpty() }.candidate!!.versionCode)
+    }
+
+    @Test
+    fun filtersRememberedToFailAreOnlyTheOnesStillSet() {
+        val runaway = appConfig(null).copy(releases = ReleasePolicy(tagFilter = "^(a+)+$"))
+        val state = AppState(patternProblem = PatternProblem(Evaluator.filtersKey(runaway), "too long"))
+        assertTrue(Evaluator.filtersFailed(runaway, state))
+        assertFalse(Evaluator.filtersFailed(runaway.copy(releases = ReleasePolicy(tagFilter = "^a+$")), state))
+        assertFalse(Evaluator.filtersFailed(runaway, AppState()))
     }
 
     @Test

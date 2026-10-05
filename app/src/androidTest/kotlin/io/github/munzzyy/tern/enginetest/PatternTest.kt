@@ -12,6 +12,7 @@ import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.text.PatternException
 import io.github.munzzyy.tern.core.text.SafePattern
 import io.github.munzzyy.tern.data.AppState
+import io.github.munzzyy.tern.data.PatternProblem
 import io.github.munzzyy.tern.engine.AppStatus
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.real.Evaluator
@@ -81,6 +82,23 @@ class PatternTest {
             h.engine.check(id)
             assertNull(h.state(id).patternProblem)
             assertEquals(AppStatus.NOT_INSTALLED, h.row(id).status)
+        }
+    }
+
+    @Test
+    fun aFilterRememberedToFailIsNotRunToListTheVersions() = runBlocking {
+        Harness("pattern-listed").use { h ->
+            h.forge.releases = listOf(FakeForge.Release("v1", listOf(FakeForge.File("app-v1.apk", asset("apk/app-v1.apk")))))
+            val id = h.addFixture()
+            h.engine.configure(id) { it.copy(releases = ReleasePolicy(versionExtract = "v(\\d+)")) }
+            h.engine.check(id)
+            assertEquals(listOf("1"), h.engine.releases(id).map { it.version })
+            assertEquals(listOf("1"), h.engine.offerable(id).map { it.version })
+
+            val filters = Evaluator.filtersKey(h.engine.evaluator.effective(h.engine.store.app(id)!!.config))
+            h.engine.saveState(id) { it.copy(patternProblem = PatternProblem(filters, "too long")) }
+            assertEquals(listOf("v1"), h.engine.releases(id).map { it.version })
+            assertEquals(emptyList<String>(), h.engine.offerable(id).map { it.version })
         }
     }
 

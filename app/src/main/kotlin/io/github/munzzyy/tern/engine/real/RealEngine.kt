@@ -630,15 +630,21 @@ class RealEngine(
 
     override suspend fun offerable(appId: String): List<Release> = ranked(appId, passingOnly = true)
 
-    /** As the selector ranks them; when a pattern of the app fails, as they were stored and none offerable. */
+    /**
+     * As the selector ranks them. When a pattern of the app fails, or is remembered to have failed
+     * and so is not run again, as they were stored and none offerable.
+     */
     private suspend fun ranked(appId: String, passingOnly: Boolean): List<Release> {
         ready()
         val app = stored[appId] ?: return emptyList()
+        val config = evaluator.effective(app.config)
+        val unread = if (passingOnly) emptyList() else app.state.releases
+        if (Evaluator.filtersFailed(config, app.state)) return unread
         return withContext(Dispatchers.Default) {
             try {
-                ReleaseSelector.ordered(app.state.releases, evaluator.effective(app.config).releases, nowMs(), passingOnly)
+                ReleaseSelector.ordered(app.state.releases, config.releases, nowMs(), passingOnly)
             } catch (_: PatternException) {
-                if (passingOnly) emptyList() else app.state.releases
+                unread
             }
         }
     }

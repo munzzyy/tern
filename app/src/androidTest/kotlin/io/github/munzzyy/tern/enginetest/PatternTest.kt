@@ -1,6 +1,7 @@
 package io.github.munzzyy.tern.enginetest
 
 import android.util.Log
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.Asset
@@ -22,6 +23,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Assume.assumeTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.atomic.AtomicBoolean
@@ -39,6 +41,9 @@ class PatternTest {
 
     @Test
     fun measureEveryRunawayPatternAgainstBait() {
+        // Its runs that miss the deadline spin until the process ends, and once four do, no pattern is
+        // matched in any later test of the suite.
+        assumeTrue(InstrumentationRegistry.getArguments().getString("engineMeasure") == "patterns")
         val rows = ArrayList<String>()
         for ((pattern, bait) in patterns) {
             for (n in listOf(30, 60, 200)) {

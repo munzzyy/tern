@@ -4,8 +4,15 @@ import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.net.NetworkCapabilities
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import io.github.munzzyy.tern.core.net.HttpClient
 import io.github.munzzyy.tern.engine.AppStatus
 import io.github.munzzyy.tern.work.Scheduler
+import java.io.IOException
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -13,6 +20,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Assume
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -85,6 +93,38 @@ class JobTest {
             assertNull("turning the checks off takes the retry with them", scheduler.getPendingJob(Scheduler.RETRY_JOB_ID))
             Scheduler.retry(targetContext, h.engine.settings.value, listOf("fixture"), attempt = 1, delayMs = 60_000)
             assertNull("no retry is set while the checks are off", scheduler.getPendingJob(Scheduler.RETRY_JOB_ID))
+        }
+    }
+
+    @Test
+    fun checksTurnedOffWhileARunIsUnderwayLeaveNoRetry() = runBlocking {
+        val hold = AtomicBoolean(false)
+        val asked = CountDownLatch(1)
+        val answer = CountDownLatch(1)
+        val down = HttpClient {
+            if (hold.get()) {
+                asked.countDown()
+                answer.await(30, TimeUnit.SECONDS)
+            }
+            throw IOException("no route to the forge")
+        }
+        Harness("job-retry-midway", http = down).use { h ->
+            Assume.assumeTrue("this device is offline, and then the run stops before it checks", h.engine.online.value)
+            h.addFixture()
+            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 360))
+            scheduler.cancel(Scheduler.JOB_ID)
+
+            h.engine.runScheduledCheck()
+            assertNotNull("a run that could not reach the forge is tried again", scheduler.getPendingJob(Scheduler.RETRY_JOB_ID))
+            scheduler.cancel(Scheduler.RETRY_JOB_ID)
+
+            hold.set(true)
+            val run = launch(Dispatchers.IO) { h.engine.runScheduledCheck() }
+            assertTrue("the run never asked the forge", asked.await(30, TimeUnit.SECONDS))
+            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 0))
+            answer.countDown()
+            run.join()
+            assertNull("checks turned off while the run was underway leave no retry", scheduler.getPendingJob(Scheduler.RETRY_JOB_ID))
         }
     }
 }

@@ -949,7 +949,7 @@ class RealEngine(
                 return
             }
             RunStop.PROXY_SILENT -> {
-                stopForSilentProxy(settings, attempt, only)
+                stopForSilentProxy(attempt, only)
                 return
             }
             null -> Unit
@@ -959,7 +959,8 @@ class RealEngine(
         val run = installs.runScheduled(settings, installsNow, only, cause)
         if (only == null) scope.launch(Dispatchers.IO) { sweepDownloads() }
         if (Scheduler.armsWaiting(settings, waitingJob = false, waited = run.waited)) Scheduler.waitForInstalls(context, settings)
-        retryDelay(run.failed, attempt, nowMs())?.let { (again, delay) -> Scheduler.retry(context, settings, again, attempt + 1, delay) }
+        // Read again: checks turned off while the run was underway leave no retry behind.
+        retryDelay(run.failed, attempt, nowMs())?.let { (again, delay) -> Scheduler.retry(context, _settings.value, again, attempt + 1, delay) }
     }
 
     /**
@@ -984,12 +985,12 @@ class RealEngine(
     }
 
     /** The proxy on this device did not answer: the run says so once and tries again later, and no app is marked. */
-    private suspend fun stopForSilentProxy(settings: Settings, attempt: Int, only: Set<String>?) {
+    private suspend fun stopForSilentProxy(attempt: Int, only: Set<String>?) {
         val problem = Problem(ProblemKind.NETWORK, texts.proxySilent())
         _lastRunProblem.value = problem
         withContext(Dispatchers.IO) { event(null, EventKind.CHECK_FAILED, problem.message) }
         val again = Retries.plan(installs.backgroundTargets(only).map { it to problem }, attempt, nowMs()) ?: return
-        Scheduler.retry(context, settings, again.first, attempt + 1, again.second)
+        Scheduler.retry(context, _settings.value, again.first, attempt + 1, again.second)
     }
 
     /** The waiting job: installs what the last check held back, without checking the list again or setting itself anew. */

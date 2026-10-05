@@ -12,7 +12,9 @@ import android.os.Build
 import android.os.Bundle
 import io.github.munzzyy.tern.R
 import io.github.munzzyy.tern.core.verify.Fingerprints
+import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.SavedFile
+import io.github.munzzyy.tern.engine.real.Checks
 import io.github.munzzyy.tern.engine.real.Texts
 import io.github.munzzyy.tern.log.TernLog
 
@@ -25,8 +27,8 @@ data class Installed(val id: String, val name: String, val version: String?, val
 /** An app whose update is on offer, and the release that is, so that a Skip from a notification skips that release alone. */
 data class Offered(val id: String, val name: String, val releaseId: String)
 
-/** An app that could not be checked or updated, and why, in the words shown for it. */
-data class Trouble(val id: String, val name: String, val reason: String)
+/** An app that could not be checked or updated, and why, in the words shown for it, with the [kind] of problem when one is known. */
+data class Trouble(val id: String, val name: String, val reason: String, val kind: ProblemKind? = null)
 
 /**
  * Every notification has a version without names. It is what a lock screen set to hide sensitive
@@ -339,8 +341,11 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
         fun grouped(apps: List<Trouble>): List<Pair<List<String>, String>> =
             apps.groupBy({ it.reason }, { it.name }).map { (reason, names) -> names to reason }
 
-        /** One value for an app that failed and why, kept in place of either. */
-        fun fingerprint(trouble: Trouble): String = Fingerprints.sha256("${trouble.id}\u0000${trouble.reason}".toByteArray())
+        /** One value for an app that failed and why, kept in place of either, and the same while the failure lasts. */
+        fun fingerprint(trouble: Trouble): String {
+            val why = trouble.kind?.let { Checks.lasting(it, trouble.reason) } ?: trouble.reason
+            return Fingerprints.sha256("${trouble.id}\u0000$why".toByteArray())
+        }
 
         /** Whether [now] holds a failure that is not among those a notification already [said]. */
         fun worthSaying(said: Set<String>, now: List<Trouble>): Boolean = now.any { fingerprint(it) !in said }

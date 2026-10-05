@@ -488,12 +488,13 @@ internal class Installs(private val e: RealEngine) {
     /** The apps that could not be checked or updated among [ids], each with the words its row shows for why. */
     private fun troubles(ids: List<String>): List<Trouble> = ids.distinct().mapNotNull { id ->
         val stored = e.stored[id] ?: return@mapNotNull null
-        Trouble(id, stored.config.shownName, reasonOf(id) ?: e.texts.installFailed(null))
+        val problem = problemNow(id)
+        Trouble(id, stored.config.shownName, problem?.message ?: e.texts.installFailed(null), problem?.kind)
     }
 
-    private fun reasonOf(id: String): String? {
+    private fun problemNow(id: String): Problem? {
         val state = e.stored[id]?.state
-        return e.evaluations[id]?.problem?.message ?: state?.installProblem?.message ?: state?.checkProblem?.message
+        return e.evaluations[id]?.problem ?: state?.installProblem ?: state?.checkProblem
     }
 
     private val saying = Any()
@@ -503,7 +504,7 @@ internal class Installs(private val e: RealEngine) {
      * once, and a new one says them all again. A failure that passed is forgotten.
      */
     private fun sayFailures(now: List<Trouble>) = synchronized(saying) {
-        val current = troubles(e.stored.keys.filter { reasonOf(it) != null })
+        val current = troubles(e.stored.keys.filter { problemNow(it) != null })
         val said = Notifier.stillSaid(e.saidFailures.get(), current)
         if (Notifier.worthSaying(said, now)) {
             e.notifier.failures(now)

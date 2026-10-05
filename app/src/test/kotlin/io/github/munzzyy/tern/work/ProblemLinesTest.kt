@@ -1,5 +1,6 @@
 package io.github.munzzyy.tern.work
 
+import io.github.munzzyy.tern.engine.ProblemKind
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
@@ -65,5 +66,20 @@ class ProblemLinesTest {
         assertTrue(Notifier.worthSaying(kept, listOf(noFile)))
         assertEquals(emptySet<String>(), Notifier.stillSaid(said(down), listOf(down.copy(reason = noFile.reason))))
         assertEquals(emptySet<String>(), Notifier.stillSaid(said(down, noFile), emptyList()))
+    }
+
+    @Test
+    fun aRateLimitOrALostNetworkIsSaidOnceThoughItsWordsChange() {
+        val limited = Trouble("a", "Kestrelwort", "The source asked Tern to wait. It will not be asked again before 13:05.", ProblemKind.RATE_LIMITED)
+        val later = limited.copy(reason = "The source asked Tern to wait. It will not be asked again before 14:05.")
+        assertFalse(Notifier.worthSaying(said(limited), listOf(later)))
+        assertEquals(said(limited), Notifier.stillSaid(said(limited), listOf(later)))
+
+        val unreachable = Trouble("b", "Moss Lantern", "The source could not be reached: failed to connect from /10.0.2.15 (port 40112)", ProblemKind.NETWORK)
+        assertFalse(Notifier.worthSaying(said(unreachable), listOf(unreachable.copy(reason = "The source could not be reached: failed to connect from /10.0.2.15 (port 40598)"))))
+        assertTrue(Notifier.worthSaying(said(unreachable), listOf(unreachable.copy(reason = limited.reason, kind = ProblemKind.RATE_LIMITED))))
+
+        val gone = Trouble("c", "Quillfern", "The source has nothing at this address any more: 404", ProblemKind.NOT_FOUND)
+        assertTrue(Notifier.worthSaying(said(gone), listOf(gone.copy(reason = "The source has nothing at this address any more: 410"))))
     }
 }

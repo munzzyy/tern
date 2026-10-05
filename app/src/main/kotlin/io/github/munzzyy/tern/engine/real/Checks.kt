@@ -235,7 +235,14 @@ internal class Checks(private val e: RealEngine) {
         fun paused(message: String) = Evaluation(AppStatus.ERROR, problem = Problem(ProblemKind.STORES_OFF, message))
 
         /** Whether a failed check goes in the log: not when the check before it failed the same way, which the row still shows. */
-        fun logsFailure(before: Problem?, now: Problem): Boolean = before == null || before.kind != now.kind || before.message != now.message
+        fun logsFailure(before: Problem?, now: Problem): Boolean = before == null || lasting(before.kind, before.message) != lasting(now.kind, now.message)
+
+        /**
+         * What stays the same while a failure lasts. The words for a network failure or a rate limit
+         * name a port, an address or a time that change at every try, so for those it is the kind alone.
+         */
+        fun lasting(kind: ProblemKind, message: String): String =
+            if (kind == ProblemKind.NETWORK || kind == ProblemKind.RATE_LIMITED) kind.name else "${kind.name}\u0000$message"
 
         private const val MAX_PARALLEL = 4
         private const val PER_HOST = 2

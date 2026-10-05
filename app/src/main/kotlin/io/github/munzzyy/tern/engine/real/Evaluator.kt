@@ -97,6 +97,7 @@ class Evaluator(
             ReleaseSelector.select(
                 state.releases, config.releases, nowMs(),
                 matchesPackage = { release -> config.trackOnly || matchesConfiguredPackage(config.packageName, rank(config, release).asSequence().take(MAX_CANDIDATES).map { inspect(it.asset, release.id) }) },
+                fitsDevice = { release -> config.trackOnly || fitsDevice(rank(config, release).asSequence().take(MAX_CANDIDATES).map { inspect(it.asset, release.id) }, device) },
             ) { config.trackOnly || rank(config, it).isNotEmpty() }
         } catch (e: PatternException) {
             return patternFailure(filters, e.message)
@@ -296,12 +297,28 @@ class Evaluator(
             var fallback: Pair<Pick, FileFacts?>? = null
             for (pick in ranked.take(MAX_CANDIDATES)) {
                 val facts = inspect(pick.asset, release.id) ?: return pick to null
-                val abiOk = facts.nativeAbis.isEmpty() || facts.nativeAbis.any { it in device.abis }
+                val abiOk = runsOn(facts, device)
                 val packageOk = UpdateDecision.blockFor(facts.inspection, installed?.app, config.packageName, config.pinnedSigners) == null
                 if (abiOk && packageOk) return pick to facts
                 if (fallback == null) fallback = pick to facts
             }
             return fallback ?: (best to inspect(best.asset, release.id))
+        }
+
+        private fun runsOn(facts: FileFacts, device: DeviceProfile): Boolean = facts.nativeAbis.isEmpty() || facts.nativeAbis.any { it in device.abis }
+
+        /**
+         * True when one of [facts] has no native libraries or has them for a processor of [device],
+         * or when a fact along the way could not be read: as with the package, an unreadable file
+         * settles nothing. False only when files were read and every one is built for other processors.
+         */
+        internal fun fitsDevice(facts: Sequence<FileFacts?>, device: DeviceProfile): Boolean {
+            var read = false
+            for (fact in facts) {
+                if (fact == null || runsOn(fact, device)) return true
+                read = true
+            }
+            return !read
         }
 
         /**

@@ -28,6 +28,9 @@ object ReleaseSelector {
     /** How many releases in a row get their package checked before giving up and taking one as-is, as today. */
     private const val MAX_PACKAGE_CHECKS = 4
 
+    /** How many builds, in all, are looked at for one that fits the device. */
+    private const val MAX_FIT_CHECKS = 4
+
     const val MAX_STAY_BEHIND = 5
 
     private val DATE_VERSION = DateTimeFormatter.ofPattern("yyyy.MM.dd.HHmm", Locale.ROOT).withZone(ZoneOffset.UTC)
@@ -51,12 +54,19 @@ object ReleaseSelector {
      * tag carries no version, such as a rolling "latest", come after every versioned one, in the
      * order the source gave them. [ReleasePolicy.order] can order them otherwise, and a release the
      * source marks as latest comes first in every order.
+     *
+     * A store such as F-Droid lists one build of a version for each processor, all with the same
+     * version text. [fitsDevice] says whether a release's files run on this device; among the builds
+     * of one version, the first that fits goes ahead of those that do not. It is asked of a few
+     * builds at most and never of a version that has only one, and when none fits they keep their
+     * order, so the result is what it was before this check.
      */
     fun select(
         releases: List<Release>,
         policy: ReleasePolicy,
         nowMs: Long,
         matchesPackage: (Release) -> Boolean = { true },
+        fitsDevice: (Release) -> Boolean = { true },
         usable: (Release) -> Boolean,
     ): Selection {
         val filters = Filters(
@@ -72,11 +82,28 @@ object ReleaseSelector {
         val passed = ArrayList<Release>()
         SafePattern.watched("release filters") { filter(releases, policy, nowMs, filters, passed, rejected) }
 
-        val ordered = order(passed, policy.order)
+        val ordered = order(passed, policy.order).toMutableList()
         var packageChecksLeft = MAX_PACKAGE_CHECKS
+        var fitChecksLeft = MAX_FIT_CHECKS
+        var buildsSortedUntil = 0
         var stayBehindLeft = policy.stayBehind.coerceIn(0, MAX_STAY_BEHIND)
         var stayedBehind = 0
-        for ((index, release) in ordered.withIndex()) {
+        for (index in ordered.indices) {
+            if (index >= buildsSortedUntil) {
+                buildsSortedUntil = buildsEnd(ordered, index)
+                if (buildsSortedUntil - index > 1) {
+                    for (build in index until buildsSortedUntil) {
+                        if (fitChecksLeft == 0) break
+                        if (!usable(ordered[build])) continue
+                        fitChecksLeft--
+                        if (fitsDevice(ordered[build])) {
+                            ordered.add(index, ordered.removeAt(build))
+                            break
+                        }
+                    }
+                }
+            }
+            val release = ordered[index]
             val reason = when {
                 !usable(release) -> Rejection.NO_USABLE_FILE
                 packageChecksLeft > 0 && !matchesPackage(release).also { packageChecksLeft-- } -> Rejection.WRONG_PACKAGE
@@ -159,6 +186,13 @@ object ReleaseSelector {
         if (minAgeDays <= 0 || found.isEmpty() || found.any { !tooNew(it, minAgeDays, nowMs) }) return found
         val listed = found.mapTo(HashSet()) { it.id }
         return found + before.filter { it.id !in listed && !tooNew(it, minAgeDays, nowMs) }
+    }
+
+    /** Where the run of releases that share the version of the one at [from] ends. */
+    private fun buildsEnd(ordered: List<Release>, from: Int): Int {
+        var end = from + 1
+        while (end < ordered.size && ordered[end].version == ordered[from].version) end++
+        return end
     }
 
     private fun order(releases: List<Release>, order: ReleaseOrder): List<Release> {

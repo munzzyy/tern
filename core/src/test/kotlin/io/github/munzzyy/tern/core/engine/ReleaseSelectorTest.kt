@@ -5,6 +5,11 @@ import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.ReleaseOrder
 import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.VersionFrom
+import io.github.munzzyy.tern.core.net.InMemoryValidatorStore
+import io.github.munzzyy.tern.core.source.CheckContext
+import io.github.munzzyy.tern.core.source.CheckResult
+import io.github.munzzyy.tern.core.source.fdroid.FDroidSource
+import io.github.munzzyy.tern.core.testing.FakeHttp
 import io.github.munzzyy.tern.core.text.PatternException
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -273,5 +278,82 @@ class ReleaseSelectorTest {
         assertEquals(listOf(Rejection.VERSION_FILTER, Rejection.VERSION_FILTER), picked.rejected.map { it.second })
         assertNull(pick(releases, ReleasePolicy(versionFilter = "^2\\.0\\.")).candidate)
         assertThrows(PatternException::class.java) { pick(releases, ReleasePolicy(versionFilter = "(unclosed")) }
+    }
+
+    /** One build of [version] for one processor, as F-Droid lists it. */
+    private fun build(code: Long, version: String) =
+        Release(id = code.toString(), version = version, versionCode = code, assets = listOf(Asset("org.example_$code.apk", "https://f-droid.org/repo/org.example_$code.apk")))
+
+    private fun select(releases: List<Release>, policy: ReleasePolicy = ReleasePolicy(), fits: (Release) -> Boolean) =
+        ReleaseSelector.select(releases, policy, now, fitsDevice = fits) { it.installable.isNotEmpty() }
+
+    @Test
+    fun amongTheBuildsOfOneVersionTheOneThatFitsTheDeviceIsChosen() {
+        val builds = listOf(build(13060104, "3.6.1"), build(13060103, "3.6.1"), build(13060101, "3.6.1"), build(13060004, "3.6.0"))
+        val asked = ArrayList<String>()
+        for (fallback in listOf(false, true)) {
+            asked.clear()
+            val picked = select(builds, ReleasePolicy(fallbackToOlder = fallback)) { asked += it.id; it.id == "13060101" }
+            assertEquals("13060101", picked.candidate!!.id)
+            assertEquals(emptyList<Pair<Release, Rejection>>(), picked.rejected)
+            assertEquals(listOf("13060104", "13060103", "13060101"), asked)
+        }
+    }
+
+    @Test
+    fun whenNoBuildOfAVersionFitsTheyAreJudgedAsBeforeAndNoOlderVersionIsTried() {
+        val builds = listOf(build(13060104, "3.6.1"), build(13060103, "3.6.1"), build(13060101, "3.6.1"), build(13060004, "3.6.0"), build(13060001, "3.6.0"))
+        for (fallback in listOf(false, true)) {
+            val asked = ArrayList<String>()
+            val picked = select(builds, ReleasePolicy(fallbackToOlder = fallback)) { asked += it.id; false }
+            assertEquals("13060104", picked.candidate!!.id)
+            assertEquals(listOf("13060104", "13060103", "13060101"), asked)
+        }
+        assertEquals("13060103", select(builds, ReleasePolicy(stayBehind = 1)) { false }.candidate!!.id)
+    }
+
+    @Test
+    fun aVersionWithOnlyOneReleaseIsNeverAskedWhetherItFits() {
+        var asked = 0
+        val picked = select(listOf(release("v2.0.0"), release("v1.9.0"))) { asked++; false }
+        assertEquals("v2.0.0", picked.candidate!!.id)
+        assertEquals(0, asked)
+    }
+
+    @Test
+    fun looksAtFourBuildsAtMostForOneThatFits() {
+        val builds = (6 downTo 1).map { build(100L + it, "2.0") }
+        var asked = 0
+        val picked = select(builds) { asked++; it.id == "101" }
+        assertEquals("106", picked.candidate!!.id)
+        assertEquals(4, asked)
+    }
+
+    @Test
+    fun aBuildWithNoFileIsNotAskedAndDoesNotJumpAhead() {
+        val builds = listOf(build(13, "1.0"), build(12, "1.0").copy(assets = emptyList()), build(11, "1.0"))
+        val asked = ArrayList<String>()
+        val picked = select(builds, ReleasePolicy(fallbackToOlder = false)) { asked += it.id; it.id != "13" }
+        assertEquals("11", picked.candidate!!.id)
+        assertEquals(listOf("13", "11"), asked)
+    }
+
+    @Test
+    fun theRecordedListingOfAnAppBuiltForEachProcessorOffersTheBuildThatFits() {
+        val pkg = "org.videolan.vlc"
+        val recorded = """
+            {"packageName":"org.videolan.vlc","suggestedVersionCode":13070108,"packages":[
+             {"versionName":"3.7.1","versionCode":13070108},{"versionName":"3.7.1","versionCode":13070107},
+             {"versionName":"3.7.1","versionCode":13070106},{"versionName":"3.7.1","versionCode":13070105},
+             {"versionName":"3.7.0","versionCode":13070008},{"versionName":"3.7.0","versionCode":13070007},
+             {"versionName":"3.7.0","versionCode":13070006},{"versionName":"3.7.0","versionCode":13070005}]}
+        """.trimIndent()
+        val source = FDroidSource()
+        val http = FakeHttp().text("https://f-droid.org/api/v1/packages/$pkg", recorded)
+        val listing = (source.check(source.match("https://f-droid.org/packages/$pkg")!!, CheckContext(http, InMemoryValidatorStore())) as CheckResult.Listing).listing
+        val fitting = setOf("13070105", "13070005")
+        assertEquals("13070108", pick(listing.releases).candidate!!.id)
+        assertEquals("13070105", select(listing.releases) { it.id in fitting }.candidate!!.id)
+        assertEquals("3.7.1", select(listing.releases) { it.id in fitting }.candidate!!.version)
     }
 }

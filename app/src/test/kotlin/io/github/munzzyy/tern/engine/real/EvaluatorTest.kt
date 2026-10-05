@@ -1,9 +1,11 @@
 package io.github.munzzyy.tern.engine.real
 
 import io.github.munzzyy.tern.core.engine.InstalledApp
+import io.github.munzzyy.tern.core.engine.ReleaseSelector
 import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.model.Release
+import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.select.Pick
 import io.github.munzzyy.tern.data.FileFacts
 import org.junit.Assert.assertEquals
@@ -137,6 +139,34 @@ class EvaluatorTest {
             if (asset.name == "nextcloud-generic.apk") facts("com.x.nextcloud", listOf("arm64-v8a", "x86_64")) else facts("com.x.nextcloud", listOf("armeabi-v7a"))
         }
         assertTrue(chosen.asset.name != bestByNameAlone.asset.name)
+    }
+
+    @Test
+    fun aReleaseFitsTheDeviceWhenOneOfItsFilesRunsThere() {
+        assertFalse(Evaluator.fitsDevice(sequenceOf(facts("org.videolan.vlc", listOf("arm64-v8a"))), armTv))
+        assertFalse(Evaluator.fitsDevice(sequenceOf(facts("a", listOf("arm64-v8a")), facts("a", listOf("x86_64"))), armTv))
+        assertTrue(Evaluator.fitsDevice(sequenceOf(facts("a", listOf("arm64-v8a")), facts("a", listOf("armeabi-v7a"))), armTv))
+        assertTrue(Evaluator.fitsDevice(sequenceOf(facts("org.videolan.vlc", listOf("arm64-v8a"))), arm64Phone))
+        assertTrue(Evaluator.fitsDevice(sequenceOf(facts("a", emptyList())), armTv))
+    }
+
+    @Test
+    fun aFileThatCannotBeReadNowSettlesNothingAboutTheFit() {
+        assertTrue(Evaluator.fitsDevice(sequenceOf(null), armTv))
+        assertTrue(Evaluator.fitsDevice(sequenceOf(facts("a", listOf("arm64-v8a")), null), armTv))
+        assertTrue(Evaluator.fitsDevice(emptySequence(), armTv))
+    }
+
+    @Test
+    fun theBuildOfAVersionForThisDevicesProcessorIsTheOneOffered() {
+        fun build(code: Long) = Release(id = "$code", version = "3.6.1", versionCode = code, assets = listOf(asset("org.videolan.vlc_$code.apk")))
+        val abis = mapOf("13060104" to "arm64-v8a", "13060103" to "x86_64", "13060101" to "armeabi-v7a")
+        val builds = listOf(build(13060104), build(13060103), build(13060101))
+        val fitsTv = { release: Release -> Evaluator.fitsDevice(sequenceOf(facts("org.videolan.vlc", listOf(abis.getValue(release.id)))), armTv) }
+        val picked = ReleaseSelector.select(builds, ReleasePolicy(fallbackToOlder = false), 0, fitsDevice = fitsTv) { it.installable.isNotEmpty() }
+        assertEquals(13060101L, picked.candidate!!.versionCode)
+        val phone = { release: Release -> Evaluator.fitsDevice(sequenceOf(facts("org.videolan.vlc", listOf(abis.getValue(release.id)))), arm64Phone) }
+        assertEquals(13060104L, ReleaseSelector.select(builds, ReleasePolicy(), 0, fitsDevice = phone) { it.installable.isNotEmpty() }.candidate!!.versionCode)
     }
 
     @Test

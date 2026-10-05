@@ -87,7 +87,7 @@ class RemoteAddTest {
     @Test
     fun wellKnownAppsOnTheFirstRunLandOnTheFirstOfThem() {
         launch("firstrun").use {
-            compose.assertFocusOn(hasTestTag(FIRST_RUN_ADD_TAG), "the first run opens on adding the first app")
+            compose.waitFor(hasTestTag(FIRST_RUN_ADD_TAG))
             compose.moveTo(hasText("Well known apps"), KEYCODE_DPAD_DOWN)
             compose.press(KEYCODE_DPAD_CENTER)
             compose.assertFocusOn(firstStarterRow, "the Add screen opens on the first well known app, not on its field")

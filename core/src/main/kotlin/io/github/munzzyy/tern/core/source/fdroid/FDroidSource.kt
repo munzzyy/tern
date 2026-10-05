@@ -121,11 +121,15 @@ class FDroidSource : Source, Searchable {
         null
     }
 
-    /** The newest release and the newest that is not a pre-release carry the changelog: one of them is the one offered. */
+    /**
+     * The builds of the newest version and of the newest that is not a pre-release carry the
+     * changelog: one of them is the one offered, and of a version built for each processor that
+     * can be any of its builds.
+     */
     private fun withChangelog(releases: List<Release>, changelog: String?): List<Release> {
         if (changelog == null) return releases
-        val stable = releases.indexOfFirst { !it.countsAsPrerelease }
-        return releases.mapIndexed { i, release -> if (i == 0 || i == stable) release.copy(notes = changelog, notesFormat = NotesFormat.MARKDOWN) else release }
+        val versions = setOfNotNull(releases.firstOrNull()?.version, releases.firstOrNull { !it.countsAsPrerelease }?.version)
+        return releases.map { if (it.version in versions) it.copy(notes = changelog, notesFormat = NotesFormat.MARKDOWN) else it }
     }
 
     /** The first page of search.f-droid.org, as the site shows it. Each hit is the package page of f-droid.org. */

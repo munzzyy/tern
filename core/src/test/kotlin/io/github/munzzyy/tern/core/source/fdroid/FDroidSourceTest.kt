@@ -113,6 +113,22 @@ class FDroidSourceTest {
     }
 
     @Test
+    fun everyBuildOfTheNewestVersionCarriesTheChangelog() {
+        val pkg = "org.videolan.vlc"
+        val recorded = """
+            {"packageName":"org.videolan.vlc","suggestedVersionCode":13070108,"packages":[
+             {"versionName":"3.7.1","versionCode":13070108},{"versionName":"3.7.1","versionCode":13070107},
+             {"versionName":"3.7.1","versionCode":13070106},{"versionName":"3.7.1","versionCode":13070105},
+             {"versionName":"3.7.0","versionCode":13070008},{"versionName":"3.7.0","versionCode":13070007},
+             {"versionName":"3.7.0","versionCode":13070006},{"versionName":"3.7.0","versionCode":13070005}]}
+        """.trimIndent()
+        val http = FakeHttp().text("https://f-droid.org/api/v1/packages/$pkg", recorded)
+            .text("https://gitlab.com/fdroid/fdroiddata/-/raw/master/metadata/$pkg.yml", data("https://example.org/vlc/changes"))
+        val listing = listingOf(http, "https://f-droid.org/packages/$pkg")
+        assertEquals(List(4) { "https://example.org/vlc/changes" } + List(4) { null }, listing.releases.map { it.notes })
+    }
+
+    @Test
     fun aChangelogKeptElsewhereIsItsAddress() {
         val http = FakeHttp().text(api, versions).text(metadata, data("https://example.org/app/changes"))
         val listing = listingOf(http)

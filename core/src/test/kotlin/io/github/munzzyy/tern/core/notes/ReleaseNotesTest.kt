@@ -251,4 +251,59 @@ class ReleaseNotesTest {
         val blocks = ReleaseNotes.parse(persian, NotesFormat.MARKDOWN)
         assertEquals(persian, ((blocks[0] as Block.Paragraph).spans[0] as Span.Text).text)
     }
+
+    private fun spans(markdown: String): List<Span> = (ReleaseNotes.parse(markdown, NotesFormat.MARKDOWN).single() as Block.Paragraph).spans
+
+    @Test
+    fun underscoresInsideANameStayAsWritten() {
+        assertEquals(listOf(Span.Text("Get app_arm64_v8a.apk or app__x86__.apk")), spans("Get app_arm64_v8a.apk or app__x86__.apk"))
+        assertEquals(listOf(Span.Text("snake_case_name")), spans("snake_case_name"))
+    }
+
+    @Test
+    fun underscoresAroundWordsStillEmphasise() {
+        assertEquals(listOf(Span.Italic(listOf(Span.Text("whole")))), spans("_whole_"))
+        assertEquals(listOf(Span.Bold(listOf(Span.Text("strong")))), spans("__strong__"))
+        assertEquals(listOf(Span.Text("Use snake_case or "), Span.Italic(listOf(Span.Text("this_one"))), Span.Text(".")), spans("Use snake_case or _this_one_."))
+    }
+
+    @Test
+    fun aLessThanSignThatOpensNoTagIsKept() {
+        assertEquals(listOf(Span.Text("a < b and c > d")), spans("a < b and c > d"))
+        assertEquals(listOf(Span.Text("needs <= 2 GB")), spans("needs <= 2 GB"))
+    }
+
+    @Test
+    fun anAddressInAngleBracketsIsALink() {
+        assertEquals(listOf(Span.Text("See "), Span.Link(listOf(Span.Text("https://example.org/a")), "https://example.org/a"), Span.Text(".")), spans("See <https://example.org/a>."))
+        assertEquals(listOf(Span.Text("<"), Span.Link(listOf(Span.Text("https://example.org/a")), "https://example.org/a")), spans("<https://example.org/a"))
+        assertEquals(listOf(Span.Text("Hello world!")), spans("Hello <b>world</b>!"))
+    }
+
+    @Test
+    fun theMarkThatEndsASentenceIsNotPartOfTheAddress() {
+        for (mark in listOf(".", ",", ";", ":", "!", "?", "...")) {
+            assertEquals(
+                mark,
+                listOf(Span.Text("see "), Span.Link(listOf(Span.Text("https://example.org/a")), "https://example.org/a"), Span.Text("$mark next")),
+                spans("see https://example.org/a$mark next"),
+            )
+        }
+        assertEquals("https://example.org/a.html?x=1", (spans("https://example.org/a.html?x=1").single() as Span.Link).url)
+    }
+
+    @Test
+    fun aStruckOutPassageKeepsItsMarks() {
+        assertEquals(listOf(Span.Text("~~old~~ new")), spans("~~old~~ new"))
+    }
+
+    @Test
+    fun hostileMarkdownStaysBounded() {
+        for (input in listOf("<".repeat(100_000), "<https://".repeat(20_000), "_".repeat(50_000), "a_".repeat(50_000), "_a".repeat(50_000))) {
+            val start = System.nanoTime()
+            val blocks = ReleaseNotes.parse(input, NotesFormat.MARKDOWN)
+            assertTrue((System.nanoTime() - start) / 1_000_000 < 5000)
+            assertTrue(blocks.isNotEmpty())
+        }
+    }
 }

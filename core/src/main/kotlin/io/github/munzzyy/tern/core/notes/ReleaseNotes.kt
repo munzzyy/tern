@@ -184,9 +184,18 @@ private class InlineParser(private val text: String) {
             when {
                 c == '<' -> {
                     val close = boundedIndexOf('>', pos + 1)
-                    if (close != -1) pos = close + 1 else {
-                        buf.append(c)
-                        pos++
+                    val inside = if (close == -1) "" else text.substring(pos + 1, close)
+                    when {
+                        close != -1 && isUrlStart(pos + 1) && inside.none { it.isWhitespace() || it == '<' } -> {
+                            flush()
+                            spans.add(Span.Link(listOf(Span.Text(inside)), inside))
+                            pos = close + 1
+                        }
+                        close != -1 && startsTag(pos + 1) -> pos = close + 1
+                        else -> {
+                            buf.append(c)
+                            pos++
+                        }
                     }
                 }
                 c == '`' -> {
@@ -223,8 +232,14 @@ private class InlineParser(private val text: String) {
                         pos++
                     }
                 }
+                c == '_' && text.getOrNull(pos - 1)?.isLetterOrDigit() == true -> {
+                    while (pos < text.length && text[pos] == '_') {
+                        buf.append('_')
+                        pos++
+                    }
+                }
                 (c == '*' || c == '_') && pos + 1 < text.length && text[pos + 1] == c -> {
-                    val close = boundedIndexOfString("" + c + c, pos + 2)
+                    val close = closing("" + c + c, pos + 2)
                     if (close != -1 && depth < MAX_DEPTH) {
                         flush()
                         spans.add(Span.Bold(InlineParser(text.substring(pos + 2, close)).parse(depth + 1)))
@@ -235,7 +250,7 @@ private class InlineParser(private val text: String) {
                     }
                 }
                 c == '*' || c == '_' -> {
-                    val close = boundedIndexOf(c, pos + 1)
+                    val close = closing(c.toString(), pos + 1)
                     if (close != -1 && close > pos + 1 && depth < MAX_DEPTH) {
                         flush()
                         spans.add(Span.Italic(InlineParser(text.substring(pos + 1, close)).parse(depth + 1)))
@@ -279,11 +294,32 @@ private class InlineParser(private val text: String) {
     private fun isUrlStart(at: Int): Boolean =
         text.regionMatches(at, "https://", 0, 8, ignoreCase = true) || text.regionMatches(at, "http://", 0, 7, ignoreCase = true)
 
+    /** Where a bare address ends: a full stop, comma or other mark that ends it belongs to the sentence. */
     private fun urlEnd(at: Int): Int {
         val limit = minOf(text.length, at + INLINE_WINDOW * 4)
         var i = at
         while (i < limit && !text[i].isWhitespace() && text[i] !in "<>\"'()[]") i++
+        while (i > at && text[i - 1] in ".,;:!?") i--
         return i
+    }
+
+    /** A raw tag opens with a letter, "/" or "!", so "a < b" is text. */
+    private fun startsTag(at: Int): Boolean = text.getOrNull(at)?.let { it.isLetter() || it == '/' || it == '!' } == true
+
+    /**
+     * Where [marker] closes. An underscore closes only where no letter or digit follows, so
+     * the underscores inside a name such as app_arm64_v8a.apk are left as they are.
+     */
+    private fun closing(marker: String, from: Int): Int {
+        val end = minOf(text.length, from + INLINE_WINDOW)
+        var i = from
+        while (i + marker.length <= end) {
+            val closes = text.regionMatches(i, marker, 0, marker.length) &&
+                (marker[0] != '_' || text.getOrNull(i + marker.length)?.isLetterOrDigit() != true)
+            if (closes) return i
+            i++
+        }
+        return -1
     }
 
     private fun boundedIndexOf(target: Char, from: Int): Int {
@@ -291,16 +327,6 @@ private class InlineParser(private val text: String) {
         var i = from
         while (i < end) {
             if (text[i] == target) return i
-            i++
-        }
-        return -1
-    }
-
-    private fun boundedIndexOfString(marker: String, from: Int): Int {
-        val end = minOf(text.length, from + INLINE_WINDOW)
-        var i = from
-        while (i + marker.length <= end) {
-            if (text.regionMatches(i, marker, 0, marker.length)) return i
             i++
         }
         return -1

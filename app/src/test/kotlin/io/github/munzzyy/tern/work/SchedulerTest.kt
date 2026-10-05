@@ -3,6 +3,7 @@ package io.github.munzzyy.tern.work
 import io.github.munzzyy.tern.engine.Settings
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -31,6 +32,25 @@ class SchedulerTest {
         assertTrue(Scheduler.armsWaiting(held, waitingJob = false, waited = true))
         assertFalse(Scheduler.armsWaiting(held, waitingJob = false, waited = false))
         assertFalse(Scheduler.armsWaiting(held.copy(autoInstalls = false), waitingJob = false, waited = true))
+    }
+
+    @Test
+    fun aRetryWaitsForTheNetworkAndTheChargerTheCheckWaitsFor() {
+        for (unmetered in listOf(false, true)) for (charging in listOf(false, true)) {
+            val s = Settings(checkEveryMinutes = 360, checkOnlyOnUnmetered = unmetered, checkOnlyWhileCharging = charging)
+            assertEquals("unmetered $unmetered, charging $charging", Scheduler.Waits(unmetered, charging), Scheduler.retryWaits(s))
+        }
+    }
+
+    @Test
+    fun whatHoldsInstallsBackDoesNotHoldARetryBack() {
+        val installs = Settings(checkEveryMinutes = 360, onlyOnUnmetered = true, onlyWhileCharging = true, checkOnlyOnUnmetered = false, checkOnlyWhileCharging = false)
+        assertEquals(Scheduler.Waits(unmetered = false, charging = false), Scheduler.retryWaits(installs))
+    }
+
+    @Test
+    fun noRetryIsSetWhileTheBackgroundCheckIsOff() {
+        assertNull(Scheduler.retryWaits(Settings(checkEveryMinutes = 0, checkOnlyOnUnmetered = true)))
     }
 
     @Test

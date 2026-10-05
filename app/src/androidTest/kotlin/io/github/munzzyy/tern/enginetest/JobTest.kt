@@ -2,6 +2,7 @@ package io.github.munzzyy.tern.enginetest
 
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
+import android.net.NetworkCapabilities
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.tern.engine.AppStatus
 import io.github.munzzyy.tern.work.Scheduler
@@ -24,7 +25,10 @@ class JobTest {
     fun setUp() = uninstallFixture()
 
     @After
-    fun tearDown() = scheduler.cancel(Scheduler.JOB_ID)
+    fun tearDown() {
+        scheduler.cancel(Scheduler.JOB_ID)
+        scheduler.cancel(Scheduler.RETRY_JOB_ID)
+    }
 
     @Test
     fun theScheduledJobSurvivesAForcedRunAndChecks() = runBlocking {
@@ -61,6 +65,25 @@ class JobTest {
             h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 0))
             assertNull(scheduler.getPendingJob(Scheduler.JOB_ID))
             assertFalse(h.engine.background().scheduled)
+        }
+    }
+
+    @Test
+    fun aRetryWaitsForWhatTheCheckWaitsForAndGoesWhenChecksAreOff() = runBlocking {
+        Harness("job-retry").use { h ->
+            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 360, checkOnlyOnUnmetered = true, checkOnlyWhileCharging = true))
+            Scheduler.retry(targetContext, h.engine.settings.value, listOf("fixture"), attempt = 1, delayMs = 60_000)
+            val retry = checkNotNull(scheduler.getPendingJob(Scheduler.RETRY_JOB_ID)) { "no retry was set" }
+            val network = checkNotNull(retry.requiredNetwork) { "the retry asks for no network" }
+            assertTrue(network.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED))
+            assertFalse("VALIDATED stays out, as it does for every job", network.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED))
+            assertTrue(retry.isRequireCharging)
+            assertTrue(retry.isRequireBatteryNotLow)
+
+            h.engine.saveSettings(h.engine.settings.value.copy(checkEveryMinutes = 0))
+            assertNull("turning the checks off takes the retry with them", scheduler.getPendingJob(Scheduler.RETRY_JOB_ID))
+            Scheduler.retry(targetContext, h.engine.settings.value, listOf("fixture"), attempt = 1, delayMs = 60_000)
+            assertNull("no retry is set while the checks are off", scheduler.getPendingJob(Scheduler.RETRY_JOB_ID))
         }
     }
 }

@@ -32,6 +32,7 @@ object Scheduler {
         val scheduler = context.getSystemService(JobScheduler::class.java)
         if (settings.checkEveryMinutes <= 0) {
             scheduler.cancel(JOB_ID)
+            scheduler.cancel(RETRY_JOB_ID)
             return false
         }
         val wanted = JobInfo.Builder(JOB_ID, ComponentName(context, CheckJobService::class.java))
@@ -65,15 +66,18 @@ object Scheduler {
         if (context.getSystemService(JobScheduler::class.java).schedule(job) != JobScheduler.RESULT_SUCCESS) TernLog.e(TAG, "JobScheduler refused the waiting install")
     }
 
-    /** Checks [apps] again after [delayMs], for the [attempt]th time. */
-    fun retry(context: Context, apps: Collection<String>, attempt: Int, delayMs: Long) {
+    /** Checks [apps] again after [delayMs], for the [attempt]th time, once the network and the charger are what [settings] ask for. */
+    fun retry(context: Context, settings: Settings, apps: Collection<String>, attempt: Int, delayMs: Long) {
+        val waits = retryWaits(settings) ?: return
         val extras = PersistableBundle().apply {
             putInt(EXTRA_ATTEMPT, attempt)
             putStringArray(EXTRA_APPS, apps.toTypedArray())
         }
         val job = JobInfo.Builder(RETRY_JOB_ID, ComponentName(context, CheckJobService::class.java))
             .setPersisted(true)
-            .setRequiredNetwork(networkRequest(unmetered = false))
+            .setRequiredNetwork(networkRequest(waits.unmetered))
+            .setRequiresCharging(waits.charging)
+            .setRequiresBatteryNotLow(true)
             .setMinimumLatency(delayMs)
             .setExtras(extras)
             .build()
@@ -95,6 +99,13 @@ object Scheduler {
      */
     fun installsNow(settings: Settings, waitingJob: Boolean, unmetered: () -> Boolean, charging: () -> Boolean): Boolean =
         settings.autoInstalls && (waitingJob || (!settings.onlyOnUnmetered || unmetered()) && (!settings.onlyWhileCharging || charging()))
+
+    /** What a job that checks waits for besides a battery that is not low: a network that costs nothing by the byte, and the charger. */
+    data class Waits(val unmetered: Boolean, val charging: Boolean)
+
+    /** A retry is part of the background check, so it waits for what the check waits for, and there is none while the check is off. */
+    fun retryWaits(settings: Settings): Waits? =
+        if (settings.checkEveryMinutes > 0) Waits(settings.checkOnlyOnUnmetered, settings.checkOnlyWhileCharging) else null
 
     /** Whether a run that held installs back sets the waiting job. The waiting job never sets itself again. */
     fun armsWaiting(settings: Settings, waitingJob: Boolean, waited: Boolean): Boolean = !waitingJob && waited && settings.autoInstalls

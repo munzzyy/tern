@@ -942,7 +942,7 @@ class RealEngine(
         val run = installs.runScheduled(settings, installsNow, only, cause)
         if (only == null) scope.launch(Dispatchers.IO) { sweepDownloads() }
         if (Scheduler.armsWaiting(settings, waitingJob = false, waited = run.waited)) Scheduler.waitForInstalls(context, settings)
-        retryDelay(run.failed, attempt, nowMs())?.let { (again, delay) -> Scheduler.retry(context, again, attempt + 1, delay) }
+        retryDelay(run.failed, attempt, nowMs())?.let { (again, delay) -> Scheduler.retry(context, settings, again, attempt + 1, delay) }
     }
 
     /** The waiting job: installs what the last check held back, without checking the list again or setting itself anew. */

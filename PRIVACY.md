@@ -143,7 +143,9 @@ device-to-device transfer.
 
 Notifications name the apps they are about, and a lock screen can show them.
 Turn off "Name the apps in notifications" in Settings and they only say how
-many.
+many. A failure is notified once while it lasts: for each one it told you
+about, Tern keeps a fingerprint of the app's id and the reason, never the name
+or the words, and drops it once the failure passes.
 
 An export contains your app list and settings, and never tokens. On a device
 without a file picker, such as a television, the export is written to

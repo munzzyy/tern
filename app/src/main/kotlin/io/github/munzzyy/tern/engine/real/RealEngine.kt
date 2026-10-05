@@ -47,6 +47,7 @@ import io.github.munzzyy.tern.core.text.PatternException
 import io.github.munzzyy.tern.core.verify.Fingerprints
 import io.github.munzzyy.tern.data.AppState
 import io.github.munzzyy.tern.data.BackgroundRuns
+import io.github.munzzyy.tern.data.SaidFailures
 import io.github.munzzyy.tern.data.SettingsStore
 import io.github.munzzyy.tern.data.Store
 import io.github.munzzyy.tern.data.StoredApp
@@ -163,6 +164,7 @@ class RealEngine(
     internal val installers = Installers(this)
     internal val installer: Installer = installer ?: installers.routing
     internal val notifier = Notifier(this.context, texts) { _settings.value.notifyNames }
+    internal val saidFailures = SaidFailures(this.context, prefsPrefix + SaidFailures.DEFAULT_NAME)
     internal val staging = File(this.context.cacheDir, "staging")
 
     /** The default folder for downloads is the default store's; an engine with a store of its own keeps out of it. */

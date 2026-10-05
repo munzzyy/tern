@@ -10,6 +10,7 @@ import android.content.Intent
 import android.graphics.drawable.Icon
 import android.os.Bundle
 import io.github.munzzyy.tern.R
+import io.github.munzzyy.tern.core.verify.Fingerprints
 import io.github.munzzyy.tern.engine.SavedFile
 import io.github.munzzyy.tern.engine.real.Texts
 import io.github.munzzyy.tern.log.TernLog
@@ -271,6 +272,15 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
         /** The reasons of [apps], each once and in the order first met, with the names of the apps that met it. */
         fun grouped(apps: List<Trouble>): List<Pair<List<String>, String>> =
             apps.groupBy({ it.reason }, { it.name }).map { (reason, names) -> names to reason }
+
+        /** One value for an app that failed and why, kept in place of either. */
+        fun fingerprint(trouble: Trouble): String = Fingerprints.sha256("${trouble.id}\u0000${trouble.reason}".toByteArray())
+
+        /** Whether [now] holds a failure that is not among those a notification already [said]. */
+        fun worthSaying(said: Set<String>, now: List<Trouble>): Boolean = now.any { fingerprint(it) !in said }
+
+        /** What is left of [said] while the apps have the problems [current]: a failure that passed is said again if it comes back. */
+        fun stillSaid(said: Set<String>, current: List<Trouble>): Set<String> = said intersect current.mapTo(HashSet(), ::fingerprint)
 
         /**
          * The apps of a notification that named [named] which still wait for their update, by id

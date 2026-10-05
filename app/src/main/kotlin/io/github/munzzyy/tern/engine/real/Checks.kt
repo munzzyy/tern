@@ -112,8 +112,9 @@ internal class Checks(private val e: RealEngine) {
         when (outcome) {
             is SourceException -> {
                 val problem = problemOf(outcome)
+                val before = e.stored[id]?.state?.checkProblem
                 e.saveState(id) { it.copy(lastCheckedMs = now, checkProblem = problem) }
-                e.event(id, EventKind.CHECK_FAILED, problem.message)
+                if (logsFailure(before, problem)) e.event(id, EventKind.CHECK_FAILED, problem.message)
                 return true
             }
             is CheckResult.Listing -> storeListing(id, outcome.listing, now)
@@ -232,6 +233,9 @@ internal class Checks(private val e: RealEngine) {
     companion object {
         /** An app of a third-party store while those are off: kept as it is, and neither checked nor installed. */
         fun paused(message: String) = Evaluation(AppStatus.ERROR, problem = Problem(ProblemKind.STORES_OFF, message))
+
+        /** Whether a failed check goes in the log: not when the check before it failed the same way, which the row still shows. */
+        fun logsFailure(before: Problem?, now: Problem): Boolean = before == null || before.kind != now.kind || before.message != now.message
 
         private const val MAX_PARALLEL = 4
         private const val PER_HOST = 2

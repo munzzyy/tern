@@ -37,6 +37,7 @@ import io.github.munzzyy.tern.install.StepFailure
 import io.github.munzzyy.tern.install.VerifiedApps
 import io.github.munzzyy.tern.log.TernLog
 import io.github.munzzyy.tern.work.Installed
+import io.github.munzzyy.tern.work.Notifier
 import io.github.munzzyy.tern.work.TransferService
 import io.github.munzzyy.tern.work.Trouble
 import java.io.File
@@ -487,8 +488,29 @@ internal class Installs(private val e: RealEngine) {
     /** The apps that could not be checked or updated among [ids], each with the words its row shows for why. */
     private fun troubles(ids: List<String>): List<Trouble> = ids.distinct().mapNotNull { id ->
         val stored = e.stored[id] ?: return@mapNotNull null
-        val reason = e.evaluations[id]?.problem?.message ?: stored.state.installProblem?.message ?: stored.state.checkProblem?.message
-        Trouble(id, stored.config.shownName, reason ?: e.texts.installFailed(null))
+        Trouble(id, stored.config.shownName, reasonOf(id) ?: e.texts.installFailed(null))
+    }
+
+    private fun reasonOf(id: String): String? {
+        val state = e.stored[id]?.state
+        return e.evaluations[id]?.problem?.message ?: state?.installProblem?.message ?: state?.checkProblem?.message
+    }
+
+    private val saying = Any()
+
+    /**
+     * Says [now] unless a notification already said each of them: a failure that lasts is said
+     * once, and a new one says them all again. A failure that passed is forgotten.
+     */
+    private fun sayFailures(now: List<Trouble>) = synchronized(saying) {
+        val current = troubles(e.stored.keys.filter { reasonOf(it) != null })
+        val said = Notifier.stillSaid(e.saidFailures.get(), current)
+        if (Notifier.worthSaying(said, now)) {
+            e.notifier.failures(now)
+            e.saidFailures.set(said + now.map(Notifier::fingerprint))
+        } else {
+            e.saidFailures.set(said)
+        }
     }
 
     /** Nothing went wrong: the row goes back to what it was, and the file stays for the next try. */
@@ -638,7 +660,7 @@ internal class Installs(private val e: RealEngine) {
         if (settings.notifyUpdates) e.notifier.updates(named(fresh))
         if (settings.notifyTracked) e.notifier.tracked(named(tracked))
         if (settings.notifyInstalled) e.notifier.installed(installed)
-        if (settings.notifyFailures) e.notifier.failures(troubles(checked.filter { it.failed }.map { it.id } + failed))
+        if (settings.notifyFailures) sayFailures(troubles(checked.filter { it.failed }.map { it.id } + failed)) else e.saidFailures.set(emptySet())
         return ScheduledRun(waited, checked.filter { it.failed }.map { it.id })
     }
 

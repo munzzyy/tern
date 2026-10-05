@@ -182,6 +182,7 @@ class Harness(
             targetContext.deleteSharedPreferences("${prefs}settings")
             targetContext.deleteSharedPreferences("${prefs}tokens")
             targetContext.deleteSharedPreferences("${prefs}background")
+            targetContext.deleteSharedPreferences("${prefs}notified")
         }
     }
 
@@ -194,8 +195,8 @@ class Harness(
         runBlocking { engine.saveSettings(engine.settings.value.copy(checkEveryMinutes = 0)) }
     }
 
-    fun addFixture(mode: UpdateMode = UpdateMode.NOTIFY, packageName: String? = PKG, id: String = "fixture"): String {
-        val config = AppConfig(id = id, source = SourceSpec(SourceTypes.FORGEJO, FakeForge.PROJECT), name = "Fixture", packageName = packageName, updates = mode)
+    fun addFixture(mode: UpdateMode = UpdateMode.NOTIFY, packageName: String? = PKG, id: String = "fixture", project: String = FakeForge.PROJECT): String {
+        val config = AppConfig(id = id, source = SourceSpec(SourceTypes.FORGEJO, project), name = "Fixture", packageName = packageName, updates = mode)
         engine.store.putApp(config, AppState())
         runBlocking { engine.ready() }
         engine.stored[id] = StoredApp(config, AppState())
@@ -248,6 +249,7 @@ class Harness(
             targetContext.deleteSharedPreferences("${prefs}settings")
             targetContext.deleteSharedPreferences("${prefs}tokens")
             targetContext.deleteSharedPreferences("${prefs}background")
+            targetContext.deleteSharedPreferences("${prefs}notified")
         }
         downloads.deleteRecursively()
     }

@@ -33,6 +33,19 @@ class VersionDisplayTest {
         }
     }
 
+    /** Vault Keys runs 12.0 and is offered 12.1, with 12.0.1 and 12.0.2 in between. */
+    @Test
+    fun theNotesOfEveryReleaseSinceTheInstalledOneAreShown() {
+        launch("default").use {
+            compose.shownRow("Vault Keys").performClick()
+            compose.tagged(DETAIL_LIST_TAG).performScrollToNode(hasText("What's new since", substring = true))
+            compose.onNodeWithText("What's new since \u206812.0\u2069").assertIsDisplayed()
+            for (version in listOf("12.1", "12.0.2", "12.0.1")) compose.waitForText("Version $version fixes a crash")
+            assertEquals(0, compose.textCount("Version 12.0 fixes a crash", substring = true))
+            assertEquals(0, compose.textCount("What's new in", substring = true))
+        }
+    }
+
     @Test
     fun aHeldCertificateIsNotCreditedToTheUser() {
         launch("default").use {

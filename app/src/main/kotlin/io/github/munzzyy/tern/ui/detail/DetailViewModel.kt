@@ -47,6 +47,11 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
     private val _releases = MutableStateFlow<Loadable<List<Release>>>(Loadable.Loading)
     val releases: StateFlow<Loadable<List<Release>>> = _releases.asStateFlow()
 
+    private val _offerable = MutableStateFlow<List<Release>>(emptyList())
+
+    /** The releases the app's settings let through, in the same order; empty until loaded. */
+    val offerable: StateFlow<List<Release>> = _offerable.asStateFlow()
+
     private val _notes = MutableStateFlow<Map<String, Loadable<List<NoteBlock>>>>(emptyMap())
     val notes: StateFlow<Map<String, Loadable<List<NoteBlock>>>> = _notes.asStateFlow()
 
@@ -73,6 +78,13 @@ class DetailViewModel(private val engine: Engine, val appId: String) : ViewModel
             throw e
         } catch (_: Exception) {
             Loadable.Failed
+        }
+        _offerable.value = try {
+            engine.offerable(appId)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (_: Exception) {
+            emptyList()
         }
     }
 

@@ -89,10 +89,13 @@ private fun withoutV(version: String): String =
 fun isInstalledRelease(release: Release, installed: InstalledApp?): Boolean {
     if (installed == null) return false
     release.versionCode?.let { return it == installed.versionCode }
-    val a = knownVersion(release.version)?.removePrefix("v")?.removePrefix("V") ?: return false
-    val b = knownVersion(installed.versionName)?.removePrefix("v")?.removePrefix("V") ?: return false
+    val a = plainVersion(release.version) ?: return false
+    val b = plainVersion(installed.versionName) ?: return false
     return a == b
 }
+
+/** [version] without a leading "v", as two versions are compared by their text; null when there is none. */
+fun plainVersion(version: String?): String? = knownVersion(version)?.removePrefix("v")?.removePrefix("V")
 
 /** "https://github.com/example/app/" becomes "github.com/example/app". */
 fun shortUrl(url: String): String = url.substringAfter("://", url).trimEnd('/')

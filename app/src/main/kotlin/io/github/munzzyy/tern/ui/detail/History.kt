@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -27,6 +28,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
+import io.github.munzzyy.tern.core.engine.InstalledApp
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.NoteBlock
@@ -42,6 +44,7 @@ import io.github.munzzyy.tern.ui.text.formatDate
 import io.github.munzzyy.tern.ui.text.isInstalledRelease
 import io.github.munzzyy.tern.ui.text.isolate
 import io.github.munzzyy.tern.ui.text.knownVersion
+import io.github.munzzyy.tern.ui.text.plainVersion
 import io.github.munzzyy.tern.ui.theme.LocalLook
 import io.github.munzzyy.tern.ui.theme.figures
 
@@ -51,20 +54,68 @@ private const val FOLDED_COUNT = 5
 @Composable
 fun quietInset(): Dp = LocalLook.current.gap * 3 / 4
 
+/** The most releases whose notes the card of changes shows. */
+private const val SINCE_COUNT = 10
+
 fun LazyListScope.history(vm: DetailViewModel, row: AppRow) {
     row.latest?.let { latest ->
         item(key = "notes") {
-            val title = knownVersion(latest.version)?.let { stringResource(R.string.notes_title, isolate(it)) } ?: stringResource(R.string.notes_title_unknown)
-            DetailCard(title, padded = true) {
-                LaunchedEffect(latest.id) { vm.loadNotes(latest) }
-                val notes by vm.notes.collectAsStateWithLifecycle()
-                NotesState(notes[latest.id])
+            val offerable by vm.offerable.collectAsStateWithLifecycle()
+            val since = remember(offerable, latest.id, row.installed) { releasesSince(offerable, latest.id, row.installed) }
+            val installed = knownVersion(row.installed?.versionName)
+            if (since.size > 1 && installed != null) {
+                ChangesSince(vm, since, installed)
+            } else {
+                val title = knownVersion(latest.version)?.let { stringResource(R.string.notes_title, isolate(it)) } ?: stringResource(R.string.notes_title_unknown)
+                DetailCard(title, padded = true) {
+                    LaunchedEffect(latest.id) { vm.loadNotes(latest) }
+                    val notes by vm.notes.collectAsStateWithLifecycle()
+                    NotesState(notes[latest.id])
+                }
             }
         }
     }
     item(key = "versions") {
         DetailCard(stringResource(R.string.versions_title), padded = true) { Versions(vm, row) }
     }
+}
+
+/** The notes of every release since the installed one, newest first, each under its version. */
+@Composable
+private fun ChangesSince(vm: DetailViewModel, since: List<Release>, installed: String) {
+    val look = LocalLook.current
+    DetailCard(stringResource(R.string.notes_title_since, isolate(installed)), padded = true) {
+        LaunchedEffect(since) { since.forEach(vm::loadNotes) }
+        val notes by vm.notes.collectAsStateWithLifecycle()
+        since.forEachIndexed { index, release ->
+            if (index > 0) HorizontalDivider(Modifier.padding(vertical = look.gapSmall), color = MaterialTheme.colorScheme.outlineVariant)
+            Text(knownVersion(release.version) ?: stringResource(R.string.version_unknown_short), style = MaterialTheme.typography.titleSmall.figures())
+            NotesState(notes[release.id])
+        }
+    }
+}
+
+/**
+ * The releases from the offered one, [latestId], down to the one installed, newest first and
+ * without it, in the order [releases] gives them. Only those with notes are kept, one for each
+ * version, so a store's builds for other processors do not repeat, and a build of the installed
+ * version ends the list as the installed one does. Empty when the installed release is not among
+ * them, since then nothing says where the changes begin.
+ */
+fun releasesSince(releases: List<Release>, latestId: String, installed: InstalledApp?, limit: Int = SINCE_COUNT): List<Release> {
+    if (installed == null) return emptyList()
+    val start = releases.indexOfFirst { it.id == latestId }
+    if (start < 0) return emptyList()
+    val installedVersion = plainVersion(installed.versionName)
+    val since = ArrayList<Release>()
+    val versions = HashSet<String>()
+    for (release in releases.subList(start, releases.size)) {
+        val version = plainVersion(release.version)
+        if (isInstalledRelease(release, installed) || (version != null && version == installedVersion)) return since
+        if (since.size == limit || release.notes.isNullOrBlank()) continue
+        if (version == null || versions.add(version)) since += release
+    }
+    return emptyList()
 }
 
 @Composable

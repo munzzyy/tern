@@ -293,6 +293,8 @@
     <!-- %s is a version. -->
     <string name="notes_title">What\'s new in %s</string>
     <string name="notes_title_unknown">What\'s new</string>
+    <!-- %1$s is the installed version. The card holds the notes of every release since it. -->
+    <string name="notes_title_since">What\'s new since %1$s</string>
     <string name="notes_none">This release has no notes.</string>
     <string name="notes_failed">The notes could not be loaded.</string>
     <string name="notes_show">Show notes</string>

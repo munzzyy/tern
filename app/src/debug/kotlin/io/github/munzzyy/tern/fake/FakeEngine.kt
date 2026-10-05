@@ -460,9 +460,15 @@ class FakeEngine(private val context: Context) : Engine, Scenarios {
         if (appId == "harborterm") {
             return (30 downTo 1).map { major -> invent.release(appId, "$major.0.0", (30 - major) * 9 + 1, prerelease = major % 7 == 0) }
         }
+        if (appId == "vaultkeys") {
+            val between = listOf("12.0.2" to 20, "12.0.1" to 30, "12.0" to 50).map { (version, days) -> invent.release(appId, version, days).copy(notes = "Version $version") }
+            return listOf(latest.copy(notes = "Version ${latest.version}")) + between
+        }
         val older = (1..2).map { n -> invent.release(appId, "0.$n", 40 * n) }
         return listOf(latest) + older
     }
+
+    override suspend fun offerable(appId: String): List<Release> = releases(appId).filter { !it.countsAsPrerelease }
 
     override suspend fun notes(release: Release): List<NoteBlock> {
         delay(stepMs)

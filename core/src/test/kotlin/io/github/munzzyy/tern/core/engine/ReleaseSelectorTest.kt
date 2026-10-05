@@ -356,4 +356,42 @@ class ReleaseSelectorTest {
         assertEquals("13070105", select(listing.releases) { it.id in fitting }.candidate!!.id)
         assertEquals("3.7.1", select(listing.releases) { it.id in fitting }.candidate!!.version)
     }
+
+    private fun ids(releases: List<Release>) = releases.map { it.id }
+
+    @Test
+    fun theReleasesAreListedInTheOrderTheSelectorTriesThem() {
+        val releases = listOf(release("v1.9.5", daysAgo = 1), release("v2.0.1", daysAgo = 20), release("v2.0.0", daysAgo = 40))
+        for (order in ReleaseOrder.entries) {
+            val policy = ReleasePolicy(order = order)
+            assertEquals(order.name, tried(releases, policy), ids(ReleaseSelector.ordered(releases, policy, now)))
+        }
+        assertEquals(listOf("v2.0.1", "v2.0.0", "v1.9.5"), ids(ReleaseSelector.ordered(releases, ReleasePolicy(), now)))
+        assertEquals(listOf("v1.9.5", "v2.0.1", "v2.0.0"), ids(ReleaseSelector.ordered(releases, ReleasePolicy(order = ReleaseOrder.DATE), now)))
+        val named = listOf(release("x-2"), release("Y-10"), release("y-9"))
+        assertEquals(listOf("Y-10", "y-9", "x-2"), ids(ReleaseSelector.ordered(named, ReleasePolicy(order = ReleaseOrder.NAME), now)))
+        val marked = releases.map { if (it.id == "v1.9.5") it.copy(latest = true) else it }
+        assertEquals(listOf("v1.9.5", "v2.0.1", "v2.0.0"), ids(ReleaseSelector.ordered(marked, ReleasePolicy(), now)))
+    }
+
+    @Test
+    fun theListedReleasesCarryTheVersionThePolicyReads() {
+        val releases = listOf(release("build-77-v1.2.0"), release("build-80-v1.10.0"))
+        val listed = ReleaseSelector.ordered(releases, ReleasePolicy(versionExtract = "v(\\d+\\.\\d+\\.\\d+)"), now)
+        assertEquals(listOf("build-80-v1.10.0", "build-77-v1.2.0"), ids(listed))
+        assertEquals(listOf("1.10.0", "1.2.0"), listed.map { it.version })
+    }
+
+    @Test
+    fun onlyThePassingReleasesAreListedWhenAsked() {
+        val releases = listOf(release("android-v1.3"), release("android-v1.2-beta"), release("desktop-v1.2.5"), release("android-v1.1"), release("android-v1.0"))
+        val policy = ReleasePolicy(tagFilter = "^android-")
+        assertEquals(listOf("android-v1.3", "android-v1.1", "android-v1.0"), ids(ReleaseSelector.ordered(releases, policy, now, passingOnly = true)))
+        assertEquals(
+            listOf("android-v1.3", "android-v1.2-beta", "android-v1.1", "android-v1.0"),
+            ids(ReleaseSelector.ordered(releases, policy.copy(includePrereleases = true), now, passingOnly = true)),
+        )
+        assertEquals(5, ReleaseSelector.ordered(releases, policy, now).size)
+        assertThrows(PatternException::class.java) { ReleaseSelector.ordered(releases, ReleasePolicy(tagFilter = "(unclosed"), now) }
+    }
 }

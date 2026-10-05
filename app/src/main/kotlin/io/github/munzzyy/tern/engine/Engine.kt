@@ -149,8 +149,11 @@ interface Engine {
     /** Marks the offered release as seen (track-only) or skipped (installable). */
     suspend fun dismissRelease(appId: String)
 
-    /** Releases from the last successful check, newest first. */
+    /** Releases from the last successful check, in the order the app's settings rank them and with versions read their way. */
     suspend fun releases(appId: String): List<Release>
+
+    /** Of [releases], the ones the app's settings let through: its filters, pre-releases, a skipped release and the wait. */
+    suspend fun offerable(appId: String): List<Release>
 
     /** The release's notes, parsed for drawing. Empty when it has none. */
     suspend fun notes(release: Release): List<NoteBlock>

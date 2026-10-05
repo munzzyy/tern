@@ -14,6 +14,7 @@ import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import io.github.munzzyy.tern.BuildConfig
+import io.github.munzzyy.tern.core.engine.ReleaseSelector
 import io.github.munzzyy.tern.core.icon.IconAddresses
 import io.github.munzzyy.tern.core.interop.AppConfigJson
 import io.github.munzzyy.tern.core.interop.AppConfigJsonException
@@ -39,6 +40,7 @@ import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.TokenProvider
 import io.github.munzzyy.tern.core.suggest.Catalog
 import io.github.munzzyy.tern.core.suggest.SuggestedApp
+import io.github.munzzyy.tern.core.text.PatternException
 import io.github.munzzyy.tern.core.verify.Fingerprints
 import io.github.munzzyy.tern.data.AppState
 import io.github.munzzyy.tern.data.SettingsStore
@@ -624,9 +626,21 @@ class RealEngine(
         }
     }
 
-    override suspend fun releases(appId: String): List<Release> {
+    override suspend fun releases(appId: String): List<Release> = ranked(appId, passingOnly = false)
+
+    override suspend fun offerable(appId: String): List<Release> = ranked(appId, passingOnly = true)
+
+    /** As the selector ranks them; when a pattern of the app fails, as they were stored and none offerable. */
+    private suspend fun ranked(appId: String, passingOnly: Boolean): List<Release> {
         ready()
-        return stored[appId]?.state?.releases.orEmpty()
+        val app = stored[appId] ?: return emptyList()
+        return withContext(Dispatchers.Default) {
+            try {
+                ReleaseSelector.ordered(app.state.releases, evaluator.effective(app.config).releases, nowMs(), passingOnly)
+            } catch (_: PatternException) {
+                if (passingOnly) emptyList() else app.state.releases
+            }
+        }
     }
 
     override suspend fun notes(release: Release): List<NoteBlock> = withContext(Dispatchers.Default) { NotesMapper.map(release) }

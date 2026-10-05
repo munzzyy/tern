@@ -69,15 +69,7 @@ object ReleaseSelector {
         fitsDevice: (Release) -> Boolean = { true },
         usable: (Release) -> Boolean,
     ): Selection {
-        val filters = Filters(
-            tag = SafePattern.compileOrNull(policy.tagFilter),
-            title = SafePattern.compileOrNull(policy.titleFilter),
-            notes = SafePattern.compileOrNull(policy.notesFilter),
-            extract = SafePattern.compileOrNull(policy.versionExtract),
-            template = MatchTemplate.parse(policy.matchGroup),
-            version = SafePattern.compileOrNull(policy.versionFilter),
-        )
-
+        val filters = filtersOf(policy)
         val rejected = ArrayList<Pair<Release, Rejection>>()
         val passed = ArrayList<Release>()
         SafePattern.watched("release filters") { filter(releases, policy, nowMs, filters, passed, rejected) }
@@ -120,6 +112,32 @@ object ReleaseSelector {
         }
         return Selection(null, rejected)
     }
+
+    /**
+     * [releases] with their versions read the way [policy] says, in the order [select] tries them.
+     * With [passingOnly], the ones its filters, its pre-release setting, a skip or the wait turn
+     * away are left out.
+     */
+    fun ordered(releases: List<Release>, policy: ReleasePolicy, nowMs: Long, passingOnly: Boolean = false): List<Release> {
+        val filters = filtersOf(policy)
+        val read = SafePattern.watched("release filters") {
+            if (passingOnly) {
+                ArrayList<Release>().also { filter(releases, policy, nowMs, filters, it, ArrayList()) }
+            } else {
+                releases.map { withVersion(it, policy.versionFrom, filters) }
+            }
+        }
+        return order(read, policy.order)
+    }
+
+    private fun filtersOf(policy: ReleasePolicy) = Filters(
+        tag = SafePattern.compileOrNull(policy.tagFilter),
+        title = SafePattern.compileOrNull(policy.titleFilter),
+        notes = SafePattern.compileOrNull(policy.notesFilter),
+        extract = SafePattern.compileOrNull(policy.versionExtract),
+        template = MatchTemplate.parse(policy.matchGroup),
+        version = SafePattern.compileOrNull(policy.versionFilter),
+    )
 
     private fun filter(
         releases: List<Release>,

@@ -5,6 +5,7 @@ import io.github.munzzyy.tern.core.json.Json
 import io.github.munzzyy.tern.core.net.HttpClient
 import io.github.munzzyy.tern.core.net.HttpRequest
 import io.github.munzzyy.tern.core.net.HttpResponse
+import io.github.munzzyy.tern.core.net.RateLimitedException
 import io.github.munzzyy.tern.core.verify.Fingerprints
 import io.github.munzzyy.tern.data.AppState
 import io.github.munzzyy.tern.engine.ProblemKind
@@ -24,15 +25,19 @@ import kotlinx.coroutines.withContext
 
 data class Downloaded(val file: File, val sha256: String, val size: Long, val reused: Boolean)
 
-/** A download that failed on the way, as a network does now and then; it is worth another try. */
-class PassingFailure(val failure: StepFailure) : Exception(failure.message)
+/**
+ * A download that failed on the way, as a network does now and then; it is worth another try,
+ * after [waitMs] when the server asked for longer than the usual pause.
+ */
+class PassingFailure(val failure: StepFailure, val waitMs: Long = 0) : Exception(failure.message)
 
 /**
  * Downloads into one folder per app. A partial file is resumed with Range plus If-Range, a finished
  * file is kept until [discard] so a failed install can be retried without downloading again.
  * A download that ends for want of space, or because the file is too large, leaves nothing behind.
  * One that fails on the way is tried again, three more times five seconds apart, each time from
- * where the server lets it go on. [sweep] clears out what nothing will ask for again.
+ * where the server lets it go on; a server that asks for a wait of up to a minute gets it.
+ * [sweep] clears out what nothing will ask for again.
  */
 class Downloader(
     private val http: HttpClient,
@@ -74,7 +79,7 @@ class Downloader(
         val files = FilesFor(folder(appId), key)
         reuse(files)?.let { return@withContext it }
         try {
-            retrying(RETRIES, { pause(RETRY_WAIT_MS) }) {
+            retrying(RETRIES, pause) {
                 try {
                     attempt(files, key, url, authorization, headers, onProgress, allowResume = true)
                 } catch (_: RestartFromZero) {
@@ -188,6 +193,9 @@ class Downloader(
         }
         val response = try {
             http.execute(HttpRequest(url, headers = headers, authorization = authorization))
+        } catch (e: RateLimitedException) {
+            val until = e.retryAtMs ?: throw PassingFailure(StepFailure(ProblemKind.NETWORK, texts.downloadFailed(e)))
+            throw limited(until, nowMs(), texts.checkRateLimited(until))
         } catch (e: IOException) {
             throw PassingFailure(StepFailure(ProblemKind.NETWORK, texts.downloadFailed(e)))
         }
@@ -373,20 +381,34 @@ class Downloader(
         fun passing(status: Int): Boolean = status == 408 || status == 429 || status in 500..599
 
         /**
-         * Runs [block], and again after [wait] each time it fails in passing, [tries] more times at
-         * the most. The last failure is the one given.
+         * Runs [block], and again each time it fails in passing, [tries] more times at the most. In
+         * between it [wait]s [RETRY_WAIT_MS], or as long as the failure asks when that is longer.
+         * The last failure is the one given.
          */
-        suspend fun <T> retrying(tries: Int, wait: suspend () -> Unit, block: suspend () -> T): T {
+        suspend fun <T> retrying(tries: Int, wait: suspend (Long) -> Unit, block: suspend () -> T): T {
             var left = tries
             while (true) {
                 try {
                     return block()
                 } catch (e: PassingFailure) {
                     if (left-- <= 0) throw e.failure
-                    wait()
+                    wait(maxOf(RETRY_WAIT_MS, e.waitMs))
                 }
             }
         }
+
+        /**
+         * A server that asked for a wait until [retryAtMs]: a wait of up to [MAX_RATE_WAIT_MS] is
+         * sat out and the download tried again, and a longer one ends it, saying [message].
+         */
+        fun limited(retryAtMs: Long, nowMs: Long, message: String): Exception {
+            val failure = StepFailure(ProblemKind.RATE_LIMITED, message, retryAtMs)
+            val waitMs = (retryAtMs - nowMs).coerceAtLeast(0)
+            return if (waitMs <= MAX_RATE_WAIT_MS) PassingFailure(failure, waitMs) else failure
+        }
+
+        /** The longest a download waits for a server, holding the one download at a time some settings allow. */
+        const val MAX_RATE_WAIT_MS = 60_000L
 
         const val MAX_BYTES = 4L * 1024 * 1024 * 1024
         const val SPACE_FACTOR = 2.2

@@ -162,7 +162,7 @@ listed as skipped with the reason.
 | Installers: system, Shizuku, Dhizuku, root, another app picked from a list with icons and its way in | All five. Every file is checked before any of them sees it, and the signer of what was installed is compared with the checked file afterwards, whichever installed it. Dhizuku is reached through its own owner and eight named classes, never all of Android's hidden interfaces. Shizuku and Dhizuku were tried on an Android 13 emulator; root has not been tried on a device |
 | New apps shown to Verified Apps first, and its About link | Yes, on at first as in Obtainium, for an install started with Tern on the screen. The installer still gets the checked file |
 | OBB files of an XAPK put in `Android/obb`, through Android's folder picker | Through Shizuku or root, under the package the checks verified and with plain file names only. With another installer they stay in the release's file, and the log says where |
-| Parallel downloads, retries of a failed download, Obtainium installed last | All three: one download at a time if wanted, three more tries resuming where the server allows, and Tern's own update last |
+| Parallel downloads, retries of a failed download, Obtainium installed last | All three: one download at a time if wanted, three more tries resuming where the server allows and waiting up to a minute when it asks, and Tern's own update last |
 | An APK from another host than its source is pointed out | Yes, on the file, without holding it back |
 | GitHub through a hubproxy instance | Yes, and never with a token |
 | Downgrades with Let Me Downgrade | Yes |

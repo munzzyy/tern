@@ -116,6 +116,7 @@ class NotifierTest {
             waitUntil(10_000, "the notification about one update") { labels(Notifier.ID_UPDATES).isNotEmpty() }
             if (Build.VERSION.SDK_INT >= 31) {
                 assertEquals(listOf(texts.actionUpdate(), texts.actionSkipVersion()), labels(Notifier.ID_UPDATES))
+                assertTrue("an update from a locked phone", shown(Notifier.ID_UPDATES)!!.actions[0].isAuthenticationRequired)
                 assertTrue("a skip from a locked phone", shown(Notifier.ID_UPDATES)!!.actions[1].isAuthenticationRequired)
             } else {
                 assertEquals("Android ${Build.VERSION.RELEASE} cannot hold a skip until the phone is unlocked", listOf(texts.actionUpdate()), labels(Notifier.ID_UPDATES))
@@ -125,6 +126,9 @@ class NotifierTest {
             Thread.sleep(1_000)
             notifier.updates(listOf(Offered("a", APP, "v2.0"), Offered("b", "Other", "v5")))
             waitUntil(10_000, "the notification about two updates") { labels(Notifier.ID_UPDATES) == listOf(texts.actionUpdateAll()) }
+            if (Build.VERSION.SDK_INT >= 31) {
+                assertTrue("updates from a locked phone", shown(Notifier.ID_UPDATES)!!.actions[0].isAuthenticationRequired)
+            }
 
             notifier.installed(listOf(Installed("t", APP, "2.0", packageName = own)))
             waitUntil(10_000, "the notification about one install") { labels(Notifier.ID_INSTALLED).isNotEmpty() }

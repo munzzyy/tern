@@ -55,8 +55,8 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
 
     /**
      * A notification about one app opens its page and offers to update it, and from Android 12 on
-     * to skip the release on offer once the phone is unlocked; one about several offers to update
-     * them all. Either way nothing starts until it is tapped.
+     * to skip the release on offer; one about several offers to update them all. Either way nothing
+     * starts until it is tapped, and from Android 12 on not until the phone is unlocked.
      */
     fun updates(apps: List<Offered>, quiet: Boolean = false) {
         if (apps.isEmpty()) return
@@ -69,8 +69,10 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
                 if (quiet) b.setOnlyAlertOnce(true)
                 if (single != null) b.setContentIntent(openApp(single.id))
                 val label = if (single != null) texts.actionUpdate() else texts.actionUpdateAll()
-                b.addAction(Notification.Action.Builder(Icon.createWithResource(c, R.drawable.ic_stat_update), label, NotificationActions.update(c, single?.id)).build())
                 // A button can wait for an unlock only from Android 12; without that, anyone holding the locked phone could skip an update.
+                val update = Notification.Action.Builder(Icon.createWithResource(c, R.drawable.ic_stat_update), label, NotificationActions.update(c, single?.id))
+                if (Build.VERSION.SDK_INT >= 31) update.setAuthenticationRequired(true)
+                b.addAction(update.build())
                 if (single != null && Build.VERSION.SDK_INT >= 31) {
                     val skip = NotificationActions.skip(c, single.id, single.releaseId)
                     b.addAction(Notification.Action.Builder(Icon.createWithResource(c, R.drawable.ic_stat_update), texts.actionSkipVersion(), skip).setAuthenticationRequired(true).build())

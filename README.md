@@ -155,9 +155,9 @@ A widget on the home screen says how many updates there are, with a Check
 button and an Update all button. A Quick Settings tile checks and shows the
 count, and the launcher icon's shortcuts check, update everything or add an app.
 Notifications about updates carry an Update button of their own, and one
-about a single app, from Android 12 on, a Skip this version button that works
-only once the phone is unlocked. A notification that an app was installed has
-an Open button when the app has a screen to open.
+about a single app, from Android 12 on, a Skip this version button. From
+Android 12 on both work only once the phone is unlocked. A notification that
+an app was installed has an Open button when the app has a screen to open.
 
 ## Through Tor
 

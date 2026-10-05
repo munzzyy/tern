@@ -3,10 +3,12 @@ package io.github.munzzyy.tern
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasAnyAncestor
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isSelected
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -41,6 +43,13 @@ class StartersTest {
     private val plain = FakeSuggestions.all.first { !it.pinned }
 
     private fun names() = fake.apps.value.map { it.config.name }
+
+    private fun fieldScrolledAway(): Boolean = try {
+        compose.tagged(ADD_FIELD_TAG).assertIsNotDisplayed()
+        true
+    } catch (_: AssertionError) {
+        false
+    }
 
     private fun openAdd() {
         compose.onNodeWithText("Add").performClick()
@@ -107,6 +116,18 @@ class StartersTest {
             assertEquals("", compose.tagged(ADD_FIELD_TAG).fetchSemanticsNode().config[SemanticsProperties.EditableText].text)
             assertEquals(0, compose.onAllNodes(hasTestTag(PREVIEW_TAG)).fetchSemanticsNodes().size)
             compose.onNodeWithText("Add an app").assertIsDisplayed()
+        }
+    }
+
+    @Test
+    fun wellKnownAppsOnAnEmptyListScrollTheirHeadingToTheTop() {
+        launch("empty").use {
+            compose.onNodeWithText("Well known apps").performClick()
+            compose.waitFor(hasTestTag(STARTERS_TAG))
+            val heading = hasText("Well known apps") and hasAnyAncestor(hasTestTag(STARTERS_TAG))
+            compose.waitUntil(3_000) { fieldScrolledAway() }
+            compose.onNode(heading).assertIsDisplayed()
+            compose.onNode(isTab and isSelected() and hasText("Add")).assertExists()
         }
     }
 

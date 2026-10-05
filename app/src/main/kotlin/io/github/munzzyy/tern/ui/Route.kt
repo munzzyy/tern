@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 sealed interface Route {
     data object Apps : Route
 
-    /** [nonce] makes a second share of the same text start a fresh detect. */
-    data class Add(val input: String? = null, val nonce: Long = 0) : Route
+    /** [nonce] makes a second share of the same text start a fresh detect; [starters] opens it on the well known apps. */
+    data class Add(val input: String? = null, val nonce: Long = 0, val starters: Boolean = false) : Route
 
     data class Detail(val appId: String) : Route
 
@@ -32,10 +32,11 @@ fun Route.tab(): Tab = when (this) {
 }
 
 private const val SEP = '\u0001'
+private const val STARTERS = "add-starters"
 
 fun encodeRoute(route: Route): String = when (route) {
     Route.Apps -> "apps"
-    is Route.Add -> "add$SEP${route.nonce}$SEP${route.input.orEmpty()}"
+    is Route.Add -> "${if (route.starters) STARTERS else "add"}$SEP${route.nonce}$SEP${route.input.orEmpty()}"
     is Route.Detail -> "detail$SEP${route.appId}"
     Route.Activity -> "activity"
     Route.Settings -> "settings"
@@ -48,7 +49,7 @@ fun decodeRoute(s: String): Route? {
     val parts = s.split(SEP, limit = 3)
     return when (parts[0]) {
         "apps" -> Route.Apps
-        "add" -> Route.Add(parts.getOrNull(2)?.takeIf { it.isNotEmpty() }, parts.getOrNull(1)?.toLongOrNull() ?: 0)
+        "add", STARTERS -> Route.Add(parts.getOrNull(2)?.takeIf { it.isNotEmpty() }, parts.getOrNull(1)?.toLongOrNull() ?: 0, starters = parts[0] == STARTERS)
         "detail" -> parts.getOrNull(1)?.let { Route.Detail(it) }
         "activity" -> Route.Activity
         "settings" -> Route.Settings
@@ -96,6 +97,11 @@ class BackStack(initial: List<Route>) {
     fun showDetail(appId: String) {
         val base = if (top is Route.Detail) routes.dropLast(1) else routes
         routes = base + Route.Detail(appId)
+    }
+
+    /** The Add tab, opened on its well known apps. */
+    fun showStarters() {
+        routes = listOf(Route.Apps, Route.Add(starters = true))
     }
 
     fun openAdd(input: String?, nonce: Long) {

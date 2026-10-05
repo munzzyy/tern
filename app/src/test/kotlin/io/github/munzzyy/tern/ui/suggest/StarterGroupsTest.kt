@@ -41,4 +41,12 @@ class StarterGroupsTest {
         assertEquals(MAX_STARTERS, starterGroups(many, television = true).sumOf { it.apps.size })
         assertEquals(3, starterGroups(many, television = true, limit = 3).sumOf { it.apps.size })
     }
+
+    @Test
+    fun focusLandsOnTheFirstAppShown() {
+        assertEquals("player", firstStarter(mixed, television = true)?.name)
+        assertEquals("notes", firstStarter(mixed, television = false)?.name)
+        assertEquals("notes", firstStarter(listOf(app("notes", false)), television = true)?.name)
+        assertEquals(null, firstStarter(emptyList(), television = true))
+    }
 }

@@ -155,6 +155,10 @@ fun TernApp(
                         stack.select(Tab.ADD)
                     },
                     onSkip = onFirstRunDone,
+                    onWellKnown = {
+                        onFirstRunDone()
+                        stack.showStarters()
+                    },
                 )
             } else {
                 Shell(stack)
@@ -286,6 +290,7 @@ private fun Pane(stack: BackStack, holder: SaveableStateHolder, current: Route, 
                             selectedId = (current as? Route.Detail)?.appId,
                             onOpen = { if ((current as? Route.Detail)?.appId == it) reopened++ else stack.showDetail(it) },
                             onAdd = { stack.select(Tab.ADD) },
+                            onWellKnown = { stack.showStarters() },
                             onHandoff = { openHandoff(stack) },
                             listState = listState,
                         )
@@ -360,12 +365,14 @@ private fun Screen(stack: BackStack, route: Route, listState: LazyListState, two
             selectedId = null,
             onOpen = { stack.showDetail(it) },
             onAdd = { stack.select(Tab.ADD) },
+            onWellKnown = { stack.showStarters() },
             onHandoff = { openHandoff(stack) },
             listState = listState,
         )
         is Route.Add -> AddScreen(
             prefill = route.input,
             nonce = route.nonce,
+            starters = route.starters,
             onAdded = { id -> stack.showAdded(id) },
             onShow = { id -> stack.showAdded(id) },
             onHandoff = { stack.push(Route.Handoff) },

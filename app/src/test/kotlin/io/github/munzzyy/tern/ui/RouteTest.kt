@@ -10,10 +10,29 @@ class RouteTest {
     @Test
     fun everyRouteSurvivesSaving() {
         val routes = listOf(
-            Route.Apps, Route.Add(), Route.Add("https://example.org/a?b=c", 42), Route.Detail("some:id"),
+            Route.Apps, Route.Add(), Route.Add("https://example.org/a?b=c", 42), Route.Add(starters = true), Route.Detail("some:id"),
             Route.Activity, Route.Settings, Route.Import, Route.Look, Route.Handoff,
         )
         for (r in routes) assertEquals(r, decodeRoute(encodeRoute(r)))
+    }
+
+    @Test
+    fun anAddSavedBeforeTheWellKnownAppsHadARouteStillOpensOnTheField() {
+        val saved = "add\u00015\u0001https://example.org/a"
+        assertEquals(Route.Add("https://example.org/a", 5), decodeRoute(saved))
+        assertEquals(saved, encodeRoute(Route.Add("https://example.org/a", 5)))
+        assertEquals(Route.Add(), decodeRoute("add\u00010\u0001"))
+        assertFalse((decodeRoute("add") as Route.Add).starters)
+    }
+
+    @Test
+    fun theWellKnownAppsOpenTheAddTabOverTheList() {
+        val stack = BackStack(listOf(Route.Apps, Route.Settings))
+        stack.showStarters()
+        assertEquals(listOf(Route.Apps, Route.Add(starters = true)), stack.routes)
+        assertEquals(Tab.ADD, stack.top.tab())
+        assertFalse(stack.addIsOnTop)
+        assertEquals(stack.routes, BackStack.decode(stack.encode()).routes)
     }
 
     @Test

@@ -48,6 +48,9 @@ fun starterGroups(all: List<Suggestion>, television: Boolean, limit: Int = MAX_S
     return groups.filter { it.apps.isNotEmpty() }
 }
 
+/** The row focus lands on when the well known apps are asked for: the first one shown. */
+fun firstStarter(all: List<Suggestion>, television: Boolean): Suggestion? = starterGroups(all, television).firstOrNull()?.apps?.firstOrNull()
+
 /** Well known apps to start from. [rowFocus] gives each row what it needs for focus to come back to it. */
 @Composable
 fun Starters(

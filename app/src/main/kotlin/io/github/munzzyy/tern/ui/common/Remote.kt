@@ -135,11 +135,14 @@ fun <T> landingOrder(last: String?, slots: Map<String, T>, first: T, backup: T, 
     }
 }
 
-/** [active] false holds focus where it is, as the list does while a detail beside it has focus; a new [again] lands once more. */
+/**
+ * [active] false holds focus where it is, as the list does while a detail beside it has focus; a new [again] lands once more.
+ * [start] is the [returnFocus] key to land on the first time, in place of [firstFocus].
+ */
 @Composable
-fun rememberScreenFocus(active: Boolean = true, again: Int = 0): ScreenFocus {
+fun rememberScreenFocus(active: Boolean = true, again: Int = 0, start: String? = null): ScreenFocus {
     val screen = rememberSaveable(saver = Saver<ScreenFocus, String>(save = { it.last.orEmpty() }, restore = { ScreenFocus(it.ifEmpty { null }) })) {
-        ScreenFocus(null)
+        ScreenFocus(start)
     }
     val keys = drivenByKeys()
     val input = LocalInputModeManager.current

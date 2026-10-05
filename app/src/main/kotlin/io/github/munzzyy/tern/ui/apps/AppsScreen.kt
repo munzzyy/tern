@@ -125,6 +125,7 @@ fun AppsScreen(
     onAdd: () -> Unit,
     listState: LazyListState = rememberLazyListState(),
     onHandoff: () -> Unit = onAdd,
+    onWellKnown: () -> Unit = onAdd,
 ) {
     val engine = LocalEngine.current
     val removals = rememberRemovals()
@@ -231,7 +232,7 @@ fun AppsScreen(
             ) {
                 when {
                     !state.loaded -> Unit
-                    state.total == 0 -> EmptyApps(onAdd, onHandoff, Modifier.firstFocus(screen))
+                    state.total == 0 -> EmptyApps(onAdd, onWellKnown, onHandoff, Modifier.firstFocus(screen))
                     else -> AppList(
                         state = state,
                         search = if (fieldShown) {
@@ -663,7 +664,7 @@ private fun FilterChips(filters: List<AppFilter>, current: ListFilter, onFilter:
 }
 
 @Composable
-private fun EmptyApps(onAdd: () -> Unit, onHandoff: () -> Unit, focus: Modifier) {
+private fun EmptyApps(onAdd: () -> Unit, onWellKnown: () -> Unit, onHandoff: () -> Unit, focus: Modifier) {
     Box(Modifier.fillMaxSize().verticalScroll(rememberScrollState()), contentAlignment = Alignment.Center) {
         EmptyState(
             title = stringResource(R.string.apps_empty_title),
@@ -672,7 +673,7 @@ private fun EmptyApps(onAdd: () -> Unit, onHandoff: () -> Unit, focus: Modifier)
             onAction = onAdd,
             actionModifier = focus,
             secondAction = stringResource(R.string.empty_well_known),
-            onSecondAction = onAdd,
+            onSecondAction = onWellKnown,
             thirdAction = if (LocalNoTouch.current) stringResource(R.string.empty_handoff) else null,
             onThirdAction = onHandoff,
         )

@@ -11,10 +11,14 @@ import androidx.compose.ui.test.isFocused
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.tern.fake.FakeLinks
+import io.github.munzzyy.tern.fake.FakeSuggestions
 import io.github.munzzyy.tern.ui.add.ADD_CONFIRM_TAG
 import io.github.munzzyy.tern.ui.add.ADD_FIELD_TAG
 import io.github.munzzyy.tern.ui.add.ADD_FIND_TAG
 import io.github.munzzyy.tern.ui.add.ADD_INSTALL_TAG
+import io.github.munzzyy.tern.ui.firstrun.FIRST_RUN_ADD_TAG
+import io.github.munzzyy.tern.ui.suggest.STARTER_ROW_TAG
+import io.github.munzzyy.tern.ui.suggest.firstStarter
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Before
@@ -65,6 +69,37 @@ class RemoteAddTest {
             compose.expect("the detail that opens takes focus") {
                 compose.onAllNodes(isFocused()).fetchSemanticsNodes().isNotEmpty() && !compose.hasFocusOn(isTab)
             }
+        }
+    }
+
+    private val firstStarterRow = hasTestTag(STARTER_ROW_TAG) and hasText(firstStarter(FakeSuggestions.all, withoutTouch)!!.name)
+
+    @Test
+    fun wellKnownAppsOnAnEmptyListLandOnTheFirstOfThem() {
+        launch("empty").use {
+            compose.assertFocusOn(hasText("Add an app"), "an empty list opens on its first action")
+            compose.moveTo(hasText("Well known apps"), KEYCODE_DPAD_DOWN)
+            compose.press(KEYCODE_DPAD_CENTER)
+            compose.assertFocusOn(firstStarterRow, "the Add screen opens on the first well known app, not on its field")
+        }
+    }
+
+    @Test
+    fun wellKnownAppsOnTheFirstRunLandOnTheFirstOfThem() {
+        launch("firstrun").use {
+            compose.assertFocusOn(hasTestTag(FIRST_RUN_ADD_TAG), "the first run opens on adding the first app")
+            compose.moveTo(hasText("Well known apps"), KEYCODE_DPAD_DOWN)
+            compose.press(KEYCODE_DPAD_CENTER)
+            compose.assertFocusOn(firstStarterRow, "the Add screen opens on the first well known app, not on its field")
+        }
+    }
+
+    @Test
+    fun theAddTabItselfStillOpensOnItsField() {
+        launch("empty").use {
+            compose.assertFocusOn(hasText("Add an app"), "an empty list opens on its first action")
+            compose.press(KEYCODE_DPAD_CENTER)
+            compose.assertFocusOn(field, "Add an app opens on the field")
         }
     }
 

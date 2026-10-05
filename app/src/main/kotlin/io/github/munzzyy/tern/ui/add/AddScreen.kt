@@ -27,11 +27,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onPlaced
+import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -68,8 +71,10 @@ import io.github.munzzyy.tern.ui.common.textFieldKeys
 import io.github.munzzyy.tern.ui.detail.SOURCES_WITH_OPTIONS
 import io.github.munzzyy.tern.ui.handoff.HandoffGlyphs
 import io.github.munzzyy.tern.ui.suggest.Starters
+import io.github.munzzyy.tern.ui.suggest.firstStarter
 import io.github.munzzyy.tern.ui.text.problemAdvice
 import io.github.munzzyy.tern.ui.theme.LocalLook
+import kotlin.math.roundToInt
 
 const val ADD_FIELD_TAG = "add_field"
 const val ADD_FIND_TAG = "add_find"
@@ -82,7 +87,10 @@ private const val HANDOFF_KEY = "handoff"
 /** A device that cannot be typed on with ease, or cannot pick a file, is offered the phone instead. */
 fun offersHandoff(noTouch: Boolean, filePicker: Boolean): Boolean = noTouch || !filePicker
 
-/** [onBack] is given when the screen was opened on top of another one, to look at a link that screen offered. */
+/**
+ * [onBack] is given when the screen was opened on top of another one, to look at a link that screen offered.
+ * [starters] opens it on the well known apps rather than the field.
+ */
 @Composable
 fun AddScreen(
     prefill: String?,
@@ -91,6 +99,7 @@ fun AddScreen(
     onShow: (String) -> Unit,
     onHandoff: () -> Unit = {},
     onBack: (() -> Unit)? = null,
+    starters: Boolean = false,
 ) {
     val engine = LocalEngine.current
     // A link that another screen offered is looked at by itself, and leaves the Add tab as the user left it.
@@ -106,11 +115,14 @@ fun AddScreen(
     val offlineReason = stringResource(R.string.offline_reason)
     var cleared by rememberSaveable { mutableIntStateOf(0) }
     var listAt by rememberSaveable { mutableIntStateOf(0) }
-    val screen = rememberScreenFocus(again = cleared)
-    val scroll = rememberScrollState()
     val suggestions = remember(engine) { engine.suggestions() }
-    val handoff = remember(engine, noTouch) { offersHandoff(noTouch, engine.hasFilePicker()) }
     val starting = state == AddState.Idle && vm.input.isBlank()
+    val firstRow = remember(suggestions, look.television) { firstStarter(suggestions, look.television) }
+    val screen = rememberScreenFocus(again = cleared, start = firstRow?.url?.takeIf { starters && starting })
+    val scroll = rememberScrollState()
+    val handoff = remember(engine, noTouch) { offersHandoff(noTouch, engine.hasFilePicker()) }
+    var toStarters by rememberSaveable { mutableStateOf(starters && starting) }
+    var startersTop by remember { mutableStateOf<Int?>(null) }
 
     LaunchedEffect(prefill, nonce) { vm.prefill(prefill, nonce) }
     LaunchedEffect(added) {
@@ -120,6 +132,11 @@ fun AddScreen(
         }
     }
     LaunchedEffect(cleared) { if (cleared > 0) scroll.scrollTo(listAt) }
+    LaunchedEffect(startersTop) {
+        val top = startersTop ?: return@LaunchedEffect
+        if (toStarters) scroll.scrollTo(top)
+        toStarters = false
+    }
     val clear: () -> Unit = {
         vm.clear()
         cleared++
@@ -226,6 +243,7 @@ fun AddScreen(
                                 listAt = scroll.value
                                 vm.look(it.url)
                             },
+                            modifier = Modifier.onPlaced { startersTop = it.positionInParent().y.roundToInt() },
                             rowFocus = { Modifier.returnFocus(screen, it.url) },
                         )
                         SourcesCard()

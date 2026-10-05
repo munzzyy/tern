@@ -50,6 +50,13 @@ class Store(context: Context, name: String = DEFAULT_NAME) : ValidatorStore, Clo
         }
     }
 
+    /** The id of every stored app, those [apps] cannot read included. */
+    fun ids(): Set<String> = reader.rawQuery("SELECT id FROM apps", null).use { c ->
+        buildSet {
+            while (c.moveToNext()) add(c.getString(0))
+        }
+    }
+
     /**
      * The stored apps that cannot be read, which [apps] leaves out: each by the address it follows
      * where that much can be read, or by its id. They are kept as they are.

@@ -67,6 +67,8 @@ internal class Installs(private val e: RealEngine) {
     private val batch: MutableSet<String> = ConcurrentHashMap.newKeySet()
     private val confirmations = ConcurrentHashMap<String, Intent>()
 
+    fun underWay(appId: String): Boolean = appId in busy
+
     @Synchronized
     fun start(appId: String, releaseId: String?, assetUrl: String?, userStarted: Boolean): Job {
         jobs[appId]?.takeIf { it.isActive }?.let { return it }

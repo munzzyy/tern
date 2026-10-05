@@ -158,6 +158,12 @@ class RealEngine(
     internal val notifier = Notifier(this.context, texts) { _settings.value.notifyNames }
     internal val staging = File(this.context.cacheDir, "staging")
 
+    /** The default folder for downloads is the default store's; an engine with a store of its own keeps out of it. */
+    private val ownsDownloads = downloadsDir != null || storeName == Store.DEFAULT_NAME
+
+    /** Every engine in a process stages in one folder, so only the app's own clears it. */
+    private val ownsStaging = storeName == Store.DEFAULT_NAME
+
     internal val scope = CoroutineScope(
         SupervisorJob() + Dispatchers.Default + CoroutineExceptionHandler { _, e -> TernLog.e(TAG, "Engine task failed", e) },
     )
@@ -263,6 +269,9 @@ class RealEngine(
         for (id in stored.keys) checks.reevaluate(id, network = false)
         publish()
         dropUninstalled()
+        // Nothing installs before this is done, so what staging holds was left by an install cut short.
+        if (ownsStaging) staging.listFiles()?.forEach { it.deleteRecursively() }
+        sweepDownloads()
     }
 
     init {
@@ -491,6 +500,21 @@ class RealEngine(
         } finally {
             _checkingAll.value = false
             _checkCount.value = null
+        }
+        scope.launch(Dispatchers.IO) { sweepDownloads() }
+    }
+
+    /**
+     * Deletes the downloads nothing will ask for again, as [Downloader.sweep] says. An app being
+     * installed or waiting on an install is left as it is, and so is one the store cannot read.
+     */
+    private fun sweepDownloads() {
+        if (!ownsDownloads) return
+        downloader.sweep(System.currentTimeMillis()) {
+            store.ids().associateWith { id ->
+                val app = stored[id]
+                if (app == null || installs.underWay(id) || app.state.pending != null || progress.containsKey(id)) null else Downloader.keysOf(app.state)
+            }
         }
     }
 
@@ -892,6 +916,7 @@ class RealEngine(
         val settings = _settings.value
         val installsNow = Scheduler.installsNow(settings, waitingJob = false, device::onUnmeteredNetwork, device::isCharging)
         val run = installs.runScheduled(settings, installsNow, only, cause)
+        if (only == null) scope.launch(Dispatchers.IO) { sweepDownloads() }
         if (Scheduler.armsWaiting(settings, waitingJob = false, waited = run.waited)) Scheduler.waitForInstalls(context, settings)
         retryDelay(run.failed, attempt, nowMs())?.let { (again, delay) -> Scheduler.retry(context, again, attempt + 1, delay) }
     }

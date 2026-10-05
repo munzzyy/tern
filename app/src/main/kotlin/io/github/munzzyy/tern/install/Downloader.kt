@@ -6,6 +6,7 @@ import io.github.munzzyy.tern.core.net.HttpClient
 import io.github.munzzyy.tern.core.net.HttpRequest
 import io.github.munzzyy.tern.core.net.HttpResponse
 import io.github.munzzyy.tern.core.verify.Fingerprints
+import io.github.munzzyy.tern.data.AppState
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.real.Texts
 import java.io.File
@@ -31,7 +32,7 @@ class PassingFailure(val failure: StepFailure) : Exception(failure.message)
  * file is kept until [discard] so a failed install can be retried without downloading again.
  * A download that ends for want of space, or because the file is too large, leaves nothing behind.
  * One that fails on the way is tried again, three more times five seconds apart, each time from
- * where the server lets it go on.
+ * where the server lets it go on. [sweep] clears out what nothing will ask for again.
  */
 class Downloader(
     private val http: HttpClient,
@@ -52,6 +53,22 @@ class Downloader(
         url: String,
         authorization: String?,
         headers: Map<String, String> = emptyMap(),
+        onProgress: (done: Long, total: Long?) -> Unit,
+    ): Downloaded {
+        hold(appId)
+        try {
+            return download(appId, key, url, authorization, headers, onProgress)
+        } finally {
+            letGo(appId)
+        }
+    }
+
+    private suspend fun download(
+        appId: String,
+        key: String,
+        url: String,
+        authorization: String?,
+        headers: Map<String, String>,
         onProgress: (done: Long, total: Long?) -> Unit,
     ): Downloaded = withContext(Dispatchers.IO) {
         val files = FilesFor(folder(appId), key)
@@ -75,7 +92,7 @@ class Downloader(
         }
     }
 
-    fun folder(appId: String): File = File(root, Fingerprints.sha256(appId.toByteArray()).take(20))
+    fun folder(appId: String): File = File(root, folderName(appId))
 
     /** The finished file [key] names, if one is kept. */
     fun kept(appId: String, key: String): File? = FilesFor(folder(appId), key).done.takeIf { it.isFile }
@@ -91,10 +108,30 @@ class Downloader(
         folder(appId).deleteRecursively()
     }
 
+    /** Apps with a fetch under way, each with how many. */
+    private val holds = HashMap<String, Int>()
+
+    private fun hold(appId: String) = synchronized(holds) {
+        holds[appId] = (holds[appId] ?: 0) + 1
+    }
+
+    private fun letGo(appId: String) = synchronized(holds) {
+        val left = (holds[appId] ?: 1) - 1
+        if (left > 0) holds[appId] = left else holds.remove(appId)
+    }
+
+    /**
+     * Sweeps this downloader's folder with what [keep] gives, asked once no fetch can start. An app
+     * a fetch is under way for is left alone, whatever [keep] says of it.
+     */
+    fun sweep(nowMs: Long, keep: () -> Map<String, Set<String>?>) = synchronized(holds) {
+        sweep(root, keep() + holds.keys.associateWith<String, Set<String>?> { null }, nowMs)
+    }
+
     private class RestartFromZero : Exception()
 
     private class FilesFor(val dir: File, key: String) {
-        private val base = Fingerprints.sha256(key.toByteArray()).take(24)
+        private val base = baseOf(key)
         val part = File(dir, "$base.part")
         val done = File(dir, "$base.bin")
         val meta = File(dir, "$base.meta")
@@ -292,6 +329,41 @@ class Downloader(
     companion object {
         /** What names one file of one release, whatever link it is fetched from at the moment. */
         fun key(releaseId: String, assetUrl: String): String = "$releaseId|$assetUrl"
+
+        fun folderName(appId: String): String = Fingerprints.sha256(appId.toByteArray()).take(20)
+
+        /** The name the files of [key] share before their ending. */
+        fun baseOf(key: String): String = Fingerprints.sha256(key.toByteArray()).take(24)
+
+        /** The keys of every file [state] can still ask for: those of each release it lists, and of the install it waits on. */
+        fun keysOf(state: AppState): Set<String> = buildSet {
+            for (release in state.releases) {
+                for (asset in release.savable) for (url in listOf(asset.url) + asset.parts) add(key(release.id, url))
+            }
+            state.pending?.let { pending -> for (url in listOf(pending.assetUrl) + pending.partUrls) add(key(pending.releaseId, url)) }
+        }
+
+        /**
+         * Deletes from [root] what nothing will ask for again: the folder of an app [keep] does not
+         * name, the files of an app under no key [keep] gives it, and a download cut short that has
+         * not moved for [ABANDONED_MS]. An app [keep] gives null is left as it is.
+         */
+        fun sweep(root: File, keep: Map<String, Set<String>?>, nowMs: Long) {
+            val apps = keep.mapKeys { folderName(it.key) }
+            for (folder in root.listFiles().orEmpty()) {
+                if (folder.name !in apps) {
+                    folder.deleteRecursively()
+                    continue
+                }
+                val bases = apps[folder.name]?.mapTo(HashSet(), ::baseOf) ?: continue
+                for ((base, files) in folder.listFiles().orEmpty().groupBy { it.name.substringBefore('.') }) {
+                    val abandoned = files.none { it.name == "$base.bin" } && files.all { nowMs - it.lastModified() > ABANDONED_MS }
+                    if (base !in bases || abandoned) files.forEach { it.deleteRecursively() }
+                }
+            }
+        }
+
+        const val ABANDONED_MS = 14L * 24 * 60 * 60 * 1000
 
         /** Tries after the first, as Obtainium makes them. */
         const val RETRIES = 3

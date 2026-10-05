@@ -6,7 +6,6 @@ import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.fdroid.FDroidRepoSource
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.SearchHit
-import io.github.munzzyy.tern.ui.testRow
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -62,47 +61,45 @@ class ResultsTest {
         assertFalse(offersHandoff(noTouch = false, filePicker = true))
     }
 
-    private fun following(spec: SourceSpec) = testRow(spec.url.substringAfterLast('/')).let { it.copy(config = it.config.copy(source = spec)) }
-
     private val repository = "https://apps.example.org/fdroid/repo"
     private val fingerprint = "ab".repeat(32)
 
     private fun repoHit(packageName: String) =
         SearchHit(packageName, null, null, FDroidRepoSource.appAddress(repository, packageName, fingerprint), "Example Apps", type = SourceTypes.FDROID_REPO)
 
-    private fun repoApp(packageName: String) =
-        following(SourceSpec(SourceTypes.FDROID_REPO, repository, mapOf(SourceOptions.PACKAGE to packageName, SourceOptions.FINGERPRINT to fingerprint)))
+    private fun repoSource(packageName: String) =
+        SourceSpec(SourceTypes.FDROID_REPO, repository, mapOf(SourceOptions.PACKAGE to packageName, SourceOptions.FINGERPRINT to fingerprint))
 
     @Test
     fun aHitIsInTheListWhateverTheCaseAndATrailingSlash() {
-        val rows = listOf(following(SourceSpec(SourceTypes.GITHUB, "https://github.com/example/sparrow")))
+        val followed = listOf(SourceSpec(SourceTypes.GITHUB, "https://github.com/example/sparrow"))
         val hit = SearchHit("Sparrow", "Example", null, "https://GitHub.com/Example/Sparrow/", "GitHub")
-        assertEquals(setOf(hit.url), followedHits(listOf(hit), rows))
-        assertEquals(emptySet<String>(), followedHits(listOf(hit.copy(url = "https://github.com/example/wren")), rows))
+        assertEquals(setOf(hit.url), followedHits(listOf(hit), followed))
+        assertEquals(emptySet<String>(), followedHits(listOf(hit.copy(url = "https://github.com/example/wren")), followed))
     }
 
     @Test
     fun anAppOfARepositoryIsInTheListOnlyByItsOwnPackage() {
-        val rows = listOf(repoApp("org.example.notes"))
-        assertEquals(setOf(repoHit("org.example.notes").url), followedHits(listOf(repoHit("org.example.notes"), repoHit("org.example.maps")), rows))
+        val followed = listOf(repoSource("org.example.notes"))
+        assertEquals(setOf(repoHit("org.example.notes").url), followedHits(listOf(repoHit("org.example.notes"), repoHit("org.example.maps")), followed))
         val elsewhere = repoHit("org.example.notes").copy(url = FDroidRepoSource.appAddress("https://other.example.org/fdroid/repo", "org.example.notes", fingerprint))
-        assertEquals(emptySet<String>(), followedHits(listOf(elsewhere), rows))
+        assertEquals(emptySet<String>(), followedHits(listOf(elsewhere), followed))
     }
 
     @Test
     fun theSameAddressReadAsAnotherKindIsNotTheSameApp() {
-        val rows = listOf(following(SourceSpec(SourceTypes.HTML, "https://github.com/example/sparrow")))
-        assertEquals(emptySet<String>(), followedHits(listOf(SearchHit("Sparrow", "Example", null, "https://github.com/example/sparrow", "GitHub")), rows))
+        val followed = listOf(SourceSpec(SourceTypes.HTML, "https://github.com/example/sparrow"))
+        assertEquals(emptySet<String>(), followedHits(listOf(SearchHit("Sparrow", "Example", null, "https://github.com/example/sparrow", "GitHub")), followed))
 
         val ownForgejo = SearchHit("Wren", "me", null, "https://git.example.org/me/wren", "git.example.org", type = SourceTypes.FORGEJO)
-        assertEquals(setOf(ownForgejo.url), followedHits(listOf(ownForgejo), listOf(following(SourceSpec(SourceTypes.FORGEJO, "https://git.example.org/me/wren")))))
-        assertEquals(emptySet<String>(), followedHits(listOf(ownForgejo), listOf(following(SourceSpec(SourceTypes.GITHUB, "https://git.example.org/me/wren")))))
+        assertEquals(setOf(ownForgejo.url), followedHits(listOf(ownForgejo), listOf(SourceSpec(SourceTypes.FORGEJO, "https://git.example.org/me/wren"))))
+        assertEquals(emptySet<String>(), followedHits(listOf(ownForgejo), listOf(SourceSpec(SourceTypes.GITHUB, "https://git.example.org/me/wren"))))
     }
 
     @Test
     fun anAddressNoSourceKnowsIsInNoList() {
-        val rows = listOf(following(SourceSpec(SourceTypes.HTML, "https://example.org/apps")))
+        val followed = listOf(SourceSpec(SourceTypes.HTML, "https://example.org/apps"))
         assertEquals(null, sourceOf(SearchHit("Notes", null, null, "obtainium://app/%7B%7D", "Obtainium")))
-        assertEquals(emptySet<String>(), followedHits(listOf(SearchHit("Notes", null, null, "obtainium://app/%7B%7D", "Obtainium")), rows))
+        assertEquals(emptySet<String>(), followedHits(listOf(SearchHit("Notes", null, null, "obtainium://app/%7B%7D", "Obtainium")), followed))
     }
 }

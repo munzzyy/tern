@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -29,7 +30,6 @@ import io.github.munzzyy.tern.core.net.Urls
 import io.github.munzzyy.tern.core.source.SourceRegistry
 import io.github.munzzyy.tern.core.text.PatternException
 import io.github.munzzyy.tern.core.text.SafePattern
-import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.SearchHit
 import io.github.munzzyy.tern.engine.real.RealEngine
@@ -79,10 +79,10 @@ fun sourceOf(hit: SearchHit): SourceSpec? {
     return reader.get(type)?.match(address) ?: SourceSpec(type, address)
 }
 
-/** The addresses of the [hits] whose app is in [rows] already, matched as the engine matches a source to an app it has. */
-fun followedHits(hits: List<SearchHit>, rows: List<AppRow>): Set<String> = hits.filter { hit ->
+/** The addresses of the [hits] whose app is followed from one of [sources] already, matched as the engine matches a source to an app it has. */
+fun followedHits(hits: List<SearchHit>, sources: List<SourceSpec>): Set<String> = hits.filter { hit ->
     val spec = sourceOf(hit) ?: return@filter false
-    rows.any { RealEngine.sameSource(it.config.source, spec) }
+    sources.any { RealEngine.sameSource(it, spec) }
 }.mapTo(HashSet()) { it.url }
 
 /** A description as long as a row can carry: cut between two words, with three dots where it was cut. */
@@ -130,8 +130,9 @@ fun ResultsList(results: Detection.Results, onPick: (SearchHit) -> Unit, modifie
     }
     val hits = kept.take(MAX_RESULTS)
     val rows by LocalEngine.current.apps.collectAsStateWithLifecycle()
-    val inList by produceState(emptySet<String>(), results.hits, rows) {
-        value = withContext(Dispatchers.Default) { followedHits(results.hits, rows) }
+    val followed = remember(rows) { rows.map { it.config.source } }
+    val inList by produceState(emptySet<String>(), hits, followed) {
+        value = withContext(Dispatchers.Default) { followedHits(hits, followed) }
     }
     Column(modifier.testTag(RESULTS_TAG), verticalArrangement = Arrangement.spacedBy(look.gapSmall)) {
         Text(

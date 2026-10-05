@@ -7,7 +7,6 @@ import io.github.munzzyy.tern.core.engine.ReleaseSelector
 import io.github.munzzyy.tern.core.engine.UpdateDecision
 import io.github.munzzyy.tern.core.model.AppConfig
 import io.github.munzzyy.tern.core.model.Asset
-import io.github.munzzyy.tern.core.model.AssetKind
 import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.model.Release
 import io.github.munzzyy.tern.core.model.SourceSpec
@@ -221,9 +220,7 @@ class Evaluator(
     /** Where the checksum will come from, judged without fetching anything. */
     fun expectedSourceLocally(config: AppConfig, release: Release, asset: Asset): String? {
         if (asset.sha256 != null) return digestLabel(config.source)
-        val siblings = setOf("${asset.name}.sha256", "${asset.name}.sha256sum")
-        release.assets.firstOrNull { it.kind == AssetKind.CHECKSUM && it.name in siblings }?.let { return texts.checksumFile(it.name) }
-        release.assets.firstOrNull { it.kind == AssetKind.CHECKSUM && it.name.lowercase() in SHARED_SUMS }?.let { return texts.checksumFile(it.name) }
+        Checksums.candidatesFor(release, asset).firstOrNull()?.let { return texts.checksumFile(it.name) }
         val notes = release.notes ?: return null
         return if (Checksums.parse(notes).keys.any { it == asset.name || it.substringAfterLast('/') == asset.name }) texts.checksumNotes() else null
     }
@@ -267,7 +264,6 @@ class Evaluator(
 
         const val MAX_CANDIDATES = 4
         private val SIGNER_BLOCKS = setOf(Block.SIGNER_MISMATCH, Block.PIN_MISMATCH)
-        private val SHARED_SUMS = setOf("sha256sums", "sha256sums.txt", "checksums.txt", "checksums-sha256.txt")
 
         /** A checksum of an app of a third-party store is the store's own, which is said as such. */
         fun fromStore(type: String, checksum: ChecksumState): Boolean = checksum != ChecksumState.NOT_PUBLISHED && type in SourceTypes.THIRD_PARTY_STORES

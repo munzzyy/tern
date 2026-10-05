@@ -4,11 +4,19 @@ import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.AssetKind
 import io.github.munzzyy.tern.core.model.Release
 
+/** A sum the publisher gave for a file, and the checksum file it was read from; null when the source or the notes gave it. */
+data class ExpectedSum(val sha256: String, val file: Asset?)
+
 object Checksums {
     private const val MAX_CHARS = 1024 * 1024
     private const val MAX_LINES = 5000
     private const val PROXIMITY_WINDOW = 60
+
+    /** How many checksum files are read for one file, at most. */
+    private const val MAX_FETCHES = 3
     private val SHARED_SUMS_NAMES = setOf("sha256sums", "sha256sums.txt", "checksums.txt", "checksums-sha256.txt")
+    private val PACKAGE_ENDINGS = listOf(".apk", ".apks", ".xapk")
+    private val OTHER_DIGESTS = listOf("sha512", "sha384", "sha1", "md5", "blake")
 
     private val HEX64 = Regex("(?<![0-9a-fA-F])[0-9a-fA-F]{64}(?![0-9a-fA-F])")
     private val GNU_LINE = Regex("^([0-9a-fA-F]{64})[ \\t]+\\*?(.+?)\\s*$")
@@ -72,22 +80,48 @@ object Checksums {
         }
     }
 
-    fun expectedFor(release: Release, asset: Asset, fetch: (Asset) -> String): String? {
-        asset.sha256?.let { return it }
+    fun expectedFor(release: Release, asset: Asset, fetch: (Asset) -> String): String? = expected(release, asset, fetch)?.sha256
 
-        val siblingNames = setOf("${asset.name}.sha256", "${asset.name}.sha256sum")
-        release.assets.firstOrNull { it.kind == AssetKind.CHECKSUM && it.name in siblingNames }?.let { sibling ->
-            val parsed = parse(fetch(sibling))
-            named(parsed, asset.name)?.let { return it }
-            parsed[""]?.let { return it }
+    /**
+     * The sum for [asset]: its own, else from the first of [candidatesFor] that gives one, reading
+     * no more than three of them, else from the release's notes. A file made for [asset] alone may
+     * hold a bare sum; any other has to name the file.
+     */
+    fun expected(release: Release, asset: Asset, fetch: (Asset) -> String): ExpectedSum? {
+        asset.sha256?.let { return ExpectedSum(it, null) }
+        val own = ownNames(release, asset)
+        for (sums in candidatesFor(release, asset).take(MAX_FETCHES)) {
+            val parsed = parse(fetch(sums))
+            val sha = named(parsed, asset.name) ?: parsed[""]?.takeIf { sums.name in own }
+            if (sha != null) return ExpectedSum(sha, sums)
         }
+        return release.notes?.let { notes -> named(parse(notes), asset.name) }?.let { ExpectedSum(it, null) }
+    }
 
-        release.assets.firstOrNull { it.kind == AssetKind.CHECKSUM && it.name.lowercase() in SHARED_SUMS_NAMES }?.let { shared ->
-            named(parse(fetch(shared)), asset.name)?.let { return it }
+    /**
+     * The checksum files of [release] that may hold the sum of [asset], in the order they are
+     * read: those made for it alone, then the shared names, then any other whose name says it
+     * holds SHA-256 sums.
+     */
+    fun candidatesFor(release: Release, asset: Asset): List<Asset> {
+        val sums = release.assets.filter { it.kind == AssetKind.CHECKSUM }
+        val own = ownNames(release, asset)
+        val first = own.mapNotNull { name -> sums.firstOrNull { it.name == name } }
+        val shared = sums.filter { it.name.lowercase() in SHARED_SUMS_NAMES }
+        val rest = sums.filter { sum ->
+            val name = sum.name.lowercase()
+            ("sha256" in name || "checksum" in name) && OTHER_DIGESTS.none { it in name }
         }
+        return (first + shared + rest).distinct()
+    }
 
-        release.notes?.let { notes -> named(parse(notes), asset.name)?.let { return it } }
-        return null
+    /** Names a checksum file made for [asset] alone goes by. A name shared with another file of the release is not one. */
+    private fun ownNames(release: Release, asset: Asset): List<String> {
+        val names = mutableListOf("${asset.name}.sha256", "${asset.name}.sha256sum", "${asset.name}.sha256.txt")
+        val stem = PACKAGE_ENDINGS.firstOrNull { asset.name.endsWith(it, ignoreCase = true) }?.let { asset.name.dropLast(it.length) }
+        val alone = stem != null && release.assets.none { it.name != asset.name && it.kind != AssetKind.CHECKSUM && it.kind != AssetKind.SIGNATURE && it.name.substringBeforeLast('.') == stem }
+        if (alone) names += "$stem.sha256"
+        return names
     }
 
     /** Sums files often list a file with the folder it was built in; the file name alone decides. */

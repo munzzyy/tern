@@ -231,4 +231,68 @@ class ChecksumsTest {
         val c = "c".repeat(64)
         assertEquals(mapOf("other.apk" to c), Checksums.parse("$a  app.apk\n$c  other.apk\n$b  app.apk\n"))
     }
+
+    private val app = Asset(name = "app.apk", url = "https://example.com/app.apk")
+
+    private fun sums(name: String) = Asset(name = name, url = "https://example.com/$name")
+
+    private fun releaseWith(vararg names: String, notes: String? = null) = Release(id = "1", version = "1.0", notes = notes, assets = listOf(app) + names.map(::sums))
+
+    @Test
+    fun aSumIsFoundInEveryPlaceItIsCommonlyPut() {
+        for (name in listOf("app.apk.sha256.txt", "app.sha256")) {
+            assertEquals(name, hexA, Checksums.expectedFor(releaseWith(name), app) { hexA })
+        }
+        for (name in listOf("SHA256SUMS-arm64.txt", "checksums_sha256.txt", "app-1.0-checksums.txt")) {
+            assertEquals(name, hexA, Checksums.expectedFor(releaseWith(name), app) { "$hexA  app.apk\n$hexB  other.apk" })
+        }
+    }
+
+    @Test
+    fun aFileForSeveralFilesHasToNameThisOne() {
+        assertNull(Checksums.expectedFor(releaseWith("SHA256SUMS-arm64.txt"), app) { hexA })
+        val release = releaseWith("SHA256SUMS-arm64.txt", "SHA256SUMS-all.txt")
+        val read = ArrayList<String>()
+        val found = Checksums.expected(release, app) { asset ->
+            read += asset.name
+            if (asset.name == "SHA256SUMS-arm64.txt") "$hexB  app-arm64.apk" else "$hexA  dist/app.apk"
+        }
+        assertEquals(ExpectedSum(hexA, release.assets.last()), found)
+        assertEquals(listOf("SHA256SUMS-arm64.txt", "SHA256SUMS-all.txt"), read)
+    }
+
+    @Test
+    fun noMoreThanThreeChecksumFilesAreRead() {
+        val release = releaseWith("checksums-a.txt", "checksums-b.txt", "checksums-c.txt", "checksums-d.txt")
+        var read = 0
+        assertNull(Checksums.expectedFor(release, app) { read++; "$hexB  other.apk" })
+        assertEquals(3, read)
+    }
+
+    @Test
+    fun aFileMadeForThisOneIsReadFirst() {
+        val release = releaseWith("SHA256SUMS", "checksums-extra.txt", "app.apk.sha256")
+        assertEquals(listOf("app.apk.sha256", "SHA256SUMS", "checksums-extra.txt"), Checksums.candidatesFor(release, app).map { it.name })
+        val read = ArrayList<String>()
+        assertEquals(hexA, Checksums.expectedFor(release, app) { read += it.name; hexA })
+        assertEquals(listOf("app.apk.sha256"), read)
+    }
+
+    @Test
+    fun aBareSumUnderANameAnotherFileSharesIsNotTaken() {
+        val release = releaseWith("app.sha256").let { it.copy(assets = it.assets + Asset("app.apks", "https://example.com/app.apks")) }
+        assertNull(Checksums.expectedFor(release, app) { hexA })
+        assertEquals(hexA, Checksums.expectedFor(release, app) { "$hexA  app.apk" })
+    }
+
+    @Test
+    fun sumsOfAnotherDigestAreNotRead() {
+        assertEquals(emptyList<Asset>(), Checksums.candidatesFor(releaseWith("checksums-sha512.txt", "app.apk.md5", "checksums-sha1.txt"), app))
+    }
+
+    @Test
+    fun aSumFromTheNotesIsCreditedToThemEvenAfterAFileWasRead() {
+        val release = releaseWith("SHA256SUMS", notes = "app.apk\n$hexA")
+        assertEquals(ExpectedSum(hexA, null), Checksums.expected(release, app) { "$hexB  other.apk" })
+    }
 }

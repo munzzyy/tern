@@ -357,10 +357,8 @@ internal class Installs(private val e: RealEngine) {
 
     private fun expectedChecksum(config: AppConfig, release: Release, asset: Asset): Pair<String, String>? {
         asset.sha256?.let { sha -> return normalized(sha) to e.evaluator.digestLabel(config.source) }
-        var fetched: Asset? = null
-        val sha = try {
-            Checksums.expectedFor(release, asset) { sums ->
-                fetched = sums
+        val expected = try {
+            Checksums.expected(release, asset) { sums ->
                 // Asked for where the source says, as the file is: a file behind GitHub's API needs the header that asks for the file itself.
                 val from = try {
                     e.registry.resolve(config.source, sums, e.sourceContext())
@@ -377,8 +375,8 @@ internal class Installs(private val e: RealEngine) {
         } catch (ex: IOException) {
             throw StepFailure(ProblemKind.NETWORK, e.texts.downloadFailed(ex))
         } ?: return null
-        val source = fetched?.let { e.texts.checksumFile(it.name) } ?: e.texts.checksumNotes()
-        return normalized(sha) to source
+        val source = expected.file?.let { e.texts.checksumFile(it.name) } ?: e.texts.checksumNotes()
+        return normalized(expected.sha256) to source
     }
 
     /**

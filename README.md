@@ -58,8 +58,9 @@ the screen says "claims" until Android has confirmed it.
 After the download:
 
 1. The file's SHA-256 is compared with the publisher's checksum when there is one:
-   GitHub's release digest, a signed F-Droid index, a `.sha256` file next to the
-   download, a `SHA256SUMS` file, or a hash in the release notes.
+   GitHub's release digest, a signed F-Droid index, a `.sha256` or `.sha256.txt`
+   file next to the download, a `SHA256SUMS` or other checksums file that names it,
+   or a hash in the release notes.
 2. The signature is verified twice, by Tern's own verifier (APK Signature Scheme
    v1, v2, v3 and v3.1) and by Android. If the two disagree about who signed the
    file, it is refused. Android does not read every part of a split bundle on

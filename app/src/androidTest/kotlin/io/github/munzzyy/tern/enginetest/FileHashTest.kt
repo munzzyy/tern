@@ -40,6 +40,18 @@ class FileHashTest {
     }
 
     @Test
+    fun theChecksumFileToBeReadIsNamedBeforeDownload() {
+        val texts = Texts(targetContext)
+        val evaluator = Evaluator(texts, Device(targetContext).profile) { 0L }
+        val config = AppConfig("a", SourceSpec(SourceTypes.GITHUB, "https://github.com/example/app"), "App")
+        val apk = Asset("app.apk", "https://github.com/example/app/releases/download/v1/app.apk", 10)
+        fun release(vararg sums: String) = Release("v1", "1", assets = listOf(apk) + sums.map { Asset(it, "https://github.com/example/app/releases/download/v1/$it") })
+        assertEquals(texts.checksumFile("app.apk.sha256.txt"), evaluator.expectedSourceLocally(config, release("SHA256SUMS", "app.apk.sha256.txt"), apk))
+        assertEquals(texts.checksumFile("SHA256SUMS-all.txt"), evaluator.expectedSourceLocally(config, release("SHA256SUMS-all.txt"), apk))
+        assertNull(evaluator.expectedSourceLocally(config, release("checksums-sha512.txt"), apk))
+    }
+
+    @Test
     fun theMeasuredHashReplacesItOnceTheFileIsDownloaded() = runBlocking {
         prepareDevice()
         uninstallFixture()

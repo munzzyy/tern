@@ -350,6 +350,17 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
         /** Whether [now] holds a failure that is not among those a notification already [said]. */
         fun worthSaying(said: Set<String>, now: List<Trouble>): Boolean = now.any { fingerprint(it) !in said }
 
+        /**
+         * What a notification says once [now] holds a new failure, or null while it does not: [now]
+         * and the failures of [current] that were [said] before and still last, so that a run which
+         * checked only some apps again does not hide the others.
+         */
+        fun toSay(said: Set<String>, current: List<Trouble>, now: List<Trouble>): List<Trouble>? {
+            if (!worthSaying(said, now)) return null
+            val ids = now.mapTo(HashSet()) { it.id }
+            return now + current.filter { it.id !in ids && fingerprint(it) in said }
+        }
+
         /** What is left of [said] while the apps have the problems [current]: a failure that passed is said again if it comes back. */
         fun stillSaid(said: Set<String>, current: List<Trouble>): Set<String> = said intersect current.mapTo(HashSet(), ::fingerprint)
 

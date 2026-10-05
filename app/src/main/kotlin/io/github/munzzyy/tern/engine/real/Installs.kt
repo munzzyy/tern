@@ -501,17 +501,15 @@ internal class Installs(private val e: RealEngine) {
 
     /**
      * Says [now] unless a notification already said each of them: a failure that lasts is said
-     * once, and a new one says them all again. A failure that passed is forgotten.
+     * once, and a new one says them all again with those said before that still last. A failure
+     * that passed is forgotten.
      */
     private fun sayFailures(now: List<Trouble>) = synchronized(saying) {
         val current = troubles(e.stored.keys.filter { problemNow(it) != null })
         val said = Notifier.stillSaid(e.saidFailures.get(), current)
-        if (Notifier.worthSaying(said, now)) {
-            e.notifier.failures(now)
-            e.saidFailures.set(said + now.map(Notifier::fingerprint))
-        } else {
-            e.saidFailures.set(said)
-        }
+        val told = Notifier.toSay(said, current, now)
+        if (told != null) e.notifier.failures(told)
+        e.saidFailures.set(said + told.orEmpty().map(Notifier::fingerprint))
     }
 
     /** Nothing went wrong: the row goes back to what it was, and the file stays for the next try. */

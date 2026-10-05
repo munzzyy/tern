@@ -4,6 +4,7 @@ import io.github.munzzyy.tern.engine.ProblemKind
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -81,5 +82,16 @@ class ProblemLinesTest {
 
         val gone = Trouble("c", "Quillfern", "The source has nothing at this address any more: 404", ProblemKind.NOT_FOUND)
         assertTrue(Notifier.worthSaying(said(gone), listOf(gone.copy(reason = "The source has nothing at this address any more: 410"))))
+    }
+
+    @Test
+    fun aNewFailureIsSaidWithTheOnesSaidBeforeThatStillLast() {
+        val changed = noFile.copy(reason = down.reason)
+        val neverSaid = Trouble("c", "Quillfern", "Third-party stores are off.")
+        val current = listOf(down, changed, neverSaid)
+        // A retry checked only b again, while a still fails as it was said to.
+        val said = Notifier.stillSaid(said(down, noFile), current)
+        assertEquals(listOf(changed, down), Notifier.toSay(said, current, listOf(changed)))
+        assertNull(Notifier.toSay(said(down, changed), current, listOf(changed)))
     }
 }

@@ -22,18 +22,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.munzzyy.tern.R
+import io.github.munzzyy.tern.core.model.SourceSpec
+import io.github.munzzyy.tern.core.net.Urls
+import io.github.munzzyy.tern.core.source.SourceRegistry
 import io.github.munzzyy.tern.core.text.PatternException
 import io.github.munzzyy.tern.core.text.SafePattern
+import io.github.munzzyy.tern.engine.AppRow
 import io.github.munzzyy.tern.engine.Detection
 import io.github.munzzyy.tern.engine.SearchHit
+import io.github.munzzyy.tern.engine.real.RealEngine
+import io.github.munzzyy.tern.ui.LocalEngine
 import io.github.munzzyy.tern.ui.common.PressRow
 import io.github.munzzyy.tern.ui.common.QuietButton
 import io.github.munzzyy.tern.ui.common.ReadBlock
 import io.github.munzzyy.tern.ui.common.SectionCard
+import io.github.munzzyy.tern.ui.common.StatusChip
 import io.github.munzzyy.tern.ui.common.TonalButton
 import io.github.munzzyy.tern.ui.common.TrustLine
 import io.github.munzzyy.tern.ui.common.textFieldKeys
+import io.github.munzzyy.tern.ui.icons.Glyphs
 import io.github.munzzyy.tern.ui.icons.LetterAvatar
 import io.github.munzzyy.tern.ui.text.Trust
 import io.github.munzzyy.tern.ui.text.hostOf
@@ -57,6 +66,24 @@ fun isCarriedList(results: Detection.Results): Boolean = results.query == Detect
 /** The repository's own name, which the engine puts on every app it lists, or else its host. */
 fun repositoryName(results: Detection.Results): String =
     results.hits.firstOrNull()?.origin?.trim()?.takeIf { it.isNotEmpty() } ?: hostOf(results.query)
+
+private val reader by lazy { SourceRegistry.standard() }
+
+/**
+ * The source [hit] leads to, read from its address alone as the Add screen reads it: as the kind it
+ * names, else as whichever source knows the address. Nothing is asked of the network.
+ */
+fun sourceOf(hit: SearchHit): SourceSpec? {
+    val type = hit.type ?: return reader.match(hit.url)
+    val address = Urls.normalize(hit.url) ?: return null
+    return reader.get(type)?.match(address) ?: SourceSpec(type, address)
+}
+
+/** The addresses of the [hits] whose app is in [rows] already, matched as the engine matches a source to an app it has. */
+fun followedHits(hits: List<SearchHit>, rows: List<AppRow>): Set<String> = hits.filter { hit ->
+    val spec = sourceOf(hit) ?: return@filter false
+    rows.any { RealEngine.sameSource(it.config.source, spec) }
+}.mapTo(HashSet()) { it.url }
 
 /** A description as long as a row can carry: cut between two words, with three dots where it was cut. */
 fun brief(text: String, limit: Int = MAX_DESCRIPTION): String {
@@ -102,6 +129,10 @@ fun ResultsList(results: Detection.Results, onPick: (SearchHit) -> Unit, modifie
         value = withContext(Dispatchers.Default) { filterHits(results.hits, filter) }
     }
     val hits = kept.take(MAX_RESULTS)
+    val rows by LocalEngine.current.apps.collectAsStateWithLifecycle()
+    val inList by produceState(emptySet<String>(), results.hits, rows) {
+        value = withContext(Dispatchers.Default) { followedHits(results.hits, rows) }
+    }
     Column(modifier.testTag(RESULTS_TAG), verticalArrangement = Arrangement.spacedBy(look.gapSmall)) {
         Text(
             when {
@@ -143,7 +174,7 @@ fun ResultsList(results: Detection.Results, onPick: (SearchHit) -> Unit, modifie
         if (repository && results.within != null) QuietButton(stringResource(R.string.repo_show_all), onClick = { onSearchRepository("") })
         if (hits.isNotEmpty()) {
             SectionCard {
-                for (hit in hits) ResultRow(hit, repository, onPick = { onPick(hit) })
+                for (hit in hits) ResultRow(hit, repository, inList = hit.url in inList, onPick = { onPick(hit) })
             }
         } else if (filter.isNotBlank()) {
             ReadBlock { Text(stringResource(R.string.results_filter_none, filter.trim()), style = MaterialTheme.typography.bodyMedium) }
@@ -163,7 +194,7 @@ fun ResultsList(results: Detection.Results, onPick: (SearchHit) -> Unit, modifie
 const val RESULTS_FILTER_TAG = "add_results_filter"
 
 @Composable
-private fun ResultRow(hit: SearchHit, repository: Boolean, onPick: () -> Unit) {
+private fun ResultRow(hit: SearchHit, repository: Boolean, inList: Boolean, onPick: () -> Unit) {
     val look = LocalLook.current
     val stars = hit.stars?.let { pluralStringResource(R.plurals.search_stars, it, it) }
     val source = listOfNotNull(hit.owner, hit.origin.takeUnless { repository }, stars).joinToString(" \u00B7 ")
@@ -179,5 +210,6 @@ private fun ResultRow(hit: SearchHit, repository: Boolean, onPick: () -> Unit) {
         hit.description?.takeIf { it.isNotBlank() }?.let {
             Text(brief(it), style = MaterialTheme.typography.bodyMedium)
         }
+        if (inList) StatusChip(Glyphs.Check, stringResource(R.string.starter_in_list))
     }
 }

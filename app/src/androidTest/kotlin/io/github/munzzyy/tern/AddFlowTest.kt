@@ -5,11 +5,14 @@ import android.content.ClipboardManager
 import android.content.Context
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performTextReplacement
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import io.github.munzzyy.tern.fake.FakeLinks
@@ -17,6 +20,7 @@ import io.github.munzzyy.tern.ui.add.ADD_CONFIRM_TAG
 import io.github.munzzyy.tern.ui.add.ADD_FIELD_TAG
 import io.github.munzzyy.tern.ui.add.ADD_FIND_TAG
 import io.github.munzzyy.tern.ui.add.ADD_INSTALL_TAG
+import io.github.munzzyy.tern.ui.add.RESULTS_TAG
 import io.github.munzzyy.tern.ui.detail.DETAIL_PRIMARY_TAG
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -32,6 +36,20 @@ class AddFlowTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
             val clipboard = appContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             clipboard.setPrimaryClip(ClipData.newPlainText("link", text))
+        }
+    }
+
+    @Test
+    fun aResultAlreadyInTheListSaysSoAndTheOthersDoNot() {
+        launch("default").use {
+            compose.onNodeWithText("Add").performClick()
+            compose.tagged(ADD_FIELD_TAG).performTextReplacement("feed reader")
+            compose.tagged(ADD_FIND_TAG).performClick()
+            val inList = hasText("In your list") and hasAnyAncestor(hasTestTag(RESULTS_TAG))
+            compose.waitFor(inList)
+            assertEquals("only Trail Map is followed already", 1, compose.onAllNodes(inList).fetchSemanticsNodes().size)
+            compose.onNode(inList and hasText("Trail Map")).performScrollTo().assertIsDisplayed()
+            assertEquals(0, compose.onAllNodes(inList and (hasText("Sparrow") or hasText("Wren"))).fetchSemanticsNodes().size)
         }
     }
 

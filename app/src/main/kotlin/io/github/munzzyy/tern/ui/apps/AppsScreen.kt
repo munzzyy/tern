@@ -673,7 +673,11 @@ private fun SearchField(search: Search, focus: Modifier, onFocus: (Boolean) -> U
             .then(focus)
             .onFocusChanged { onFocus(it.hasFocus) }
             .focusRequester(grab)
-            .textFieldKeys()
+            .textFieldKeys(typing = { event ->
+                val letter = event.typedForSearch(look.television)
+                if (letter.isNotEmpty()) search.onText(search.text + letter)
+                letter.isNotEmpty()
+            })
             .testTag(APP_SEARCH_TAG),
     )
 }

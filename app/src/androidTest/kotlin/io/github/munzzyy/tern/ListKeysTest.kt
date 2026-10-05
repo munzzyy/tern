@@ -77,13 +77,15 @@ class ListKeysTest {
             compose.assertFocusOn(row, "the list opens with focus on its first app")
             compose.press(KEYCODE_S)
             compose.waitFor(searchField and hasText("s"))
-            if (!withoutTouch) {
-                compose.assertFocusOn(searchField, "the search field takes focus")
-                compose.press(KEYCODE_U)
-                compose.waitFor(searchField and hasText("su"))
-                compose.press(KEYCODE_MOVE_HOME, KEYCODE_PAGE_DOWN, KEYCODE_MOVE_END)
-                compose.assertFocusOn(searchField, "keys pressed in the field stay in the field")
+            compose.assertFocusOn(searchField, "the search field takes focus")
+            compose.press(KEYCODE_U)
+            compose.waitFor(searchField and hasText("su"))
+            if (keyboardShown()) {
+                device.pressBack()
+                compose.waitUntil(3_000) { !keyboardShown() }
             }
+            compose.press(KEYCODE_MOVE_HOME, KEYCODE_PAGE_DOWN, KEYCODE_MOVE_END)
+            compose.assertFocusOn(searchField, "keys pressed in the field stay in the field")
         }
     }
 }

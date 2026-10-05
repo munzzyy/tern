@@ -8,6 +8,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.isAltPressed
 import androidx.compose.ui.input.key.isCtrlPressed
@@ -35,7 +36,7 @@ fun Modifier.listKeys(list: LazyListState, screen: ScreenFocus, inSearch: () -> 
     val search by rememberUpdatedState(onSearch)
     onPreviewKeyEvent { event ->
         if (event.type != KeyEventType.KeyDown || searching()) return@onPreviewKeyEvent false
-        when (val key = listKey(event.key.nativeKeyCode, event.utf16CodePoint, event.isCtrlPressed, event.isAltPressed || event.isMetaPressed, television)) {
+        when (val key = event.toListKey(television)) {
             null -> false
             is ListKey.Search -> search?.let {
                 it(key.typed)
@@ -48,6 +49,12 @@ fun Modifier.listKeys(list: LazyListState, screen: ScreenFocus, inSearch: () -> 
         }
     }
 }
+
+private fun KeyEvent.toListKey(television: Boolean): ListKey? =
+    listKey(key.nativeKeyCode, utf16CodePoint, isCtrlPressed, isAltPressed || isMetaPressed, television)
+
+/** What this key types into the search: a letter, or a digit off a television; empty for any other key. */
+internal fun KeyEvent.typedForSearch(television: Boolean): String = (toListKey(television) as? ListKey.Search)?.typed.orEmpty()
 
 /** Scrolls as [key] asks, then gives focus to the first row in view, or to the last once the list is at its end. */
 private suspend fun LazyListState.move(key: ListKey, screen: ScreenFocus) {

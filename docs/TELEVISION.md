@@ -89,6 +89,7 @@ it again and the install carries on by itself.
 
 On the list of apps, Channel up and Channel down move a screenful at a time, as Page up and Page
 down do on a keyboard. Focus lands on the first app in view, or on the last once the list is at its
-end. Home and End go to the first and the last app. The Search key or Ctrl+F opens the search, and a letter typed on the list starts a
-search with that letter. A remote's number keys start nothing. Inside the search field every key
-belongs to the field.
+end. Home and End go to the first and the last app. The Search key or Ctrl+F opens the search. A
+letter typed on the list starts a search with that letter, and the letters after it go on into the
+search. A remote's number keys start nothing. Inside the search field every key belongs to the
+field.

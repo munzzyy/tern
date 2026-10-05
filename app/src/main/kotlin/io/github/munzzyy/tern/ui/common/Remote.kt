@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -32,6 +33,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.InputMode
 import androidx.compose.ui.input.InputModeManager
 import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
@@ -69,13 +71,17 @@ private fun InputModeManager.leaveTouchMode() {
     if (inputMode != InputMode.Keyboard) requestInputMode(InputMode.Keyboard)
 }
 
-/** Up and down leave the field; without a touch screen a stop sits in front of it, since focusing the field itself opens the keyboard. */
-fun Modifier.textFieldKeys(): Modifier = composed {
+/**
+ * Up and down leave the field; without a touch screen a stop sits in front of it, since focusing the field itself opens the keyboard.
+ * A key pressed on the stop that [typing] takes moves focus on into the field.
+ */
+fun Modifier.textFieldKeys(typing: ((KeyEvent) -> Boolean)? = null): Modifier = composed {
     if (!LocalNoTouch.current) return@composed verticalKeysLeave()
     val field = remember { FocusRequester() }
     val reveal = remember { BringIntoViewRequester() }
     val scope = rememberCoroutineScope()
     val keyboard = LocalSoftwareKeyboardController.current
+    val typed by rememberUpdatedState(typing)
     var onStop by remember { mutableStateOf(false) }
     var inside by remember { mutableStateOf(false) }
     bringIntoViewRequester(reveal)
@@ -85,12 +91,18 @@ fun Modifier.textFieldKeys(): Modifier = composed {
             inside = it.hasFocus
         }
         .onKeyEvent { event ->
-            if (onStop && event.type == KeyEventType.KeyDown && event.key in OPEN_KEYS) {
-                field.requestFocus()
-                keyboard?.show()
-                true
-            } else {
-                false
+            when {
+                !onStop || event.type != KeyEventType.KeyDown -> false
+                event.key in OPEN_KEYS -> {
+                    field.requestFocus()
+                    keyboard?.show()
+                    true
+                }
+                typed?.invoke(event) == true -> {
+                    field.requestFocus()
+                    true
+                }
+                else -> false
             }
         }
         .focusRing(RoundedCornerShape(4.dp))

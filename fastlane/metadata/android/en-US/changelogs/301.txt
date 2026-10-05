@@ -1,0 +1,1 @@
+Where Google is blocked, Tern no longer calls a working connection offline. Checks, including the scheduled ones, run as soon as Android says the network reaches the internet.

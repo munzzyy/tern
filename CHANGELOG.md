@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.1, 2026-10-05
+
+- Where Google is blocked, Tern no longer calls a working connection
+  offline. It waited for Android's own check to Google to get through, so
+  checks refused and the scheduled ones never ran. A network now counts as
+  soon as Android says it reaches the internet.
+
 ## 0.3.0, 2026-10-02
 
 - A file signed with more than one key passes only when every one of those

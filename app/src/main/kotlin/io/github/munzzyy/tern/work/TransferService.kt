@@ -7,6 +7,8 @@ import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
+import android.os.SystemClock
+import io.github.munzzyy.tern.engine.Progress
 import io.github.munzzyy.tern.engine.real.RealEngine
 import io.github.munzzyy.tern.log.TernLog
 import kotlinx.coroutines.Job
@@ -33,7 +35,12 @@ class TransferService : Service() {
         }
         if (watcher?.isActive == true) return START_NOT_STICKY
         watcher = engine.scope.launch {
+            val pace = Pace(NOTIFY_INTERVAL_MS)
+            var before = emptyMap<String, Progress>()
             engine.transfers.takeWhile { it.isNotEmpty() }.collect { transfers ->
+                val changed = !Pace.onlyBytes(before, transfers)
+                before = transfers
+                if (!pace.due(SystemClock.elapsedRealtime(), changed)) return@collect
                 // Apps by their names, and files on their way to Downloads by theirs.
                 val names = transfers.keys.mapNotNull { id -> engine.apps.value.firstOrNull { it.id == id }?.config?.shownName ?: engine.saves.name(id) }
                 val done = transfers.values.sumOf { it.bytesDone }
@@ -54,6 +61,9 @@ class TransferService : Service() {
 
     companion object {
         private const val TAG = "TernTransfer"
+
+        /** Android drops a notification's updates past five a second, and the one dropped can be the last. */
+        private const val NOTIFY_INTERVAL_MS = 1000L
 
         fun start(context: Context) {
             try {

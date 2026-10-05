@@ -184,7 +184,7 @@ internal class Interop(private val e: RealEngine) {
             val download = e.installs.inTurn {
                 e.downloader.fetch(appId, key, from.url, authorizationFor(asset, from.url), from.headers) { done, total ->
                     e.saves.progress(counted, done, total ?: asset.size)
-                    e.publish()
+                    e.publishProgress(changed = false)
                 }
             }
             fresh = !download.reused

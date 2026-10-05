@@ -11,6 +11,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.SystemClock
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import io.github.munzzyy.tern.BuildConfig
@@ -92,6 +93,7 @@ import io.github.munzzyy.tern.net.ProxyDoor
 import io.github.munzzyy.tern.net.ProxyProbe
 import io.github.munzzyy.tern.net.UrlConnectionHttp
 import io.github.munzzyy.tern.work.Notifier
+import io.github.munzzyy.tern.work.Pace
 import io.github.munzzyy.tern.work.Scheduler
 import java.io.Closeable
 import java.io.File
@@ -306,7 +308,9 @@ class RealEngine(
      */
     @Synchronized
     internal fun publish() {
-        val rows = stored.values.map(::row)
+        val silent = installers.silent()
+        val mayInstall = silent == null && device.mayInstall()
+        val rows = stored.values.map { row(it, silent, mayInstall) }
         _apps.value = rows.sortedWith(
             compareBy<AppRow> { if (it.status == AppStatus.UPDATE_AVAILABLE || it.status == AppStatus.NEW_RELEASE) 0 else 1 }
                 .thenBy { it.config.shownName.lowercase() }
@@ -320,7 +324,8 @@ class RealEngine(
         _events.value = store.events()
     }
 
-    private fun row(entry: StoredApp): AppRow {
+    /** [silent] and [mayInstall] are read once for all the rows. */
+    private fun row(entry: StoredApp, silent: Boolean?, mayInstall: Boolean): AppRow {
         val id = entry.config.id
         val eval = evaluations[id] ?: Evaluation(AppStatus.UNKNOWN)
         val installed = packageOf(entry.config, eval)?.let { deviceApps[it] }?.app
@@ -336,7 +341,7 @@ class RealEngine(
             progress = progress[id],
             problem = eval.problem,
             lastCheckedMs = entry.state.lastCheckedMs,
-            silentUpdate = if (installed == null) null else installers.silent() ?: device.silentUpdateLikely(installed, eval.facts?.targetSdk),
+            silentUpdate = if (installed == null) null else silent ?: device.silentUpdateLikely(installed, eval.facts?.targetSdk, mayInstall),
             checking = id in checking,
             movedTo = Moves.suggestion(entry.state),
             addedAtMs = entry.state.addedAtMs,
@@ -392,9 +397,16 @@ class RealEngine(
         publishEvents()
     }
 
+    private val rowPace = Pace(ROW_INTERVAL_MS)
+
+    /** A download that only moved on is drawn a few times a second at most; any other change at once. */
     internal fun setProgress(id: String, value: Progress?) {
-        if (value == null) progress.remove(id) else progress[id] = value
-        publish()
+        val before = if (value == null) progress.remove(id) else progress.put(id, value)
+        publishProgress(changed = !Pace.onlyBytes(before, value))
+    }
+
+    internal fun publishProgress(changed: Boolean) {
+        if (rowPace.due(SystemClock.elapsedRealtime(), changed)) publish()
     }
 
     override suspend fun detect(input: String): Detection {
@@ -979,6 +991,7 @@ class RealEngine(
 
     companion object {
         private const val TAG = "TernEngine"
+        private const val ROW_INTERVAL_MS = 250L
         private const val OBTAINIUM_ALIAS = "io.github.munzzyy.tern.ObtainiumLinks"
 
         /** The module that lets Android put an older version of an app over a newer one. */

@@ -1,6 +1,9 @@
 package io.github.munzzyy.tern.enginetest
 
 import android.app.Notification
+import android.app.NotificationManager
+import android.content.Intent
+import android.provider.Settings
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.munzzyy.tern.engine.SavedFile
 import io.github.munzzyy.tern.engine.real.Texts
@@ -56,6 +59,43 @@ class NotifierTest {
             assertFalse("$which names the app: ${words(n)}", APP in words(n))
             assertNull(which, n.publicVersion)
             assertTrue(which, n.extras.getCharSequence(Notification.EXTRA_TITLE).toString().isNotBlank())
+        }
+    }
+
+    @Test
+    fun confirmationsWaitUnderOneSummaryThatAloneMakesASound() {
+        prepareDevice()
+        val manager = targetContext.getSystemService(NotificationManager::class.java)
+        val texts = Texts(targetContext)
+        val notifier = Notifier(targetContext, texts) { true }
+        val grouped = { manager.activeNotifications.filter { it.notification.group == Notifier.GROUP_CONFIRM } }
+        val summary = { grouped().singleOrNull { it.id == Notifier.ID_CONFIRMS }?.notification }
+        val apps = listOf("kestrel", "moss", "quill")
+        try {
+            for (app in apps) {
+                notifier.confirm(app, "$APP $app", Intent(Settings.ACTION_SETTINGS))
+                // Android drops updates that come faster than a few a second, and a person never confirms that fast.
+                Thread.sleep(1_000)
+            }
+            waitUntil(10_000, "three confirmations and their summary") { grouped().size == 4 }
+            val shown = summary()!!
+            assertTrue((shown.flags and Notification.FLAG_GROUP_SUMMARY) != 0)
+            assertEquals("a tap on the summary leaves the confirmations", 0, shown.flags and Notification.FLAG_AUTO_CANCEL)
+            assertEquals(texts.notifyConfirms(3), shown.extras.getCharSequence(Notification.EXTRA_TITLE).toString())
+            assertEquals(Notification.VISIBILITY_PUBLIC, shown.visibility)
+            assertFalse("the summary names an app: ${words(shown)}", APP in words(shown))
+            for (child in grouped().filter { it.id != Notifier.ID_CONFIRMS }) {
+                assertEquals(Notification.GROUP_ALERT_SUMMARY, child.notification.groupAlertBehavior)
+                assertTrue(APP in words(child.notification))
+                assertFalse("a confirmation names its app on the lock screen", APP in words(child.notification.publicVersion!!))
+            }
+
+            notifier.cancelConfirm(apps[0])
+            waitUntil(10_000, "the summary to count two") { summary()?.extras?.getCharSequence(Notification.EXTRA_TITLE)?.toString() == texts.notifyConfirms(2) }
+            apps.drop(1).forEach(notifier::cancelConfirm)
+            waitUntil(10_000, "the summary to go with the last confirmation") { grouped().isEmpty() }
+        } finally {
+            manager.cancelAll()
         }
     }
 

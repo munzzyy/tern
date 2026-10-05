@@ -178,6 +178,7 @@ class Texts(context: Context) : ImportTexts {
     fun notifyInstalled(count: Int, onlyName: String?) = if (count == 1 && onlyName != null) s(R.string.engine_notify_installed_one, onlyName) else q(R.plurals.engine_notify_installed_count, count)
     fun notifyConfirm(name: String) = s(R.string.engine_notify_confirm, name)
     fun notifyConfirmPlain() = s(R.string.notify_confirm_plain)
+    fun notifyConfirms(count: Int) = q(R.plurals.notify_confirm_count, count)
     fun notifyFailures(count: Int) = q(R.plurals.engine_notify_failures_count, count)
 
     fun pickReason(reason: PickReason): String = when (reason.kind) {

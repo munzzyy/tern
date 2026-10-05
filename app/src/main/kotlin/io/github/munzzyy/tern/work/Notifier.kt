@@ -155,13 +155,37 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
 
     private fun savedId(name: String) = ID_SAVED_BASE + (name.hashCode() and 0xffff)
 
-    /** The system installer wants the user; tapping opens its confirmation. */
+    /**
+     * The system installer wants the user; tapping opens its confirmation. Confirmations wait
+     * together under one summary, which alone makes a sound, and only when it first shows.
+     */
     fun confirm(appId: String, name: String, confirm: Intent) {
         val tap = PendingIntent.getActivity(c, appId.hashCode(), confirm, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-        show(confirmId(appId), confirmAbout(name) { it.setContentIntent(tap) })
+        val id = confirmId(appId)
+        show(id, confirmAbout(name) { it.setContentIntent(tap).setGroup(GROUP_CONFIRM).setGroupAlertBehavior(Notification.GROUP_ALERT_SUMMARY) })
+        summarize(posted = id, gone = null)
     }
 
-    fun cancelConfirm(appId: String) = manager.cancel(confirmId(appId))
+    fun cancelConfirm(appId: String) {
+        val id = confirmId(appId)
+        manager.cancel(id)
+        summarize(posted = null, gone = id)
+    }
+
+    private fun summarize(posted: Int?, gone: Int?) {
+        val shown = try {
+            manager.activeNotifications.filter { it.notification.group == GROUP_CONFIRM }
+        } catch (e: RuntimeException) {
+            TernLog.i(TAG, "Could not read the notifications shown: ${e.message}")
+            return
+        }
+        val children = shown.filter { it.id != ID_CONFIRMS }.mapTo(HashSet()) { it.id }
+        when (val count = confirmSummary(children, shown.any { it.id == ID_CONFIRMS }, posted, gone)) {
+            null -> Unit
+            0 -> manager.cancel(ID_CONFIRMS)
+            else -> show(ID_CONFIRMS, confirmsAbout(count))
+        }
+    }
 
     /** The downloads the person started: how far they are, in bytes too, and a way to stop them all. */
     fun transfer(apps: List<String>, done: Long, total: Long?): Notification =
@@ -206,6 +230,11 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
 
     fun confirmAbout(app: String, more: (Notification.Builder) -> Unit = {}): Notification =
         about(ATTENTION, R.drawable.ic_stat_attention, texts.notifyConfirmPlain(), texts.notifyConfirm(app), null, more)
+
+    fun confirmsAbout(count: Int): Notification =
+        about(ATTENTION, R.drawable.ic_stat_attention, texts.notifyConfirms(count), null, null) { b ->
+            b.setGroup(GROUP_CONFIRM).setGroupSummary(true).setGroupAlertBehavior(Notification.GROUP_ALERT_SUMMARY).setOnlyAlertOnce(true).setAutoCancel(false)
+        }
 
     /** [more] goes into both versions; [namedOnly] only into the one that names apps, which a locked screen may hide. */
     private fun about(
@@ -260,6 +289,10 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
         const val ID_TRACKED = 5
         const val ID_CHECKING = 6
 
+        /** The summary of the install confirmations that wait. */
+        const val ID_CONFIRMS = 7
+        const val GROUP_CONFIRM = "io.github.munzzyy.tern.CONFIRM"
+
         /** The app whose page a notification opens. */
         const val EXTRA_OPEN_APP = "io.github.munzzyy.tern.OPEN_APP"
 
@@ -289,6 +322,21 @@ class Notifier(context: Context, private val texts: Texts, private val names: ()
          */
         fun stillWaiting(named: List<String>, installed: String, waiting: (String) -> String?): List<Pair<String, String>> =
             named.filter { it != installed }.mapNotNull { id -> waiting(id)?.let { id to it } }
+
+        /**
+         * How many confirmations the summary counts once [posted] shows and [gone] does not, of
+         * the [children] shown: 0 when it goes, and null when it stays as it is. Taking one away
+         * never brings back a summary that is not shown, so only a new confirmation makes a sound.
+         */
+        fun confirmSummary(children: Set<Int>, summaryShown: Boolean, posted: Int?, gone: Int?): Int? {
+            val left = children - setOfNotNull(gone) + setOfNotNull(posted)
+            return when {
+                left.isEmpty() -> 0
+                posted == null && !summaryShown -> null
+                else -> left.size
+            }
+        }
+
         private const val ID_CONFIRM_BASE = 0x10000
         private const val PROGRESS_SCALE = 1000
         private const val TAG = "TernNotify"

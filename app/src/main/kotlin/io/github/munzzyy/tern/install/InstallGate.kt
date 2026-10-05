@@ -25,6 +25,7 @@ import io.github.munzzyy.tern.core.model.AssetPolicy
 import io.github.munzzyy.tern.core.model.DeviceProfile
 import io.github.munzzyy.tern.core.select.AssetPicker
 import io.github.munzzyy.tern.core.select.AssetPolicyException
+import io.github.munzzyy.tern.core.text.PatternsBusyException
 import io.github.munzzyy.tern.data.FileFacts
 import io.github.munzzyy.tern.engine.ProblemKind
 import io.github.munzzyy.tern.engine.real.Texts
@@ -157,7 +158,7 @@ class InstallGate(
         val entries = try {
             apks.filter { request.installsInside(it.name) }
         } catch (e: AssetPolicyException) {
-            throw StepFailure(ProblemKind.PARSE, texts.patternProblem(e.message ?: ""))
+            throw StepFailure(ProblemKind.PARSE, if (PatternsBusyException.within(e)) texts.patternsBusy() else texts.patternProblem(e.message ?: ""))
         }
         if (entries.isEmpty()) throw StepFailure(ProblemKind.NO_FILE_FOR_DEVICE, texts.innerFilterMatchesNothing())
         if (entries.size > MAX_APKS) throw StepFailure(ProblemKind.PARSE, texts.unreadableFile("${entries.size} APKs"))

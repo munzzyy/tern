@@ -14,7 +14,7 @@ data class PickReason(val kind: Kind, val detail: String? = null) {
 
 data class Pick(val asset: Asset, val score: Int, val reasons: List<PickReason>)
 
-class AssetPolicyException(message: String) : Exception(message)
+class AssetPolicyException(message: String, cause: Throwable? = null) : Exception(message, cause)
 
 object AssetPicker {
     private val SPECIAL_ABI_TOKENS = listOf("arm64-v8a", "armeabi-v7a", "x86_64")
@@ -73,7 +73,7 @@ object AssetPicker {
                     .mapNotNull { asset -> rankOne(asset, deviceAbis, deviceVariant, policy, include, exclude) }
             }
         } catch (e: PatternException) {
-            throw AssetPolicyException(e.message ?: "The file filter could not be applied")
+            throw AssetPolicyException(e.message ?: "The file filter could not be applied", e)
         }
 
         return picks.sortedWith(compareByDescending<Pick> { it.score }.thenBy { it.asset.name })
@@ -92,7 +92,7 @@ object AssetPicker {
             if (include != null && !include.matches(name)) return null
             if (exclude != null && exclude.matches(name)) return null
         } catch (e: PatternException) {
-            throw AssetPolicyException(e.message ?: "The file filter could not be applied")
+            throw AssetPolicyException(e.message ?: "The file filter could not be applied", e)
         }
 
         val tokens = tokenize(name)
@@ -157,7 +157,7 @@ object AssetPicker {
         return try {
             filter.matches(name.take(MAX_NAME_LENGTH))
         } catch (e: PatternException) {
-            throw AssetPolicyException(e.message ?: "The file filter could not be applied")
+            throw AssetPolicyException(e.message ?: "The file filter could not be applied", e)
         }
     }
 

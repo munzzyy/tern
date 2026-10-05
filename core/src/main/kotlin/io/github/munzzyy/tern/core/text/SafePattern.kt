@@ -8,7 +8,17 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 import java.util.concurrent.atomic.AtomicInteger
 
-class PatternException(val pattern: String, message: String, cause: Throwable? = null) : Exception(message, cause)
+open class PatternException(val pattern: String, message: String, cause: Throwable? = null) : Exception(message, cause)
+
+/** A pattern not run because patterns that took too long are still running. It says nothing about the pattern itself. */
+class PatternsBusyException(pattern: String, message: String) : PatternException(pattern, message) {
+    companion object {
+        /** True when [e] is one, or was raised from one, however many times it was wrapped. */
+        fun within(e: Throwable): Boolean = generateSequence(e) { it.cause }.take(MAX_CAUSES).any { it is PatternsBusyException }
+
+        private const val MAX_CAUSES = 8
+    }
+}
 
 /**
  * A regular expression written by a user or carried in an import, which makes it hostile input.
@@ -16,7 +26,8 @@ class PatternException(val pattern: String, message: String, cause: Throwable? =
  * JVM does). Where it does not (Android hands the text to native code), a deadline applies instead:
  * the match runs on a thread of its own, and when the deadline passes the caller gets an error and
  * the thread is left behind to finish or die with the process. While it is still running, its
- * pattern is not started again, and once a few are left running nothing more is matched.
+ * pattern is not started again, and once a few are left running no pattern is matched until they
+ * stop. Both refusals are a [PatternsBusyException]: they last only as long as those runs do.
  */
 class SafePattern private constructor(
     private val regex: Regex,
@@ -78,7 +89,7 @@ class SafePattern private constructor(
         const val SINGLE_TIMEOUT_MS = 500L
         const val BATCH_TIMEOUT_MS = 2_000L
 
-        /** How many runs past their deadline may still be going before nothing more is matched. */
+        /** How many runs past their deadline may still be going before no pattern is matched. */
         const val MAX_LEFT_RUNNING = 4
 
         /** A run on its own thread, and the pattern it is matching right now. */
@@ -120,12 +131,16 @@ class SafePattern private constructor(
         /**
          * One match of [pattern]: under its own deadline, or the one of the batch it is part of,
          * which then names it if the deadline passes. A pattern whose earlier match is still
-         * running past its deadline is refused at once.
+         * running past its deadline is refused at once, and so is every pattern while
+         * [MAX_LEFT_RUNNING] runs are.
          */
         internal fun <T> matching(pattern: String, timeoutMs: Long = SINGLE_TIMEOUT_MS, body: () -> T): T {
             runaway[pattern]?.let { earlier ->
-                if (earlier.isAlive) throw PatternException(pattern, "This pattern is still running from a match that took too long: $pattern")
+                if (earlier.isAlive) throw PatternsBusyException(pattern, "This pattern is still running from a match that took too long: $pattern")
                 runaway.remove(pattern, earlier)
+            }
+            if (stillRunning() >= MAX_LEFT_RUNNING) {
+                throw PatternsBusyException(pattern, "Patterns that took too long are still running, so none is matched until they stop or Tern restarts")
             }
             val current = inside.get() ?: return run(pattern, pattern, timeoutMs, body)
             current.pattern = pattern
@@ -138,9 +153,6 @@ class SafePattern private constructor(
 
         private fun <T> run(what: String, pattern: String?, timeoutMs: Long, body: () -> T): T {
             if (inside.get() != null) return translate(what, body)
-            if (stillRunning() >= MAX_LEFT_RUNNING) {
-                throw PatternException(what, "Patterns that took too long are still running, so nothing more is matched until Tern restarts")
-            }
             val run = Run(pattern)
             val task = FutureTask(Callable {
                 inside.set(run)

@@ -1,8 +1,11 @@
 package io.github.munzzyy.tern.core.text
 
+import io.github.munzzyy.tern.core.engine.ReleaseSelector
 import io.github.munzzyy.tern.core.model.Asset
 import io.github.munzzyy.tern.core.model.AssetPolicy
 import io.github.munzzyy.tern.core.model.DeviceProfile
+import io.github.munzzyy.tern.core.model.Release
+import io.github.munzzyy.tern.core.model.ReleasePolicy
 import io.github.munzzyy.tern.core.model.SourceSpec
 import io.github.munzzyy.tern.core.net.InMemoryValidatorStore
 import io.github.munzzyy.tern.core.select.AssetPicker
@@ -141,12 +144,13 @@ class SafePatternTest {
     fun aPatternStillRunningPastItsDeadlineIsNotStartedAgain() {
         val before = SafePattern.stillRunning()
         val pattern = "(x+x+)+y-single"
-        assertThrows(PatternException::class.java) { SafePattern.matching(pattern, timeoutMs = 100) { spin() } }
+        val timedOut = assertThrows(PatternException::class.java) { SafePattern.matching(pattern, timeoutMs = 100) { spin() } }
+        assertFalse(PatternsBusyException.within(timedOut))
         assertEquals(before + 1, SafePattern.stillRunning())
 
         var ran = false
         val started = System.nanoTime()
-        val refused = assertThrows(PatternException::class.java) { SafePattern.matching(pattern, timeoutMs = 100) { ran = true } }
+        val refused = assertThrows(PatternsBusyException::class.java) { SafePattern.matching(pattern, timeoutMs = 100) { ran = true } }
         assertTrue((System.nanoTime() - started) / 1_000_000 < 50)
         assertFalse(ran)
         assertEquals(pattern, refused.pattern)
@@ -167,7 +171,7 @@ class SafePatternTest {
         }
         var ran = false
         val started = System.nanoTime()
-        val refused = assertThrows(PatternException::class.java) {
+        val refused = assertThrows(PatternsBusyException::class.java) {
             SafePattern.watched("release filters", timeoutMs = 100) { SafePattern.matching(pattern) { ran = true } }
         }
         assertTrue((System.nanoTime() - started) / 1_000_000 < 50)
@@ -178,20 +182,46 @@ class SafePatternTest {
         untilNoMoreThan(before)
     }
 
-    @Test(timeout = 10_000)
-    fun onceAFewAreLeftRunningNothingMoreIsMatched() {
+    private fun leaveAFewRunning(): Int {
         val before = SafePattern.stillRunning()
         assertTrue(before < SafePattern.MAX_LEFT_RUNNING)
         repeat(SafePattern.MAX_LEFT_RUNNING - before) { n ->
             assertThrows(PatternException::class.java) { SafePattern.watched("stuck $n", timeoutMs = 50) { spin() } }
         }
         assertEquals(SafePattern.MAX_LEFT_RUNNING, SafePattern.stillRunning())
-        val refused = assertThrows(PatternException::class.java) { SafePattern.compile("a").matches("a") }
-        assertTrue(refused.message!!, "until Tern restarts" in refused.message!!)
-        assertThrows(PatternException::class.java) { SafePattern.watched<String>("batch") { "never" } }
+        return before
+    }
+
+    @Test(timeout = 10_000)
+    fun onceAFewAreLeftRunningNoPatternIsMatchedUntilTheyStop() {
+        val before = leaveAFewRunning()
+        val refused = assertThrows(PatternsBusyException::class.java) { SafePattern.compile("a").matches("a") }
+        assertTrue(refused.message!!, "until they stop or Tern restarts" in refused.message!!)
+        assertEquals("ran", SafePattern.watched("batch") { "ran" })
 
         released.set(true)
         untilNoMoreThan(before)
         assertTrue(SafePattern.compile("a").matches("a"))
+    }
+
+    @Test(timeout = 10_000)
+    fun whileTheyRunAnAppWithoutFiltersIsStillOfferedItsRelease() {
+        val before = leaveAFewRunning()
+        val releases = listOf(Release(id = "v2.0.0", version = "2.0.0", assets = listOf(Asset("app.apk", "https://example.org/app.apk"))))
+        assertEquals("v2.0.0", ReleaseSelector.select(releases, ReleasePolicy(), 0) { true }.candidate?.id)
+        assertEquals(1, AssetPicker.rank(releases[0].assets, DeviceProfile.ARM64_PHONE, AssetPolicy()).size)
+
+        assertThrows(PatternsBusyException::class.java) { ReleaseSelector.select(releases, ReleasePolicy(tagFilter = "^v"), 0) { true } }
+        val file = assertThrows(AssetPolicyException::class.java) {
+            AssetPicker.rank(releases[0].assets, DeviceProfile.ARM64_PHONE, AssetPolicy(include = "apk"))
+        }
+        assertTrue(PatternsBusyException.within(file))
+
+        released.set(true)
+        untilNoMoreThan(before)
+        assertEquals("v2.0.0", ReleaseSelector.select(releases, ReleasePolicy(tagFilter = "^v"), 0) { true }.candidate?.id)
+        val broken = assertThrows(PatternException::class.java) { SafePattern.compile("(\\w+ )+!", maxSteps = 200).matches("word ".repeat(400)) }
+        assertFalse(PatternsBusyException.within(broken))
+        assertFalse(PatternsBusyException.within(assertThrows(AssetPolicyException::class.java) { AssetPicker.rank(releases[0].assets, DeviceProfile.ARM64_PHONE, AssetPolicy(exclude = "(unclosed")) }))
     }
 }

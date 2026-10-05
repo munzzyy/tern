@@ -20,6 +20,7 @@ import io.github.munzzyy.tern.core.source.SourceOptions
 import io.github.munzzyy.tern.core.source.SourceTypes
 import io.github.munzzyy.tern.core.source.forge.GitHubSource
 import io.github.munzzyy.tern.core.text.PatternException
+import io.github.munzzyy.tern.core.text.PatternsBusyException
 import io.github.munzzyy.tern.core.verify.Checksums
 import io.github.munzzyy.tern.core.verify.Fingerprints
 import io.github.munzzyy.tern.data.AppState
@@ -99,9 +100,9 @@ class Evaluator(
                 fitsDevice = { release -> config.trackOnly || fitsDevice(rank(config, release).asSequence().take(MAX_CANDIDATES).map { inspect(it.asset, release.id) }, device) },
             ) { config.trackOnly || rank(config, it).isNotEmpty() }
         } catch (e: PatternException) {
-            return patternFailure(filters, e.message)
+            return patternFailure(filters, e)
         } catch (e: AssetPolicyException) {
-            return patternFailure(filters, e.message)
+            return patternFailure(filters, e)
         }
         val candidate = selection.candidate ?: return Evaluation(AppStatus.ERROR, problem = noCandidate(selection.rejected.map { it.second }, state))
 
@@ -110,7 +111,11 @@ class Evaluator(
             return Evaluation(status, latest = candidate, problem = state.checkProblem)
         }
 
-        val ranked = rank(config, candidate)
+        val ranked = try {
+            rank(config, candidate)
+        } catch (e: AssetPolicyException) {
+            return patternFailure(filters, e)
+        }
         val preferred = preferred(config, ranked)
         val order = if (preferred == null) ranked else listOf(preferred) + ranked.filter { it !== preferred }
         val (chosen, facts) = chooseFile(config, installed, candidate, order, device, inspect)
@@ -252,9 +257,11 @@ class Evaluator(
         else -> Problem(ProblemKind.NO_RELEASES, texts.checkNoReleases())
     }
 
-    private fun patternFailure(filters: String, message: String?): Evaluation {
-        val remembered = PatternProblem(filters, message.orEmpty())
-        return Evaluation(AppStatus.ERROR, problem = Problem(ProblemKind.PARSE, texts.patternProblem(message)), patternProblem = remembered)
+    /** A filter that failed is remembered so it is not run again; one only turned away while others still run is not. */
+    private fun patternFailure(filters: String, e: Exception): Evaluation {
+        if (PatternsBusyException.within(e)) return Evaluation(AppStatus.ERROR, problem = Problem(ProblemKind.PARSE, texts.patternsBusy()))
+        val remembered = PatternProblem(filters, e.message.orEmpty())
+        return Evaluation(AppStatus.ERROR, problem = Problem(ProblemKind.PARSE, texts.patternProblem(e.message)), patternProblem = remembered)
     }
 
     companion object {

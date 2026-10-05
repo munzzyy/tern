@@ -39,6 +39,7 @@
     <string name="engine_no_release_passes">No release passes this app\'s filters.</string>
     <string name="engine_only_prereleases">Only pre-releases are published. Turn on pre-releases for this app to follow them.</string>
     <string name="engine_pattern_problem">A filter of this app could not be applied, so the app is not checked until the filter changes: %1$s</string>
+    <string name="engine_patterns_busy">Filters that took too long to match are still running, so this app\'s filters are not applied until they stop or Tern restarts.</string>
     <string name="engine_offline">There is no internet connection, so nothing was checked.</string>
     <string name="engine_track_only">This app is only tracked; Tern does not install it.</string>
     <string name="engine_no_release">There is no release to install.</string>

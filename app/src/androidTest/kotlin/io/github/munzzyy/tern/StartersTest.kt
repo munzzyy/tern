@@ -121,6 +121,8 @@ class StartersTest {
 
     @Test
     fun wellKnownAppsOnAnEmptyListScrollTheirHeadingToTheTop() {
+        // Under keys the button lands focus on the first app instead, and an earlier test can leave Android there.
+        touchAgain()
         launch("empty").use {
             compose.onNodeWithText("Well known apps").performClick()
             compose.waitFor(hasTestTag(STARTERS_TAG))

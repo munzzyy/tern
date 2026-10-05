@@ -4,6 +4,8 @@ import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.ProxyMode
 import io.github.munzzyy.tern.engine.RunStop
 import io.github.munzzyy.tern.engine.Settings
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withTimeoutOrNull
 
 /** Whether a background run can reach anything before it checks a single app. */
 internal object RunGate {
@@ -12,6 +14,20 @@ internal object RunGate {
         !online -> RunStop.OFFLINE
         proxyOnDevice && !answers() -> RunStop.PROXY_SILENT
         else -> null
+    }
+
+    /**
+     * Whether the proxy answers now or, when it is Orbot, comes up within [waitMs] of being asked
+     * to start. [start] asks Orbot and says whether it is on this device; one that is not is not
+     * waited for.
+     */
+    suspend fun answersInTime(probe: () -> Boolean, orbot: Boolean, start: () -> Boolean, waitMs: Long, pollMs: Long): Boolean {
+        if (probe()) return true
+        if (!orbot || !start()) return false
+        return withTimeoutOrNull(waitMs) {
+            while (!probe()) delay(pollMs)
+            true
+        } ?: false
     }
 
     /**

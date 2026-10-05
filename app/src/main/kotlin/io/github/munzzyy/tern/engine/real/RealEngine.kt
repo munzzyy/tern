@@ -113,7 +113,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -121,7 +120,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeoutOrNull
 
 /**
  * The engine behind the screens. Installed versions are always read from PackageManager and never
@@ -968,13 +966,13 @@ class RealEngine(
      * to start, as it is when Tern starts, and given a short while to come up.
      */
     private suspend fun proxyAnswers(settings: Settings): Boolean = withContext(Dispatchers.IO) {
-        if (proxyAnswersNow()) return@withContext true
-        if (settings.proxy != ProxyMode.ORBOT) return@withContext false
+        RunGate.answersInTime(::proxyAnswersNow, settings.proxy == ProxyMode.ORBOT, ::startOrbot, ORBOT_WAIT_MS, ORBOT_POLL_MS)
+    }
+
+    /** Asks Orbot to start, and says whether it is on this device to be asked. */
+    private fun startOrbot(): Boolean {
         orbotLink.ask()
-        withTimeoutOrNull(ORBOT_WAIT_MS) {
-            while (!proxyAnswersNow()) delay(ORBOT_POLL_MS)
-            true
-        } ?: false
+        return orbotLink.state.value != OrbotState.NOT_INSTALLED
     }
 
     /** A proxy whose setting cannot be built is left to the checks, which say what is wrong with it. */

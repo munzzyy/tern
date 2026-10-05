@@ -4,6 +4,7 @@ import io.github.munzzyy.tern.engine.CheckCause
 import io.github.munzzyy.tern.engine.ProxyMode
 import io.github.munzzyy.tern.engine.RunStop
 import io.github.munzzyy.tern.engine.Settings
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -29,6 +30,23 @@ class RunGateTest {
     @Test
     fun withNoProxyOnThisDeviceNothingIsAsked() {
         assertNull(RunGate.blocked(online = true, proxyOnDevice = false, answers = never))
+    }
+
+    @Test
+    fun anOrbotThatIsNotOnThisDeviceIsNotWaitedFor() = runBlocking {
+        var probes = 0
+        assertFalse(RunGate.answersInTime({ probes++ > 0 }, orbot = true, start = { false }, waitMs = 2_000, pollMs = 10))
+        assertEquals("the proxy is asked once and not again", 1, probes)
+    }
+
+    @Test
+    fun aSilentOrbotIsGivenAWhileToComeUp() = runBlocking {
+        var probes = 0
+        assertTrue(RunGate.answersInTime({ ++probes >= 3 }, orbot = true, start = { true }, waitMs = 2_000, pollMs = 10))
+        assertFalse("one that never comes up is given up on", RunGate.answersInTime({ false }, orbot = true, start = { true }, waitMs = 50, pollMs = 10))
+        var started = false
+        assertFalse(RunGate.answersInTime({ false }, orbot = false, start = { started = true; true }, waitMs = 2_000, pollMs = 10))
+        assertFalse("a proxy that is not Orbot is not asked to start", started)
     }
 
     @Test

@@ -644,8 +644,10 @@ private fun SearchField(search: Search, focus: Modifier, onFocus: (Boolean) -> U
     TextField(
         value = value,
         onValueChange = {
+            // The keyboard ending its composition repeats the old text, which would undo a search closed with Back.
+            val changed = it.text != value.text
             edited = it
-            search.onText(it.text)
+            if (changed) search.onText(it.text)
         },
         singleLine = true,
         placeholder = { Text(stringResource(R.string.apps_search_hint)) },

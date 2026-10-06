@@ -21,13 +21,10 @@ class InstallReceiver : BroadcastReceiver() {
         TernLog.i(TAG, "Session $sessionId for $appId ended with status $status: $message")
         val engine = RealEngine.obtain(context)
         val done = goAsync()
+        // Not a finally: a scope cancelled by a closing engine never runs the block, and Android holds every later broadcast until this one finishes.
         engine.scope.launch {
-            try {
-                engine.installs.onResult(appId, status, sessionId, message, confirm)
-            } finally {
-                done.finish()
-            }
-        }
+            engine.installs.onResult(appId, status, sessionId, message, confirm)
+        }.invokeOnCompletion { done.finish() }
     }
 
     companion object {

@@ -21,13 +21,9 @@ class NotificationActions : BroadcastReceiver() {
             val engine = RealEngine.obtain(context)
             val done = goAsync()
             engine.scope.launch {
-                try {
-                    engine.ready()
-                    engine.cancelDownloads()
-                } finally {
-                    done.finish()
-                }
-            }
+                engine.ready()
+                engine.cancelDownloads()
+            }.invokeOnCompletion { done.finish() }
             return
         }
         if (action == ACTION_SKIP) {
@@ -40,10 +36,8 @@ class NotificationActions : BroadcastReceiver() {
                     engine.skipRelease(appId, releaseId)
                 } catch (e: RuntimeException) {
                     TernLog.w(TAG, "The release asked to be skipped from a notification was not: ${e.javaClass.simpleName}")
-                } finally {
-                    done.finish()
                 }
-            }
+            }.invokeOnCompletion { done.finish() }
             return
         }
         if (action != ACTION_UPDATE && action != ACTION_UPDATE_ALL) return
@@ -57,10 +51,8 @@ class NotificationActions : BroadcastReceiver() {
                 if (action == ACTION_UPDATE && appId != null) engine.install(appId) else engine.installAllUpdates()
             } catch (e: RuntimeException) {
                 TernLog.w(TAG, "The update asked for from a notification did not start: ${e.javaClass.simpleName}")
-            } finally {
-                done.finish()
             }
-        }
+        }.invokeOnCompletion { done.finish() }
     }
 
     companion object {

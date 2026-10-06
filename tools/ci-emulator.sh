@@ -12,6 +12,7 @@ avdmanager="$sdk/cmdline-tools/latest/bin/avdmanager"
 adb="$sdk/platform-tools/adb"
 emulator="$sdk/emulator/emulator"
 boot_seconds=600
+settle_seconds=300
 suite_seconds=3600
 
 install() { (yes || true) | "$sdkmanager" "$@" > /dev/null; }
@@ -37,25 +38,29 @@ done
 [ -n "$port" ] || { echo "FAIL no free emulator port between 5554 and 5681"; exit 1; }
 serial="emulator-$port"
 
-"$emulator" -avd tern-ci -port "$port" -no-window -no-audio -no-snapshot -no-boot-anim -gpu swiftshader_indirect \
-    > "$work/emulator.log" 2>&1 &
-pid=$!
-
+pid=""
 watchdog=""
 stop() {
     [ -z "$watchdog" ] || kill "$watchdog" 2> /dev/null || true
-    "$adb" -s "$serial" emu kill > /dev/null 2>&1 || true
-    for _ in $(seq 1 30); do
-        kill -0 "$pid" 2> /dev/null || break
-        sleep 1
-    done
-    kill -9 "$pid" 2> /dev/null || true
+    if [ -n "$pid" ]; then
+        "$adb" -s "$serial" emu kill > /dev/null 2>&1 || true
+        for _ in $(seq 1 30); do
+            kill -0 "$pid" 2> /dev/null || break
+            sleep 1
+        done
+        kill -9 "$pid" 2> /dev/null || true
+    fi
     rm -rf "$work"
 }
 trap stop EXIT
 
 cd "$root"
 ./gradlew --no-daemon :app:assembleDebug :app:assembleDebugAndroidTest
+
+# Booting under a Gradle build on four cores starves System UI into an ANR dialog that hides the installer.
+"$emulator" -avd tern-ci -port "$port" -no-window -no-audio -no-snapshot -no-boot-anim -gpu swiftshader_indirect \
+    > "$work/emulator.log" 2>&1 &
+pid=$!
 
 deadline=$((SECONDS + boot_seconds))
 until [ "$("$adb" -s "$serial" shell getprop sys.boot_completed 2> /dev/null | tr -d '\r')" = 1 ]; do
@@ -73,6 +78,23 @@ until [ "$("$adb" -s "$serial" shell getprop sys.boot_completed 2> /dev/null | t
 done
 echo "$serial booted"
 
+# Booted is not settled: until the boot work is done, install results can come late enough to time tests out.
+deadline=$((SECONDS + settle_seconds))
+timeout "$settle_seconds" "$adb" -s "$serial" shell am wait-for-broadcast-idle > /dev/null || echo "note: the boot broadcasts did not drain"
+quiet=0
+until [ "$quiet" -ge 3 ]; do
+    idle="$("$adb" -s "$serial" shell 'head -1 /proc/stat; sleep 5; head -1 /proc/stat' 2> /dev/null |
+        awk '{ t = 0; for (i = 2; i <= NF; i++) t += $i; tot[NR] = t; idl[NR] = $5 + $6 }
+             END { if (NR == 2 && tot[2] > tot[1]) printf "%d", 100 * (idl[2] - idl[1]) / (tot[2] - tot[1]) }')" || idle=""
+    if [ -n "$idle" ] && [ "$idle" -ge 60 ]; then quiet=$((quiet + 1)); else quiet=0; fi
+    if [ "$SECONDS" -ge "$deadline" ]; then
+        echo "note: $serial is still busy after $settle_seconds s (${idle:-?}% idle), going on"
+        break
+    fi
+done
+echo "$serial settled (${idle:-?}% idle)"
+"$adb" -s "$serial" logcat -b events -d -s am_anr | grep am_anr || true
+
 for scale in window_animation_scale transition_animation_scale animator_duration_scale; do
     "$adb" -s "$serial" shell settings put global "$scale" 0
 done
@@ -88,6 +110,9 @@ watchdog=$!
 
 status=0
 timeout "$suite_seconds" bash tools/device-suite.sh "$serial" -e package io.github.munzzyy.tern.enginetest | tee "$work/suite.txt" || status=$?
+if [ "$status" -ne 0 ]; then
+    "$adb" -s "$serial" logcat -b events -d -s am_anr am_kill 2> /dev/null | grep -E 'am_anr|am_kill.*anr' || true
+fi
 if ! kill -0 "$pid" 2> /dev/null; then
     echo "FAIL the emulator stopped during the run"
     status=1
